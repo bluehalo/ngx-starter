@@ -1,0 +1,50 @@
+@import './colors';
+
+$font-family: 'Roboto', 'Arial';
+$font-family-bold: 'Roboto-Bold';
+$font-family-light: 'Roboto-Light';
+$font-family-medium: 'Roboto Medium', 'Roboto';
+$font-family-italic: 'Roboto-Italic', 'Roboto Italic', 'Roboto';
+
+$font-line-height: 20px;
+$font-size: 14px;
+
+@mixin font-smoothing($value: antialiased) {
+  @if $value == antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+@mixin font($family: $font-family, $size: $font-size, $line-height: 20px) {
+  font-family: $family;
+  font-size: $size;
+  line-height: $line-height;
+  font-style: normal;
+}
+
+@mixin font-normal($size: $font-size, $line-height: $font-line-height) {
+  @include font($font-family, $size, $line-height);
+}
+
+@mixin font-medium($size: $font-size, $line-height: $font-line-height) {
+  @include font($font-family-medium, $size, $line-height);
+}
+
+@mixin font-bold($size: $font-size, $line-height: $font-line-height) {
+  @include font($font-family-bold, $size, $line-height);
+}
+
+@mixin font-dark($color: $color-text-black) {
+  color: $color;
+  @include font-smoothing(auto);
+}
+
+@mixin font-light($color: $color-text-white) {
+  color: $color;
+  @include font-smoothing(antialiased);
+}

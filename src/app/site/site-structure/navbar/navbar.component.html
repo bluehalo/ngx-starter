@@ -1,0 +1,95 @@
+<div
+     class="navbar-left"
+     [ngClass]="{'navbar-open': navbarOpen}">
+
+  <!-- Main Nav -->
+  <ul class="nav main-nav">
+
+    <!-- Logo -->
+    <li class="logo-element">
+      <a href="/#/" *ngIf="!navbarOpen">
+        <img class="logo-icon" src="/assets/images/nav-logo-icon.png"/>
+      </a>
+      <a href="/#/" *ngIf="navbarOpen">
+        <img class="logo" src="/assets/images/nav-logo.png"/>
+      </a>
+    </li>
+
+    <!-- Element -->
+    <li class="element">
+      <a tooltip="Element 1"
+         placement="right"
+         container="body"
+         [isDisabled]="navbarOpen"
+         routerLinkActive="active-link"
+         routerLink="/element1">
+        <i class="fa fa-fw fa-code"></i>
+        <span *ngIf="navbarOpen">Element 1</span>
+      </a>
+    </li>
+    <li class="element">
+      <a tooltip="Element 2"
+         placement="right"
+         container="body"
+         [isDisabled]="navbarOpen"
+         routerLinkActive="active-link"
+         routerLink="/element2">
+        <i class="fa fa-fw fa-search"></i>
+        <span *ngIf="navbarOpen">Element 2</span>
+      </a>
+    </li>
+
+  </ul>
+
+
+  <!-- Bottom Aux Nav -->
+  <ul class="nav aux-nav">
+
+    <!-- User -->
+    <li class="dropdown user-container" dropdown>
+      <a class="dropdown-toggle" dropdownToggle>
+        <div class="user-icon">UN</div>
+        <span *ngIf="navbarOpen">User Name</span>
+      </a>
+
+      <ul *dropdownMenu class="dropdown-menu dropdown-menu-besides-right dropdown-menu-bottom" role="menu">
+
+        <!-- Manage User Account -->
+        <li><a [routerLink]="['/update-user']">Profile</a></li>
+
+      </ul>
+    </li>
+
+    <!-- Help -->
+    <li class="dropdown" dropdown>
+      <a class="dropdown-toggle" dropdownToggle>
+        <i class="fa fa-fw fa-question-circle help-icon"></i>
+        <span *ngIf="navbarOpen">Help</span>
+      </a>
+      <ul *dropdownMenu class="dropdown-menu dropdown-menu-besides-right dropdown-menu-bottom" role="menu">
+
+        <!-- Help -->
+        <li><a [routerLink]="['/help']">Help Docs</a></li>
+
+        <!-- About -->
+        <li><a [routerLink]="['/about']">About</a></li>
+
+      </ul>
+    </li>
+
+    <!-- Collapse/Expand -->
+    <li class="element"
+        (click)="toggleNavbar()">
+      <a>
+        <i class="fa fa-fw collapse-icon" [class.fa-angle-double-right]="!navbarOpen" [class.fa-angle-double-left]="navbarOpen"></i>
+        <span *ngIf="navbarOpen">Collapse</span>
+      </a>
+    </li>
+
+  </ul>
+
+</div>
+
+<div class="navbar-content">
+  <ng-content></ng-content>
+</div>

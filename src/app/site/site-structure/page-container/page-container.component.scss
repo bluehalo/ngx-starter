@@ -1,0 +1,71 @@
+@import '../../theme/colors';
+@import './variables';
+
+header.page-header {
+  z-index: 2147483647;
+}
+
+footer.page-footer {
+  z-index: 2147483647;
+}
+
+.page-banner {
+  text-align: center;
+
+  width: 100%;
+  z-index: 2147483647;
+}
+
+.copyright-banner {
+  background-color: $color-bg-copyright;
+  color: $color-text-copyright;
+  height: $copyright-banner-height;
+}
+
+.footer-banner {
+  background-color: $color-bg-footer;
+  color: $color-text-footer;
+  height: $footer-banner-height;
+}
+
+.header-banner {
+  background-color: $color-bg-header;
+  color: $color-text-header;
+  height: $header-banner-height;
+}
+
+.page-content {
+  background-color: red;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &.header-active {
+    margin-top: $header-banner-height;
+  }
+
+  &.copyright-active {
+    margin-bottom: $footer-banner-height;
+
+    &.footer-active {
+      margin-bottom: $footer-banner-height + $copyright-banner-height;
+    }
+  }
+
+  &.footer-active {
+    margin-bottom: $footer-banner-height;
+  }
+}
+
+.page-footer {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.page-header {
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+}

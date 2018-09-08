@@ -1,0 +1,165 @@
+@import '../../theme/colors';
+@import '../../theme/fonts';
+@import '../page-container/variables';
+
+$color1: #f15a2a;
+$color2: #2d2952;
+$color3: #3c91e6;
+$color4: #c1c8e4;
+$color5: #8860d0;
+
+$nav-open-width: 224px;
+$nav-closed-width: 54px;
+$nav-background-color: $color2;
+
+$nav-divider-height: 20px;
+
+$nav-element-height: $nav-closed-width;
+$nav-element-hover-color: $color3;
+$nav-element-font-size: 16px;
+$nav-element-icon-size: 20px;
+$nav-element-icon-margin-left: ($nav-closed-width - 25.7px)/2;
+$nav-element-selected-background-color: $color3;
+$nav-element-text-margin-left: 16px;
+
+$nav-logo-element-color-bg: $color1;
+$nav-logo-element-height: $nav-element-height;
+$nav-logo-element-img-margin: 4px;
+
+
+// -------------------------------------------------
+// Navbar offsets given the header/footer setup
+// -------------------------------------------------
+:host-context(.header-active) .navbar-left {
+  top: $header-banner-height;
+}
+
+:host-context(.copyright-active) .navbar-left {
+  bottom: $footer-banner-height;
+}
+
+:host-context(.footer-active) .navbar-left {
+  bottom: $footer-banner-height;
+}
+
+:host-context(.copyright-active.footer-active) .navbar-left {
+  bottom: $footer-banner-height + $copyright-banner-height;
+}
+
+
+// -------------------------------------------------
+// Navbar Left
+// A left-docked vertical navigation bar
+// -------------------------------------------------
+.navbar-left {
+
+  background-color: $nav-background-color;
+  padding: 0;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 0;
+
+  width: $nav-closed-width;
+  z-index: 10000;
+
+  // A normal element
+  .element {
+
+    height: $nav-element-height;
+    width: $nav-closed-width;
+
+    &:hover {
+      cursor: pointer;
+
+      a {
+        color: $nav-element-hover-color;
+      }
+    }
+
+    a {
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      @include font-normal($nav-element-font-size, $nav-element-height);
+      @include font-light();
+
+      > i.fa {
+        margin-left: $nav-element-icon-margin-left;
+        font-size: $nav-element-icon-size;
+      }
+
+      > span {
+        margin-left: 10px;
+        font-size: $nav-element-font-size;
+      }
+
+    }
+
+  }
+
+  // Adjustments for when the navbar is open
+  &.navbar-open {
+    width: $nav-open-width;
+
+    .element {
+      width: $nav-open-width;
+    }
+
+    .main-nav {
+      .logo-element {
+        width: $nav-open-width;
+      }
+    }
+
+    .aux-nav {
+      .caret {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  // Main nav: The upper area of the navbar where main site nav buttons exist
+  .main-nav {
+
+    left: 0;
+    top: 0;
+
+    // The element that contains the logo
+    .logo-element {
+
+      background-color: $nav-logo-element-color-bg;
+
+      height: $nav-element-height;
+      width: $nav-closed-width;
+
+      img {
+        margin: $nav-logo-element-img-margin;
+
+        &.logo-icon {
+          height: auto;
+          width: $nav-closed-width - 2*$nav-logo-element-img-margin;
+        }
+
+        &.logo {
+          height: auto;
+          width: $nav-open-width - 2*$nav-logo-element-img-margin;
+        }
+      }
+    }
+
+  }
+
+  // Main nav: The lower area of the navbar where auxilliary nav buttons exist
+  .aux-nav {
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+  }
+
+}

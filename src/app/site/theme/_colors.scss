@@ -1,0 +1,30 @@
+//==================================
+// Theme Colors
+//==================================
+$color-text-white: rgb(243, 243, 243);
+$color-text-black: rgb(34, 34, 34);
+
+// $color-text-light: rgb(188, 188, 188);
+// $color-text-medium: rgb(153, 153, 153);
+// $color-text-dark: rgb(92, 92, 92);
+
+$color-bg-white: rgb(255, 255, 255);
+$color-bg-black: rgb(34, 34, 34);
+$color-bg-light: rgb(243, 243, 243);
+
+// $color-border-light: rgb(238, 238, 238);
+// $color-border-medium: rgb(170, 170, 170);
+// $color-border-dark: rgb(68, 68, 68);
+
+
+//==================================
+// page-banners
+//==================================
+$color-bg-copyright: $color-bg-light;
+$color-text-copyright: $color-text-black;
+
+$color-bg-footer: $color-bg-black;
+$color-text-footer: $color-text-white;
+
+$color-bg-header: $color-bg-footer;
+$color-text-header: $color-text-footer;

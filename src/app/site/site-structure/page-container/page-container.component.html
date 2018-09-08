@@ -1,0 +1,39 @@
+<!-- Page Header -->
+<header class="page-header">
+
+  <div class="page-banner" *ngIf="null != bannerContent">
+    <div class="header-banner"
+         [innerHtml]="bannerContent"></div>
+  </div>
+
+</header>
+
+
+<!-- Page content -->
+<section [ngClass]="{'header-active footer-active' : null != bannerContent, 'copyright-active': null != copyrightContent}">
+
+  <navbar>
+
+    <section class="page-content">
+      <ng-content></ng-content>
+    </section>
+
+  </navbar>
+
+</section>
+
+
+<!-- Page Footer -->
+<footer class="page-footer">
+
+  <div class="page-banner" *ngIf="null != copyrightContent">
+    <div class="copyright-banner"
+         [innerHtml]="copyrightContent"></div>
+  </div>
+
+  <div class="page-banner" *ngIf="null != bannerContent">
+    <div class="footer-banner"
+         [innerHtml]="bannerContent"></div>
+  </div>
+
+</footer>

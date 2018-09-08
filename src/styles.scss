@@ -1,1 +1,42 @@
+@import './app/shared/styles/mixins';
+@import './app/site/theme/colors';
+@import './app/site/theme/fonts';
+
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  @include font-normal();
+  @include font-dark();
+
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+}
+
+html {
+  min-height: 100%;
+}
+
+.site-loading-container {
+  background-color: $color-bg-light;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+
+  .site-loading-message {
+    left: 0;
+    min-height: 100%;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 30%;
+
+    .message {
+      @include font-normal(24px, 30px);
+      margin: 10px;
+    }
+  }
+}
