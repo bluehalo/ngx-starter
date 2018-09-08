@@ -20,23 +20,22 @@ $font-size: 14px;
   }
 }
 
-@mixin font($family: $font-family, $size: $font-size, $line-height: 20px) {
+@mixin font($family: $font-family, $size: $font-size) {
   font-family: $family;
   font-size: $size;
-  line-height: $line-height;
   font-style: normal;
 }
 
-@mixin font-normal($size: $font-size, $line-height: $font-line-height) {
-  @include font($font-family, $size, $line-height);
+@mixin font-normal($size: $font-size) {
+  @include font($font-family, $size);
 }
 
-@mixin font-medium($size: $font-size, $line-height: $font-line-height) {
-  @include font($font-family-medium, $size, $line-height);
+@mixin font-medium($size: $font-size) {
+  @include font($font-family-medium, $size);
 }
 
-@mixin font-bold($size: $font-size, $line-height: $font-line-height) {
-  @include font($font-family-bold, $size, $line-height);
+@mixin font-bold($size: $font-size) {
+  @include font($font-family-bold, $size);
 }
 
 @mixin font-dark($color: $color-text-black) {
