@@ -1,6 +1,12 @@
 //==================================
 // Theme Colors
 //==================================
+$color1: #f15a2a;
+$color2: #2d2952;
+$color3: #3c91e6;
+$color4: #14152f;
+
+
 $color-text-white: rgb(243, 243, 243);
 $color-text-black: rgb(34, 34, 34);
 
@@ -12,9 +18,12 @@ $color-bg-white: rgb(255, 255, 255);
 $color-bg-black: rgb(34, 34, 34);
 $color-bg-light: rgb(243, 243, 243);
 
-// $color-border-light: rgb(238, 238, 238);
-// $color-border-medium: rgb(170, 170, 170);
-// $color-border-dark: rgb(68, 68, 68);
+$color-bg-dark-transparent: rgba(34, 34, 34, 0.6);
+$color-bg-light-transparent: rgba(255, 255, 255, 0.6);
+
+$color-border-light: rgb(238, 238, 238);
+$color-border-medium: rgb(170, 170, 170);
+$color-border-dark: rgb(68, 68, 68);
 
 
 //==================================

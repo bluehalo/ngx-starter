@@ -1,0 +1,113 @@
+@import './colors';
+@import './fonts';
+@import './styles';
+
+
+// -------------------------------------------------
+// Popovers
+// -------------------------------------------------
+$tooltip-background-color: $color-bg-dark-transparent;
+$tooltip-border-radius: $border-radius;
+$tooltip-font-color: $color-text-white;
+$tooltip-font-size: 14px;
+
+.tooltip {
+  .tooltip-inner {
+    @include font-normal($tooltip-font-size);
+    @include font-light($tooltip-font-color);
+
+    border-radius: $tooltip-border-radius;
+    background-color: $tooltip-background-color;
+
+    padding: 8px 16px;
+    word-break: normal;
+    z-index: 20000;
+  }
+
+  .tooltip-arrow {
+    visibility: hidden;
+  }
+}
+
+
+
+// -------------------------------------------------
+// Popovers
+// -------------------------------------------------
+$popover-border-color: $color-border-light;
+$popover-border-radius: $border-radius;
+$popover-content-background-color: $color-bg-white;
+$popover-content-font-color: $color-text-black;
+$popover-content-hover-background-color: $color-bg-light;
+
+.popover {
+  border-color: $popover-border-color;
+  border-radius: $popover-border-radius;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+
+  .popover-content {
+    background-color: $popover-content-background-color;
+    padding: 0;
+  }
+}
+
+.nav-popover {
+
+  .popover {
+    min-height: 22px;
+
+    .popover-arrow {
+      top: auto !important;
+      z-index: -1;
+    }
+  }
+
+  &.nav-popover-bottom {
+    .popover {
+      top: auto !important;
+      bottom: 0;
+
+      .popover-arrow {
+        bottom: 11px;
+      }
+    }
+  }
+
+  &.nav-popover-right {
+    .popover {
+      margin-left: 12px;
+
+      .popover-arrow {
+        border-right-color: $popover-border-color;
+
+        &.arrow::before {
+          box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+          left: 4px;
+          transform: rotate(45deg);
+          width: 14px;
+        }
+      }
+    }
+  }
+}
+
+
+ul.popover-menu {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  a {
+    @include font-dark($popover-content-font-color);
+
+    display: block;
+    padding: 10px;
+    border-bottom: 1px solid $popover-border-color;
+
+    &:hover {
+      background-color: $popover-content-hover-background-color;
+      text-decoration: none;
+    }
+  }
+}

@@ -7,6 +7,45 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      min-height: 100%;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    .site-loading-container {
+      background-color: #f4f7fc;
+      text-align: center;
+
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+
+    .site-loading-container .site-loading-message {
+      min-height: 100%;
+      text-align: center;
+
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 30%;
+    }
+
+    .site-loading-container .site-loading-message .message {
+      font-family: Roboto, arial;
+      font-size: 24px;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
   <app-root>

@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SiteModule } from './site/site.module';
 import { SiteStructureModule } from './site/site-structure/site-structure.module';
+
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { SiteStructureModule } from './site/site-structure/site-structure.module
   imports: [
     BrowserModule,
 
-    BsDropdownModule.forRoot(),
+    PopoverModule.forRoot(),
     TooltipModule.forRoot(),
 
     AppRoutingModule,
+
+    SiteModule,
     SiteStructureModule
   ],
   providers: [],

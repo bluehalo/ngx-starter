@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'navbar',
@@ -7,14 +7,27 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  navbarOpen = true;
+  navbarOpenValue = false;
 
-  toggleNavbar() {
-    this.navbarOpen = !this.navbarOpen;
+  @Output()
+  navbarOpenChange = new EventEmitter<boolean>();
+
+  @Input()
+  get navbarOpen() {
+    return this.navbarOpenValue;
+  }
+
+  set navbarOpen(v: boolean) {
+    this.navbarOpenValue = v;
+    this.navbarOpenChange.emit(v);
 
     if (null != window) {
       window.dispatchEvent(new Event('resize', { bubbles: true }));
     }
+  }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 
 }

@@ -19,13 +19,14 @@ import { RouterModule } from '@angular/router';
 	imports: [
 		RouterModule.forRoot(
 			[
-				// {
-				// 	// map '/' to default route
-				// 	path: '',
-				// 	canActivate: [AuthGuard],
-				// 	redirectTo: '/welcome',
-				// 	pathMatch: 'full'
-				// },
+				{
+					// map '/' to default route
+					path: '',
+					// canActivate: [AuthGuard],
+					redirectTo: '/welcome',
+					pathMatch: 'full'
+				},
+
 				// {
 				// 	path: 'signin',
 				// 	component: SigninComponent,

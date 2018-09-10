@@ -1,36 +1,9 @@
-@import '../../theme/colors';
-@import '../../theme/fonts';
+@import '../../../theme/colors';
+@import '../../../theme/fonts';
+@import '../../../theme/styles';
+
 @import '../page-container/variables';
-
-$color1: #f15a2a;
-$color2: #2d2952;
-$color3: #3c91e6;
-$color4: #c1c8e4;
-$color5: #8860d0;
-
-// Specify these
-$nav-background-color: $color2;
-$nav-closed-width: 54px;
-$nav-open-width: 224px;
-
-$nav-element-font-color: $color-text-white;
-$nav-element-font-dark-color: $color-text-black;
-$nav-element-font-size: 16px;
-$nav-element-margin: 20px;
-$nav-element-hover-color: $color3;
-$nav-element-icon-size: 20px;
-$nav-element-icon-width: 27.5px;
-$nav-element-selected-background-color: $color3;
-$nav-element-text-margin-left: 20px;
-
-$nav-element-divider-margin: 10px;
-
-$nav-element-logo-color-bg: $color1;
-$nav-element-logo-img-margin: 4px;
-$nav-element-logo-img-height: 50px;
-
-// Calculated
-$nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2;
+@import './variables';
 
 
 // -------------------------------------------------
@@ -58,7 +31,6 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
 // A left-docked vertical navigation bar
 // -------------------------------------------------
 .navbar-left {
-
   background-color: $nav-background-color;
   padding: 0;
 
@@ -73,31 +45,28 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
 
   // A normal element
   .element {
+    position: relative;
 
-    margin: $nav-element-margin 0 0;
-    width: $nav-closed-width;
-
-    &:hover {
-      cursor: pointer;
-
-      a {
-        color: $nav-element-hover-color;
-      }
-    }
-
-    a {
-
-      &:hover {
-        text-decoration: none;
-      }
-
+    > a {
       @include font-normal($nav-element-font-size);
       @include font-light($nav-element-font-color);
+
+      display: block;
+      padding: $nav-element-padding 0;
+      width: $nav-closed-width;
+
+      &:hover {
+        color: $nav-element-hover-color;
+      }
+      &:hover, &.highlight-link {
+        background-color: $nav-element-hover-background-color;
+        cursor: pointer;
+        text-decoration: none;
+      }
 
       > i.fa {
         font-size: $nav-element-icon-size;
         margin-left: $nav-element-icon-margin-left;
-
       }
 
       > span {
@@ -105,39 +74,54 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
         margin-left: 10px;
       }
 
+      &.active-link {
+        background-color: $nav-element-active-background-color;
+        border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
+
+        > i.fa {
+          margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
+        }
+      }
     }
 
+    &:first-child {
+      margin-top: $nav-element-padding;
+    }
   }
 
-  :last-child.element {
-    margin-bottom: $nav-element-margin;
-  }
 
   // A divider element
   .element-divider {
-
     border-bottom: $nav-element-font-color solid 1px;
     margin-left: $nav-element-divider-margin;
     margin-right: $nav-element-divider-margin;
+    padding: 0;
 
     height: 0;
     width: $nav-closed-width - 2 * $nav-element-divider-margin;
-
   }
+
+  .element-divider-collapse {
+    margin-top: $nav-element-padding;
+  }
+
 
   // The element that contains the logo
   .element-logo {
+    padding: 0;
 
-    background-color: $nav-element-logo-color-bg;
+    > a, > a:hover {
+      background-color: $nav-element-logo-color-bg;
+      padding: 0;
 
-    img {
-      margin: $nav-element-logo-img-margin;
+      > img {
+        margin: $nav-element-logo-img-margin;
 
-      &.logo {
-        height: auto;
-        width: $nav-closed-width - 2 * $nav-element-logo-img-margin;
+        &.logo {
+          height: auto;
+          width: $nav-closed-width - 2 * $nav-element-logo-img-margin;
+        }
       }
-
     }
   }
 
@@ -146,7 +130,7 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
   &.navbar-open {
     width: $nav-open-width;
 
-    .element {
+    .element > a {
       width: $nav-open-width;
     }
 
@@ -154,22 +138,8 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
       width: $nav-open-width - 2 * $nav-element-divider-margin;
     }
 
-    .element-logo {
-      img.logo {
-        width: $nav-open-width - 2 * $nav-element-logo-img-margin;
-      }
-    }
-
-    .main-nav {
-      .logo-element {
-        width: $nav-open-width;
-      }
-    }
-
-    .aux-nav {
-      .caret {
-        transform: rotate(180deg);
-      }
+    .element-logo > a > img.logo {
+      width: $nav-open-width - 2 * $nav-element-logo-img-margin;
     }
   }
 
@@ -180,7 +150,6 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
     .element-logo {
       margin: 0;
     }
-
   }
 
   // Main nav: The upper area of the navbar where main site nav buttons exist
@@ -194,6 +163,19 @@ $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2
     position: absolute;
     bottom: 0;
     left: 0;
-  }
 
+    .nav-popover .popover-menu {
+      width: 192px;
+    }
+  }
+}
+
+
+// Offset the content by the width of the navbar
+.navbar-content {
+  margin-left: $nav-closed-width;
+
+  &.navbar-open {
+    margin-left: $nav-open-width;
+  }
 }

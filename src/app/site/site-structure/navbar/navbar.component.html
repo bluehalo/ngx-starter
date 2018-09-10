@@ -7,10 +7,10 @@
 
     <!-- Logo -->
     <li class="element element-logo">
-      <a href="/#/" *ngIf="!navbarOpen">
+      <a href="/#/" [hidden]="navbarOpen">
         <img class="logo" src="/assets/images/nav-logo-icon.png"/>
       </a>
-      <a href="/#/" *ngIf="navbarOpen">
+      <a href="/#/" [hidden]="!navbarOpen">
         <img class="logo" src="/assets/images/nav-logo.png"/>
       </a>
     </li>
@@ -23,17 +23,33 @@
 
     <!-- Element -->
     <li class="element">
-      <a routerLinkActive="active-link"
-         routerLink="/search">
-        <i class="fa fa-fw fa-search"></i>
-        <span *ngIf="navbarOpen">Search</span>
+      <a tooltip="Explore"
+         placement="right"
+         [isDisabled]="navbarOpen"
+         routerLinkActive="active-link"
+         routerLink="/explore">
+        <i class="fa fa-fw fa-compass"></i>
+        <span [hidden]="!navbarOpen">Explore</span>
       </a>
     </li>
     <li class="element">
-      <a routerLinkActive="active-link"
+      <a tooltip="Search"
+         placement="right"
+         [isDisabled]="navbarOpen"
+         routerLinkActive="active-link"
+         routerLink="/search">
+        <i class="fa fa-fw fa-search"></i>
+        <span [hidden]="!navbarOpen">Search</span>
+      </a>
+    </li>
+    <li class="element">
+      <a tooltip="Advanced"
+         placement="right"
+         [isDisabled]="navbarOpen"
+         routerLinkActive="active-link"
          routerLink="/advanced">
         <i class="fa fa-fw fa-code"></i>
-        <span *ngIf="navbarOpen">Advanced</span>
+        <span [hidden]="!navbarOpen">Advanced</span>
       </a>
     </li>
 
@@ -43,54 +59,91 @@
   <!-- Bottom Aux Nav -->
   <ul class="nav nav-aux">
 
-    <!-- User -->
-    <li class="element dropdown" dropdown>
-      <a dropdownToggle>
+    <!-- User Nav  -->
+    <li class="element nav-popover nav-popover-bottom">
+      <a [ngClass]="{'highlight-link': userNavOpen}"
+         [popover]="userNav"
+         #userPopover="bs-popover"
+         placement="right"
+         [outsideClick]="true"
+         (onShown)="userNavOpen = true;"
+         (onHidden)="userNavOpen = false;">
         <i class="fa fa-fw fa-user-circle"></i>
-        <span *ngIf="navbarOpen">User Name</span>
+        <span [hidden]="!navbarOpen">User Name</span>
       </a>
 
-      <ul *dropdownMenu
-          class="dropdown-menu dropdown-menu-besides-right dropdown-menu-bottom"
-          role="menu">
+      <ng-template #userNav>
+        <ul class="popover-menu" role="menu">
 
-        <!-- Manage User Account -->
-        <li><a routerLink="/update-user">Profile</a></li>
+          <!-- User Account -->
+          <li>
+            <a routerLink="/user"
+               (click)="userNav.toggle()">Profile</a>
+          </li>
 
-      </ul>
+          <!-- Auditing -->
+          <li>
+            <a routerLink="/audit"
+               (click)="userNav.toggle()">Audit Activity</a>
+          </li>
+
+          <!-- Admin -->
+          <li>
+            <a routerLink="/admin"
+               (click)="userNav.toggle()">Admin</a>
+          </li>
+
+          <!-- User Signout -->
+          <li [hidden]="pki"><a href="/auth/signout">Sign out</a></li>
+
+        </ul>
+      </ng-template>
     </li>
 
-    <!-- Help -->
-    <li class="element dropdown" dropdown>
-      <a dropdownToggle>
+
+    <!-- Help Nav -->
+    <li class="element nav-popover nav-popover-bottom">
+      <a [ngClass]="{'highlight-link': helpNavOpen}"
+         [popover]="helpNav"
+         #userPopover="bs-popover"
+         placement="right"
+         [outsideClick]="true"
+         (onShown)="helpNavOpen = true;"
+         (onHidden)="helpNavOpen = false;">
         <i class="fa fa-fw fa-question-circle"></i>
-        <span *ngIf="navbarOpen">Help</span>
+        <span [hidden]="!navbarOpen">Help</span>
       </a>
 
-      <ul *dropdownMenu
-          class="dropdown-menu dropdown-menu-besides-right dropdown-menu-bottom"
-          role="menu">
+      <ng-template #helpNav>
+        <ul class="popover-menu" role="menu">
 
-        <!-- Help -->
-        <li><a routerLink="/help">Help Docs</a></li>
+          <!-- Help -->
+          <li>
+            <a routerLink="/help"
+               (click)="helpNav.toggle()">Help Docs</a>
+          </li>
 
-        <!-- About -->
-        <li><a routerLink="/about">About</a></li>
+          <!-- About -->
+          <li>
+            <a routerLink="/about"
+               (click)="helpNav.toggle()">About</a>
+          </li>
 
-      </ul>
+        </ul>
+      </ng-template>
     </li>
 
     <!-- Divider -->
-    <li class="element element-divider"></li>
+    <li class="element element-divider element-divider-collapse"></li>
 
     <!-- Collapse/Expand -->
     <li class="element "
         (click)="toggleNavbar()">
       <a>
-        <i class="fa fa-fw collapse-icon"
+        <i class="fa fa-fw"
            [class.fa-angle-double-right]="!navbarOpen"
            [class.fa-angle-double-left]="navbarOpen"></i>
-        <span *ngIf="navbarOpen">Collapse</span>
+        <span [hidden]="!navbarOpen">Collapse</span>
       </a>
     </li>
 
@@ -98,6 +151,7 @@
 
 </div>
 
-<div class="navbar-content">
+<div class="navbar-content"
+     [ngClass]="{'navbar-open': navbarOpen}">
   <ng-content></ng-content>
 </div>

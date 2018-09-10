@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -13,7 +13,7 @@ import { PageContainerComponent } from './page-container/page-container.componen
     CommonModule,
     RouterModule,
 
-    BsDropdownModule,
+    PopoverModule,
     TooltipModule
   ],
   exports: [
