@@ -98,16 +98,22 @@ ul.popover-menu {
   margin: 0;
   padding: 0;
 
+  li {
+    border-bottom: 1px solid $popover-border-color;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &:hover a {
+      background-color: $popover-content-hover-background-color;
+      text-decoration: none;
+    }
+  }
   a {
     @include font-dark($popover-content-font-color);
 
     display: block;
     padding: 10px;
-    border-bottom: 1px solid $popover-border-color;
-
-    &:hover {
-      background-color: $popover-content-hover-background-color;
-      text-decoration: none;
-    }
   }
 }
