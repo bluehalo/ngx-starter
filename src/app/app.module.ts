@@ -11,21 +11,21 @@ import { SiteModule } from './site/site.module';
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
 
-    PopoverModule.forRoot(),
-    TooltipModule.forRoot(),
+		PopoverModule.forRoot(),
+		TooltipModule.forRoot(),
 
-    AppRoutingModule,
+		AppRoutingModule,
 
-    CoreModule,
-    SiteModule
-  ],
-  providers: [],
-  bootstrap: [ AppComponent ]
+		CoreModule,
+		SiteModule
+	],
+	providers: [],
+	bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -1,10 +1,10 @@
 <!-- Site Header -->
 <header class="site-header">
 
-  <div class="site-banner" *ngIf="null != bannerContent">
-    <div class="header-banner"
-         [innerHtml]="bannerContent"></div>
-  </div>
+	<div class="site-banner" *ngIf="null != bannerContent">
+		<div class="header-banner"
+		     [innerHtml]="bannerContent"></div>
+	</div>
 
 </header>
 
@@ -12,13 +12,13 @@
 <!-- Site content -->
 <section [ngClass]="{'header-active footer-active' : null != bannerContent, 'copyright-active': null != copyrightContent}">
 
-  <site-navbar>
+	<site-navbar>
 
-    <section class="site-content">
-      <ng-content></ng-content>
-    </section>
+		<section class="site-content">
+			<ng-content></ng-content>
+		</section>
 
-  </site-navbar>
+	</site-navbar>
 
 </section>
 
@@ -26,14 +26,14 @@
 <!-- Site Footer -->
 <footer class="site-footer">
 
-  <div class="site-banner" *ngIf="null != copyrightContent">
-    <div class="copyright-banner"
-         [innerHtml]="copyrightContent"></div>
-  </div>
+	<div class="site-banner" *ngIf="null != copyrightContent">
+		<div class="copyright-banner"
+		     [innerHtml]="copyrightContent"></div>
+	</div>
 
-  <div class="site-banner" *ngIf="null != bannerContent">
-    <div class="footer-banner"
-         [innerHtml]="bannerContent"></div>
-  </div>
+	<div class="site-banner" *ngIf="null != bannerContent">
+		<div class="footer-banner"
+		     [innerHtml]="bannerContent"></div>
+	</div>
 
 </footer>

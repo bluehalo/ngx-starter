@@ -10,19 +10,19 @@
 // Navbar offsets given the header/footer setup
 // -------------------------------------------------
 :host-context(.header-active) .navbar-left {
-  top: $header-banner-height;
+	top: $header-banner-height;
 }
 
 :host-context(.copyright-active) .navbar-left {
-  bottom: $footer-banner-height;
+	bottom: $footer-banner-height;
 }
 
 :host-context(.footer-active) .navbar-left {
-  bottom: $footer-banner-height;
+	bottom: $footer-banner-height;
 }
 
 :host-context(.copyright-active.footer-active) .navbar-left {
-  bottom: $footer-banner-height + $copyright-banner-height;
+	bottom: $footer-banner-height + $copyright-banner-height;
 }
 
 
@@ -31,151 +31,151 @@
 // A left-docked vertical navigation bar
 // -------------------------------------------------
 .navbar-left {
-  background-color: $nav-background-color;
-  padding: 0;
+	background-color: $nav-background-color;
+	padding: 0;
 
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  top: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	top: 0;
 
-  width: $nav-closed-width;
-  z-index: 10000;
-
-
-  // A normal element
-  .element {
-    position: relative;
-
-    > a {
-      @include font-normal($nav-element-font-size);
-      @include font-light($nav-element-font-color);
-
-      display: block;
-      padding: $nav-element-padding 0;
-      width: $nav-closed-width;
-
-      &:hover {
-        color: $nav-element-hover-color;
-      }
-      &:hover, &.highlight-link {
-        background-color: $nav-element-hover-background-color;
-        cursor: pointer;
-        text-decoration: none;
-      }
-
-      > i.fa {
-        font-size: $nav-element-icon-size;
-        margin-left: $nav-element-icon-margin-left;
-      }
-
-      > span {
-        font-size: $nav-element-font-size;
-        margin-left: 10px;
-      }
-
-      &.active-link {
-        background-color: $nav-element-active-background-color;
-        border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
-
-        > i.fa {
-          margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
-        }
-      }
-    }
-
-    &:first-child {
-      margin-top: $nav-element-padding;
-    }
-  }
+	width: $nav-closed-width;
+	z-index: 10000;
 
 
-  // A divider element
-  .element-divider {
-    border-bottom: $nav-element-font-color solid 1px;
-    margin-left: $nav-element-divider-margin;
-    margin-right: $nav-element-divider-margin;
-    padding: 0;
+	// A normal element
+	.element {
+		position: relative;
 
-    height: 0;
-    width: $nav-closed-width - 2 * $nav-element-divider-margin;
-  }
+		> a {
+			@include font-normal($nav-element-font-size);
+			@include font-light($nav-element-font-color);
 
-  .element-divider-collapse {
-    margin-top: $nav-element-padding;
-  }
+			display: block;
+			padding: $nav-element-padding 0;
+			width: $nav-closed-width;
+
+			&:hover {
+				color: $nav-element-hover-color;
+			}
+			&:hover, &.highlight-link {
+				background-color: $nav-element-hover-background-color;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+			> i.fa {
+				font-size: $nav-element-icon-size;
+				margin-left: $nav-element-icon-margin-left;
+			}
+
+			> span {
+				font-size: $nav-element-font-size;
+				margin-left: 10px;
+			}
+
+			&.active-link {
+				background-color: $nav-element-active-background-color;
+				border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
+
+				> i.fa {
+					margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
+				}
+			}
+		}
+
+		&:first-child {
+			margin-top: $nav-element-padding;
+		}
+	}
 
 
-  // The element that contains the logo
-  .element-logo {
-    padding: 0;
+	// A divider element
+	.element-divider {
+		border-bottom: $nav-element-font-color solid 1px;
+		margin-left: $nav-element-divider-margin;
+		margin-right: $nav-element-divider-margin;
+		padding: 0;
 
-    > a, > a:hover {
-      background-color: $nav-element-logo-color-bg;
-      padding: 0;
+		height: 0;
+		width: $nav-closed-width - 2 * $nav-element-divider-margin;
+	}
 
-      > img {
-        margin: $nav-element-logo-img-margin;
-
-        &.logo {
-          height: auto;
-          width: $nav-closed-width - 2 * $nav-element-logo-img-margin;
-        }
-      }
-    }
-  }
+	.element-divider-collapse {
+		margin-top: $nav-element-padding;
+	}
 
 
-  // Adjustments for when the navbar is open
-  &.navbar-open {
-    width: $nav-open-width;
+	// The element that contains the logo
+	.element-logo {
+		padding: 0;
 
-    .element > a {
-      width: $nav-open-width;
-    }
+		> a, > a:hover {
+			background-color: $nav-element-logo-color-bg;
+			padding: 0;
 
-    .element-divider {
-      width: $nav-open-width - 2 * $nav-element-divider-margin;
-    }
+			> img {
+				margin: $nav-element-logo-img-margin;
 
-    .element-logo > a > img.logo {
-      width: $nav-open-width - 2 * $nav-element-logo-img-margin;
-    }
-  }
+				&.logo {
+					height: auto;
+					width: $nav-closed-width - 2 * $nav-element-logo-img-margin;
+				}
+			}
+		}
+	}
 
-  .nav-logo {
-    left: 0;
-    top: 0;
 
-    .element-logo {
-      margin: 0;
-    }
-  }
+	// Adjustments for when the navbar is open
+	&.navbar-open {
+		width: $nav-open-width;
 
-  // Main nav: The upper area of the navbar where main site nav buttons exist
-  .nav-main {
-    left: 0;
-    top: $nav-element-logo-img-height + $nav-element-logo-img-margin;
-  }
+		.element > a {
+			width: $nav-open-width;
+		}
 
-  // Main nav: The lower area of the navbar where auxilliary nav buttons exist
-  .nav-aux {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+		.element-divider {
+			width: $nav-open-width - 2 * $nav-element-divider-margin;
+		}
 
-    .nav-popover .popover-menu {
-      width: 192px;
-    }
-  }
+		.element-logo > a > img.logo {
+			width: $nav-open-width - 2 * $nav-element-logo-img-margin;
+		}
+	}
+
+	.nav-logo {
+		left: 0;
+		top: 0;
+
+		.element-logo {
+			margin: 0;
+		}
+	}
+
+	// Main nav: The upper area of the navbar where main site nav buttons exist
+	.nav-main {
+		left: 0;
+		top: $nav-element-logo-img-height + $nav-element-logo-img-margin;
+	}
+
+	// Main nav: The lower area of the navbar where auxilliary nav buttons exist
+	.nav-aux {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+
+		.nav-popover .popover-menu {
+			width: 192px;
+		}
+	}
 }
 
 
 // Offset the content by the width of the navbar
 .navbar-content {
-  margin-left: $nav-closed-width;
+	margin-left: $nav-closed-width;
 
-  &.navbar-open {
-    margin-left: $nav-open-width;
-  }
+	&.navbar-open {
+		margin-left: $nav-open-width;
+	}
 }

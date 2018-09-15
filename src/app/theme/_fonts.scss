@@ -10,40 +10,40 @@ $font-line-height: 20px;
 $font-size: 14px;
 
 @mixin font-smoothing($value: antialiased) {
-  @if $value == antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  @else {
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-  }
+	@if $value == antialiased {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	@else {
+		-webkit-font-smoothing: subpixel-antialiased;
+		-moz-osx-font-smoothing: auto;
+	}
 }
 
 @mixin font($family: $font-family, $size: $font-size) {
-  font-family: $family;
-  font-size: $size;
-  font-style: normal;
+	font-family: $family;
+	font-size: $size;
+	font-style: normal;
 }
 
 @mixin font-normal($size: $font-size) {
-  @include font($font-family, $size);
+	@include font($font-family, $size);
 }
 
 @mixin font-medium($size: $font-size) {
-  @include font($font-family-medium, $size);
+	@include font($font-family-medium, $size);
 }
 
 @mixin font-bold($size: $font-size) {
-  @include font($font-family-bold, $size);
+	@include font($font-family-bold, $size);
 }
 
 @mixin font-dark($color: $color-text-black) {
-  color: $color;
-  @include font-smoothing(auto);
+	color: $color;
+	@include font-smoothing(auto);
 }
 
 @mixin font-light($color: $color-text-white) {
-  color: $color;
-  @include font-smoothing(antialiased);
+	color: $color;
+	@include font-smoothing(antialiased);
 }

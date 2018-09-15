@@ -6,17 +6,17 @@ import { ExampleModule } from './example/example.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  imports: [
-    SiteRoutingModule,
+	imports: [
+		SiteRoutingModule,
 
-    ExampleModule
-  ],
-  exports: [
+		ExampleModule
+	],
+	exports: [
 
-  ],
-  declarations: [
-    WelcomeComponent
-  ],
-  providers: []
+	],
+	declarations: [
+		WelcomeComponent
+	],
+	providers: []
 })
 export class SiteModule { }

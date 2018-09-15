@@ -117,9 +117,9 @@ import { RouterModule } from '@angular/router';
 				// 	data: { roles: [] }
 				// }
 			],
-      {
-			  useHash: true
-		  })
+			{
+				useHash: true
+			})
 	],
 	exports: [
 		RouterModule

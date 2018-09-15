@@ -7,17 +7,17 @@ import { AdvancedComponent } from './advanced.component';
 import { ExploreComponent } from './explore.component';
 
 @NgModule({
-  imports: [
-    ExampleRoutingModule
-  ],
-  exports: [
+	imports: [
+		ExampleRoutingModule
+	],
+	exports: [
 
-  ],
-  declarations: [
-    AdvancedComponent,
-    ExploreComponent,
-    SearchComponent
-  ],
-  providers: []
+	],
+	declarations: [
+		AdvancedComponent,
+		ExploreComponent,
+		SearchComponent
+	],
+	providers: []
 })
 export class ExampleModule { }
