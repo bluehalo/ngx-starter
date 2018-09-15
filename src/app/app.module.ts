@@ -6,8 +6,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
 import { SiteModule } from './site/site.module';
-import { SiteStructureModule } from './site/site-structure/site-structure.module';
 
 
 @NgModule({
@@ -22,8 +22,8 @@ import { SiteStructureModule } from './site/site-structure/site-structure.module
 
     AppRoutingModule,
 
-    SiteModule,
-    SiteStructureModule
+    CoreModule,
+    SiteModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]

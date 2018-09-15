@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'navbar',
-  templateUrl: 'navbar.component.html',
-  styleUrls: [ 'navbar.component.scss' ]
+  selector: 'site-navbar',
+  templateUrl: 'site-navbar.component.html',
+  styleUrls: [ 'site-navbar.component.scss' ]
 })
-export class NavbarComponent {
+export class SiteNavbarComponent {
 
   navbarOpenValue = false;
 

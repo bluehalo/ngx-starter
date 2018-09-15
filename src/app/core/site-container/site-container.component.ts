@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'page-container',
-  templateUrl: 'page-container.component.html',
-  styleUrls: [ 'page-container.component.scss' ]
+  selector: 'site-container',
+  templateUrl: 'site-container.component.html',
+  styleUrls: [ 'site-container.component.scss' ]
 })
-export class PageContainerComponent {
+export class SiteContainerComponent {
 
   // TODO: load the stuff from the server
 
