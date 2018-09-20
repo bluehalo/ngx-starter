@@ -1,39 +1,40 @@
-<section class="row">
-	<!-- PKI Authentication Strategy -->
-	<div *ngIf="pkiMode">
-		Loading, please wait...
-	</div>
+<section class="container">
 
-	<!-- Username/Password Authentication Strategy -->
-	<div *ngIf="!pkiMode">
+	<section class="row">
 
-		<h2 class="col-md-12 text-center">Sign In</h2>
+		<!-- PKI Authentication Strategy -->
+		<div class="signin-loading-container" *ngIf="pkiMode">
+			Loading, please wait...
+		</div>
 
-		<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
-			<div class="signin form-horizontal" autocomplete="off">
+		<!-- Username/Password Authentication Strategy -->
+		<div class="signin-container" *ngIf="!pkiMode">
+
+			<h2 class="text-center">Sign In</h2>
+
+			<div class="signin-form form-horizontal" autocomplete="off">
 				<fieldset>
 					<div class="form-group">
 						<label for="username">Username</label>
-						<input autofocus type="text" id="username" name="username" class="form-control" [(ngModel)]="user.credentials.username" (keyup.enter)="signin()" placeholder="Username">
+						<input autofocus type="text" id="username" name="username" class="form-control" [(ngModel)]="username" (keyup.enter)="signin()" placeholder="Username">
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" id="password" name="password" class="form-control" [(ngModel)]="user.credentials.password" (keyup.enter)="signin()" placeholder="Password">
+						<input type="password" id="password" name="password" class="form-control" [(ngModel)]="password" (keyup.enter)="signin()" placeholder="Password">
 					</div>
 					<div class="text-center form-group">
 						<button type="submit" class="btn btn-primary" (click)="signin()">Sign In</button>
-						<button type="button" class="btn btn-secondary btn-spacing-right-aligned" routerLink="/signup">or Sign Up</button>
+						<button type="button" class="btn btn-outline-secondary" routerLink="/signup">or Sign Up</button>
 					</div>
 					<div [hidden]="!error" class="text-center text-danger">
 						<strong>{{error}}</strong>
 					</div>
-					<div class="text-center">
-						<a type="button" class="btn btn-link" routerLink="/password/forgot">Forgot your password?</a>
-					</div>
 				</fieldset>
 			</div>
+
 		</div>
 
-	</div>
+	</section>
+
 
 </section>

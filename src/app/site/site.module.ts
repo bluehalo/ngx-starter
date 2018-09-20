@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 
+import { AuthGuard } from '../core/auth/auth.guard';
 import { CoreModule } from '../core/core.module';
+
 import { SiteRoutingModule } from './site-routing.module';
 import { ExampleModule } from './example/example.module';
-
-
 import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
@@ -20,6 +20,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 	declarations: [
 		WelcomeComponent
 	],
-	providers: []
+	providers: [
+		AuthGuard
+	]
 })
 export class SiteModule { }

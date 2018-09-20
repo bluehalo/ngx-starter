@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { WelcomeComponent } from './welcome/welcome.component';
-import { RouteGuardService } from '../core/auth/route-guard.service';
+import { AuthGuard } from '../core/auth/auth.guard';
 
 @NgModule({
 	imports: [
@@ -14,7 +14,7 @@ import { RouteGuardService } from '../core/auth/route-guard.service';
 			},
 			{
 				path: 'welcome',
-				canActivate: [ RouteGuardService ],
+				canActivate: [ AuthGuard ],
 				component: WelcomeComponent,
 				data: {
 

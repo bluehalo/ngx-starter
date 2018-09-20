@@ -1,42 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
-import { User } from './user.model';
+import { Session } from './session.model';
+
 
 @Injectable()
 export class SessionService {
 
 	// Previous url to store in case we want to redirect there later
-	previousUrl: string;
+	private previousUrl: string;
 
-	user: any = null;
+	// The current session information
+	private session: Session = null;
 
-	constructor(private router: Router, private authService: AuthenticationService) {}
+	constructor(
+		private authService: AuthenticationService,
+		private http: HttpClient,
+		private router: Router,
+	) {}
 
-	getUser(): Observable<User> {
-		if (null == this.user) {
-			return this.authService.getCurrentUser();
-		}
-		else {
-			return of(this.user);
-		}
+	clear() {
+		this.session = null;
 	}
 
+	signin(username: string, password: string) {
+		return this.authService.signin(username, password).pipe(
+			tap((result) => {
+				this.session = result;
+			})
+		);
 
-	isAuthenticated(): boolean {
-		return (null != this.user);
 	}
 
-	requiresEua(): boolean {
-
+	getSession(): Session {
+		return this.session;
 	}
 
-	clearUser() {
-		this.user = null;
+	setPreviousUrl(url: string) {
+		this.previousUrl = url;
 	}
 
 	goToPreviousRoute() {

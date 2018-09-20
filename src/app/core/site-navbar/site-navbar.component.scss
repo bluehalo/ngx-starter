@@ -49,7 +49,7 @@
 
 		> a {
 			@include font-normal($nav-element-font-size);
-			@include font-light($nav-element-font-color);
+			@include font-color-light($nav-element-font-color);
 
 			display: block;
 			padding: $nav-element-padding 0;

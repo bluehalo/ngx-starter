@@ -29,7 +29,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 					case 401:
 
 						// Deauthenticate the global user
-						this.sessionService.user.clearUser();
+						this.sessionService.clear();
 
 						if (type === 'invalid-certificate') {
 							// Redirect to invalid credentials page

@@ -6,11 +6,15 @@ import { RouterModule } from '@angular/router';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { AuthenticationService } from './auth/authentication.service';
+import { AuthGuard } from './auth/auth.guard';
+import { ConfigService} from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
+import { SessionService } from './auth/session.service';
 import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
-import { ConfigService} from './config.service';
+
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -46,8 +50,11 @@ function getConfiguration(configService: ConfigService) {
 		SiteNavbarComponent
 	],
 	providers: [
+		AuthGuard,
+		AuthenticationService,
 		ConfigService,
-		{ provide: APP_INITIALIZER, useFactory: getConfiguration, deps: [ ConfigService ], multi: true }
+		SessionService,
+		{ provide: APP_INITIALIZER, useFactory: getConfiguration, deps: [ ConfigService ], multi: true },
 	]
 })
 export class CoreModule { }

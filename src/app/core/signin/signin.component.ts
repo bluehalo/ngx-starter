@@ -1,39 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import * as _ from 'lodash';
 
+import { Config } from '../config.model';
+import { ConfigService } from '../config.service';
+import { SessionService } from '../auth/session.service';
+
 @Component({
-	templateUrl: 'signin.component.html'
+	templateUrl: 'signin.component.html',
+	styleUrls: [ 'signin.component.scss' ]
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit {
 
 	username: string;
 	password: string;
 	error: string;
 	pkiMode: boolean = false;
 
-	constructor() {}
+	constructor(
+		private configService: ConfigService,
+		private sessionService: SessionService
+	) {}
 
-	signin() {
 
+	ngOnInit() {
+		this.configService.getConfig().subscribe((config: Config) => {
+			this.pkiMode = config.auth === 'proxy-pki';
+		});
 	}
 
-
-	/**
-	 * Validate a pair of passwords
-	 * The server will perform full validation, so for now all we're really doing is
-	 * verifying that the two passwords are the same.
-	 */
-	validatePassword(p1: string, p2: string): any {
-		p1 = (_.isString(p1) && p1.trim().length > 0) ? p1 : undefined;
-		p2 = (_.isString(p2) && p2.trim().length > 0) ? p2 : undefined;
-
-		if (p1 !== p2) {
-			return { valid: false, message: 'Passwords do not match' };
-		}
-		else {
-			return { valid: true };
-		}
+	signin() {
+		this.sessionService.signin(this.username, this.password).subscribe(
+			(result) => {
+				this.sessionService.goToPreviousRoute();
+			},
+			(error) => {
+				this.error = _.get(error, 'error.message', 'Unexpected error signing in.');
+			}
+		);
 	}
 
 }

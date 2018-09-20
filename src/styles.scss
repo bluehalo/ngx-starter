@@ -5,7 +5,7 @@
 
 body {
 	@include font-normal();
-	@include font-dark();
+	@include font-color-dark();
 
 	padding: 0;
 	margin: 0;

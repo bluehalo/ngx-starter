@@ -26,6 +26,10 @@ $font-size: 14px;
 	font-style: normal;
 }
 
+@mixin font-light($size: $font-size) {
+	@include font($font-family-light, $size);
+}
+
 @mixin font-normal($size: $font-size) {
 	@include font($font-family, $size);
 }
@@ -38,12 +42,12 @@ $font-size: 14px;
 	@include font($font-family-bold, $size);
 }
 
-@mixin font-dark($color: $color-text-black) {
+@mixin font-color-dark($color: $color-text-black) {
 	color: $color;
 	@include font-smoothing(auto);
 }
 
-@mixin font-light($color: $color-text-white) {
+@mixin font-color-light($color: $color-text-white) {
 	color: $color;
 	@include font-smoothing(antialiased);
 }

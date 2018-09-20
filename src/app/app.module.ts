@@ -7,10 +7,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthenticationService } from './core/auth/authentication.service';
 import { CoreModule } from './core/core.module';
-import { RouteGuardService } from './core/auth/route-guard.service';
 import { SessionService } from './core/auth/session.service';
+import { SiteModule } from './site/site.module';
 
 
 @NgModule({
@@ -25,9 +24,11 @@ import { SessionService } from './core/auth/session.service';
 		TooltipModule.forRoot(),
 
 		AppRoutingModule,
-		CoreModule
+		CoreModule,
+		SiteModule
 	],
 	providers: [
+		SessionService
 	],
 	bootstrap: [ AppComponent ]
 })

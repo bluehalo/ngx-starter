@@ -4,6 +4,42 @@
 
 
 // -------------------------------------------------
+// Forms
+// -------------------------------------------------
+$form-border-color: $color-border;
+$form-label-font-color: $color-text-dark;
+$form-label-font-size: 14px;
+$form-input-font-color: $color-text-dark;
+$form-input-font-size: 14px;
+$form-input-placeholder-font-color: $color-text-light;
+
+
+.form-group {
+	label {
+		@include font-bold($form-label-font-size);
+		@include font-color-dark($form-label-font-color);
+
+		margin-left: 2px;
+	}
+
+	input, textarea {
+		@include font-medium($form-input-font-size);
+		@include font-color-dark($form-input-font-color);
+
+		height: 2.7em;
+		background: #fff none;
+		border: 1px solid $form-border-color;
+		border-radius: $border-radius;
+
+		&::placeholder {
+			@include font-light($form-input-font-size);
+			@include font-color-dark($form-input-placeholder-font-color);
+		}
+	}
+}
+
+
+// -------------------------------------------------
 // Popovers
 // -------------------------------------------------
 $tooltip-background-color: $color-bg-dark-transparent;
@@ -14,7 +50,7 @@ $tooltip-font-size: 14px;
 .tooltip {
 	.tooltip-inner {
 		@include font-normal($tooltip-font-size);
-		@include font-light($tooltip-font-color);
+		@include font-color-light($tooltip-font-color);
 
 		border-radius: $tooltip-border-radius;
 		background-color: $tooltip-background-color;
@@ -34,7 +70,7 @@ $tooltip-font-size: 14px;
 // -------------------------------------------------
 // Popovers
 // -------------------------------------------------
-$popover-border-color: $color-border-light;
+$popover-border-color: $color-border;
 $popover-border-radius: $border-radius;
 $popover-content-background-color: $color-bg-white;
 $popover-content-font-color: $color-text-black;
@@ -111,7 +147,7 @@ ul.popover-menu {
 		}
 	}
 	a {
-		@include font-dark($popover-content-font-color);
+		@include font-color-dark($popover-content-font-color);
 
 		display: block;
 		padding: 10px;
