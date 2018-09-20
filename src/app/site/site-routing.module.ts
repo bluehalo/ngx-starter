@@ -15,10 +15,7 @@ import { AuthGuard } from '../core/auth/auth.guard';
 			{
 				path: 'welcome',
 				canActivate: [ AuthGuard ],
-				component: WelcomeComponent,
-				data: {
-
-				}
+				component: WelcomeComponent
 			}
 		])
 	],

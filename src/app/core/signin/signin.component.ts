@@ -12,10 +12,12 @@ import { SessionService } from '../auth/session.service';
 })
 export class SigninComponent implements OnInit {
 
+	loaded = false;
+	pkiMode = false;
+
 	username: string;
 	password: string;
 	error: string;
-	pkiMode: boolean = false;
 
 	constructor(
 		private configService: ConfigService,
@@ -26,6 +28,12 @@ export class SigninComponent implements OnInit {
 	ngOnInit() {
 		this.configService.getConfig().subscribe((config: Config) => {
 			this.pkiMode = config.auth === 'proxy-pki';
+			this.loaded = true;
+
+			if (this.pkiMode) {
+				// Automatically sign in
+				this.signin();
+			}
 		});
 	}
 

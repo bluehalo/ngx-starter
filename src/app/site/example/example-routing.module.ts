@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdvancedComponent } from './advanced.component';
+import { AuthGuard } from '../../core/auth/auth.guard';
 import { ExploreComponent } from './explore.component';
 import { SearchComponent } from './search.component';
+
 
 @NgModule({
 	imports: [
 		RouterModule.forChild([
 			{
 				path: 'advanced',
-				component: AdvancedComponent
+				component: AdvancedComponent,
+				canActivate: [ AuthGuard ]
 			},
 			{
 				path: 'explore',

@@ -1,0 +1,47 @@
+@import '../../theme/colors';
+@import '../../theme/fonts';
+
+$loading-spinner-border: 5px;
+$loading-spinner-color: $color-text-dark;
+$loading-spinner-size: 42px;
+$loading-spinner-message-font-size: 24px;
+
+
+.loading-container {
+
+	.loading-spinner {
+		display: inline-block;
+		float: left;
+		width: $loading-spinner-size;
+		height: $loading-spinner-size;
+
+		&:after {
+			content: " ";
+			display: block;
+			width: $loading-spinner-size;
+			height: $loading-spinner-size;
+			margin: 1px;
+			border-radius: 50%;
+			border: $loading-spinner-border solid $loading-spinner-color;
+			border-color: $loading-spinner-color transparent $loading-spinner-color transparent;
+			animation: loading-spinner 1.2s linear infinite;
+		}
+
+	}
+	.loading-message {
+		@include font-normal($loading-spinner-message-font-size);
+		@include font-color-dark($loading-spinner-color);
+
+		line-height: $loading-spinner-size;
+		margin-left: $loading-spinner-size + 16px;
+	}
+}
+
+@keyframes loading-spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

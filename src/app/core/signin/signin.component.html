@@ -1,10 +1,10 @@
 <section class="container">
 
-	<section class="row">
+	<section class="row" *ngIf="loaded">
 
 		<!-- PKI Authentication Strategy -->
 		<div class="signin-loading-container" *ngIf="pkiMode">
-			Loading, please wait...
+			<loading-spinner message="Signing In..."></loading-spinner>
 		</div>
 
 		<!-- Username/Password Authentication Strategy -->

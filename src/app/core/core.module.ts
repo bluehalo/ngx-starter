@@ -10,6 +10,7 @@ import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
 import { ConfigService} from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
+import { LoadingSpinnerModule } from '../common/loading-spinner.module';
 import { SessionService } from './auth/session.service';
 import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
@@ -37,7 +38,8 @@ function getConfiguration(configService: ConfigService) {
 		PopoverModule,
 		TooltipModule,
 
-		CoreRoutingModule
+		CoreRoutingModule,
+		LoadingSpinnerModule,
 	],
 	exports: [
 		SigninComponent,

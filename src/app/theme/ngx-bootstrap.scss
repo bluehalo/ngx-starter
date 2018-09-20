@@ -1,155 +1,16 @@
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
 @import './colors';
 @import './fonts';
 @import './styles';
 
+/**
+ * ngx-bootstrap.scss
 
-// -------------------------------------------------
-// Forms
-// -------------------------------------------------
-$form-border-color: $color-border;
-$form-label-font-color: $color-text-dark;
-$form-label-font-size: 14px;
-$form-input-font-color: $color-text-dark;
-$form-input-font-size: 14px;
-$form-input-placeholder-font-color: $color-text-light;
+ * This file is globally included in the Angular application.
+ * All bootstrap theme styles should be included in this file.
+ */
 
-
-.form-group {
-	label {
-		@include font-bold($form-label-font-size);
-		@include font-color-dark($form-label-font-color);
-
-		margin-left: 2px;
-	}
-
-	input, textarea {
-		@include font-medium($form-input-font-size);
-		@include font-color-dark($form-input-font-color);
-
-		height: 2.7em;
-		background: #fff none;
-		border: 1px solid $form-border-color;
-		border-radius: $border-radius;
-
-		&::placeholder {
-			@include font-light($form-input-font-size);
-			@include font-color-dark($form-input-placeholder-font-color);
-		}
-	}
-}
-
-
-// -------------------------------------------------
-// Popovers
-// -------------------------------------------------
-$tooltip-background-color: $color-bg-dark-transparent;
-$tooltip-border-radius: $border-radius;
-$tooltip-font-color: $color-text-white;
-$tooltip-font-size: 14px;
-
-.tooltip {
-	.tooltip-inner {
-		@include font-normal($tooltip-font-size);
-		@include font-color-light($tooltip-font-color);
-
-		border-radius: $tooltip-border-radius;
-		background-color: $tooltip-background-color;
-
-		padding: 8px 16px;
-		word-break: normal;
-		z-index: 20000;
-	}
-
-	.tooltip-arrow {
-		visibility: hidden;
-	}
-}
-
-
-
-// -------------------------------------------------
-// Popovers
-// -------------------------------------------------
-$popover-border-color: $color-border;
-$popover-border-radius: $border-radius;
-$popover-content-background-color: $color-bg-white;
-$popover-content-font-color: $color-text-black;
-$popover-content-hover-background-color: $color-bg-light;
-
-.popover {
-	border-color: $popover-border-color;
-	border-radius: $popover-border-radius;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-
-	.popover-content {
-		background-color: $popover-content-background-color;
-		padding: 0;
-	}
-}
-
-.nav-popover {
-
-	.popover {
-		min-height: 22px;
-
-		.popover-arrow {
-			top: auto !important;
-			z-index: -1;
-		}
-	}
-
-	&.nav-popover-bottom {
-		.popover {
-			top: auto !important;
-			bottom: 0;
-
-			.popover-arrow {
-				bottom: 11px;
-			}
-		}
-	}
-
-	&.nav-popover-right {
-		.popover {
-			margin-left: 12px;
-
-			.popover-arrow {
-				border-right-color: $popover-border-color;
-
-				&.arrow::before {
-					box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-					left: 4px;
-					transform: rotate(45deg);
-					width: 14px;
-				}
-			}
-		}
-	}
-}
-
-
-ul.popover-menu {
-	list-style: none;
-
-	margin: 0;
-	padding: 0;
-
-	li {
-		border-bottom: 1px solid $popover-border-color;
-
-		&:last-of-type {
-			border-bottom: none;
-		}
-
-		&:hover a {
-			background-color: $popover-content-hover-background-color;
-			text-decoration: none;
-		}
-	}
-	a {
-		@include font-color-dark($popover-content-font-color);
-
-		display: block;
-		padding: 10px;
-	}
-}
+@import './ngx-bootstrap/forms';
+@import './ngx-bootstrap/tooltip';
+@import './ngx-bootstrap/popover';

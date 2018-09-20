@@ -1,0 +1,26 @@
+@import '../colors';
+@import '../fonts';
+@import '../styles';
+
+$tooltip-background-color: $color-bg-dark-transparent;
+$tooltip-border-radius: $border-radius;
+$tooltip-font-color: $color-text-white;
+$tooltip-font-size: 14px;
+
+.tooltip {
+	.tooltip-inner {
+		@include font-normal($tooltip-font-size);
+		@include font-color-light($tooltip-font-color);
+
+		border-radius: $tooltip-border-radius;
+		background-color: $tooltip-background-color;
+
+		padding: 8px 16px;
+		word-break: normal;
+		z-index: 20000;
+	}
+
+	.tooltip-arrow {
+		visibility: hidden;
+	}
+}

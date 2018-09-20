@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 
 import { ExampleRoutingModule } from './example-routing.module';
 
+import { AuthGuard } from '../../core/auth/auth.guard';
 import { SearchComponent } from './search.component';
 import { AdvancedComponent } from './advanced.component';
 import { ExploreComponent } from './explore.component';
+
 
 @NgModule({
 	imports: [
@@ -18,6 +20,8 @@ import { ExploreComponent } from './explore.component';
 		ExploreComponent,
 		SearchComponent
 	],
-	providers: []
+	providers: [
+		AuthGuard
+	]
 })
 export class ExampleModule { }
