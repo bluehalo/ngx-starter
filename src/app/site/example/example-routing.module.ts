@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AdvancedComponent } from './advanced.component';
 import { AuthGuard } from '../../core/auth/auth.guard';
 import { ExploreComponent } from './explore.component';
 import { SearchComponent } from './search.component';
@@ -11,17 +10,14 @@ import { SearchComponent } from './search.component';
 	imports: [
 		RouterModule.forChild([
 			{
-				path: 'advanced',
-				component: AdvancedComponent,
-				canActivate: [ AuthGuard ]
-			},
-			{
 				path: 'explore',
-				component: ExploreComponent
+				component: ExploreComponent,
+				canActivate: [ AuthGuard ]
 			},
 			{
 				path: 'search',
 				component: SearchComponent,
+				canActivate: [ AuthGuard ]
 			}
 		])
 	],

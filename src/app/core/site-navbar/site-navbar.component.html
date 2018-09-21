@@ -42,16 +42,6 @@
 				<span [hidden]="!navbarOpen">Search</span>
 			</a>
 		</li>
-		<li class="element">
-			<a tooltip="Advanced"
-			   placement="right"
-			   [isDisabled]="navbarOpen"
-			   routerLinkActive="active-link"
-			   routerLink="/advanced">
-				<i class="fa fa-fw fa-code"></i>
-				<span [hidden]="!navbarOpen">Advanced</span>
-			</a>
-		</li>
 
 	</ul>
 
@@ -74,24 +64,6 @@
 
 			<ng-template #userNav>
 				<ul class="popover-menu" role="menu">
-
-					<!-- User Account -->
-					<li>
-						<a routerLink="/user"
-						   (click)="userNav.toggle()">Profile</a>
-					</li>
-
-					<!-- Auditing -->
-					<li>
-						<a routerLink="/audit"
-						   (click)="userNav.toggle()">Audit Activity</a>
-					</li>
-
-					<!-- Admin -->
-					<li>
-						<a routerLink="/admin"
-						   (click)="userNav.toggle()">Admin</a>
-					</li>
 
 					<!-- User Signout -->
 					<li [hidden]="pki"><a href="/auth/signout">Sign out</a></li>
