@@ -34,7 +34,10 @@ export class SiteNavbarComponent {
 	constructor(private sessionService: SessionService) {}
 
 	ngOnInit() {
-		this.session = this.sessionService.getSession();
+		this.sessionService.getSession()
+			.subscribe((session) => {
+				this.session = session;
+			});
 	}
 
 	toggleNavbar() {

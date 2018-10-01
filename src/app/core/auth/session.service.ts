@@ -3,6 +3,7 @@ import {NavigationExtras, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import * as _ from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs/index';
 import { tap } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
@@ -16,7 +17,7 @@ export class SessionService {
 	private previousUrl: string;
 
 	// The current session information
-	private session: Session = null;
+	sessionSubject = new BehaviorSubject<Session>(null);
 
 	constructor(
 		private authService: AuthenticationService,
@@ -24,21 +25,16 @@ export class SessionService {
 		private router: Router,
 	) {}
 
-	clear() {
-		this.session = null;
-	}
-
 	signin(username: string, password: string) {
 		return this.authService.signin(username, password).pipe(
 			tap((result) => {
-				this.session = result;
+				this.sessionSubject.next(result);
 			})
 		);
-
 	}
 
-	getSession(): Session {
-		return this.session;
+	getSession(): Observable<Session> {
+		return this.sessionSubject;
 	}
 
 	setPreviousUrl(url: string) {
