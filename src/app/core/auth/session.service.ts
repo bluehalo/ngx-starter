@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import * as _ from 'lodash';
-import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
@@ -47,10 +46,10 @@ export class SessionService {
 	}
 
 	goToPreviousRoute() {
-		this.goToRoute(this.previousUrl);
+		this.goToRoute(this.previousUrl, { replaceUrl: true });
 	}
 
-	private goToRoute(url: string) {
+	private goToRoute(url: string, extras?: NavigationExtras) {
 
 		// Redirect the user to a URL
 		if (null == url) {
@@ -60,13 +59,14 @@ export class SessionService {
 
 		let queryParams = this.parseQueryParams(url);
 		if (!_.isEmpty(queryParams)) {
-			// Redirect the user, preserving query params
-			this.router.navigate([ url ], { queryParams: queryParams });
+			if (null == extras) {
+				extras = {};
+			}
+			extras = _.assign(extras, { queryParams: queryParams });
 		}
-		else {
-			// Redirect the user
-			this.router.navigate([ url ]);
-		}
+
+		// Redirect the user
+		this.router.navigate([ url ], extras);
 	}
 
 	private parseQueryParams(url: string): any {

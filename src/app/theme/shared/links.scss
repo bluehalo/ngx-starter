@@ -1,0 +1,19 @@
+@import '../colors';
+
+$link-color-light: $color5;
+$link-color-dark: $color1;
+
+.link {
+
+	&.link-light {
+		color: $link-color-light;
+	}
+	&.link-dark {
+		color: $link-color-dark;
+	}
+
+	&:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}

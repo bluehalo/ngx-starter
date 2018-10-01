@@ -1,0 +1,21 @@
+@import '../fonts';
+@import '../colors';
+
+
+.btn {
+
+	@include font-normal();
+
+	&.btn-primary {
+		@include font-color-light();
+	}
+
+	&.btn-outline-primary {
+		@include font-color-dark();
+	}
+
+	&.btn-large {
+		@include font-normal(18px);
+	}
+
+}

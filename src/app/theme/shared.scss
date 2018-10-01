@@ -1,0 +1,17 @@
+@import './colors';
+@import './fonts';
+@import './styles';
+
+/**
+ * shared.scss
+
+ * This file is globally included in the Angular application.
+ * All shared theme styles should be included in this file.
+ */
+
+// site-specific
+
+
+// general purpose
+@import './shared/links';
+

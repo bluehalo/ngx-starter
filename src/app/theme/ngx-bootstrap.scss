@@ -11,6 +11,9 @@
  * All bootstrap theme styles should be included in this file.
  */
 
+@import './ngx-bootstrap/buttons';
+@import './ngx-bootstrap/cards';
+@import './ngx-bootstrap/dropdowns';
 @import './ngx-bootstrap/forms';
-@import './ngx-bootstrap/tooltip';
-@import './ngx-bootstrap/popover';
+@import './ngx-bootstrap/popovers';
+@import './ngx-bootstrap/tooltips';

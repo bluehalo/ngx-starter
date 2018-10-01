@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+import * as _ from 'lodash';
+
+import { Config } from '../config.model';
+import { ConfigService } from '../config.service';
+
 @Component({
 	selector: 'site-container',
 	templateUrl: 'site-container.component.html',
@@ -7,9 +12,14 @@ import { Component } from '@angular/core';
 })
 export class SiteContainerComponent {
 
-	// TODO: load the stuff from the server
+	bannerHtml = undefined;
+	copyrightHtml = undefined;
 
-	bannerContent = 'DEFAULT SETTINGS';
-	copyrightContent = '&copy; 2018 - Asymmetrik, Ltd.';
+	constructor(private configService: ConfigService) {
+		configService.getConfig().subscribe((config: Config) => {
+			this.bannerHtml = _.get(config, 'banner.html', undefined);
+			this.copyrightHtml = _.get(config, 'copyright.html', undefined);
+		});
+	}
 
 }

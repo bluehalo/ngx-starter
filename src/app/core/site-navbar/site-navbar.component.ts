@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { Session } from '../auth/session.model';
+import { SessionService } from '../auth/session.service';
+
 
 @Component({
 	selector: 'site-navbar',
@@ -8,6 +12,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class SiteNavbarComponent {
 
 	navbarOpenValue = false;
+	session: Session = null;
 
 	@Output()
 	navbarOpenChange = new EventEmitter<boolean>();
@@ -24,6 +29,12 @@ export class SiteNavbarComponent {
 		if (null != window) {
 			window.dispatchEvent(new Event('resize', { bubbles: true }));
 		}
+	}
+
+	constructor(private sessionService: SessionService) {}
+
+	ngOnInit() {
+		this.session = this.sessionService.getSession();
 	}
 
 	toggleNavbar() {

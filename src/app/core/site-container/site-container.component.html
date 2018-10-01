@@ -1,16 +1,16 @@
 <!-- Site Header -->
 <header class="site-header">
 
-	<div class="site-banner" *ngIf="null != bannerContent">
+	<div class="site-banner" *ngIf="null != bannerHtml">
 		<div class="header-banner"
-		     [innerHtml]="bannerContent"></div>
+		     [innerHtml]="bannerHtml"></div>
 	</div>
 
 </header>
 
 
 <!-- Site content -->
-<section [ngClass]="{'header-active footer-active' : null != bannerContent, 'copyright-active': null != copyrightContent}">
+<section [ngClass]="{'header-active footer-active' : null != bannerHtml, 'copyright-active': null != copyrightHtml}">
 
 	<site-navbar>
 
@@ -26,14 +26,14 @@
 <!-- Site Footer -->
 <footer class="site-footer">
 
-	<div class="site-banner" *ngIf="null != copyrightContent">
+	<div class="site-banner" *ngIf="null != copyrightHtml">
 		<div class="copyright-banner"
-		     [innerHtml]="copyrightContent"></div>
+		     [innerHtml]="copyrightHtml"></div>
 	</div>
 
-	<div class="site-banner" *ngIf="null != bannerContent">
+	<div class="site-banner" *ngIf="null != bannerHtml">
 		<div class="footer-banner"
-		     [innerHtml]="bannerContent"></div>
+		     [innerHtml]="bannerHtml"></div>
 	</div>
 
 </footer>

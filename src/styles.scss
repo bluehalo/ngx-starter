@@ -1,7 +1,12 @@
 @import './app/theme/fonts';
-@import './app/theme/ngx-bootstrap';
 
 /* You can add global styles to this file, and also import other style files */
+
+// Import the main ngx-bootstrap style file
+@import './app/theme/ngx-bootstrap';
+
+// Import the shared site theme style file
+@import './app/theme/shared';
 
 body {
 	@include font-normal();

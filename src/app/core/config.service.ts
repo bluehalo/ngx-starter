@@ -1,27 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { AsyncSubject } from 'rxjs';
 
 import { Config } from './config.model';
 
 @Injectable()
 export class ConfigService {
 
-	config: Config = null;
+	configSubject = new AsyncSubject <Config>();
 
-	constructor(private http: HttpClient) {}
-
-	public getConfig(): Observable<Config> {
-		if (null == this.config) {
-			return this.http.get('api/config').pipe(
-				tap((config: any) => this.config = config)
-			);
-		}
-		else {
-			return of(this.config);
-		}
+	constructor(private http: HttpClient) {
+		this.reloadConfig();
 	}
 
+	/**
+	 * Get the shared config observable
+	 * @returns {BehaviorSubject<Config>}
+	 */
+	public getConfig(): AsyncSubject<Config> {
+		return this.configSubject;
+	}
+
+	/**
+	 * Force a call to the server to get the latest config. There really isn't
+	 * a need to ever invoke this externally. Config shouldn't change.
+	 */
+	public reloadConfig() {
+		this.http.get<Config>('api/config')
+			.subscribe((config) => {
+				this.configSubject.next(config);
+				this.configSubject.complete();
+			});
+	}
 }

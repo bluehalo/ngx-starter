@@ -1,0 +1,38 @@
+@import '../colors';
+@import '../fonts';
+@import '../styles';
+
+$dropdown-border-color: $color-border;
+$dropdown-border-radius: $border-radius;
+$dropdown-background-color: $color-bg-white;
+$dropdown-element-font-color: $color-text-black;
+$dropdown-element-hover-background-color: $color-bg-light;
+
+
+ul.dropdown-menu {
+	@include font-normal();
+	@include font-color-dark($dropdown-element-font-color);
+
+	background-color: $dropdown-background-color;
+
+	border-color: $dropdown-border-color;
+	border-radius: $dropdown-border-radius;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+
+	padding: 0;
+	margin: 0;
+
+	li > a.dropdown-item {
+		border-bottom: 1px solid $dropdown-border-color;
+		padding: 10px 24px;
+
+		&last-of-type {
+			border-bottom: none;
+		}
+
+		&:hover {
+			background-color: $dropdown-element-hover-background-color;
+			cursor: pointer;
+		}
+	}
+}
