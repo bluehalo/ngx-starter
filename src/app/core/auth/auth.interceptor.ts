@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
-import { EMPTY as OBSERVABLE_EMPTY, Observable, throwError as ObservableThrowError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
@@ -68,10 +68,10 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 					if (!_.endsWith(err.url, 'user/me')) {
 						this.router.navigate(['/signin']);
 					}
-					return OBSERVABLE_EMPTY;
+					return EMPTY;
 				}
 				else {
-					return ObservableThrowError(err);
+					return throwError(err);
 				}
 
 			})

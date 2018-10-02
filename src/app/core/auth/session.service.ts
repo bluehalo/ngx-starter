@@ -33,6 +33,10 @@ export class SessionService {
 		);
 	}
 
+	clear() {
+		this.sessionSubject.next(null);
+	}
+
 	getSession(): Observable<Session> {
 		return this.sessionSubject;
 	}

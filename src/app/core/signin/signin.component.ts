@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import * as _ from 'lodash';
 
@@ -10,7 +10,7 @@ import { SessionService } from '../auth/session.service';
 	templateUrl: 'signin.component.html',
 	styleUrls: [ 'signin.component.scss' ]
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnDestroy, OnInit {
 
 	loaded = false;
 	pkiMode = false;
@@ -48,4 +48,7 @@ export class SigninComponent implements OnInit {
 		);
 	}
 
+	ngOnDestroy() {
+
+	}
 }
