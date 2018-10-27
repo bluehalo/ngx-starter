@@ -272,13 +272,6 @@ $palette-blue: (
 		darker-contrast: mat-contrast($base-palette, $darker),
 		darkest-contrast: mat-contrast($base-palette, $darkest)
 	));
-  
-	// For each hue in the palette, add a "-contrast" color to the map.
-	@each $hue, $color in $base-palette {
-		$result: map_merge($result, (
-			'#{$hue}-contrast': mat-contrast($base-palette, $hue)
-		));
-	}
 
 	@return $result;
 }
