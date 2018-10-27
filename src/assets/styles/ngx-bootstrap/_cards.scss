@@ -1,9 +1,4 @@
-@import '../colors';
-@import '../fonts';
-@import '../styles';
-
-
-$card-border-color: $color-border;
+$card-border-color: map-get($color-background, 'darker');
 $card-border-radius: $border-radius;
 
 .card {
