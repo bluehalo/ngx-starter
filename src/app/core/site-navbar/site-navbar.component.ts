@@ -12,6 +12,10 @@ import { SessionService } from '../auth/session.service';
 export class SiteNavbarComponent {
 
 	navbarOpenValue = false;
+
+	helpNavOpen = false;
+	userNavOpen = false;
+
 	session: Session = null;
 
 	@Output()
