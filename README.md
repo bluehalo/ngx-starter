@@ -27,20 +27,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Notes
 
-### FF issue with Prod Mode
-https://github.com/angular/angular-cli/issues/9340
-Will potentially be fixed in Angular cli 7.x
-
-Added explicit references
-```
-    "uglify-es": "3.2.2",
-    "uglifyjs-webpack-plugin": "1.1.5",
-```
-
-And, added resolutions section
-```
-  "resolutions": {
-    "uglify-es": "3.2.2",
-    "uglifyjs-webpack-plugin": "1.1.5"
-  }
-```
