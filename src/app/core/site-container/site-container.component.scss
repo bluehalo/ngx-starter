@@ -1,4 +1,4 @@
-@import '../../theme/colors';
+@import '../../../styles/colors';
 @import './shared';
 
 header.site-header {
@@ -17,20 +17,20 @@ footer.site-footer {
 }
 
 .copyright-banner {
-	background-color: $color-bg-copyright;
-	color: $color-text-copyright;
+	background-color: map-get($color-background, 'default');
+	color: map-get($color-background, 'default-contrast');
 	height: $copyright-banner-height;
 }
 
 .footer-banner {
-	background-color: $color-bg-footer;
-	color: $color-text-footer;
+	background-color: map-get($color-background, 'darkest');
+	color: map-get($color-background, 'darkest-contrast');
 	height: $footer-banner-height;
 }
 
 .header-banner {
-	background-color: $color-bg-header;
-	color: $color-text-header;
+	background-color: map-get($color-background, 'darkest');
+	color: map-get($color-background, 'darkest-contrast');
 	height: $header-banner-height;
 }
 

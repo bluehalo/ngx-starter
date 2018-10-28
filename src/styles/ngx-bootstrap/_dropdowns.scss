@@ -1,12 +1,13 @@
+@import '../globals';
 @import '../colors';
-@import '../fonts';
-@import '../styles';
 
-$dropdown-border-color: $color-border;
+@import '../typography';
+
+$dropdown-border-color: map-get($color-background, 'darker');
 $dropdown-border-radius: $border-radius;
-$dropdown-background-color: $color-bg-white;
-$dropdown-element-font-color: $color-text-black;
-$dropdown-element-hover-background-color: $color-bg-light;
+$dropdown-background-color: map-get($color-background, 'lightest');
+$dropdown-element-font-color: map-get($color-background, 'lightest-contrast');
+$dropdown-element-hover-background-color: map-get($color-background, 'lighter');
 
 
 ul.dropdown-menu {

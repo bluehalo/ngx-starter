@@ -1,0 +1,16 @@
+@import './palettes';
+
+//==================================
+// Theme Colors
+//==================================
+$color-primary: mat-palette($palette-primary);
+$color-accent: mat-palette($palette-teal, 500, 300, A400);
+$color-background: mat-palette($palette-gray, 200, 50, A100, 800, 900);
+
+//==================================
+// Status Colors
+//==================================
+$color-success: mat-palette($palette-green);
+$color-warning: mat-palette($palette-yellow);
+$color-info: mat-palette($palette-blue);
+$color-error: mat-palette($palette-red);

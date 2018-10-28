@@ -1,12 +1,13 @@
+@import '../globals';
 @import '../colors';
-@import '../fonts';
-@import '../styles';
 
-$popover-border-color: $color-border;
+@import '../typography';
+
+$popover-border-color: map-get($color-background, 'default');
 $popover-border-radius: $border-radius;
-$popover-content-background-color: $color-bg-white;
-$popover-content-font-color: $color-text-black;
-$popover-content-hover-background-color: $color-bg-light;
+$popover-content-background-color: map-get($color-background, 'lightest');
+$popover-content-font-color: map-get($color-background, 'lightest-contrast');
+$popover-content-hover-background-color: map-get($color-background, 'lighter');
 
 .popover {
 	border-color: $popover-border-color;
