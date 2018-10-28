@@ -31,6 +31,9 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [ "src/styles" ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -80,6 +83,9 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [ "src/styles" ]
+            },
             "scripts": [],
             "assets": [
               "src/favicon.ico",

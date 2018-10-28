@@ -1,8 +1,8 @@
-@import '../../theme/colors';
-@import '../../theme/fonts';
+@import 'colors';
+@import 'typography';
 
 $loading-spinner-border: 5px;
-$loading-spinner-color: $color-text-dark;
+$loading-spinner-color: map-get($color-primary, 'darker');
 $loading-spinner-size: 42px;
 $loading-spinner-message-font-size: 24px;
 

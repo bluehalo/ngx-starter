@@ -1,0 +1,277 @@
+$color-text-black: #000;
+$color-text-white: #fff;
+
+//==================================
+// Custom Palettes
+// Generator: http://mcg.mbitson.com/
+//==================================
+$palette-primary: (
+	50: #e4e4e5,
+	100: #babbbe,
+	200: #8d8e92,
+	300: #5f6066,
+	400: #3c3e46,
+	500: #1a1c25,
+	600: #171921,
+	700: #13141b,
+	800: #0f1116,
+	900: #08090d,
+	A100: #528cff,
+	A200: #1f6aff,
+	A400: #004eeb,
+	A700: #0046d2,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-white,
+		400: $color-text-white,
+		500: $color-text-white,
+		600: $color-text-white,
+		700: $color-text-white,
+		800: $color-text-white,
+		900: $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-white,
+		A400: $color-text-white,
+		A700: $color-text-white,
+	)
+);
+
+//==================================
+// Default Palettes
+// Generator: http://mcg.mbitson.com/
+//==================================
+$palette-gray: (
+	50: #fefefe,
+	100: #f5f5f5,
+	200: #eeeeee,
+	300: #e0e0e0,
+	400: #bdbdbd,
+	500: #9e9e9e,
+	600: #757575,
+	700: #616161,
+	800: #424242,
+	900: #212121,
+	A100: #ffffff,
+	A200: #eeeeee,
+	A400: #bdbdbd,
+	A700: #616161,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-black,
+		500: $color-text-black,
+		600: $color-text-white,
+		700: $color-text-white,
+		800: $color-text-white,
+		900: $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-white,
+	)
+);
+
+
+$palette-red: (
+	50: #f7e3e9,
+	100: #ebb8c8,
+	200: #dd89a3,
+	300: #cf597e,
+	400: #c53662,
+	500: #bb1246,
+	600: #b5103f,
+	700: #ac0d37,
+	800: #a40a2f,
+	900: #960520,
+	A100: #ffc2ca,
+	A200: #ff8f9e,
+	A400: #ff5c71,
+	A700: #ff425b,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-white,
+		500: $color-text-white,
+		600: $color-text-white,
+		700: $color-text-white,
+		800: $color-text-white,
+		900: $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-white
+	)
+);
+
+$palette-yellow: (
+	50: #fff8e1,
+	100: #ffecb3,
+	200: #ffe082,
+	300: #ffd54f,
+	400: #ffca28,
+	500: #ffc107,
+	600: #ffb300,
+	700: #ffa000,
+	800: #ff8f00,
+	900: #ff6f00,
+	A100: #ffe57f,
+	A200: #ffd740,
+	A400: #ffc400,
+	A700: #ffab00,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-black,
+		500: $color-text-black,
+		600: $color-text-black,
+		700: $color-text-black,
+		800: $color-text-black,
+		900: $color-text-black,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-black,
+	)
+);
+
+
+$palette-green: (
+	50: #f1f8e9,
+	100: #dcedc8,
+	200: #c5e1a5,
+	300: #aed581,
+	400: #9ccc65,
+	500: #8bc34a,
+	600: #7cb342,
+	700: #689f38,
+	800: #558b2f,
+	900: #33691e,
+	A100: #ccff90,
+	A200: #b2ff59,
+	A400: #76ff03,
+	A700: #64dd17,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-black,
+		500: $color-text-black,
+		600: $color-text-black,
+		700: $color-text-white,
+		800: $color-text-white,
+		900: $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-black,
+	)
+);
+
+$palette-teal: (
+	50: #e4f8f9,
+	100: #bbefef,
+	200: #8ee4e4,
+	300: #61d9d9,
+	400: #1dc8c9,
+	500: #45a29e,
+	600: #3e9a96,
+	700: #36908c,
+	800: #2e8682,
+	900: #1f7570,
+	A100: #b3fffa,
+	A200: #80fff7,
+	A400: #4dfff4,
+	A700: #33fff3,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-black,
+		500: $color-text-black,
+		600: $color-text-white,
+		700: $color-text-white,
+		800: $color-text-white,
+		90 : $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-black
+	)
+);
+
+
+$palette-blue: (
+	50: #e1f5fe,
+	100: #b3e5fc,
+	200: #81d4fa,
+	300: #4fc3f7,
+	400: #29b6f6,
+	500: #03a9f4,
+	600: #039be5,
+	700: #0288d1,
+	800: #0277bd,
+	900: #01579b,
+	A100: #80d8ff,
+	A200: #40c4ff,
+	A400: #00b0ff,
+	A700: #0091ea,
+	contrast: (
+		50: $color-text-black,
+		100: $color-text-black,
+		200: $color-text-black,
+		300: $color-text-black,
+		400: $color-text-black,
+		500: $color-text-white,
+		600: $color-text-white,
+		700: $color-text-white,
+		800: $color-text-white,
+		900: $color-text-white,
+		A100: $color-text-black,
+		A200: $color-text-black,
+		A400: $color-text-black,
+		A700: $color-text-white,
+	)
+);
+
+//==================================
+// Color Helper Methods
+//==================================
+// For a given hue in a palette, return the contrast color from the map of contrast palettes.
+// @param $color-map
+// @param $hue
+@function mat-contrast($palette, $hue) {
+	@return map-get(map-get($palette, contrast), $hue);
+}
+
+// Creates a map of hues to colors for a theme. This is used to define a theme palette in terms
+// of the Material Design hues.
+// @param $color-map
+// @param $primary
+// @param $lighter
+@function mat-palette($base-palette, $default: 500, $lighter: 100, $lightest: 50, $darker: 700, $darkest: 900) {
+	$result: map_merge($base-palette, (
+		default: map-get($base-palette, $default),
+		lighter: map-get($base-palette, $lighter),
+		lightest: map-get($base-palette, $lightest),
+		darker: map-get($base-palette, $darker),
+		darkest: map-get($base-palette, $darkest),
+	
+		default-contrast: mat-contrast($base-palette, $default),
+		lighter-contrast: mat-contrast($base-palette, $lighter),
+		lightest-contrast: mat-contrast($base-palette, $lightest),
+		darker-contrast: mat-contrast($base-palette, $darker),
+		darkest-contrast: mat-contrast($base-palette, $darkest)
+	));
+
+	@return $result;
+}

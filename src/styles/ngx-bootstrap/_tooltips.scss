@@ -1,10 +1,6 @@
-@import '../colors';
-@import '../fonts';
-@import '../styles';
-
-$tooltip-background-color: $color-bg-dark-transparent;
+$tooltip-background-color: fade-out(map-get($color-background, 'darkest'), .4);
 $tooltip-border-radius: $border-radius;
-$tooltip-font-color: $color-text-white;
+$tooltip-font-color: map-get($color-background, 'darkest-contrast');
 $tooltip-font-size: 14px;
 
 .tooltip {

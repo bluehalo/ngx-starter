@@ -1,13 +1,9 @@
-@import '../colors';
-@import '../fonts';
-@import '../styles';
-
-$form-border-color: $color-border;
-$form-label-font-color: $color-text-dark;
+$form-border-color: map-get($color-background, 'darker');
+$form-label-font-color: map-get($color-primary, 'darker');
 $form-label-font-size: 14px;
-$form-input-font-color: $color-text-dark;
+$form-input-font-color: map-get($color-primary, 'darker');
 $form-input-font-size: 14px;
-$form-input-placeholder-font-color: $color-text-light;
+$form-input-placeholder-font-color: map-get($color-primary, 'lighter');
 
 
 .form-group {
