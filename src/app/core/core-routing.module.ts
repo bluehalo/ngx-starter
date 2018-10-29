@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
+import { AccessComponent } from './access.component';
 import { SigninComponent } from './signin/signin.component';
 
 @NgModule({
@@ -10,6 +11,10 @@ import { SigninComponent } from './signin/signin.component';
 			{
 				path: 'about',
 				component: AboutComponent
+			},
+			{
+				path: 'access',
+				component: AccessComponent
 			},
 			{
 				path: 'signin',

@@ -7,8 +7,10 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AboutComponent } from './about.component';
+import { AccessComponent } from './access.component';
 import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { ConfigService} from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
@@ -18,7 +20,7 @@ import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 
 export function getConfiguration(configService: ConfigService) {
@@ -48,6 +50,7 @@ export function getConfiguration(configService: ConfigService) {
 	],
 	declarations: [
 		AboutComponent,
+		AccessComponent,
 		SigninComponent,
 		SiteContainerComponent,
 		SiteNavbarComponent
@@ -59,6 +62,7 @@ export function getConfiguration(configService: ConfigService) {
 		SessionService,
 		PageTitleService,
 		{ provide: APP_INITIALIZER, useFactory: getConfiguration, deps: [ ConfigService ], multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 	]
 })
 export class CoreModule {
