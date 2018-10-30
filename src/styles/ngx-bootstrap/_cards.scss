@@ -1,3 +1,6 @@
+@import '../globals';
+@import '../colors';
+
 $card-border-color: map-get($color-background, 'darker');
 $card-border-radius: $border-radius;
 

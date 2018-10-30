@@ -1,3 +1,8 @@
+@import '../globals';
+@import '../colors';
+
+@import '../typography';
+
 $dropdown-border-color: map-get($color-background, 'darker');
 $dropdown-border-radius: $border-radius;
 $dropdown-background-color: map-get($color-background, 'lightest');

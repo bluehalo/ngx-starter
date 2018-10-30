@@ -25,7 +25,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
-		configService.getConfig().toPromise().catch((error) => {
+		return configService.getConfig().toPromise().catch((error) => {
 			return { error };
 		});
 	};

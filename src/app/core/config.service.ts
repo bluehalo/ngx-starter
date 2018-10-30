@@ -32,8 +32,8 @@ export class ConfigService {
 	public reloadConfig() {
 		const request = new HttpRequest<Config>('GET', 'api/config', {});
 
-		this.http.handle(request)
-			.subscribe((httpEvent: HttpEvent<Config>) => {
+		this.http.handle(request).subscribe(
+			(httpEvent: HttpEvent<Config>) => {
 
 				if (httpEvent instanceof HttpResponse) {
 					let newConfig = null;
@@ -46,7 +46,10 @@ export class ConfigService {
 					this.configSubject.next(newConfig);
 					this.configSubject.complete();
 				}
-
+			},
+			() => {
+				this.configSubject.next(null);
+				this.configSubject.complete();
 			});
 	}
 }

@@ -1,3 +1,9 @@
+@import '../globals';
+@import '../colors';
+
+@import '../typography';
+
+
 $tooltip-background-color: fade-out(map-get($color-background, 'darkest'), .4);
 $tooltip-border-radius: $border-radius;
 $tooltip-font-color: map-get($color-background, 'darkest-contrast');
