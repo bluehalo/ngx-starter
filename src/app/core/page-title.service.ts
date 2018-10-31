@@ -24,7 +24,7 @@ export class PageTitleService {
 			let appTitle = _.get(config, 'app.title', null);
 
 			this.router.events.pipe(
-				filter(event => event instanceof NavigationEnd),
+				filter((event) => event instanceof NavigationEnd),
 				map(() => this.activatedRoute),
 				map((route) => {
 					// Get to the leaf route
