@@ -28,9 +28,14 @@ export class ConfigService {
 	 */
 	public reloadConfig() {
 		this.http.get<Config>('api/config')
-			.subscribe((config) => {
-				this.configSubject.next(config);
-				this.configSubject.complete();
-			});
+			.subscribe(
+				(config) => {
+					this.configSubject.next(config);
+					this.configSubject.complete();
+				},
+				() => {
+					this.configSubject.next(null);
+					this.configSubject.complete();
+				});
 	}
 }

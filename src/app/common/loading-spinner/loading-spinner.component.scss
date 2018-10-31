@@ -1,5 +1,5 @@
-@import 'colors';
-@import 'typography';
+@import '../../../styles/colors';
+@import '../../../styles/typography';
 
 $loading-spinner-border: 5px;
 $loading-spinner-color: map-get($color-primary, 'darker');

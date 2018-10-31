@@ -1,16 +1,16 @@
-@import 'globals';
-@import 'colors';
-@import 'mixins';
+@import 'styles/globals';
+@import 'styles/colors';
+@import 'styles/mixins';
 
-@import 'display';
-@import 'icons';
-@import 'links';
-@import 'typography';
+@import 'styles/display';
+@import 'styles/icons';
+@import 'styles/links';
+@import 'styles/typography';
 
 /* You can add global styles to this file, and also import other style files */
 
 // Import the main ngx-bootstrap style file
-@import 'ngx-bootstrap';
+@import 'styles/ngx-bootstrap';
 
 body {
 	@include font-normal();
