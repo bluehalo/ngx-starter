@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Asymmetrik/ngx-starter.svg?branch=develop)](https://travis-ci.org/Asymmetrik/ngx-starter)
+
 # ngx-starter
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 It provides a foundation on which to build custom applications that share common features and functionality.
