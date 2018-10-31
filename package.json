@@ -8,6 +8,7 @@
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -46,6 +47,7 @@
     "karma-coverage-istanbul-reporter": "2.0",
     "karma-jasmine": "1.1",
     "karma-jasmine-html-reporter": "0.2",
+    "karma-junit-reporter": "1.2",
     "nodemon": "1.18",
     "protractor": "5.4",
     "ts-node": "7.0",
