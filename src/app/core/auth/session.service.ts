@@ -13,11 +13,11 @@ import { Session } from './session.model';
 @Injectable()
 export class SessionService {
 
-	// Previous url to store in case we want to redirect there later
-	private previousUrl: string;
-
 	// The current session information
 	sessionSubject = new BehaviorSubject<Session>(null);
+
+	// Previous url to store in case we want to redirect there later
+	private previousUrl: string;
 
 	constructor(
 		private authService: AuthenticationService,

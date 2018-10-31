@@ -1,8 +1,9 @@
 {
 	"extends": "tslint:recommended",
 	"rules": {
-		"ban-types": false,
-		"interface-over-type-literal": false,
+    "ban-types": false,
+    "interface-name" : [true, "never-prefix"],
+    "interface-over-type-literal": false,
 		"indent": [ true, "tabs" ],
 		"trailing-comma": false,
 		"quotemark": [ true, "single" ],
