@@ -1,0 +1,37 @@
+@import '../../../styles/colors';
+
+$section-selected-color: #33495f;
+
+.help-content {
+	& > .row {
+		padding: 10px 20px;
+	}
+
+	.help-main {
+		.card {
+			padding: 10px 20px;
+		}
+	}
+
+	.help-menu {
+		li {
+			margin: 10px;
+			width: 100%;
+		}
+	}
+
+	.lead {
+		font-size: 18px;
+	}
+
+	.topic-selected {
+		background-color: #eee;
+		color: $section-selected-color;
+		font-weight: bold;
+		text-decoration: none;
+
+		&:hover {
+			color: $section-selected-color;
+		}
+	}
+}
