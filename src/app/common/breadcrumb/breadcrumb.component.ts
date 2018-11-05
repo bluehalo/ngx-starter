@@ -8,7 +8,8 @@ import { BreadcrumbService, Breadcrumb } from './breadcrumb.service';
 
 @Component({
 	selector: 'breadcrumb',
-	templateUrl: 'breadcrumb.component.html'
+	templateUrl: 'breadcrumb.component.html',
+	styleUrls: [ 'breadcrumb.component.scss' ]
 })
 export class BreadcrumbComponent {
 
