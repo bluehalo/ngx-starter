@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import { first } from 'rxjs/operators';
 
-import { ConfigService } from '../../../core/config.service';
+import { ConfigService } from '../../config.service';
 
 @Component({
 	selector: 'external-links',

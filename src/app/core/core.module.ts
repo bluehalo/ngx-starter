@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { HelpModule } from './help/help.module';
+
 import { AboutComponent } from './about.component';
 import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
@@ -40,6 +42,7 @@ export function getConfiguration(configService: ConfigService) {
 		PopoverModule,
 		TooltipModule,
 
+		HelpModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
 	],

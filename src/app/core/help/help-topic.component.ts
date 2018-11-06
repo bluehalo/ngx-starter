@@ -3,7 +3,7 @@ import {
 	ViewContainerRef
 } from '@angular/core';
 import * as _ from 'lodash';
-import { StringUtils } from '../string-utils.service';
+import { StringUtils } from '../../common/string-utils.service';
 
 export class HelpTopics {
 	static topics: any = {};
