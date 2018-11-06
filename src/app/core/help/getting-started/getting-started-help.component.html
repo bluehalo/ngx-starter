@@ -1,0 +1,27 @@
+<p class="lead">Before you start, it’s important to understand the basic functionality and behavior of the application.</p>
+
+<p>
+	Welcome to {{ appName }}! Here you’ll find documentation about the application as well as pointers to other available resources. Navigate topic areas in the Help using the links in the left column.
+	<!-- Will want to add a link to our help site and our email (which should both be configurable) -->
+</p>
+
+<div class="callout callout-info">
+	<h4>Browser Recommendation</h4>
+	<pre><i class="fa fa-3x fa-firefox"> Firefox</i>    <i class="fa fa-3x fa-chrome"> Chrome</i></pre>
+	<p>
+		{{ appName }} is designed to work in all modern browsers, and is optimized for Firefox and Chrome.
+	</p>
+</div>
+
+<div class="callout callout-info">
+	<h4>Looking for help?</h4>
+	<p>Help is also located throughout the app. Whenever you see this icon: <a class="no-href btn-icon inline-help-label"><i class="fa fa-question-circle help-icon"></i></a>, you can click to receive a tooltip.</p>
+	<p>
+		You can get back to this Help at any time by clicking on the question mark icon <i class="fa fa-question-circle help-icon"></i> in the left-hand navigation of the site.
+	</p>
+</div>
+
+<div *ngIf="externalLinksEnabled">
+	<h2>External Resources</h2>
+	<external-links></external-links>
+</div>
