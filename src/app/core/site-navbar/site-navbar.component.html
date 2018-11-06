@@ -68,6 +68,9 @@
 			<ng-template #userNav>
 				<ul class="popover-menu" role="menu">
 
+					<!-- Admin Page (only admins should see this) -->
+					<li><a routerLink="/admin">ADMIN</a></li>
+
 					<!-- User Signout -->
 					<li [hidden]="pki"><a href="/auth/signout">Sign out</a></li>
 
@@ -93,9 +96,9 @@
 			<ng-template #adminNav>
 				<ul class="popover-menu" role="menu">
 					<li *ngFor="let adminItem of adminMenuItems">
-						<a [routerLink]="[adminItem.link, { clearCachedFilter: true }]"
+						<a [routerLink]="['admin/' + adminItem.id, { clearCachedFilter: true }]"
 							(click)="adminNavPopover.hide()">
-							{{ adminItem.name }}
+							{{ adminItem.title }}
 						</a>
 					</li>
 				</ul>
@@ -124,6 +127,9 @@
 						<a routerLink="/help"
 						   (click)="helpNavPopover.hide()">Help Docs</a>
 					</li>
+
+					<!-- Feedback -->
+					<li><a (click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
 
 					<!-- About -->
 					<li>

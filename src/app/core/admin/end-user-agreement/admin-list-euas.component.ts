@@ -10,6 +10,7 @@ import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';
+import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	selector: 'admin-list-euas',
@@ -156,3 +157,4 @@ export class AdminListEuasComponent implements OnInit {
 	}
 
 }
+AdminTopics.registerTopic('euas', 0);

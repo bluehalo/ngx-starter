@@ -1,0 +1,15 @@
+<alert *ngFor="let alert of alertService.getAlerts(); let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >
+	<table>
+		<tbody>
+		<tr>
+			<td class="align-middle">
+				<system-alert-icon [icon]="alert.type"></system-alert-icon>
+			</td>
+			<td class="align-middle">
+				<div class="system-alert-message">{{ alert.msg }}</div>
+				<div class="system-alert-subtext" *ngIf="alert.subtext">{{ alert.subtext }}</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</alert>

@@ -13,6 +13,7 @@ import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 import { Pager, PagingOptions, SortDirection,
 	SortDisplayOption, SortControls, TableSortOptions } from '../../../common/paging.module';
+import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'
@@ -249,3 +250,4 @@ export class AdminListUsersComponent {
 	}
 
 }
+AdminTopics.registerTopic('users', 0);

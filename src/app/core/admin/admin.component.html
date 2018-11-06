@@ -1,39 +1,11 @@
 <section class="admin-container">
 
 	<ul class="nav nav-tabs">
-		<li class="nav-item" role="presentation">
+		<li *ngFor="let topic of helpTopics" class="nav-item" role="presentation">
 			<a class="nav-link"
-				[routerLink]="['/admin/users', {clearCachedFilter: true}]"
-				routerLinkActive="active">
-				Users
-			</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link"
-				[routerLink]="['/admin/cacheEntries', {clearCachedFilter: true}]"
-				routerLinkActive="active">
-				Cache Entries
-			</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link"
-				[routerLink]="['/admin/euas', {clearCachedFilter: true}]"
-				routerLinkActive="active">
-				End User Agreement
-			</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link"
-				[routerLink]="['/admin/messages', {clearCachedFilter: true}]"
-				routerLinkActive="active">
-				Messages
-			</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link"
-				[routerLink]="['/admin/feedback', {clearCachedFilter: true}]"
-				routerLinkActive="active">
-				Feedback
+			   [routerLink]="['/admin/' + topic.id, {clearCachedFilter: true}]"
+			   routerLinkActive="active">
+				{{ topic.title }}
 			</a>
 		</li>
 	</ul>
@@ -41,5 +13,4 @@
 	<div class="admin-section-container">
 		<router-outlet></router-outlet>
 	</div>
-
 </section>
