@@ -4,7 +4,13 @@
 
 		<!-- PKI Authentication Strategy -->
 		<div class="signin-loading-container" *ngIf="pkiMode">
-			<loading-spinner message="Signing In..."></loading-spinner>
+			<loading-spinner [hidden]="error"
+				message="Signing In...">
+			</loading-spinner>
+			<div [hidden]="!error" class="text-center text-danger">
+				<p>Unable to authenticate:</p>
+				<strong>{{error}}</strong>
+			</div>
 		</div>
 
 		<!-- Username/Password Authentication Strategy -->
