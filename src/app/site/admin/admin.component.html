@@ -1,13 +1,45 @@
-<section>
+<section class="admin-container">
 
 	<ul class="nav nav-tabs">
-		<li role="presentation"><a [routerLink]="['/admin/users', {clearCachedFilter: true}]" routerLinkActive="active">Users</a></li>
-		<li role="presentation"><a [routerLink]="['/admin/cacheEntries', {clearCachedFilter: true}]" routerLinkActive="active">Cache Entries</a></li>
-		<li role="presentation"><a [routerLink]="['/admin/euas', {clearCachedFilter: true}]" routerLinkActive="active">End User Agreement</a></li>
-		<li role="presentation"><a [routerLink]="['/admin/messages', {clearCachedFilter: true}]" routerLinkActive="active">Messages</a></li>
-		<li role="presentation"><a [routerLink]="['/admin/feedback', {clearCachedFilter: true}]" routerLinkActive="active">Feedback</a></li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link"
+				[routerLink]="['/admin/users', {clearCachedFilter: true}]"
+				routerLinkActive="active">
+				Users
+			</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link"
+				[routerLink]="['/admin/cacheEntries', {clearCachedFilter: true}]"
+				routerLinkActive="active">
+				Cache Entries
+			</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link"
+				[routerLink]="['/admin/euas', {clearCachedFilter: true}]"
+				routerLinkActive="active">
+				End User Agreement
+			</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link"
+				[routerLink]="['/admin/messages', {clearCachedFilter: true}]"
+				routerLinkActive="active">
+				Messages
+			</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link"
+				[routerLink]="['/admin/feedback', {clearCachedFilter: true}]"
+				routerLinkActive="active">
+				Feedback
+			</a>
+		</li>
 	</ul>
 
-	<router-outlet></router-outlet>
+	<div class="admin-section-container">
+		<router-outlet></router-outlet>
+	</div>
 
 </section>

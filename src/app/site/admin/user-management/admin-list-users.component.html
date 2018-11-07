@@ -11,25 +11,42 @@
 	<!-- Search Input -->
 	<div class="row">
 		<div class="col-md-10">
-			<div class="input-group">
-				<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">
-				<span class="input-group-btn">
-					<button class="btn btn-sm btn-outline-secondary" type="button" (click)="applySearch()">
+			<div class="input-group input-group-sm">
+				<input placeholder="Enter a search..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
 						<i class="fa fa-search"></i>
 					</button>
-				</span>
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Quick Filters -->
 	<div class="controls paging-sort padding-top-10">
-		<span class="column-label">Quick Filters:</span>
-		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.bypassAC" (ngModelChange)="applySearch()"/>Bypass AC</label>
-		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.editorRole" (ngModelChange)="applySearch()"/>Editor</label>
-		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.auditorRole" (ngModelChange)="applySearch()"/>Auditor</label>
-		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.adminRole" (ngModelChange)="applySearch()"/>Admin</label>
-		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.pending" (ngModelChange)="applySearch()"/>Pending</label>
+		<div class="form-check form-check-inline">
+			<label class="form-check-label">Quick Filters:</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="filters.bypassAC" (ngModelChange)="applySearch()">
+			<label class="form-check-label" (click)="filters.bypassAC = !filters.bypassAC; applySearch()">Bypass AC</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="filters.editorRole" (ngModelChange)="applySearch()"/>
+			<label class="form-check-label">Editor</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="filters.auditorRole" (ngModelChange)="applySearch()"/>
+			<label class="form-check-label">Auditor</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="filters.adminRole" (ngModelChange)="applySearch()"/>
+			<label class="form-check-label">Admin</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" [(ngModel)]="filters.pending" (ngModelChange)="applySearch()"/>
+			<label class="form-check-label">Pending</label>
+		</div>
 	</div>
 
 	<div class="row">
@@ -38,10 +55,13 @@
 			<!-- Column Selector -->
 			<div class="controls paging-sort" [hidden]="users.length === 0">
 				<span class="column-label">Columns (
-					<a type="button" [ngClass]="{selected: columnMode==='default'}" class="no-href btn-link" (click)="quickColumnSelect('default')">Default</a> /
-					<a type="button" [ngClass]="{selected: columnMode==='all'}" class="no-href btn-link" (click)="quickColumnSelect('all')">All</a> ):
+					<button class="btn btn-sm btn-link" type="button" [ngClass]="{selected: columnMode==='default'}" (click)="quickColumnSelect('default')">Default</button> /
+					<button class="btn btn-sm btn-link" type="button" [ngClass]="{selected: columnMode==='all'}" (click)="quickColumnSelect('all')">All</button> ):
 				</span>
-				<label class="column-option" *ngFor="let key of columnKeys"><input type="checkbox" [(ngModel)]="columns[key].show" (ngModelChange)="checkColumnConfiguration()"/>{{columns[key].title}}</label>
+				<div class="form-check form-check-inline" *ngFor="let key of columnKeys">
+					<input class="form-check-input" type="checkbox" [(ngModel)]="columns[key].show" (ngModelChange)="checkColumnConfiguration()">
+					<label class="form-check-label" (click)="columns[key].show = !columns[key].show; checkColumnConfiguration()">{{columns[key].title}}</label>
+				</div>
 			</div>
 
 		</div>
