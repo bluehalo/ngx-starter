@@ -76,12 +76,12 @@
 		(onSortChange)="setSort($event)"
 	>
 
-		<template named-template="table-header">
+		<ng-template named-template="table-header">
 			<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>
 			<th>&nbsp;</th>
-		</template>
+		</ng-template>
 
-		<template named-template="table-row" let-user let-i="index">
+		<ng-template named-template="table-row" let-user let-i="index">
 			<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
 			<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
 			<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
@@ -123,12 +123,12 @@
 					<button title="Delete" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteUser(user)"><span class="fa fa-trash-o"></span></button>
 				</div>
 			</td>
-		</template>
+		</ng-template>
 
-		<template named-template='empty-table'>
+		<ng-template named-template='empty-table'>
 			<h3>
 				<small>No Users matched your search</small>
 			</h3>
-		</template>
+		</ng-template>
 	</pageable-table>
 </section>

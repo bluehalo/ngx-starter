@@ -4,14 +4,11 @@ import { Subject } from 'rxjs';
 
 import { TooltipModule } from 'ngx-bootstrap';
 
-import { CapitalizePipe } from './../capitalize.pipe';
-import { KeysPipe } from './../keys.pipe';
-import { AsyTemplate } from './../asy-template.directive';
-import { AsyTransclude } from './../asy-transclude.directive';
-import { SortDisplayOption } from './../result-utils.class';
-import { PagingOptions, PageChange, Pager } from './../pager.component';
+import { NamedTemplate } from '../../named-template.directive';
+import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
 
 import { PageableTable, TableSortOptions } from './pageable-table.component';
+import { SortDirection, SortDisplayOption } from '../sorting.model';
 
 @Component({
 	template:
@@ -25,19 +22,19 @@ import { PageableTable, TableSortOptions } from './pageable-table.component';
 		(onRefresh)="refreshed$.next($event)"
 	>
 
-		<template asy-template="table-header">
+		<ng-template named-template="table-header">
 			{{ headerContent }}
-		</template>
+		</ng-template>
 
-		<template asy-template="table-row" let-item let-index="index">
+		<ng-template named-template="table-row" let-item let-index="index">
 			{{ rowContent }}
 			{{ item }}
 			{{ index }}
-		</template>
+		</ng-template>
 
-		<template asy-template="empty-table">
+		<ng-template named-template="empty-table">
 			{{ emptyTableContent }}
-		</template>
+		</ng-template>
 
 	</pageable-table>
 `
@@ -71,11 +68,8 @@ describe('PageableTable', () => {
 			declarations: [
 				PageableTableTestHost,
 				PageableTable,
-				AsyTransclude,
-				AsyTemplate,
+				NamedTemplate,
 				Pager,
-				KeysPipe,
-				CapitalizePipe,
 			]
 		});
 
