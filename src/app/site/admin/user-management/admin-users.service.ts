@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
 import { PagingOptions } from '../../../common/paging/pager/pager.component';
-import { User } from '../../auth/user.model';
+import { User } from '../../../core/core.module';
 
 @Injectable()
 /**

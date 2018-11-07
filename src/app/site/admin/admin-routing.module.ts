@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 import { AdminComponent } from './admin.component';
-import { AuthGuard } from '../auth/auth.guard';
+import { AuthGuard } from '../../core/core.module';
 
 @NgModule({
 	imports: [
