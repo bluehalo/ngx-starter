@@ -1,8 +1,24 @@
-import { Component, Input, Output, SimpleChange, EventEmitter } from '@angular/core';
+import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges } from '@angular/core';
 
 import * as _ from 'lodash';
 
 import { SortDirection } from '../sorting.model';
+
+export interface PagingResults {
+	pageNumber: number;
+	pageSize: number;
+	totalPages: number;
+	totalSize: number;
+	elements: any[];
+}
+
+export const NULL_PAGING_RESULTS: PagingResults = {
+	pageNumber: 0,
+	pageSize: 0,
+	totalPages: 0,
+	totalSize: 0,
+	elements: []
+};
 
 export type PageChange = {
 	pageNumber: number;
@@ -16,7 +32,7 @@ export class PagingOptions {
 		public pageSize: number = 50,
 		public totalPages: number = 0,
 		public totalSize: number = 0,
-		public sortField?: string,
+		public sortField?: string | string[],
 		public sortDir?: SortDirection
 	) {}
 
@@ -57,7 +73,7 @@ export class PagingOptions {
 	selector: 'asy-pager',
 	templateUrl: './pager.component.html'
 })
-export class Pager {
+export class Pager implements OnInit, OnChanges {
 
 	@Input() pageNumber: number = 0;
 	@Input() pageSize: number = 0;
@@ -92,7 +108,7 @@ export class Pager {
 	}
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-		if (changes.hasOwnProperty('pageSize') || changes.hasOwnProperty('totalSize')) {
+		if (changes.hasOwnProperty('pageNumber') || changes.hasOwnProperty('pageSize') || changes.hasOwnProperty('totalSize')) {
 			this.calculateTotalPages();
 			this.format();
 		}

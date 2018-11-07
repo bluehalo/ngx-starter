@@ -1,5 +1,5 @@
 <!-- Sorting/Paging Controls -->
-<div *ngIf="totalSize > 0 || (totalSize == null && (currentSize > 0) || pageNumber != 0)">
+<div *ngIf="totalSize > 0 || (totalSize == null && (currentSize > 0) || pageNumber != 0); else invalidPage">
 
 	<span *ngIf="showSortingControls" style="display: inline-block">
 		<a type="button" class="no-href btn-link" tooltip="Newest on Top" [hidden]="sortdir==='DESC'" (click)="sort('DESC')"><i class="fa fa-sort-amount-desc"></i></a>
@@ -41,3 +41,5 @@
 	</span>
 
 </div>
+
+<ng-template #invalidPage>- of -</ng-template>

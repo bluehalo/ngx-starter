@@ -1,38 +1,39 @@
-import { Component, EventEmitter, Input, Output, DebugElement } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
 
+import { Subject } from 'rxjs/Subject';
 import { TooltipModule } from 'ngx-bootstrap';
 
-import { NamedTemplate } from '../../named-template.directive';
-import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
-
-import { PageableTable, TableSortOptions } from './pageable-table.component';
-import { SortDirection, SortDisplayOption } from '../sorting.model';
+import { CapitalizePipe } from '../capitalize.pipe';
+import { KeysPipe } from '../keys.pipe';
+import { AsyTemplate } from '../util/asy-template.directive';
+import { AsyTransclude } from '../util/asy-transclude.directive';
+import { PagingOptions, PageChange, PagerComponent } from '../pager.component';
+import { PageableTableComponent } from './pageable-table.component';
+import { SortControls } from './sort-controls.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	template:
-`
+		`
 	<pageable-table [items]="items"
 		[pagingOptions]="pagingOptions"
-		[sortOptions]="sortOptions"
 		[refreshable]="refreshable"
 		(onPageChange)="pageChanged$.next($event)"
-		(onSortChange)="sortChanged$.next($event)"
 		(onRefresh)="refreshed$.next($event)"
 	>
 
-		<ng-template named-template="table-header">
+		<ng-template asy-template="table-header">
 			{{ headerContent }}
 		</ng-template>
 
-		<ng-template named-template="table-row" let-item let-index="index">
+		<ng-template asy-template="table-row" let-item let-index="index">
 			{{ rowContent }}
 			{{ item }}
 			{{ index }}
 		</ng-template>
 
-		<ng-template named-template="empty-table">
+		<ng-template asy-template="empty-table">
 			{{ emptyTableContent }}
 		</ng-template>
 
@@ -42,7 +43,6 @@ import { SortDirection, SortDisplayOption } from '../sorting.model';
 export class PageableTableTestHost {
 	@Input() items: Iterable<any>;
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
-	@Input() sortOptions: TableSortOptions;
 	@Input() refreshable: boolean = false;
 
 	@Input() headerContent: string;
@@ -50,11 +50,10 @@ export class PageableTableTestHost {
 	@Input() emptyTableContent: string;
 
 	pageChanged$ = new Subject<PageChange>();
-	sortChanged$ = new Subject<SortDisplayOption>();
 	refreshed$ = new Subject();
 }
 
-describe('PageableTable', () => {
+describe('PageableTableComponent', () => {
 
 	let fixture: ComponentFixture<PageableTableTestHost>;
 	let testHost: PageableTableTestHost;
@@ -63,13 +62,18 @@ describe('PageableTable', () => {
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
 			imports: [
-				TooltipModule.forRoot()
+				TooltipModule.forRoot(),
+				FormsModule
 			],
 			declarations: [
 				PageableTableTestHost,
-				PageableTable,
-				NamedTemplate,
-				Pager,
+				PageableTableComponent,
+				AsyTransclude,
+				AsyTemplate,
+				PagerComponent,
+				KeysPipe,
+				CapitalizePipe,
+				SortControls
 			]
 		});
 

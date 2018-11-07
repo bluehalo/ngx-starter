@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { PageableTableModule, TableSortOptions } from './paging/pageable-table.module';
+import { PageableTableModule } from './paging/pageable-table.module';
+import { SortControls } from './paging/sort-controls/sort-controls.component';
 import { Pager, PagingOptions } from './paging/pager/pager.component';
 import { SortDirection, SortDisplayOption } from './paging/sorting.model';
 
@@ -14,6 +15,7 @@ import { SortDirection, SortDisplayOption } from './paging/sorting.model';
 		Pager,
 		PagingOptions,
 
+		SortControls,
 		SortDirection,
 		SortDisplayOption
 	],
@@ -22,6 +24,7 @@ import { SortDirection, SortDisplayOption } from './paging/sorting.model';
 		Pager,
 		PagingOptions,
 
+		SortControls,
 		SortDirection,
 		SortDisplayOption
 	],
@@ -29,6 +32,7 @@ import { SortDirection, SortDisplayOption } from './paging/sorting.model';
 })
 export class PagingModule { }
 
-export { PageableTableModule, TableSortOptions } from './paging/pageable-table.module';
+export { PageableTableModule } from './paging/pageable-table.module';
 export { Pager, PagingOptions } from './paging/pager/pager.component';
 export { SortDirection, SortDisplayOption } from './paging/sorting.model';
+export { SortControls, TableSortOptions } from './paging/sort-controls/sort-controls.component';

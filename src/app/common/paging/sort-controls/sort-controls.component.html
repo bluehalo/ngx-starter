@@ -1,0 +1,16 @@
+<div class="paging-sort">
+	<span *ngIf="showHeader" class="control-label">Sort By:</span>
+	<span *ngFor="let option of sortOptions | keys; let i = index">
+		<span *ngIf="i > 0"> / </span>
+		<a type="button" class="no-href"
+		   [class.selected]="selectedKey === option.value.sortField"
+		   (click)="updateSort(option.key)">{{ option.value.label }}
+			<span *ngIf="showDirectionControl && selectedKey === option.value.sortField" style="display: inline-block">
+				<i *ngIf="selectedDir==='DESC'"
+				   class="fa fa-sort-amount-desc"></i>
+				<i *ngIf="selectedDir==='ASC'"
+				   class="fa fa-sort-amount-asc"></i>
+			</span>
+		</a>
+	</span>
+</div>

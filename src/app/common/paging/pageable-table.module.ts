@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { PageableTable, TableSortOptions } from './pageable-table/pageable-table.component';
+import { PageableTable } from './pageable-table/pageable-table.component';
 
 @NgModule({
 	imports: [],
@@ -12,5 +12,3 @@ import { PageableTable, TableSortOptions } from './pageable-table/pageable-table
 	]
 })
 export class PageableTableModule {}
-
-export { TableSortOptions } from './pageable-table/pageable-table.component';
