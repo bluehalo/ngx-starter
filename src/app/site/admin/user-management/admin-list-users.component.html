@@ -3,9 +3,9 @@
 	<h3 class="page-header">
 		Users
 		<small>Administer User Accounts</small>
-		<a routerLink="/admin/user" type="button" class="btn btn-default btn-sm pull-right">
+		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary pull-right">
 			<i class="fa fa-user-plus"></i> Create User
-		</a>
+		</button>
 	</h3>
 
 	<!-- Search Input -->
@@ -14,7 +14,7 @@
 			<div class="input-group">
 				<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">
 				<span class="input-group-btn">
-					<button class="btn btn-default btn-sm" type="button" (click)="applySearch()">
+					<button class="btn btn-sm btn-outline-secondary" type="button" (click)="applySearch()">
 						<i class="fa fa-search"></i>
 					</button>
 				</span>
@@ -50,8 +50,8 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="btn-group pull-right dropdown" dropdown>
-				<button type="button" class="btn btn-default btn-sm" (click)="exportCurrentView()"><i class="fa fa-download"></i> Export </button>
-				<button type="button" class="btn btn-default btn-sm dropdown-toggle" dropdownToggle>
+				<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><i class="fa fa-download"></i> Export </button>
+				<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" dropdownToggle>
 					<span class="caret"></span>
 				</button>
 				<ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -103,7 +103,7 @@
 			<td [hidden]="!columns.roles.show" style="min-width: 310px;max-width: 310px;">
 				<div class="btn-group">
 					<button *ngFor="let role of possibleRoles"
-							type="button" class="btn btn-sm" disabled
+							type="button" class="btn btn-sm btn-outline-secondary" disabled
 							[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
 							[attr.title]="role.description">
 						<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></i>
@@ -113,9 +113,13 @@
 			</td>
 
 			<td style="min-width: 80px;max-width: 80px;">
-				<div class="pull-right">
-					<a title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-default btn-sm"><span class="fa fa-edit"></span></a>
-					<button title="Delete" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteUser(user)"><span class="fa fa-trash-o"></span></button>
+				<div class="btn-group pull-right">
+					<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-sm btn-outline-secondary">
+						<span class="fa fa-edit"></span>
+					</button>
+					<button title="Delete" type="button" class="btn btn-sm btn-outline-secondary" (click)="confirmDeleteUser(user)">
+						<span class="fa fa-trash-o"></span>
+					</button>
 				</div>
 			</td>
 		</ng-template>
