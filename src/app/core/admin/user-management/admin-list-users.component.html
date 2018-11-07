@@ -1,0 +1,134 @@
+<section>
+
+	<h3 class="page-header">
+		Users
+		<small>Administer User Accounts</small>
+		<a routerLink="/admin/user" type="button" class="btn btn-default btn-sm pull-right">
+			<i class="fa fa-user-plus"></i> Create User
+		</a>
+	</h3>
+
+	<!-- Alert Notifications -->
+	<alert *ngFor="let alert of alertService.getAlerts(); let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >{{alert.msg}}</alert>
+
+	<!-- Search Input -->
+	<div class="row">
+		<!-- Team Selection -->
+		<div class="col-md-2">
+			<select-teams (setSelection)="setSelectedTeam($event)" (alertError)="showAlertMessage($event)" [showTags]="false"></select-teams>
+		</div>
+		<div class="col-md-10">
+			<div class="input-group">
+				<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">
+				<span class="input-group-btn">
+					<button class="btn btn-default btn-sm" type="button" (click)="applySearch()">
+						<i class="fa fa-search"></i>
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Quick Filters -->
+	<div class="controls paging-sort padding-top-10">
+		<span class="column-label">Quick Filters:</span>
+		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.bypassAC" (ngModelChange)="applySearch()"/>Bypass AC</label>
+		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.editorRole" (ngModelChange)="applySearch()"/>Editor</label>
+		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.auditorRole" (ngModelChange)="applySearch()"/>Auditor</label>
+		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.adminRole" (ngModelChange)="applySearch()"/>Admin</label>
+		<label class="column-option"><input type="checkbox" [(ngModel)]="filters.pending" (ngModelChange)="applySearch()"/>Pending</label>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<!-- Column Selector -->
+			<div class="controls paging-sort" [hidden]="users.length === 0">
+				<span class="column-label">Columns (
+					<a type="button" [ngClass]="{selected: columnMode==='default'}" class="no-href btn-link" (click)="quickColumnSelect('default')">Default</a> /
+					<a type="button" [ngClass]="{selected: columnMode==='all'}" class="no-href btn-link" (click)="quickColumnSelect('all')">All</a> ):
+				</span>
+				<label class="column-option" *ngFor="let key of columnKeys"><input type="checkbox" [(ngModel)]="columns[key].show" (ngModelChange)="checkColumnConfiguration()"/>{{columns[key].title}}</label>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group pull-right dropdown" dropdown>
+				<button type="button" class="btn btn-default btn-sm" (click)="exportCurrentView()"><i class="fa fa-download"></i> Export </button>
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" dropdownToggle>
+					<span class="caret"></span>
+				</button>
+				<ul *dropdownMenu class="dropdown-menu" role="menu">
+					<li><a (click)="exportCurrentView()">Export Current View</a></li>
+					<li><a (click)="exportUserData()">Export Single Field</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<pageable-table [items]="users"
+		[pagingOptions]="pagingOpts"
+		[sortOptions]="sortOpts"
+		(onPageChange)="goToPage($event)"
+		(onSortChange)="setSort($event)"
+	>
+
+		<template named-template="table-header">
+			<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>
+			<th>&nbsp;</th>
+		</template>
+
+		<template named-template="table-row" let-user let-i="index">
+			<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
+			<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
+			<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
+			<td [hidden]="!columns.teams.show">
+				<div class="hide-overflow" style="max-width: 300px;">
+					<span *ngFor="let team of user.userModel.teams; let last = last" [attr.title]="team._id">{{ teamMap[team._id] }}{{ last? '' : ', ' }}</span>
+				</div>
+			</td>
+			<td [hidden]="!columns.organization.show">{{user.userModel.organization}}</td>
+			<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
+			<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>
+			<td [hidden]="!columns.acceptedEua.show">{{user.userModel.acceptedEua | agoDate:false}}</td>
+			<td [hidden]="!columns.lastLogin.show">{{user.userModel.lastLogin | agoDate:false}}</td>
+			<td [hidden]="!columns.created.show">{{user.userModel.created | agoDate:false}}</td>
+			<td [hidden]="!columns.updated.show">{{user.userModel.updated | agoDate:false}}</td>
+
+			<td [hidden]="!columns.bypassAccessCheck.show" class="center">
+				<i class="fa fa-fw" disabled [ngClass]="{'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></i>
+			</td>
+
+			<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
+			<td [hidden]="!columns.externalGroups.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalGroups}}</td>
+
+			<td [hidden]="!columns.roles.show" style="min-width: 310px;max-width: 310px;">
+				<div class="btn-group">
+					<button *ngFor="let role of possibleRoles"
+							type="button" class="btn btn-sm" disabled
+							[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
+							[attr.title]="role.description">
+						<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></i>
+						{{role.label}}
+					</button>
+				</div>
+			</td>
+
+			<td style="min-width: 80px;max-width: 80px;">
+				<div class="pull-right">
+					<a title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-default btn-sm"><span class="fa fa-edit"></span></a>
+					<button title="Delete" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteUser(user)"><span class="fa fa-trash-o"></span></button>
+				</div>
+			</td>
+		</template>
+
+		<template named-template='empty-table'>
+			<h3>
+				<small>No Users matched your search</small>
+			</h3>
+		</template>
+	</pageable-table>
+</section>

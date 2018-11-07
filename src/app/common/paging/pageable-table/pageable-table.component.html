@@ -1,0 +1,70 @@
+<div class="pageable-table">
+
+	<div class="row">
+		<div class="col-md-12">
+
+			 <!--Sorting/Paging Controls-->
+			<div [hidden]="pagingOptions?.totalSize === 0">
+				<div class="controls">
+					<div class="paging-sort" style="float:left;" *ngIf="sortOptions">
+						<span>Sort By:</span>
+						<span *ngFor="let option of sortOptions | keys; let i = index">
+							<span *ngIf="i > 0"> / </span>
+							<a type="button" class="no-href btn-link"
+								[class.selected]="pagingOptions.sortField === option.value.sortField"
+								(click)="onSortChange.emit(option.value)">{{ option.key | capitalize }}
+							</a>
+						</span>
+					</div>
+					<div class="pull-right">
+						<div class="pull-right" style="margin-left: 10px;" *ngIf="refreshable">
+							<a class="btn-link no-href" (click)="onRefresh.emit()">
+								<i class="fa fa-refresh"></i><span> Refresh</span>
+							</a>
+						</div>
+						<div class="paging-controls pull-right" *ngIf="pagingOptions">
+							<asy-pager
+									[pageNumber]="pagingOptions.pageNumber"
+									[pageSize]="pagingOptions.pageSize"
+									[totalSize]="pagingOptions.totalSize"
+									[maxPageSize]="50"
+									[currentSize]="items?.length"
+									(onChange)="onPageChange.emit($event)">
+							</asy-pager>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- Actual Results -->
+			<table class="asymmetrik table table-condensed table-hover table-striped" [hidden]="items?.length === 0">
+				<thead>
+					<tr>
+						<template [asy-transclude]="headerTemplate"></template>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr *ngFor="let item of items; let i = index">
+						<template *ngIf="rowTemplate"
+							[asy-transclude]="rowTemplate"
+							[item]="item"
+							[index]="i"
+						></template>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Empty Table Display -->
+	<div class="col-md-6 col-md-offset-3 center" [hidden]="items?.length > 0">
+		<template [asy-transclude]="emptyTableTemplate"></template>
+	</div>
+
+</div>

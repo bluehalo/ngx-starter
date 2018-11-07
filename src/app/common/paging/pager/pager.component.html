@@ -1,0 +1,43 @@
+<!-- Sorting/Paging Controls -->
+<div *ngIf="totalSize > 0 || (totalSize == null && (currentSize > 0) || pageNumber != 0)">
+
+	<span *ngIf="showSortingControls" style="display: inline-block">
+		<a type="button" class="no-href btn-link" tooltip="Newest on Top" [hidden]="sortdir==='DESC'" (click)="sort('DESC')"><i class="fa fa-sort-amount-desc"></i></a>
+		<a type="button" class="no-href btn-link" tooltip="Oldest on Top" [hidden]="sortdir==='ASC'" (click)="sort('ASC')"><i class="fa fa-sort-amount-asc"></i></a>
+	</span>
+
+	<span class="pager-controls">
+		<!-- Count message -->
+		<span class="pager-status">
+			{{startFormatted}} - {{endFormatted}} of {{totalFormatted}}
+			<i style="color: #ffbd5c" class="fa fa-warning"
+				*ngIf="showCountWarning"
+				tooltip="{{ countWarningMessage }}"
+			></i>
+		</span>
+
+		<!-- Paging controls -->
+		<a type="button" class="no-href btn-link"
+			[hidden]="totalPages <= 1"
+			(click)="goToPage(0)">
+			<i class="fa fa-angle-double-left"></i>
+		</a>
+		<a type="button" class="no-href btn-link"
+			[hidden]="totalPages <= 1"
+			(click)="goToPage(pageNumber - 1)">
+			<i class="fa fa-angle-left"></i>
+		</a>
+		<a type="button" class="no-href btn-link"
+			[hidden]="totalPages <= 1 || (pageNumber + 1) >= totalPages || currentSize !== pageSize"
+			(click)="goToPage(pageNumber + 1)">
+			<i class="fa fa-angle-right"></i>
+		</a>
+		<a type="button" class="no-href btn-link"
+			[hidden]="totalPages <= 1 || (pageNumber + 1) >= totalPages || currentSize !== pageSize"
+			(click)="goToPage(totalPages - 1)"
+			*ngIf="!disableGoToEnd">
+			<i class="fa fa-angle-double-right"></i>
+		</a>
+	</span>
+
+</div>
