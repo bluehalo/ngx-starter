@@ -13,10 +13,6 @@
 
 	<!-- Search Input -->
 	<div class="row">
-		<!-- Team Selection -->
-		<div class="col-md-2">
-			<select-teams (setSelection)="setSelectedTeam($event)" (alertError)="showAlertMessage($event)" [showTags]="false"></select-teams>
-		</div>
 		<div class="col-md-10">
 			<div class="input-group">
 				<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">

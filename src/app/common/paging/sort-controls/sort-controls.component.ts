@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+import { KeysPipe } from '../../keys.pipe';
 import { SortDirection, SortDisplayOption } from '../sorting.model';
 
 export type TableSortOptions = {

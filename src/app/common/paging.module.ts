@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { PageableTableModule } from './paging/pageable-table.module';
 import { SortControls } from './paging/sort-controls/sort-controls.component';
-import { Pager, PagingOptions } from './paging/pager/pager.component';
+import { Pager, PageChange, PagingOptions } from './paging/pager/pager.component';
 import { SortDirection, SortDisplayOption } from './paging/sorting.model';
 
 @NgModule({

@@ -8,6 +8,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { HelpModule } from './help/help.module';
 
+import { AdminModule } from './admin/admin.module';
 import { AboutComponent } from './about.component';
 import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
@@ -45,6 +46,7 @@ export function getConfiguration(configService: ConfigService) {
 		HelpModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
+		AdminModule,
 	],
 	exports: [
 		SiteContainerComponent,

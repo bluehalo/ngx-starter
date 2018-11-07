@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { TooltipModule } from 'ngx-bootstrap';
 
-import { CapitalizePipe } from '../capitalize.pipe';
-import { KeysPipe } from '../keys.pipe';
-import { AsyTemplate } from '../util/asy-template.directive';
-import { AsyTransclude } from '../util/asy-transclude.directive';
-import { PagingOptions, PageChange, PagerComponent } from '../pager.component';
-import { PageableTableComponent } from './pageable-table.component';
-import { SortControls } from './sort-controls.component';
+import { PageableTableModule } from '../pageable-table.module';
+import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
+import { PageableTable } from './pageable-table.component';
+import { SortControls } from '../sort-controls/sort-controls.component';
 import { FormsModule } from '@angular/forms';
+import { NamedTemplate } from '../../named-template.directive';
+import { Transclusion } from '../../transclusion.directive';
+import { PipesModule } from '../../pipes.module';
 
 @Component({
 	template:
@@ -23,17 +23,17 @@ import { FormsModule } from '@angular/forms';
 		(onRefresh)="refreshed$.next($event)"
 	>
 
-		<ng-template asy-template="table-header">
+		<ng-template named-template="table-header">
 			{{ headerContent }}
 		</ng-template>
 
-		<ng-template asy-template="table-row" let-item let-index="index">
+		<ng-template named-template="table-row" let-item let-index="index">
 			{{ rowContent }}
 			{{ item }}
 			{{ index }}
 		</ng-template>
 
-		<ng-template asy-template="empty-table">
+		<ng-template named-template="empty-table">
 			{{ emptyTableContent }}
 		</ng-template>
 
@@ -63,17 +63,16 @@ describe('PageableTableComponent', () => {
 		const testbed = TestBed.configureTestingModule({
 			imports: [
 				TooltipModule.forRoot(),
-				FormsModule
+				FormsModule,
+				PipesModule
 			],
 			declarations: [
+				NamedTemplate,
 				PageableTableTestHost,
-				PageableTableComponent,
-				AsyTransclude,
-				AsyTemplate,
-				PagerComponent,
-				KeysPipe,
-				CapitalizePipe,
-				SortControls
+				PageableTable,
+				Pager,
+				SortControls,
+				Transclusion
 			]
 		});
 
