@@ -12,7 +12,6 @@ export class User {
 			userModel = null;
 		}
 
-		console.log(`Got user model ${JSON.stringify(userModel, null, '\t')}`);
 		this.userModel = userModel;
 
 		return this;
