@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 
 import { Pager } from './pager/pager.component';
 import { PageableTable } from './pageable-table/pageable-table.component';
+import { PipesModule } from '../pipes.module';
 
 @NgModule({
-	imports: [],
+	imports: [
+		PipesModule
+	],
 	exports: [
 		PageableTable
 	],
