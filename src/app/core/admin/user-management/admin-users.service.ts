@@ -19,8 +19,10 @@ export class AdminUsersService {
 
 	search(query: any, search: string, paging: PagingOptions, options: any): Observable<any> {
 		return Observable.create((observer: any) => {
+
 			const params = new HttpParams();
 			Object.keys(paging).forEach( (key) => params.set(key, paging[key]) );
+
 			const url = `api/admin/users?${params.toString()}`;
 			const body = { q: query, s: search, options: options };
 			this.http.post(url, body)

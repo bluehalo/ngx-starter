@@ -69,8 +69,7 @@
 	<pageable-table [items]="users"
 		[pagingOptions]="pagingOpts"
 		(onPageChange)="goToPage($event)"
-		(onSortChange)="setSort($event)"
-	>
+		(onSortChange)="setSort($event)">
 
 		<ng-template named-template="table-header">
 			<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>

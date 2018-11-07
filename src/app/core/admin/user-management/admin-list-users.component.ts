@@ -27,7 +27,7 @@ export class AdminListUsersComponent {
 		name: {show: true, title: 'Name'},
 		username: {show: true, title: 'Username'},
 		_id: {show: false, title: 'ID'},
-		teams: {show: true, title: 'Teams'},
+		teams: {show: false, title: 'Teams'},
 		organization: {show: false, title: 'Organization'},
 		email: {show: false, title: 'Email'},
 		phone: {show: false, title: 'Phone'},

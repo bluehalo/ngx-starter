@@ -7,6 +7,7 @@ import { AlertModule, BsDropdownModule, ButtonsModule } from 'ngx-bootstrap';
 
 import { AdminListUsersComponent } from './admin-list-users.component';
 import { AdminUsersService } from './admin-users.service';
+import { DirectivesModule } from '../../../common/directives.module';
 import { PipesModule } from '../../../common/pipes.module';
 import { PagingModule } from '../../../common/paging.module';
 
@@ -17,6 +18,7 @@ import { PagingModule } from '../../../common/paging.module';
 		ButtonsModule.forRoot(),
 
 		CommonModule,
+		DirectivesModule,
 		FormsModule,
 		PagingModule,
 		PipesModule,

@@ -8,8 +8,7 @@ import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
 import { PageableTable } from './pageable-table.component';
 import { SortControls } from '../sort-controls/sort-controls.component';
 import { FormsModule } from '@angular/forms';
-import { NamedTemplate } from '../../named-template.directive';
-import { Transclusion } from '../../transclusion.directive';
+import { DirectivesModule } from '../../directives.module';
 import { PipesModule } from '../../pipes.module';
 
 @Component({
@@ -62,16 +61,15 @@ describe('PageableTableComponent', () => {
 		const testbed = TestBed.configureTestingModule({
 			imports: [
 				TooltipModule.forRoot(),
+				DirectivesModule,
 				FormsModule,
 				PipesModule
 			],
 			declarations: [
-				NamedTemplate,
 				PageableTableTestHost,
 				PageableTable,
 				Pager,
 				SortControls,
-				Transclusion
 			]
 		});
 

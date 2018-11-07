@@ -3,18 +3,16 @@ import {
 	AfterContentInit
 } from '@angular/core';
 
-import { fromPairs as fromPairs } from 'lodash';
+import { fromPairs } from 'lodash';
 
-import { NamedTemplate } from '../../named-template.directive';
+import { NamedTemplate } from '../../directives.module';
 import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
-import { Transclusion } from '../../transclusion.directive';
 import { KeysPipe } from '../../pipes.module';
 
 @Component({
 	selector: 'pageable-table',
 	templateUrl: './pageable-table.component.html'
 })
-
 export class PageableTable implements AfterContentInit {
 
 	@Input() items: Array<any>;
@@ -42,7 +40,7 @@ export class PageableTable implements AfterContentInit {
 	emptyTableTemplate: TemplateRef<any>;
 
 	ngAfterContentInit() {
-		const typeTemplatePairs = this.templates.map((template): [string, TemplateRef<any>] => [template.name, template.templateRef]);
+		const typeTemplatePairs = this.templates.map(this.getNamedTemplates);
 		const userSuppliedTemplates = fromPairs(typeTemplatePairs);
 		this.actionTemplate = userSuppliedTemplates['table-action'];
 		this.headerTemplate = userSuppliedTemplates['table-header'];
@@ -50,4 +48,7 @@ export class PageableTable implements AfterContentInit {
 		this.footerTemplate = userSuppliedTemplates['table-footer'];
 		this.emptyTableTemplate = userSuppliedTemplates['empty-table'];
 	}
+
+	private getNamedTemplates = (template): [string, TemplateRef<any>] =>
+		[template.name, template.templateRef]
 }

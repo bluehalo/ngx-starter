@@ -1,6 +1,6 @@
 import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges } from '@angular/core';
 
-import * as _ from 'lodash';
+import { isNumber } from 'lodash';
 
 import { SortDirection } from '../sorting.model';
 
@@ -115,7 +115,7 @@ export class Pager implements OnInit, OnChanges {
 	}
 
 	isValid() {
-		return _.isNumber(this.pageSize) && _.isNumber(this.pageNumber) && _.isNumber(this.currentSize) && _.isNumber(this.totalSize);
+		return isNumber(this.pageSize) && isNumber(this.pageNumber) && isNumber(this.currentSize) && isNumber(this.totalSize);
 	}
 
 	format() {
