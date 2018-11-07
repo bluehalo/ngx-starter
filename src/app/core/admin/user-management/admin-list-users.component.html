@@ -8,9 +8,6 @@
 		</a>
 	</h3>
 
-	<!-- Alert Notifications -->
-	<alert *ngFor="let alert of alertService.getAlerts(); let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >{{alert.msg}}</alert>
-
 	<!-- Search Input -->
 	<div class="row">
 		<div class="col-md-10">
@@ -65,9 +62,12 @@
 		</div>
 	</div>
 
+	<sort-controls
+		[sortOptions]="sortOpts">
+	</sort-controls>
+
 	<pageable-table [items]="users"
 		[pagingOptions]="pagingOpts"
-		[sortOptions]="sortOpts"
 		(onPageChange)="goToPage($event)"
 		(onSortChange)="setSort($event)"
 	>

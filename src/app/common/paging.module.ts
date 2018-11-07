@@ -1,38 +1,34 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { PageableTableModule } from './paging/pageable-table.module';
+import { TooltipModule } from 'ngx-bootstrap';
+
 import { SortControls } from './paging/sort-controls/sort-controls.component';
-import { Pager, PageChange, PagingOptions } from './paging/pager/pager.component';
-import { SortDirection, SortDisplayOption } from './paging/sorting.model';
+import { Pager } from './paging/pager/pager.component';
+import { PageableTable } from './paging/pageable-table/pageable-table.component';
+import { PipesModule } from './pipes.module';
+import { DirectivesModule } from './directives.module';
 
 @NgModule({
 	imports: [
-		PageableTableModule
+		CommonModule,
+		DirectivesModule,
+		PipesModule,
+		TooltipModule
 	],
 	exports: [
-		PageableTableModule,
-
 		Pager,
-		PagingOptions,
-
+		PageableTable,
 		SortControls,
-		SortDirection,
-		SortDisplayOption
 	],
 	declarations: [
-		PageableTableModule,
 		Pager,
-		PagingOptions,
-
+		PageableTable,
 		SortControls,
-		SortDirection,
-		SortDisplayOption
 	],
 	providers: []
 })
 export class PagingModule { }
 
-export { PageableTableModule } from './paging/pageable-table.module';
-export { Pager, PagingOptions } from './paging/pager/pager.component';
+export { Pager, PageChange, PagingOptions } from './paging/pager/pager.component';
 export { SortDirection, SortDisplayOption } from './paging/sorting.model';
-export { SortControls, TableSortOptions } from './paging/sort-controls/sort-controls.component';

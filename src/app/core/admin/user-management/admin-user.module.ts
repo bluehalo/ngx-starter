@@ -7,6 +7,8 @@ import { AlertModule, BsDropdownModule, ButtonsModule } from 'ngx-bootstrap';
 
 import { AdminListUsersComponent } from './admin-list-users.component';
 import { AdminUsersService } from './admin-users.service';
+import { PipesModule } from '../../../common/pipes.module';
+import { PagingModule } from '../../../common/paging.module';
 
 @NgModule({
 	imports: [
@@ -16,6 +18,8 @@ import { AdminUsersService } from './admin-users.service';
 
 		CommonModule,
 		FormsModule,
+		PagingModule,
+		PipesModule,
 		RouterModule
 	],
 	exports: [

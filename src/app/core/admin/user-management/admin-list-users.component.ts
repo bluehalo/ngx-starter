@@ -3,14 +3,15 @@ import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import * as _ from 'lodash';
-import { BsModalService } from 'ngx-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 
 import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
 import { AdminUsersService } from './admin-users.service';
 import { ConfigService } from '../../config.service';
-import { PagingOptions, SortDirection, SortDisplayOption, TableSortOptions } from '../../../common/paging.module';
+import { Pager, PagingOptions } from '../../../common/paging/pager/pager.component';
+import { SortDirection, SortDisplayOption } from '../../../common/paging/sorting.model';
+import { SortControls, TableSortOptions } from '../../../common/paging/sort-controls/sort-controls.component';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'
@@ -64,7 +65,6 @@ export class AdminListUsersComponent {
 	private requiredExternalRoles: string[];
 
 	constructor(
-		private modalService: BsModalService,
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService
@@ -73,11 +73,11 @@ export class AdminListUsersComponent {
 	ngOnInit() {
 		this.sub = this.route.params.subscribe((params: Params) => {
 
-			// // Clear cache if requested
-			// let clearCachedFilter = params[`clearCachedFilter`];
-			// if (_.toString(clearCachedFilter) === 'true' || null == this.adminService.cache.listUsers) {
-			// 	this.adminService.cache.listUsers = {};
-			// }
+			// Clear cache if requested
+			let clearCachedFilter = params[`clearCachedFilter`];
+			if (_.toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
+				this.adminUsersService.cache.listUsers = {};
+			}
 
 			this.configService.getConfig().subscribe(
 				(config: any) => {

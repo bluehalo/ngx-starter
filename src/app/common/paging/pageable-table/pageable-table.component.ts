@@ -8,6 +8,7 @@ import { fromPairs as fromPairs } from 'lodash';
 import { NamedTemplate } from '../../named-template.directive';
 import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
 import { Transclusion } from '../../transclusion.directive';
+import { KeysPipe } from '../../pipes.module';
 
 @Component({
 	selector: 'pageable-table',

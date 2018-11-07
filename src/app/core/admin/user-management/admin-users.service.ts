@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { PagingOptions } from '../../../common/paging/pager/pager.component';
 import { User } from '../../auth/user.model';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class AdminUsersService {
 		return Observable.create((observer: any) => {
 			const params = new HttpParams();
 			Object.keys(paging).forEach( (key) => params.set(key, paging[key]) );
-			const url = `admin/users?${params.toString}`;
+			const url = `api/admin/users?${params.toString()}`;
 			const body = { q: query, s: search, options: options };
 			this.http.post(url, body)
 				.subscribe(
@@ -41,23 +41,23 @@ export class AdminUsersService {
 	}
 
 	removeUser(id: string) {
-		return this.http.delete(`admin/user/${id}`);
+		return this.http.delete(`api/admin/user/${id}`);
 	}
 
 	getAll(query: any, field: string) {
-		return this.http.post('admin/users/getAll', { query: query, field: field });
+		return this.http.post('api/admin/users/getAll', { query: query, field: field });
 	}
 
 	create(user: User) {
-		return this.http.post('admin/user', user.userModel);
+		return this.http.post('api/admin/user', user.userModel);
 	}
 
 	get(userId: string) {
-		return this.http.get(`admin/user/${userId}`);
+		return this.http.get(`api/admin/user/${userId}`);
 	}
 
 	update(user: User) {
-		return this.http.post(`admin/user/${user.userModel._id}`, user.userModel);
+		return this.http.post(`api/admin/user/${user.userModel._id}`, user.userModel);
 	}
 
 }

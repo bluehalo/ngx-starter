@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminUserModule } from './user-management/admin-user.module';
+import { PagingModule } from '../../common/paging.module';
 
 @NgModule({
 	imports: [
@@ -14,7 +15,8 @@ import { AdminUserModule } from './user-management/admin-user.module';
 		AdminUserModule,
 
 		CommonModule,
-		FormsModule
+		FormsModule,
+		PagingModule
 	],
 	exports: [],
 	declarations:   [
