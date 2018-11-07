@@ -3,7 +3,7 @@ import {
 	AfterContentInit
 } from '@angular/core';
 
-import * as _ from 'lodash';
+import { fromPairs as fromPairs } from 'lodash';
 
 import { NamedTemplate } from '../../named-template.directive';
 import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
@@ -42,7 +42,7 @@ export class PageableTable implements AfterContentInit {
 
 	ngAfterContentInit() {
 		const typeTemplatePairs = this.templates.map((template): [string, TemplateRef<any>] => [template.name, template.templateRef]);
-		const userSuppliedTemplates = _.fromPairs(typeTemplatePairs);
+		const userSuppliedTemplates = fromPairs(typeTemplatePairs);
 		this.actionTemplate = userSuppliedTemplates['table-action'];
 		this.headerTemplate = userSuppliedTemplates['table-header'];
 		this.rowTemplate = userSuppliedTemplates['table-row'];
