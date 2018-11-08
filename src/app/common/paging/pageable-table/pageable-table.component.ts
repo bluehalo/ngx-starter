@@ -6,12 +6,12 @@ import {
 import { fromPairs } from 'lodash';
 
 import { NamedTemplate } from '../../directives.module';
-import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
-import { KeysPipe } from '../../pipes.module';
+import { PagingOptions, PageChange } from '../pager/pager.component';
 
 @Component({
 	selector: 'pageable-table',
-	templateUrl: './pageable-table.component.html'
+	templateUrl: './pageable-table.component.html',
+	styleUrls: [ './pageable-table.component.scss' ]
 })
 export class PageableTable implements AfterContentInit {
 

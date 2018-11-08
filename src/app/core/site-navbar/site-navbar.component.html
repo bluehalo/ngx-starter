@@ -81,7 +81,7 @@
 			*ngIf="null != session">
 			<a [ngClass]="{'highlight-link': adminNavOpen}"
 			[popover]="adminNav"
-			#userNavPopover="bs-popover"
+			#adminNavPopover="bs-popover"
 			placement="right"
 			[outsideClick]="true"
 			(onShown)="adminNavOpen = true;"
@@ -94,7 +94,7 @@
 				<ul class="popover-menu" role="menu">
 					<li *ngFor="let adminItem of adminMenuItems">
 						<a [routerLink]="[adminItem.link, { clearCachedFilter: true }]"
-							(click)="helpNavPopover.hide()">
+							(click)="adminNavPopover.hide()">
 							{{ adminItem.name }}
 						</a>
 					</li>
