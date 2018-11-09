@@ -26,5 +26,6 @@ install:
   - npm install
 
 script:
+  - npm run build:prod
   - npm run test:ci
   - npm run e2e
