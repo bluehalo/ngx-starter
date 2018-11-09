@@ -1,0 +1,61 @@
+<section>
+
+	<!-- Show a breadcrumb to the list EUAs page -->
+	<a class="back-link" [routerLink]="['/admin/euas']">
+		<i class="fa fa-angle-double-left"></i> Back to EUAs
+	</a>
+
+	<form novalidate name="euaForm" autocomplete="off" class="form-horizontal" role="form"
+		data-ng-submit="updateEua(euaForm.$valid)" >
+
+		<div class="page-header">
+			<h3>
+				{{title}}
+				<small>{{subtitle}}</small>
+			</h3>
+		</div>
+
+		<!-- Alert Notifications ->
+		<div class="word-wrap" data-alert data-ng-repeat="alert in alertService.alerts" data-type="{{alert.type}}" data-close="alertService.clear($index)">{{alert.msg}}</div> -->
+
+		<!-- Basic Information -->
+		<div class="col-md-12 form-group">
+			<label class="control-label" for="title">Title of the Agreement
+		<span class="text-danger">
+		  <strong> *</strong>
+		</span>
+	  </label>
+			<div>
+		<input type="text" class="form-control" id="title" name="title" [(ngModel)]="eua.euaModel.title" required />
+	  </div>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<label class="control-label" for="text">Text Content of the Agreement
+		<span class="text-danger">
+		  <strong> *</strong>
+		</span>
+	  </label>
+			<div>
+				<textarea rows="16" class="form-control" id="text" name="text" [(ngModel)]="eua.euaModel.text" required></textarea>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group" *ngIf="error">
+			<div class="pull-right">
+				<div class="text-danger">
+					<strong>{{error}}</strong>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 form-group">
+			<div class="pull-right">
+				<button type="submit" class="btn btn-primary" (click)="submitEua()">{{submitText}}</button>
+				<button type="button" class="btn btn-default" (click)="previewEua()">Preview</button>
+				<a type="button" class="btn btn-link" [routerLink]="['/admin/euas']">Cancel</a>
+			</div>
+		</div>
+	</form>
+
+</section>

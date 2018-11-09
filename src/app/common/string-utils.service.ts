@@ -1,4 +1,5 @@
-import * as _ from 'lodash';
+import { HttpParams } from '@angular/common/http';
+import { isString } from 'lodash';
 
 export class StringUtils {
 
@@ -6,7 +7,7 @@ export class StringUtils {
 	 * Returns true if input is a string and it is not empty.
 	 */
 	public static isNonEmptyString(s: any): boolean {
-		return (_.isString(s) && s.trim().length > 0);
+		return (isString(s) && s.trim().length > 0);
 	}
 
 	/**
@@ -73,6 +74,16 @@ export class StringUtils {
 		}
 
 		return null;
+	}
+
+	public urlEncode(obj: any): string {
+		let urlSearchParams = new HttpParams();
+		for (let key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				urlSearchParams.append(key, obj[key]);
+			}
+		}
+		return urlSearchParams.toString();
 	}
 
 }
