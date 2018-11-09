@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 
-import * as _ from 'lodash';
+import { isArray, isEmpty } from 'lodash';
 import { first } from 'rxjs/operators';
 
 import { HelpTopics } from '../help-topic.component';
@@ -25,8 +25,8 @@ export class GettingStartedHelpComponent implements OnInit {
 			this.config = config;
 			this.externalLinksEnabled = config.welcomeLinks
 				&& config.welcomeLinks.enabled
-				&& _.isArray(config.welcomeLinks.links)
-				&& !_.isEmpty(config.welcomeLinks.links);
+				&& isArray(config.welcomeLinks.links)
+				&& !isEmpty(config.welcomeLinks.links);
 			this.appName = config.app.title;
 		});
 	}

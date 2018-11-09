@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { isString } from 'lodash';
 
 export class StringUtils {
 
@@ -6,7 +6,7 @@ export class StringUtils {
 	 * Returns true if input is a string and it is not empty.
 	 */
 	public static isNonEmptyString(s: any): boolean {
-		return (_.isString(s) && s.trim().length > 0);
+		return (isString(s) && s.trim().length > 0);
 	}
 
 	/**

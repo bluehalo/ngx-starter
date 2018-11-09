@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import * as _ from 'lodash';
+import { get } from 'lodash';
 
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
@@ -43,7 +43,7 @@ export class SigninComponent implements OnDestroy, OnInit {
 				this.sessionService.goToPreviousRoute();
 			},
 			(error) => {
-				this.error = _.get(error, 'error.message', 'Unexpected error signing in.');
+				this.error = get(error, 'error.message', 'Unexpected error signing in.');
 			}
 		);
 	}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import * as _ from 'lodash';
+import { get } from 'lodash';
 
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
@@ -17,8 +17,8 @@ export class SiteContainerComponent {
 
 	constructor(private configService: ConfigService) {
 		configService.getConfig().subscribe((config: Config) => {
-			this.bannerHtml = _.get(config, 'banner.html', undefined);
-			this.copyrightHtml = _.get(config, 'copyright.html', undefined);
+			this.bannerHtml = get(config, 'banner.html', undefined);
+			this.copyrightHtml = get(config, 'copyright.html', undefined);
 		});
 	}
 

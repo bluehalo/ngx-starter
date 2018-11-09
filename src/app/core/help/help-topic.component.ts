@@ -2,7 +2,7 @@ import {
 	Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, ViewChild,
 	ViewContainerRef
 } from '@angular/core';
-import * as _ from 'lodash';
+import { values } from 'lodash';
 import { StringUtils } from '../../common/string-utils.service';
 
 export class HelpTopics {
@@ -15,7 +15,7 @@ export class HelpTopics {
 	}
 
 	static getTopicList(): string[] {
-		return _.values(this.topicOrder).sort((a, b) => a.ordinal - b.ordinal).map((v) => v.key);
+		return values(this.topicOrder).sort((a, b) => a.ordinal - b.ordinal).map((v) => v.key);
 	}
 
 	static getTopicTitle(title: string, short: boolean = false): string {
