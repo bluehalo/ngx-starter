@@ -135,11 +135,11 @@
 					</td>
 
 					<td style="min-width: 80px;max-width: 80px;">
-						<div class="btn-group pull-right">
-							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-sm btn-outline-secondary">
+						<div class="btn-group btn-group-sm pull-right">
+							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-outline-secondary">
 								<span class="fa fa-edit"></span>
 							</button>
-							<button title="Delete" type="button" class="btn btn-sm btn-outline-secondary" (click)="confirmDeleteUser(user)">
+							<button title="Delete" type="button" class="btn btn-danger" (click)="confirmDeleteUser(user)">
 								<span class="fa fa-trash-o"></span>
 							</button>
 						</div>
