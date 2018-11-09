@@ -3,6 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 
+interface AdminMenuItem {
+	link: string;
+	name: string;
+}
 
 @Component({
 	selector: 'site-navbar',
@@ -13,10 +17,19 @@ export class SiteNavbarComponent {
 
 	navbarOpenValue = false;
 
+	adminNavOpen = false;
 	helpNavOpen = false;
 	userNavOpen = false;
 
 	session: Session = null;
+
+	adminMenuItems: AdminMenuItem[] = [
+		{ link: '/admin/users', name: 'Users' },
+		{ link: '/admin/cacheEntries', name: 'Cache' },
+		{ link: '/admin/euas', name: 'EUA' },
+		{ link: '/admin/messages', name: 'Messages' },
+		{ link: '/admin/feedback', name: 'Feedback' }
+	];
 
 	@Output()
 	navbarOpenChange = new EventEmitter<boolean>();

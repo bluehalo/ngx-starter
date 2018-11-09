@@ -1,0 +1,101 @@
+<section class="pageable-table">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table" [ngClass]="{'card': showInCard, 'compact-table': !showInCard}" [hidden]="items?.length === 0">
+
+				<div *ngIf="showHeader" class="table-header" [ngClass]="{'table-actions' : null != actionTemplate}">
+					<ng-template *ngIf="showActions" [transclusion]="actionTemplate"></ng-template>
+
+					<!-- Paging -->
+					<div [hidden]="items?.length === 0">
+						<div class="paging-controls">
+							<div class="pull-right" style="margin-left: 10px;" *ngIf="refreshable">
+								<a class="btn-link no-href" (click)="onRefresh.emit()">
+									<i class="fa fa-refresh"></i><span> Refresh</span>
+								</a>
+							</div>
+							<div class="pull-right">
+								<asy-pager
+									[pageNumber]="pagingOptions?.pageNumber"
+									[pageSize]="pagingOptions?.pageSize"
+									[totalSize]="pagingOptions?.totalSize"
+									[maxPageSize]="pagingOptions?.pageSize"
+									[currentSize]="items?.length"
+									[disableGoToEnd]="disableGoToEnd"
+									(onChange)="onPageChange.emit($event)">
+								</asy-pager>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="!pagedPastAllowed" class="table-content" [ngClass]="{'padding-top-10' : null != actionTemplate}">
+					<!-- Actual Results -->
+					<table class="table table-condensed table-hover">
+						<thead>
+						<tr>
+							<ng-template [transclusion]="headerTemplate"></ng-template>
+						</tr>
+						</thead>
+
+						<tbody>
+						<tr *ngFor="let item of items; let i = index" class="table-row">
+							<ng-template
+								*ngIf="rowTemplate"
+								[transclusion]="rowTemplate"
+								[item]="item"
+								[index]="i">
+							</ng-template>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Bottom Paging Controls -->
+				<div class="row padding-top-5" *ngIf="pagerAtBottom && !pagedPastAllowed">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<asy-pager
+								[pageNumber]="pagingOptions?.pageNumber"
+								[pageSize]="pagingOptions?.pageSize"
+								[totalSize]="pagingOptions?.totalSize"
+								[maxPageSize]="pagingOptions?.pageSize"
+								[currentSize]="items?.length"
+								[disableGoToEnd]="disableGoToEnd"
+								(onChange)="pageAndScroll.emit($event)">
+							</asy-pager>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" [ngClass]="{'padding-top-10' : null != actionTemplate}" *ngIf="pagedPastAllowed">
+					<div class="col-md-12 center">
+						<h4>You can only page through the first {{ maxAllowed }} results</h4>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Empty Table Display -->
+	<div class="row" [hidden]="items?.length > 0">
+		<div class="col-md-12">
+
+			<section *ngIf="!loading" class="card card-message">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 center">
+						<ng-template [transclusion]="emptyTableTemplate"></ng-template>
+					</div>
+
+					<div class="padding-top-10 col-md-12 pull left">
+						<ng-template [transclusion]="footerTemplate"></ng-template>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</div>
+
+</section>

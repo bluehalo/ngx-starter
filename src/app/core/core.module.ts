@@ -20,8 +20,11 @@ import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 
+import { User } from './auth/user.model';
+
 import { HttpClientModule } from '@angular/common/http';
 
+import { AdminModule } from './admin/admin.module';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
@@ -42,6 +45,7 @@ export function getConfiguration(configService: ConfigService) {
 		PopoverModule,
 		TooltipModule,
 
+		AdminModule,
 		HelpModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
@@ -69,3 +73,8 @@ export class CoreModule {
 		this.pageTitleService.init();
 	}
 }
+
+export { AuthGuard } from './auth/auth.guard';
+export { User } from './auth/user.model';
+export { Role } from './auth/role.model';
+export { ConfigService } from './config.service';
