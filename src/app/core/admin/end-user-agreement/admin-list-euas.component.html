@@ -8,83 +8,73 @@
 		</a>
 	</h3>
 
-	<!-- Search Input -->
-	<div class="row">
-		<div class="col-md-12">
-			<div class="input-group">
-				<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">
-				<span class="input-group-btn">
-					<button class="btn btn-default btn-sm" type="button" (click)="applySearch()">
-						<i class="fa fa-search"></i>
-					</button>
-				</span>
-			</div>
-		</div>
-	</div>
-
-	<!-- Column Selector -->
-	<div class="row">
-		<div class="col-md-12">
-			<div class="controls paging-sort" [hidden]="euas.length === 0">
-				<span class="column-label">Show Columns:</span>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns._id" />ID</label>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns.title" />Title</label>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns.text" />Text</label>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns.created" />Created</label>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns.updated" />Updated</label>
-				<label class="column-option">
-					<input type="checkbox" [(ngModel)]="columns.published" />Published</label>
-			</div>
-		</div>
-	</div>
-
-	<sort-controls [sortOptions]="sortOpts"></sort-controls>
-
-	<pageable-table [items]="euas"
-		[pagingOptions]="pagingOpts"
-		(onPageChange)="goToPage($event)"
-		(onSortChange)="setSort($event)">
-
-		<ng-template named-template="table-header">
-			<th [hidden]="!columns._id">ID</th>
-			<th [hidden]="!columns.title">Title</th>
-			<th [hidden]="!columns.text">Text</th>
-			<th [hidden]="!columns.created">Created</th>
-			<th [hidden]="!columns.updated">Updated</th>
-			<th [hidden]="!columns.published">Published</th>
-			<th>&nbsp;</th>
-		</ng-template>
-
-		<ng-template named-template="table-row" let-eua let-i="index">
-			<td [hidden]="!columns._id">{{eua.euaModel._id}}</td>
-			<td [hidden]="!columns.title">
-				<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.title}}</div>
-				</td>
-			<td [hidden]="!columns.text">
-				<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.text}}</div>
-			</td>
-			<td [hidden]="!columns.created">{{ eua.euaModel.created | utcDate }}</td>
-			<td [hidden]="!columns.updated">{{ eua.euaModel.updated | utcDate }}</td>
-			<td [hidden]="!columns.published">{{ eua.euaModel.published | utcDate }}</td>
-
-			<td style="width: 120px;">
-				<div class="pull-right">
-					<a title="Edit" [routerLink]="['/admin/eua',eua.euaModel._id]" type="button" class="btn btn-default btn-sm"><span class="fa fa-edit"></span></a>
-					<button title="Publish" type="button" class="btn btn-default btn-sm" (click)="publishEua(eua)"><i class="fa fa-share-square-o"></i></button>
-					<button title="Delete" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteEua(eua)"><span class="fa fa-trash-o"></span></button>
+	<div class="row padding-top-5">
+		<div class="col-md-2">
+			<!-- Column Selector -->
+			<div class="card" [hidden]="euas.length === 0">
+				<span class="column-label">Columns</span>
+				<div class="form-check form-check-inline" *ngFor="let key of columnKeys">
+					<input class="form-check-input" type="checkbox" [(ngModel)]="columns[key].show">
+					<label class="form-check-label" (click)="columns[key].show = !columns[key].show;">{{columns[key].title}}</label>
 				</div>
-			</td>
-		</ng-template>
+			</div>
+		</div>
+		<div class="col-md-10">
+			<!-- Search Input -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<input placeholder="Enter a search..." type="text" class="form-control input-sm" [(ngModel)]="search" (keyup.enter)="applySearch()">
+						<span class="input-group-btn">
+							<button class="btn btn-default btn-sm" type="button" (click)="applySearch()">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
 
-		<ng-template named-template="empty-table">
-			<h3>
-				<small>No End User Agreements? Either there were no EUAs that matched your search or there are no EUAs in the system.</small>
-			</h3>
-		</ng-template>
-	</pageable-table>
+			<sort-controls [sortOptions]="sortOpts"></sort-controls>
+
+			<pageable-table [items]="euas"
+				[pagingOptions]="pagingOpts"
+				(onPageChange)="goToPage($event)"
+				(onSortChange)="setSort($event)">
+
+				<ng-template named-template="table-header">
+					<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>
+					<th>&nbsp;</th>
+				</ng-template>
+
+				<ng-template named-template="table-row" let-eua let-i="index">
+					<td [hidden]="!columns._id.show">{{eua.euaModel._id}}</td>
+					<td [hidden]="!columns.title.show">
+						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.title}}</div>
+						</td>
+					<td [hidden]="!columns.text.show">
+						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.text}}</div>
+					</td>
+					<td [hidden]="!columns.created.show">{{ eua.euaModel.created | utcDate }}</td>
+					<td [hidden]="!columns.updated.show">{{ eua.euaModel.updated | utcDate }}</td>
+					<td [hidden]="!columns.published.show">{{ eua.euaModel.published | utcDate }}</td>
+
+					<td style="width: 120px;">
+						<div class="pull-right">
+							<a title="Edit" [routerLink]="['/admin/eua',eua.euaModel._id]" type="button" class="btn btn-default btn-sm"><span class="fa fa-edit"></span></a>
+							<button title="Publish" type="button" class="btn btn-default btn-sm" (click)="publishEua(eua)"><i class="fa fa-share-square-o"></i></button>
+							<button title="Delete" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteEua(eua)"><span class="fa fa-trash-o"></span></button>
+						</div>
+					</td>
+				</ng-template>
+
+				<ng-template named-template="empty-table">
+					<h3>
+						<small>No End User Agreements? Either there were no EUAs that matched your search or there are no EUAs in the system.</small>
+					</h3>
+				</ng-template>
+			</pageable-table>
+		</div>
+
+	</div>
+
 </section>

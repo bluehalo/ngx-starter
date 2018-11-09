@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { filter, first, switchMap } from 'rxjs/operators';
 
-import { toString } from 'lodash';
+import { keys, toString } from 'lodash';
 
 import { EndUserAgreement } from './eua.class';
 import { EuaService } from './eua.service';
@@ -25,13 +25,15 @@ export class AdminListEuasComponent implements OnInit {
 
 	// Columns to show/hide in user table
 	columns = {
-		_id: false,
-		created: true,
-		published: true,
-		text: false,
-		title: true,
-		updated: true
+		_id: { show: false, title: 'ID' },
+		title: { show: true, title: 'Title' },
+		text: { show: false, title: 'Text' },
+		created: { show: true, title: 'Created' },
+		updated: { show: true, title: 'Updated' },
+		published: { show: true, title: 'Published' },
 	};
+
+	columnKeys: string[] = keys(this.columns) as string[];
 
 	sortOpts: TableSortOptions = {
 		title: new SortDisplayOption('Name', 'name', SortDirection.asc),
