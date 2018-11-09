@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { isArray, keys, toString } from 'lodash';
+import isArray from 'lodash/isArray';
+import keys from 'lodash/keys';
+import toString from 'lodash/toString';
 import { Observable, Subscription } from 'rxjs';
 
 import { User } from '../../auth/user.model';

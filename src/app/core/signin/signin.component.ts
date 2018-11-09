@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { get } from 'lodash';
+import get from 'lodash/get';
 
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';

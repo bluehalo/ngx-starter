@@ -2,7 +2,7 @@ import {
 	Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, ViewChild,
 	ViewContainerRef
 } from '@angular/core';
-import { values } from 'lodash';
+import values from 'lodash/values';
 import { StringUtils } from '../../common/string-utils.service';
 
 export class HelpTopics {

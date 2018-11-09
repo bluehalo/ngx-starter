@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import { Observable } from 'rxjs';
 
 import { PagingOptions } from '../../../common/paging.module';

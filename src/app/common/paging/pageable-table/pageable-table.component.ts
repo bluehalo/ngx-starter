@@ -3,7 +3,7 @@ import {
 	AfterContentInit
 } from '@angular/core';
 
-import { fromPairs } from 'lodash';
+import fromPairs from 'lodash/fromPairs';
 
 import { NamedTemplate } from '../../directives.module';
 import { PagingOptions, PageChange } from '../pager/pager.component';

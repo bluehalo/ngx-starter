@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
-import { capitalize, get, isEmpty } from 'lodash';
+import capitalize from 'lodash/capitalize';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { of } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 

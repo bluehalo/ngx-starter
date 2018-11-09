@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {NavigationExtras, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { assign, isEmpty } from 'lodash';
+import assign from 'lodash/assign';
+import isEmpty from 'lodash/isEmpty';
 import { BehaviorSubject, Observable } from 'rxjs/index';
 import { tap } from 'rxjs/operators';
 

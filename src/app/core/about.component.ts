@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { get } from 'lodash';
+import get from 'lodash/get';
 
 import { ConfigService } from './config.service';
 import { Config } from './config.model';

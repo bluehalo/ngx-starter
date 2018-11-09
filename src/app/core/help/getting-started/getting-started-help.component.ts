@@ -1,6 +1,7 @@
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 
-import { isArray, isEmpty } from 'lodash';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
 
 import { HelpTopics } from '../help-topic.component';
