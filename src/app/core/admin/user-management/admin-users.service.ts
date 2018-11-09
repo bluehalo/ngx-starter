@@ -4,8 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 
-import { PagingOptions } from '../../../common/paging/pager/pager.component';
-import { User } from '../../../core/core.module';
+import { PagingOptions } from '../../../common/paging.module';
+import { User } from '../../auth/user.model';
 
 @Injectable()
 /**
@@ -58,7 +58,7 @@ export class AdminUsersService {
 		return this.http.get(`api/admin/user/${userId}`);
 	}
 
-	update(user: User) {
+	update(user: User): Observable<any> {
 		return this.http.post(`api/admin/user/${user.userModel._id}`, user.userModel);
 	}
 

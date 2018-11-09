@@ -5,11 +5,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 
-import { ConfigService, User, Role } from '../../../core/core.module';
+import { User } from '../../auth/user.model';
+import { Role } from '../../auth/role.model';
+import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
-import { Pager, PagingOptions } from '../../../common/paging/pager/pager.component';
-import { SortDirection, SortDisplayOption } from '../../../common/paging/sorting.model';
-import { SortControls, TableSortOptions } from '../../../common/paging/sort-controls/sort-controls.component';
+import { Pager, PagingOptions, SortDirection,
+	SortDisplayOption, SortControls, TableSortOptions } from '../../../common/paging.module';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'

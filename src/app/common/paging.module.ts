@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TooltipModule } from 'ngx-bootstrap';
 
-import { SortControls } from './paging/sort-controls/sort-controls.component';
+import { SortControls, TableSortOptions } from './paging/sort-controls/sort-controls.component';
 import { Pager } from './paging/pager/pager.component';
 import { PageableTable } from './paging/pageable-table/pageable-table.component';
 import { PipesModule } from './pipes.module';
@@ -32,3 +32,4 @@ export class PagingModule { }
 
 export { Pager, PageChange, PagingOptions } from './paging/pager/pager.component';
 export { SortDirection, SortDisplayOption } from './paging/sorting.model';
+export { SortControls, TableSortOptions } from './paging/sort-controls/sort-controls.component';

@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
+import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
 import { AdminComponent } from './admin.component';
-import { AuthGuard } from '../../core/core.module';
+import { AuthGuard } from '../auth/auth.guard';
 
 @NgModule({
 	imports: [
@@ -29,6 +30,11 @@ import { AuthGuard } from '../../core/core.module';
 					{
 						path: 'users',
 						component: AdminListUsersComponent
+					},
+
+					{
+						path: 'user/:id',
+						component: AdminUpdateUserComponent
 					}
 				]
 			}])

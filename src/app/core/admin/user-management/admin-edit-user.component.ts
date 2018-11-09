@@ -1,0 +1,68 @@
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { User } from '../../auth/user.model';
+import { Role } from '../../auth/role.model';
+import { AdminUsersService } from './admin-users.service';
+import { ManageUserComponent } from './manage-user.component';
+import { ConfigService } from '../../config.service';
+
+@Component({
+	selector: 'admin-edit-user',
+	templateUrl: './manage-user.component.html'
+})
+export class AdminUpdateUserComponent extends ManageUserComponent {
+
+	private mode = 'admin-edit';
+
+	private possibleRoles = Role.ROLES;
+
+	private id: string;
+
+	private sub: any;
+
+	constructor(
+		router: Router,
+		configService: ConfigService,
+		private adminUsersService: AdminUsersService,
+		private route: ActivatedRoute
+	) {
+		super(router, configService);
+	}
+
+	initialize() {
+		this.sub = this.route.params.subscribe( (params: any) => {
+			this.id = params.id;
+
+			this.title = 'Edit User';
+			this.subtitle = 'Make changes to the user\'s information';
+			this.okButtonText = 'Save';
+			this.navigateOnSuccess = '/admin/users';
+			this.okDisabled = false;
+			this.adminUsersService.get(this.id).subscribe((userRaw: any) => {
+				this.user = new User().setFromUserModel(userRaw);
+				if (null == this.user.userModel.roles) {
+					this.user.userModel.roles = {};
+				}
+				this.user.userModel.providerData = { dn: (null != this.user.userModel.providerData) ? this.user.userModel.providerData.dn : undefined };
+				this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
+			});
+		});
+
+	}
+
+	ngOnDestroy() {
+		this.sub.unsubscribe();
+	}
+
+	handleBypassAccessCheck() {
+		// Don't need to do anything
+	}
+
+	submitUser(user: User): Observable<any> {
+		return this.adminUsersService.update(user);
+	}
+
+}

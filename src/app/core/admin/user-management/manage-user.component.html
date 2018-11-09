@@ -1,0 +1,163 @@
+<section *ngIf="user && user.userModel">
+
+	<!-- Show a breadcrumb to the list users page -->
+	<a *ngIf="mode === 'admin-edit' || mode === 'admin-create'" class="back-link" routerLink="/admin/users">
+		<i class="fa fa-angle-double-left"></i> Back to Users
+	</a>
+
+	<form *ngIf="user" #form="ngForm" (ngSubmit)="submit()" autocomplete="off" class="form-horizontal" role="form" novalidate >
+
+		<div class="page-header">
+			<h3>
+				{{title}}
+				<small>{{subtitle}}</small>
+
+				<!-- Show control to re-sync the user's cache when proxy-pki is the auth strategy -->
+				<button [disabled]="refreshing" *ngIf="proxyPki && mode === 'edit'" (click)="refreshCredentials()" class="btn btn-default btn-sm pull-right">
+					<span class="fa fa-refresh"></span> Refresh User Credentials
+				</button>
+			</h3>
+		</div>
+
+		<!-- Name -->
+		<div class="form-group row">
+			<label class="col-md-2 control-label" for="name">Name<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-10">
+				<input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.userModel.name" ngControl="name" required [disabled]="metadataLocked" />
+			</div>
+		</div>
+
+		<!-- Username -->
+		<div class="form-group row">
+			<label class="col-md-2 control-label" for="username">Username<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-10">
+				<input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.userModel.username" ngControl="username" required [disabled]="metadataLocked"/>
+			</div>
+		</div>
+
+		<!-- Organization -->
+		<div class="form-group row">
+			<label class="col-md-2 control-label" for="organization">Organization<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-10">
+				<input type="text" class="form-control" id="organization" name="organization" [(ngModel)]="user.userModel.organization" ngControl="organization" required [disabled]="metadataLocked"/>
+			</div>
+		</div>
+
+		<!-- Email -->
+		<div class="form-group row">
+			<label class="col-md-2 control-label" for="email">Email<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-10">
+				<input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.userModel.email" ngControl="email" required [disabled]="metadataLocked"/>
+			</div>
+		</div>
+
+		<!-- Local Login Information -->
+		<div *ngIf="config.auth === 'local'">
+
+			<div class="page-header">
+				<h3>
+					Password
+					<small>At least 6 characters. <span *ngIf="mode === 'edit' || mode === 'admin-edit'">Leave blank if you do not want to change the password.</span></small>
+				</h3>
+			</div>
+
+			<!-- Current password is needed if you aren't an admin and you're editing -->
+			<div class="form-group row" *ngIf="mode === 'edit'">
+				<label class="col-md-2 control-label" for="currentPassword">Current Password</label>
+				<div class="col-md-10"><input type="password" name="password" class="form-control" id="currentPassword" [(ngModel)]="user.userModel.currentPassword"></div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-2 control-label" for="password">New Password</label>
+				<div class="col-md-10"><input type="password" name="password" class="form-control" id="password" [(ngModel)]="user.userModel.password" ></div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-2 control-label" for="password2">Re-enter</label>
+				<div class="col-md-10"><input type="password" id="password2" name="password2" class="form-control" id="verifyPassword" [(ngModel)]="user.userModel.verifyPassword"></div>
+			</div>
+
+		</div>
+
+		<!-- PKI Information -->
+		<div *ngIf="proxyPki">
+
+			<!-- Stuff that admins can modify but normal users don't see -->
+			<div *ngIf="(mode === 'admin-edit' || mode === 'admin-create')">
+
+				<!-- Bypass Access Checker -->
+				<div class="form-group">
+					<label class="col-md-2 control-label">Access Check</label>
+
+					<div class="col-md-10">
+						<button type="button" class="btn"
+								[ngClass]="{ 'btn-selected': user.userModel.bypassAccessCheck, 'btn-unselected': !user.userModel.bypassAccessCheck }" title="Bypass Access Check"
+								btnCheckbox name="bypassAccessCheck" [(ngModel)]="user.userModel.bypassAccessCheck" (ngModelChange)="bypassAccessCheck()">
+							<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></i>
+							Bypass Access Check
+						</button>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Stuff that normal users can see, but won't be able to modify -->
+			<div *ngIf="(mode === 'admin-edit' || mode === 'edit')">
+
+				<!-- dn -->
+				<div class="form-group row">
+					<label class="col-md-2 control-label" for="dn">DN</label>
+					<div class="col-md-10"><input type="text" id="dn" class="form-control" name="dn" [(ngModel)]="user.userModel.providerData.dn" disabled/></div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-md-2 control-label" for="externalRoles">External Roles</label>
+					<div class="col-md-10"><input type="text" class="form-control" id="externalRoles" name="externalRoles" [(ngModel)]="user.userModel.externalRoles" disabled></div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-md-2 control-label" for="externalGroups">External Groups</label>
+					<div class="col-md-10"><input type="text" class="form-control" id="externalGroups" name="externalGroups" [(ngModel)]="user.userModel.externalGroups" disabled></div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Admin only stuff -->
+		<div *ngIf="mode === 'admin-edit' || mode === 'admin-create'">
+			<div class="form-group">
+				<label class="col-md-2 control-label">Roles</label>
+				<div class="col-md-10 btn-group">
+					<button *ngFor="let role of possibleRoles"
+							name="roles"
+							type="button" class="btn"
+							[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
+							[attr.title]="role.description"
+							[(ngModel)]="user.userModel.roles[role.role]" btnCheckbox>
+						<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></i>
+						{{role.label}}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="submit" class="btn btn-default" [disabled]="okDisabled || !form.form.valid">{{ okButtonText }}</button>
+					<a type="button" class="btn btn-link" *ngIf="mode === 'signup'" routerLink="/signin">or Sign In</a>
+					<a type="button" class="btn btn-link" *ngIf="mode === 'admin-create' || mode === 'admin-edit'" routerLink="/admin/users">Cancel</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Validation errors -->
+		<div class="form-group row" [hidden]="!error">
+			<div class="col-md-offset-2 col-md-10">
+				<div class="text-danger">
+					<strong>{{error}}</strong>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</section>

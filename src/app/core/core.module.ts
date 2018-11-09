@@ -24,6 +24,7 @@ import { User } from './auth/user.model';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { AdminModule } from './admin/admin.module';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
@@ -44,6 +45,7 @@ export function getConfiguration(configService: ConfigService) {
 		PopoverModule,
 		TooltipModule,
 
+		AdminModule,
 		HelpModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,

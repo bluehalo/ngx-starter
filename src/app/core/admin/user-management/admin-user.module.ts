@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AlertModule, BsDropdownModule, ButtonsModule } from 'ngx-bootstrap';
 
 import { AdminListUsersComponent } from './admin-list-users.component';
+import { AdminUpdateUserComponent } from './admin-edit-user.component';
 import { AdminUsersService } from './admin-users.service';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PipesModule } from '../../../common/pipes.module';
@@ -29,7 +30,8 @@ import { PagingModule } from '../../../common/paging.module';
 	entryComponents: [
 	],
 	declarations:   [
-		AdminListUsersComponent
+		AdminListUsersComponent,
+		AdminUpdateUserComponent
 	],
 	providers:  [
 		AdminUsersService
