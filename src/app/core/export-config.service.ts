@@ -13,7 +13,7 @@ export class ExportConfigService {
 
 	postExportConfig(type: string, config: any): Observable<any> {
 		return this.http.post(
-			'/requestExport',
+			'/api/requestExport',
 			JSON.stringify({ type: type, config: config }),
 			{ headers: { 'Content-Type': 'application/json'	} }
 		);
