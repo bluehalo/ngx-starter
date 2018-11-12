@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import * as _ from 'lodash';
+import isArray from 'lodash/isArray';
 import { Observable } from 'rxjs';
 
 import { PagingOptions } from '../../../common/paging.module';
@@ -28,7 +28,7 @@ export class AdminUsersService {
 			this.http.post(url, body)
 				.subscribe(
 					(results: any) => {
-						if (null != results && _.isArray(results.elements)) {
+						if (null != results && isArray(results.elements)) {
 							results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
 						}
 						observer.next(results);

@@ -7,6 +7,7 @@
     "start:prod": "ng serve --proxy-config proxy.conf.json --prod",
     "build": "ng build",
     "build:prod": "ng build --prod",
+    "build:bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
     "test": "ng test",
     "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
@@ -53,6 +54,7 @@
     "protractor": "5.4",
     "ts-node": "7.0",
     "tslint": "5.11",
-    "typescript": "3.1"
+    "typescript": "3.1",
+    "webpack-bundle-analyzer": "3.0"
   }
 }

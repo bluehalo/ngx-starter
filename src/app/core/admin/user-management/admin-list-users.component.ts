@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { keys, toString, isArray } from 'lodash';
+import isArray from 'lodash/isArray';
+import keys from 'lodash/keys';
+import toString from 'lodash/toString';
 import { Observable, Subscription } from 'rxjs';
 
 import { User } from '../../auth/user.model';
@@ -147,6 +149,14 @@ export class AdminListUsersComponent {
 		this.checkColumnConfiguration();
 	}
 
+	exportUserData() {
+		console.log('Export User Data coming soon...');
+	}
+
+	exportCurrentView() {
+		console.log('Export Current View coming soon...');
+	}
+
 	/**
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
@@ -237,4 +247,5 @@ export class AdminListUsersComponent {
 		}
 		return query;
 	}
+
 }
