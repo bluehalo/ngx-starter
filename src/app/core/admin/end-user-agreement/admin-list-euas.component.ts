@@ -6,7 +6,7 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { keys, toString } from 'lodash';
 
-import { EndUserAgreement } from './eua.class';
+import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';

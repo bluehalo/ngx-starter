@@ -9,7 +9,6 @@ import { AdminListEuasComponent } from './admin-list-euas.component';
 import { AdminCreateEuaComponent } from './admin-create-eua.component';
 import { AdminUpdateEuaComponent } from './admin-edit-eua.component';
 
-import { StringUtils } from '../../../common/string-utils.service';
 import { ModalModule, ModalService } from '../../../common/modal.module';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
@@ -37,8 +36,7 @@ import { PipesModule } from '../../../common/pipes.module';
 	providers:  [
 		AdminUsersService,
 		EuaService,
-		ModalService,
-		StringUtils
+		ModalService
 	]
 })
 export class AdminEuaModule { }

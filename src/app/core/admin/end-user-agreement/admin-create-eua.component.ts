@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EndUserAgreement } from './eua.class';
+import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
 import { ModalService } from '../../../common/modal.module';
@@ -10,7 +10,7 @@ import { ModalService } from '../../../common/modal.module';
 	selector: 'admin-create-eua',
 	templateUrl: './manage-eua.component.html'
 })
-export class AdminCreateEuaComponent extends ManageEuaComponent {
+export class AdminCreateEuaComponent extends ManageEuaComponent implements OnInit {
 
 	constructor(
 		router: Router,

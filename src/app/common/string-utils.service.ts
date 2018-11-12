@@ -75,15 +75,4 @@ export class StringUtils {
 
 		return null;
 	}
-
-	public urlEncode(obj: any): string {
-		let urlSearchParams = new HttpParams();
-		for (let key in obj) {
-			if (obj.hasOwnProperty(key)) {
-				urlSearchParams.append(key, obj[key]);
-			}
-		}
-		return urlSearchParams.toString();
-	}
-
 }

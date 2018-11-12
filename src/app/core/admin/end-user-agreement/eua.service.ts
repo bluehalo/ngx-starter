@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { PagingOptions } from '../../../common/paging.module';
-import { EndUserAgreement } from './eua.class';
-import { StringUtils } from '../../../common/string-utils.service';
+import { EndUserAgreement } from './eua.model';
 
 @Injectable()
 /**
@@ -15,7 +14,7 @@ export class EuaService {
 
 	public cache: any = {};
 
-	constructor(private http: HttpClient, private stringUtils: StringUtils) {}
+	constructor(private http: HttpClient) {}
 
 	/**
 	 * Public methods to be exposed through the service
@@ -28,26 +27,30 @@ export class EuaService {
 
 	// Retrieve
 	get(id: string): Observable<any> {
-		return this.http.get('api/eua/' + id);
+		return this.http.get(`api/eua/${id}`);
 	}
 
 	// Search Euas
 	search(query: any, search: string , paging: PagingOptions, options: any): Observable<any> {
-		return this.http.post('api/euas?' + this.stringUtils.urlEncode(paging.toObj()), {q: query, s: search, options: options});
+		return this.http.post(
+			'api/euas',
+			{q: query, s: search, options: options},
+			{ params: paging.toObj() }
+		);
 	}
 
 	// Update
 	update(eua: EndUserAgreement): Observable<any> {
-		return this.http.post('api/eua/' + eua.euaModel._id, eua.euaModel);
+		return this.http.post(`api/eua/${eua.euaModel._id}`, eua.euaModel);
 	}
 
 	// Delete
 	remove(id: string): Observable<any> {
-		return this.http.delete('api/eua/' + id);
+		return this.http.delete(`api/eua/${id}`);
 	}
 
 	publish(id: string): Observable<any> {
-		return this.http.post('api/eua/' + id + '/publish', {});
+		return this.http.post(`api/eua/${id}/publish`, {});
 	}
 
 }
