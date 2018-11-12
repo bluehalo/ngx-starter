@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import * as _ from 'lodash';
+import isArray from 'lodash/isArray';
+import keys from 'lodash/keys';
+import toString from 'lodash/toString';
 import { Observable, Subscription } from 'rxjs';
 
 import { User } from '../../auth/user.model';
@@ -40,7 +42,7 @@ export class AdminListUsersComponent {
 		roles: {show: true, title: 'Roles'}
 	};
 
-	columnKeys: string[] = _.keys(this.columns) as string[];
+	columnKeys: string[] = keys(this.columns) as string[];
 
 	columnMode: string = 'default';
 
@@ -74,13 +76,13 @@ export class AdminListUsersComponent {
 
 			// Clear cache if requested
 			let clearCachedFilter = params[`clearCachedFilter`];
-			if (_.toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
+			if (toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
 				this.adminUsersService.cache.listUsers = {};
 			}
 
 			this.configService.getConfig().subscribe(
 				(config: any) => {
-					this.requiredExternalRoles = _.isArray(config.requiredRoles) ? config.requiredRoles : [];
+					this.requiredExternalRoles = isArray(config.requiredRoles) ? config.requiredRoles : [];
 
 					this.initialize();
 					this.loadUsers();
@@ -145,6 +147,14 @@ export class AdminListUsersComponent {
 			this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
 		}
 		this.checkColumnConfiguration();
+	}
+
+	exportUserData() {
+		console.log('Export User Data coming soon...');
+	}
+
+	exportCurrentView() {
+		console.log('Export Current View coming soon...');
 	}
 
 	/**
@@ -237,4 +247,5 @@ export class AdminListUsersComponent {
 		}
 		return query;
 	}
+
 }

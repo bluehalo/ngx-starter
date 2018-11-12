@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {NavigationExtras, Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import * as _ from 'lodash';
+import assign from 'lodash/assign';
+import isEmpty from 'lodash/isEmpty';
 import { BehaviorSubject, Observable } from 'rxjs/index';
 import { tap } from 'rxjs/operators';
 
@@ -58,11 +59,11 @@ export class SessionService {
 		url = url.split('?')[0];
 
 		let queryParams = this.parseQueryParams(url);
-		if (!_.isEmpty(queryParams)) {
+		if (!isEmpty(queryParams)) {
 			if (null == extras) {
 				extras = {};
 			}
-			extras = _.assign(extras, { queryParams: queryParams });
+			extras = assign(extras, { queryParams: queryParams });
 		}
 
 		// Redirect the user
@@ -74,7 +75,7 @@ export class SessionService {
 
 		if (url && -1 !== url.indexOf('?')) {
 			let queryParamString = url.split('?')[1];
-			const paramSegments = (!_.isEmpty(queryParamString)) ? queryParamString.split('&') : [];
+			const paramSegments = (!isEmpty(queryParamString)) ? queryParamString.split('&') : [];
 			paramSegments.forEach((segment: string) => {
 				const keyValuePair = segment.split('=');
 				if (keyValuePair.length === 2) {

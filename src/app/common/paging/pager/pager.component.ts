@@ -1,6 +1,6 @@
 import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges } from '@angular/core';
 
-import { isNumber } from 'lodash';
+import isNumber from 'lodash/isNumber';
 
 import { SortDirection } from '../sorting.model';
 

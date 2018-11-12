@@ -14,6 +14,23 @@ This documentation will only discuss aspects that are unique to it.
 
 ## Development
 
+### NPM Scripts
+
+This starter application provides a number of NPM tools for ease of development. Following sections go into further detail on some of these scripts:
+
+npm run ... | Description
+--- | ---
+ng | Enters the Angular CLI.
+start | Start the app for development that will rebuild and reload as you change files.
+start:prod | Start the app for production by building assets into, and serving them from, the `./dist` directory.
+build | Runs a development build that will ensure all code compiles correctly.
+build:prod | Runs a production build that will output assets into the `./dist` directory.
+build:bundle-report | Builds for development and starts a Webpack Bundle Analyzer on local port 8888. Then, opens a browser to this port. Useful in identifying module optimizations.
+test | Run karma tests with a watcher that will update as you change files.
+test:ci | Runs karma tests once and outputs code coverage results upon successful execution.
+lint | Outputs a lint report to the console.
+e2e | Runs end-to-end tests once and outputs test results to the console.
+
 ### Running the Development Server
 `npm start` starts the development server.
 
