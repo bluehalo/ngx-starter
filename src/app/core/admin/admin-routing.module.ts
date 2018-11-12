@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
+import { AdminCreateEuaComponent, AdminListEuasComponent, AdminUpdateEuaComponent } from './end-user-agreement/admin-eua.module';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -35,6 +36,22 @@ import { AuthGuard } from '../auth/auth.guard';
 					{
 						path: 'user/:id',
 						component: AdminUpdateUserComponent
+					},
+
+					/**
+					 * Admin EUA Routes
+					 */
+					{
+						path: 'euas',
+						component: AdminListEuasComponent
+					},
+					{
+						path: 'eua',
+						component: AdminCreateEuaComponent
+					},
+					{
+						path: 'eua/:id',
+						component: AdminUpdateEuaComponent
 					}
 				]
 			}])
