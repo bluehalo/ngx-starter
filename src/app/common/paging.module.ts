@@ -33,7 +33,7 @@ import { DirectivesModule } from './directives.module';
 })
 export class PagingModule { }
 
-export { Pager, PageChange, PagingOptions, PagingResults, NULL_PAGING_RESULTS } from './paging/pager/pager.component';
+export { Pager, PageChange, PagingOptions, PagingComponent, PagingResults, NULL_PAGING_RESULTS } from './paging/pager/pager.component';
 export { SortDirection, SortDisplayOption } from './paging/sorting.model';
 export { SortControls, TableSortOptions } from './paging/sort-controls/sort-controls.component';
 export { SortableTableHeaderComponent, SortableTableHeader } from './paging/sortable-table-header/sortable-table-header.component';

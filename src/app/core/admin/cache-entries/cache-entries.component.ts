@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
@@ -7,7 +7,7 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { CacheEntry } from './cache-entry.model';
 import { CacheEntriesService } from './cache-entries.service';
-import { PagingOptions, SortDirection, SortDisplayOption, TableSortOptions } from '../../../common/paging.module';
+import { PagingComponent, PagingOptions, SortDirection, SortDisplayOption, TableSortOptions } from '../../../common/paging.module';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 
@@ -17,13 +17,11 @@ import { AdminTopics } from '../admin-topic.model';
 	selector: 'cache-entries',
 	templateUrl: './cache-entries.component.html'
 })
-export class CacheEntriesComponent {
+export class CacheEntriesComponent extends PagingComponent implements OnInit {
 
 	cacheEntries: any[] = [];
 
 	search: string = '';
-
-	pagingOpts: PagingOptions;
 
 	sortOpts: TableSortOptions = {
 		key: new SortDisplayOption('Key', 'key', SortDirection.asc),
@@ -34,7 +32,7 @@ export class CacheEntriesComponent {
 		private cacheEntriesService: CacheEntriesService,
 		private modalService: ModalService,
 		private bsModalService: BsModalService
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.pagingOpts = new PagingOptions();
@@ -44,19 +42,7 @@ export class CacheEntriesComponent {
 		this.loadCacheEntries();
 	}
 
-	applySearch() {
-		this.pagingOpts.setPageNumber(0);
-		this.loadCacheEntries();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadCacheEntries();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
+	loadData() {
 		this.loadCacheEntries();
 	}
 
@@ -129,6 +115,6 @@ export class CacheEntriesComponent {
 AdminTopics.registerTopic({
 	id: 'cache-entries',
 	title: 'Cache Entries',
-	ordinal: 1,
+	ordinal: 2,
 	path: 'cacheEntries'
 });
