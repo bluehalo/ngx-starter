@@ -157,4 +157,10 @@ export class AdminListEuasComponent implements OnInit {
 	}
 
 }
-AdminTopics.registerTopic('euas', 0);
+
+AdminTopics.registerTopic({
+	id: 'end-user-agreements',
+	title: 'EUAs',
+	ordinal: 0,
+	path: 'euas'
+});

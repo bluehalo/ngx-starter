@@ -1,27 +1,21 @@
 import values from 'lodash/values';
-import { StringUtils } from '../../common/string-utils.service';
 
 export class AdminTopic {
 	id: string;
+	ordinal?: number = 1;
+	path: string;
 	title: string;
 }
 
 export class AdminTopics {
-	private static topicOrder: any = {};
+	private static topics: { [s: string]: AdminTopic } = {};
 
-	static registerTopic(key: string, ordinal?: number) {
-		this.topicOrder[key] = { key: key, ordinal: ordinal };
-	}
-
-	static getTopicList(): string[] {
-		return values(this.topicOrder).sort((a, b) => a.ordinal - b.ordinal).map((v) => v.key);
+	static registerTopic(topic: AdminTopic) {
+		this.topics[topic.id] = topic;
 	}
 
 	static getTopics(): AdminTopic[] {
-		return AdminTopics.getTopicList().map((topic: string) => ({ id: topic, title: AdminTopics.getTopicTitle(topic, true) }));
+		return values(this.topics).sort((a, b) => a.ordinal - b.ordinal);
 	}
 
-	static getTopicTitle(title: string, short: boolean = false): string {
-		return StringUtils.hyphenToHuman(title);
-	}
 }

@@ -250,4 +250,10 @@ export class AdminListUsersComponent {
 	}
 
 }
-AdminTopics.registerTopic('users', 0);
+
+AdminTopics.registerTopic({
+	id: 'users',
+	title: 'User',
+	ordinal: 0,
+	path: 'users'
+});
