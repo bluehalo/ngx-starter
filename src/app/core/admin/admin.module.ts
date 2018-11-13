@@ -9,6 +9,8 @@ import { AdminUserModule } from './user-management/admin-user.module';
 import { AdminEuaModule } from './end-user-agreement/admin-eua.module';
 import { PagingModule } from '../../common/paging.module';
 
+import { AdminTopics } from './admin-topic.model';
+
 @NgModule({
 	imports: [
 		AdminRoutingModule,
@@ -23,10 +25,13 @@ import { PagingModule } from '../../common/paging.module';
 	],
 	exports: [],
 	declarations:   [
-		AdminComponent
+		AdminComponent,
 	],
 	providers:  [
+		AdminTopics,
 		AuthGuard
 	]
 })
 export class AdminModule { }
+export { AdminTopic, AdminTopics } from './admin-topic.model';
+export { AdminComponent } from './admin.component';

@@ -1,0 +1,73 @@
+<section class="modal-header">
+	<h1>
+		Give Feedback
+	</h1>
+</section>
+
+<section class="modal-body">
+	<div class="row form-group">
+		<label class="col-md-12">What type of feedback would you like to leave?</label>
+		<div class="col-md-12 col-sm-12 col-xs-12 pull-left btn-group" dropdown>
+			<button style="text-align: left;" type="button" class="form-control dropdown-toggle-secondary" dropdownToggle>
+				<span class="pull-left hide-overflow selected-option">{{ selectedOption.name }}</span>
+				<span class="pull-right">
+					<span class="caret"></span>
+				</span>
+			</button>
+
+			<ul *dropdownMenu class="dropdown-menu full-width-menu" role="menu">
+				<li *ngFor="let type of allTypeOption" (click)="selectedOption = type">
+					<a class="no-href">{{ type.name }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div *ngIf="classificationOptions" class="row form-group">
+		<label class="col-md-12">Select classification level for your feedback:</label>
+		<div class="col-md-12 col-sm-12 col-xs-12 pull-left btn-group" dropdown>
+			<button style="text-align: left;" type="button" class="form-control dropdown-toggle-secondary" dropdownToggle>
+				<span class="pull-left hide-overflow selected-option">{{ selectedClassification?.level }}</span>
+				<span class="pull-right">
+					<span class="caret"></span>
+				</span>
+			</button>
+
+			<ul *dropdownMenu class="dropdown-menu full-width-menu" role="menu">
+				<li *ngFor="let opt of classificationOptions" (click)="selectedClassification = opt">
+					<a class="no-href">{{ opt?.level }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<label class="col-md-12">{{ selectedOption.prompt }}</label>
+		<div class="col-md-12">
+			<textarea
+				style="max-width: 100%;"
+				class="form-control input-sm custom-control"
+				rows="5"
+				[(ngModel)]="feedbackText">
+			</textarea>
+		</div>
+	</div>
+</section>
+
+<section class="modal-footer">
+	<div class="row">
+		<div *ngIf="error" class="col-md-12 pull-right text-danger">
+			<strong>{{ error }}</strong>
+		</div>
+		<div *ngIf="success" class="col-md-12 pull-right text-success">
+			<strong>{{ success }}</strong>
+		</div>
+	</div>
+
+	<div class="row padding-top-5">
+		<div class="col-md-12 pull-right">
+			<button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+			<button class="btn btn-primary btn-spacing-right-aligned" [disabled]="submitting" (click)="submit()">Submit</button>
+		</div>
+	</div>
+</section>
