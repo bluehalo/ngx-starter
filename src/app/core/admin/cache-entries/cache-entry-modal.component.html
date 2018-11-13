@@ -1,15 +1,15 @@
 <section class="modal-header">
 	<h3>
-		<span>Cache Entry Details</span>
-		<span class="pull-right">
-				<a class="btn-icon no-href"
-				   (click)="modalRef.hide()"
-				   data-tooltip="Close"
-				   data-tooltip-placement="bottom">
-					<i class="fa fa-times"></i>
-				</a>
-			</span>
+		Cache Entry Details
 	</h3>
+	<span class="pull-right">
+		<button type="button" class="btn btn-link"
+			(click)="modalRef.hide()"
+			data-tooltip="Close"
+			data-tooltip-placement="bottom">
+			<span class="fa fa-times"></span>
+		</button>
+	</span>
 </section>
 
 <section class="modal-body">
@@ -28,5 +28,8 @@
 </section>
 
 <section class="modal-footer">
-	<button class="btn btn-link" (click)="modalRef.hide()">Close</button>
+	<button class="btn btn-outline-secondary" (click)="modalRef.hide()">
+		<span class="fa fa-times"></span>
+		Close
+	</button>
 </section>

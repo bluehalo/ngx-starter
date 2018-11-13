@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, TooltipModule } from 'ngx-bootstrap';
 
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 import { CacheEntriesService } from './cache-entries.service';
@@ -19,7 +19,8 @@ import { PipesModule } from '../../../common/pipes.module';
 		DirectivesModule,
 		FormsModule,
 		PagingModule,
-		PipesModule
+		PipesModule,
+		TooltipModule
 	],
 	entryComponents: [
 		CacheEntryModalComponent

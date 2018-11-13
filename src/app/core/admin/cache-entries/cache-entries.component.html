@@ -10,11 +10,11 @@
 		<div class="col-md-12">
 			<div class="input-group input-group-sm">
 				<input placeholder="Search key and value..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
-				<span class="input-group-btn">
-					<button class="btn btn-primary btn-sm" type="button" (click)="applySearch()">
-						<i class="fa fa-search"></i>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
+						<span class="fa fa-search"></span>
 					</button>
-				</span>
+				</div>
 			</div>
 		</div>
 	</div>
