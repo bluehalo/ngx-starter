@@ -2,40 +2,51 @@
 
 	<h3 class="page-header">
 		System Feedback
-
-		<div class="header-btns pull-right">
-			<button type="button" class="btn btn-primary pull-right" (click)="export()">
-				<i class="fa fa-download"></i> Export
-			</button>
-		</div>
 	</h3>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<pageable-table [items]="feedbacks" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
+	<div class="row padding-top-5">
+		<div class="col-md-12">
 
-		<ng-template named-template="table-header">
-			<th *ngFor="let header of headers">
-				<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
-			</th>
-		</ng-template>
+			<!-- Export -->
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<div class="btn-group pull-right dropdown">
+						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="export()">
+							<i class="fa fa-download"></i> Export
+						</button>
+					</div>
+				</div>
+			</div>
 
-		<ng-template named-template="table-row" let-feedback>
-			<td>{{ feedback?.creator?.name }}</td>
-			<td>{{ feedback?.creator?.email }}</td>
-			<td>{{ feedback?.type }}</td>
-			<td>{{ feedback?.body }}</td>
-			<td>{{ feedback?.url }}</td>
-			<td [tooltip]="feedback.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
-		</ng-template>
+			<pageable-table [items]="feedbacks" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
 
-		<ng-template named-template="empty-table">
-			<h3>
-				<small>No Feedback</small>
-			</h3>
-		</ng-template>
+				<ng-template named-template="table-header">
+					<th *ngFor="let header of headers">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					</th>
+				</ng-template>
 
-	</pageable-table>
+				<ng-template named-template="table-row" let-feedback>
+					<td>{{ feedback?.creator?.name }}</td>
+					<td>{{ feedback?.creator?.email }}</td>
+					<td>{{ feedback?.type }}</td>
+					<td>{{ feedback?.body }}</td>
+					<td>{{ feedback?.url }}</td>
+					<td [tooltip]="feedback.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
+				</ng-template>
+
+				<ng-template named-template="empty-table">
+					<h3>
+						<small>No Feedback</small>
+					</h3>
+				</ng-template>
+
+			</pageable-table>
+
+		</div>
+	</div>
 
 </section>

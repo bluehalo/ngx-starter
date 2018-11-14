@@ -13,6 +13,7 @@ import { ModalModule, ModalService } from '../../../common/modal.module';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 
 @NgModule({
 	imports: [
@@ -22,7 +23,8 @@ import { PipesModule } from '../../../common/pipes.module';
 		ModalModule,
 		PagingModule,
 		PipesModule,
-		RouterModule
+		RouterModule,
+		SystemAlertModule
 	],
 	exports: [
 	],

@@ -1,98 +1,125 @@
-import { Component, ViewChild } from '@angular/core';
-import { Response } from '@angular/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import cloneDeep from 'lodash/cloneDeep';
 import isArray from 'lodash/isArray';
-import keys from 'lodash/keys';
 import toString from 'lodash/toString';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
+
+import { PagingOptions, PagingResults, SortDirection, SortDisplayOption, SortableTableHeader } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 
 import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
-import { Pager, PagingOptions, SortDirection,
-	SortDisplayOption, SortControls, TableSortOptions } from '../../../common/paging.module';
 import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'
 })
-export class AdminListUsersComponent {
+export class AdminListUsersComponent implements OnDestroy, OnInit {
 
 	users: any[] = [];
+
+	pagingOpts: PagingOptions;
 
 	search: string = '';
 
 	// Columns to show/hide in user table
 	columns: any = {
-		name: {show: true, title: 'Name'},
-		username: {show: true, title: 'Username'},
-		_id: {show: false, title: 'ID'},
-		teams: {show: false, title: 'Teams'},
-		organization: {show: false, title: 'Organization'},
-		email: {show: false, title: 'Email'},
-		phone: {show: false, title: 'Phone'},
-		acceptedEua: {show: false, title: 'EUA'},
-		lastLogin: {show: true, title: 'Last Login'},
-		created: {show: false, title: 'Created'},
-		updated: {show: false, title: 'Updated'},
-		bypassAccessCheck: {show: false, title: 'Bypass AC'},
-		externalRoles: {show: false, title: 'External Roles'},
-		externalGroups: {show: false, title: 'External Groups'},
-		roles: {show: true, title: 'Roles'}
+		name: { show: true, display: 'Name' },
+		username: { show: true, display: 'Username' },
+		_id: { show: false, display: 'ID' },
+		// teams: { show: true, display: 'Teams' },
+		organization: { show: false, display: 'Organization' },
+		email: { show: false, display: 'Email' },
+		phone: { show: false, display: 'Phone' },
+		acceptedEua: { show: false, display: 'EUA' },
+		lastLogin: { show: true, display: 'Last Login' },
+		created: { show: false, display: 'Created' },
+		updated: { show: false, display: 'Updated' },
+		bypassAccessCheck: { show: false, display: 'Bypass AC' },
+		externalRoles: { show: false, display: 'External Roles' },
+		externalGroups: { show: false, display: 'External Groups' },
+		roles: { show: true, display: 'Roles' }
 	};
 
-	columnKeys: string[] = keys(this.columns) as string[];
+	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
 
-	columnMode: string = 'default';
+	headers: SortableTableHeader[] = [
+		{ name: 'Name', sortField: 'name', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Name', default: true },
+		{ name: 'Username', sortField: 'username', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Username' },
+		{ name: 'ID', sortField: '_id', sortable: false },
+		// { name: 'Teams', sortField: 'teams', sortable: false },
+		{ name: 'Organization', sortField: 'organization', sortable: false },
+		{ name: 'Email', sortField: 'email', sortable: false },
+		{ name: 'Phone', sortField: 'phone', sortable: false },
+		{ name: 'EUA', sortField: 'acceptedEua', sortable: false },
+		{ name: 'Last Login', sortField: 'lastLogin', sortable: false },
+		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Create Date' },
+		{ name: 'Updated', sortField: 'updated', sortable: false },
+		{ name: 'Bypass AC', sortField: 'bypassAccessCheck', sortable: false },
+		{ name: 'External Roles', sortField: 'externalRoles', sortable: false },
+		{ name: 'External Groups', sortField: 'externalGroups', sortable: false },
+		{ name: 'Roles', sortField: 'roles', sortable: false }
+	];
 
-	pagingOpts: PagingOptions;
+	headersToShow: SortableTableHeader[] = [];
 
-	sortOpts: TableSortOptions = {
-		name: new SortDisplayOption('Name', 'name', SortDirection.asc),
-		username: new SortDisplayOption('Username', 'username', SortDirection.asc),
-		created: new SortDisplayOption('Created', 'created', SortDirection.desc),
-		relevance: new SortDisplayOption('Relevance', 'score', SortDirection.desc)
-	};
-
-	filters: any;
+	quickFilters: any = {};
 
 	possibleRoles: Role[] = Role.ROLES;
 
-	private sub: Subscription;
-
-	private defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
-
 	private requiredExternalRoles: string[];
+
+	private destroy$: Subject<boolean> = new Subject();
 
 	constructor(
 		private route: ActivatedRoute,
 		private configService: ConfigService,
-		private adminUsersService: AdminUsersService
+		private adminUsersService: AdminUsersService,
+		private alertService: SystemAlertService
 	) {}
 
 	ngOnInit() {
-		this.sub = this.route.params.subscribe((params: Params) => {
+		this.route.params
+			.pipe(
+				takeUntil(this.destroy$)
+			).subscribe((params: Params) => {
+				// Clear any alerts
+				this.alertService.clearAllAlerts();
 
-			// Clear cache if requested
-			let clearCachedFilter = params[`clearCachedFilter`];
-			if (toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
-				this.adminUsersService.cache.listUsers = {};
-			}
+				// Clear cache if requested
+				let clearCachedFilter = params[`clearCachedFilter`];
+				if (toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
+					this.adminUsersService.cache.listUsers = {};
+				}
+			});
 
-			this.configService.getConfig().subscribe(
-				(config: any) => {
-					this.requiredExternalRoles = isArray(config.requiredRoles) ? config.requiredRoles : [];
+		this.configService.getConfig()
+			.pipe(
+				first(),
+				takeUntil(this.destroy$)
+			).subscribe(
+			(config: any) => {
+				this.requiredExternalRoles = isArray(config.requiredRoles) ? config.requiredRoles : [];
 
-					this.initialize();
-					this.loadUsers();
-				});
-		});
+				this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
+				this.initialize();
+				this.loadUsers();
+			});
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.destroy$.next(true);
+		this.destroy$.unsubscribe();
+	}
+
+	onSearch(search: string) {
+		this.search = search;
+		this.applySearch();
 	}
 
 	applySearch() {
@@ -116,46 +143,22 @@ export class AdminListUsersComponent {
 		const username = user.userModel.username;
 	}
 
-	checkColumnConfiguration() {
-			// Check first to see if all columns are turned on
-		this.columnMode = 'all';
-		this.columnKeys.some((name: string) => {
-			if (this.columns[name].show !== true) {
-				this.columnMode = 'custom';
-				return true;
-			}
-		});
-
-		if (this.columnMode === 'all') {
-			return;
-		}
-
-		// Check if our default columns are enabled
-		this.columnMode = 'default';
-		this.columnKeys.some( (name: string) => {
-			if (this.columns[name].show !== this.defaultColumns[name].show) {
-				this.columnMode = 'custom';
-				return true;
-			}
-		});
-	}
-
-	quickColumnSelect(selection: string) {
-		if (selection === 'all') {
-			this.columnKeys.forEach( (name: string) =>	this.columns[name].show = true);
-
-		} else if (selection === 'default') {
-			this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
-		}
-		this.checkColumnConfiguration();
-	}
-
 	exportUserData() {
 		console.log('Export User Data coming soon...');
 	}
 
 	exportCurrentView() {
 		console.log('Export Current View coming soon...');
+	}
+
+	columnsUpdated(updatedColumns: any) {
+		this.columns = cloneDeep(updatedColumns);
+		this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
+	}
+
+	quickFiltersUpdated(updatedFilters: any) {
+		this.quickFilters = cloneDeep(updatedFilters);
+		this.applySearch();
 	}
 
 	/**
@@ -165,71 +168,77 @@ export class AdminListUsersComponent {
 		let cachedFilter = this.adminUsersService.cache.listUsers;
 
 		this.search = cachedFilter.search ? cachedFilter.search : '';
-		this.filters = cachedFilter.filters ? cachedFilter.filters : {
-			bypassAC: false,
-			editorRole: false,
-			auditorRole: false,
-			adminRole: false,
-			pending: false
-		};
+		this.quickFilters = cachedFilter.filters ? cachedFilter.filters : this.getDefaultQuickFilters();
 
 		if (cachedFilter.paging) {
 			this.pagingOpts = cachedFilter.paging;
 		} else {
 			this.pagingOpts = new PagingOptions();
-			this.pagingOpts.sortField = this.sortOpts['name'].sortField;
-			this.pagingOpts.sortDir = this.sortOpts['name'].sortDir;
-		}
 
+			const defaultSort = this.headers.find((header: any) => header.default);
+			if (null != defaultSort) {
+				this.pagingOpts.sortField = defaultSort.sortField;
+				this.pagingOpts.sortDir = defaultSort.sortDir;
+			}
+		}
+	}
+
+	private getDefaultQuickFilters() {
+		let roles: any = {
+			bypassAC: { show: false, display: 'Bypass AC' },
+		};
+
+		Role.ROLES.forEach((role) => {
+			if (role.role !== 'user') {
+				roles[`${role.role}Role`] = {show: false, display: role.label};
+			}
+		});
+
+		roles.pending = { show: false, display: 'Pending' };
+
+		return roles;
 	}
 
 	private loadUsers() {
 		let options: any = {};
 
 		this.adminUsersService.cache.listUsers = {
-			filters: this.filters,
+			filters: this.quickFilters,
 			search: this.search,
 			paging: this.pagingOpts
 		};
 
-		let obs: Observable<Response> = this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options);
+		let obs: Observable<PagingResults> = this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options);
 
-		obs.subscribe(
-			(result: any) => {
-				if (result && Array.isArray(result.elements)) {
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
+		obs.subscribe((result: PagingResults) => {
+			this.users = result.elements;
 
-					// Set the user list
-					this.users = result.elements;
-
-				} else {
-					this.pagingOpts.reset();
-				}
-			},
-			(_err: any): any => null );
+			if (this.users.length > 0) {
+				this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
+			} else {
+				this.pagingOpts.reset();
+			}
+		});
 	}
 
 	private getQuery(): any {
 		let query: any;
 		let elements: any[] = [];
 
-		if (this.filters.bypassAC) {
+		if (this.quickFilters.bypassAC.show) {
 			elements.push({ bypassAccessCheck: true });
 		}
 
-		if (this.filters.editorRole) {
-			elements.push({ 'roles.editor': true });
-		}
+		Role.ROLES.forEach((role) => {
+			let filter = this.quickFilters[`${role.role}Role`];
+			if (filter != null && filter.show) {
+				let element = {};
+				element[`roles.${role.role}`] = true;
+				elements.push(element);
+			}
+		});
 
-		if (this.filters.auditorRole) {
-			elements.push({ 'roles.auditor': true });
-		}
-
-		if (this.filters.adminRole) {
-			elements.push({ 'roles.admin': true });
-		}
-
-		if (this.filters.pending) {
+		if (this.quickFilters.pending.show) {
 			let filter: any = {
 				$or: [ { 'roles.user': {$ne: true} } ]
 			};
