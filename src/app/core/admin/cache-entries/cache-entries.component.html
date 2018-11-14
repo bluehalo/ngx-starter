@@ -1,0 +1,60 @@
+<section>
+
+	<h3 class="page-header">
+		Cache Entries
+		<small>Administer Cache Entries</small>
+	</h3>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<!-- Search Input -->
+	<div class="row padding-top-5">
+		<div class="col-md-12">
+			<search-table placeholder="Search key and value..." (applySearch)="onSearch($event)"></search-table>
+		</div>
+	</div>
+
+	<pageable-table [items]="cacheEntries"
+		[pagingOptions]="pagingOpts"
+		(onPageChange)="goToPage($event)"
+		(onSortChange)="setSort($event)">
+
+		<ng-template named-template="table-header">
+			<th *ngFor="let header of headers">
+				<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+			</th>
+			<th>&nbsp;</th>
+		</ng-template>
+
+		<ng-template named-template="table-row" let-cacheEntry>
+			<td>{{cacheEntry.entry.key}}</td>
+			<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
+			<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
+			<td style="width: 120px;">
+				<div class="btn-group btn-group-sm pull-right">
+					<button title="View Entry" (click)="viewCacheEntry(cacheEntry)"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-eye"></span>
+					</button>
+					<button title="Refresh Entry" (click)="refreshCacheEntry(cacheEntry)" [disabled]="cacheEntry.isRefreshing"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-refresh"></span>
+					</button>
+					<button title="Delete Entry" (click)="confirmDeleteEntry(cacheEntry)"
+						type="button" class="btn btn-danger">
+						<span class="fa fa-trash-o"></span>
+					</button>
+				</div>
+			</td>
+		</ng-template>
+
+		<ng-template named-template="empty-table">
+			<h3>
+				<small>No Cache Entries matched your search</small>
+			</h3>
+		</ng-template>
+
+	</pageable-table>
+
+</section>

@@ -7,8 +7,8 @@ import toString from 'lodash/toString';
 import { Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
-import { PagingOptions, PagingResults, SortDirection, SortDisplayOption, SortableTableHeader } from '../../../common/paging.module';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
@@ -19,11 +19,9 @@ import { AdminTopics } from '../admin-topic.model';
 @Component({
 	templateUrl: './admin-list-users.component.html'
 })
-export class AdminListUsersComponent implements OnDestroy, OnInit {
+export class AdminListUsersComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	users: any[] = [];
-
-	pagingOpts: PagingOptions;
 
 	search: string = '';
 
@@ -81,7 +79,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private alertService: SystemAlertService
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.route.params
@@ -122,19 +120,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		this.applySearch();
 	}
 
-	applySearch() {
-		this.pagingOpts.setPageNumber(0);
-		this.loadUsers();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadUsers();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
+	loadData() {
 		this.loadUsers();
 	}
 
@@ -211,12 +197,12 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		let obs: Observable<PagingResults> = this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options);
 
 		obs.subscribe((result: PagingResults) => {
-			this.users = result.elements;
-
-			if (this.users.length > 0) {
+			if (result && Array.isArray(result.elements)) {
+				this.users = result.elements;
 				this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 			} else {
 				this.pagingOpts.reset();
+				this.users = [];
 			}
 		});
 	}
@@ -259,4 +245,10 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	}
 
 }
-AdminTopics.registerTopic('users', 0);
+
+AdminTopics.registerTopic({
+	id: 'users',
+	title: 'User',
+	ordinal: 0,
+	path: 'users'
+});

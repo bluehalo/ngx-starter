@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Subject } from 'rxjs';
 import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
@@ -8,20 +8,19 @@ import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 import cloneDeep from 'lodash/cloneDeep';
 import toString from 'lodash/toString';
 
+import { ModalAction, ModalService } from '../../../common/modal.module';
+import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
+
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
-import { ModalAction, ModalService } from '../../../common/modal.module';
-import { PagingOptions, PagingResults, SortDisplayOption, SortDirection, SortableTableHeader } from '../../../common/paging.module';
 import { AdminTopics } from '../admin-topic.model';
-import { SystemAlertService } from '../../../common/system-alert.module';
 
 @Component({
 	selector: 'admin-list-euas',
 	templateUrl: './admin-list-euas.component.html'
 })
-export class AdminListEuasComponent implements OnDestroy, OnInit {
-
-	pagingOpts: PagingOptions;
+export class AdminListEuasComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	euas: EndUserAgreement[] = [];
 
@@ -57,7 +56,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		private euaService: EuaService,
 		private route: ActivatedRoute,
 		private alertService: SystemAlertService
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -87,19 +86,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		this.applySearch();
 	}
 
-	applySearch() {
-		this.pagingOpts.setPageNumber(0);
-		this.loadEuas();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadEuas();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
+	loadData() {
 		this.loadEuas();
 	}
 
@@ -124,9 +111,10 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 			.subscribe(() => {
 				this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
 				this.loadEuas();
-			}, (response: Response) => {
+			},
+			(response: HttpErrorResponse) => {
 				if (response.status >= 400 && response.status < 500) {
-					this.alertService.addAlert(response.json().message);
+					this.alertService.addAlert(response.error.message);
 				}
 			});
 	}
@@ -137,9 +125,9 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 				this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
 				this.loadEuas();
 			},
-			(response: Response) => {
+			(response: HttpErrorResponse) => {
 				if (response.status >= 400 && response.status < 500) {
-					this.alertService.addAlert(response.json().message);
+					this.alertService.addAlert(response.error.message);
 				}
 			});
 		this.loadEuas();
@@ -192,4 +180,10 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	}
 
 }
-AdminTopics.registerTopic('euas', 0);
+
+AdminTopics.registerTopic({
+	id: 'end-user-agreements',
+	title: 'EUAs',
+	ordinal: 1,
+	path: 'euas'
+});

@@ -2,7 +2,7 @@ import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges
 
 import isNumber from 'lodash/isNumber';
 
-import { SortDirection } from '../sorting.model';
+import { SortDirection, SortDisplayOption } from '../sorting.model';
 
 export interface PagingResults {
 	pageNumber: number;
@@ -67,6 +67,30 @@ export class PagingOptions {
 			dir: this.sortDir || null
 		};
 	}
+}
+
+export abstract class PagingComponent {
+
+	pagingOpts: PagingOptions;
+
+	abstract loadData();
+
+	applySearch() {
+		this.pagingOpts.setPageNumber(0);
+		this.loadData();
+	}
+
+	goToPage(event: any) {
+		this.pagingOpts.update(event.pageNumber, event.pageSize);
+		this.loadData();
+	}
+
+	setSort(sortOpt: SortDisplayOption) {
+		this.pagingOpts.sortField = sortOpt.sortField;
+		this.pagingOpts.sortDir = sortOpt.sortDir;
+		this.loadData();
+	}
+
 }
 
 @Component({

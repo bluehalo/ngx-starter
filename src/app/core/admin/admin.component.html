@@ -3,7 +3,7 @@
 	<ul class="nav nav-tabs">
 		<li *ngFor="let topic of helpTopics" class="nav-item" role="presentation">
 			<a class="nav-link"
-			   [routerLink]="['/admin/' + topic.id, {clearCachedFilter: true}]"
+			   [routerLink]="['/admin/' + topic.path, {clearCachedFilter: true}]"
 			   routerLinkActive="active">
 				{{ topic.title }}
 			</a>

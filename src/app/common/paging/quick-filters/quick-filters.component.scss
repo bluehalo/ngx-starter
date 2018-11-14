@@ -14,8 +14,14 @@
 		line-height: 16px;
 	}
 
-	input {
+	input[type=checkbox] {
 		margin-right: 5px;
+
+		&:checked {
+			+ label {
+				@include font-bold(14px);
+			}
+		}
 	}
 
 	label {
