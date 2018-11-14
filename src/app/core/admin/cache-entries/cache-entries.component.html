@@ -39,10 +39,19 @@
 			<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
 			<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
 			<td style="width: 120px;">
-				<div class="pull-right">
-					<button title="View Entry" type="button" class="btn btn-default btn-sm" (click)="viewCacheEntry(cacheEntry)"><span class="fa fa-eye"></span></button>
-					<button title="Refresh Entry" type="button" class="btn btn-default btn-sm" [disabled]="cacheEntry.isRefreshing" (click)="refreshCacheEntry(cacheEntry)"><span class="fa fa-refresh"></span></button>
-					<button title="Delete Entry" type="button" class="btn btn-danger btn-sm" (click)="confirmDeleteEntry(cacheEntry)"><span class="fa fa-trash-o"></span></button>
+				<div class="btn-group btn-group-sm pull-right">
+					<button title="View Entry" (click)="viewCacheEntry(cacheEntry)"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-eye"></span>
+					</button>
+					<button title="Refresh Entry" (click)="refreshCacheEntry(cacheEntry)" [disabled]="cacheEntry.isRefreshing"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-refresh"></span>
+					</button>
+					<button title="Delete Entry" (click)="confirmDeleteEntry(cacheEntry)"
+						type="button" class="btn btn-danger">
+						<span class="fa fa-trash-o"></span>
+					</button>
 				</div>
 			</td>
 		</ng-template>
