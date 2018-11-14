@@ -9,16 +9,14 @@ import { keys, toString } from 'lodash';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ModalAction, ModalService } from '../../../common/modal.module';
-import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';
+import { PagingComponent, PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';
 import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	selector: 'admin-list-euas',
 	templateUrl: './admin-list-euas.component.html'
 })
-export class AdminListEuasComponent implements OnInit {
-
-	pagingOpts: PagingOptions;
+export class AdminListEuasComponent extends PagingComponent implements OnInit {
 
 	euas: EndUserAgreement[] = [];
 
@@ -48,7 +46,7 @@ export class AdminListEuasComponent implements OnInit {
 		private modalService: ModalService,
 		private euaService: EuaService,
 		private route: ActivatedRoute
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.route.params.subscribe( (params: Params) => {
@@ -62,19 +60,7 @@ export class AdminListEuasComponent implements OnInit {
 		this.loadEuas();
 	}
 
-	applySearch() {
-		this.pagingOpts.setPageNumber(0);
-		this.loadEuas();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadEuas();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
+	loadData() {
 		this.loadEuas();
 	}
 
@@ -157,4 +143,10 @@ export class AdminListEuasComponent implements OnInit {
 	}
 
 }
-AdminTopics.registerTopic('euas', 0);
+
+AdminTopics.registerTopic({
+	id: 'end-user-agreements',
+	title: 'EUAs',
+	ordinal: 1,
+	path: 'euas'
+});

@@ -1,0 +1,67 @@
+<section>
+
+	<h3 class="page-header">
+		Cache Entries
+		<small>Administer Cache Entries</small>
+	</h3>
+
+	<!-- Search Input -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group input-group-sm">
+				<input placeholder="Search key and value..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
+						<span class="fa fa-search"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<sort-controls [sortOptions]="sortOpts">
+	</sort-controls>
+
+	<pageable-table [items]="cacheEntries"
+		[pagingOptions]="pagingOpts"
+		(onPageChange)="goToPage($event)"
+		(onSortChange)="setSort($event)">
+
+		<ng-template named-template="table-header">
+			<th>Key</th>
+			<th>Value</th>
+			<th>Timestamp</th>
+			<th>&nbsp;</th>
+		</ng-template>
+
+		<ng-template named-template="table-row" let-cacheEntry>
+			<td>{{cacheEntry.entry.key}}</td>
+			<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
+			<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
+			<td style="width: 120px;">
+				<div class="btn-group btn-group-sm pull-right">
+					<button title="View Entry" (click)="viewCacheEntry(cacheEntry)"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-eye"></span>
+					</button>
+					<button title="Refresh Entry" (click)="refreshCacheEntry(cacheEntry)" [disabled]="cacheEntry.isRefreshing"
+						type="button" class="btn btn-outline-secondary">
+						<span class="fa fa-refresh"></span>
+					</button>
+					<button title="Delete Entry" (click)="confirmDeleteEntry(cacheEntry)"
+						type="button" class="btn btn-danger">
+						<span class="fa fa-trash-o"></span>
+					</button>
+				</div>
+			</td>
+		</ng-template>
+
+		<ng-template named-template="empty-table">
+			<h3>
+				<small>No Cache Entries matched your search</small>
+			</h3>
+		</ng-template>
+
+	</pageable-table>
+
+</section>

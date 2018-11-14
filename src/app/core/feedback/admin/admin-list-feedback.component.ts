@@ -76,4 +76,9 @@ export class AdminListFeedbackComponent implements OnInit {
 	}
 }
 
-AdminTopics.registerTopic('feedback', 0);
+AdminTopics.registerTopic({
+	id: 'feedback',
+	title: 'Feedback',
+	ordinal: 3,
+	path: 'feedback'
+});

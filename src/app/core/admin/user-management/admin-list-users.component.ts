@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -11,14 +11,14 @@ import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
-import { Pager, PagingOptions, SortDirection,
+import { Pager, PagingComponent, PagingOptions, SortDirection,
 	SortDisplayOption, SortControls, TableSortOptions } from '../../../common/paging.module';
 import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'
 })
-export class AdminListUsersComponent {
+export class AdminListUsersComponent extends PagingComponent implements OnInit {
 
 	users: any[] = [];
 
@@ -47,8 +47,6 @@ export class AdminListUsersComponent {
 
 	columnMode: string = 'default';
 
-	pagingOpts: PagingOptions;
-
 	sortOpts: TableSortOptions = {
 		name: new SortDisplayOption('Name', 'name', SortDirection.asc),
 		username: new SortDisplayOption('Username', 'username', SortDirection.asc),
@@ -70,7 +68,7 @@ export class AdminListUsersComponent {
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.sub = this.route.params.subscribe((params: Params) => {
@@ -95,19 +93,7 @@ export class AdminListUsersComponent {
 		this.sub.unsubscribe();
 	}
 
-	applySearch() {
-		this.pagingOpts.setPageNumber(0);
-		this.loadUsers();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadUsers();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
+	loadData() {
 		this.loadUsers();
 	}
 
@@ -250,4 +236,10 @@ export class AdminListUsersComponent {
 	}
 
 }
-AdminTopics.registerTopic('users', 0);
+
+AdminTopics.registerTopic({
+	id: 'users',
+	title: 'User',
+	ordinal: 0,
+	path: 'users'
+});

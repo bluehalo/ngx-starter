@@ -1,0 +1,35 @@
+<section class="modal-header">
+	<h3>
+		Cache Entry Details
+	</h3>
+	<span class="pull-right">
+		<button type="button" class="btn btn-link"
+			(click)="modalRef.hide()"
+			data-tooltip="Close"
+			data-tooltip-placement="bottom">
+			<span class="fa fa-times"></span>
+		</button>
+	</span>
+</section>
+
+<section class="modal-body">
+	<div class="row">
+		<div class="col-md-12">
+			<label>Key</label>
+			<div>{{ cacheEntry?.key}}</div>
+
+			<label>Last Updated</label>
+			<div>{{ cacheEntry?.date | utcDate }} ({{ cacheEntry?.date | agoDate:false }})</div>
+
+			<label>Value</label>
+			<pre>{{ cacheEntry?.value | json}}</pre>
+		</div>
+	</div>
+</section>
+
+<section class="modal-footer">
+	<button class="btn btn-outline-secondary" (click)="modalRef.hide()">
+		<span class="fa fa-times"></span>
+		Close
+	</button>
+</section>

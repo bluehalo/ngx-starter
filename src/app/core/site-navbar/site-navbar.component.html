@@ -93,7 +93,7 @@
 			<ng-template #adminNav>
 				<ul class="popover-menu" role="menu">
 					<li *ngFor="let adminItem of adminMenuItems">
-						<a [routerLink]="['admin/' + adminItem.id, { clearCachedFilter: true }]"
+						<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
 							(click)="adminNavPopover.hide()">
 							{{ adminItem.title }}
 						</a>

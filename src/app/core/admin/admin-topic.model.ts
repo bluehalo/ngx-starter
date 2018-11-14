@@ -1,27 +1,31 @@
+import isNil from 'lodash/isNil';
 import values from 'lodash/values';
-import { StringUtils } from '../../common/string-utils.service';
+import sortBy from 'lodash/sortBy';
 
 export class AdminTopic {
 	id: string;
+	ordinal?: number;
+	path: string;
 	title: string;
 }
 
 export class AdminTopics {
-	private static topicOrder: any = {};
+	private static topics: { [s: string]: AdminTopic } = {};
 
-	static registerTopic(key: string, ordinal?: number) {
-		this.topicOrder[key] = { key: key, ordinal: ordinal };
+	static clearTopics() {
+		this.topics = {};
 	}
 
-	static getTopicList(): string[] {
-		return values(this.topicOrder).sort((a, b) => a.ordinal - b.ordinal).map((v) => v.key);
+	static registerTopic(topic: AdminTopic) {
+		if (isNil(topic.ordinal)) {
+			topic.ordinal = 1;
+		}
+		this.topics[topic.id] = topic;
 	}
 
 	static getTopics(): AdminTopic[] {
-		return AdminTopics.getTopicList().map((topic: string) => ({ id: topic, title: AdminTopics.getTopicTitle(topic, true) }));
+		const topics = values(this.topics);
+		return sortBy(topics, ['ordinal', 'title', 'path']);
 	}
 
-	static getTopicTitle(title: string, short: boolean = false): string {
-		return StringUtils.hyphenToHuman(title);
-	}
 }
