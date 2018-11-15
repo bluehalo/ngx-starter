@@ -15,7 +15,7 @@
 				<div class="col-md-12 form-group">
 					<div class="btn-group pull-right dropdown">
 						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="export()">
-							<i class="fa fa-download"></i> Export
+							<span class="fa fa-download"></span> Export
 						</button>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 					<td>{{ feedback?.type }}</td>
 					<td>{{ feedback?.body }}</td>
 					<td>{{ feedback?.url }}</td>
-					<td [tooltip]="feedback.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
+					<td [tooltip]="feedback?.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
 				</ng-template>
 
 				<ng-template named-template="empty-table">
