@@ -1,0 +1,30 @@
+@import '../../../../styles/colors';
+@import '../../../../styles/typography';
+
+.quick-select {
+	margin-bottom: 1rem;
+	padding: 15px 15px 10px;
+
+	.collapsible {
+		cursor: pointer;
+	}
+
+	.quick-select-title {
+		@include font-bold(16px);
+		line-height: 16px;
+	}
+
+	input[type=checkbox] {
+		margin-right: 5px;
+
+		&:checked {
+			+ label {
+				@include font-bold(14px);
+			}
+		}
+	}
+
+	label {
+		margin-bottom: 0;
+	}
+}

@@ -1,0 +1,24 @@
+<div class="quick-select card">
+	<div>
+		<span class="collapsible" (click)="shown = !shown">
+			<span class="quick-select-title">
+				{{ title }}
+				<i class="fa fa-fw" [ngClass]="{ 'fa-caret-up': shown, 'fa-caret-down': !shown }"></i>
+			</span>
+		</span>
+	</div>
+
+	<div *ngIf="defaultFilters && shown">(
+		<a [class.selected]="columnMode==='default'" (click)="toggleQuickFilter('default')" tabindex="0">Default</a> /
+		<a [class.selected]="columnMode==='all'" (click)="toggleQuickFilter('all')" tabindex="0">All</a> ):
+	</div>
+
+	<div *ngIf="shown" class="quick-select-header">
+		<div *ngFor="let key of filterKeys">
+			<label class="checkbox-inline hide-overflow" tooltip="{{ filters[key].display }}">
+				<input type="checkbox" [ngModel]="filters[key].show" (ngModelChange)="toggleFilter$.next(key)">
+				<label (click)="toggleFilter$.next(key)">{{ filters[key].display }}</label>
+			</label>
+		</div>
+	</div>
+</div>

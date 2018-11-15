@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import isArray from 'lodash/isArray';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.module';
 import { User } from '../../auth/user.model';
 
 @Injectable()
@@ -17,29 +18,19 @@ export class AdminUsersService {
 
 	constructor(private http: HttpClient) {}
 
-	search(query: any, search: string, paging: PagingOptions, options: any): Observable<any> {
-		return Observable.create((observer: any) => {
-
-			const params = new HttpParams();
-			Object.keys(paging).forEach( (key) => params.set(key, paging[key]) );
-
-			const url = `api/admin/users?${params.toString()}`;
-			const body = { q: query, s: search, options: options };
-			this.http.post(url, body)
-				.subscribe(
-					(results: any) => {
-						if (null != results && isArray(results.elements)) {
-							results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
-						}
-						observer.next(results);
-					},
-					(err: any) => {
-						observer.error(err);
-					},
-					() => {
-						observer.complete();
-					});
-		});
+	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
+		return this.http.post(
+			'api/admin/users',
+			{ q: query, s: search, options: options },
+			{ params: paging.toObj() }
+		).pipe(
+			map((results: PagingResults) => {
+				if (null != results && isArray(results.elements)) {
+					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
+				}
+				return results;
+			})
+		);
 	}
 
 	removeUser(id: string) {

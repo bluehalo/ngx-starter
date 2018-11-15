@@ -12,65 +12,21 @@
 		<div class="col-md-2">
 
 			<!-- Quick Filters -->
-			<div class="card">
-				<div class="form-check form-check-inline">
-					<label class="form-check-label">Quick Filters:</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="filters.bypassAC" (ngModelChange)="applySearch()">
-					<label class="form-check-label" (click)="filters.bypassAC = !filters.bypassAC; applySearch()">Bypass AC</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="filters.editorRole" (ngModelChange)="applySearch()"/>
-					<label class="form-check-label">Editor</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="filters.auditorRole" (ngModelChange)="applySearch()"/>
-					<label class="form-check-label">Auditor</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="filters.adminRole" (ngModelChange)="applySearch()"/>
-					<label class="form-check-label">Admin</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="filters.pending" (ngModelChange)="applySearch()"/>
-					<label class="form-check-label">Pending</label>
-				</div>
-			</div>
+			<quick-filters [filters]="quickFilters" (filtersChange)="quickFiltersUpdated($event)"></quick-filters>
 
 			<!-- Column Selector -->
-			<div class="card margin-top-10" [hidden]="users.length === 0">
-				<span class="column-label">Columns (
-					<button class="btn btn-sm btn-link" type="button" [ngClass]="{selected: columnMode==='default'}" (click)="quickColumnSelect('default')">Default</button> /
-					<button class="btn btn-sm btn-link" type="button" [ngClass]="{selected: columnMode==='all'}" (click)="quickColumnSelect('all')">All</button> ):
-				</span>
-				<div class="form-check form-check-inline" *ngFor="let key of columnKeys">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="columns[key].show" (ngModelChange)="checkColumnConfiguration()">
-					<label class="form-check-label" (click)="columns[key].show = !columns[key].show; checkColumnConfiguration()">{{columns[key].title}}</label>
-				</div>
-			</div>
+			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
 
 		</div>
 
 		<div class="col-md-10">
 
 			<!-- Search Input -->
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group input-group-sm">
-						<input placeholder="Enter a search..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
-								<i class="fa fa-search"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<search-table placeholder="Search users..." (applySearch)="onSearch($event)"></search-table>
 
 			<!-- Export -->
-			<div class="row padding-top-10">
-				<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12 form-group">
 					<div class="btn-group pull-right dropdown" dropdown>
 						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><i class="fa fa-download"></i> Export </button>
 						<button type="button" class="btn btn-sm btn-outline-secondary" dropdownToggle>
@@ -84,17 +40,14 @@
 				</div>
 			</div>
 
-			<sort-controls
-				[sortOptions]="sortOpts">
-			</sort-controls>
-
 			<pageable-table [items]="users"
 				[pagingOptions]="pagingOpts"
-				(onPageChange)="goToPage($event)"
-				(onSortChange)="setSort($event)">
+				(onPageChange)="goToPage($event)">
 
 				<ng-template named-template="table-header">
-					<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>
+					<th *ngFor="let header of headersToShow">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					</th>
 					<th>&nbsp;</th>
 				</ng-template>
 
@@ -102,11 +55,11 @@
 					<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
 					<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
 					<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
-					<td [hidden]="!columns.teams.show">
-						<div class="hide-overflow" style="max-width: 300px;">
-							<span *ngFor="let team of user.userModel.teams; let last = last" [attr.title]="team._id">{{ teamMap[team._id] }}{{ last? '' : ', ' }}</span>
-						</div>
-					</td>
+					<!--<td [hidden]="!columns.teams.show">-->
+						<!--<div class="hide-overflow" style="max-width: 300px;">-->
+							<!--<span *ngFor="let team of user.userModel.teams; let last = last" [attr.title]="team._id">{{ teamMap[team._id] }}{{ last? '' : ', ' }}</span>-->
+						<!--</div>-->
+					<!--</td>-->
 					<td [hidden]="!columns.organization.show">{{user.userModel.organization}}</td>
 					<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
 					<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>

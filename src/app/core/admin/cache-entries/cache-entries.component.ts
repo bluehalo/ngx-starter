@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-
+import { BsModalService } from 'ngx-bootstrap';
 import { filter, first, switchMap } from 'rxjs/operators';
+
+import { ModalAction, ModalService } from '../../../common/modal.module';
+import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { CacheEntry } from './cache-entry.model';
 import { CacheEntriesService } from './cache-entries.service';
-import { PagingComponent, PagingOptions, SortDirection, SortDisplayOption, TableSortOptions } from '../../../common/paging.module';
-import { ModalAction, ModalService } from '../../../common/modal.module';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
-
 import { AdminTopics } from '../admin-topic.model';
 
 @Component({
@@ -23,23 +23,36 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 
 	search: string = '';
 
-	sortOpts: TableSortOptions = {
-		key: new SortDisplayOption('Key', 'key', SortDirection.asc),
-		timestamp: new SortDisplayOption('Timestamp', 'ts', SortDirection.desc)
-	};
+	headers: SortableTableHeader[] = [
+		{ name: 'Key', sortField: 'key', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Key', default: true },
+		{ name: 'Value', sortable: false },
+		{ name: 'Timestamp', sortField: 'ts', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Timestamp' }
+	];
 
 	constructor(
 		private cacheEntriesService: CacheEntriesService,
 		private modalService: ModalService,
-		private bsModalService: BsModalService
+		private bsModalService: BsModalService,
+		private alertService: SystemAlertService
 	) { super(); }
 
 	ngOnInit() {
+		this.alertService.clearAllAlerts();
+
 		this.pagingOpts = new PagingOptions();
-		this.pagingOpts.sortField = this.sortOpts['key'].sortField;
-		this.pagingOpts.sortDir = this.sortOpts['key'].sortDir;
+
+		const defaultSort = this.headers.find((header: any) => header.default);
+		if (null != defaultSort) {
+			this.pagingOpts.sortField = defaultSort.sortField;
+			this.pagingOpts.sortDir = defaultSort.sortDir;
+		}
 
 		this.loadCacheEntries();
+	}
+
+	onSearch(search: string) {
+		this.search = search;
+		this.applySearch();
 	}
 
 	loadData() {
@@ -59,10 +72,10 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 				})
 			)
 			.subscribe(() => {
-				// this.alertService.addAlert(`Deleted cache entry: ${entryToDelete.key}`, 'success');
+				this.alertService.addAlert(`Deleted cache entry: ${entryToDelete.key}`, 'success');
 				this.loadCacheEntries();
-			}, (response: Response) => {
-				// this.alertService.addAlert(response.json().message);
+			}, (response: HttpErrorResponse) => {
+				this.alertService.addAlert(response.error.message);
 			});
 	}
 
@@ -78,21 +91,19 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 		let key = cacheEntry.entry.key;
 		this.cacheEntriesService.refresh(key).subscribe(
 			() => {
-				// this.alertService.addAlert(`Refreshed cache entry: ${key}`, 'success');
+				this.alertService.addAlert(`Refreshed cache entry: ${key}`, 'success');
 				cacheEntry.isRefreshing = false;
 				this.applySearch();
-			},
-			(response: Response) => {
-				// this.alertService.addAlert(response.json().message);
+			}, (response: HttpErrorResponse) => {
+				this.alertService.addAlert(response.error.message);
 				cacheEntry.isRefreshing = false;
 			}
 		);
 	}
 
-
 	private loadCacheEntries() {
 		this.cacheEntriesService.match({}, this.search, this.pagingOpts).subscribe(
-			(result: any) => {
+			(result: PagingResults) => {
 				if (result && Array.isArray(result.elements)) {
 					this.cacheEntries = result.elements.map((element: any) => {
 						return {
@@ -105,8 +116,8 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 					this.pagingOpts.reset();
 				}
 			},
-			(response: Response) => {
-				// this.alertService.addAlert(response.json().message);
+			(response: HttpErrorResponse) => {
+				this.alertService.addAlert(response.error.message);
 			});
 	}
 

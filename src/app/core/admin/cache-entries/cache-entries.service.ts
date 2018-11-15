@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { PagingOptions } from '../../../common/paging.module';
-import { CacheEntry } from './cache-entry.model';
 
 @Injectable()
 export class CacheEntriesService {

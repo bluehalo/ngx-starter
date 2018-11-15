@@ -8,33 +8,17 @@
 		</button>
 	</h3>
 
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
 	<div class="row padding-top-5">
 		<div class="col-md-2">
 			<!-- Column Selector -->
-			<div class="card" [hidden]="euas.length === 0">
-				<span class="column-label">Columns</span>
-				<div class="form-check form-check-inline" *ngFor="let key of columnKeys">
-					<input class="form-check-input" type="checkbox" [(ngModel)]="columns[key].show">
-					<label class="form-check-label" (click)="columns[key].show = !columns[key].show;">{{columns[key].title}}</label>
-				</div>
-			</div>
+			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
 		</div>
 		<div class="col-md-10">
 			<!-- Search Input -->
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group input-group-sm">
-						<input placeholder="Enter a search..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
-								<span class="fa fa-search"></span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<sort-controls [sortOptions]="sortOpts"></sort-controls>
+			<search-table (applySearch)="onSearch($event)"></search-table>
 
 			<pageable-table [items]="euas"
 				[pagingOptions]="pagingOpts"
@@ -42,7 +26,9 @@
 				(onSortChange)="setSort($event)">
 
 				<ng-template named-template="table-header">
-					<th *ngFor="let key of columnKeys" [hidden]="!columns[key].show">{{columns[key].title}}</th>
+					<th *ngFor="let header of headersToShow">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					</th>
 					<th>&nbsp;</th>
 				</ng-template>
 

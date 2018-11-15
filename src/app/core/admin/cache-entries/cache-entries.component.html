@@ -5,22 +5,15 @@
 		<small>Administer Cache Entries</small>
 	</h3>
 
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
 	<!-- Search Input -->
-	<div class="row">
+	<div class="row padding-top-5">
 		<div class="col-md-12">
-			<div class="input-group input-group-sm">
-				<input placeholder="Search key and value..." type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch()">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button" (click)="applySearch()">
-						<span class="fa fa-search"></span>
-					</button>
-				</div>
-			</div>
+			<search-table placeholder="Search key and value..." (applySearch)="onSearch($event)"></search-table>
 		</div>
 	</div>
-
-	<sort-controls [sortOptions]="sortOpts">
-	</sort-controls>
 
 	<pageable-table [items]="cacheEntries"
 		[pagingOptions]="pagingOpts"
@@ -28,9 +21,9 @@
 		(onSortChange)="setSort($event)">
 
 		<ng-template named-template="table-header">
-			<th>Key</th>
-			<th>Value</th>
-			<th>Timestamp</th>
+			<th *ngFor="let header of headers">
+				<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+			</th>
 			<th>&nbsp;</th>
 		</ng-template>
 

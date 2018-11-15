@@ -11,6 +11,7 @@ import { CacheEntriesComponent } from './cache-entries.component';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 
 @NgModule({
 	imports: [
@@ -20,6 +21,7 @@ import { PipesModule } from '../../../common/pipes.module';
 		FormsModule,
 		PagingModule,
 		PipesModule,
+		SystemAlertModule,
 		TooltipModule
 	],
 	entryComponents: [
