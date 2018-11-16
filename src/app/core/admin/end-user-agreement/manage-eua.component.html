@@ -2,7 +2,7 @@
 
 	<!-- Show a breadcrumb to the list EUAs page -->
 	<a class="back-link" [routerLink]="['/admin/euas']">
-		<i class="fa fa-angle-double-left"></i> Back to EUAs
+		<span class="fa fa-angle-double-left"></span> Back to EUAs
 	</a>
 
 	<form novalidate name="euaForm" autocomplete="off" class="form-horizontal" role="form"
@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="col-md-12 form-group" *ngIf="error">
-			<div class="pull-right">
+			<div class="float-right">
 				<div class="text-danger">
 					<strong>{{error}}</strong>
 				</div>
@@ -50,9 +50,9 @@
 		</div>
 
 		<div class="col-md-12 form-group">
-			<div class="pull-right">
+			<div class="float-right">
 				<button type="submit" class="btn btn-primary" (click)="submitEua()">{{submitText}}</button>
-				<button type="button" class="btn btn-default" (click)="previewEua()">Preview</button>
+				<button type="button" class="btn btn-secondary" (click)="previewEua()">Preview</button>
 				<a type="button" class="btn btn-link" [routerLink]="['/admin/euas']">Cancel</a>
 			</div>
 		</div>

@@ -9,12 +9,12 @@
 					<!-- Paging -->
 					<div [hidden]="items?.length === 0">
 						<div class="paging-controls">
-							<div class="pull-right" style="margin-left: 10px;" *ngIf="refreshable">
+							<div class="float-right" style="margin-left: 10px;" *ngIf="refreshable">
 								<a class="btn-link no-href" (click)="onRefresh.emit()">
-									<i class="fa fa-refresh"></i><span> Refresh</span>
+									<span class="fa fa-refresh"></span><span> Refresh</span>
 								</a>
 							</div>
-							<div class="pull-right">
+							<div class="float-right">
 								<asy-pager
 									[pageNumber]="pagingOptions?.pageNumber"
 									[pageSize]="pagingOptions?.pageSize"
@@ -54,7 +54,7 @@
 				<!-- Bottom Paging Controls -->
 				<div class="row padding-top-5" *ngIf="pagerAtBottom && !pagedPastAllowed">
 					<div class="col-md-12">
-						<div class="pull-right">
+						<div class="float-right">
 							<asy-pager
 								[pageNumber]="pagingOptions?.pageNumber"
 								[pageSize]="pagingOptions?.pageSize"
@@ -69,7 +69,7 @@
 				</div>
 
 				<div class="row" [ngClass]="{'padding-top-10' : null != actionTemplate}" *ngIf="pagedPastAllowed">
-					<div class="col-md-12 center">
+					<div class="col-md-12 text-center">
 						<h4>You can only page through the first {{ maxAllowed }} results</h4>
 					</div>
 				</div>
@@ -85,11 +85,11 @@
 
 			<section *ngIf="!loading" class="card card-message">
 				<div class="row">
-					<div class="col-md-6 offset-md-3 center">
+					<div class="col-md-6 offset-md-3 text-center">
 						<ng-template [transclusion]="emptyTableTemplate"></ng-template>
 					</div>
 
-					<div class="padding-top-10 col-md-12 pull left">
+					<div class="padding-top-10 col-md-12 float-left">
 						<ng-template [transclusion]="footerTemplate"></ng-template>
 					</div>
 				</div>

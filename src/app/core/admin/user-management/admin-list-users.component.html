@@ -3,8 +3,8 @@
 	<h3 class="page-header">
 		Users
 		<small>Administer User Accounts</small>
-		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary pull-right">
-			<i class="fa fa-user-plus"></i> Create User
+		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary float-right">
+			<span class="fa fa-user-plus"></span> Create User
 		</button>
 	</h3>
 
@@ -27,14 +27,14 @@
 			<!-- Export -->
 			<div class="row">
 				<div class="col-md-12 form-group">
-					<div class="btn-group pull-right dropdown" dropdown>
-						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><i class="fa fa-download"></i> Export </button>
+					<div class="btn-group float-right dropdown" dropdown>
+						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
 						<button type="button" class="btn btn-sm btn-outline-secondary" dropdownToggle>
-							<i class="fa fa-caret-down"></i>
+							<span class="fa fa-caret-down"></span>
 						</button>
-						<ul *dropdownMenu class="dropdown-menu" role="menu">
-							<li><a (click)="exportCurrentView()">Export Current View</a></li>
-							<li><a (click)="exportUserData()">Export Single Field</a></li>
+						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
+							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
 						</ul>
 					</div>
 				</div>
@@ -68,8 +68,8 @@
 					<td [hidden]="!columns.created.show">{{user.userModel.created | agoDate:false}}</td>
 					<td [hidden]="!columns.updated.show">{{user.userModel.updated | agoDate:false}}</td>
 
-					<td [hidden]="!columns.bypassAccessCheck.show" class="center">
-						<i class="fa fa-fw" disabled [ngClass]="{'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></i>
+					<td [hidden]="!columns.bypassAccessCheck.show" class="text-center">
+						<span class="fa fa-fw" disabled [ngClass]="{'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></span>
 					</td>
 
 					<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
@@ -81,14 +81,14 @@
 									type="button" class="btn btn-sm btn-outline-secondary" disabled
 									[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
 									[attr.title]="role.description">
-								<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></i>
+								<span class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></span>
 								{{role.label}}
 							</button>
 						</div>
 					</td>
 
 					<td style="min-width: 80px;max-width: 80px;">
-						<div class="btn-group btn-group-sm pull-right">
+						<div class="btn-group btn-group-sm float-right">
 							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-outline-secondary">
 								<span class="fa fa-edit"></span>
 							</button>

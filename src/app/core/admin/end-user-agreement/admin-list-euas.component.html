@@ -3,7 +3,7 @@
 	<h3 class="page-header">
 		EUAs
 		<small>Administer End User Agreements</small>
-		<button [routerLink]="['/admin/eua']" type="button" class="btn btn-sm btn-primary pull-right">
+		<button [routerLink]="['/admin/eua']" type="button" class="btn btn-sm btn-primary float-right">
 			<span class="fa fa-plus"></span> Create EUA
 		</button>
 	</h3>
@@ -45,7 +45,7 @@
 					<td [hidden]="!columns.published.show">{{ eua.euaModel.published | utcDate }}</td>
 
 					<td style="width: 120px;">
-						<div class="btn-group btn-group-sm pull-right">
+						<div class="btn-group btn-group-sm float-right">
 							<button title="Edit" [routerLink]="['/admin/eua',eua.euaModel._id]"
 								type="button" class="btn btn-outline-secondary">
 								<span class="fa fa-edit"></span>

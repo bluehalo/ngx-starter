@@ -23,17 +23,22 @@ ul.dropdown-menu {
 	padding: 0;
 	margin: 0;
 
-	li > a.dropdown-item {
-		border-bottom: 1px solid $dropdown-border-color;
-		padding: 10px 24px;
+	&.full-width-menu {
+		margin-left: 15px;
+		width: calc(100% - 30px);
+	}
 
-		&last-of-type {
-			border-bottom: none;
-		}
+	li > a.dropdown-item {
+		padding: 10px 24px;
 
 		&:hover {
 			background-color: $dropdown-element-hover-background-color;
 			cursor: pointer;
+		}
+
+
+		&:active {
+			color: inherit;
 		}
 	}
 }

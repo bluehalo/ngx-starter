@@ -2,7 +2,7 @@
 
 	<!-- Show a breadcrumb to the list users page -->
 	<a *ngIf="mode === 'admin-edit' || mode === 'admin-create'" class="back-link" routerLink="/admin/users">
-		<i class="fa fa-angle-double-left"></i> Back to Users
+		<span class="fa fa-angle-double-left"></span> Back to Users
 	</a>
 
 	<form *ngIf="user" #form="ngForm" (ngSubmit)="submit()" autocomplete="off" class="form-horizontal" role="form" novalidate >
@@ -13,7 +13,7 @@
 				<small>{{subtitle}}</small>
 
 				<!-- Show control to re-sync the user's cache when proxy-pki is the auth strategy -->
-				<button [disabled]="refreshing" *ngIf="proxyPki && mode === 'edit'" (click)="refreshCredentials()" class="btn btn-default btn-sm pull-right">
+				<button [disabled]="refreshing" *ngIf="proxyPki && mode === 'edit'" (click)="refreshCredentials()" class="btn btn-primary btn-sm float-right">
 					<span class="fa fa-refresh"></span> Refresh User Credentials
 				</button>
 			</h3>
@@ -91,7 +91,7 @@
 						<button type="button" class="btn"
 								[ngClass]="{ 'btn-selected': user.userModel.bypassAccessCheck, 'btn-unselected': !user.userModel.bypassAccessCheck }" title="Bypass Access Check"
 								btnCheckbox name="bypassAccessCheck" [(ngModel)]="user.userModel.bypassAccessCheck" (ngModelChange)="bypassAccessCheck()">
-							<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></i>
+							<span class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></span>
 							Bypass Access Check
 						</button>
 					</div>
@@ -132,7 +132,7 @@
 							[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
 							[attr.title]="role.description"
 							[(ngModel)]="user.userModel.roles[role.role]" btnCheckbox>
-						<i class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></i>
+						<span class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></span>
 						{{role.label}}
 					</button>
 				</div>
@@ -141,8 +141,8 @@
 
 		<div class="form-group row">
 			<div class="col-md-12">
-				<div class="pull-right">
-					<button type="submit" class="btn btn-default" [disabled]="okDisabled || !form.form.valid">{{ okButtonText }}</button>
+				<div class="float-right">
+					<button type="submit" class="btn btn-primary" [disabled]="okDisabled || !form.form.valid">{{ okButtonText }}</button>
 					<a type="button" class="btn btn-link" *ngIf="mode === 'signup'" routerLink="/signin">or Sign In</a>
 					<a type="button" class="btn btn-link" *ngIf="mode === 'admin-create' || mode === 'admin-edit'" routerLink="/admin/users">Cancel</a>
 				</div>
