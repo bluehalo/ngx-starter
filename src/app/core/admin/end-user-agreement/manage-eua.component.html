@@ -49,11 +49,11 @@
 			</div>
 		</div>
 
-		<div class="col-md-12 form-group">
-			<div class="float-right">
-				<button type="submit" class="btn btn-primary" (click)="submitEua()">{{submitText}}</button>
-				<button type="button" class="btn btn-secondary" (click)="previewEua()">Preview</button>
-				<a type="button" class="btn btn-link" [routerLink]="['/admin/euas']">Cancel</a>
+		<div class="col-md-12">
+			<div class="btn-group float-right">
+				<button type="button" class="btn btn-link" [routerLink]="['/admin/euas']">Cancel</button>
+				<button type="button" class="btn btn-outline-secondary" (click)="previewEua()">Preview</button>
+				<button type="button" class="btn btn-primary" (click)="submitEua()">{{submitText}}</button>
 			</div>
 		</div>
 	</form>
