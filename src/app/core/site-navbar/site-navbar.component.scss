@@ -63,7 +63,7 @@
 				text-decoration: none;
 			}
 
-			> i.fa {
+			> span.fa {
 				font-size: $nav-element-icon-size;
 				margin-left: $nav-element-icon-margin-left;
 			}
@@ -77,7 +77,7 @@
 				background-color: $nav-element-active-background-color;
 				border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
 
-				> i.fa {
+				> span.fa {
 					margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
 				}
 			}

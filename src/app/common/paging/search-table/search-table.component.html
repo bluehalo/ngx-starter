@@ -4,7 +4,7 @@
 			<input [placeholder]="placeholder" type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch.emit(search)">
 			<span class="input-group-append">
 				<button class="btn btn-outline-secondary" type="button" (click)="applySearch.emit(search)">
-					<i class="fa fa-search"></i>
+					<span class="fa fa-search"></span>
 				</button>
 			</span>
 		</div>
