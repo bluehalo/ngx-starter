@@ -1,0 +1,52 @@
+<section>
+
+	<h3 class="page-header">
+		System Feedback
+	</h3>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<div class="row padding-top-5">
+		<div class="col-md-12">
+
+			<!-- Export -->
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<div class="btn-group float-right dropdown">
+						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="export()">
+							<span class="fa fa-download"></span> Export
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<pageable-table [items]="feedbacks" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
+
+				<ng-template named-template="table-header">
+					<th *ngFor="let header of headers">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					</th>
+				</ng-template>
+
+				<ng-template named-template="table-row" let-feedback>
+					<td>{{ feedback?.creator?.name }}</td>
+					<td>{{ feedback?.creator?.email }}</td>
+					<td>{{ feedback?.type }}</td>
+					<td>{{ feedback?.body }}</td>
+					<td>{{ feedback?.url }}</td>
+					<td [tooltip]="feedback?.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
+				</ng-template>
+
+				<ng-template named-template="empty-table">
+					<h3>
+						<small>No Feedback</small>
+					</h3>
+				</ng-template>
+
+			</pageable-table>
+
+		</div>
+	</div>
+
+</section>

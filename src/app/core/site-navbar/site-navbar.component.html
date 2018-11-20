@@ -29,7 +29,7 @@
 			   [isDisabled]="navbarOpen"
 			   routerLinkActive="active-link"
 			   routerLink="/explore">
-				<i class="fa fa-fw fa-compass"></i>
+				<span class="fa fa-fw fa-compass"></span>
 				<span [hidden]="!navbarOpen">Explore</span>
 			</a>
 		</li>
@@ -40,7 +40,7 @@
 			   [isDisabled]="navbarOpen"
 			   routerLinkActive="active-link"
 			   routerLink="/search">
-				<i class="fa fa-fw fa-search"></i>
+				<span class="fa fa-fw fa-search"></span>
 				<span [hidden]="!navbarOpen">Search</span>
 			</a>
 		</li>
@@ -61,7 +61,7 @@
 			   [outsideClick]="true"
 			   (onShown)="userNavOpen = true;"
 			   (onHidden)="userNavOpen = false;">
-				<i class="fa fa-fw fa-user-circle"></i>
+				<span class="fa fa-fw fa-user-circle"></span>
 				<span [hidden]="!navbarOpen">{{ session?.name }}</span>
 			</a>
 
@@ -71,6 +71,33 @@
 					<!-- User Signout -->
 					<li [hidden]="pki"><a href="/auth/signout">Sign out</a></li>
 
+				</ul>
+			</ng-template>
+		</li>
+
+		<!-- Admin Nav	-->
+		<!-- TODO Only show the admin navigation when the user is determined to be an admin -->
+		<li class="element nav-popover nav-popover-bottom"
+			*ngIf="null != session">
+			<a [ngClass]="{'highlight-link': adminNavOpen}"
+			[popover]="adminNav"
+			#adminNavPopover="bs-popover"
+			placement="right"
+			[outsideClick]="true"
+			(onShown)="adminNavOpen = true;"
+			(onHidden)="adminNavOpen = false;">
+				<span class="fa fa-fw fa-cog"></span>
+				<span [hidden]="!navbarOpen">Admin</span>
+			</a>
+
+			<ng-template #adminNav>
+				<ul class="popover-menu" role="menu">
+					<li *ngFor="let adminItem of adminMenuItems">
+						<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
+							(click)="adminNavPopover.hide()">
+							{{ adminItem.title }}
+						</a>
+					</li>
 				</ul>
 			</ng-template>
 		</li>
@@ -85,7 +112,7 @@
 			   [outsideClick]="true"
 			   (onShown)="helpNavOpen = true;"
 			   (onHidden)="helpNavOpen = false;">
-				<i class="fa fa-fw fa-question-circle"></i>
+				<span class="fa fa-fw fa-question-circle"></span>
 				<span [hidden]="!navbarOpen">Help</span>
 			</a>
 
@@ -97,6 +124,10 @@
 						<a routerLink="/help"
 						   (click)="helpNavPopover.hide()">Help Docs</a>
 					</li>
+
+					<!-- Feedback -->
+					<li><a class="link"
+						(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
 
 					<!-- About -->
 					<li>
@@ -115,9 +146,9 @@
 		<li class="element "
 				(click)="toggleNavbar()">
 			<a>
-				<i class="fa fa-fw"
+				<span class="fa fa-fw"
 				   [class.fa-angle-double-right]="!navbarOpen"
-				   [class.fa-angle-double-left]="navbarOpen"></i>
+				   [class.fa-angle-double-left]="navbarOpen"></span>
 				<span [hidden]="!navbarOpen">Collapse</span>
 			</a>
 		</li>

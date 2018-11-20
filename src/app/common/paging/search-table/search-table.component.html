@@ -1,0 +1,12 @@
+<div class="row">
+	<div class="col-md-12 form-group">
+		<div class="input-group input-group-sm">
+			<input [placeholder]="placeholder" type="text" class="form-control" [(ngModel)]="search" (keyup.enter)="applySearch.emit(search)">
+			<span class="input-group-append">
+				<button class="btn btn-outline-secondary" type="button" (click)="applySearch.emit(search)">
+					<span class="fa fa-search"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>

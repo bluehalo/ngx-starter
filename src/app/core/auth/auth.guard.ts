@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import * as _ from 'lodash';
+import get from 'lodash/get';
 
 import { Observable, of } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
 
 		// Default to requiring authentication if guard is present
 		let requiresAuthentication: boolean = true;
-		if (_.get(route, 'data.requiresAuthentication', true) === false) {
+		if (get(route, 'data.requiresAuthentication', true) === false) {
 			requiresAuthentication = false;
 		}
 

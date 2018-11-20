@@ -1,0 +1,10 @@
+<div [ngSwitch]="showBreadcrumbs">
+	<div *ngSwitchCase="false" class="header">{{ _homeBreadcrumb?.label }}</div>
+	<div *ngSwitchCase="true" class="header">
+		<span *ngFor="let b of breadcrumbs; let last = last" class="header-breadcrumb">
+			<a *ngIf="!last" [routerLink]="[b.url]">{{ b?.label }}</a>
+			<span *ngIf="last">{{ b?.label }}</span>
+			<span *ngIf="!last" class="header-breadcrumb-separator"> > </span>
+		</span>
+	</div>
+</div>

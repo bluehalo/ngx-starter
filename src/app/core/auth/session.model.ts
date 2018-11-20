@@ -1,3 +1,3 @@
 export class Session {
-	name: string
+	name: string;
 }

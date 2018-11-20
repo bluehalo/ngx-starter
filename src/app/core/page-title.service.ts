@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
-import * as _ from 'lodash';
+import capitalize from 'lodash/capitalize';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { of } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
@@ -21,10 +23,10 @@ export class PageTitleService {
 	init() {
 
 		this.configService.getConfig().subscribe((config) => {
-			let appTitle = _.get(config, 'app.title', null);
+			let appTitle = get(config, 'app.title', null);
 
 			this.router.events.pipe(
-				filter(event => event instanceof NavigationEnd),
+				filter((event) => event instanceof NavigationEnd),
 				map(() => this.activatedRoute),
 				map((route) => {
 					// Get to the leaf route
@@ -43,11 +45,11 @@ export class PageTitleService {
 						if (null == pathTitle) {
 							pathTitle = this.router.url.split('/')
 								.slice(1)
-								.map((frag) => _.capitalize(frag))
+								.map((frag) => capitalize(frag))
 								.join(' > ');
 						}
 
-						if (_.isEmpty(appTitle) || _.isEmpty(pathTitle)) {
+						if (isEmpty(appTitle) || isEmpty(pathTitle)) {
 							return `${appTitle}${pathTitle}`;
 						}
 						else {

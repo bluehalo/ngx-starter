@@ -1,0 +1,10 @@
+<span *ngIf="header" class="sortable-table-header hide-overflow limit-width-cell" [ngClass]="{'sortable': sortable}" tooltip="{{ sortable ? header.tooltip : ''}}" (click)="sort()" placement="top" container="body">
+	{{ header?.name }}
+	<ng-container *ngIf="sortable">
+		<ng-container *ngIf="currentSortField === header.sortField">
+			<span *ngIf="currentSortDir === 'DESC'" class="fa fa-lg fa-sort-desc"></span>
+			<span *ngIf="currentSortDir === 'ASC'" class="fa fa-lg fa-sort-asc"></span>
+		</ng-container>
+		<span *ngIf="currentSortField !== header.sortField" class="fa fa-sort"></span>
+	</ng-container>
+</span>

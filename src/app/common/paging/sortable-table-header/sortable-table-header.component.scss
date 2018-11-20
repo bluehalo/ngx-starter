@@ -1,0 +1,29 @@
+@import '../../site/shared/fonts';
+
+table {
+	&.mean2starter {
+		th {
+			@include font-bold(16px, $color-text, 18px);
+
+			.sortable-table-header {
+				@include font-bold(16px, $color-text, 18px);
+
+				&.sortable {
+					&:hover {
+						cursor: pointer;
+					}
+				}
+
+				.fa-sort-desc {
+					position: relative;
+					top: -5px;
+				}
+
+				.fa-sort-asc {
+					position: relative;
+					top: 5px;
+				}
+			}
+		}
+	}
+}

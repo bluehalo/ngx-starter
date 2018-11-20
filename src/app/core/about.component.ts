@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as _ from 'lodash';
+import get from 'lodash/get';
 
 import { ConfigService } from './config.service';
 import { Config } from './config.model';
@@ -31,7 +31,7 @@ export class AboutComponent implements OnInit {
 
 	ngOnInit() {
 		this.configService.getConfig().subscribe((config: Config) => {
-			this.appTitle = _.get(config, 'app.title', '');
+			this.appTitle = get(config, 'app.title', '');
 			this.version = config.version;
 		});
 	}

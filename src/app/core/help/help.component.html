@@ -1,0 +1,25 @@
+<div class="help-content landing-page">
+	<breadcrumb [homeBreadcrumb]="homeBreadcrumb"></breadcrumb>
+
+	<div class="row">
+		<div class="col-sm-2 help-menu" role="complementary">
+			<nav class="card">
+				<ul class="nav nav-stacked">
+					<li *ngFor="let topic of helpTopics" role="presentation">
+						<a class="no-href btn-link" routerLinkActive="topic-selected" [routerLink]="['/help/' + topic.id]">{{ topic.title }}</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-sm-10 help-main" role="main">
+			<!-- Title -->
+			<div *ngIf="null != title" class="site-title">{{ title }}</div>
+
+			<!-- Content -->
+			<section class="card">
+				<router-outlet></router-outlet>
+			</section>
+		</div>
+	</div>
+</div>

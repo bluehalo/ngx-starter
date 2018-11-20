@@ -1,0 +1,19 @@
+@import '../../../styles/colors';
+@import '../../../styles/typography';
+
+.header {
+	@include font-bold(14px);
+	line-height: 14px;
+	background-color: $color-white;
+	height: 54px;
+	padding-left: 20px;
+	padding-top: 20px;
+
+	.header-breadcrumb {
+
+		.header-breadcrumb-separator {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+}

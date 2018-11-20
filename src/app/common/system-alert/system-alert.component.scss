@@ -1,0 +1,64 @@
+@import '../../site/shared/colors';
+@import '../../site/shared/fonts';
+@import '../../site/scss/site-shared';
+
+alert {
+	.alert {
+		.alert-icon {
+			margin-left: -5px;
+			margin-right: 5px;
+
+			.fa-fw {
+				font-size: 30px;
+			}
+		}
+
+		.system-alert-message {
+			@include font-normal(16px, $color-text, 18px);
+		}
+
+		.system-alert-subtext {
+			@include font-normal(12px, $color-text, 20px);
+		}
+
+		&.alert-success {
+			@include border($color-alert-success, 2px, 3px);
+			background: $color-white;
+
+			.alert-icon {
+				.fa-fw {
+					color: $color-alert-success;
+				}
+			}
+		}
+
+		&.alert-danger {
+			@include border($color-alert-error, 2px, 3px);
+			background: $color-white;
+
+			.alert-icon {
+				.fa-fw {
+					color: $color-alert-error;
+				}
+			}
+		}
+
+		&.alert-warning {
+			@include border($color-alert-warning, 2px, 3px);
+			background: $color-white;
+
+			.alert-icon {
+				.fa-fw {
+					color: $color-alert-warning;
+				}
+			}
+		}
+
+		button {
+			&.close {
+				color: $color-text;
+				opacity: 1;
+			}
+		}
+	}
+}

@@ -1,0 +1,112 @@
+<section>
+
+	<h3 class="page-header">
+		Users
+		<small>Administer User Accounts</small>
+		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary float-right">
+			<span class="fa fa-user-plus"></span> Create User
+		</button>
+	</h3>
+
+	<div class="row padding-top-5">
+		<div class="col-md-2">
+
+			<!-- Quick Filters -->
+			<quick-filters [filters]="quickFilters" (filtersChange)="quickFiltersUpdated($event)"></quick-filters>
+
+			<!-- Column Selector -->
+			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
+
+		</div>
+
+		<div class="col-md-10">
+
+			<!-- Search Input -->
+			<search-table placeholder="Search users..." (applySearch)="onSearch($event)"></search-table>
+
+			<!-- Export -->
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<div class="btn-group float-right dropdown" dropdown>
+						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" dropdownToggle>
+							<span class="fa fa-caret-down"></span>
+						</button>
+						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
+							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<pageable-table [items]="users"
+				[pagingOptions]="pagingOpts"
+				(onPageChange)="goToPage($event)">
+
+				<ng-template named-template="table-header">
+					<th *ngFor="let header of headersToShow">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					</th>
+					<th>&nbsp;</th>
+				</ng-template>
+
+				<ng-template named-template="table-row" let-user let-i="index">
+					<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
+					<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
+					<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
+					<!--<td [hidden]="!columns.teams.show">-->
+						<!--<div class="hide-overflow" style="max-width: 300px;">-->
+							<!--<span *ngFor="let team of user.userModel.teams; let last = last" [attr.title]="team._id">{{ teamMap[team._id] }}{{ last? '' : ', ' }}</span>-->
+						<!--</div>-->
+					<!--</td>-->
+					<td [hidden]="!columns.organization.show">{{user.userModel.organization}}</td>
+					<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
+					<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>
+					<td [hidden]="!columns.acceptedEua.show">{{user.userModel.acceptedEua | agoDate:false}}</td>
+					<td [hidden]="!columns.lastLogin.show">{{user.userModel.lastLogin | agoDate:false}}</td>
+					<td [hidden]="!columns.created.show">{{user.userModel.created | agoDate:false}}</td>
+					<td [hidden]="!columns.updated.show">{{user.userModel.updated | agoDate:false}}</td>
+
+					<td [hidden]="!columns.bypassAccessCheck.show" class="text-center">
+						<span class="fa fa-fw" disabled [ngClass]="{'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></span>
+					</td>
+
+					<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
+					<td [hidden]="!columns.externalGroups.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalGroups}}</td>
+
+					<td [hidden]="!columns.roles.show" style="min-width: 310px;max-width: 310px;">
+						<div class="btn-group">
+							<button *ngFor="let role of possibleRoles"
+									type="button" class="btn btn-sm btn-outline-secondary" disabled
+									[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
+									[attr.title]="role.description">
+								<span class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></span>
+								{{role.label}}
+							</button>
+						</div>
+					</td>
+
+					<td style="min-width: 80px;max-width: 80px;">
+						<div class="btn-group btn-group-sm float-right">
+							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-outline-secondary">
+								<span class="fa fa-edit"></span>
+							</button>
+							<button title="Delete" type="button" class="btn btn-danger" (click)="confirmDeleteUser(user)">
+								<span class="fa fa-trash-o"></span>
+							</button>
+						</div>
+					</td>
+				</ng-template>
+
+				<ng-template named-template='empty-table'>
+					<h3>
+						<small>No Users matched your search</small>
+					</h3>
+				</ng-template>
+			</pageable-table>
+
+		</div>
+
+	</div>
+</section>

@@ -1,0 +1,56 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
+import { DirectivesModule } from '../../common/directives.module';
+import { PagingModule } from '../../common/paging.module';
+import { PipesModule } from '../../common/pipes.module';
+import { SystemAlertModule } from '../../common/system-alert.module';
+
+import { AdminListFeedbackComponent } from './admin/admin-list-feedback.component';
+import { FeedbackModalComponent } from './feedback-modal.component';
+import { FeedbackService } from './feedback.service';
+import { FeedbackRoutingModule } from './feedback-routing.module';
+
+@NgModule({
+	imports: [
+		AlertModule.forRoot(),
+		BsDropdownModule.forRoot(),
+		ButtonsModule.forRoot(),
+		TooltipModule.forRoot(),
+
+		CommonModule,
+		FormsModule,
+
+		DirectivesModule,
+		PagingModule,
+		PipesModule,
+		SystemAlertModule,
+
+		FeedbackRoutingModule
+	],
+	exports: [
+		AdminListFeedbackComponent,
+		FeedbackModalComponent
+	],
+	entryComponents: [
+		AdminListFeedbackComponent,
+		FeedbackModalComponent
+	],
+	declarations:   [
+		AdminListFeedbackComponent,
+		FeedbackModalComponent
+	],
+	providers:  [
+		FeedbackService
+	],
+})
+export class FeedbackModule { }
+export { AdminListFeedbackComponent } from './admin/admin-list-feedback.component';
+export { FeedbackModalComponent } from './feedback-modal.component';
+export { FeedbackService } from './feedback.service';

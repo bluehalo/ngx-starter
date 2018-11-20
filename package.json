@@ -7,7 +7,9 @@
     "start:prod": "ng serve --proxy-config proxy.conf.json --prod",
     "build": "ng build",
     "build:prod": "ng build --prod",
+    "build:bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -25,6 +27,7 @@
     "bootstrap": "4.1",
     "core-js": "2.5",
     "font-awesome": "4.7",
+    "moment": "2.22",
     "ngx-bootstrap": "3.0",
     "roboto-fontface": "0.10",
     "rxjs": "6.3",
@@ -46,10 +49,12 @@
     "karma-coverage-istanbul-reporter": "2.0",
     "karma-jasmine": "1.1",
     "karma-jasmine-html-reporter": "0.2",
+    "karma-junit-reporter": "1.2",
     "nodemon": "1.18",
     "protractor": "5.4",
     "ts-node": "7.0",
     "tslint": "5.11",
-    "typescript": "3.1"
+    "typescript": "3.1",
+    "webpack-bundle-analyzer": "3.0"
   }
 }

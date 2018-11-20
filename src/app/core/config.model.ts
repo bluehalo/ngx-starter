@@ -1,19 +1,19 @@
 interface AppConfig {
-	title: string
+	title: string;
 }
 
 interface BannerConfig {
-	html: string,
-	style: string
+	html: string;
+	style: string;
 }
 
 export interface Config {
-	auth: string,
+	auth: string;
 
-	app: AppConfig,
-	version: string,
-	contactEmail: string,
+	app: AppConfig;
+	version: string;
+	contactEmail: string;
 
-	banner: BannerConfig,
-	copyright: BannerConfig
+	banner: BannerConfig;
+	copyright: BannerConfig;
 }
