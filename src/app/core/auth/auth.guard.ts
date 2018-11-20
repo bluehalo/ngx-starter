@@ -3,10 +3,12 @@ import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from
 import get from 'lodash/get';
 
 import { Observable, of } from 'rxjs';
-import { catchError, first, map } from 'rxjs/operators';
+import { catchError, first, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { SessionService } from './session.service';
+
+import { Session } from './session.model';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -46,19 +48,29 @@ export class AuthGuard implements CanActivate {
 				console.log(error);
 				return of(null);
 			}),
-			map((session) => {
-				// The user isn't authenticated
+			switchMap((session) => {
+				// The user isn't authenticated, try reloading
 				if (session == null) {
-					// Send them to signin with a redirect to the previous URL
-					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/signin']);
-					return false;
+					return this.sessionService.reloadSession();
 				}
-
-				return true;
+				return of(session);
+			}),
+			map((session) => {
+				return this.checkAccess(route, state, session);
 			})
 		);
+	}
 
+	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot, session: Session): boolean {
+		// The user still isn't authenticated
+		if (session == null) {
+			// Send them to signin with a redirect to the previous URL
+			this.sessionService.setPreviousUrl(state.url);
+			this.router.navigate(['/signin']);
+			return false;
+		}
+
+		return true;
 	}
 
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,6 +12,10 @@ export class AuthenticationService {
 
 	signin(username: string, password: string): Observable<any> {
 		return this.http.post('api/auth/signin', { username, password });
+	}
+
+	reloadCurrentUser(): Observable<any> {
+		return this.http.get('api/user/me');
 	}
 
 	logout() {

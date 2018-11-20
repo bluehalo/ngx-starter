@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
-import { BehaviorSubject, Observable } from 'rxjs/index';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, pipe } from 'rxjs/index';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
-
+import { User } from './user.model';
+import { ConfigService } from '../config.service';
 
 @Injectable()
 export class SessionService {
@@ -20,16 +21,47 @@ export class SessionService {
 	// Previous url to store in case we want to redirect there later
 	private previousUrl: string;
 
+	private readonly mapUserModelToSession = pipe(
+		map((result: any) => {
+			if (result == null) {
+				return result;
+			}
+			let user = new User();
+			user.setFromUserModel(result);
+			return {
+				name: result.name,
+				user
+			};
+		})
+	);
+
 	constructor(
 		private authService: AuthenticationService,
+		private configService: ConfigService,
 		private http: HttpClient,
 		private router: Router,
 	) {}
 
+	reloadSession() {
+		return this.authService.reloadCurrentUser().pipe(
+			catchError(() => {
+				return of(null);
+			}),
+			this.mapUserModelToSession,
+			tap((session) => {
+				this.sessionSubject.next(session);
+			})
+		);
+	}
+
 	signin(username: string, password: string) {
 		return this.authService.signin(username, password).pipe(
-			tap((result) => {
-				this.sessionSubject.next(result);
+			catchError(() => {
+				return of(null);
+			}),
+			this.mapUserModelToSession,
+			tap((session) => {
+				this.sessionSubject.next(session);
 			})
 		);
 	}

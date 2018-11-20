@@ -27,8 +27,6 @@ import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 
-// import { User } from './auth/user.model';
-
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
