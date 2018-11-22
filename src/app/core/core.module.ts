@@ -16,6 +16,7 @@ import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
 import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthorizationService } from './auth/authorization.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ConfigService} from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
@@ -26,6 +27,7 @@ import { SessionService } from './auth/session.service';
 import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
+import { AuthorizationDirective } from './auth/authorization.directive';
 
 
 export function getConfiguration(configService: ConfigService) {
@@ -56,17 +58,20 @@ export function getConfiguration(configService: ConfigService) {
 	],
 	exports: [
 		SiteContainerComponent,
+		AuthorizationDirective
 	],
 	declarations: [
 		AboutComponent,
 		AccessComponent,
 		SigninComponent,
 		SiteContainerComponent,
-		SiteNavbarComponent
+		SiteNavbarComponent,
+		AuthorizationDirective
 	],
 	providers: [
 		AuthGuard,
 		AuthenticationService,
+		AuthorizationService,
 		ConfigService,
 		ExportConfigService,
 		PageTitleService,
