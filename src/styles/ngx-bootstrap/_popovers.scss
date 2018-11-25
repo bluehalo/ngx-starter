@@ -67,6 +67,13 @@ ul.popover-menu {
 	margin: 0;
 	padding: 0;
 
+	a {
+		@include font-color-dark($popover-content-font-color);
+
+		display: block;
+		padding: 10px 24px;
+	}
+
 	li {
 		border-bottom: 1px solid $popover-border-color;
 
@@ -78,11 +85,5 @@ ul.popover-menu {
 			background-color: $popover-content-hover-background-color;
 			text-decoration: none;
 		}
-	}
-	a {
-		@include font-color-dark($popover-content-font-color);
-
-		display: block;
-		padding: 10px 24px;
 	}
 }
