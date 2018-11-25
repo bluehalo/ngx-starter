@@ -10,8 +10,7 @@
     "build:bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
     "test": "ng test",
     "test:ci": "ng test --watch=false --code-coverage",
-    "lint": "ng lint && npm run lint:styles",
-    "lint:styles": "stylelint './src/**/*.scss'",
+    "lint": "ng lint && stylelint './src/**/*.scss'",
     "e2e": "ng e2e"
   },
   "private": true,
