@@ -42,7 +42,7 @@ export class SessionService {
 		private router: Router,
 	) {}
 
-	reloadSession() {
+	reloadSession(): Observable<any> {
 		return this.authService.reloadCurrentUser().pipe(
 			catchError(() => {
 				return of(null);
@@ -54,8 +54,32 @@ export class SessionService {
 		);
 	}
 
-	signin(username: string, password: string) {
+	signin(username: string, password: string): Observable<any> {
 		return this.authService.signin(username, password).pipe(
+			catchError(() => {
+				return of(null);
+			}),
+			this.mapUserModelToSession,
+			tap((session) => {
+				this.sessionSubject.next(session);
+			})
+		);
+	}
+
+	getCurrentEua(): Observable<any> {
+		return this.authService.getCurrentEua().pipe(
+			catchError(() => {
+				return of(null);
+			}),
+			tap((eua: any) => {
+				this.sessionSubject.value.user.setEua(eua);
+				this.sessionSubject.next(this.sessionSubject.value);
+			})
+		);
+	}
+
+	acceptEua(): Observable<any> {
+		return this.authService.acceptEua().pipe(
 			catchError(() => {
 				return of(null);
 			}),

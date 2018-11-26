@@ -22,6 +22,13 @@ export class AuthorizationService {
 		);
 	}
 
+	public isEuaCurrent() {
+		let euaPublished: number = get(this.session, 'user.eua.published', 0);
+		let euaAccepted: number = get(this.session, 'user.userModel.acceptedEua', 0);
+
+		return euaAccepted >= euaPublished;
+	}
+
 	public isAuthenticated(): boolean {
 		return (null != this.session && null != this.session.name);
 	}
@@ -51,6 +58,11 @@ export class AuthorizationService {
 		return roles.every((role: string | Role) => this.hasRole(role));
 		// return roles.reduce( (p: boolean, c: string) => p && this.hasRole(c), true);
 	}
+
+	public isUser(): boolean {
+		return this.hasRole(Role.USER.role);
+	}
+
 	public isAdmin(): boolean {
 		return this.hasRole(Role.ADMIN.role);
 	}

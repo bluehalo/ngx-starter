@@ -3,7 +3,11 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
+import { InactiveComponent } from './inactive.component';
 import { SigninComponent } from './signin/signin.component';
+import { UnauthorizedComponent } from './unauthorized.component';
+import { UserEuaComponent } from './eua/user-eua.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
 	imports: [
@@ -17,8 +21,29 @@ import { SigninComponent } from './signin/signin.component';
 				component: AccessComponent
 			},
 			{
+				path: 'inactive',
+				component: InactiveComponent,
+				canActivate: [AuthGuard],
+				data: {
+					requiresEua: false
+				}
+			},
+			{
 				path: 'signin',
 				component: SigninComponent
+			},
+			{
+				path: 'unauthorized',
+				component: UnauthorizedComponent,
+				canActivate: [AuthGuard],
+				data: {
+					requiresEua: false
+				}
+			},
+			{
+				path: 'user-eua',
+				canActivate: [AuthGuard],
+				component: UserEuaComponent
 			}
 		])
 	],

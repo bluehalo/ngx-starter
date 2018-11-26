@@ -10,7 +10,6 @@ import { SessionService } from './session.service';
 
 import { Session } from './session.model';
 import { AuthorizationService } from './authorization.service';
-import { Role } from './role.model';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -58,13 +57,22 @@ export class AuthGuard implements CanActivate {
 				}
 				return of(session);
 			}),
-			map((session) => {
-				return this.checkAccess(route, state, session);
+			switchMap(() => {
+				return this.authorizationService.isAuthenticated() ? this.sessionService.getCurrentEua() : of(null);
+			}),
+			map(() => {
+				return this.checkAccess(route, state);
 			})
 		);
 	}
 
-	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot, session: Session): boolean {
+	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+		// Default to requiring authentication if guard is present
+		let requiresEua: boolean = true;
+		if (get(route, 'data.requiresEua', true) === false) {
+			requiresEua = false;
+		}
+
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
 			// Send them to signin with a redirect to the previous URL
@@ -73,8 +81,19 @@ export class AuthGuard implements CanActivate {
 			return false;
 		}
 
-
 		if (!this.authorizationService.isAdmin()) {
+			// -----------------------------------------------------------
+			// Does the user need to accept the user agreement??
+			// -----------------------------------------------------------
+			// Check to see if the user needs to agree to the end user agreement
+			if (!this.authorizationService.isEuaCurrent()) {
+				if (!state.url.startsWith('/user-eua') && requiresEua) {
+					this.sessionService.setPreviousUrl(state.url);
+					this.router.navigate(['/user-eua']);
+					return false;
+				}
+			}
+
 			// -----------------------------------------------------------
 			// Check the role requirements for the route
 			// -----------------------------------------------------------
@@ -91,36 +110,20 @@ export class AuthGuard implements CanActivate {
 			// If there are roles missing then we need to do something
 			if (missingRoles.length > 0) {
 
-				if (!this.authorizationService.hasRole(Role.USER)) {
+				if (!this.authorizationService.isUser()) {
 					// If the user is missing the user role, they are pending
-					if (state.url !== '/inactive-user') {
-						this.sessionService.setPreviousUrl(state.url);
-						this.router.navigate(['/inactive-user']);
-						return false;
-					}
+					this.sessionService.setPreviousUrl(state.url);
+					this.router.navigate(['/inactive']);
+					return false;
 				} else {
 					// The user doesn't have the needed roles to view the page
-					if (state.url !== '/unauthorized') {
-						this.sessionService.setPreviousUrl(state.url);
-						this.router.navigate(['/unauthorized']);
-						return false;
-					}
+					this.sessionService.setPreviousUrl(state.url);
+					this.router.navigate(['/unauthorized']);
+					return false;
 				}
 
 			}
 		}
-
-		// if (this.userStateService.user.missingExternalRoles.length > 0 && !this.userStateService.isBypassed()) {
-		// 	if (url !== '/no-access') {
-		// 		this.router.navigate(['/no-access']);
-		// 		return false;
-		// 	}
-		// }
-
-
-
-
-
 
 		return true;
 	}

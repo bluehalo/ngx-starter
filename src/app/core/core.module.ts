@@ -27,7 +27,11 @@ import { SessionService } from './auth/session.service';
 import { SigninComponent } from './signin/signin.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
+import { SystemAlertModule } from '../common/system-alert.module';
 import { AuthorizationDirective } from './auth/authorization.directive';
+import { InactiveComponent } from './inactive.component';
+import { UnauthorizedComponent } from './unauthorized.component';
+import { UserEuaComponent } from './eua/user-eua.component';
 
 
 export function getConfiguration(configService: ConfigService) {
@@ -55,6 +59,7 @@ export function getConfiguration(configService: ConfigService) {
 		FeedbackModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
+		SystemAlertModule
 	],
 	exports: [
 		SiteContainerComponent,
@@ -63,9 +68,12 @@ export function getConfiguration(configService: ConfigService) {
 	declarations: [
 		AboutComponent,
 		AccessComponent,
+		InactiveComponent,
 		SigninComponent,
 		SiteContainerComponent,
 		SiteNavbarComponent,
+		UnauthorizedComponent,
+		UserEuaComponent,
 		AuthorizationDirective
 	],
 	providers: [

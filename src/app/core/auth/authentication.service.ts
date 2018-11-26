@@ -21,4 +21,11 @@ export class AuthenticationService {
 	logout() {
 	}
 
+	getCurrentEua(): Observable<any> {
+		return this.http.get('api/eua');
+	}
+
+	acceptEua(): Observable<any> {
+		return this.http.post('api/eua/accept', {});
+	}
 }

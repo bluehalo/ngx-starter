@@ -1,0 +1,34 @@
+<section>
+	<div class="row padding-top-20">
+		<div *ngIf="eua" class="col-md-8 offset-2">
+			<h5>
+				End User Agreement (EUA)<br/>
+				<small>Please review and acknowledge the end user agreement</small>
+			</h5>
+
+			<!-- Alert Notifications -->
+			<system-alert *ngIf="showAlerts"></system-alert>
+
+			<form name="userForm" autocomplete="off" class="form-horizontal" role="form">
+				<div class="card word-wrap">
+					<h6 class="card-header">{{ eua.title }}</h6>
+
+					<!-- Contents of EUA -->
+					<div class="card-body" [innerHtml]="eua.text"></div>
+
+					<div class="card-footer" *ngIf="!preview">
+						<div class="checkbox">
+							<label><input type="checkbox" name="acknowledge" [(ngModel)]="agree">I have read and acknowledge the end user agreement (EUA)</label>
+						</div>
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary" [disabled]="!agree" (click)="accept()" *ngIf="!preview">Submit Acknowledgement</button>
+
+				<div class="padding-top-10" *ngIf="preview">
+					<button class="btn btn-primary" (click)="close()">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
