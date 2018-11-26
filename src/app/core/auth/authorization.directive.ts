@@ -12,7 +12,7 @@ import { SessionService } from './session.service';
 import { AuthorizationService } from './authorization.service';
 
 @Directive({
-	selector: '[hasRole], [hasEveryRole], [hasSomeRoles]'
+	selector: '[isAuthenticated], [hasRole], [hasEveryRole], [hasSomeRoles]'
 })
 export class AuthorizationDirective implements OnChanges, OnInit {
 	@Input() hasRole: string;
@@ -74,6 +74,8 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 			hasPermission = this.authorizationService.hasSomeRoles(this.hasSomeRoles);
 		} else if (this.hasEveryRole != null && this.hasEveryRole.length > 0) {
 			hasPermission = this.authorizationService.hasEveryRole(this.hasEveryRole);
+		} else {
+			hasPermission = this.authorizationService.isAuthenticated();
 		}
 
 		return hasPermission;

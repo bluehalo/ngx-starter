@@ -53,7 +53,7 @@
 
 		<!-- User Nav	-->
 		<li class="element nav-popover nav-popover-bottom"
-			*hasRole="'user'">
+			*isAuthenticated>
 			<a [ngClass]="{'highlight-link': userNavOpen}"
 			   [popover]="userNav"
 			   #userNavPopover="bs-popover"
