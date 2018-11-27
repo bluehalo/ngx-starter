@@ -28,7 +28,7 @@ build:prod | Runs a production build that will output assets into the `./dist` d
 build:bundle-report | Builds for development and starts a Webpack Bundle Analyzer on local port 8888. Then, opens a browser to this port. Useful in identifying module optimizations.
 test | Run karma tests with a watcher that will update as you change files.
 test:ci | Runs karma tests once and outputs code coverage results upon successful execution.
-lint | Outputs a lint report to the console.
+lint | Runs the Angular CLI lint task (`ng lint`) and runs `stylelint` to lint scss files as configured by `stylelint.config.js`
 e2e | Runs end-to-end tests once and outputs test results to the console.
 
 ### Running the Development Server
