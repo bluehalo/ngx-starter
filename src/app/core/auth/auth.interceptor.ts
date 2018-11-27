@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
 				// Grab all the useful stuff out of the error response
 				const status = get(err, 'status', 200);
 				const type = get(err, 'error.type', '');
-				const url = get(err, 'error.url', '');
+				const url = get(err, 'url', '');
 				const message = get(err, 'error.message', '');
 
 				const routeObject = { status, type, message, url };

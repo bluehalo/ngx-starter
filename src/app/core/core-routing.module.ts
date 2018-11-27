@@ -21,6 +21,14 @@ import { AuthGuard } from './auth/auth.guard';
 				component: AccessComponent
 			},
 			{
+				path: 'eua',
+				component: UserEuaComponent,
+				canActivate: [AuthGuard],
+				data: {
+					requiresEua: false
+				}
+			},
+			{
 				path: 'inactive',
 				component: InactiveComponent,
 				canActivate: [AuthGuard],
@@ -35,14 +43,6 @@ import { AuthGuard } from './auth/auth.guard';
 			{
 				path: 'unauthorized',
 				component: UnauthorizedComponent,
-				canActivate: [AuthGuard],
-				data: {
-					requiresEua: false
-				}
-			},
-			{
-				path: 'user-eua',
-				component: UserEuaComponent,
 				canActivate: [AuthGuard],
 				data: {
 					requiresEua: false

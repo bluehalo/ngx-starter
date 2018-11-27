@@ -89,7 +89,7 @@ export class AuthGuard implements CanActivate {
 			if (!this.authorizationService.isEuaCurrent()) {
 				if (requiresEua) {
 					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/user-eua']);
+					this.router.navigate(['/eua']);
 					return false;
 				}
 			}
