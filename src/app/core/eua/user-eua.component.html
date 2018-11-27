@@ -16,17 +16,16 @@
 					<!-- Contents of EUA -->
 					<div class="card-body" [innerHtml]="eua.text"></div>
 
-					<div class="card-footer" *ngIf="!preview">
-						<div class="checkbox">
-							<label><input type="checkbox" name="acknowledge" [(ngModel)]="agree">I have read and acknowledge the end user agreement (EUA)</label>
+					<div class="card-footer">
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" name="acknowledge" id="acknowledge" [(ngModel)]="agree">
+							<label class="form-check-label" for="acknowledge">I have read and acknowledge the end user agreement (EUA)</label>
 						</div>
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-primary" [disabled]="!agree" (click)="accept()" *ngIf="!preview">Submit Acknowledgement</button>
-
-				<div class="padding-top-10" *ngIf="preview">
-					<button class="btn btn-primary" (click)="close()">Close</button>
+				<div class="padding-top-20">
+					<button type="submit" class="btn btn-primary" [disabled]="!agree" (click)="accept()">Submit Acknowledgement</button>
 				</div>
 			</form>
 		</div>

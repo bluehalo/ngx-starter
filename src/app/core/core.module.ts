@@ -63,6 +63,7 @@ export function getConfiguration(configService: ConfigService) {
 	],
 	exports: [
 		SiteContainerComponent,
+		UserEuaComponent,
 		AuthorizationDirective
 	],
 	declarations: [

@@ -87,7 +87,7 @@ export class AuthGuard implements CanActivate {
 			// -----------------------------------------------------------
 			// Check to see if the user needs to agree to the end user agreement
 			if (!this.authorizationService.isEuaCurrent()) {
-				if (!state.url.startsWith('/user-eua') && requiresEua) {
+				if (requiresEua) {
 					this.sessionService.setPreviousUrl(state.url);
 					this.router.navigate(['/user-eua']);
 					return false;
