@@ -109,20 +109,12 @@ export class AuthGuard implements CanActivate {
 
 			// If there are roles missing then we need to do something
 			if (missingRoles.length > 0) {
-
-				if (!this.authorizationService.isUser()) {
-					// If the user is missing the user role, they are pending
-					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/inactive']);
-					return false;
-				} else {
-					// The user doesn't have the needed roles to view the page
-					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/unauthorized']);
-					return false;
-				}
-
+				// The user doesn't have the needed roles to view the page
+				this.sessionService.setPreviousUrl(state.url);
+				this.router.navigate(['/unauthorized']);
+				return false;
 			}
+
 		}
 
 		return true;

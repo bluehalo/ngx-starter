@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
-import { InactiveComponent } from './inactive.component';
 import { SigninComponent } from './signin/signin.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
@@ -29,14 +28,6 @@ import { AuthGuard } from './auth/auth.guard';
 				}
 			},
 			{
-				path: 'inactive',
-				component: InactiveComponent,
-				canActivate: [AuthGuard],
-				data: {
-					requiresEua: false
-				}
-			},
-			{
 				path: 'signin',
 				component: SigninComponent
 			},
@@ -45,6 +36,7 @@ import { AuthGuard } from './auth/auth.guard';
 				component: UnauthorizedComponent,
 				canActivate: [AuthGuard],
 				data: {
+					roles: [], // no roles are needed to get to the "unauthorized" page
 					requiresEua: false
 				}
 			}
