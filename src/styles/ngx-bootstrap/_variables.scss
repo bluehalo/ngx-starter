@@ -1,0 +1,18 @@
+@import '../globals';
+@import '../colors';
+
+// Bootstrap Card
+$card-border-radius:                $border-radius;
+$card-border-color:                 map-get($color-background, 'darker');
+
+// Bootstrap Dropdown
+$dropdown-padding-y:				0;
+$dropdown-spacer:					0;
+$dropdown-bg:						map-get($color-background, 'lightest');
+$dropdown-border-color:             map-get($color-background, 'darker');
+$dropdown-border-radius:            $border-radius;
+$dropdown-box-shadow: 				0 1px 4px rgba(0, 0, 0, .3);
+$dropdown-link-hover-bg:			map-get($color-background, 'lighter');
+
+$dropdown-item-padding-y:           10px;
+$dropdown-item-padding-x:			24px;
