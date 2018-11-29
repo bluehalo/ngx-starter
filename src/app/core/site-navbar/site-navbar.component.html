@@ -23,7 +23,7 @@
 
 		<!-- Element -->
 		<li class="element"
-		    *ngIf="null != session">
+			*hasRole="'user'">
 			<a tooltip="Explore"
 			   placement="right"
 			   [isDisabled]="navbarOpen"
@@ -34,7 +34,7 @@
 			</a>
 		</li>
 		<li class="element"
-			*ngIf="null != session">
+			*hasRole="'user'">
 			<a tooltip="Search"
 			   placement="right"
 			   [isDisabled]="navbarOpen"
@@ -53,7 +53,7 @@
 
 		<!-- User Nav	-->
 		<li class="element nav-popover nav-popover-bottom"
-			*ngIf="null != session">
+			*isAuthenticated>
 			<a [ngClass]="{'highlight-link': userNavOpen}"
 			   [popover]="userNav"
 			   #userNavPopover="bs-popover"
@@ -69,7 +69,7 @@
 				<ul class="popover-menu" role="menu">
 
 					<!-- User Signout -->
-					<li [hidden]="pki"><a href="/auth/signout">Sign out</a></li>
+					<li [hidden]="pki"><a href="/api/auth/signout">Sign out</a></li>
 
 				</ul>
 			</ng-template>
@@ -78,7 +78,7 @@
 		<!-- Admin Nav	-->
 		<!-- TODO Only show the admin navigation when the user is determined to be an admin -->
 		<li class="element nav-popover nav-popover-bottom"
-			*ngIf="null != session">
+			*hasRole="'admin'">
 			<a [ngClass]="{'highlight-link': adminNavOpen}"
 			[popover]="adminNav"
 			#adminNavPopover="bs-popover"
@@ -101,7 +101,6 @@
 				</ul>
 			</ng-template>
 		</li>
-
 
 		<!-- Help Nav -->
 		<li class="element nav-popover nav-popover-bottom">
