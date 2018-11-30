@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import endsWith from 'lodash/endsWith';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import get from 'lodash/get';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
@@ -13,7 +13,7 @@ import { SessionService } from './session.service';
  * HTTP Interceptor that will interpret authentication-related HTTP calls
  */
 @Injectable()
-export class AuthHttpInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
 	constructor(private router: Router, private sessionService: SessionService) {
 		// Nothing here
@@ -24,55 +24,31 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError((err) => {
 
-				const type = err.error.type;
-				switch (err.status) {
-					case 401:
+				// Grab all the useful stuff out of the error response
+				const status = get(err, 'status', 200);
+				const type = get(err, 'error.type', '');
+				const url = get(err, 'url', '');
+				const message = get(err, 'error.message', '');
 
-						// Deauthenticate the global user
-						this.sessionService.clear();
+				const routeObject = { status, type, message, url };
 
-						if (type === 'invalid-certificate') {
-							// Redirect to invalid credentials page
-							this.router.navigate(['/invalid-certificate']);
-						}
-						else {
-							// Signin protection is handled by the AuthGuard on specific routes
-						}
+				// Go to signin if the user isn't logged in and wasn't already on the signin page
+				if (401 === status && !url.endsWith('auth/signin')) {
+					this.router.navigate(['/signin']);
 
-						break;
-					case 403:
-						if (type === 'eua') {
-							this.router.navigate(['/user-eua']);
-						}
-						else if (type === 'inactive') {
-							this.router.navigate(['/inactive-user']);
-						}
-						else if (type === 'noaccess') {
-							this.router.navigate(['/no-access']);
-						}
-						else if (type === 'redirect') {
-							window.location.href = err.error.url;
-						}
-						else {
-							// Add unauthorized behavior
-							this.router.navigate(['/unauthorized']);
-						}
-						break;
-
-					default:
-						break;
 				}
 
-				if (err.status === 401
-					&& !endsWith(err.url, 'auth/signin')) {
-					if (!endsWith(err.url, 'user/me')) {
-						this.router.navigate(['/signin']);
+				// If it was anything other 400 error, take them to the access problem page
+				else if (403 === status) {
+					if ('eua' === type) {
+						this.router.navigate(['/eua']);
 					}
-					return EMPTY;
+					else {
+						this.router.navigate(['/access', routeObject]);
+					}
 				}
-				else {
-					return throwError(err);
-				}
+
+				return throwError(err);
 
 			})
 		);

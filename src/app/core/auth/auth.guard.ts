@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import get from 'lodash/get';
 
+import get from 'lodash/get';
 import { Observable, of } from 'rxjs';
-import { catchError, first, map } from 'rxjs/operators';
+import { catchError, first, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { SessionService } from './session.service';
+
+import { Session } from './session.model';
+import { AuthorizationService } from './authorization.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
 	constructor(
 		private router: Router,
-		private sessionService: SessionService
+		private sessionService: SessionService,
+		private authorizationService: AuthorizationService
 	) { }
 
 
@@ -46,19 +50,74 @@ export class AuthGuard implements CanActivate {
 				console.log(error);
 				return of(null);
 			}),
-			map((session) => {
-				// The user isn't authenticated
+			switchMap((session) => {
+				// The user isn't authenticated, try reloading
 				if (session == null) {
-					// Send them to signin with a redirect to the previous URL
-					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/signin']);
-					return false;
+					return this.sessionService.reloadSession();
 				}
-
-				return true;
+				return of(session);
+			}),
+			switchMap(() => {
+				return this.authorizationService.isAuthenticated() ? this.sessionService.getCurrentEua() : of(null);
+			}),
+			map(() => {
+				return this.checkAccess(route, state);
 			})
 		);
+	}
 
+	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+		// Default to requiring authentication if guard is present
+		let requiresEua: boolean = true;
+		if (get(route, 'data.requiresEua', true) === false) {
+			requiresEua = false;
+		}
+
+		// The user still isn't authenticated
+		if (!this.authorizationService.isAuthenticated()) {
+			// Send them to signin with a redirect to the previous URL
+			this.sessionService.setPreviousUrl(state.url);
+			this.router.navigate(['/signin']);
+			return false;
+		}
+
+		if (!this.authorizationService.isAdmin()) {
+			// -----------------------------------------------------------
+			// Does the user need to accept the user agreement??
+			// -----------------------------------------------------------
+			// Check to see if the user needs to agree to the end user agreement
+			if (!this.authorizationService.isEuaCurrent()) {
+				if (requiresEua) {
+					this.sessionService.setPreviousUrl(state.url);
+					this.router.navigate(['/eua']);
+					return false;
+				}
+			}
+
+			// -----------------------------------------------------------
+			// Check the role requirements for the route
+			// -----------------------------------------------------------
+
+			// compile a list of roles that are missing
+			let requiredRoles = get(route, 'data.roles', ['user']);
+			let missingRoles: any[] = [];
+			requiredRoles.forEach( (role: any) => {
+				if (!this.authorizationService.hasRole(role)) {
+					missingRoles.push(role);
+				}
+			});
+
+			// If there are roles missing then we need to do something
+			if (missingRoles.length > 0) {
+				// The user doesn't have the needed roles to view the page
+				this.sessionService.setPreviousUrl(state.url);
+				this.router.navigate(['/unauthorized']);
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 
 }

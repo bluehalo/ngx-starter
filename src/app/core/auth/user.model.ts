@@ -7,6 +7,10 @@ export class User {
 		public eua?: any) {
 	}
 
+	public setEua(eua: any) {
+		this.eua = eua;
+	}
+
 	public setFromUserModel(userModel: any): User {
 		if (null == userModel || null == userModel.username) {
 			userModel = null;

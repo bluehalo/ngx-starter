@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 
 import { AsyncSubject } from 'rxjs';
 
@@ -10,7 +10,7 @@ export class ConfigService {
 
 	configSubject = new AsyncSubject <Config>();
 
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpBackend) {
 		this.reloadConfig();
 	}
 
@@ -23,19 +23,33 @@ export class ConfigService {
 	}
 
 	/**
-	 * Force a call to the server to get the latest config. There really isn't
-	 * a need to ever invoke this externally. Config shouldn't change.
+	 * Refresh the latest config and fire it to the subject. This should not need
+	 * to be invoked frequently because the config rarely changes.
+	 *
+	 * We are using HttpBackend to avoid the interceptors since this call is invoked
+	 * as part of the app initialization process.
 	 */
 	public reloadConfig() {
-		this.http.get<Config>('api/config')
-			.subscribe(
-				(config) => {
-					this.configSubject.next(config);
+		const request = new HttpRequest<Config>('GET', 'api/config', {});
+
+		this.http.handle(request).subscribe(
+			(httpEvent: HttpEvent<Config>) => {
+
+				if (httpEvent instanceof HttpResponse) {
+					let newConfig = null;
+					const response = (httpEvent as HttpResponse<Config>);
+
+					if (response.status >= 200 && response.status < 300) {
+						newConfig = response.body;
+					}
+
+					this.configSubject.next(newConfig);
 					this.configSubject.complete();
-				},
-				() => {
-					this.configSubject.next(null);
-					this.configSubject.complete();
-				});
+				}
+			},
+			() => {
+				this.configSubject.next(null);
+				this.configSubject.complete();
+			});
 	}
 }
