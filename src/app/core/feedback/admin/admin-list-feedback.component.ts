@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PagingResults, PagingOptions, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import { PagingComponent, PagingResults, PagingOptions, SortDirection, SortableTableHeader } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { ExportConfigService } from '../../export-config.service';
 import { AdminTopics } from '../../admin/admin.module';
@@ -10,11 +10,9 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	templateUrl: 'admin-list-feedback.component.html'
 })
-export class AdminListFeedbackComponent implements OnInit {
+export class AdminListFeedbackComponent extends PagingComponent implements OnInit {
 
 	feedbacks: any[];
-
-	pagingOpts: PagingOptions;
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Submitted By', sortField: 'audit.actor', sortDir: SortDirection.asc, sortable: true },
@@ -29,31 +27,14 @@ export class AdminListFeedbackComponent implements OnInit {
 		private feedbackService: FeedbackService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService
-	) {}
+	) { super(); }
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		this.pagingOpts = new PagingOptions();
+		this.setDefaultPagingOptions();
 
-		const defaultSort = this.headers.find((header: any) => header.default);
-		if (null != defaultSort) {
-			this.pagingOpts.sortField = defaultSort.sortField;
-			this.pagingOpts.sortDir = defaultSort.sortDir;
-		}
-
-		this.loadFeedbackEntries();
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadFeedbackEntries();
-	}
-
-	setSort(sortOpt: SortableTableHeader) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
-		this.loadFeedbackEntries();
+		this.loadData();
 	}
 
 	export() {
@@ -64,7 +45,7 @@ export class AdminListFeedbackComponent implements OnInit {
 			});
 	}
 
-	private loadFeedbackEntries() {
+	loadData() {
 		this.feedbackService.getFeedback(this.pagingOpts).subscribe((result: PagingResults) => {
 			this.feedbacks = result.elements;
 			if (this.feedbacks.length > 0) {

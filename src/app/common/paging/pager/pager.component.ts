@@ -2,6 +2,7 @@ import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges
 
 import isNumber from 'lodash/isNumber';
 
+import { SortableTableHeader } from '../sortable-table-header/sortable-table-header.component';
 import { SortDirection, SortDisplayOption } from '../sorting.model';
 
 export interface PagingResults {
@@ -71,6 +72,7 @@ export class PagingOptions {
 
 export abstract class PagingComponent {
 
+	abstract headers: SortableTableHeader[];
 	pagingOpts: PagingOptions;
 
 	abstract loadData();
@@ -83,6 +85,16 @@ export abstract class PagingComponent {
 	goToPage(event: any) {
 		this.pagingOpts.update(event.pageNumber, event.pageSize);
 		this.loadData();
+	}
+
+	setDefaultPagingOptions() {
+		this.pagingOpts = new PagingOptions();
+
+		const defaultSort = this.headers.find((header: any) => header.default);
+		if (null != defaultSort) {
+			this.pagingOpts.sortField = defaultSort.sortField;
+			this.pagingOpts.sortDir = defaultSort.sortDir;
+		}
 	}
 
 	setSort(sortOpt: SortDisplayOption) {

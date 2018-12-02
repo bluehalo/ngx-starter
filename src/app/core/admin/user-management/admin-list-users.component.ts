@@ -159,13 +159,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 		if (cachedFilter.paging) {
 			this.pagingOpts = cachedFilter.paging;
 		} else {
-			this.pagingOpts = new PagingOptions();
-
-			const defaultSort = this.headers.find((header: any) => header.default);
-			if (null != defaultSort) {
-				this.pagingOpts.sortField = defaultSort.sortField;
-				this.pagingOpts.sortDir = defaultSort.sortDir;
-			}
+			this.setDefaultPagingOptions();
 		}
 	}
 
