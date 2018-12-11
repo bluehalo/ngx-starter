@@ -24,7 +24,9 @@ import { ExportConfigService } from './export-config.service';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
 import { PageTitleService } from './page-title.service';
 import { SessionService } from './auth/session.service';
+import { SignedUpComponent } from './signup/signed-up.component';
 import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 import { SystemAlertModule } from '../common/system-alert.module';
@@ -68,7 +70,9 @@ export function getConfiguration(configService: ConfigService) {
 	declarations: [
 		AboutComponent,
 		AccessComponent,
+		SignedUpComponent,
 		SigninComponent,
+		SignupComponent,
 		SiteContainerComponent,
 		SiteNavbarComponent,
 		UnauthorizedComponent,

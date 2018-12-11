@@ -1,12 +1,14 @@
 import { Router } from '@angular/router';
 import { Response } from '@angular/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
+import { takeUntil } from 'rxjs/internal/operators';
+import { OnDestroy, OnInit } from '@angular/core';
 
-export abstract class ManageUserComponent {
+export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	config: any;
 	error: string = null;
@@ -21,14 +23,19 @@ export abstract class ManageUserComponent {
 	navigateOnSuccess: string;
 	user: User;
 
+	protected destroy$: Subject<boolean> = new Subject();
+
 	constructor(
-		private router: Router,
-		private configService: ConfigService
+		protected router: Router,
+		protected configService: ConfigService
 	) {
 	}
 
 	ngOnInit() {
 		this.configService.getConfig()
+			.pipe(
+				takeUntil(this.destroy$)
+			)
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth === 'proxy-pki';
@@ -37,6 +44,11 @@ export abstract class ManageUserComponent {
 
 				this.initialize();
 			});
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next(true);
+		this.destroy$.unsubscribe();
 	}
 
 	abstract initialize(): any;

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { User } from './user.model';
+
+
 @Injectable()
 export class AuthenticationService {
 
@@ -12,6 +15,10 @@ export class AuthenticationService {
 
 	signin(username: string, password: string): Observable<any> {
 		return this.http.post('api/auth/signin', { username, password });
+	}
+
+	signup(user: User): Observable<any> {
+		return this.http.post('api/auth/signup', user.userModel);
 	}
 
 	reloadCurrentUser(): Observable<any> {
