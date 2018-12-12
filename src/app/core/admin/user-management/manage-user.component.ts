@@ -1,12 +1,14 @@
+import { OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
-import { takeUntil } from 'rxjs/internal/operators';
-import { OnDestroy, OnInit } from '@angular/core';
 
 export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
@@ -27,7 +29,8 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	constructor(
 		protected router: Router,
-		protected configService: ConfigService
+		protected configService: ConfigService,
+		protected alertService: SystemAlertService
 	) {
 	}
 
@@ -63,10 +66,7 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 				.subscribe(
 					() => this.router.navigate([this.navigateOnSuccess]),
 					(response: Response) => {
-						if (response.status >= 400 && response.status < 500) {
-							let errors = response.json().message.split('\n');
-							this.error = errors.join(', ');
-						}
+						this.alertService.addClientErrorAlert(response);
 					});
 		}
 	}

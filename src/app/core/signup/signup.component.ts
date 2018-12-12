@@ -8,6 +8,7 @@ import { ManageUserComponent } from '../admin/user-management/manage-user.compon
 import { ConfigService } from '../../core/config.service';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
+import { SystemAlertService } from '../../common/system-alert.module';
 
 @Component({
 	selector: 'user-signup',
@@ -27,10 +28,11 @@ export class SignupComponent extends ManageUserComponent {
 	constructor(
 		protected router: Router,
 		protected configService: ConfigService,
+		protected alertService: SystemAlertService,
 		private authService: AuthenticationService,
 		private route: ActivatedRoute
 	) {
-		super(router, configService);
+		super(router, configService, alertService);
 	}
 
 	ngOnInit() {

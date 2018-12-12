@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 
 import { AlertModule, BsDropdownModule, ButtonsModule } from 'ngx-bootstrap';
 
+import { AdminCreateUserComponent } from './admin-create-user.component';
 import { AdminListUsersComponent } from './admin-list-users.component';
 import { AdminUpdateUserComponent } from './admin-edit-user.component';
 import { AdminUsersService } from './admin-users.service';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PipesModule } from '../../../common/pipes.module';
 import { PagingModule } from '../../../common/paging.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 
 @NgModule({
 	imports: [
@@ -23,13 +25,15 @@ import { PagingModule } from '../../../common/paging.module';
 		FormsModule,
 		PagingModule,
 		PipesModule,
-		RouterModule
+		RouterModule,
+		SystemAlertModule
 	],
 	exports: [
 	],
 	entryComponents: [
 	],
 	declarations:   [
+		AdminCreateUserComponent,
 		AdminListUsersComponent,
 		AdminUpdateUserComponent
 	],

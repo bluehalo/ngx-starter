@@ -8,6 +8,7 @@ import { Role } from '../../auth/role.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 import { ConfigService } from '../../config.service';
+import { SystemAlertService } from '../../../common/system-alert.module';
 
 @Component({
 	selector: 'admin-edit-user',
@@ -24,12 +25,13 @@ export class AdminUpdateUserComponent extends ManageUserComponent {
 	private sub: any;
 
 	constructor(
-		router: Router,
-		configService: ConfigService,
-		private adminUsersService: AdminUsersService,
-		private route: ActivatedRoute
+		protected router: Router,
+		protected configService: ConfigService,
+		protected alertService: SystemAlertService,
+		private route: ActivatedRoute,
+		private adminUsersService: AdminUsersService
 	) {
-		super(router, configService);
+		super(router, configService, alertService);
 	}
 
 	initialize() {
