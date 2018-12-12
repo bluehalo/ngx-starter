@@ -1,6 +1,6 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -65,7 +65,7 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 			this.submitUser(this.user)
 				.subscribe(
 					() => this.router.navigate([this.navigateOnSuccess]),
-					(response: Response) => {
+					(response: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(response);
 					});
 		}
