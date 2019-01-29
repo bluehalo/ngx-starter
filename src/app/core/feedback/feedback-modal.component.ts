@@ -45,7 +45,7 @@ export class FeedbackModalComponent implements OnInit {
 		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
 			this.currentRoute = `${config.app.baseUrl}${this.router.url}`;
 
-			if (Array.isArray(config.feedbackClassificationOpts) && isEmpty(config.feedbackClassificationOpts)) {
+			if (Array.isArray(config.feedbackClassificationOpts) && !isEmpty(config.feedbackClassificationOpts)) {
 				this.classificationOptions = config.feedbackClassificationOpts;
 				this.selectedClassification = _first(this.classificationOptions);
 			}
