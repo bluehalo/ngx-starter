@@ -30,7 +30,7 @@ export class FeedbackModalComponent implements OnInit {
 
 	classificationOptions: any[];
 
-	selectedClassification: any;
+	selectedClassification: any = {};
 
 	private currentRoute: string;
 
@@ -56,7 +56,7 @@ export class FeedbackModalComponent implements OnInit {
 		if (StringUtils.isNonEmptyString(this.feedbackText)) {
 			this.error = null;
 			this.submitting = true;
-			this.feedbackService.submit(this.feedbackText, this.selectedOption.name, this.currentRoute, this.selectedClassification).subscribe(() => {
+			this.feedbackService.submit(this.feedbackText, this.selectedOption.name, this.currentRoute, 'level' in this.selectedClassification ? this.selectedClassification.level : undefined ).subscribe(() => {
 				this.success = 'Feedback successfully submitted!';
 				setTimeout(() => this.modalRef.hide(), 1500);
 			}, (error: HttpErrorResponse) => {
