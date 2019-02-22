@@ -51,6 +51,32 @@
 	<!-- Bottom Aux Nav -->
 	<ul class="nav nav-aux">
 
+		<!-- Team Nav   -->
+		<li class="element nav-popover nav-popover-bottom"
+			*isAuthenticated>
+			<a [ngClass]="{'highlight-link': teamNavOpen}"
+			   [popover]="teamNav"
+			   #teamNavPopover="bs-popover"
+			   placement="right"
+			   [outsideClick]="true"
+			   (onShown)="teamNavOpen = true;"
+			   (onHidden)="teamNavOpen = false;">
+				<span class="fa fa-fw fa-users"></span>
+				<span [hidden]="!navbarOpen">Teams</span>
+			</a>
+
+			<ng-template #teamNav>
+				<ul class="popover-menu" role="menu">
+					<!-- List Teams -->
+					<li>
+						<a routerLink="/teams"
+						   (click)="teamNavPopover.hide()">View All</a>
+					</li>
+
+				</ul>
+			</ng-template>
+		</li>
+
 		<!-- User Nav	-->
 		<li class="element nav-popover nav-popover-bottom"
 			*isAuthenticated>

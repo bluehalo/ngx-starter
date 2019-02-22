@@ -1,0 +1,52 @@
+<section class="p-3">
+	<h3 class="page-header">
+		Teams
+		<small>View and manage team membership and roles</small>
+		<button routerLink="/team/create"  type="button" class="btn btn-primary float-right">
+			<span class="fa fa-plus"></span> Create Team
+		</button>
+	</h3>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+		<search-table placeholder="Search teams..." (applySearch)="searchEvent$.next($event)" class="flex-grow-1"></search-table>
+
+		<pageable-table [items]="teams" [pagingOptions]="pagingOptions" (onPageChange)="pageEvent$.next($event)" [loading]="loading">
+
+			<ng-template named-template="table-header">
+				<th *ngFor="let header of headers">
+					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (onSortChange)="sortEvent$.next($event)"></sortable-table-header>
+				</th>
+			</ng-template>
+
+			<ng-template named-template="table-row" let-team let-i="index">
+				<td>
+					<div>
+						<a [routerLink]="['/team', team._id]">{{ team.name }}</a>
+					</div>
+				</td>
+				<td>
+					<div>{{ team.description }}</div>
+				</td>
+				<td>
+					<div>{{ team.created | agoDate }}</div>
+				</td>
+			</ng-template>
+
+			<ng-template named-template="empty-table">
+				<div>
+					<ng-container *ngIf="hasQuery; then empty_search else no_results"></ng-container>
+					<ng-template #empty_search>
+						<h5>No Teams matched your search</h5>
+					</ng-template>
+					<ng-template #no_results>
+						<div>
+							<h4>No Teams Created</h4>
+							<button class="btn btn-primary my-3" (click)="add()"><span class="fa fa-plus"></span> Create Team</button>
+							<p>For more details, review the Moniker Help</p>
+						</div>
+					</ng-template>
+				</div>
+			</ng-template>
+		</pageable-table>
+</section>

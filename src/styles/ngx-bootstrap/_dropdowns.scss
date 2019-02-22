@@ -2,6 +2,20 @@
 
 $dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
 
+.btn-group.open {
+	.dropdown-toggle::after {
+		transform: rotate(180deg);
+	}
+}
+
+.dropdown-toggle-table {
+	padding: 0;
+
+	&:focus {
+		box-shadow: none;
+	}
+}
+
 ul.dropdown-menu {
 	@include font-normal();
 	@include font-color-dark($dropdown-element-font-color);

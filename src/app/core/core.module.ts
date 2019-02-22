@@ -31,6 +31,7 @@ import { SystemAlertModule } from '../common/system-alert.module';
 import { AuthorizationDirective } from './auth/authorization.directive';
 import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
+import { TeamsModule } from './teams/teams.module';
 
 
 export function getConfiguration(configService: ConfigService) {
@@ -56,6 +57,7 @@ export function getConfiguration(configService: ConfigService) {
 		AdminModule,
 		HelpModule,
 		FeedbackModule,
+		TeamsModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
 		SystemAlertModule
