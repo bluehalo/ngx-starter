@@ -30,7 +30,7 @@ export class FeedbackModalComponent implements OnInit {
 
 	classificationOptions: any[];
 
-	selectedClassification: any;
+	selectedClassification: any = {};
 
 	private currentRoute: string;
 
@@ -45,7 +45,7 @@ export class FeedbackModalComponent implements OnInit {
 		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
 			this.currentRoute = `${config.app.baseUrl}${this.router.url}`;
 
-			if (Array.isArray(config.feedbackClassificationOpts) && isEmpty(config.feedbackClassificationOpts)) {
+			if (Array.isArray(config.feedbackClassificationOpts) && !isEmpty(config.feedbackClassificationOpts)) {
 				this.classificationOptions = config.feedbackClassificationOpts;
 				this.selectedClassification = _first(this.classificationOptions);
 			}
@@ -56,7 +56,7 @@ export class FeedbackModalComponent implements OnInit {
 		if (StringUtils.isNonEmptyString(this.feedbackText)) {
 			this.error = null;
 			this.submitting = true;
-			this.feedbackService.submit(this.feedbackText, this.selectedOption.name, this.currentRoute, this.selectedClassification).subscribe(() => {
+			this.feedbackService.submit(this.feedbackText, this.selectedOption.name, this.currentRoute, 'level' in this.selectedClassification ? this.selectedClassification.level : undefined ).subscribe(() => {
 				this.success = 'Feedback successfully submitted!';
 				setTimeout(() => this.modalRef.hide(), 1500);
 			}, (error: HttpErrorResponse) => {
