@@ -3,11 +3,11 @@
 
 @import '../typography';
 
-$popover-border-color: map-get($color-background, 'default');
-$popover-border-radius: $border-radius;
-$popover-content-background-color: map-get($color-background, 'lightest');
-$popover-content-font-color: map-get($color-background, 'lightest-contrast');
-$popover-content-hover-background-color: map-get($color-background, 'lighter');
+$popover-border-color: map-get($color-background, 'default') default;
+$popover-border-radius: $border-radius default;
+$popover-content-background-color: map-get($color-background, 'lightest') default;
+$popover-content-font-color: map-get($color-background, 'lightest-contrast') default;
+$popover-content-hover-background-color: map-get($color-background, 'lighter') default;
 
 .popover {
 	border-color: $popover-border-color;

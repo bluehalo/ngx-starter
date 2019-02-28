@@ -3,29 +3,29 @@
 @import '../site-container/shared';
 
 // Specify these
-$nav-background-color: map-get($color-primary, 'default');
-$nav-closed-width: 54px;
-$nav-open-width: 238px;
+$nav-background-color: $ux-primary !default;
+$nav-closed-width: 54px !default;
+$nav-open-width: 238px !default;
 
-$nav-element-font-color: map-get($color-primary, 'default-contrast');
-$nav-element-font-size: 16px;
-$nav-element-icon-size: 20px;
-$nav-element-icon-width: 27.5px;
-$nav-element-padding: 10px;
-$nav-element-text-margin-left: 20px;
+$nav-element-font-color: $ux-light-gray !default;
+$nav-element-font-size: 16px !default;
+$nav-element-icon-size: 20px !default;
+$nav-element-icon-width: 27.5px !default;
+$nav-element-padding: 10px !default;
+$nav-element-text-margin-left: 20px !default;
 
-$nav-element-hover-color: map-get($color-accent, 'lighter');
-$nav-element-hover-background-color: map-get($color-primary, 'darker');
+$nav-element-hover-color: $ux-white !default;
+$nav-element-hover-background-color: $ux-primary-medium !default;
 
-$nav-element-active-background-color: $nav-element-hover-background-color;
-$nav-element-active-color: $nav-element-hover-color;
-$nav-element-active-indicator-width: 4px;
+$nav-element-active-background-color: $ux-primary-dark !default;
+$nav-element-active-color: $ux-highlight !default;
+$nav-element-active-indicator-width: 4px !default;
 
-$nav-element-divider-margin: 10px;
+$nav-element-divider-margin: 10px !default;
 
-$nav-element-logo-color-bg: map-get($color-accent, 'default');
-$nav-element-logo-img-margin: 4px;
-$nav-element-logo-img-height: 50px;
+$nav-element-logo-color-bg: $ux-brand-background !default;
+$nav-element-logo-img-margin: 4px !default;
+$nav-element-logo-img-height: 50px !default;
 
 // Calculated
 $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2;

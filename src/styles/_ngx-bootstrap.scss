@@ -1,3 +1,5 @@
+@import './ngx-bootstrap/variables';
+
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
 /**
@@ -13,3 +15,4 @@
 @import './ngx-bootstrap/forms';
 @import './ngx-bootstrap/popovers';
 @import './ngx-bootstrap/tooltips';
+@import './ngx-bootstrap/nav';

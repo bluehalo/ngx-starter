@@ -1,13 +1,13 @@
 @import './colors';
 
-$font-family: 'Roboto', 'Arial';
-$font-family-bold: 'Roboto-Bold';
-$font-family-light: 'Roboto-Light';
-$font-family-medium: 'Roboto Medium', 'Roboto';
-$font-family-italic: 'Roboto-Italic', 'Roboto Italic', 'Roboto';
+$font-family: 'Roboto', 'Arial' !default;
+$font-family-bold: 'Roboto-Bold' !default;
+$font-family-light: 'Roboto-Light' !default;
+$font-family-medium: 'Roboto Medium', 'Roboto' !default;
+$font-family-italic: 'Roboto-Italic', 'Roboto Italic', 'Roboto' !default;
 
-$font-line-height: 20px;
-$font-size: 14px;
+$font-line-height: 20px !default;
+$font-size: 14px !default;
 
 @mixin font-smoothing($value: antialiased) {
 	@if $value == antialiased {

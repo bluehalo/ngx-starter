@@ -3,14 +3,42 @@
 //==================================
 // Theme Colors
 //==================================
-$color-primary: mat-palette($palette-primary);
-$color-accent: mat-palette($palette-teal, 500, 300, A400);
-$color-background: mat-palette($palette-gray, 200, 50, A100, 800, 900);
+$color-primary: mat-palette($palette-primary) !default;
+$color-accent: mat-palette($palette-teal, 500, 300, A400) !default;
+$color-background: mat-palette($palette-gray, 200, 50, A100, 800, 900) !default;
+
+//==================================
+// UX Colors
+//==================================
+$ux-highlight: map-get($color-accent, 'lighter') !default;
+$ux-black: $color-black !default;
+$ux-dark-gray: map-get($color-background, 'darker') !default;
+$ux-background: $color-white !default;
+$ux-white: $color-white !default;
+$ux-brand-background: map-get($color-accent, 'default') !default;
+$ux-primary-highlight: map-get($color-primary, 'lightest') !default;
+$ux-primary-medium:  map-get($color-primary, 'lighter') !default;
+$ux-primary:  map-get($color-primary, 'default') !default;
+$ux-primary-dark: map-get($color-primary, 'darker') !default;
+
+$ux-alert-success: #30B390 !default;
+$ux-alert-error: #FF0033 !default;
+$ux-alert-warning: #F8BB00 !default;
+$ux-alert-notification: #00ABF4 !default;
+
+$ux-light-gray: map-get($color-background, 'lightest') !default;
+$ux-medium-gray: map-get($color-background, 'lighter') !default;
+
+$ux-body-text: $ux-dark-gray !default;
+$ux-heading: $ux-black !default;
+$ux-modal-overlay: $ux-medium-gray !default;
+$ux-modal-header: $ux-primary !default;
+$ux-alternate-row-fill: $ux-white !default;
 
 //==================================
 // Status Colors
 //==================================
-$color-success: mat-palette($palette-green);
-$color-warning: mat-palette($palette-yellow);
-$color-info: mat-palette($palette-blue);
-$color-error: mat-palette($palette-red);
+$color-success: mat-palette($palette-green) !default;
+$color-warning: mat-palette($palette-yellow) !default;
+$color-info: mat-palette($palette-blue) !default;
+$color-error: mat-palette($palette-red) !default;

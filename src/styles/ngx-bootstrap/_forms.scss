@@ -3,14 +3,13 @@
 
 @import '../typography';
 
-$form-label-font-color: map-get($color-primary, 'darker');
-$form-label-font-size: 14px;
-$form-input-border-color: map-get($color-background, 'darker');
-$form-input-border-radius: $border-radius;
-$form-input-font-color: map-get($color-primary, 'darker');
-$form-input-font-size: 14px;
-$form-input-placeholder-font-color: map-get($color-primary, 'lighter');
-
+$form-label-font-color: map-get($color-primary, 'darker') !default;
+$form-label-font-size: 14px !default;
+$form-input-border-color: map-get($color-background, 'darker') !default;
+$form-input-border-radius: $border-radius !default;
+$form-input-font-color: map-get($color-primary, 'darker') !default;
+$form-input-font-size: 14px !default;
+$form-input-placeholder-font-color: map-get($color-primary, 'lighter') !default;
 
 .form-group {
 	label {
