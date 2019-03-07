@@ -1,3 +1,8 @@
 @mixin transition($property: all, $timing: .2s, $animation: ease-out) {
 	transition: $property $timing $animation;
 }
+
+@mixin border($border-color, $border-width: 1px, $border-radius: 2px) {
+	border: $border-width solid $border-color;
+	border-radius: $border-radius;
+}

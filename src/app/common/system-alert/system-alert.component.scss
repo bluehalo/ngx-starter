@@ -1,6 +1,6 @@
-@import '../../site/shared/colors';
-@import '../../site/shared/fonts';
-@import '../../site/scss/site-shared';
+@import '../../../styles/overrides';
+@import '../../../styles/colors';
+@import '../../../styles/typography';
 
 .alert {
 	.alert-icon {
@@ -21,41 +21,41 @@
 	}
 
 	&.alert-success {
-		@include border($color-alert-success, 2px, 3px);
-		background: $color-white;
+		@include border($ux-alert-success, 2px, 3px);
+		background: $ux-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $color-alert-success;
+				color: $ux-alert-success;
 			}
 		}
 	}
 
 	&.alert-danger {
-		@include border($color-alert-error, 2px, 3px);
-		background: $color-white;
+		@include border($ux-alert-error, 2px, 3px);
+		background: $ux-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $color-alert-error;
+				color: $ux-alert-error;
 			}
 		}
 	}
 
 	&.alert-warning {
-		@include border($color-alert-warning, 2px, 3px);
-		background: $color-white;
+		@include border($ux-alert-warning, 2px, 3px);
+		background: $ux-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $color-alert-warning;
+				color: $ux-alert-warning;
 			}
 		}
 	}
 
 	button {
 		&.close {
-			color: $color-text;
+			color: $ux-body-text;
 			opacity: 1;
 		}
 	}
