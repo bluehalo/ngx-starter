@@ -13,49 +13,49 @@
 	}
 
 	.system-alert-message {
-		@include font-normal(16px, $color-text, 18px);
+		@include font-normal(16px, $ux-color-body-text, 18px);
 	}
 
 	.system-alert-subtext {
-		@include font-normal(12px, $color-text, 20px);
+		@include font-normal(12px, $ux-color-body-text, 20px);
 	}
 
 	&.alert-success {
-		@include border($ux-alert-success, 2px, 3px);
-		background: $ux-white;
+		@include border($ux-color-alert-success, 2px, 3px);
+		background: $ux-color-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $ux-alert-success;
+				color: $ux-color-alert-success;
 			}
 		}
 	}
 
 	&.alert-danger {
-		@include border($ux-alert-error, 2px, 3px);
-		background: $ux-white;
+		@include border($ux-color-alert-error, 2px, 3px);
+		background: $ux-color-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $ux-alert-error;
+				color: $ux-color-alert-error;
 			}
 		}
 	}
 
 	&.alert-warning {
-		@include border($ux-alert-warning, 2px, 3px);
-		background: $ux-white;
+		@include border($ux-color-alert-warning, 2px, 3px);
+		background: $ux-color-white;
 
 		.alert-icon {
 			.fa-fw {
-				color: $ux-alert-warning;
+				color: $ux-color-alert-warning;
 			}
 		}
 	}
 
 	button {
 		&.close {
-			color: $ux-body-text;
+			color: $ux-color-body-text;
 			opacity: 1;
 		}
 	}

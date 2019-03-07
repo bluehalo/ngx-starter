@@ -1,16 +1,16 @@
 @import '../typography';
 
 // Buttons
-$ux-button-bg: $ux-primary !default;
-$ux-button-bg-hover: $ux-highlight !default;
-$ux-button-bg-mouse-down: $ux-primary-medium !default;
-$ux-button-bg-disabled: $ux-light-gray !default;
+$ux-button-bg: $ux-color-primary !default;
+$ux-button-bg-hover: $ux-color-highlight !default;
+$ux-button-bg-mouse-down: $ux-color-primary-medium !default;
+$ux-button-bg-disabled: $ux-color-light-gray !default;
 
-$ux-button-border: $ux-primary !default;
-$ux-button-border-hover: $ux-highlight !default;
-$ux-button-border-mouse-down: $ux-primary-medium !default;
-$ux-button-border-disabled: $ux-light-gray !default;
-$ux-button-color-disabled: $ux-medium-gray !default;
+$ux-button-border: $ux-color-primary !default;
+$ux-button-border-hover: $ux-color-highlight !default;
+$ux-button-border-mouse-down: $ux-color-primary-medium !default;
+$ux-button-border-disabled: $ux-color-light-gray !default;
+$ux-button-color-disabled: $ux-color-medium-gray !default;
 
 .btn {
 

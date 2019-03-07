@@ -4,10 +4,10 @@
 table {
 	&.mean2starter {
 		th {
-			@include font-bold(16px, $ux-body-text, 18px);
+			@include font-bold(16px, $ux-color-body-text, 18px);
 
 			.sortable-table-header {
-				@include font-bold(16px, $ux-body-text, 18px);
+				@include font-bold(16px, $ux-color-body-text, 18px);
 
 				&.sortable {
 					&:hover {
