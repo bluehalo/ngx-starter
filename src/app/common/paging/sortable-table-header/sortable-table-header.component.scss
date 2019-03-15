@@ -1,12 +1,13 @@
-@import '../../site/shared/fonts';
+@import '../../../../styles/overrides';
+@import '../../../../styles/typography';
 
 table {
 	&.mean2starter {
 		th {
-			@include font-bold(16px, $color-text, 18px);
+			@include font-bold(16px, $ux-color-body-text, 18px);
 
 			.sortable-table-header {
-				@include font-bold(16px, $color-text, 18px);
+				@include font-bold(16px, $ux-color-body-text, 18px);
 
 				&.sortable {
 					&:hover {

@@ -1,10 +1,11 @@
+@import '../../../styles/overrides';
 @import '../../../styles/colors';
 @import '../../../styles/typography';
 
-$loading-spinner-border: 5px;
-$loading-spinner-color: map-get($color-primary, 'darker');
-$loading-spinner-size: 42px;
-$loading-spinner-message-font-size: 24px;
+$loading-spinner-border: 5px !default;
+$loading-spinner-color: map-get($color-primary, 'darker') !default;
+$loading-spinner-size: 42px !default;
+$loading-spinner-message-font-size: 24px !default;
 
 
 .loading-container {

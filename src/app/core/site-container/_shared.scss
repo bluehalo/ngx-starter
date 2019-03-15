@@ -1,6 +1,13 @@
 @import '../../../styles/typography';
 
-$header-banner-height: $font-line-height;
-$footer-banner-height: $font-line-height;
-$copyright-banner-height: $font-line-height;
+$header-banner-height: $font-line-height !default;
+$header-banner-bg: map-get($color-background, 'darkest') !default;
+$header-banner-color: map-get($color-background, 'darkest-contrast') !default;
 
+$footer-banner-height: $font-line-height !default;
+$footer-banner-bg: map-get($color-background, 'darkest') !default;
+$footer-banner-color: map-get($color-background, 'darkest-contrast') !default;
+
+$copyright-banner-height: $font-line-height !default;
+$copyright-banner-bg: map-get($color-background, 'default') !default;
+$copyright-banner-color: map-get($color-background, 'default-contrast') !default;

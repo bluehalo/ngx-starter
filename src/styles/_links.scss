@@ -1,7 +1,7 @@
 @import './colors';
 
-$link-color-light: map-get($color-accent, 'lightest');
-$link-color-dark: map-get($color-primary, 'default');
+$link-color-light: map-get($color-accent, 'lightest') !default;
+$link-color-dark: map-get($color-primary, 'default') !default;
 
 .link {
 

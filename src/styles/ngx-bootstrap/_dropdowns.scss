@@ -3,11 +3,11 @@
 
 @import '../typography';
 
-$dropdown-border-color: map-get($color-background, 'darker');
-$dropdown-border-radius: $border-radius;
-$dropdown-background-color: map-get($color-background, 'lightest');
-$dropdown-element-font-color: map-get($color-background, 'lightest-contrast');
-$dropdown-element-hover-background-color: map-get($color-background, 'lighter');
+$dropdown-border-color: map-get($color-background, 'darker') !default;
+$dropdown-border-radius: $border-radius !default;
+$dropdown-background-color: map-get($color-background, 'lightest') !default;
+$dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
+$dropdown-element-hover-background-color: map-get($color-background, 'lighter') !default;
 
 
 ul.dropdown-menu {
@@ -35,7 +35,6 @@ ul.dropdown-menu {
 			background-color: $dropdown-element-hover-background-color;
 			cursor: pointer;
 		}
-
 
 		&:active {
 			color: inherit;

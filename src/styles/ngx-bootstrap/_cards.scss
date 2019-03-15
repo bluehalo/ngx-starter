@@ -1,11 +1,12 @@
 @import '../globals';
 @import '../colors';
 
-$card-border-color: map-get($color-background, 'darker');
-$card-border-radius: $border-radius;
+$card-border-color: map-get($color-background, 'darker') !default;
+$card-border-radius: $border-radius !default;
+$card-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) !default;
 
 .card {
 	border-color: $card-border-color;
 	border-radius: $card-border-radius;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	box-shadow: $card-box-shadow;
 }

@@ -1,19 +1,37 @@
 @import '../typography';
 
+// Buttons
+$ux-button-bg: $ux-color-primary !default;
+$ux-button-bg-hover: $ux-color-highlight !default;
+$ux-button-bg-mouse-down: $ux-color-primary-medium !default;
+$ux-button-bg-disabled: $ux-color-light-gray !default;
+
+$ux-button-border: $ux-color-primary !default;
+$ux-button-border-hover: $ux-color-highlight !default;
+$ux-button-border-mouse-down: $ux-color-primary-medium !default;
+$ux-button-border-disabled: $ux-color-light-gray !default;
+$ux-button-color-disabled: $ux-color-medium-gray !default;
+
 .btn {
 
 	@include font-normal();
 
 	&.btn-primary {
 		@include font-color-light();
-	}
-
-	&.btn-outline-primary {
-		@include font-color-dark();
+		@include button-variant($ux-button-bg, $ux-button-border, $ux-button-bg-hover, $ux-button-border-hover, $ux-button-bg-mouse-down, $ux-button-border-mouse-down);
 	}
 
 	&.btn-large {
 		@include font-normal(18px);
+	}
+
+	&.btn-outline-primary, &.btn-outline-secondary {
+		@include button-outline-variant($ux-button-bg, #FFF, $ux-button-bg-mouse-down, $ux-button-bg-mouse-down);
+
+		&:hover {
+			border-color: $ux-button-bg-hover;
+			background-color: $ux-button-bg-hover;
+		}
 	}
 
 }
