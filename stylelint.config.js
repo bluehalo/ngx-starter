@@ -9,6 +9,12 @@ module.exports = {
 		'at-rule-empty-line-before': null,
 		'indentation': [ 'tab' ],
 		'no-descending-specificity': null,
-		'no-empty-source': null
+		'no-empty-source': null,
+		"selector-pseudo-element-no-unknown": [
+			true,
+			{
+				"ignorePseudoElements": ["ng-deep"]
+			}
+		]
 	}
 };
