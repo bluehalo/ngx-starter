@@ -1,24 +1,7 @@
-@import '../globals';
-@import '../colors';
+@import 'shared';
 
-@import '../typography';
-
-$popover-border-color: map-get($color-background, 'default') default;
-$popover-border-radius: $border-radius default;
-$popover-content-background-color: map-get($color-background, 'lightest') default;
-$popover-content-font-color: map-get($color-background, 'lightest-contrast') default;
-$popover-content-hover-background-color: map-get($color-background, 'lighter') default;
-
-.popover {
-	border-color: $popover-border-color;
-	border-radius: $popover-border-radius;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-
-	.popover-content {
-		background-color: $popover-content-background-color;
-		padding: 0;
-	}
-}
+$popover-menu-item-font-color: map-get($color-background, 'lightest-contrast') !default;
+$popover-menu-item-hover-bg-color: map-get($color-background, 'default') !default;
 
 .nav-popover {
 
@@ -63,12 +46,10 @@ $popover-content-hover-background-color: map-get($color-background, 'lighter') d
 
 ul.popover-menu {
 	list-style: none;
-
-	margin: 0;
 	padding: 0;
 
 	a {
-		@include font-color-dark($popover-content-font-color);
+		@include font-color-dark($popover-menu-item-font-color);
 
 		display: block;
 		padding: 10px 24px;
@@ -82,7 +63,7 @@ ul.popover-menu {
 		}
 
 		&:hover a {
-			background-color: $popover-content-hover-background-color;
+			background-color: $popover-menu-item-hover-bg-color;
 			text-decoration: none;
 		}
 	}

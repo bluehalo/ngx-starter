@@ -1,4 +1,4 @@
-@import './colors';
+@import 'shared';
 
 $link-color-light: map-get($color-accent, 'lightest') !default;
 $link-color-dark: map-get($color-primary, 'default') !default;

@@ -1,23 +1,9 @@
-@import '../globals';
-@import '../colors';
-
-@import '../typography';
-
-
-$tooltip-background-color: fade-out(map-get($color-background, 'darkest'), .4) !default;
-$tooltip-border-radius: $border-radius !default;
-$tooltip-font-color: map-get($color-background, 'darkest-contrast') !default;
-$tooltip-font-size: 14px !default;
+@import 'shared';
 
 .tooltip {
 	.tooltip-inner {
 		@include font-normal($tooltip-font-size);
-		@include font-color-light($tooltip-font-color);
 
-		border-radius: $tooltip-border-radius;
-		background-color: $tooltip-background-color;
-
-		padding: 8px 16px;
 		word-break: normal;
 		z-index: 20000;
 	}
