@@ -95,7 +95,8 @@ export abstract class PagingComponent {
 
 @Component({
 	selector: 'asy-pager',
-	templateUrl: './pager.component.html'
+	templateUrl: './pager.component.html',
+	styleUrls: [ './pager.component.scss' ]
 })
 export class Pager implements OnInit, OnChanges {
 
@@ -105,7 +106,6 @@ export class Pager implements OnInit, OnChanges {
 	@Input() maxPageSize: number = 100;
 	@Input() currentSize: number = 0;
 	@Input() disableGoToEnd: boolean = false;
-	@Input() showSortingControls: boolean = false;
 	@Input() showCountWarning: boolean = false;
 	@Input() countWarningMessage: string = '';
 
@@ -180,13 +180,6 @@ export class Pager implements OnInit, OnChanges {
 
 		// Since the size changed, go back to the first page
 		this.pageNumber = 0;
-
-		// Emit change event
-		this.onChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
-	}
-
-	sort(direction: SortDirection) {
-		this.sortdir = direction;
 
 		// Emit change event
 		this.onChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});

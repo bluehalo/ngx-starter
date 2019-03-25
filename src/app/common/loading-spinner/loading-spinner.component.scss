@@ -1,6 +1,5 @@
 @import '../../../styles/overrides';
-@import '../../../styles/colors';
-@import '../../../styles/typography';
+@import '../../../styles/shared';
 
 $loading-spinner-border: 5px !default;
 $loading-spinner-color: map-get($color-primary, 'darker') !default;

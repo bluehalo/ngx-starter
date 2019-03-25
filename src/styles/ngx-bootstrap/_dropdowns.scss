@@ -1,27 +1,10 @@
-@import '../globals';
-@import '../colors';
+@import 'shared';
 
-@import '../typography';
-
-$dropdown-border-color: map-get($color-background, 'darker') !default;
-$dropdown-border-radius: $border-radius !default;
-$dropdown-background-color: map-get($color-background, 'lightest') !default;
 $dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
-$dropdown-element-hover-background-color: map-get($color-background, 'lighter') !default;
-
 
 ul.dropdown-menu {
 	@include font-normal();
 	@include font-color-dark($dropdown-element-font-color);
-
-	background-color: $dropdown-background-color;
-
-	border-color: $dropdown-border-color;
-	border-radius: $dropdown-border-radius;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-
-	padding: 0;
-	margin: 0;
 
 	&.full-width-menu {
 		margin-left: 15px;
@@ -29,10 +12,7 @@ ul.dropdown-menu {
 	}
 
 	li > a.dropdown-item {
-		padding: 10px 24px;
-
 		&:hover {
-			background-color: $dropdown-element-hover-background-color;
 			cursor: pointer;
 		}
 

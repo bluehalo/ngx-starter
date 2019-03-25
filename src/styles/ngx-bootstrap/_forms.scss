@@ -1,7 +1,4 @@
-@import '../globals';
-@import '../colors';
-
-@import '../typography';
+@import 'shared';
 
 $form-label-font-color: map-get($color-primary, 'darker') !default;
 $form-label-font-size: 14px !default;

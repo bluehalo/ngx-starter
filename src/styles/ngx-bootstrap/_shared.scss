@@ -1,0 +1,7 @@
+// Imports non-rendering bootstrap SASS (i.e. variables, functions, mixins) for easy import into other files.
+
+@import 'variables';
+
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';

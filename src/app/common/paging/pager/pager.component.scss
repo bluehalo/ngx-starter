@@ -1,0 +1,22 @@
+@import '../../../../styles/overrides';
+@import '../../../../styles/shared';
+
+$pager-status-warning-color: $ux-color-alert-warning !default;
+
+$pager-controls-padding-x: 2px !default;
+$pager-controls-padding-y: 0 !default;
+
+$pager-controls-margin-top: -1px !default;
+
+.pager-controls {
+	.pager-status {
+		.warning {
+			color: $pager-status-warning-color;
+		}
+	}
+
+	.btn-link {
+		margin-top: $pager-controls-margin-top;
+		padding: $pager-controls-padding-y $pager-controls-padding-x;
+	}
+}

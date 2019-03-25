@@ -10,7 +10,8 @@ export interface SortableTableHeader {
 }
 @Component({
 	selector: 'sortable-table-header',
-	templateUrl: 'sortable-table-header.component.html'
+	templateUrl: 'sortable-table-header.component.html',
+	styleUrls: [ 'sortable-table-header.component.scss' ]
 })
 export class SortableTableHeaderComponent implements OnInit {
 

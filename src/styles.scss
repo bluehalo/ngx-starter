@@ -1,12 +1,10 @@
 @import 'styles/overrides';
-@import 'styles/globals';
-@import 'styles/colors';
-@import 'styles/mixins';
+@import 'styles/shared';
 
 @import 'styles/display';
 @import 'styles/icons';
 @import 'styles/links';
-@import 'styles/typography';
+@import 'styles/selection';
 
 /* You can add global styles to this file, and also import other style files */
 

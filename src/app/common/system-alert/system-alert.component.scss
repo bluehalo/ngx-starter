@@ -1,6 +1,5 @@
 @import '../../../styles/overrides';
-@import '../../../styles/colors';
-@import '../../../styles/typography';
+@import '../../../styles/shared';
 
 .alert {
 	.alert-icon {
@@ -13,11 +12,13 @@
 	}
 
 	.system-alert-message {
-		@include font-normal(16px, $ux-color-body-text, 18px);
+		@include font-normal(16px);
+		color: $ux-color-body-text;
 	}
 
 	.system-alert-subtext {
-		@include font-normal(12px, $ux-color-body-text, 20px);
+		@include font-normal(12px);
+		color: $ux-color-body-text;
 	}
 
 	&.alert-success {
