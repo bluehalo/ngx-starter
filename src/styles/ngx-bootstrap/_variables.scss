@@ -1,5 +1,8 @@
 @import '../shared';
 
+// Options
+$enable-shadows: true !default;
+
 // Colors
 $primary: $ux-color-primary !default;
 $secondary: $ux-color-primary !default;
@@ -8,6 +11,8 @@ $secondary: $ux-color-primary !default;
 $h1-font-size: $ux-h1-font-size !default;
 $h2-font-size: $ux-h2-font-size !default;
 $h3-font-size: $ux-h3-font-size !default;
+$h4-font-size: $ux-h4-font-size !default;
+$h5-font-size: $ux-h5-font-size !default;
 
 // Links
 $link-hover-color: $ux-color-highlight !default;
@@ -20,6 +25,9 @@ $nav-tabs-link-active-border-color: transparent transparent $ux-color-primary-me
 
 // Card
 $card-border-color:                 $ux-color-dark-gray !default;
+
+// Button
+$btn-disabled-opacity:              0.3 !default;
 
 // Dropdown
 $dropdown-padding-y:				0 !default;

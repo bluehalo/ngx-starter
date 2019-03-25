@@ -53,6 +53,8 @@ footer.site-footer {
 	margin-bottom: 0;
 	margin-top: 0;
 
+	padding: $site-content-padding-y $site-content-padding-x;
+
 	.header-active & {
 		margin-top: $header-banner-height;
 	}

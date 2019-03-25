@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component } from '@angular/core';
 
-import * as _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { Observable, Subscription } from 'rxjs';
 
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
@@ -12,10 +12,7 @@ import { SystemAlertService } from '../../common/system-alert.module';
 
 @Component({
 	selector: 'user-signup',
-	templateUrl: '../admin/user-management/manage-user.component.html',
-	styles: ['.card { margin: 3rem 1rem 4rem; }']
-
-
+	templateUrl: '../admin/user-management/manage-user.component.html'
 })
 export class SignupComponent extends ManageUserComponent {
 
@@ -39,7 +36,7 @@ export class SignupComponent extends ManageUserComponent {
 		super.ngOnInit();
 		this.routeParamSubscription = this.route.queryParams.subscribe((params: Params) => {
 			this.inviteId = params.inviteId;
-			if (!_.isEmpty(params.email)) {
+			if (!isEmpty(params.email)) {
 				this.user.userModel.email = params.email;
 			}
 		});

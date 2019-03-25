@@ -1,26 +1,25 @@
 <section>
-
-	<h3 class="page-header">
+	<h2>
 		Users
 		<small>Administer User Accounts</small>
 		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary float-right">
 			<span class="fa fa-user-plus"></span> Create User
 		</button>
-	</h3>
+	</h2>
 
-	<div class="row padding-top-5">
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<div class="row pt-2">
 		<div class="col-md-2">
-
 			<!-- Quick Filters -->
 			<quick-filters [filters]="quickFilters" (filtersChange)="quickFiltersUpdated($event)"></quick-filters>
 
 			<!-- Column Selector -->
 			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
-
 		</div>
 
 		<div class="col-md-10">
-
 			<!-- Search Input -->
 			<search-table placeholder="Search users..." (applySearch)="onSearch($event)"></search-table>
 
@@ -29,9 +28,7 @@
 				<div class="col-md-12 form-group">
 					<div class="btn-group float-right dropdown" dropdown>
 						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
-						<button type="button" class="btn btn-sm btn-outline-secondary" dropdownToggle>
-							<span class="fa fa-caret-down"></span>
-						</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
 							<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
 							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
@@ -87,7 +84,7 @@
 						</div>
 					</td>
 
-					<td style="min-width: 80px;max-width: 80px;">
+					<td style="min-width: 80px; max-width: 80px;">
 						<div class="btn-group btn-group-sm float-right">
 							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-outline-secondary">
 								<span class="fa fa-edit"></span>
@@ -100,13 +97,11 @@
 				</ng-template>
 
 				<ng-template named-template='empty-table'>
-					<h3>
+					<h2>
 						<small>No Users matched your search</small>
-					</h3>
+					</h2>
 				</ng-template>
 			</pageable-table>
-
 		</div>
-
 	</div>
 </section>

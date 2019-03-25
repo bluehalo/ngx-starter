@@ -1,11 +1,14 @@
+@import '../../../styles/overrides';
+@import '../site-container/shared';
 
 .admin-container {
+	margin: $site-content-padding-y * -1 $site-content-padding-x * -1;
+
 	.nav-tabs {
 		padding: 16px 15px 0;
 	}
 
 	.admin-section-container {
-		padding: 15px;
+		padding: $site-content-padding-y $site-content-padding-x;
 	}
-
 }

@@ -1,4 +1,4 @@
-<section class="p-3">
+<section>
 
 	<!-- Show a breadcrumb to the list teams page -->
 	<a class="back-link" routerLink="/teams">
@@ -8,26 +8,23 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<!-- Team Name and Create Date -->
-	<h1 class="pt-2">
+	<!-- Team Name and Delete Button -->
+	<h2 class="pt-2">
 		{{ team.name }}
-		<small class="float-right">Date Created: {{ team.created | utcDate:'MM/DD/YYYY' }}</small>
-	</h1>
+		<button type="button" class="btn btn-sm btn-primary float-right" (click)="remove()" *ngIf="canManageTeam">
+			<span class="fa fa-trash"></span> Delete Team
+		</button>
+	</h2>
 
-	<!-- Team Description and Delete Button -->
+	<!-- Team Description and Create Date -->
 	<div>
-		<div class="team-summary-description">
-			{{ team.description }}
-		</div>
-
-		<div *ngIf="canManageTeam" class="btn-group float-right">
-			<button type="button" class="btn btn-primary" (click)="remove()"><span class="fa fa-trash"></span> Delete Team</button>
-		</div>
+		<div>{{ team.description }}</div>
+		<div>Date Created: {{ team.created | utcDate:'MM/DD/YYYY' }}</div>
 	</div>
 
 	<!-- Tabs -->
-	<div class="mt-4">
-		<tabset type="tabs fit-content">
+	<div class="mt-3">
+		<tabset type="tabs">
 			<tab heading="Members">
 				<list-team-members [team]="team"></list-team-members>
 			</tab>
@@ -36,6 +33,5 @@
 			</tab>
 		</tabset>
 	</div>
-
 
 </section>

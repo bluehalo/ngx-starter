@@ -3,6 +3,8 @@
 $ux-h1-font-size: 22px !default;
 $ux-h2-font-size: 20px !default;
 $ux-h3-font-size: 18px !default;
+$ux-h4-font-size: 16px !default;
+$ux-h5-font-size: 14px !default;
 $ux-subheading-font-size: 16px !default;
 $ux-label-font-size: 14px !default;
 $ux-caption-font-size: 12px !default;
@@ -49,12 +51,12 @@ $font-size: 14px !default;
 	@include font($font-family-bold, $size);
 }
 
-@mixin font-color-dark($color: $color-black) {
+@mixin font-color-dark($color: $ux-color-black) {
 	color: $color;
 	@include font-smoothing(auto);
 }
 
-@mixin font-color-light($color: $color-white) {
+@mixin font-color-light($color: $ux-color-white) {
 	color: $color;
 	@include font-smoothing(antialiased);
 }

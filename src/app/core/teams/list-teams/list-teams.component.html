@@ -1,14 +1,16 @@
-<section class="p-3">
-	<h3 class="page-header">
+<section>
+	<h2 class="mb-3">
 		Teams
 		<small>View and manage team membership and roles</small>
-		<button routerLink="/team/create"  type="button" class="btn btn-primary float-right">
+		<button routerLink="/team/create" type="button" class="btn btn-sm btn-primary float-right">
 			<span class="fa fa-plus"></span> Create Team
 		</button>
-	</h3>
+	</h2>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
+
+	<div class="pt-2">
 		<search-table placeholder="Search teams..." (applySearch)="searchEvent$.next($event)" class="flex-grow-1"></search-table>
 
 		<pageable-table [items]="teams" [pagingOptions]="pagingOptions" (onPageChange)="pageEvent$.next($event)" [loading]="loading">
@@ -49,4 +51,5 @@
 				</div>
 			</ng-template>
 		</pageable-table>
+	</div>
 </section>

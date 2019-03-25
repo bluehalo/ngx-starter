@@ -11,3 +11,6 @@ $footer-banner-color: map-get($color-background, 'darkest-contrast') !default;
 $copyright-banner-height: $font-line-height !default;
 $copyright-banner-bg: map-get($color-background, 'default') !default;
 $copyright-banner-color: map-get($color-background, 'default-contrast') !default;
+
+$site-content-padding-y: 1rem !default;
+$site-content-padding-x: 1rem !default;

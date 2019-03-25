@@ -11,9 +11,6 @@
 // Import the main ngx-bootstrap style file
 @import 'styles/ngx-bootstrap';
 
-// Import ng-select style file
-@import "~@ng-select/ng-select/scss/default.theme";
-
 body {
 	@include font-normal();
 	@include font-color-dark($ux-color-body-text);
@@ -33,4 +30,8 @@ html {
 	content: '*';
 	color: $red;
 	padding-right: 3px;
+}
+
+.back-link {
+	text-decoration: underline;
 }
