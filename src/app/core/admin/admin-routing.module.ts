@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { AdminCreateUserComponent } from './user-management/admin-create-user.component';
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
 import { AdminCreateEuaComponent, AdminListEuasComponent, AdminUpdateEuaComponent } from './end-user-agreement/admin-eua.module';
@@ -33,7 +34,10 @@ import { AuthGuard } from '../auth/auth.guard';
 						path: 'users',
 						component: AdminListUsersComponent
 					},
-
+					{
+						path: 'user',
+						component: AdminCreateUserComponent
+					},
 					{
 						path: 'user/:id',
 						component: AdminUpdateUserComponent

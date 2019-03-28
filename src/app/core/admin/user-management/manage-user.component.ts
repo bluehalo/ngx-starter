@@ -1,12 +1,16 @@
+import { OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 
-export abstract class ManageUserComponent {
+export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	config: any;
 	error: string = null;
@@ -21,14 +25,20 @@ export abstract class ManageUserComponent {
 	navigateOnSuccess: string;
 	user: User;
 
+	protected destroy$: Subject<boolean> = new Subject();
+
 	constructor(
-		private router: Router,
-		private configService: ConfigService
+		protected router: Router,
+		protected configService: ConfigService,
+		protected alertService: SystemAlertService
 	) {
 	}
 
 	ngOnInit() {
 		this.configService.getConfig()
+			.pipe(
+				takeUntil(this.destroy$)
+			)
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth === 'proxy-pki';
@@ -37,6 +47,11 @@ export abstract class ManageUserComponent {
 
 				this.initialize();
 			});
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next(true);
+		this.destroy$.unsubscribe();
 	}
 
 	abstract initialize(): any;
@@ -50,11 +65,8 @@ export abstract class ManageUserComponent {
 			this.submitUser(this.user)
 				.subscribe(
 					() => this.router.navigate([this.navigateOnSuccess]),
-					(response: Response) => {
-						if (response.status >= 400 && response.status < 500) {
-							let errors = response.json().message.split('\n');
-							this.error = errors.join(', ');
-						}
+					(response: HttpErrorResponse) => {
+						this.alertService.addClientErrorAlert(response);
 					});
 		}
 	}

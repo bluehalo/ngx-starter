@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
+import { SignedUpComponent } from './signup/signed-up.component';
 import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -30,6 +32,14 @@ import { AuthGuard } from './auth/auth.guard';
 			{
 				path: 'signin',
 				component: SigninComponent
+			},
+			{
+				path: 'signup',
+				component: SignupComponent
+			},
+			{
+				path: 'signed-up',
+				component: SignedUpComponent
 			},
 			{
 				path: 'unauthorized',
