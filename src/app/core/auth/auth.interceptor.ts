@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
 				const url = get(err, 'url', '');
 				const message = get(err, 'error.message', '');
 
-				const routeObject = { status, type, message, url };
+				const stateObject = { status, type, message, url };
 
 				// Go to signin if the user isn't logged in and wasn't already on the signin page
 				if (401 === status && !url.endsWith('auth/signin')) {
@@ -44,7 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
 						this.router.navigate(['/eua']);
 					}
 					else {
-						this.router.navigate(['/access', routeObject]);
+						this.router.navigate(['/access'], {state: stateObject});
 					}
 				}
 
