@@ -178,3 +178,20 @@
 		margin-left: $nav-open-width;
 	}
 }
+
+// Fix positioning of popovers
+::ng-deep .navbar-left {
+	.nav-popover {
+		.popover {
+			transform: translate3d($nav-closed-width, 0px, 0px) !important;
+		}
+	}
+
+	&.navbar-open {
+		.nav-popover {
+			.popover {
+				transform: translate3d($nav-open-width, 0px, 0px) !important;
+			}
+		}
+	}
+}
