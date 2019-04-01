@@ -1,0 +1,13 @@
+<ng-select
+	class="ng-select-bootstrap-4"
+	[items]="[]"
+	[addTag]="true"
+	[multiple]="true"
+	[hideSelected]="true"
+	[isOpen]="autocompleteOpen"
+	(add)="onAdd()"
+	[searchFn]="noResults"
+	(search)="onSearch($event)"
+	placeholder="{{ placeholder }}"
+	[(ngModel)]="value">
+</ng-select>

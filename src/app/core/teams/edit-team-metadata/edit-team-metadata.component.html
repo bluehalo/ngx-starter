@@ -1,0 +1,37 @@
+<section class="p-3">
+	<form #form="ngForm" (ngSubmit)="save()" autocomplete="off" role="form" novalidate>
+		<h3>
+			Edit Team<br/>
+			<small>Modify team details</small>
+		</h3>
+
+		<!-- Required Indicator -->
+		<div>
+			<span><span class="text-danger"><strong> *</strong></span> Required</span>
+		</div>
+
+		<!-- Team Name -->
+		<div class="form-group pt-4">
+			<label class="control-label form-required" for="name">Team Name</label>
+			<input type="text" class="form-control" id="name" name="name" [(ngModel)]="team.name" required/>
+		</div>
+
+		<!-- Description -->
+		<div class="form-group">
+			<label class="control-label" for="description">Description</label>
+			<textarea rows="4" class="form-control" id="description" name="description" [(ngModel)]="team.description"></textarea>
+		</div>
+
+		<!-- External Groups -->
+		<div class="form-group" [hidden]="!showExternalTeams">
+			<label class="control-label">External Teams</label>
+			<asy-multi-select-input placeholder="Enter a team name..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
+		</div>
+
+		<div class="form-group">
+			<div class="float-right">
+				<button class="btn btn-primary" [disabled]="!form.form.valid">Save</button>
+			</div>
+		</div>
+	</form>
+</section>

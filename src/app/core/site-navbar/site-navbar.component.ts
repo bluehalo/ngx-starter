@@ -19,6 +19,7 @@ export class SiteNavbarComponent implements OnInit {
 	adminNavOpen = false;
 	helpNavOpen = false;
 	userNavOpen = false;
+	teamNavOpen = false;
 
 	session: Session = null;
 

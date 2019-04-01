@@ -1,0 +1,88 @@
+<section class="p-3">
+	<h3 class="pb-3">
+		Team Members
+
+		<div class="float-right" *ngIf="canManageTeam">
+			<button type="button" class="btn btn-primary" (click)="addMembers()"><span class="fa fa-plus"></span> Add New</button>
+		</div>
+	</h3>
+
+	<!-- Search Input -->
+	<search-table placeholder="Search team members..." (applySearch)="searchEvent$.next($event)"></search-table>
+
+	<pageable-table [items]="teamMembers" [pagingOptions]="pagingOptions" (onPageChange)="pageEvent$.next($event)">
+
+		<ng-template named-template="table-header">
+			<th *ngFor="let header of headersToShow">
+				<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (onSortChange)="sortEvent$.next($event)"></sortable-table-header>
+			</th>
+		</ng-template>
+
+		<ng-template named-template="table-row" let-member>
+			<!-- Name -->
+			<td>
+				<div>{{ member.userModel.name }}</div>
+			</td>
+
+			<!-- Username -->
+			<td>
+				<div>{{ member.userModel.username }}</div>
+			</td>
+
+			<!-- Active -->
+			<td>
+				<div>
+					{{ member.active ? 'Active': 'Not Active' }}
+				</div>
+			</td>
+
+			<!-- Bypassed -->
+			<td *ngIf="isUserAdmin">
+				<div>
+					{{ member.userModel.bypassAccessCheck ? 'Yes': 'No' }}
+				</div>
+			</td>
+
+			<!-- Role -->
+			<td>
+				<div *ngIf="!canManageTeam">{{ member.roleDisplay }}</div>
+				<div *ngIf="canManageTeam">
+					<div class="btn-group" dropdown container="body">
+						<button type="button" class="btn dropdown-toggle dropdown-toggle-table" dropdownToggle>
+							<span class="float-left" style="margin-right: 4px;">{{ member.roleDisplay }}</span>
+						</button>
+
+						<ul *dropdownMenu class="dropdown-menu" role="menu">
+							<li *ngFor="let role of teamRoleOptions" [value]="role.role" (click)="updateRole(member, role.role)">
+								<a class="dropdown-item">{{ role.label }}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</td>
+
+			<!-- Delete -->
+			<td *ngIf="canManageTeam && member.explicit">
+				<a class="btn-icon"
+				   tooltip="Remove Member"
+				   container="body"
+				   placement="bottom"
+				   (click)="removeMember(member)">
+					<span class="fa fa-lg fa-trash"></span>
+				</a>
+			</td>
+		</ng-template>
+
+		<ng-template named-template="empty-table">
+			<div *ngIf="hasSearch">
+				<h4>No team members matched your search</h4>
+			</div>
+			<div *ngIf="!hasSearch">
+				<h4>No Members?</h4>
+				<p>There are no members on this team. Read our <a [routerLink]="['/help/teams']">help page</a> for more details.</p>
+			</div>
+		</ng-template>
+
+	</pageable-table>
+
+</section>

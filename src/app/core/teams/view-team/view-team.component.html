@@ -1,0 +1,41 @@
+<section class="p-3">
+
+	<!-- Show a breadcrumb to the list teams page -->
+	<a class="back-link" routerLink="/teams">
+		<span class="fa fa-angle-double-left"></span> Back to Teams
+	</a>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<!-- Team Name and Create Date -->
+	<h1 class="pt-2">
+		{{ team.name }}
+		<small class="float-right">Date Created: {{ team.created | utcDate:'MM/DD/YYYY' }}</small>
+	</h1>
+
+	<!-- Team Description and Delete Button -->
+	<div>
+		<div class="team-summary-description">
+			{{ team.description }}
+		</div>
+
+		<div *ngIf="canManageTeam" class="btn-group float-right">
+			<button type="button" class="btn btn-primary" (click)="remove()"><span class="fa fa-trash"></span> Delete Team</button>
+		</div>
+	</div>
+
+	<!-- Tabs -->
+	<div class="mt-4">
+		<tabset type="tabs fit-content">
+			<tab heading="Members">
+				<list-team-members [team]="team"></list-team-members>
+			</tab>
+			<tab heading="Settings" *ngIf="canManageTeam">
+				<edit-team-metadata [team]="team" (metadataUpdated)="updateTeam($event)"></edit-team-metadata>
+			</tab>
+		</tabset>
+	</div>
+
+
+</section>
