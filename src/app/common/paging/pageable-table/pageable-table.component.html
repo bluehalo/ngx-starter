@@ -1,7 +1,7 @@
 <section class="pageable-table">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table" [ngClass]="{'card': showInCard, 'compact-table': !showInCard}" [hidden]="items?.length === 0">
+			<div class="table" [ngClass]="{'card p-3': showInCard, 'compact-table': !showInCard}" [hidden]="items?.length === 0">
 
 				<div *ngIf="showHeader" class="table-header" [ngClass]="{'table-actions' : null != actionTemplate}">
 					<ng-template *ngIf="showActions" [transclusion]="actionTemplate"></ng-template>
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 
-				<div *ngIf="!pagedPastAllowed" class="table-content" [ngClass]="{'padding-top-10' : null != actionTemplate}">
+				<div *ngIf="!pagedPastAllowed" class="table-content" [ngClass]="{'pt-2' : null != actionTemplate}">
 					<!-- Actual Results -->
 					<table class="table table-condensed table-hover">
 						<thead>
@@ -52,7 +52,7 @@
 				</div>
 
 				<!-- Bottom Paging Controls -->
-				<div class="row padding-top-5" *ngIf="pagerAtBottom && !pagedPastAllowed">
+				<div class="row pt-1" *ngIf="pagerAtBottom && !pagedPastAllowed">
 					<div class="col-md-12">
 						<div class="float-right">
 							<asy-pager
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 
-				<div class="row" [ngClass]="{'padding-top-10' : null != actionTemplate}" *ngIf="pagedPastAllowed">
+				<div class="row" [ngClass]="{'pt-2' : null != actionTemplate}" *ngIf="pagedPastAllowed">
 					<div class="col-md-12 text-center">
 						<h4>You can only page through the first {{ maxAllowed }} results</h4>
 					</div>
@@ -85,11 +85,11 @@
 
 			<section *ngIf="!loading" class="card card-message">
 				<div class="row">
-					<div class="col-md-6 offset-md-3 text-center">
+					<div class="pt-2 col-md-6 offset-md-3 text-center">
 						<ng-template [transclusion]="emptyTableTemplate"></ng-template>
 					</div>
 
-					<div class="padding-top-10 col-md-12 float-left">
+					<div class="pt-2 col-md-12 float-left">
 						<ng-template [transclusion]="footerTemplate"></ng-template>
 					</div>
 				</div>

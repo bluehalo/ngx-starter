@@ -8,17 +8,8 @@ $nav-tabs-border-highlight-width: 3px !default;
 	}
 
 	.nav-link {
-		border-width: 0 0 $nav-tabs-border-width;
-
-		margin: 0 1rem;
-		&.hover, &:hover {
-			border-width: 0 0 $nav-tabs-border-highlight-width;
-		}
-	}
-
-	.nav-link.active,
-	.nav-item.show .nav-link {
 		border-width: 0 0 $nav-tabs-border-highlight-width;
+		margin: 0 1rem;
 	}
 }
 

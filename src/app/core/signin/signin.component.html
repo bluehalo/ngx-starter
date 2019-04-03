@@ -3,7 +3,7 @@
 	<section class="row" *ngIf="loaded">
 
 		<!-- PKI Authentication Strategy -->
-		<div class="signin-loading-container" *ngIf="pkiMode">
+		<div class="signin-loading-container mx-auto mt-5" *ngIf="pkiMode">
 			<loading-spinner [hidden]="error"
 				message="Signing In...">
 			</loading-spinner>
@@ -14,7 +14,7 @@
 		</div>
 
 		<!-- Username/Password Authentication Strategy -->
-		<div class="signin-container" *ngIf="!pkiMode">
+		<div class="signin-container mx-auto mt-5" *ngIf="!pkiMode">
 
 			<h2 class="text-center">Sign In</h2>
 
@@ -28,9 +28,9 @@
 						<label for="password">Password</label>
 						<input type="password" id="password" name="password" class="form-control" [(ngModel)]="password" (keyup.enter)="signin()" placeholder="Password">
 					</div>
-					<div class="text-center form-group">
-						<button type="submit" class="btn btn-primary" (click)="signin()">Sign In</button>
-						<button type="button" class="btn btn-outline-secondary" routerLink="/signup">or Sign Up</button>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-primary mr-2" (click)="signin()">Sign In</button>
+						<button type="button" class="btn btn-link" routerLink="/signup">or Sign Up</button>
 					</div>
 					<div [hidden]="!error" class="text-center text-danger">
 						<strong>{{error}}</strong>

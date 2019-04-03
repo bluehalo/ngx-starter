@@ -35,3 +35,9 @@ ul.dropdown-menu {
 		}
 	}
 }
+
+.dropdown.open {
+	.dropdown-toggle::after {
+		transform: rotate(180deg);
+	}
+}

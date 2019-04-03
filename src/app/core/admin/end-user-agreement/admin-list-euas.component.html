@@ -1,17 +1,16 @@
 <section>
-
-	<h3 class="page-header">
+	<h2>
 		EUAs
 		<small>Administer End User Agreements</small>
 		<button [routerLink]="['/admin/eua']" type="button" class="btn btn-sm btn-primary float-right">
 			<span class="fa fa-plus"></span> Create EUA
 		</button>
-	</h3>
+	</h2>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<div class="row padding-top-5">
+	<div class="row pt-2">
 		<div class="col-md-2">
 			<!-- Column Selector -->
 			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
@@ -63,13 +62,11 @@
 				</ng-template>
 
 				<ng-template named-template="empty-table">
-					<h3>
+					<h2>
 						<small>No End User Agreements? Either there were no EUAs that matched your search or there are no EUAs in the system.</small>
-					</h3>
+					</h2>
 				</ng-template>
 			</pageable-table>
 		</div>
-
 	</div>
-
 </section>
