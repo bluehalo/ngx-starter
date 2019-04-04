@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
 	template: `
@@ -16,26 +16,21 @@ import { ActivatedRoute } from '@angular/router';
 	`,
 	styles: [ '' ]
 })
-export class AccessComponent implements OnInit {
-
-	loaded = false;
+export class AccessComponent {
 
 	status: string;
 	message: string;
 
 
 	constructor(
-		private activatedRoute: ActivatedRoute
-	) {}
+		private router: Router
+	) {
+		const navigation = this.router.getCurrentNavigation();
+		const state = navigation.extras.state;
 
-
-	ngOnInit() {
-		this.activatedRoute.params.subscribe((routeParams) => {
-			this.loaded = true;
-
-			this.status = routeParams.status;
-			this.message = routeParams.message;
-		});
+		if (state) {
+			this.status = state.status;
+			this.message = state.message;
+		}
 	}
-
 }
