@@ -2,8 +2,6 @@
 
 $form-label-font-color: map-get($color-primary, 'darker') !default;
 $form-label-font-size: 14px !default;
-$form-input-border-color: map-get($color-background, 'darker') !default;
-$form-input-border-radius: $border-radius !default;
 $form-input-font-color: map-get($color-primary, 'darker') !default;
 $form-input-font-size: 14px !default;
 $form-input-placeholder-font-color: map-get($color-primary, 'lighter') !default;
@@ -22,8 +20,6 @@ $form-input-placeholder-font-color: map-get($color-primary, 'lighter') !default;
 
 		height: 2.7em;
 		background: #fff none;
-		border: 1px solid $form-input-border-color;
-		border-radius: $form-input-border-radius;
 
 		&::placeholder {
 			@include font-light($form-input-font-size);

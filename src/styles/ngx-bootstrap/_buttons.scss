@@ -14,7 +14,7 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 
 .btn {
 
-	@include font-normal();
+	@include font-normal($btn-font-size);
 
 	&.btn-primary {
 		@include font-color-light();
@@ -31,6 +31,30 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 		&:hover {
 			border-color: $ux-button-bg-hover;
 			background-color: $ux-button-bg-hover;
+		}
+
+		&.disabled,
+		&:disabled {
+			border-color: inherit;
+			background-color: inherit;
+		}
+	}
+
+	&.btn-link {
+		text-decoration: underline;
+
+		&:not(:disabled):not(.disabled):active,
+		&:not(:disabled):not(.disabled).active {
+			box-shadow: none;
+		}
+	}
+
+	&.btn-card {
+		@include button-variant($ux-color-white, $card-border-color, $ux-color-white, $ux-color-highlight, $ux-color-white, $ux-color-primary-medium);
+
+		&:hover,
+		&.hover {
+			box-shadow: 0 0 0 $btn-focus-width $ux-color-highlight;
 		}
 	}
 

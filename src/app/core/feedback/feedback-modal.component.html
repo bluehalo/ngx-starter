@@ -1,75 +1,50 @@
 <section class="modal-header">
-	<h1>
+	<h2 class="modal-title">
 		Give Feedback
-	</h1>
+	</h2>
+	<button type="button" class="close"
+			(click)="modalRef.hide()"
+			tooltip="Close"
+			placement="bottom"
+			aria-label="Close">
+		<span class="fa fa-times" aria-hidden="true"></span>
+	</button>
 </section>
 
 <section class="modal-body">
-	<div class="row form-group">
-		<label class="col-md-12">What type of feedback would you like to leave?</label>
-		<div class="col-md-12 col-sm-12 col-xs-12 float-left btn-group" dropdown>
-			<button style="text-align: left;" type="button" class="form-control dropdown-toggle-secondary" dropdownToggle>
-				<span class="float-left hide-overflow selected-option">{{ selectedOption.name }}</span>
-				<span class="float-right">
-					<span class="fa fa-caret-down"></span>
-				</span>
-			</button>
+	<form #submitFeedbackForm="ngForm">
+		<div class="form-group">
+			<label>What type of feedback would you like to leave?</label>
+			<ng-select [items]="allTypeOption" [clearable]="false" bindLabel="name"
+					   [(ngModel)]="selectedOption" name="type" required
+					   placeholder="Select Feedback Type..." dropdownPosition="bottom">
 
-			<ul *dropdownMenu class="dropdown-menu full-width-menu" role="menu">
-				<li *ngFor="let type of allTypeOption" (click)="selectedOption = type">
-					<a class="dropdown-item" tabindex="0">{{ type.name }}</a>
-				</li>
-			</ul>
+			</ng-select>
 		</div>
-	</div>
 
-	<div *ngIf="classificationOptions" class="row form-group">
-		<label class="col-md-12">Select classification level for your feedback:</label>
-		<div class="col-md-12 col-sm-12 col-xs-12 float-left btn-group" dropdown>
-			<button style="text-align: left;" type="button" class="form-control dropdown-toggle-secondary" dropdownToggle>
-				<span class="float-left hide-overflow selected-option">{{ selectedClassification?.level }}</span>
-				<span class="float-right">
-					<span class="fa fa-caret-down"></span>
-				</span>
-			</button>
-
-			<ul *dropdownMenu class="dropdown-menu full-width-menu" role="menu">
-				<li *ngFor="let opt of classificationOptions" (click)="selectedClassification = opt">
-					<a class="dropdown-item" tabindex="0">{{ opt?.level }}</a>
-				</li>
-			</ul>
+		<div *ngIf="classificationOptions" class="form-group">
+			<label>Select classification level for your feedback:</label>
+			<ng-select [items]="classificationOptions" [clearable]="false" bindLabel="level"
+					   [(ngModel)]="selectedClassification" name="classification" required
+					   placeholder="Select Classification..." dropdownPosition="bottom">
+			</ng-select>
 		</div>
-	</div>
 
-	<div class="row form-group">
-		<label class="col-md-12">{{ selectedOption.prompt }}</label>
-		<div class="col-md-12">
-			<textarea
-				style="max-width: 100%;"
-				class="form-control input-sm custom-control"
-				rows="5"
-				[(ngModel)]="feedbackText">
-			</textarea>
+		<div class="form-group">
+			<label class="form-required">{{ selectedOption.prompt }}</label>
+			<textarea class="form-control" style="height: 8rem;"
+					  [(ngModel)]="feedbackText" required name="feedbackText"></textarea>
 		</div>
-	</div>
+	</form>
 </section>
 
 <section class="modal-footer">
-	<div class="row">
-		<div *ngIf="error" class="col-md-12 float-right text-danger">
-			<strong>{{ error }}</strong>
-		</div>
-		<div *ngIf="success" class="col-md-12 float-right text-success">
-			<strong>{{ success }}</strong>
-		</div>
+	<div *ngIf="error" class="text-danger font-weight-bolder">
+		{{ error }}
 	</div>
-
-	<div class="row padding-top-5">
-		<div class="col-md-12">
-			<div class="btn-group float-right">
-				<button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">Cancel</button>
-				<button type="button" class="btn btn-primary" [disabled]="submitting" (click)="submit()">Submit</button>
-			</div>
-		</div>
+	<div *ngIf="success" class="text-success font-weight-bolder">
+		{{ success }}
 	</div>
+	<button type="button" class="btn btn-link mr-2" (click)="modalRef.hide()">Cancel</button>
+	<button type="button" class="btn btn-primary" [disabled]="submitting || !submitFeedbackForm.form.valid" (click)="submit()">Submit</button>
 </section>

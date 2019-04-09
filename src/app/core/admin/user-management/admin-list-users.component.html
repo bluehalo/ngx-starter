@@ -2,9 +2,6 @@
 	<h2>
 		Users
 		<small>Administer User Accounts</small>
-		<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary float-right">
-			<span class="fa fa-user-plus"></span> Create User
-		</button>
 	</h2>
 
 	<!-- Alert Notifications -->
@@ -20,21 +17,20 @@
 		</div>
 
 		<div class="col-md-10">
-			<!-- Search Input -->
-			<search-table placeholder="Search users..." (applySearch)="onSearch($event)"></search-table>
-
-			<!-- Export -->
-			<div class="row">
-				<div class="col-md-12 form-group">
-					<div class="btn-group float-right dropdown" dropdown>
-						<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
-						<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
-						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-							<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
-							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
-						</ul>
-					</div>
+			<div class="d-flex mb-3 align-items-center">
+				<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"
+								  style="width: 350px"></asy-search-input>
+				<div class="btn-group float-right dropdown ml-auto" dropdown>
+					<button type="button" class="btn btn-sm btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
+					<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
+					<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+						<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
+						<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
+					</ul>
 				</div>
+				<button routerLink="/admin/user" type="button" class="btn btn-sm btn-primary ml-3">
+					<span class="fa fa-user-plus"></span> Create User
+				</button>
 			</div>
 
 			<pageable-table [items]="users"

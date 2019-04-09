@@ -17,7 +17,9 @@ $checkbox-inner-size: $radio-checkbox-size  - ($checkbox-inner-margin * 2);
 
 input {
 	&[type="radio"],
-	&[type="checkbox"] {
+	&[type="checkbox"],
+	&[type="radio"].form-check-input,
+	&[type="checkbox"].form-check-input {
 		left: -9999px;     // hides default ui elements
 		position: absolute;
 

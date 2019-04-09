@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { MultiSelectInputModule } from '../../common/multi-select-input.module';
@@ -30,6 +31,7 @@ import { TeamsRoutingModule } from './teams-routing.module';
 		BsDropdownModule.forRoot(),
 		TabsModule.forRoot(),
 		TypeaheadModule.forRoot(),
+		TooltipModule.forRoot(),
 
 		CommonModule,
 		FormsModule,

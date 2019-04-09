@@ -14,6 +14,7 @@ import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
+import { SearchInputModule } from '../../../common/search-input.module';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,8 @@ import { SystemAlertModule } from '../../../common/system-alert.module';
 		PagingModule,
 		PipesModule,
 		RouterModule,
-		SystemAlertModule
+		SystemAlertModule,
+		SearchInputModule
 	],
 	exports: [
 	],

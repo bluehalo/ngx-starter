@@ -12,19 +12,19 @@
 
 		<!-- Team Name -->
 		<div class="form-group">
-			<label class="control-label form-required" for="name">Team Name</label>
+			<label class="form-required" for="name">Team Name</label>
 			<input type="text" class="form-control" id="name" name="name" [(ngModel)]="team.name" required/>
 		</div>
 
 		<!-- Description -->
 		<div class="form-group">
-			<label class="control-label" for="description">Description</label>
+			<label for="description">Description</label>
 			<textarea rows="4" class="form-control" style="height: 6rem" id="description" name="description" [(ngModel)]="team.description"></textarea>
 		</div>
 
 		<!-- External Groups -->
 		<div class="form-group" [hidden]="!showExternalTeams">
-			<label class="control-label">External Teams</label>
+			<label>External Teams</label>
 			<asy-multi-select-input placeholder="Enter a team name..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
 		</div>
 

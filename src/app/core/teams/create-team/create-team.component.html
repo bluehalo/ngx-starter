@@ -21,21 +21,21 @@
 
 		<!-- Team Name -->
 		<div class="form-group pt-4">
-			<label class="control-label form-required" for="name">Team Name</label>
+			<label class="form-required" for="name">Team Name</label>
 			<input type="text" class="form-control" id="name" name="name" [(ngModel)]="team.name" required/>
 		</div>
 
 		<!-- Team Admin -->
 		<div class="form-group d-inline-block" *ngIf="isAdmin">
-			<label class="control-label"><span class="text-danger"><strong>* </strong></span> Team Admin</label>
+			<label class="form-required">Team Admin</label>
 
 			<div *ngIf="!editDefaultTeamAdmin">
 				<span class="fa fa-user"></span> {{ defaultTeamAdmin.name }} ({{ defaultTeamAdmin.username }})
 				<button type="button" class="btn btn-link" (click)="editDefaultTeamAdmin = true">(Select Another Admin)</button>
 			</div>
 
-			<div *ngIf="editDefaultTeamAdmin">
-				<div class="float-left" >
+			<div *ngIf="editDefaultTeamAdmin" class="form-row">
+				<div class="col">
 					<input type="text" name="admin" id="admin" class="form-control" style="width: 500px"
 						   placeholder="Start typing a user to add..."
 						   [(ngModel)]="queryUserSearchTerm"
@@ -46,7 +46,7 @@
 						   (typeaheadOnSelect)="typeaheadOnSelect($event)">
 				</div>
 
-				<div class="float-left">
+				<div class="col">
 					<!-- Cancel Button -->
 					<button type="button" class="btn btn-outline-secondary" (click)="editDefaultTeamAdmin = false">Cancel</button>
 				</div>
@@ -55,21 +55,21 @@
 
 		<!-- Description -->
 		<div class="form-group">
-			<label class="control-label" for="description">Description</label>
+			<label for="description">Description</label>
 			<textarea rows="2" class="form-control" id="description" name="description" [(ngModel)]="team.description"></textarea>
 		</div>
 
 		<!-- External Groups -->
 		<div class="form-group" [hidden]="!showExternalTeams">
-			<label class="control-label">External Teams</label>
+			<label>External Teams</label>
 			<asy-multi-select-input placeholder="Enter a team name..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
 		</div>
 
 		<div class="form-group">
 			<div class="float-right">
 				<!--&lt;!&ndash;<asy-loading-animation text="" *ngIf="submitting"></asy-loading-animation>&ndash;&gt;-->
-				<button type="button" class="btn btn-outline-secondary" routerLink="/teams">Cancel</button>
-				<button type="button" class="btn btn-primary ml-1" (click)="save()" [disabled]="!form.form.valid">Create</button>
+				<button type="button" class="btn btn-link mr-1" routerLink="/teams">Cancel</button>
+				<button type="button" class="btn btn-primary" (click)="save()" [disabled]="!form.form.valid">Create</button>
 			</div>
 		</div>
 	</form>

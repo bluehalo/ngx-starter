@@ -11,6 +11,9 @@
 // Import the main ngx-bootstrap style file
 @import 'styles/ngx-bootstrap';
 
+// Import the main ng-select style file
+@import 'styles/ng-select';
+
 body {
 	@include font-normal();
 	@include font-color-dark($ux-color-body-text);
@@ -26,12 +29,35 @@ html {
 	min-height: 100%;
 }
 
-.form-required:before {
-	content: '*';
-	color: $red;
-	padding-right: 3px;
+@if $form-required == before {
+	.form-required:before {
+		content: '*';
+		color: $red;
+		padding-right: 3px;
+	}
+} @else if $form-required == after {
+	.form-required:after {
+		content: '*';
+		color: $red;
+		padding-left: 3px;
+	}
 }
 
 .back-link {
 	text-decoration: underline;
+}
+
+// Adds ellipsis to any DOM element that is too long
+.hide-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	.dropdown-menu {
+		bottom: inherit;
+		left: inherit;
+		position: inherit;
+		right: inherit;
+		top: inherit;
+	}
 }

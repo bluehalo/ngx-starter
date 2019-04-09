@@ -1,5 +1,36 @@
+@import 'shared';
+
 $card-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) !default;
+$card-selected-check-size: 2rem !default;
 
 .card {
 	box-shadow: $card-box-shadow;
+}
+
+.card-selectable {
+	&:hover,
+	&.hover,
+	&.selected {
+		box-shadow: 0 0 0 $btn-focus-width $ux-color-highlight;
+		border-color: $ux-color-highlight;
+	}
+
+	&.selected {
+		&:before {
+			font: normal normal normal $card-selected-check-size/2 FontAwesome; /* stylelint-disable-line */
+			color: $ux-color-white;
+			content: '\f00c';
+			position: absolute;
+			left: $card-selected-check-size / -2;
+			top: $card-selected-check-size / -2;
+			width: $card-selected-check-size;
+			height: $card-selected-check-size;
+			border-radius: 100%;
+			background: $ux-color-highlight;
+			padding-top: $card-selected-check-size / 4;
+			box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4);
+		}
+	}
+
+	cursor: pointer;
 }

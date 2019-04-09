@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PagingResults, PagingOptions, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import {
+	PagingResults,
+	PagingOptions,
+	SortDirection,
+	SortableTableHeader,
+	PagingComponent
+} from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { ExportConfigService } from '../../export-config.service';
 import { AdminTopics } from '../../admin/admin.module';
@@ -10,18 +16,22 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	templateUrl: 'admin-list-feedback.component.html'
 })
-export class AdminListFeedbackComponent implements OnInit {
+export class AdminListFeedbackComponent extends PagingComponent implements OnInit {
 
 	feedbacks: any[];
+
+	search: string;
 
 	pagingOpts: PagingOptions;
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Submitted By', sortField: 'audit.actor', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Email', sortable: false },
-		{ name: 'Type', sortable: false },
+		{ name: 'Type', sortField: 'type', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Feedback', sortable: false },
-		{ name: 'Submitted From', sortable: false },
+		{ name: 'Submitted From', sortField: 'url', sortDir: SortDirection.asc, sortable: true },
+		{ name: 'Browser', sortField: 'browser', sortDir: SortDirection.asc, sortable: true },
+		{ name: 'OS', sortField: 'os', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Submission Time', sortField: 'created', sortDir: SortDirection.desc, sortable: true, default: true }
 	];
 
@@ -29,7 +39,9 @@ export class AdminListFeedbackComponent implements OnInit {
 		private feedbackService: FeedbackService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -45,15 +57,13 @@ export class AdminListFeedbackComponent implements OnInit {
 		this.loadFeedbackEntries();
 	}
 
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
+	loadData() {
 		this.loadFeedbackEntries();
 	}
 
-	setSort(sortOpt: SortableTableHeader) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
-		this.loadFeedbackEntries();
+	onSearch(search: string) {
+		this.search = search;
+		this.applySearch();
 	}
 
 	export() {
@@ -65,7 +75,7 @@ export class AdminListFeedbackComponent implements OnInit {
 	}
 
 	private loadFeedbackEntries() {
-		this.feedbackService.getFeedback(this.pagingOpts).subscribe((result: PagingResults) => {
+		this.feedbackService.getFeedback(this.pagingOpts, null, this.search, {}).subscribe((result: PagingResults) => {
 			this.feedbacks = result.elements;
 			if (this.feedbacks.length > 0) {
 				this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);

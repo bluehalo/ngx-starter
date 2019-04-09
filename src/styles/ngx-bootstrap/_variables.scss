@@ -29,6 +29,9 @@ $card-border-color:                 $ux-color-dark-gray !default;
 // Button
 $btn-disabled-opacity:              0.3 !default;
 
+// Forms
+$input-border-color: map-get($color-background, 'darker') !default;
+
 // Dropdown
 $dropdown-padding-y:				0 !default;
 $dropdown-spacer:					0 !default;

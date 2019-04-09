@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { first as _first } from 'lodash/first';
+import first from 'lodash/first';
 import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap';
-import { first } from 'rxjs/operators';
+import { first as rxjsFirst } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { StringUtils } from '../../common/string-utils.service';
@@ -42,12 +42,12 @@ export class FeedbackModalComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.currentRoute = `${config.app.baseUrl}${this.router.url}`;
+		this.configService.getConfig().pipe(rxjsFirst()).subscribe((config: any) => {
+			this.currentRoute = `${config.app.baseUrl || ''}${this.router.url}`;
 
 			if (Array.isArray(config.feedbackClassificationOpts) && !isEmpty(config.feedbackClassificationOpts)) {
 				this.classificationOptions = config.feedbackClassificationOpts;
-				this.selectedClassification = _first(this.classificationOptions);
+				this.selectedClassification = first(this.classificationOptions);
 			}
 		});
 	}
