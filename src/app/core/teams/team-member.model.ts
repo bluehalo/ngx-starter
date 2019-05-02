@@ -24,7 +24,7 @@ export class TeamMember extends User {
 		return this.userModel.teams.length > 0;
 	}
 
-	public getRoleInTeam(team: Team): string {
+	public getRoleInTeam(team: Team| { _id: string }): string {
 		if (null != this.userModel) {
 			let teams = get(this, 'userModel.teams', []);
 			// Find the role of this user in the team

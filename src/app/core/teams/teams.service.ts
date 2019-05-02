@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { PagingOptions, PagingResults, NULL_PAGING_RESULTS } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
 
+import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 
 import { Team } from './team.model';
@@ -28,6 +29,7 @@ export class TeamsService {
 		private http: HttpClient,
 		private sessionService: SessionService,
 		private alertService: SystemAlertService,
+		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService) {
 	}
 
@@ -131,6 +133,29 @@ export class TeamsService {
 			JSON.stringify( { role: role }),
 			{ headers: this.headers }
 		);
+	}
+
+	getTeamsCanManageResources(): Observable<Team[]> {
+		return Observable.create((observer: any) => {
+			this.search(new PagingOptions(0, 1000), {}, null, {}).subscribe(
+				(result: any) => {
+					let teams: Team[] = [];
+					if (null != result) {
+						teams = result.elements || [];
+					}
+					observer.next(teams.filter((team) => {
+						return this.authorizationService.isAdmin()
+							|| this.teamAuthorizationService.canManageResources(team);
+					}));
+				},
+				(err: any) => {
+					observer.error(err);
+				},
+				() => {
+					observer.complete();
+				}
+			);
+		});
 	}
 
 	private handleTeamMembers(result: any, team: Team) {
