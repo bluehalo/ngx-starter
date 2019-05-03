@@ -47,6 +47,7 @@ $popover-menu-item-hover-bg-color: map-get($color-background, 'default') !defaul
 ul.popover-menu {
 	list-style: none;
 	padding: 0;
+	margin-bottom: 0;
 
 	a {
 		@include font-color-dark($popover-menu-item-font-color);

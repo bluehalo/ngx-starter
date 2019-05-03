@@ -32,6 +32,7 @@
 .navbar-left {
 	background-color: $nav-background-color;
 	padding: 0;
+	overflow-x: hidden;
 
 	position: fixed;
 	bottom: 0;
@@ -41,6 +42,7 @@
 	width: $nav-closed-width;
 	z-index: 10000;
 
+	transition: width .15s ease-in-out;
 
 	// A normal element
 	.element {
@@ -124,6 +126,15 @@
 		}
 	}
 
+	.nav-inner-scroll {
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: $nav-closed-width;
+	}
+
+	.nav-collapse {
+		width: $nav-closed-width;
+	}
 
 	// Adjustments for when the navbar is open
 	&.navbar-open {
@@ -140,31 +151,19 @@
 		.element-logo > a > img.logo {
 			width: $nav-open-width - 2 * $nav-element-logo-img-margin;
 		}
-	}
 
-	.nav-logo {
-		left: 0;
-		top: 0;
-
-		.element-logo {
-			margin: 0;
+		.nav-inner-scroll, .nav-collapse {
+			width: $nav-open-width;
 		}
 	}
 
-	// Main nav: The upper area of the navbar where main site nav buttons exist
-	.nav-main {
-		left: 0;
-		top: $nav-element-logo-img-height + $nav-element-logo-img-margin;
-	}
+	// Main nav: The top area where the site logo exists
+	.nav-logo {
+		background-color: $nav-element-logo-color-bg;
+		width: 100%;
 
-	// Main nav: The lower area of the navbar where auxilliary nav buttons exist
-	.nav-aux {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-
-		.nav-popover .popover-menu {
-			width: 192px;
+		.element-logo {
+			margin: 0;
 		}
 	}
 }
@@ -173,25 +172,13 @@
 // Offset the content by the width of the navbar
 .navbar-content {
 	margin-left: $nav-closed-width;
+	transition: margin-left .15s ease-in-out;
 
 	&.navbar-open {
 		margin-left: $nav-open-width;
 	}
 }
 
-// Fix positioning of popovers
-::ng-deep .navbar-left {
-	.nav-popover {
-		.popover {
-			transform: translate3d($nav-closed-width, 0px, 0px) !important;
-		}
-	}
-
-	&.navbar-open {
-		.nav-popover {
-			.popover {
-				transform: translate3d($nav-open-width, 0px, 0px) !important;
-			}
-		}
-	}
+::ng-deep .site-nav-popover-container {
+	width: 192px;
 }

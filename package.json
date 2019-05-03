@@ -29,7 +29,7 @@
     "core-js": "2.5",
     "font-awesome": "4.7",
     "moment": "2.22",
-    "ngx-bootstrap": "4.0",
+    "ngx-bootstrap": "4.2.0",
     "roboto-fontface": "0.10",
     "rxjs": "6.3",
     "zone.js": "0.8"
