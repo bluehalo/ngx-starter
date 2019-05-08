@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarTopics } from '../../core/core.module';
 
 @Component({
 	template: `
@@ -16,3 +17,12 @@ export class SearchComponent {
 
 
 }
+
+NavbarTopics.registerTopic({
+	id: 'search',
+	title: 'Search',
+	ordinal: 2,
+	path: 'search',
+	iconClass: 'fa-search',
+	hasSomeRoles: ['user']
+});

@@ -6,6 +6,7 @@ import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { FeedbackModalComponent } from '../feedback/feedback-modal.component';
 import { AdminTopic, AdminTopics } from '../admin/admin.module';
+import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 
 @Component({
 	selector: 'site-navbar',
@@ -24,6 +25,8 @@ export class SiteNavbarComponent implements OnInit {
 	session: Session = null;
 
 	adminMenuItems: AdminTopic[];
+
+	navbarItems: NavbarTopic[];
 
 	@Output()
 	navbarOpenChange = new EventEmitter<boolean>();
@@ -54,6 +57,8 @@ export class SiteNavbarComponent implements OnInit {
 			});
 
 		this.adminMenuItems = AdminTopics.getTopics();
+
+		this.navbarItems = NavbarTopics.getTopics();
 	}
 
 	toggleNavbar() {

@@ -1,9 +1,9 @@
 <div
-		 class="navbar-left"
+		 class="navbar-left d-flex flex-column align-items-start"
 		 [ngClass]="{'navbar-open': navbarOpen}">
 
 	<!-- Logo -->
-	<ul class="nav nav-logo">
+	<ul class="nav nav-logo flex-shrink-0">
 
 		<!-- Logo -->
 		<li class="element element-logo">
@@ -17,153 +17,153 @@
 
 	</ul>
 
+	<div class="nav-inner-scroll d-flex flex-column align-items-start flex-grow-1">
 
-	<!-- Main Nav -->
-	<ul class="nav nav-main">
+		<!-- Main Nav -->
+		<ul class="nav nav-main flex-shrink-0 mb-auto">
+			<ng-container *ngFor="let navbarItem of navbarItems">
+			<li
+				class="element"
+				*hasSomeRoles="navbarItem.hasSomeRoles">
+				<a tooltip="{{ navbarItem.title }}"
+				   placement="left"
+				   [isDisabled]="navbarOpen"
+				   routerLinkActive="active-link"
+				   [routerLink]="navbarItem.path">
+					<span class="fa fa-fw {{ navbarItem.iconClass }}"></span>
+					<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
+				</a>
+			</li>
+			</ng-container>
+		</ul>
 
-		<!-- Element -->
-		<li class="element"
-			*hasRole="'user'">
-			<a tooltip="Explore"
-			   placement="right"
-			   [isDisabled]="navbarOpen"
-			   routerLinkActive="active-link"
-			   routerLink="/explore">
-				<span class="fa fa-fw fa-compass"></span>
-				<span [hidden]="!navbarOpen">Explore</span>
-			</a>
-		</li>
-		<li class="element"
-			*hasRole="'user'">
-			<a tooltip="Search"
-			   placement="right"
-			   [isDisabled]="navbarOpen"
-			   routerLinkActive="active-link"
-			   routerLink="/search">
-				<span class="fa fa-fw fa-search"></span>
-				<span [hidden]="!navbarOpen">Search</span>
-			</a>
-		</li>
+		<!-- Bottom Aux Nav -->
+		<ul class="nav nav-aux flex-shrink-0">
 
-	</ul>
+			<!-- Team Nav   -->
+			<li class="element nav-popover nav-popover-bottom"
+				*isAuthenticated>
+				<a [ngClass]="{'highlight-link': teamNavOpen}"
+				   [popover]="teamNav"
+				   container="body"
+				   containerClass="site-nav-popover-container"
+				   #teamNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="teamNavOpen = true;"
+				   (onHidden)="teamNavOpen = false;">
+					<span class="fa fa-fw fa-users"></span>
+					<span [hidden]="!navbarOpen">Teams</span>
+				</a>
 
+				<ng-template #teamNav>
+					<ul class="popover-menu" role="menu">
+						<!-- List Teams -->
+						<li>
+							<a routerLink="/teams"
+							   (click)="teamNavPopover.hide()">View All</a>
+						</li>
 
-	<!-- Bottom Aux Nav -->
-	<ul class="nav nav-aux">
+					</ul>
+				</ng-template>
+			</li>
 
-		<!-- Team Nav   -->
-		<li class="element nav-popover nav-popover-bottom"
-			*isAuthenticated>
-			<a [ngClass]="{'highlight-link': teamNavOpen}"
-			   [popover]="teamNav"
-			   #teamNavPopover="bs-popover"
-			   placement="right"
-			   [outsideClick]="true"
-			   (onShown)="teamNavOpen = true;"
-			   (onHidden)="teamNavOpen = false;">
-				<span class="fa fa-fw fa-users"></span>
-				<span [hidden]="!navbarOpen">Teams</span>
-			</a>
+			<!-- User Nav	-->
+			<li class="element nav-popover nav-popover-bottom"
+				*isAuthenticated>
+				<a [ngClass]="{'highlight-link': userNavOpen}"
+				   [popover]="userNav"
+				   container="body"
+				   containerClass="site-nav-popover-container"
+				   #userNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="userNavOpen = true;"
+				   (onHidden)="userNavOpen = false;">
+					<span class="fa fa-fw fa-user-circle"></span>
+					<span [hidden]="!navbarOpen">{{ session?.name }}</span>
+				</a>
 
-			<ng-template #teamNav>
-				<ul class="popover-menu" role="menu">
-					<!-- List Teams -->
-					<li>
-						<a routerLink="/teams"
-						   (click)="teamNavPopover.hide()">View All</a>
-					</li>
+				<ng-template #userNav>
+					<ul class="popover-menu" role="menu">
 
-				</ul>
-			</ng-template>
-		</li>
+						<!-- User Signout -->
+						<li [hidden]="pki"><a href="/api/auth/signout">Sign out</a></li>
 
-		<!-- User Nav	-->
-		<li class="element nav-popover nav-popover-bottom"
-			*isAuthenticated>
-			<a [ngClass]="{'highlight-link': userNavOpen}"
-			   [popover]="userNav"
-			   #userNavPopover="bs-popover"
-			   placement="right"
-			   [outsideClick]="true"
-			   (onShown)="userNavOpen = true;"
-			   (onHidden)="userNavOpen = false;">
-				<span class="fa fa-fw fa-user-circle"></span>
-				<span [hidden]="!navbarOpen">{{ session?.name }}</span>
-			</a>
+					</ul>
+				</ng-template>
+			</li>
 
-			<ng-template #userNav>
-				<ul class="popover-menu" role="menu">
+			<!-- Admin Nav	-->
+			<li class="element nav-popover nav-popover-bottom"
+				*hasRole="'admin'">
+				<a [ngClass]="{'highlight-link': adminNavOpen}"
+				   [popover]="adminNav"
+				   container="body"
+				   containerClass="site-nav-popover-container"
+				   #adminNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="adminNavOpen = true;"
+				   (onHidden)="adminNavOpen = false;">
+					<span class="fa fa-fw fa-cog"></span>
+					<span [hidden]="!navbarOpen">Admin</span>
+				</a>
 
-					<!-- User Signout -->
-					<li [hidden]="pki"><a href="/api/auth/signout">Sign out</a></li>
+				<ng-template #adminNav>
+					<ul class="popover-menu" role="menu">
+						<li *ngFor="let adminItem of adminMenuItems">
+							<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
+								(click)="adminNavPopover.hide()">
+								{{ adminItem.title }}
+							</a>
+						</li>
+					</ul>
+				</ng-template>
+			</li>
 
-				</ul>
-			</ng-template>
-		</li>
+			<!-- Help Nav -->
+			<li class="element nav-popover nav-popover-bottom">
+				<a [ngClass]="{'highlight-link': helpNavOpen}"
+				   [popover]="helpNav"
+				   container="body"
+				   containerClass="site-nav-popover-container"
+				   #helpNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="helpNavOpen = true;"
+				   (onHidden)="helpNavOpen = false;">
+					<span class="fa fa-fw fa-question-circle"></span>
+					<span [hidden]="!navbarOpen">Help</span>
+				</a>
 
-		<!-- Admin Nav	-->
-		<!-- TODO Only show the admin navigation when the user is determined to be an admin -->
-		<li class="element nav-popover nav-popover-bottom"
-			*hasRole="'admin'">
-			<a [ngClass]="{'highlight-link': adminNavOpen}"
-			[popover]="adminNav"
-			#adminNavPopover="bs-popover"
-			placement="right"
-			[outsideClick]="true"
-			(onShown)="adminNavOpen = true;"
-			(onHidden)="adminNavOpen = false;">
-				<span class="fa fa-fw fa-cog"></span>
-				<span [hidden]="!navbarOpen">Admin</span>
-			</a>
+				<ng-template #helpNav>
+					<ul class="popover-menu" role="menu">
 
-			<ng-template #adminNav>
-				<ul class="popover-menu" role="menu">
-					<li *ngFor="let adminItem of adminMenuItems">
-						<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
-							(click)="adminNavPopover.hide()">
-							{{ adminItem.title }}
-						</a>
-					</li>
-				</ul>
-			</ng-template>
-		</li>
+						<!-- Help -->
+						<li>
+							<a routerLink="/help"
+							   (click)="helpNavPopover.hide()">Help Docs</a>
+						</li>
 
-		<!-- Help Nav -->
-		<li class="element nav-popover nav-popover-bottom">
-			<a [ngClass]="{'highlight-link': helpNavOpen}"
-			   [popover]="helpNav"
-			   #helpNavPopover="bs-popover"
-			   placement="right"
-			   [outsideClick]="true"
-			   (onShown)="helpNavOpen = true;"
-			   (onHidden)="helpNavOpen = false;">
-				<span class="fa fa-fw fa-question-circle"></span>
-				<span [hidden]="!navbarOpen">Help</span>
-			</a>
+						<!-- Feedback -->
+						<li><a class="link"
+							(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
 
-			<ng-template #helpNav>
-				<ul class="popover-menu" role="menu">
+						<!-- About -->
+						<li>
+							<a routerLink="/about"
+							   (click)="helpNavPopover.hide()">About</a>
+						</li>
 
-					<!-- Help -->
-					<li>
-						<a routerLink="/help"
-						   (click)="helpNavPopover.hide()">Help Docs</a>
-					</li>
+					</ul>
+				</ng-template>
+			</li>
 
-					<!-- Feedback -->
-					<li><a class="link"
-						(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
+		</ul>
+	</div>
 
-					<!-- About -->
-					<li>
-						<a routerLink="/about"
-						   (click)="helpNavPopover.hide()">About</a>
-					</li>
-
-				</ul>
-			</ng-template>
-		</li>
-
+	<ul class="nav nav-collapse flex-shrink-0">
 		<!-- Divider -->
 		<li class="element element-divider element-divider-collapse"></li>
 
@@ -177,7 +177,6 @@
 				<span [hidden]="!navbarOpen">Collapse</span>
 			</a>
 		</li>
-
 	</ul>
 
 </div>
