@@ -9,6 +9,8 @@ import { Team } from './team.model';
 import { TeamRole } from './team-role.model';
 import { TeamMember } from './team-member.model';
 
+type TeamIdObj = Team | { _id: string };
+
 @Injectable()
 export class TeamAuthorizationService {
 
@@ -22,41 +24,45 @@ export class TeamAuthorizationService {
 				first(),
 				map((session: Session) => new TeamMember().setFromTeamMemberModel(null, session.user.userModel))
 			).subscribe((member: TeamMember) => {
-				this.member = member;
-			});
+			this.member = member;
+		});
 	}
 
 	hasTeams(): boolean {
 		return this.member.userModel.teams.length > 0;
 	}
 
-	public hasRole(team: Team, role: string | TeamRole): boolean {
+	public hasRole(team: TeamIdObj, role: string | TeamRole): boolean {
 		role = this.roleToString(role);
 		return this.member.getRoleInTeam(team) === role;
 	}
 
-	public hasAnyRole(team: Team): boolean {
+	public hasAnyRole(team: TeamIdObj): boolean {
 		return TeamRole.ROLES.some((role: TeamRole) => this.hasRole(team, role));
 	}
 
-	public hasSomeRoles(team: Team, roles: Array<string | TeamRole>): boolean {
+	public hasSomeRoles(team: TeamIdObj, roles: Array<string | TeamRole>): boolean {
 		return roles.some((role: string | TeamRole) => this.hasRole(team, role));
 	}
 
-	public hasEveryRole(team: Team, roles: Array<string | TeamRole>): boolean {
+	public hasEveryRole(team: TeamIdObj, roles: Array<string | TeamRole>): boolean {
 		return roles.every((role: string | TeamRole) => this.hasRole(team, role));
 		// return roles.reduce( (p: boolean, c: string) => p && this.hasRole(c), true);
 	}
 
-	public isMember(team: Team): boolean {
+	public isMember(team: TeamIdObj): boolean {
 		return this.hasRole(team, TeamRole.VIEW_ONLY.role);
 	}
 
-	public isEditor(team: Team): boolean {
+	public isEditor(team: TeamIdObj): boolean {
 		return this.hasRole(team, TeamRole.EDITOR.role);
 	}
 
-	public isAdmin(team: Team): boolean {
+	public canManageResources(team: TeamIdObj): boolean {
+		return this.isAdmin(team) || this.isEditor(team);
+	}
+
+	public isAdmin(team: TeamIdObj): boolean {
 		return this.hasRole(team, TeamRole.ADMIN.role);
 	}
 
