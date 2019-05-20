@@ -3,9 +3,9 @@ import {
 	Input,
 	TemplateRef,
 	ViewContainerRef,
-	ElementRef,
 	OnInit,
-	SimpleChanges, OnChanges
+	SimpleChanges, OnChanges, EmbeddedViewRef,
+	ɵstringify as stringify
 } from '@angular/core';
 
 import { SessionService } from './session.service';
@@ -19,20 +19,57 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	@Input() hasEveryRole: string[];
 	@Input() hasSomeRoles: string[];
 
-	private isHidden = true;
+	private _thenTemplateRef: TemplateRef<any>|null = null;
+	private _elseTemplateRef: TemplateRef<any>|null = null;
+	private _thenViewRef: EmbeddedViewRef<any>|null = null;
+	private _elseViewRef: EmbeddedViewRef<any>|null = null;
 
 	constructor(
-		private element: ElementRef,
 		private templateRef: TemplateRef<any>,
-		private viewContainer: ViewContainerRef,
+		private _viewContainer: ViewContainerRef,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
 	) {
+		this._thenTemplateRef = templateRef;
+	}
+
+	@Input()
+	set isAuthenticatedThen(templateRef: TemplateRef<any>|null) {
+		this.setThenTemplate('isAuthenticatedThen', templateRef);
+	}
+	@Input()
+	set hasRoleThen(templateRef: TemplateRef<any>|null) {
+		this.setThenTemplate('hasRoleThen', templateRef);
+	}
+	@Input()
+	set hasEveryRoleThen(templateRef: TemplateRef<any>|null) {
+		this.setThenTemplate('hasEveryRoleThen', templateRef);
+	}
+	@Input()
+	set hasSomeRolesThen(templateRef: TemplateRef<any>|null) {
+		this.setThenTemplate('hasSomeRolesThen', templateRef);
+	}
+
+	@Input()
+	set isAuthenticatedElse(templateRef: TemplateRef<any>|null) {
+		this.setElseTemplate('isAuthenticatedElse', templateRef);
+	}
+	@Input()
+	set hasRoleElse(templateRef: TemplateRef<any>|null) {
+		this.setElseTemplate('hasRoleElse', templateRef);
+	}
+	@Input()
+	set hasEveryRoleElse(templateRef: TemplateRef<any>|null) {
+		this.setElseTemplate('hasEveryRoleElse', templateRef);
+	}
+	@Input()
+	set hasSomeRolesElse(templateRef: TemplateRef<any>|null) {
+		this.setElseTemplate('hasSomeRolesElse', templateRef);
 	}
 
 	ngOnInit() {
 		this.sessionService.getSession().subscribe(() => {
-			this.updateView();
+			this._updateView();
 		});
 	}
 
@@ -49,19 +86,41 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 				return;
 			}
 
-			this.updateView();
+			this._updateView();
 		}
 	}
 
-	private updateView() {
+	private setThenTemplate(property: string, templateRef: TemplateRef<any>|null) {
+		assertTemplate(property, templateRef);
+		this._thenTemplateRef = templateRef;
+		this._thenViewRef = null; // clear previous view if any
+		this._updateView();
+	}
+
+	private setElseTemplate(property: string, templateRef: TemplateRef<any>|null) {
+		assertTemplate(property, templateRef);
+		this._elseTemplateRef = templateRef;
+		this._elseViewRef = null; // clear previous view if any
+		this._updateView();
+	}
+
+	private _updateView() {
 		if (this.checkPermission()) {
-			if (this.isHidden) {
-				this.viewContainer.createEmbeddedView(this.templateRef);
-				this.isHidden = false;
+			if (!this._thenViewRef) {
+				this._viewContainer.clear();
+				this._elseViewRef = null;
+				if (this._thenTemplateRef) {
+					this._thenViewRef = this._viewContainer.createEmbeddedView(this._thenTemplateRef);
+				}
 			}
 		} else {
-			this.isHidden = true;
-			this.viewContainer.clear();
+			if (!this._elseViewRef) {
+				this._viewContainer.clear();
+				this._thenViewRef = null;
+				if (this._elseTemplateRef) {
+					this._elseViewRef = this._viewContainer.createEmbeddedView(this._elseTemplateRef);
+				}
+			}
 		}
 	}
 
@@ -79,5 +138,12 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 		}
 
 		return hasPermission;
+	}
+}
+
+function assertTemplate(property: string, templateRef: TemplateRef<any>| null): void {
+	const isTemplateRefOrNull = !!(!templateRef || templateRef.createEmbeddedView);
+	if (!isTemplateRefOrNull) {
+		throw new Error(`${property} must be a TemplateRef, but received '${stringify(templateRef)}'.`);
 	}
 }
