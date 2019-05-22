@@ -6,14 +6,20 @@ import { catchError } from 'rxjs/operators';
 
 import { PagingResults, NULL_PAGING_RESULTS, PagingOptions } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
+import { Feedback } from './feedback.model';
 
 @Injectable()
 export class FeedbackService {
 
 	static feedbackTypes: any[] = [
-		{ name: 'General Feedback', prompt: 'Please share your feedback.' },
-		{ name: 'Bug Report', prompt: 'Please describe the bug. What were you doing when the bug happened?' },
-		{ name: 'Feature Request', prompt: 'What feature would you like to see?' }
+		{ name: 'General Feedback', prompt: 'Ask a question or make a comment' },
+		{ name: 'Feature Request', prompt: 'Suggest a new feature' },
+		{ name: 'Bug Report', prompt: 'Report a bug/error',
+			subType: {
+				label: 'What\'s the bug/error type?',
+				types: ['Content or data', 'Styling', 'Technical', 'Other', 'Unsure']
+			}
+		}
 	];
 
 	headers: any = { 'Content-Type': 'application/json'	};
@@ -23,10 +29,28 @@ export class FeedbackService {
 		private alertService: SystemAlertService
 	) {}
 
-	submit(feedback: string, type: string, url: string, classification?: any): Observable<any> {
+	getFormattedText(feedback: Feedback): string {
+		let text: string = '';
+		if (feedback.subType !== undefined) {
+			text += `${feedback.classification.prefix} ${feedback.subType}`;
+			if (feedback.subType === 'Other') {
+				text += ` - ${feedback.otherText}`;
+			}
+			text += '\n';
+		}
+		text += `${feedback.classification.prefix} ${feedback.text}`;
+		return text;
+	}
+
+	submit(feedback: Feedback): Observable<any> {
 		return this.http.post(
 			'api/feedback',
-			JSON.stringify({ body: feedback, type: type.toLowerCase(), url, classification }),
+			JSON.stringify({
+				body: this.getFormattedText(feedback),
+				type: feedback.type.toLowerCase(),
+				classification: feedback.classification.level,
+				url: feedback.currentRoute
+			}),
 			{ headers: this.headers }
 		);
 	}

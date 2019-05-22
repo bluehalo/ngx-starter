@@ -17,3 +17,6 @@
 @import './ngx-bootstrap/tooltips';
 @import './ngx-bootstrap/nav';
 @import './ngx-bootstrap/modal';
+
+
+@include text-emphasis-variant(".text-highlight", $ux-color-highlight);

@@ -1,0 +1,10 @@
+<section class="flyout" [ngClass]="{ 'flyout-open': isOpen }">
+	<button class="btn flyout-btn" (click)="toggle()">
+		{{ label }}
+		<span class="fa fa-lg fa-angle-down ml-1"></span>
+	</button>
+
+	<div class="flyout-content" #flyoutContentContainer>
+		<ng-content></ng-content>
+	</div>
+</section>

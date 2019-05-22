@@ -1,0 +1,41 @@
+@import '../../../styles/overrides';
+@import '../../../styles/shared';
+@import '../../../styles/ngx-bootstrap/shared';
+
+.flyout {
+	z-index: $zindex-popover;
+
+	&.flyout-open {
+		.flyout-btn .fa-angle-down {
+			transform: rotate(180deg);
+		}
+	}
+}
+
+.flyout-btn {
+	color: $ux-color-white;
+	position: absolute;
+	background-color: $ux-color-highlight;
+	transform: rotate(90deg);
+	transform-origin: 0% 0%;
+
+	border-radius: 0 0 $border-radius $border-radius;
+	min-width: 118px;
+	box-shadow: none;
+
+	&:not(:disabled):not(.disabled):active,
+	&:not(:disabled):not(.disabled).active,
+	&.focus,
+	&:focus {
+		box-shadow: none;
+	}
+}
+
+.flyout-content {
+	overflow: auto;
+	border-top: 10px solid $ux-color-highlight;
+	width: 0;
+	box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2);
+
+	transition: width 1s ease;
+}
