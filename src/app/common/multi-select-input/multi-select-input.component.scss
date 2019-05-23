@@ -1,12 +1,12 @@
+@import '../../../styles/overrides';
 @import '../../../styles/globals';
 @import '../../../styles/colors';
+@import '../../../styles/ngx-bootstrap/shared';
 
-::ng-deep .ng-select-bootstrap-4 {
+$tag-color: #f9f9f9 !default;
+$tag-bg-color: $ux-color-primary !default;
 
-	.ng-select-container {
-		border-radius: $border-radius;
-		border-color: map-get($color-background, 'darker');
-	}
+:host ::ng-deep .ng-select {
 
 	.ng-placeholder {
 		padding-top: 2px;
@@ -27,7 +27,6 @@
 	}
 
 	.ng-value-icon {
-		display: none;
 		float: right;
 		border-right: none !important;
 		&:hover {
@@ -37,25 +36,24 @@
 	}
 
 	.ng-value {
+		background-color: $tag-bg-color !important;
+		color: $tag-color !important;
 		margin-bottom: 0px !important;
 		margin-right: 5px !important;
 		box-shadow: 0 1px 4px 1px #d4d1d1;
 		height: 25px !important;
-		font-size: 1.1em !important;
+		font-size: inherit !important;
 		padding: 1px !important;
 		border-radius: 3px !important;
 		margin-top: -4px;
+
+		&:hover {
+			background-color: $ux-color-highlight !important;
+		}
 	}
 
 	.ng-select-container .ng-value-container .ng-input>input {
 		height: 27px;
 		margin-top: -1px;
 	}
-
 }
-
-::ng-deep .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
-	border-color: #80bdff !important;
-	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
-}
-

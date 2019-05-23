@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NgModel, ControlValueAccessor } from '@angular/forms';
 
 @Component({
@@ -25,10 +25,8 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 
 	constructor() {}
 
-	ngOnInit() {}
-
 	onSearch($event) {
-		if ( $event.trim().length > 0 ) {
+		if ( $event.term.trim().length > 0 ) {
 			this.autocompleteOpen = true;
 		} else {
 			this.autocompleteOpen = false;
