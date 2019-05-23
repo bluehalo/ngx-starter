@@ -1,16 +1,20 @@
 <section>
 	<h2>
 		System Feedback
-		<!-- Export -->
-		<button type="button" class="btn btn-sm btn-outline-secondary float-right" (click)="export()">
-			<span class="fa fa-download"></span> Export
-		</button>
 	</h2>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
 	<div class="pt-2">
+
+		<div class="d-flex mb-3 align-items-center">
+			<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"
+							  style="width: 350px"></asy-search-input>
+			<button type="button" class="btn btn-sm btn-outline-secondary ml-auto" (click)="export()">
+				<span class="fa fa-download"></span> Export
+			</button>
+		</div>
 
 		<pageable-table [items]="feedbacks" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
 
@@ -21,12 +25,30 @@
 			</ng-template>
 
 			<ng-template named-template="table-row" let-feedback>
-				<td>{{ feedback?.creator?.name }}</td>
-				<td>{{ feedback?.creator?.email }}</td>
-				<td>{{ feedback?.type }}</td>
-				<td>{{ feedback?.body }}</td>
-				<td>{{ feedback?.url }}</td>
-				<td [tooltip]="feedback?.created" container="body" placement="top">{{ feedback?.created | agoDate:false }}</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
+				</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
+				</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
+				</td>
+				<td>
+					<div style="width: 300px;">{{ feedback?.body }}</div>
+				</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.url }}</div>
+				</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.browser }}</div>
+				</td>
+				<td>
+					<div class="hide-overflow">{{ feedback?.os }}</div>
+				</td>
+				<td tooltip="{{ feedback?.created | utcDate }}" container="body" placement="top">
+					<div class="hide-overflow">{{ feedback?.created | agoDate:false }}</div>
+				</td>
 			</ng-template>
 
 			<ng-template named-template="empty-table">

@@ -31,10 +31,10 @@ export class FeedbackService {
 		);
 	}
 
-	getFeedback(paging: PagingOptions): Observable<PagingResults> {
+	getFeedback(paging: PagingOptions, query: any, search: string, options: any): Observable<PagingResults> {
 		return this.http.post<PagingResults>(
 			'api/admin/feedback',
-			'',
+			JSON.stringify({ s: search, q: query, options }),
 			{ params: paging.toObj(), headers: this.headers }
 		).pipe(
 			catchError((error: HttpErrorResponse) => {

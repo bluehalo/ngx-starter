@@ -1,0 +1,26 @@
+@import 'shared';
+@import 'ngx-bootstrap/shared';
+
+$ng-select-highlight: $input-focus-border-color !default;
+$ng-select-border: $input-border-color !default;
+
+@import '~@ng-select/ng-select/scss/default.theme';
+
+.ng-select {
+	.ng-select-container {
+		border-radius: $border-radius;
+	}
+
+	&.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+		@if $enable-shadows {
+			box-shadow: $input-box-shadow, $input-focus-box-shadow;
+		} @else {
+			box-shadow: $input-focus-box-shadow;
+		}
+	}
+}
+
+.form-group .ng-select .ng-select-container .ng-value-container .ng-input>input {
+	height: 27px;
+	margin-top: -2px;
+}

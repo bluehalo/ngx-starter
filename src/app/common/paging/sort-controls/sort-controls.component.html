@@ -1,5 +1,5 @@
 <div class="paging-sort">
-	<span *ngIf="showHeader" class="control-label">Sort By:</span>
+	<span *ngIf="showHeader">Sort By:</span>
 	<span *ngFor="let option of sortOptions | keys; let i = index">
 		<span *ngIf="i > 0"> / </span>
 		<button type="button" class="btn btn-sm btn-link"

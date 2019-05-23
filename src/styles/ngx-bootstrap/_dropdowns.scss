@@ -11,7 +11,8 @@ $dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !d
 .dropdown-toggle-table {
 	padding: 0;
 
-	&:focus {
+	&:focus,
+	.btn-group.show & {
 		box-shadow: none;
 	}
 }

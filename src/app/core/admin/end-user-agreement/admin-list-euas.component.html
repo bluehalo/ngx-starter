@@ -2,9 +2,6 @@
 	<h2>
 		EUAs
 		<small>Administer End User Agreements</small>
-		<button [routerLink]="['/admin/eua']" type="button" class="btn btn-sm btn-primary float-right">
-			<span class="fa fa-plus"></span> Create EUA
-		</button>
 	</h2>
 
 	<!-- Alert Notifications -->
@@ -16,8 +13,13 @@
 			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
 		</div>
 		<div class="col-md-10">
-			<!-- Search Input -->
-			<search-table (applySearch)="onSearch($event)"></search-table>
+			<div class="d-flex mb-3 align-items-center">
+				<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"
+								  style="width: 350px"></asy-search-input>
+				<button [routerLink]="['/admin/eua']" type="button" class="btn btn-primary ml-auto">
+					<span class="fa fa-plus"></span> Create EUA
+				</button>
+			</div>
 
 			<pageable-table [items]="euas"
 				[pagingOptions]="pagingOpts"

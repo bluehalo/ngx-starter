@@ -1,0 +1,5 @@
+<div class="input-group" style="width: 350px;">
+	<input [placeholder]="placeholder" type="text" class="form-control" [(ngModel)]="search" (keyup)="onKeyup()">
+	<span *ngIf="search.length === 0" class="icon fa fa-search"></span>
+	<span *ngIf="search.length > 0" (click)="clearSearch()" class="icon fa fa-times"></span>
+</div>

@@ -7,6 +7,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { DirectivesModule } from '../../common/directives.module';
 import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
@@ -16,6 +18,7 @@ import { AdminListFeedbackComponent } from './admin/admin-list-feedback.componen
 import { FeedbackModalComponent } from './feedback-modal.component';
 import { FeedbackService } from './feedback.service';
 import { FeedbackRoutingModule } from './feedback-routing.module';
+import { SearchInputModule } from '../../common/search-input.module';
 
 @NgModule({
 	imports: [
@@ -23,6 +26,7 @@ import { FeedbackRoutingModule } from './feedback-routing.module';
 		BsDropdownModule.forRoot(),
 		ButtonsModule.forRoot(),
 		TooltipModule.forRoot(),
+		NgSelectModule,
 
 		CommonModule,
 		FormsModule,
@@ -31,6 +35,7 @@ import { FeedbackRoutingModule } from './feedback-routing.module';
 		PagingModule,
 		PipesModule,
 		SystemAlertModule,
+		SearchInputModule,
 
 		FeedbackRoutingModule
 	],

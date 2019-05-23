@@ -1,8 +1,8 @@
 <div class="modal-header">
-	<h3 class="modal-title float-left">{{ title }}</h3>
+	<h2 class="modal-title">{{ title }}</h2>
 </div>
 <div class="modal-body word-wrap" [innerHtml]="message"></div>
 <div class="modal-footer">
+	<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">{{ cancelText }}</button>
 	<button class="btn btn-primary" (click)="ok()">{{ okText }}</button>
-	<button *ngIf="cancelText" class="btn btn-outline-secondary" (click)="cancel()">{{ cancelText }}</button>
 </div>
