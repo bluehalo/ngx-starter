@@ -2,6 +2,11 @@
 @import '../../../styles/shared';
 @import '../../../styles/ngx-bootstrap/shared';
 
+$flyout-btn-color: $ux-color-white !default;
+$flyout-btn-bg-color: $ux-color-highlight !default;
+$flyout-border-top: 10px !default;
+$flyout-box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2) !default;
+
 .flyout {
 	z-index: $zindex-popover;
 
@@ -13,14 +18,13 @@
 }
 
 .flyout-btn {
-	color: $ux-color-white;
 	position: absolute;
-	background-color: $ux-color-highlight;
+	color: $flyout-btn-color;
+	background-color: $flyout-btn-bg-color;
 	transform: rotate(90deg);
-	transform-origin: 0% 0%;
+	transform-origin: 0 0;
 
 	border-radius: 0 0 $border-radius $border-radius;
-	min-width: 118px;
 	box-shadow: none;
 
 	&:not(:disabled):not(.disabled):active,
@@ -33,9 +37,9 @@
 
 .flyout-content {
 	overflow: auto;
-	border-top: 10px solid $ux-color-highlight;
+	border-top: $flyout-border-top solid $ux-color-highlight;
+	box-shadow: $flyout-box-shadow;
 	width: 0;
-	box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2);
 
-	transition: width 1s ease;
+	transition: width 1s ease-in-out;
 }

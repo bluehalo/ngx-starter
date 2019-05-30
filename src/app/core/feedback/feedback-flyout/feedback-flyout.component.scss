@@ -5,6 +5,10 @@
 	position: fixed;
 	top: 25px;
 	right: 0;
+
+	& ::ng-deep .flyout-btn {
+		width: 118px;
+	}
 }
 
 .feedback-form {
