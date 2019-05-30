@@ -45,6 +45,9 @@ export class SessionService {
 
 	reloadSession(): Observable<any> {
 		return this.authService.reloadCurrentUser().pipe(
+			catchError(() => {
+				return of(null);
+			}),
 			this.mapUserModelToSession,
 			tap((session) => {
 				this.sessionSubject.next(session);
