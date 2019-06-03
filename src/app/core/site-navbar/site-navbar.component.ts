@@ -2,11 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import get from 'lodash/get';
+
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { FeedbackModalComponent } from '../feedback/feedback-modal.component';
 import { AdminTopic, AdminTopics } from '../admin/admin.module';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
+import { Config } from '../config.model';
+import { ConfigService } from '../config.service';
 
 @Component({
 	selector: 'site-navbar',
@@ -21,6 +25,8 @@ export class SiteNavbarComponent implements OnInit {
 	helpNavOpen = false;
 	userNavOpen = false;
 	teamNavOpen = false;
+
+	showFeedbackOption: boolean = true;
 
 	session: Session = null;
 
@@ -47,6 +53,7 @@ export class SiteNavbarComponent implements OnInit {
 
 	constructor(
 		private modalService: BsModalService,
+		private configService: ConfigService,
 		private sessionService: SessionService
 	) {}
 
@@ -55,6 +62,10 @@ export class SiteNavbarComponent implements OnInit {
 			.subscribe((session) => {
 				this.session = session;
 			});
+
+		this.configService.getConfig().subscribe((config: Config) => {
+			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
+		});
 
 		this.adminMenuItems = AdminTopics.getTopics();
 

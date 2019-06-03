@@ -1,0 +1,27 @@
+@import '../../../../styles/overrides';
+@import '../../../../styles/shared';
+
+:host {
+	position: fixed;
+	top: 25px;
+	right: 0;
+
+	& ::ng-deep .flyout-btn {
+		width: 118px;
+	}
+}
+
+.feedback-form {
+	background: $ux-color-white;
+	width: 550px;
+}
+
+.feedback-ready {
+	background: $ux-color-white url(/assets/images/feedback-bg.png) no-repeat right 1rem;
+	background-size: 219px 129px;
+	padding: 2rem;
+}
+
+.form-check-label {
+	font-family: $font-family;
+}

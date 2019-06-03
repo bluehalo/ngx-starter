@@ -18,6 +18,8 @@ import { AdminListFeedbackComponent } from './admin/admin-list-feedback.componen
 import { FeedbackModalComponent } from './feedback-modal.component';
 import { FeedbackService } from './feedback.service';
 import { FeedbackRoutingModule } from './feedback-routing.module';
+import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.component';
+import { FlyoutModule } from '../../common/flyout.module';
 import { SearchInputModule } from '../../common/search-input.module';
 
 @NgModule({
@@ -36,12 +38,14 @@ import { SearchInputModule } from '../../common/search-input.module';
 		PipesModule,
 		SystemAlertModule,
 		SearchInputModule,
+		FlyoutModule,
 
 		FeedbackRoutingModule
 	],
 	exports: [
 		AdminListFeedbackComponent,
-		FeedbackModalComponent
+		FeedbackModalComponent,
+		FeedbackFlyoutComponent
 	],
 	entryComponents: [
 		AdminListFeedbackComponent,
@@ -49,7 +53,8 @@ import { SearchInputModule } from '../../common/search-input.module';
 	],
 	declarations:   [
 		AdminListFeedbackComponent,
-		FeedbackModalComponent
+		FeedbackModalComponent,
+		FeedbackFlyoutComponent
 	],
 	providers:  [
 		FeedbackService

@@ -14,11 +14,13 @@ export class SiteContainerComponent {
 
 	bannerHtml = undefined;
 	copyrightHtml = undefined;
+	showFeedbackFlyout: boolean = false;
 
 	constructor(private configService: ConfigService) {
 		configService.getConfig().subscribe((config: Config) => {
 			this.bannerHtml = get(config, 'banner.html', undefined);
 			this.copyrightHtml = get(config, 'copyright.html', undefined);
+			this.showFeedbackFlyout = get(config, 'feedback.showFlyout', false);
 		});
 	}
 
