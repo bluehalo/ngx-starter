@@ -28,7 +28,7 @@ export class HelpTopics {
 	template: '<div #content></div>'
 })
 export class HelpTopicComponent {
-	@ViewChild('content', { read: ViewContainerRef }) content: ViewContainerRef;
+	@ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
 
 	@Input()
 	set key(key: string) {

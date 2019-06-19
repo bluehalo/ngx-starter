@@ -17,7 +17,7 @@ import { FeedbackService } from '../feedback.service';
 })
 export class FeedbackFlyoutComponent implements OnInit {
 
-	@ViewChild(FlyoutComponent) flyout: FlyoutComponent;
+	@ViewChild(FlyoutComponent, { static: false }) flyout: FlyoutComponent;
 
 	feedback: Feedback = new Feedback();
 
