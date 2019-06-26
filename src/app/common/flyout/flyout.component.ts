@@ -14,8 +14,8 @@ import {
 })
 export class FlyoutComponent implements OnInit {
 
-	@ViewChild('flyoutContentContainer') container: ElementRef;
-	@ContentChild('flyoutContent') content: ElementRef;
+	@ViewChild('flyoutContentContainer', { static: false }) container: ElementRef;
+	@ContentChild('flyoutContent', { static: false}) content: ElementRef;
 
 	@Input()
 	label: string;
