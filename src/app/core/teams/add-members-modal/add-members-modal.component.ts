@@ -9,7 +9,6 @@ import { map, mergeMap } from 'rxjs/operators';
 
 import { PagingOptions } from '../../../common/paging.module';
 
-import { AdminUsersService } from '../../admin/user-management/admin-users.service';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
 
@@ -39,7 +38,6 @@ export class AddMembersModalComponent implements OnInit {
 	private pagingOptions: PagingOptions = new PagingOptions();
 
 	constructor(
-		private userService: AdminUsersService,
 		private teamsService: TeamsService,
 		public modalRef: BsModalRef
 	) {}
@@ -48,7 +46,7 @@ export class AddMembersModalComponent implements OnInit {
 		this.dataSource = Observable.create((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
-			mergeMap((token: string) => this.userService.search({}, token, this.pagingOptions, {})),
+			mergeMap((token: string) => this.teamsService.searchUsers({}, token, this.pagingOptions, {})),
 			map((result: any) => {
 				return result.elements.map((r: any) => {
 					r.displayName = r.userModel.name + ' [' + r.userModel.username + ']';

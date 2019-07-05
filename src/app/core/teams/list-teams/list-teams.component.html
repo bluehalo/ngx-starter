@@ -2,16 +2,20 @@
 	<h2 class="mb-3">
 		Teams
 		<small>View and manage team membership and roles</small>
-		<button routerLink="/team/create" type="button" class="btn btn-sm btn-primary float-right">
-			<span class="fa fa-plus"></span> Create Team
-		</button>
 	</h2>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
 	<div class="pt-2">
-		<search-table placeholder="Search teams..." (applySearch)="searchEvent$.next($event)" class="flex-grow-1"></search-table>
+
+		<div class="d-flex mb-3 align-items-center">
+			<asy-search-input placeholder="Search teams..." (applySearch)="searchEvent$.next($event)"
+							  style="width: 350px"></asy-search-input>
+			<button routerLink="/team/create" type="button" class="btn btn-primary ml-auto">
+				<span class="fa fa-plus"></span> Create Team
+			</button>
+		</div>
 
 		<pageable-table [items]="teams" [pagingOptions]="pagingOptions" (onPageChange)="pageEvent$.next($event)" [loading]="loading">
 
@@ -44,8 +48,6 @@
 					<ng-template #no_results>
 						<div>
 							<h4>No Teams Created</h4>
-							<button class="btn btn-primary my-3" (click)="add()"><span class="fa fa-plus"></span> Create Team</button>
-							<p>For more details, review the Moniker Help</p>
 						</div>
 					</ng-template>
 				</div>
