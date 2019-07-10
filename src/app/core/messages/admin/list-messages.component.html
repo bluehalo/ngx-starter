@@ -1,0 +1,56 @@
+<section>
+
+	<h2>
+		Messages
+		<small>Administer Messages</small>
+	</h2>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<div class="pt-2">
+		<div class="d-flex mb-3 align-items-center">
+			<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)" style="width: 350px">
+			</asy-search-input>
+			<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
+				<span class="fa fa-plus"></span> Create Message
+			</button>
+		</div>
+		<pageable-table [items]="messages" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
+
+			<ng-template named-template="table-header">
+				<th *ngFor="let header of headers">
+					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField"
+						[currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+				</th>
+				<th>&nbsp;</th>
+			</ng-template>
+
+			<ng-template named-template="table-row" let-message>
+				<td>{{message.title}}</td>
+				<td>{{message.tearline}}</td>
+				<td>{{message.type}}</td>
+				<td>{{message.created | agoDate:false}}</td>
+				<td>{{message.updated | agoDate:false}}</td>
+				<td style="width: 120px;">
+					<div class="btn-group btn-group-sm float-right">
+						<button title="Edit" [routerLink]="['/admin/message', message._id]" type="button"
+							class="btn btn-outline-secondary">
+							<span class="fa fa-edit"></span>
+						</button>
+						<button title="Delete" (click)="confirmDeleteMessage(message)" type="button" class="btn btn-danger">
+							<span class="fa fa-trash-o"></span>
+						</button>
+					</div>
+				</td>
+			</ng-template>
+
+			<ng-template named-template="empty-table">
+				<h3>
+					<small>No Messages matched your search</small>
+				</h3>
+			</ng-template>
+
+		</pageable-table>
+	</div>
+</section>

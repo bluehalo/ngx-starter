@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "7.2",
     "@angular/router": "7.2",
     "@ng-select/ng-select": "2.13.3",
+    "@types/socket.io-client": "^1.4.32",
     "bootstrap": "4.3.1",
     "core-js": "2.5",
     "font-awesome": "4.7",
@@ -32,6 +33,7 @@
     "ngx-bootstrap": "4.2.0",
     "roboto-fontface": "0.10",
     "rxjs": "6.3",
+    "socket.io-client": "^2.2.0",
     "zone.js": "0.8"
   },
   "devDependencies": {
