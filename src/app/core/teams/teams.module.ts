@@ -12,6 +12,7 @@ import { SystemAlertModule } from '../../common/system-alert.module';
 import { PagingModule } from '../../common/paging.module';
 import { DirectivesModule } from '../../common/directives.module';
 import { PipesModule } from '../../common/pipes.module';
+import { SearchInputModule } from '../../common/search-input.module';
 
 import { AddMembersModalComponent } from './add-members-modal/add-members-modal.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
@@ -40,6 +41,7 @@ import { TeamsRoutingModule } from './teams-routing.module';
 		MultiSelectInputModule,
 		SystemAlertModule,
 		PagingModule,
+		SearchInputModule,
 
 		TeamsRoutingModule
 	],

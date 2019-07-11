@@ -21,7 +21,7 @@ import { TeamsResolve } from './teams.resolver';
 				component: CreateTeamComponent,
 				canActivate: [AuthGuard],
 				data: {
-					roles: [ 'user' ]
+					roles: [ 'editor' ]
 				}
 			},
 			{

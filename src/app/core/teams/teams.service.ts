@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
+import isArray from 'lodash/isArray';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -13,6 +14,7 @@ import { SessionService } from '../auth/session.service';
 import { Team } from './team.model';
 import { TeamMember } from './team-member.model';
 import { TeamAuthorizationService } from './team-authorization.service';
+import { User } from '../auth/user.model';
 
 export interface AddedMember {
 	username?: string;
@@ -156,6 +158,21 @@ export class TeamsService {
 				}
 			);
 		});
+	}
+
+	searchUsers(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
+		return this.http.post(
+			'api/users',
+			{ q: query, s: search, options: options },
+			{ params: paging.toObj() }
+		).pipe(
+			map((results: PagingResults) => {
+				if (null != results && isArray(results.elements)) {
+					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
+				}
+				return results;
+			})
+		);
 	}
 
 	private handleTeamMembers(result: any, team: Team) {
