@@ -2,21 +2,24 @@ import { Injectable, EventEmitter } from '@angular/core';
 
 import { Message } from './message.class';
 import { SocketService } from '../socket.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PagingOptions } from 'src/app/common/paging.module';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SystemAlertService } from '../../common/system-alert.module';
 
 
 @Injectable()
 export class MessageService {
+	headers: any = { 'Content-Type': 'application/json' };
 
 	public numMessagesIndicator: BehaviorSubject<number> = new BehaviorSubject(0);
 	cache: any = {};
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed: number = 0;
 
-
 	constructor(
+		private alertService: SystemAlertService,
 		private http: HttpClient,
 		private socketService: SocketService,
 	) {
@@ -24,14 +27,27 @@ export class MessageService {
 	}
 
 	create(message: Message) {
-		return this.http.post('api/admin/message',
+		return this.http.post(
+			'api/admin/message',
 			JSON.stringify(message),
-			{ headers: { 'Content-Type': 'application/json' } });
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
+		);
 	}
 
 	get(id: string) {
-		return this.http.get(`api/admin/message/${id}`,
-			{ headers: { 'Content-Type': 'application/json' } }
+		return this.http.get(
+			`api/admin/message/${id}`,
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
@@ -39,43 +55,79 @@ export class MessageService {
 	 * Retrieves an array of a field's value for all messages in the system
 	 */
 	getAll(query: any, field: any) {
-		return this.http.post(`api/admin/message/getAll`,
+		return this.http.post(
+			`api/admin/message/getAll`,
 			{ query: query, field: field },
-			{ headers: { 'Content-Type': 'application/json' } }
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
 	update(message: Message) {
-		return this.http.post(`api/admin/message/${message._id}`,
+		return this.http.post(
+			`api/admin/message/${message._id}`,
 			JSON.stringify(message),
-			{ headers: { 'Content-Type': 'application/json' } }
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
 	remove(id: string) {
-		return this.http.delete(`api/admin/message/${id}`,
-			{ headers: { 'Content-Type': 'application/json' } }
+		return this.http.delete(
+			`api/admin/message/${id}`,
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
 	search(query: any, search: any, paging: PagingOptions = new PagingOptions()) {
-		return this.http.post('api/messages',
+		return this.http.post(
+			'api/messages',
 			{ q: query, s: search },
-			{ headers: { 'Content-Type': 'application/json' }, params: paging.toObj() },
+			{ headers: this.headers, params: paging.toObj() },
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
 	recent(): Observable<any[]> {
-		return this.http.post<any>('api/messages/recent',
+		return this.http.post<any>(
+			'api/messages/recent',
 			{},
-			{ headers: { 'Content-Type': 'application/json' } }
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
 	dismiss(ids: string[]) {
-		return this.http.post('api/messages/dismiss',
+		return this.http.post(
+			'api/messages/dismiss',
 			{ messageIds: ids },
-			{ headers: { 'Content-Type': 'application/json' } }
+			{ headers: this.headers }
+		).pipe(
+			catchError((error: HttpErrorResponse) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(null);
+			})
 		);
 	}
 
@@ -121,7 +173,9 @@ export class MessageService {
 
 	updateNewMessageIndicator() {
 		this.recent().subscribe((results) => {
-			this.numMessagesIndicator.next(results.length);
+			if (results !== null) {
+				this.numMessagesIndicator.next(results.length);
+			}
 		});
 	}
 
