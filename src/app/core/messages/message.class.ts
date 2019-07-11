@@ -7,7 +7,6 @@ export enum MessageType {
 export class Message {
 	public _id: string;
 	public title: string;
-	public tearline: string;
 	public type: MessageType;
 	public body: string;
 	public updated: number;
@@ -17,7 +16,6 @@ export class Message {
 	public setFromModel(model: any): Message {
 		this._id = model._id;
 		this.title = model.title;
-		this.tearline = model.tearline;
 		this.type = model.type;
 		this.body = model.body;
 		this.updated = model.updated;

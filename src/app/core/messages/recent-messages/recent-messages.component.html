@@ -1,0 +1,33 @@
+<div *ngIf="messages.length > 0">
+    <h4 class="mb-3">Notifications</h4>
+    <ng-container *ngFor="let message of messages; index as i">
+      <div class="card card-message mb-3">
+        <div class="d-flex">
+          <div class="col-alert-icon {{getTypeAlertClass(message)}}">
+            <span class="fa {{getTypeIcon(message)}} alert-icon d-flex align-items-center"></span>
+          </div>
+          <div class="flex-grow-1">
+            <div class="card-body">
+              <h3>{{message.title}}</h3>
+              <p>{{message.body}}</p>
+            </div>
+          </div>
+          <div class="flex-grow-0">
+            <span class="fa fa-lg fa-close mr-2 mt-2" style="cursor: pointer"
+              (click)="dismissMessage(message)"></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <div class="message-actions row m-0">
+      <button type="button" class="btn btn-sm btn-link pl-0" (click)="dismissAll()">Dismiss all</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary px-3 ml-auto" (click)="viewAll()">View All</button>
+    </div>
+  </div>
+  
+  <div *ngIf="messages.length === 0 && !loading" class="text-center">
+    <h2 class="mt-4">You're all caught up!</h2>
+    <p class="mb-4">You don't have any new notifications.</p>
+    <button type="button" class="btn btn-sm btn-outline-secondary px-3 mb-2" (click)="viewAll()">View All</button>
+  </div>

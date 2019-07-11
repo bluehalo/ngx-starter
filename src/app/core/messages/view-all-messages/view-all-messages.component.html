@@ -1,0 +1,47 @@
+<section>
+  <h2 class="mb-3">
+    Messages
+    <small>View and search past messages</small>
+  </h2>
+
+  <!-- Alert Notifications -->
+  <system-alert></system-alert>
+
+  <div class="pt-2 d-flex flex-column">
+    <asy-search-input class="mx-auto mb-4" placeholder="Search messages..." (applySearch)="onSearch($event)"
+      style="width: 350px">
+    </asy-search-input>
+    <div class="p-2">
+      <div *ngIf="newMessages" class="text-center">
+        <button class="btn btn-sm btn-link" (click)="loadNewMessages()" style="font-size: 14px">Load new messages</button>
+      </div>
+      <div *ngIf="messages.length === 0">
+        <p>No messages to display.</p>
+      </div>
+      <ng-container *ngFor="let message of messages; index as i">
+        <div>
+          <div class="card card-message mb-4 mx-auto">
+            <div class="d-flex flex-grow-1">
+              <div class="col-alert-icon {{getTypeAlertClass(message)}}">
+                <span class="fa {{getTypeIcon(message)}} alert-icon d-flex align-items-center"></span>
+              </div>
+              <div class="flex-grow-1">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <div>
+                      <h3>{{message.title}}</h3>
+                    </div>
+                    <div class="ml-auto">
+                      <p>{{message.created | agoDate}}</p>
+                    </div>
+                  </div>
+                  <p>{{message.body}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

@@ -1,22 +1,32 @@
 import { NgModule } from '@angular/core';
 import { MessageService } from './message.service';
-import { MessagesComponent } from './messages.component';
 import { CommonModule } from '@angular/common';
 import { SocketService } from '../socket.service';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { AdminMessagesModule } from './admin/admin-messages.module';
+import { ViewAllMessagesComponent } from './view-all-messages/view-all-messages.component';
+import { MessagesRoutingModule } from './messages-routing.module';
+import { RouterModule } from '@angular/router';
+import { SystemAlertModule } from 'src/app/common/system-alert.module';
+import { RecentMessagesComponent } from './recent-messages/recent-messages.component';
+import { SearchInputModule } from 'src/app/common/search-input.module';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		PipesModule,
-		AdminMessagesModule
+		AdminMessagesModule,
+		MessagesRoutingModule,
+		RouterModule,
+		SystemAlertModule,
+		SearchInputModule
 	],
 	exports: [
-		MessagesComponent
+		RecentMessagesComponent
 	],
 	declarations: [
-		MessagesComponent
+		ViewAllMessagesComponent,
+		RecentMessagesComponent
 	],
 	providers: [
 		MessageService,

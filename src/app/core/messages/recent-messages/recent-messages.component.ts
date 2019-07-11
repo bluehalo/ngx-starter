@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { Message, MessageType } from './message.class';
-import { MessageService } from './message.service';
+import { Message, MessageType } from '../message.class';
+import { MessageService } from '../message.service';
 import * as _ from 'lodash';
-
+import { Router } from '@angular/router';
 @Component({
-	selector: 'app-list-messages',
-	templateUrl: './messages.component.html',
-	styleUrls: ['./messages.component.scss']
+	selector: 'app-recent-messages',
+	templateUrl: './recent-messages.component.html',
+	styleUrls: ['./recent-messages.component.scss']
 })
-export class MessagesComponent {
+export class RecentMessagesComponent implements OnInit {
 
+	@Input() container: any;
 	messages: Message[];
+	loading: boolean = false;
 
 	constructor(
-		private messageService: MessageService
+		private messageService: MessageService,
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -29,11 +32,13 @@ export class MessagesComponent {
 	}
 
 	load() {
+		this.loading = true;
 		this.messageService.recent()
 			.subscribe((result) => {
 				let messages = _.orderBy(result, ['created'], ['desc']);
 				this.messages = messages as Message[];
 				this.messageService.numMessagesIndicator.next(this.messages.length);
+				this.loading = false;
 			});
 	}
 
@@ -46,6 +51,12 @@ export class MessagesComponent {
 	dismissAll() {
 		this.messageService.dismiss(this.messages.map((m) => m._id)).subscribe(() => {
 			this.load();
+		});
+	}
+
+	viewAll() {
+		this.router.navigate(['/messages']).then(() => {
+			this.container.hide();
 		});
 	}
 

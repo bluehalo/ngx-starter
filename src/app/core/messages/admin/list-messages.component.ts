@@ -25,7 +25,6 @@ export class ListMessagesComponent {
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Title', sortField: 'title', sortDir: SortDirection.asc, sortable: true },
-		{ name: 'Tearline', sortField: 'tearline', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Type', sortField: 'type', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true },
 		{ name: 'Updated', sortField: 'updated', sortDir: SortDirection.desc, sortable: true, default: true }
