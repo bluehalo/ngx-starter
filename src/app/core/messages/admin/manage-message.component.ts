@@ -1,10 +1,10 @@
-import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Message } from '../message.class';
 import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export abstract class ManageMessageComponent {
 
@@ -50,9 +50,9 @@ export abstract class ManageMessageComponent {
 		this.submitMessage(this.message)
 			.subscribe(
 				() => this.router.navigate([this.navigateOnSuccess]),
-				(response: Response) => {
+				(response: HttpErrorResponse) => {
 					if (response.status >= 400 && response.status < 500) {
-						let errors = response.json().message.split('\n');
+						let errors = response.message.split('\n');
 						this.error = errors.join(', ');
 					}
 				});

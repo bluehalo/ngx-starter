@@ -17,7 +17,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	search: string = null;
 	newMessages: boolean = false;
 
-	@ViewChild(SearchInputComponent) searchInput: SearchInputComponent;
+	@ViewChild(SearchInputComponent, { static: true }) searchInput: SearchInputComponent;
 
 	constructor(
 		private messagesService: MessageService

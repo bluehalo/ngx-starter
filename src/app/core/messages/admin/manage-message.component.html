@@ -15,7 +15,7 @@
 		</div>
 
 		<!-- Alert Notifications -->
-		<alert *ngFor="let alert of alertService.getAlerts(); let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >{{alert.msg}}</alert>
+		<system-alert></system-alert>
 
 		<!-- Type -->
 		<div class="form-group row">

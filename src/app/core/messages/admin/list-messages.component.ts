@@ -1,6 +1,5 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component } from '@angular/core';
-import { Response } from '@angular/http';
 
 import * as _ from 'lodash';
 
@@ -11,6 +10,7 @@ import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ModalService, ModalAction } from 'src/app/common/modal.module';
 import { first, filter, switchMap } from 'rxjs/operators';
 import { AdminTopics } from '../../admin/admin.module';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	templateUrl: './list-messages.component.html'
@@ -115,8 +115,8 @@ export class ListMessagesComponent {
 			.subscribe(() => {
 				this.alertService.addAlert(`Deleted message.`, 'success');
 				this.applySearch();
-			}, (response: Response) => {
-				this.alertService.addAlert(response.json().message);
+			}, (error: HttpErrorResponse) => {
+				this.alertService.addAlert(error.message);
 			});
 	}
 
