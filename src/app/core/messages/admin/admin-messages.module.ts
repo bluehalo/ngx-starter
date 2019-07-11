@@ -3,8 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { AlertModule } from 'ngx-bootstrap';
-
 import { CreateMessageComponent } from './create-message.component';
 import { ListMessagesComponent } from './list-messages.component';
 import { AdminMessagesRoutingModule } from './admin-messages-routing.module';
@@ -18,8 +16,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
 	imports: [
-		AlertModule.forRoot(),
-
 		AdminMessagesRoutingModule,
 		CommonModule,
 		FormsModule,

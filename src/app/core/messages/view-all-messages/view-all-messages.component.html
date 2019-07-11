@@ -27,9 +27,9 @@
               </div>
               <div class="flex-grow-1">
                 <div class="card-body">
-                  <div class="d-flex">
+                  <div class="d-flex pb-2">
                     <div>
-                      <h3>{{message.title}}</h3>
+                      <h3>{{message.title | titlecase}}</h3>
                     </div>
                     <div class="ml-auto">
                       <p>{{message.created | agoDate}}</p>
