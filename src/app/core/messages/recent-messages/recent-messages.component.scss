@@ -1,50 +1,52 @@
-.message-actions {
-	.btn {
-		font-size: 14px;
-	}
-}
+@import '../../../../styles/overrides';
+@import '../../../../styles/shared';
 
+$card-width: 258px;
+$card-icon-width: 31px;
 
 .card-message {
-	display: inline-block;
-	z-index: 3;
-	border:none;
-	width: 258px;
+	border: none;
 	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
-	
-	.card-body{
-		padding: 10px;
-		p {
-			margin-bottom: 0;
-		}
+	display: inline-block;
+	width: $card-width;
+
+	.card-body {
+		padding: .75rem;
 	}
 
 	.col-alert-icon {
-		flex: 0 0 31px;
-		background-color: white;
+		max-width: $card-icon-width;
+		flex: 0 0 $card-icon-width;
+		background-color: $ux-color-white;
 		display: flex;
 		justify-content: center;
-	
+		align-items: center;
+
 		.alert-icon {
 			font-size: 1.6rem;
-			color: white;
+			color: $ux-color-white;
 		}
-	
+
 		&.warn {
-			background-color: #F8BB00;
+			background-color: $ux-color-alert-warning;
 		}
-	
+
 		&.error {
-			background-color: #FF0033;
+			background-color: $ux-color-alert-error;
 		}
-	
+
 		&.info {
-			background-color: #0156B1;
+			background-color: $ux-color-alert-notification;
 		}
-	
+
 		&.motd {
-			background-color: #00ABF4;
+			background-color: $ux-color-alert-success;
 		}
+	}
+
+	.col-alert-body {
+		max-width: calc(100% - #{$card-icon-width});
+		flex: 0 0 calc(100% - #{$card-icon-width});
 	}
 }

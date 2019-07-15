@@ -217,4 +217,8 @@
 	font-weight: 500;
 	background: #00ABF4;
 	font-family: Roboto, sans-serif;
+
+	.navbar-open & {
+		right: 11px + $nav-open-width - $nav-closed-width;
+	}
 }

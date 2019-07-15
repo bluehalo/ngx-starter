@@ -1,8 +1,10 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { MessageService } from '../message.service';
-import { Message, MessageType } from '../message.class';
+
 import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/paging.module';
 import { SearchInputComponent } from 'src/app/common/search-input.module';
+
+import { MessageService } from '../message.service';
+import { Message } from '../message.class';
 
 @Component({
 	selector: 'app-view-all-messages',
@@ -65,36 +67,6 @@ export class ViewAllMessagesComponent implements OnInit {
 		this.search = search;
 		this.pageNumber = 0;
 		this.loadMessages(this.pageNumber);
-	}
-
-	getTypeAlertClass(message: Message) {
-		switch (MessageType[message.type].toLowerCase()) {
-			case 'motd':
-				return 'motd';
-			case 'info':
-				return 'info';
-			case 'warn':
-				return 'warn';
-			case 'error':
-				return 'error';
-			default:
-				return 'unknown';
-		}
-	}
-
-	getTypeIcon(message: Message) {
-		switch (MessageType[message.type].toLowerCase()) {
-			case 'motd':
-				return 'fa-check';
-			case 'info':
-				return 'fa-info';
-			case 'warn':
-				return 'fa-exclamation';
-			case 'error':
-				return 'fa-exclamation-triangle';
-			default:
-				return 'unknown';
-		}
 	}
 
 }
