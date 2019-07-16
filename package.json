@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "8.0.2",
     "@angular/router": "8.0.2",
     "@ng-select/ng-select": "2.13.3",
+    "@types/socket.io-client": "^1.4.32",
     "bootstrap": "4.3.1",
     "core-js": "2.5",
     "font-awesome": "4.7",
@@ -31,7 +32,8 @@
     "ngx-bootstrap": "4.2.0",
     "roboto-fontface": "0.10",
     "rxjs": "6.5.2",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.0",

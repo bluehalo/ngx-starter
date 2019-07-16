@@ -11,6 +11,7 @@ import { AdminTopic, AdminTopics } from '../admin/admin.module';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
+import { MessageService } from '../messages/message.service';
 
 @Component({
 	selector: 'site-navbar',
@@ -25,6 +26,7 @@ export class SiteNavbarComponent implements OnInit {
 	helpNavOpen = false;
 	userNavOpen = false;
 	teamNavOpen = false;
+	messagesNavOpen = false;
 
 	showFeedbackOption: boolean = true;
 
@@ -33,6 +35,8 @@ export class SiteNavbarComponent implements OnInit {
 	adminMenuItems: AdminTopic[];
 
 	navbarItems: NavbarTopic[];
+
+	numNewMessages: number = 0;
 
 	@Output()
 	navbarOpenChange = new EventEmitter<boolean>();
@@ -54,13 +58,15 @@ export class SiteNavbarComponent implements OnInit {
 	constructor(
 		private modalService: BsModalService,
 		private configService: ConfigService,
-		private sessionService: SessionService
+		private sessionService: SessionService,
+		private messageService: MessageService
 	) {}
 
 	ngOnInit() {
 		this.sessionService.getSession()
 			.subscribe((session) => {
 				this.session = session;
+				this.messageService.updateNewMessageIndicator();
 			});
 
 		this.configService.getConfig().subscribe((config: Config) => {
@@ -70,6 +76,9 @@ export class SiteNavbarComponent implements OnInit {
 		this.adminMenuItems = AdminTopics.getTopics();
 
 		this.navbarItems = NavbarTopics.getTopics();
+		this.messageService.numMessagesIndicator.subscribe((count) => {
+			this.numNewMessages = count;
+		});
 	}
 
 	toggleNavbar() {
@@ -79,5 +88,4 @@ export class SiteNavbarComponent implements OnInit {
 	showFeedbackModal() {
 		this.modalService.show(FeedbackModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
 	}
-
 }

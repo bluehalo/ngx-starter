@@ -1,0 +1,62 @@
+<section>
+
+	<!-- Show a breadcrumb to the list messages page -->
+	<a *ngIf="mode === 'admin-edit' || mode === 'admin-create'" class="back-link" [routerLink]="['/admin/messages']">
+		<i class="fa fa-angle-double-left"></i> Back to Messages
+	</a>
+
+	<form *ngIf="message" #form="ngForm" autocomplete="off" class="form-horizontal" role="form" novalidate >
+
+		<div class="page-header">
+			<h2>
+				{{title}}
+				<small>{{subtitle}}</small>
+			</h2>
+		</div>
+
+		<!-- Alert Notifications -->
+		<system-alert></system-alert>
+
+		<!-- Type -->
+		<div class="form-group row">
+			<label class="col-md-12" for="messageType">Type<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-12">
+				<ng-select id="messageType" name="type" [items]="typeOptions" [(ngModel)]="message.type" bindValue="value" bindLabel="display" style="width: 350px"></ng-select>
+			</div>
+		</div>
+
+		<!-- Title -->
+		<div class="form-group row">
+			<label class="col-md-12" for="title">Title<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-12"><input type="text" class="form-control" id="title" name="title" [(ngModel)]="message.title" required /></div>
+		</div>
+
+		<!-- Body -->
+		<div class="form-group row">
+			<label class="col-md-12" for="text">Message Body<span class="text-danger"><strong> *</strong></span></label>
+			<div class="col-md-12">
+				<textarea style="height: 4.5rem" class="form-control" id="text" name="text" [(ngModel)]="message.body" required></textarea>
+			</div>
+		</div>
+
+		<div class="form-group row" *ngIf="error">
+			<div class="col-md-12">
+				<div class="text-danger">
+					<strong>{{error}}</strong>
+				</div>
+			</div>
+		</div>
+
+		<!-- Butttons -->
+		<div class="form-group row">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/messages']"> Cancel</button>
+					<button class="btn btn-primary" (click)="submit()" [disabled]="okDisabled">{{okButtonText}}</button>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</section>

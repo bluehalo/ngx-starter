@@ -1,0 +1,46 @@
+<section>
+	<h2 class="mb-3">
+		Notifications
+	</h2>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<div class="pt-2 d-flex flex-column align-items-stretch ">
+		<asy-search-input class="mx-auto mb-4" placeholder="Search messages..." (applySearch)="onSearch($event)"
+						  style="width: 350px">
+		</asy-search-input>
+		<div class="p-2 text-center">
+			<div *ngIf="newMessages">
+				<button class="btn btn-sm btn-link" (click)="loadNewMessages()">Load new messages</button>
+			</div>
+			<div *ngIf="messages.length === 0">
+				<p>No messages to display.</p>
+			</div>
+			<ng-container *ngFor="let message of messages">
+				<div class="card card-message mb-4 text-left">
+					<div class="row no-gutters">
+						<div class="col-alert-icon {{ message.type | lowercase }}">
+							<span class="fa alert-icon d-flex align-items-center"
+								  [ngClass]="{
+									'fa-check': message.type.toLowerCase() === 'motd',
+									'fa-info': message.type.toLowerCase() === 'info',
+									'fa-exclamation': message.type.toLowerCase() === 'warn',
+									'fa-exclamation-triangle': message.type.toLowerCase() === 'error'
+									}"></span>
+						</div>
+						<div class="col-alert-body">
+							<div class="card-body">
+								<div class="d-flex">
+									<h3 class="card-title">{{ message.title | titlecase }}</h3>
+									<span class="ml-auto">{{ message.created | agoDate }}</span>
+								</div>
+								<p class="mb-0">{{message.body}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+</section>

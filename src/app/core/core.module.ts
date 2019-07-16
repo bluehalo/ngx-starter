@@ -35,6 +35,7 @@ import { AuthorizationDirective } from './auth/authorization.directive';
 import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { TeamsModule } from './teams/teams.module';
+import { MessagesModule } from './messages/messages.module';
 
 
 export function getConfiguration(configService: ConfigService) {
@@ -63,7 +64,8 @@ export function getConfiguration(configService: ConfigService) {
 		TeamsModule,
 		CoreRoutingModule,
 		LoadingSpinnerModule,
-		SystemAlertModule
+		SystemAlertModule,
+		MessagesModule
 	],
 	exports: [
 		SiteContainerComponent,

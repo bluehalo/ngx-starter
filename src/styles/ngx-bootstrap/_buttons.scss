@@ -22,7 +22,11 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 	}
 
 	&.btn-large {
-		@include font-normal(18px);
+		@include font-normal($font-size-lg);
+	}
+
+	&.btn-sm {
+		@include font-normal($font-size-sm);
 	}
 
 	&.btn-outline-primary, &.btn-outline-secondary {

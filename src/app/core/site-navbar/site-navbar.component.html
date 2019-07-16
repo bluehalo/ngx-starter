@@ -63,7 +63,6 @@
 							<a routerLink="/teams"
 							   (click)="teamNavPopover.hide()">View All</a>
 						</li>
-
 					</ul>
 				</ng-template>
 			</li>
@@ -116,6 +115,34 @@
 							<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
 								(click)="adminNavPopover.hide()">
 								{{ adminItem.title }}
+							</a>
+						</li>
+					</ul>
+				</ng-template>
+			</li>
+
+			<!-- Messages Nav   -->
+			<li class="element nav-popover nav-popover-bottom"
+				*isAuthenticated>
+				<a [ngClass]="{'highlight-link': messagesNavOpen}"
+				   [popover]="messagesNav"
+				   container="body"
+				   containerClass="site-nav-popover-container-messages"
+				   #messagesNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="messagesNavOpen = true;"
+				   (onHidden)="messagesNavOpen = false;">
+					<span class="fa fa-fw fa-bell" attr.newMessagesCount="{{numNewMessages}}"
+						  [ngClass]="{'messages-icon-new-messages-badge': numNewMessages > 0 }"></span>
+					<span [hidden]="!navbarOpen">Notifications</span>
+				</a>
+				<ng-template #messagesNav>
+					<ul class="popover-menu" role="menu">
+						<!-- List Messages -->
+						<li>
+							<a>
+								<app-recent-messages [container]="messagesNavPopover"></app-recent-messages>
 							</a>
 						</li>
 					</ul>

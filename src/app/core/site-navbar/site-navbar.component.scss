@@ -183,3 +183,42 @@
 	width: 192px;
 	z-index: 10001;
 }
+
+::ng-deep .site-nav-popover-container-messages {
+	width: 298px;
+	max-width: 298px;
+	z-index: 10001;
+
+	.popover-menu {
+		li {
+			a {
+				&:hover {
+					background-color: unset;
+				}
+				padding: 12px 18px;
+				max-height: 550px;
+				overflow: auto;
+			}
+		}
+	}
+}
+
+// new messages number badge
+.messages-icon-new-messages-badge[newMessagesCount]::after {
+	content: attr(newMessagesCount);
+	position: absolute;
+	top: 7px;
+	right: 11px;
+	border-radius: 50%;
+	height: 16px;
+	width: 16px;
+	line-height: 16px;
+	font-size: 12px;
+	font-weight: 500;
+	background: #00ABF4;
+	font-family: Roboto, sans-serif;
+
+	.navbar-open & {
+		right: 11px + $nav-open-width - $nav-closed-width;
+	}
+}
