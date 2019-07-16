@@ -6,7 +6,7 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<div class="pt-2 d-flex flex-column">
+	<div class="pt-2 d-flex flex-column align-items-stretch ">
 		<asy-search-input class="mx-auto mb-4" placeholder="Search messages..." (applySearch)="onSearch($event)"
 						  style="width: 350px">
 		</asy-search-input>
@@ -18,7 +18,7 @@
 				<p>No messages to display.</p>
 			</div>
 			<ng-container *ngFor="let message of messages">
-				<div class="card card-message mb-4 mx-auto text-left">
+				<div class="card card-message mb-4 text-left">
 					<div class="row no-gutters">
 						<div class="col-alert-icon {{ message.type | lowercase }}">
 							<span class="fa alert-icon d-flex align-items-center"
