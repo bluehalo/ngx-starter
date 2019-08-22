@@ -25,29 +25,29 @@ input {
 
 		& + label {
 			position: relative;
-			padding-left: 28px;
+			padding: 5px 5px 5px 33px;
 			cursor: pointer;
 			line-height: 20px;
 			display: inline-block;
 			color: $radio-checkbox-label-color;
 
 			&:before {
+				@include transition(box-shadow);
 				content: '';
 				position: absolute;
-				left: 0;
-				top: 0;
+				left: 5px;
+				top: 5px;
 				width: $radio-checkbox-size;
 				height: $radio-checkbox-size;
 				border: $radio-checkbox-border-width solid $radio-checkbox-unchecked-color;
 				background: $ux-color-white;
+				margin-right: 5px;
 			}
 
 			&:after {
+				@include transition(transform);
 				position: absolute;
-				-webkit-transition: all 0.2s ease;
-				transition: all 0.2s ease;
 				opacity: 0;
-				-webkit-transform: scale(0);
 				transform: scale(0);
 			}
 		}
@@ -58,6 +58,10 @@ input {
 					border-color: $radio-checkbox-hover-color;
 				}
 			}
+		}
+
+		&:focus + label::before {
+			@include focus-style;
 		}
 
 		&:checked {
@@ -85,7 +89,7 @@ input {
 
 
 	&[type="radio"] {
-		& + label {
+		+ label {
 			&:before {
 				border-radius: 100%;
 			}
@@ -112,8 +116,8 @@ input {
 				font: normal normal normal $checkbox-inner-size/1 FontAwesome; /* stylelint-disable-line */
 				color: $ux-color-white;
 				content: '\f00c';
-				top: $checkbox-inner-margin;
-				left: $checkbox-inner-margin;
+				top: $checkbox-inner-margin + 5px;
+				left: $checkbox-inner-margin + 5px;
 			}
 		}
 
