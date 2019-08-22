@@ -20,7 +20,7 @@
 
 	transition: $transition-list;
 
-	// if the user requests a reduced motion experience, remove the transition on the box shadow
+	// if the user requests a reduced motion experience, remove transitions
 	@media screen and (prefers-reduced-motion: reduce) {
 		transition: none;
 	}
