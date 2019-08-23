@@ -13,7 +13,7 @@ install:
 
 before_script:
   - echo $PATH
-  - wget http://chromedriver.storage.googleapis.com74.0.3729.6/chromedriver_linux64.zip
+  - wget http://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d /home/travis/virtualenv/python2.7.12/bin/
   - export CHROME_BIN=chromium-browser
 
