@@ -14,7 +14,7 @@ export class SkipToDirective {
 		private renderer: Renderer2
 	) {
 		const el = elRef.nativeElement;
-		renderer.setAttribute(el, 'id', 'skip-to');
+		renderer.addClass(el, 'skip-to');
 		renderer.setAttribute(el, 'tabindex', '-1');
 	}
 }
