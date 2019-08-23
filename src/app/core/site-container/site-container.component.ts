@@ -24,4 +24,18 @@ export class SiteContainerComponent {
 		});
 	}
 
+
+	skipToMainContent(e: any) {
+		e.preventDefault();
+
+		const skipTo = document.getElementById('skip-to');
+		const appContent = document.getElementById('app-content');
+
+		if (skipTo) {
+			skipTo.focus();
+		} else {
+			appContent.focus();
+			window.scrollTo(0, 0);
+		}
+	}
 }

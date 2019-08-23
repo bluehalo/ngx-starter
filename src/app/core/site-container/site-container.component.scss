@@ -2,19 +2,21 @@
 @import '../../../styles/shared';
 @import './shared';
 
+$banner-z-index: 10002;
+
 header.site-header {
-	z-index: 2147483647;
+	z-index: $banner-z-index;
 }
 
 footer.site-footer {
-	z-index: 2147483647;
+	z-index: $banner-z-index;
 }
 
 .site-banner {
 	text-align: center;
 
 	width: 100%;
-	z-index: 2147483647;
+	z-index: $banner-z-index;
 }
 
 .copyright-banner {
@@ -70,6 +72,21 @@ footer.site-footer {
 	.copyright-active.footer-active &{
 		margin-bottom: $footer-banner-height + $copyright-banner-height;
 	}
+}
 
+a.skip-link {
+	position: absolute;
+	top: -1000em;
 
+	&:focus {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: $banner-z-index + 1;
+
+		padding: 10px;
+		background-color: $ux-color-primary;
+		color: $color-white;
+		text-decoration: underline;
+	}
 }
