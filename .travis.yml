@@ -4,15 +4,18 @@ language: node_js
 node_js:
   - "10"
 
-addons:
-  chrome: stable
-
 cache:
   directories:
      - ./node_modules
 
 install:
   - npm install
+
+before_script:
+  - echo $PATH
+  - wget http://chromedriver.storage.googleapis.com74.0.3729.6/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip -d /home/travis/virtualenv/python2.7.12/bin/
+  - export CHROME_BIN=chromium-browser
 
 script:
   - npm run build:prod
