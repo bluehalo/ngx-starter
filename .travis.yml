@@ -18,6 +18,7 @@ before_script:
   - unzip chromedriver_linux64.zip -d chromedriver
   - export PATH=$PATH:`pwd`/chromedriver
   - export CHROME_BIN=chromium-browser
+  - which chromedriver
 
 script:
   - npm run build:prod
