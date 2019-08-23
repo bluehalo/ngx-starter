@@ -1,8 +1,27 @@
-@mixin transition($property: all, $timing: .2s, $animation: ease-out) {
-	transition: $property $timing $animation;
-}
+@import 'colors';
 
 @mixin border($border-color, $border-width: 1px, $border-radius: 2px) {
 	border: $border-width solid $border-color;
 	border-radius: $border-radius;
+}
+
+@mixin focus-style($color: $ux-color-primary, $alpha: .5, $spread: 3px, $inset: false) {
+	$box-shadow-color: rgba($color, $alpha);
+	outline: none;
+
+	box-shadow: #{if($inset, inset, '')} 0 0 0 $spread $box-shadow-color;
+}
+
+@mixin transition($properties...) {
+	$transition-list: ();
+	@each $prop in $properties {
+		$transition-list: append($transition-list, $prop 300ms, $separator: comma);
+	}
+
+	transition: $transition-list;
+
+	// if the user requests a reduced motion experience, remove transitions
+	@media screen and (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
 }
