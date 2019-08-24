@@ -1,3 +1,7 @@
+<a class="skip-link" href="#" (click)="skipToMainContent($event)">
+	Skip to main content
+</a>
+
 <!-- Site Header -->
 <header class="site-header">
 
@@ -14,7 +18,7 @@
 
 	<site-navbar>
 
-		<section class="site-content">
+		<section class="site-content" id="app-content" tabindex="-1">
 			<ng-content></ng-content>
 		</section>
 

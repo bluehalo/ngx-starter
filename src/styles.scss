@@ -61,3 +61,11 @@ html {
 		top: inherit;
 	}
 }
+
+// when the .skip-to class is applied to non-interactive
+// elements it should not have a style when focused
+div, span, h1, h2, h3, h4, h5, h6 {
+	&.skip-to:focus {
+		outline: 0;
+	}
+}
