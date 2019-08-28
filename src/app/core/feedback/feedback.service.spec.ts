@@ -1,7 +1,5 @@
 import { FeedbackService } from './feedback.service.js';
-import { TestBed } from '@angular/core/testing';
 import { Feedback } from './feedback.model.js';
-import { FeedbackModalComponent } from './feedback-modal.component.js';
 
 describe('FeedbackService', () => {
 
