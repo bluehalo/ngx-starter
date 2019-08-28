@@ -31,14 +31,15 @@ export class FeedbackService {
 
 	getFormattedText(feedback: Feedback): string {
 		let text: string = '';
+		const prefix = `${feedback.classification ? feedback.classification.prefix + ' ' : ''}`;
 		if (feedback.subType !== undefined) {
-			text += `${feedback.classification.prefix} ${feedback.subType}`;
+			text += `${prefix}${feedback.subType}`;
 			if (feedback.subType === 'Other') {
 				text += ` - ${feedback.otherText}`;
 			}
 			text += '\n';
 		}
-		text += `${feedback.classification.prefix} ${feedback.text}`;
+		text += `${prefix}${feedback.text}`;
 		return text;
 	}
 
@@ -48,7 +49,7 @@ export class FeedbackService {
 			JSON.stringify({
 				body: this.getFormattedText(feedback),
 				type: feedback.type.toLowerCase(),
-				classification: feedback.classification.level,
+				classification: feedback.classification ? feedback.classification.level : '',
 				url: feedback.currentRoute
 			}),
 			{ headers: this.headers }
