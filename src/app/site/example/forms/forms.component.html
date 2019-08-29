@@ -1,0 +1,166 @@
+<form style="max-width: 800px;">
+
+	<h2>Form Controls</h2>
+	<div class="form-group">
+		<label for="exampleFormControlText" class="form-required">Example text</label>
+		<input type="text" class="form-control" id="exampleFormControlText" placeholder="Default input">
+		<small class="form-text text-muted">Extra explanation provided if necessary.</small>
+	</div>
+
+	<div class="form-group">
+		<label for="exampleFormControlTextarea1">Example textarea</label>
+		<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Default input"></textarea>
+	</div>
+
+	<h2 class="pt-3">Sizing</h2>
+	<div class="form-group">
+		<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+	</div>
+
+	<div class="form-group">
+		<input class="form-control" type="text" placeholder="Default input">
+	</div>
+
+	<div class="form-group">
+		<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+	</div>
+
+	<h2 class="pt-3">ng-select</h2>
+	<div class="form-group">
+		<input type="text" class="form-control" placeholder="text input for comparison">
+	</div>
+
+	<div class="form-group">
+		<ng-select [items]="[{value: 'item1'}, {value: 'item2', disabled: true}, {value: 'item3'}]"
+				   bindLabel="value"
+				   bindValue="value"
+				   placeholder="Select a value..."
+				   id="ngSelectBS">
+		</ng-select>
+	</div>
+
+	<h2 class="pt-3">Checkboxes and radios</h2>
+
+	<h5 class="pt-2">Default (stacked)</h5>
+	<div class="form-group">
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+			<label class="form-check-label" for="defaultCheck1">
+				Default checkbox
+			</label>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+			<label class="form-check-label" for="defaultCheck2">
+				Disabled checkbox
+			</label>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+			<label class="form-check-label" for="exampleRadios1">
+				Default radio
+			</label>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+			<label class="form-check-label" for="exampleRadios2">
+				Second default radio
+			</label>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+			<label class="form-check-label" for="exampleRadios3">
+				Disabled radio
+			</label>
+		</div>
+	</div>
+
+	<h5 class="pt-2">Inline</h5>
+	<div class="form-group">
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+			<label class="form-check-label" for="inlineCheckbox1">1</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+			<label class="form-check-label" for="inlineCheckbox2">2</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+			<label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+			<label class="form-check-label" for="inlineRadio1">1</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+			<label class="form-check-label" for="inlineRadio2">2</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+			<label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+		</div>
+	</div>
+
+	<h5 class="pt-2">Without labels</h5>
+	<div class="form-check">
+		<input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+	</div>
+	<div class="form-check">
+		<input class="form-check-input position-static" type="radio" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+	</div>
+
+	<h2 class="pt-3">Buttons</h2>
+
+	<h5 class="pt-2">Standard</h5>
+	<button type="button" class="mr-3 btn btn-primary">Primary</button>
+	<button type="button" class="mr-3 btn btn-secondary">Secondary</button>
+	<button type="button" class="mr-3 btn btn-success">Success</button>
+	<button type="button" class="mr-3 btn btn-danger">Danger</button>
+	<button type="button" class="mr-3 btn btn-warning">Warning</button>
+	<button type="button" class="mr-3 btn btn-info">Info</button>
+	<button type="button" class="mr-3 btn btn-light">Light</button>
+	<button type="button" class="mr-3 btn btn-dark">Dark</button>
+	<button type="button" class="mr-3 btn btn-link">Link</button>
+
+	<h5 class="pt-2">Outline Buttons</h5>
+	<button type="button" class="mr-3 btn btn-outline-primary">Primary</button>
+	<button type="button" class="mr-3 btn btn-outline-secondary">Secondary</button>
+	<button type="button" class="mr-3 btn btn-outline-success">Success</button>
+	<button type="button" class="mr-3 btn btn-outline-danger">Danger</button>
+	<button type="button" class="mr-3 btn btn-outline-warning">Warning</button>
+	<button type="button" class="mr-3 btn btn-outline-info">Info</button>
+	<button type="button" class="mr-3 btn btn-outline-light">Light</button>
+	<button type="button" class="mr-3 btn btn-outline-dark">Dark</button>
+
+	<h5 class="pt-2">Button Tags</h5>
+	<a class="mr-3 btn btn-primary" href="#" role="button">Link</a>
+	<button class="mr-3 btn btn-primary" type="submit">Button</button>
+	<input class="mr-3 btn btn-primary" type="button" value="Input">
+	<input class="mr-3 btn btn-primary" type="submit" value="Submit">
+	<input class="mr-3 btn btn-primary" type="reset" value="Reset">
+
+	<h5 class="pt-2">Large Buttons</h5>
+	<button type="button" class="mr-3 btn btn-primary btn-lg">Large button</button>
+	<button type="button" class="mr-3 btn btn-secondary btn-lg">Large button</button>
+
+	<h5 class="pt-2">Small Buttons</h5>
+	<button type="button" class="mr-3 btn btn-primary btn-sm">Small button</button>
+	<button type="button" class="mr-3 btn btn-secondary btn-sm">Small button</button>
+
+	<h5 class="pt-2">Active State</h5>
+	<a href="#" class="mr-3 btn btn-primary active" role="button" aria-pressed="true">Primary Button</a>
+	<a href="#" class="mr-3 btn btn-secondary active" role="button" aria-pressed="true">Secondary Button</a>
+
+	<h5 class="pt-2">Disabled State</h5>
+	<button type="button" class="mr-3 btn btn-primary" disabled>Primary button</button>
+	<button type="button" class="mr-3 btn btn-secondary" disabled>Secondary Button</button>
+
+</form>
