@@ -96,8 +96,8 @@ input {
 
 			&:after {
 				content: '';
-				top: $radio-inner-margin;
-				left: $radio-inner-margin;
+				top: $radio-inner-margin + 5px;
+				left: $radio-inner-margin + 5px;
 				width: $radio-inner-size;
 				height: $radio-inner-size;
 				background: $radio-checkbox-checked-color;
