@@ -1,3 +1,8 @@
+export class Classification {
+	prefix: string;
+	level: string;
+}
+
 export class Feedback {
 	text: string;
 
@@ -7,7 +12,7 @@ export class Feedback {
 
 	otherText: string;
 
-	classification: any;
+	classification?: Classification;
 
 	currentRoute: string;
 
