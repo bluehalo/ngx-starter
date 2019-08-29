@@ -1,5 +1,5 @@
-import { FeedbackService } from './feedback.service.js';
-import { Feedback } from './feedback.model.js';
+import { FeedbackService } from './feedback.service';
+import { Feedback } from './feedback.model';
 
 describe('FeedbackService', () => {
 
