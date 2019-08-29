@@ -23,7 +23,7 @@
     "@angular/platform-browser": "8.0.2",
     "@angular/platform-browser-dynamic": "8.0.2",
     "@angular/router": "8.0.2",
-    "@ng-select/ng-select": "2.13.3",
+    "@ng-select/ng-select": "3.0.7",
     "@types/socket.io-client": "^1.4.32",
     "bootstrap": "4.3.1",
     "core-js": "2.5",
