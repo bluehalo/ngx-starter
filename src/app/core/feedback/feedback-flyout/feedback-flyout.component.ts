@@ -19,6 +19,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 	@ViewChild(FlyoutComponent, { static: false }) flyout: FlyoutComponent;
 
+	baseUrl: string = '';
 	feedback: Feedback = new Feedback();
 
 	classificationOptions: any[];
@@ -34,7 +35,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 	ngOnInit() {
 		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.feedback.currentRoute = `${config.app.baseUrl}${this.router.url}`;
+			this.baseUrl = `${config.app.baseUrl || ''}`;
 
 			if (Array.isArray(config.feedback.classificationOpts) && !isEmpty(config.feedback.classificationOpts)) {
 				this.classificationOptions = config.feedback.classificationOpts;
@@ -53,6 +54,8 @@ export class FeedbackFlyoutComponent implements OnInit {
 	submit() {
 		this.status = 'submitting';
 
+		// Get the current URL from the router at the time of submission.
+		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
 		this.feedbackService.submit(this.feedback).subscribe(() => {
 			this.status = 'success';
 			setTimeout(() => {
