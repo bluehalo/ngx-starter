@@ -1,29 +1,19 @@
 @import 'shared';
 
-$form-label-font-color: map-get($color-primary, 'darker') !default;
-$form-label-font-size: 14px !default;
-$form-input-font-color: map-get($color-primary, 'darker') !default;
-$form-input-font-size: 14px !default;
-$form-input-placeholder-font-color: map-get($color-primary, 'lighter') !default;
+$form-label-font-color: $ux-color-primary-dark !default;
+
+.form-control {
+	font-style: normal;
+	@include font-smoothing(auto);
+
+	&::placeholder {
+		font-family: $font-family-light;
+	}
+}
 
 .form-group {
 	label {
-		@include font-bold($form-label-font-size);
+		@include font-bold($input-font-size);
 		@include font-color-dark($form-label-font-color);
-
-		margin-left: 2px;
-	}
-
-	input, textarea {
-		@include font-medium($form-input-font-size);
-		@include font-color-dark($form-input-font-color);
-
-		height: 2.7em;
-		background: #fff none;
-
-		&::placeholder {
-			@include font-light($form-input-font-size);
-			@include font-color-dark($form-input-placeholder-font-color);
-		}
 	}
 }

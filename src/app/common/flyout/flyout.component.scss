@@ -36,7 +36,7 @@ $flyout-box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2) !default;
 }
 
 .flyout-content {
-	overflow: auto;
+	overflow: hidden;
 	border-top: $flyout-border-top solid $ux-color-highlight;
 	box-shadow: $flyout-box-shadow;
 	width: 0;

@@ -1,12 +1,14 @@
 @import 'shared';
 
-$radio-checkbox-label-color: $ux-color-body-text !default;
+$radio-checkbox-label-color: $ux-color-primary-dark !default;
 $radio-checkbox-checked-color: $ux-color-primary-medium !default;
 $radio-checkbox-unchecked-color: $ux-color-black !default;
 $radio-checkbox-disabled-color: $ux-color-light-gray !default;
 $radio-checkbox-hover-color: $ux-color-highlight !default;
 $radio-checkbox-size: 20px !default;
 $radio-checkbox-border-width: 2px !default;
+$radio-checkbox-label-padding: 10px !default;
+$radio-checkbox-margin-y: .25rem !default;
 
 // Calculated
 $radio-inner-margin: ($radio-checkbox-border-width * 2) + 1;
@@ -25,23 +27,22 @@ input {
 
 		& + label {
 			position: relative;
-			padding: 5px 5px 5px 33px;
+			padding-left: $radio-checkbox-size + $radio-checkbox-label-padding;
 			cursor: pointer;
-			line-height: 20px;
+			line-height: $radio-checkbox-size;
 			display: inline-block;
 			color: $radio-checkbox-label-color;
+			margin: $radio-checkbox-margin-y 0;
 
 			&:before {
 				@include transition(box-shadow);
 				content: '';
 				position: absolute;
-				left: 5px;
-				top: 5px;
+				left: 0;
 				width: $radio-checkbox-size;
 				height: $radio-checkbox-size;
 				border: $radio-checkbox-border-width solid $radio-checkbox-unchecked-color;
 				background: $ux-color-white;
-				margin-right: 5px;
 			}
 
 			&:after {
@@ -87,7 +88,6 @@ input {
 		}
 	}
 
-
 	&[type="radio"] {
 		+ label {
 			&:before {
@@ -96,8 +96,8 @@ input {
 
 			&:after {
 				content: '';
-				top: $radio-inner-margin + 5px;
-				left: $radio-inner-margin + 5px;
+				top: $radio-inner-margin;
+				left: $radio-inner-margin;
 				width: $radio-inner-size;
 				height: $radio-inner-size;
 				background: $radio-checkbox-checked-color;
@@ -116,8 +116,8 @@ input {
 				font: normal normal normal $checkbox-inner-size/1 FontAwesome; /* stylelint-disable-line */
 				color: $ux-color-white;
 				content: '\f00c';
-				top: $checkbox-inner-margin + 5px;
-				left: $checkbox-inner-margin + 5px;
+				top: $checkbox-inner-margin;
+				left: $checkbox-inner-margin;
 			}
 		}
 

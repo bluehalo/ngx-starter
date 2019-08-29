@@ -3,6 +3,11 @@
 // Options
 $enable-shadows: true !default;
 
+// Components
+$border-radius: 2px !default;
+$border-radius-lg: $border-radius !default;
+$border-radius-sm: $border-radius !default;
+
 // Colors
 $primary: $ux-color-primary !default;
 $secondary: $ux-color-primary !default;
@@ -30,7 +35,16 @@ $card-border-color:                 $ux-color-dark-gray !default;
 $btn-disabled-opacity:              0.3 !default;
 
 // Forms
-$input-border-color: map-get($color-background, 'darker') !default;
+$input-font-family:                 $font-family-medium !default;
+$input-font-size:                   .875rem !default;
+$input-font-size-lg:                1rem !default;
+$input-font-size-sm:                .75rem !default;
+
+$input-color:                       map-get($color-primary, 'darker') !default;
+$input-border-color:                map-get($color-background, 'darker') !default;
+$input-placeholder-color:           map-get($color-primary, 'lighter') !default;
+
+$form-check-input-gutter:           0 !default;
 
 // Dropdown
 $dropdown-padding-y:				0 !default;
