@@ -43,7 +43,8 @@ export class PageTitleService {
 
 						// If there wasn't a path title, try to generate one
 						if (null == pathTitle) {
-							pathTitle = this.router.url.split('/')
+							pathTitle = this.router.url.split(';')[0]
+								.split('/')
 								.slice(1)
 								.map((frag) => capitalize(frag))
 								.join(' > ');
