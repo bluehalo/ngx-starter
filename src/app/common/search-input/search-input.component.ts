@@ -9,7 +9,7 @@ export class SearchInputComponent {
 
 	@Input() placeholder: string = 'Search...';
 	@Output() applySearch: EventEmitter<string> = new EventEmitter();
-	search: string = '';
+	@Input() search: string = '';
 
 	private keyupTimeout;
 
