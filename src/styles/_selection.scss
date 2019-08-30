@@ -104,6 +104,14 @@ input {
 				border-radius: 100%;
 			}
 		}
+
+		&:disabled:checked {
+			& + label {
+				&:after {
+					background-color: $radio-checkbox-disabled-color;
+				}
+			}
+		}
 	}
 
 	&[type="checkbox"] {
@@ -125,6 +133,14 @@ input {
 			& + label {
 				&:before {
 					background: $radio-checkbox-checked-color;
+				}
+			}
+		}
+
+		&:disabled:checked {
+			& + label {
+				&:before {
+					background-color: $radio-checkbox-disabled-color;
 				}
 			}
 		}
