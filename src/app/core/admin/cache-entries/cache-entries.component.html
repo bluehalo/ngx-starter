@@ -10,8 +10,7 @@
 	<!-- Search Input -->
 	<div class="pt-2">
 		<div class="d-flex mb-3 align-items-center">
-			<asy-search-input placeholder="Search key and value..." (applySearch)="onSearch($event)"
-							  style="width: 350px"></asy-search-input>
+			<asy-search-input placeholder="Search key and value..." (applySearch)="onSearch($event)"></asy-search-input>
 		</div>
 
 		<pageable-table [items]="cacheEntries"

@@ -1,14 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'asy-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss']
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent {
 
 	@Input() placeholder: string = 'Search...';
-	@Input() width: string = '500';
 	@Output() applySearch: EventEmitter<string> = new EventEmitter();
 	search: string = '';
 
@@ -23,12 +22,11 @@ export class SearchInputComponent implements OnInit {
 		}, 350);
 	}
 
-	clearSearch() {
+	clearSearch(event?: MouseEvent) {
 		this.search = '';
 		this.applySearch.emit(this.search);
+		if (event) {
+			event.stopPropagation();
+		}
 	}
-
-	ngOnInit() {
-	}
-
 }
