@@ -16,7 +16,7 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 
 	@include font-normal($btn-font-size);
 
-	&.btn-primary {
+	&.btn-primary, &.btn-secondary {
 		@include font-color-light();
 		@include button-variant($ux-button-bg, $ux-button-border, $ux-button-bg-hover, $ux-button-border-hover, $ux-button-bg-mouse-down, $ux-button-border-mouse-down);
 	}

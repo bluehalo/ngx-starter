@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../../core/auth/auth.guard';
 import { ExploreComponent } from './explore.component';
+import { FormsComponent } from './forms/forms.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 
@@ -28,6 +29,11 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'search',
 				component: SearchComponent,
+				canActivate: [ AuthGuard ]
+			},
+			{
+				path: 'forms',
+				component: FormsComponent,
 				canActivate: [ AuthGuard ]
 			}
 		])

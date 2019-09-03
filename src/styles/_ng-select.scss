@@ -1,22 +1,29 @@
 @import 'shared';
 @import 'ngx-bootstrap/shared';
 
+// can not set variable from within conditional, function returns correct value and allows variable to be set below.
+@function get-box-shadow() {
+	@if $enable-shadows {
+		@return $input-box-shadow, $input-focus-box-shadow;
+	} @else {
+		@return $input-focus-box-shadow;
+	}
+}
+
 $ng-select-highlight: $input-focus-border-color !default;
 $ng-select-border: $input-border-color !default;
+$ng-select-border-radius: $border-radius !default;
+$ng-select-box-shadow: get-box-shadow() !default;
+$ng-select-placeholder: $input-placeholder-color !default;
+$ng-select-height: $input-height !default;
+$ng-select-value-padding-left: $input-padding-x;
 
 @import '~@ng-select/ng-select/scss/default.theme';
 
 .ng-select {
-	.ng-select-container {
-		border-radius: $border-radius;
-	}
-
-	&.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
-		@if $enable-shadows {
-			box-shadow: $input-box-shadow, $input-focus-box-shadow;
-		} @else {
-			box-shadow: $input-focus-box-shadow;
-		}
+	.ng-placeholder {
+		font-family: $font-family-light;
+		font-weight: 300;
 	}
 }
 
