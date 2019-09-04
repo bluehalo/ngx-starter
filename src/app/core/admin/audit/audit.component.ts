@@ -11,6 +11,7 @@ import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.
 import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { AuditOption } from './audit.classes';
+import { AdminTopics } from '../admin-topic.model';
 
 
 @Component({
@@ -249,3 +250,11 @@ export class AuditComponent {
 			});
 	}
 }
+
+AdminTopics.registerTopic({
+	id: 'audit',
+	title: 'Audit',
+	ordinal: 6,
+	path: 'audit'
+});
+

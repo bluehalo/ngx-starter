@@ -9,12 +9,12 @@ export class AuditService {
 	constructor(private http: HttpClient) {}
 
 	public getDistinctAuditValues(field: string): Observable<Response> {
-		return this.http.get<Response>('audit/distinctValues', { params: { field: field } });
+		return this.http.get<Response>('api/audit/distinctValues', { params: { field: field } });
 	}
 
 	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
 		return this.http.post<PagingResults>(
-			'audit',
+			'api/audit',
 			{ q: query, s: search },
 			{ params: paging.toObj() }
 		);
