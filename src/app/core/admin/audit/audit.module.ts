@@ -13,6 +13,9 @@ import {
 	DefaultAudit, ExportAudit
 } from './audit-object.component';
 
+import { PagingModule } from '../../../common/paging.module';
+import { PipesModule } from '../../..//common/pipes.module';
+
 @NgModule({
 	imports: [
 		DatepickerModule.forRoot(),
@@ -20,7 +23,9 @@ import {
 		TypeaheadModule.forRoot(),
 
 		CommonModule,
-		FormsModule
+		FormsModule,
+		PagingModule,
+		PipesModule
 	],
 	entryComponents: [
 		AuditViewChangeModal,

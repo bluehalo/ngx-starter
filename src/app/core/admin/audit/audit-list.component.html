@@ -91,7 +91,7 @@
 		(onPageChange)="goToPage($event)"
 		(onRefresh)="refresh()">
 
-		<template asy-template="table-header">
+		<ng-template named-template="table-header">
 			<th>
 				<a class="no-href" (click)="setSort('audit.actor.name')">
 					<i class="fa fa-user"></i> Actor<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'ASC'}"></i>
@@ -115,9 +115,9 @@
 			<th>Object</th>
 			<th><i class="fa fa-history"></i> Before</th>
 			<th><i class="fa fa-file-text-o"></i> Message</th>
-		</template>
+		</ng-template>
 
-		<template asy-template="table-row" let-entry>
+		<ng-template named-template="table-row" let-entry>
 			<td >
 				<div class="hide-overflow" style="max-width:200px;">
 					<asy-audit-component [auditObject]="entry.audit.actor" auditType="user"></asy-audit-component>
@@ -176,9 +176,9 @@
 					{{entry?.message}}
 				</div>
 			</td>
-		</template>
+		</ng-template>
 
-		<template asy-template="empty-table">
+		<ng-template named-template="empty-table">
 			<h3>
 				No Audit Entries?<br/>
 				<small>
@@ -186,6 +186,6 @@
 					Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
 				</small>
 			</h3>
-		</template>
+		</ng-template>
 	</pageable-table>
 </section>
