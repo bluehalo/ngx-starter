@@ -1,0 +1,191 @@
+<section>
+
+	<h3 class="page-header">
+		Audit Entries
+		<small>Browse and search audit entries</small>
+	</h3>
+
+	<div class="input-group audit-filter">
+		<div class="row">
+			<label><i class="fa fa-user"></i> Actor:</label>
+			<input type="text" name="actor" class="form-control input-sm"
+				   placeholder="Search..."
+				   style="width: 300px;"
+				   [(ngModel)]="queryUserSearchTerm"
+				   [typeahead]="searchUsersRef"
+				   [typeaheadOptionField]="'displayName'"
+				   [typeaheadMinLength]="1"
+				   [typeaheadWaitMs]="300"
+				   (typeaheadOnSelect)="typeaheadOnSelect($event)"
+				   (keyup.enter)="refresh()">
+		</div>
+
+		<!-- Quick Filters -->
+		<div class="row">
+			<label><i class="fa fa-mouse-pointer"></i>Actions:</label>
+			<div class="media-body controls paging-sort">
+				<label class="column-option" *ngFor="let option of actionOptions">
+					<input type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" />
+					{{option?.display}}
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<label><i class="fa fa-tag"></i>Type:</label>
+			<div class="media-body controls paging-sort">
+				<label class="column-option" *ngFor="let option of auditTypeOptions">
+					<input type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" />
+					{{option?.display}}
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<label><i class="fa fa-clock-o"></i> Timestamp:</label>
+			<select style="width:150px;" name="timestamp" class="form-control input-sm" [(ngModel)]="dateRangeFilter.selected" (ngModelChange)="refresh()">
+				<option *ngFor="let option of dateRangeOptions" [value]="option.value">{{option?.display}}</option>
+			</select>
+			<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">Start: </span>
+					<input style="width:255px;" type="text" name="gteDate" class="form-control input-sm"
+								 ngModel="{{queryStartDate | date:'shortDate'}}"
+								 (click)="showGteDatepicker = !showGteDatepicker"/>
+					<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
+				</div>
+				<div class="row col-md-12">
+					<div style="position: absolute; z-index: 999;">
+						<datepicker [hidden]="!showGteDatepicker"
+									[(ngModel)]="queryStartDate"
+									(ngModelChange)="updateDateRange()"
+									[yearRange]="1">
+						</datepicker>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon">Stop: </span>
+					<input type="text" name="lteDate" class="form-control input-sm"
+								 style="width: 255px;"
+								 ngModel="{{queryEndDate | date:'shortDate'}}"
+								 (click)="showLteDatepicker = !showLteDatepicker"/>
+
+					<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
+				</div>
+				<div class="row col-md-12">
+					<div style="position: absolute; z-index: 999;">
+						<datepicker [hidden]="!showLteDatepicker"
+									[(ngModel)]="queryEndDate"
+									(ngModelChange)="updateDateRange()"
+									[yearRange]="1">
+						</datepicker>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<pageable-table [items]="auditEntries"
+		[pagingOptions]="pagingOpts"
+		[refreshable]="true"
+		(onPageChange)="goToPage($event)"
+		(onRefresh)="refresh()">
+
+		<template asy-template="table-header">
+			<th>
+				<a class="no-href" (click)="setSort('audit.actor.name')">
+					<i class="fa fa-user"></i> Actor<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'ASC'}"></i>
+				</a>
+			</th>
+			<th>
+				<a class="no-href" (click)="setSort('created')">
+					<i class="fa fa-clock-o"></i> Timestamp<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'created' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'created' && pagingOpts.sortDir === 'ASC'}"></i>
+				</a>
+			</th>
+			<th>
+				<a class="no-href" (click)="setSort('audit.action')">
+					Action<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.action' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.action' && pagingOpts.sortDir === 'ASC'}"></i>
+				</a>
+			</th>
+			<th>
+				<a class="no-href" (click)="setSort('audit.auditType')">
+					Type<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.auditType' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.auditType' && pagingOpts.sortDir === 'ASC'}"></i>
+				</a>
+			</th>
+			<th>Object</th>
+			<th><i class="fa fa-history"></i> Before</th>
+			<th><i class="fa fa-file-text-o"></i> Message</th>
+		</template>
+
+		<template asy-template="table-row" let-entry>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					<asy-audit-component [auditObject]="entry.audit.actor" auditType="user"></asy-audit-component>
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					{{entry?.created | utcDate }}
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					{{entry?.audit?.action}}
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					{{entry?.audit?.auditType}}
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					<asy-audit-component [auditObject]="(null != entry.audit.object.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
+					<div>
+						<small *ngIf="entry.audit.action === 'create' || entry.audit.action === 'delete'">
+							<a class="btn-icon no-href"
+								[hidden]="null == entry.audit.object"
+								(click)="viewMore(entry, 'viewDetails')">
+								<i class="fa fa-eye"></i><span>View Details</span>
+							</a>
+						</small>
+						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
+					</div>
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					<asy-audit-component [auditObject]="entry.audit.object.before" [auditType]="entry.audit.auditType"></asy-audit-component>
+					<div>
+						<small *ngIf="entry.audit.action === 'update' || entry.audit.action === 'admin update'">
+							<a class="btn-icon no-href"
+								[hidden]="null == entry.audit.object || null == entry.audit.object.before"
+								tooltip="See details of the update"
+								placement="bottom"
+								container="body"
+								(click)="viewMore(entry, 'viewChanges')">
+								<i class="fa fa-eye"></i><span>View Changes</span>
+							</a>
+						</small>
+						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
+					</div>
+				</div>
+			</td>
+			<td >
+				<div class="hide-overflow" style="max-width:200px;">
+					{{entry?.message}}
+				</div>
+			</td>
+		</template>
+
+		<template asy-template="empty-table">
+			<h3>
+				No Audit Entries?<br/>
+				<small>
+					Either there were no Audit Entries that matched your search or you don't have access to Audit Entries.<br/>
+					Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
+				</small>
+			</h3>
+		</template>
+	</pageable-table>
+</section>

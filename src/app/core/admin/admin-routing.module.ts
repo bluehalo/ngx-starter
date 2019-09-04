@@ -8,6 +8,7 @@ import { AdminCreateEuaComponent, AdminListEuasComponent, AdminUpdateEuaComponen
 import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { AuditComponent } from './audit/audit.module';
 
 @NgModule({
 	imports: [
@@ -65,6 +66,11 @@ import { AuthGuard } from '../auth/auth.guard';
 					{
 						path: 'cacheEntries',
 						component: CacheEntriesComponent
+					},
+
+					{
+						path: 'audit',
+						component: AuditComponent
 					}
 				]
 			}])
