@@ -24,6 +24,7 @@ export class AuditComponent {
 	auditEntries: any[] = [];
 
 	actionOptions: AuditOption[] = [];
+	actorFormShown: boolean = true;
 
 	auditTypeOptions: AuditOption[] = [];
 
