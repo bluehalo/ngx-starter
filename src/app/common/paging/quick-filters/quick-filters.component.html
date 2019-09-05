@@ -14,11 +14,9 @@
 	</div>
 
 	<div *ngIf="shown" class="quick-select-header">
-		<div *ngFor="let key of filterKeys">
-			<label class="checkbox-inline hide-overflow" tooltip="{{ filters[key].display }}">
-				<input type="checkbox" [ngModel]="filters[key].show" (ngModelChange)="toggleFilter$.next(key)">
-				<label (click)="toggleFilter$.next(key)">{{ filters[key].display }}</label>
-			</label>
+		<div *ngFor="let key of filterKeys" class="form-check hide-overflow m-n1 p-1" tooltip="{{ filters[key].display }}">
+			<input class="form-check-input" type="checkbox" [ngModel]="filters[key].show" (ngModelChange)="toggleFilter$.next(key)">
+			<label class="form-check-label" (click)="toggleFilter$.next(key)">{{ filters[key].display }}</label>
 		</div>
 	</div>
 </div>

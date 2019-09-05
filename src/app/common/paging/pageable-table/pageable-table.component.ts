@@ -15,29 +15,31 @@ import { PagingOptions, PageChange } from '../pager/pager.component';
 })
 export class PageableTable implements AfterContentInit {
 
-	@Input() items: Array<any>;
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
+	@Input() items: Array<any>;
+	@Input() hasItems: boolean = false;
 	@Input() loading: boolean = false;
-	@Input() refreshable: boolean = false;
-	@Input() showInCard: boolean = true;
-	@Input() showHeader: boolean = true;
-	@Input() showActions = false;
+	@Input() showInCard: boolean = false;
+	@Input() showActions: boolean = false;
+	@Input() showFooterActions: boolean = false;
+	@Input() hideTableToData: boolean = false;
 	@Input() disableGoToEnd: boolean = false;
-	@Input() pagerAtBottom: boolean = false;
-	@Input() maxAllowed: number;
-	@Input() pagedPastAllowed: boolean = false;
+	@Input() pagerAtTop: boolean = false;
+	@Input() pagerAtBottom: boolean = true;
+	@Input() tableHover: boolean = false;
+	@Input() tableStriped: boolean = false;
 
 	@Output() onPageChange = new EventEmitter<PageChange>();
 	@Output() pageAndScroll = new EventEmitter<PageChange>();
-	@Output() onRefresh = new EventEmitter();
 
 	@ContentChildren(NamedTemplate) templates: QueryList<NamedTemplate>;
 
 	actionTemplate: TemplateRef<any>;
 	headerTemplate: TemplateRef<any>;
 	rowTemplate: TemplateRef<any>;
-	footerTemplate: TemplateRef<any>;
-	emptyTableTemplate: TemplateRef<any>;
+	noResultsTableTemplate: TemplateRef<any>;
+	noDataTableTemplate: TemplateRef<any>;
+	footerActionTemplate: TemplateRef<any>;
 
 	ngAfterContentInit() {
 		const typeTemplatePairs = this.templates.map(this.getNamedTemplates);
@@ -45,8 +47,9 @@ export class PageableTable implements AfterContentInit {
 		this.actionTemplate = userSuppliedTemplates['table-action'];
 		this.headerTemplate = userSuppliedTemplates['table-header'];
 		this.rowTemplate = userSuppliedTemplates['table-row'];
-		this.footerTemplate = userSuppliedTemplates['table-footer'];
-		this.emptyTableTemplate = userSuppliedTemplates['empty-table'];
+		this.noResultsTableTemplate = userSuppliedTemplates['table-no-results'];
+		this.noDataTableTemplate = userSuppliedTemplates['table-no-data'];
+		this.footerActionTemplate = userSuppliedTemplates['table-footer-action'];
 	}
 
 	private getNamedTemplates = (template): [string, TemplateRef<any>] =>

@@ -57,17 +57,17 @@
 			<!-- Current password is needed if you aren't an admin and you're editing -->
 			<div class="form-group" *ngIf="mode === 'edit'">
 				<label for="currentPassword">Current Password</label>
-				<input type="password" name="password" class="form-control" id="currentPassword" [(ngModel)]="user.userModel.currentPassword">
+				<input type="password" name="password" class="form-control" id="currentPassword" [(ngModel)]="user.userModel.currentPassword" autocomplete="off">
 			</div>
 
 			<div class="form-group">
 				<label for="password"><label *ngIf="mode === 'edit'">New</label> Password</label>
-				<input type="password" name="password" class="form-control" id="password" [(ngModel)]="user.userModel.password" >
+				<input type="password" name="password" class="form-control" id="password" [(ngModel)]="user.userModel.password" autocomplete="off">
 			</div>
 
 			<div class="form-group">
 				<label for="password2">Re-enter <label *ngIf="mode === 'edit'">New</label> Password</label>
-				<input type="password" id="password2" name="password2" class="form-control" [(ngModel)]="user.userModel.verifyPassword">
+				<input type="password" id="password2" name="password2" class="form-control" [(ngModel)]="user.userModel.verifyPassword" autocomplete="off">
 			</div>
 
 		</ng-container>
@@ -121,7 +121,7 @@
 			<label>Roles</label>
 			<div class="btn-group">
 				<button *ngFor="let role of possibleRoles"
-						name="roles"
+						name="role"
 						type="button" class="btn"
 						[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
 						[attr.title]="role.description"

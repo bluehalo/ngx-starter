@@ -9,14 +9,16 @@
 
 	<!-- Search Input -->
 	<div class="pt-2">
-		<div class="d-flex mb-3 align-items-center">
+		<div class="d-flex mb-3">
 			<asy-search-input placeholder="Search key and value..." (applySearch)="onSearch($event)"></asy-search-input>
 		</div>
 
 		<pageable-table [items]="cacheEntries"
-			[pagingOptions]="pagingOpts"
-			(onPageChange)="goToPage($event)"
-			(onSortChange)="setSort($event)">
+						[hasItems]="hasCacheEntries"
+						[pagingOptions]="pagingOpts"
+						[tableStriped]="true"
+						(onPageChange)="goToPage($event)"
+						(onSortChange)="setSort($event)">
 
 			<ng-template named-template="table-header">
 				<th *ngFor="let header of headers">
@@ -29,27 +31,35 @@
 				<td>{{cacheEntry.entry.key}}</td>
 				<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
 				<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
-				<td style="width: 120px;">
-					<div class="btn-group btn-group-sm float-right">
-						<button title="View Entry" (click)="viewCacheEntry(cacheEntry)"
-							type="button" class="btn btn-outline-secondary">
-							<span class="fa fa-eye"></span>
-						</button>
-						<button title="Refresh Entry" (click)="refreshCacheEntry(cacheEntry)" [disabled]="cacheEntry.isRefreshing"
-							type="button" class="btn btn-outline-secondary">
-							<span class="fa fa-refresh"></span>
-						</button>
-						<button title="Delete Entry" (click)="confirmDeleteEntry(cacheEntry)"
-							type="button" class="btn btn-danger">
-							<span class="fa fa-trash-o"></span>
-						</button>
-					</div>
+				<td class="text-right" style="max-width: 50px;">
+					<span dropdown container="body" placement="top left" class="border-left pl-2 py-1">
+						<span class="px-2" style="cursor: pointer;" dropdownToggle>
+							<span class="fa fa-lg fa-ellipsis-v"></span>
+						</span>
+						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
+							<li>
+								<a class="dropdown-item" (click)="viewCacheEntry(cacheEntry)">View</a>
+							</li>
+							<li>
+								<a class="dropdown-item" (click)="refreshCacheEntry(cacheEntry)">Refresh</a>
+							</li>
+							<li>
+								<a class="dropdown-item" (click)="confirmDeleteEntry(cacheEntry)">Delete</a>
+							</li>
+						</ul>
+					</span>
 				</td>
 			</ng-template>
 
-			<ng-template named-template="empty-table">
-				<h2>
+			<ng-template named-template="table-no-results">
+				<h2 class="text-center">
 					<small>No Cache Entries matched your search</small>
+				</h2>
+			</ng-template>
+
+			<ng-template named-template="table-no-data">
+				<h2 class="text-center">
+					<small>No Cache Entries are available</small>
 				</h2>
 			</ng-template>
 

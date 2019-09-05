@@ -20,6 +20,7 @@ import { AdminTopics } from '../admin-topic.model';
 export class CacheEntriesComponent extends PagingComponent implements OnInit {
 
 	cacheEntries: any[] = [];
+	hasCacheEntries: boolean = false;
 
 	search: string = '';
 
@@ -102,23 +103,28 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 	}
 
 	private loadCacheEntries() {
-		this.cacheEntriesService.match({}, this.search, this.pagingOpts).subscribe(
-			(result: PagingResults) => {
-				if (result && Array.isArray(result.elements)) {
-					this.cacheEntries = result.elements.map((element: any) => {
-						return {
-							entry: new CacheEntry(element.key, element.value, element.ts),
-							isRefreshing: false
-						};
-					});
+		this.cacheEntriesService.match({}, this.search, this.pagingOpts)
+			.subscribe((result: PagingResults) => {
+				this.cacheEntries = result.elements.map((element: any) => {
+					return {
+						entry: new CacheEntry(element.key, element.value, element.ts),
+						isRefreshing: false
+					};
+				});
+				if (this.cacheEntries.length > 0) {
 					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 				} else {
 					this.pagingOpts.reset();
 				}
+
+				if (!this.hasCacheEntries) {
+					this.hasCacheEntries = this.cacheEntries.length > 0;
+				}
 			},
 			(response: HttpErrorResponse) => {
 				this.alertService.addAlert(response.error.message);
-			});
+			}
+		);
 	}
 
 }

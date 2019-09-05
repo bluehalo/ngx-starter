@@ -19,10 +19,9 @@ import { FeedbackService } from '../feedback.service';
 export class AdminListFeedbackComponent extends PagingComponent implements OnInit {
 
 	feedbacks: any[];
+	hasFeedback: boolean = false;
 
-	search: string;
-
-	pagingOpts: PagingOptions;
+	search: string = '';
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Submitted By', sortField: 'audit.actor', sortDir: SortDirection.asc, sortable: true },
@@ -75,14 +74,22 @@ export class AdminListFeedbackComponent extends PagingComponent implements OnIni
 	}
 
 	private loadFeedbackEntries() {
-		this.feedbackService.getFeedback(this.pagingOpts, null, this.search, {}).subscribe((result: PagingResults) => {
-			this.feedbacks = result.elements;
-			if (this.feedbacks.length > 0) {
-				this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-			} else {
-				this.pagingOpts.reset();
+		this.feedbackService.getFeedback(this.pagingOpts, null, this.search, {})
+			.subscribe((result: PagingResults) => {
+				this.feedbacks = result.elements;
+				if (this.feedbacks.length > 0) {
+					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
+				} else {
+					this.pagingOpts.reset();
+				}
+
+				if (!this.hasFeedback) {
+					this.hasFeedback = this.feedbacks.length > 0;
+				}
+			}, (error) => {
+				this.alertService.addAlert(error.message);
 			}
-		});
+		);
 	}
 }
 

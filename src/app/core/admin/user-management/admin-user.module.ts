@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AlertModule, BsDropdownModule, ButtonsModule } from 'ngx-bootstrap';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AdminCreateUserComponent } from './admin-create-user.component';
 import { AdminListUsersComponent } from './admin-list-users.component';
@@ -18,8 +20,8 @@ import { SearchInputModule } from '../../../common/search-input.module';
 @NgModule({
 	imports: [
 		AlertModule.forRoot(),
-		BsDropdownModule.forRoot(),
 		ButtonsModule.forRoot(),
+		BsDropdownModule.forRoot(),
 
 		CommonModule,
 		DirectivesModule,
