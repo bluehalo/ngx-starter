@@ -15,11 +15,9 @@ import { PipesModule } from '../../pipes.module';
 	template:
 		`
 	<pageable-table [items]="items"
-		[pagingOptions]="pagingOptions"
-		[refreshable]="refreshable"
-		(onPageChange)="pageChanged$.next($event)"
-		(onRefresh)="refreshed$.next($event)"
-	>
+					[hasItems]="hasItems"
+					[pagingOptions]="pagingOptions"
+					(onPageChange)="pageChanged$.next($event)">
 
 		<ng-template named-template="table-header">
 			{{ headerContent }}
@@ -31,8 +29,12 @@ import { PipesModule } from '../../pipes.module';
 			{{ index }}
 		</ng-template>
 
-		<ng-template named-template="empty-table">
-			{{ emptyTableContent }}
+		<ng-template named-template="table-no-data">
+			{{ noDataContent }}
+		</ng-template>
+
+		<ng-template named-template="table-no-results">
+			{{ noResultsContent }}
 		</ng-template>
 
 	</pageable-table>
@@ -40,15 +42,15 @@ import { PipesModule } from '../../pipes.module';
 })
 export class PageableTableTestHost {
 	@Input() items: Iterable<any>;
+	@Input() hasItems: boolean;
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
-	@Input() refreshable: boolean = false;
 
 	@Input() headerContent: string;
 	@Input() rowContent: string;
-	@Input() emptyTableContent: string;
+	@Input() noDataContent: string;
+	@Input() noResultsContent: string;
 
 	pageChanged$ = new Subject<PageChange>();
-	refreshed$ = new Subject();
 }
 
 describe('PageableTableComponent', () => {
@@ -81,15 +83,24 @@ describe('PageableTableComponent', () => {
 
 	it('displays empty table template when no items are provided', () => {
 		const expectedContent = 'EMPTY_TABLE';
-		testHost.emptyTableContent = expectedContent;
+		testHost.noDataContent = expectedContent;
 		fixture.detectChanges();
 		expect(rootHTMLElement.innerText).toContain(expectedContent);
 	});
 
-	it('displays empty table template when items are empty', () => {
-		const expectedContent = 'EMPTY_TABLE';
-		testHost.emptyTableContent = expectedContent;
+	it('displays no data template when items are empty', () => {
+		const expectedContent = 'NO_DATA';
+		testHost.noDataContent = expectedContent;
 		testHost.items = [];
+		fixture.detectChanges();
+		expect(rootHTMLElement.innerText).toContain(expectedContent);
+	});
+
+	it('displays no results template when filtered items are empty', () => {
+		const expectedContent = 'NO_RESULTS';
+		testHost.noResultsContent = expectedContent;
+		testHost.items = [];
+		testHost.hasItems = true;
 		fixture.detectChanges();
 		expect(rootHTMLElement.innerText).toContain(expectedContent);
 	});
