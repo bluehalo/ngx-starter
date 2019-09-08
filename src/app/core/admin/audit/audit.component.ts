@@ -16,6 +16,7 @@ import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	selector: 'audit',
+	styleUrls: ['audit.scss'],
 	templateUrl: './audit-list.component.html'
 })
 export class AuditComponent {
@@ -94,11 +95,12 @@ export class AuditComponent {
 
 		// Bind the search users typeahead to a function
 		this.searchUsersRef = Observable.create((observer: any) => {
-			this.userService.search({}, this.queryUserSearchTerm, this.userPagingOpts, null)
+			this.userService.match({}, this.queryUserSearchTerm, this.userPagingOpts, null)
 				.subscribe((result: any) => {
 					let formatted = result.elements
 						.map((r: any) => {
-							r.displayName = r.name + ' [' + r.username + ']';
+							const user = r.userModel;
+							r.displayName = user.name + ' [' + user.username + ']';
 							return r;
 						});
 					observer.next(formatted);

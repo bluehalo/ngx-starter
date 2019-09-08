@@ -33,6 +33,21 @@ export class AdminUsersService {
 		);
 	}
 
+	match(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
+		return this.http.post(
+			'api/users/match',
+			{ q: query, s: search, options: options },
+			{ params: paging.toObj() }
+		).pipe(
+			map((results: PagingResults) => {
+				if (null != results && isArray(results.elements)) {
+					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
+				}
+				return results;
+			})
+		);
+	}
+
 	removeUser(id: string) {
 		return this.http.delete(`api/admin/user/${id}`);
 	}

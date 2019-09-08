@@ -1,11 +1,6 @@
-.audit-filter {
-	width: 100%;
+@import '../../../common/paging/quick-filters/quick-filters.component';
 
-	input {
-		&[type='date'] {
-			width: 200px;
-		}
-	}
+.audit-filter {
 
 	label {
 		float: left;
@@ -19,7 +14,4 @@
 		}
 	}
 
-	.btn-group {
-		display: block;
-	}
 }
