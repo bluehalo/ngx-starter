@@ -23,7 +23,7 @@
 
 		&:checked {
 			+ label {
-				@include font-bold(14px);
+				font-family: $font-family-bold;
 			}
 		}
 	}

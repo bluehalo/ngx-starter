@@ -1,101 +1,67 @@
-<section class="pageable-table">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="table" [ngClass]="{'card p-3': showInCard, 'compact-table': !showInCard}" [hidden]="items?.length === 0">
+<div class="table" [ngClass]="{'card p-3': showInCard}">
+	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions" [hidden]="items?.length === 0">
+		<div class="table-actions d-flex flex-grow-1" *ngIf="showActions">
+			<ng-template [transclusion]="actionTemplate"></ng-template>
+		</div>
 
-				<div *ngIf="showHeader" class="table-header" [ngClass]="{'table-actions' : null != actionTemplate}">
-					<ng-template *ngIf="showActions" [transclusion]="actionTemplate"></ng-template>
-
-					<!-- Paging -->
-					<div [hidden]="items?.length === 0">
-						<div class="paging-controls">
-							<div class="float-right" style="margin-left: 10px;" *ngIf="refreshable">
-								<a class="btn-link no-href" (click)="onRefresh.emit()">
-									<span class="fa fa-refresh"></span><span> Refresh</span>
-								</a>
-							</div>
-							<div class="float-right">
-								<asy-pager
-									[pageNumber]="pagingOptions?.pageNumber"
-									[pageSize]="pagingOptions?.pageSize"
-									[totalSize]="pagingOptions?.totalSize"
-									[maxPageSize]="pagingOptions?.pageSize"
-									[currentSize]="items?.length"
-									[disableGoToEnd]="disableGoToEnd"
-									(onChange)="onPageChange.emit($event)">
-								</asy-pager>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div *ngIf="!pagedPastAllowed" class="table-content" [ngClass]="{'pt-2' : null != actionTemplate}">
-					<!-- Actual Results -->
-					<table class="table table-condensed table-hover">
-						<thead>
-						<tr>
-							<ng-template [transclusion]="headerTemplate"></ng-template>
-						</tr>
-						</thead>
-
-						<tbody>
-						<tr *ngFor="let item of items; let i = index" class="table-row">
-							<ng-template
-								*ngIf="rowTemplate"
-								[transclusion]="rowTemplate"
-								[item]="item"
-								[index]="i">
-							</ng-template>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<!-- Bottom Paging Controls -->
-				<div class="row pt-1" *ngIf="pagerAtBottom && !pagedPastAllowed">
-					<div class="col-md-12">
-						<div class="float-right">
-							<asy-pager
-								[pageNumber]="pagingOptions?.pageNumber"
-								[pageSize]="pagingOptions?.pageSize"
-								[totalSize]="pagingOptions?.totalSize"
-								[maxPageSize]="pagingOptions?.pageSize"
-								[currentSize]="items?.length"
-								[disableGoToEnd]="disableGoToEnd"
-								(onChange)="pageAndScroll.emit($event)">
-							</asy-pager>
-						</div>
-					</div>
-				</div>
-
-				<div class="row" [ngClass]="{'pt-2' : null != actionTemplate}" *ngIf="pagedPastAllowed">
-					<div class="col-md-12 text-center">
-						<h4>You can only page through the first {{ maxAllowed }} results</h4>
-					</div>
-				</div>
-
-			</div>
-
+		<div class="table-header-pager" *ngIf="pagerAtTop" [ngClass]="{'ml-auto': !showActions}">
+			<asy-pager
+				[pageNumber]="pagingOptions?.pageNumber"
+				[pageSize]="pagingOptions?.pageSize"
+				[totalSize]="pagingOptions?.totalSize"
+				[maxPageSize]="pagingOptions?.pageSize"
+				[currentSize]="items?.length"
+				[disableGoToEnd]="disableGoToEnd"
+				(onChange)="onPageChange.emit($event)">
+			</asy-pager>
 		</div>
 	</div>
 
-	<!-- Empty Table Display -->
-	<div class="row" [hidden]="items?.length > 0">
-		<div class="col-md-12">
+	<div class="table-content table-responsive" [hidden]="hideTableToData && items?.length === 0">
+		<!-- Actual Results -->
+		<table class="table" [ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}">
+			<thead>
+			<tr>
+				<ng-template [transclusion]="headerTemplate"></ng-template>
+			</tr>
+			</thead>
 
-			<section *ngIf="!loading" class="card card-message">
-				<div class="row">
-					<div class="pt-2 col-md-6 offset-md-3 text-center">
-						<ng-template [transclusion]="emptyTableTemplate"></ng-template>
-					</div>
-
-					<div class="pt-2 col-md-12 float-left">
-						<ng-template [transclusion]="footerTemplate"></ng-template>
-					</div>
-				</div>
-			</section>
-
-		</div>
+			<tbody>
+			<tr *ngFor="let item of items; let i = index" class="table-row">
+				<ng-template
+					*ngIf="rowTemplate"
+					[transclusion]="rowTemplate"
+					[item]="item"
+					[index]="i">
+				</ng-template>
+			</tr>
+			</tbody>
+		</table>
 	</div>
 
-</section>
+	<div class="table-no-results" *ngIf="!loading && hasItems && items?.length === 0">
+		<ng-template [transclusion]="noResultsTableTemplate"></ng-template>
+	</div>
+
+	<div class="table-no-data" *ngIf="!hasItems && !loading">
+		<ng-template [transclusion]="noDataTableTemplate"></ng-template>
+	</div>
+
+	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions" [hidden]="items?.length === 0">
+		<div class="table-actions d-flex flex-grow-1" *ngIf="showFooterActions">
+			<ng-template [transclusion]="footerActionTemplate"></ng-template>
+		</div>
+
+		<div class="table-footer-pager" *ngIf="pagerAtBottom" [ngClass]="{'ml-auto': !showFooterActions}">
+			<asy-pager
+				[pageNumber]="pagingOptions?.pageNumber"
+				[pageSize]="pagingOptions?.pageSize"
+				[totalSize]="pagingOptions?.totalSize"
+				[maxPageSize]="pagingOptions?.pageSize"
+				[currentSize]="items?.length"
+				[disableGoToEnd]="disableGoToEnd"
+				(onChange)="onPageChange.emit($event)">
+			</asy-pager>
+		</div>
+	</div>
+</div>

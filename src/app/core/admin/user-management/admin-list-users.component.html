@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="col-md-10">
-			<div class="d-flex mb-3 align-items-center">
+			<div class="d-flex mb-3">
 				<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"></asy-search-input>
 				<div class="btn-group float-right dropdown ml-auto" dropdown>
 					<button type="button" class="btn btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
@@ -33,8 +33,10 @@
 			</div>
 
 			<pageable-table [items]="users"
-				[pagingOptions]="pagingOpts"
-				(onPageChange)="goToPage($event)">
+							[hasItems]="hasUsers"
+							[pagingOptions]="pagingOpts"
+							[tableStriped]="true"
+							(onPageChange)="goToPage($event)">
 
 				<ng-template named-template="table-header">
 					<th *ngFor="let header of headersToShow">
@@ -67,33 +69,39 @@
 					<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
 					<td [hidden]="!columns.externalGroups.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalGroups}}</td>
 
-					<td [hidden]="!columns.roles.show" style="min-width: 310px;max-width: 310px;">
-						<div class="btn-group">
-							<button *ngFor="let role of possibleRoles"
-									type="button" class="btn btn-sm btn-outline-secondary" disabled
-									[ngClass]="{ 'btn-selected': user.userModel.roles && user.userModel.roles[role.role], 'btn-unselected': !user.userModel.roles || !user.userModel.roles[role.role] }"
-									[attr.title]="role.description">
-								<span class="fa fa-fw" [ngClass]="{ 'fa-check-square-o': user.userModel.roles && user.userModel.roles[role.role], 'fa-square-o': !user.userModel.roles || !user.userModel.roles[role.role] }"></span>
-								{{role.label}}
-							</button>
-						</div>
+					<td [hidden]="!columns.roles.show" style="max-width:200px;">
+						<ng-container *ngFor="let role of possibleRoles">
+							<div *ngIf="user.userModel.roles && user.userModel.roles[role.role]">
+								{{ role.role | titlecase }}
+							</div>
+						</ng-container>
 					</td>
-
-					<td style="min-width: 80px; max-width: 80px;">
-						<div class="btn-group btn-group-sm float-right">
-							<button title="Edit" [routerLink]="['/admin/user', user.userModel._id]" type="button" class="btn btn-outline-secondary">
-								<span class="fa fa-edit"></span>
-							</button>
-							<button title="Delete" type="button" class="btn btn-danger" (click)="confirmDeleteUser(user)">
-								<span class="fa fa-trash-o"></span>
-							</button>
-						</div>
+					<td class="text-right" style="max-width: 50px;">
+						<span dropdown container="body" placement="top left" class="border-left pl-2 py-1">
+							<span class="px-2" style="cursor: pointer;" dropdownToggle>
+								<span class="fa fa-lg fa-ellipsis-v"></span>
+							</span>
+							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
+								<li>
+									<a class="dropdown-item" [routerLink]="['/admin/user', user.userModel._id]">Edit</a>
+								</li>
+								<li>
+									<a class="dropdown-item" (click)="confirmDeleteUser(user)">Delete</a>
+								</li>
+							</ul>
+						</span>
 					</td>
 				</ng-template>
 
-				<ng-template named-template='empty-table'>
-					<h2>
+				<ng-template named-template="table-no-results">
+					<h2 class="text-center">
 						<small>No Users matched your search</small>
+					</h2>
+				</ng-template>
+
+				<ng-template named-template="table-no-data">
+					<h2 class="text-center">
+						<small>No Users are available</small>
 					</h2>
 				</ng-template>
 			</pageable-table>

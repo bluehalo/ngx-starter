@@ -17,12 +17,12 @@ import { EuaService } from './eua.service';
 import { AdminTopics } from '../admin-topic.model';
 
 @Component({
-	selector: 'admin-list-euas',
 	templateUrl: './admin-list-euas.component.html'
 })
 export class AdminListEuasComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	euas: EndUserAgreement[] = [];
+	hasEuas: boolean = false;
 
 	search: string = '';
 
@@ -159,14 +159,20 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 		this.euaService.cache.listEuas = {search: this.search, paging: this.pagingOpts};
 		this.euaService.search(this.getQuery(), this.search, this.pagingOpts, options)
 			.subscribe((result: PagingResults) => {
-				if (result && Array.isArray(result.elements)) {
-					this.euas = result.elements.map((element: any) => new EndUserAgreement().setFromEuaModel(element));
+				this.euas = result.elements.map((element: any) => new EndUserAgreement().setFromEuaModel(element));
+				if (this.euas.length > 0) {
 					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 				} else {
 					this.pagingOpts.reset();
-					this.euas = [];
 				}
-			});
+
+				if (!this.hasEuas) {
+					this.hasEuas = this.euas.length > 0;
+				}
+			}, (error) => {
+				this.alertService.addAlert(error.message);
+			}
+		);
 	}
 
 	private getQuery(): any {

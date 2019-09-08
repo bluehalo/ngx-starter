@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ModalModule, TooltipModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 import { CacheEntriesService } from './cache-entries.service';
@@ -16,6 +18,7 @@ import { SearchInputModule } from '../../../common/search-input.module';
 
 @NgModule({
 	imports: [
+		BsDropdownModule.forRoot(),
 		ModalModule.forRoot(),
 		CommonModule,
 		DirectivesModule,
