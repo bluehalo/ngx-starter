@@ -8,14 +8,18 @@
 
 	<div class="pt-2">
 
-		<div class="d-flex mb-3 align-items-center">
+		<div class="d-flex mb-3">
 			<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"></asy-search-input>
 			<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
 				<span class="fa fa-download"></span> Export
 			</button>
 		</div>
 
-		<pageable-table [items]="feedbacks" [pagingOptions]="pagingOpts" (onPageChange)="goToPage($event)">
+		<pageable-table [items]="feedbacks"
+						[hasItems]="hasFeedback"
+						[pagingOptions]="pagingOpts"
+						[tableStriped]="true"
+						(onPageChange)="goToPage($event)">
 
 			<ng-template named-template="table-header">
 				<th *ngFor="let header of headers">
@@ -53,6 +57,18 @@
 			<ng-template named-template="empty-table">
 				<h2>
 					<small>No Feedback</small>
+				</h2>
+			</ng-template>
+
+			<ng-template named-template="table-no-results">
+				<h2 class="text-center">
+					<small>No Feedback matched your search</small>
+				</h2>
+			</ng-template>
+
+			<ng-template named-template="table-no-data">
+				<h2 class="text-center">
+					<small>No Feedback available</small>
 				</h2>
 			</ng-template>
 

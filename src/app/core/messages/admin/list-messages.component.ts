@@ -5,7 +5,13 @@ import * as _ from 'lodash';
 
 import { Message } from '../message.class';
 import { MessageService } from '../message.service';
-import { PagingOptions, SortDisplayOption, SortDirection, SortableTableHeader } from 'src/app/common/paging.module';
+import {
+	PagingOptions,
+	SortDisplayOption,
+	SortDirection,
+	SortableTableHeader,
+	PagingResults
+} from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ModalService, ModalAction } from 'src/app/common/modal.module';
 import { first, filter, switchMap } from 'rxjs/operators';
@@ -18,6 +24,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ListMessagesComponent {
 
 	messages: Message[] = [];
+	hasMessages: boolean = false;
 	pagingOpts: PagingOptions;
 	search: string = '';
 	filters: any = {};
@@ -77,16 +84,21 @@ export class ListMessagesComponent {
 	applySearch() {
 		this.messageService.cache.messages = {search: this.search, paging: this.pagingOpts};
 		this.messageService.search({}, this.search, this.pagingOpts)
-			.subscribe((result: any) => {
-				if (null != result) {
-					this.messages = result.elements;
+			.subscribe((result: PagingResults) => {
+				this.messages = result.elements;
+				if (this.messages.length > 0) {
 					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 				} else {
-					this.messages = [];
+					this.pagingOpts.reset();
+				}
+
+				if (!this.hasMessages) {
+					this.hasMessages = this.messages.length > 0;
 				}
 			}, (error) => {
 				this.alertService.addAlert(error.message);
-			});
+			}
+		);
 	}
 
 	goToPage(event: any) {

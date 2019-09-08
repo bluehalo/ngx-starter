@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { EuaService } from './eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';
@@ -18,6 +20,7 @@ import { SearchInputModule } from '../../../common/search-input.module';
 
 @NgModule({
 	imports: [
+		BsDropdownModule.forRoot(),
 		CommonModule,
 		DirectivesModule,
 		FormsModule,

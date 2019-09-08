@@ -3,6 +3,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
 import { CreateMessageComponent } from './create-message.component';
 import { ListMessagesComponent } from './list-messages.component';
 import { AdminMessagesRoutingModule } from './admin-messages-routing.module';
@@ -12,10 +15,10 @@ import { PipesModule } from 'src/app/common/pipes.module';
 import { DirectivesModule } from 'src/app/common/directives.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
 	imports: [
+		BsDropdownModule.forRoot(),
 		AdminMessagesRoutingModule,
 		CommonModule,
 		FormsModule,

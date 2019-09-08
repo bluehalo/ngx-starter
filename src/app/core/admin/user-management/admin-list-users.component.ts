@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import cloneDeep from 'lodash/cloneDeep';
 import isArray from 'lodash/isArray';
 import toString from 'lodash/toString';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
 import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
@@ -22,6 +22,7 @@ import { AdminTopics } from '../admin-topic.model';
 export class AdminListUsersComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	users: any[] = [];
+	hasUsers: boolean = false;
 
 	search: string = '';
 
@@ -127,6 +128,8 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 	confirmDeleteUser(user: User) {
 		const id = user.userModel._id;
 		const username = user.userModel.username;
+
+		console.log('Delete User not yet implemented.');
 	}
 
 	exportUserData() {
@@ -194,17 +197,22 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 			paging: this.pagingOpts
 		};
 
-		let obs: Observable<PagingResults> = this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options);
-
-		obs.subscribe((result: PagingResults) => {
-			if (result && Array.isArray(result.elements)) {
+		this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options)
+			.subscribe((result: PagingResults) => {
 				this.users = result.elements;
-				this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-			} else {
-				this.pagingOpts.reset();
-				this.users = [];
+				if (this.users.length > 0) {
+					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
+				} else {
+					this.pagingOpts.reset();
+				}
+
+				if (!this.hasUsers) {
+					this.hasUsers = this.users.length > 0;
+				}
+			}, (error) => {
+				this.alertService.addAlert(error.message);
 			}
-		});
+		);
 	}
 
 	private getQuery(): any {
