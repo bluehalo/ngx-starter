@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import _isString from 'lodash/isString';
-import * as moment from 'moment';
+import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Observable, forkJoin } from 'rxjs';
 
@@ -55,9 +55,9 @@ export class AuditComponent implements OnInit {
 
 	showLteDatepicker: boolean = false;
 
-	queryStartDate: Date = moment.utc().subtract(1, 'days').toDate();
+	queryStartDate: Date = utc().subtract(1, 'days').toDate();
 
-	queryEndDate: Date = moment.utc().toDate();
+	queryEndDate: Date = utc().toDate();
 
 	searchUsersRef: Observable<any>;
 
@@ -188,17 +188,17 @@ export class AuditComponent implements OnInit {
 		if (this.dateRangeFilter.selected === 'choose') {
 			if (null != this.queryStartDate) {
 				timeQuery = (null == timeQuery) ? {} : timeQuery;
-				timeQuery.$gte = moment.utc(this.queryStartDate).startOf('day');
+				timeQuery.$gte = utc(this.queryStartDate).startOf('day');
 			}
 			if (null != this.queryEndDate) {
 				timeQuery = (null == timeQuery) ? {} : timeQuery;
-				timeQuery.$lt = moment.utc(this.queryEndDate).endOf('day');
+				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
 			}
 		}
 		else if (this.dateRangeFilter.selected !== 'everything') {
 			timeQuery = {
-				$gte: moment.utc().add(this.dateRangeFilter.selected, 'days'),
-				$lt: moment.utc()
+				$gte: utc().add(this.dateRangeFilter.selected, 'days'),
+				$lt: utc()
 			};
 		}
 
