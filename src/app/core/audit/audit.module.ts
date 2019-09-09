@@ -8,7 +8,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
-import { AdminUsersService } from '../user-management/admin-users.service';
+import { AuditRoutingModule } from './audit-routing.module';
 import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
@@ -18,9 +18,9 @@ import {
 	UserAuthentication
 } from './audit-object.component';
 
-import { DirectivesModule } from '../../../common/directives.module';
-import { PagingModule } from '../../../common/paging.module';
-import { PipesModule } from '../../..//common/pipes.module';
+import { DirectivesModule } from '../../common/directives.module';
+import { PagingModule } from '../../common/paging.module';
+import { PipesModule } from '../../common/pipes.module';
 
 @NgModule({
 	imports: [
@@ -29,6 +29,7 @@ import { PipesModule } from '../../..//common/pipes.module';
 		TypeaheadModule.forRoot(),
 		NgSelectModule,
 
+		AuditRoutingModule,
 		CommonModule,
 		DirectivesModule,
 		FormsModule,
@@ -60,8 +61,7 @@ import { PipesModule } from '../../..//common/pipes.module';
 		UserAuthentication
 	],
 	providers: [
-		AuditService,
-		AdminUsersService
+		AuditService
 	]
 })
 export class AuditModule { }

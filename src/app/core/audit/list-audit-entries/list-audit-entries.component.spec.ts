@@ -8,9 +8,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { BsModalService, BsDatepickerModule, ModalModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 
-import { PagingModule, PagingResults } from '../../../../common/paging.module';
-import { PipesModule } from '../../../../common/pipes.module';
-import { DirectivesModule } from '../../../../common/directives.module';
+import { PagingModule, PagingResults } from '../../../common/paging.module';
+import { PipesModule } from '../../../common/pipes.module';
+import { DirectivesModule } from '../../../common/directives.module';
 
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
@@ -19,11 +19,9 @@ import {
 	UserAuthentication
 } from '../audit-object.component';
 import { AuditService } from '../audit.service';
-import { AdminUsersService } from '../../user-management/admin-users.service';
 
 describe('Audit Component Spec', () => {
 
-	let adminUsersServiceSpy;
 	let auditServiceSpy;
 
 	let fixture: ComponentFixture<ListAuditEntriesComponent>;
@@ -83,7 +81,7 @@ describe('Audit Component Spec', () => {
 
 	beforeEach(async () => {
 
-		auditServiceSpy = jasmine.createSpyObj('AuditService', ['getDistinctAuditValues', 'search']);
+		auditServiceSpy = jasmine.createSpyObj('AuditService', ['getDistinctAuditValues', 'search', 'matchUser']);
 		auditServiceSpy.getDistinctAuditValues.and.callFake((field) => {
 			if (field === 'audit.action') {
 				return of(distinctResultsActions);
@@ -96,9 +94,7 @@ describe('Audit Component Spec', () => {
 			}
 		});
 		auditServiceSpy.search.and.returnValue( of(searchResults) );
-
-		adminUsersServiceSpy = jasmine.createSpyObj('AdminUsersService', ['match']);
-		adminUsersServiceSpy.match.and.returnValue( of(matchedUsers) );
+		auditServiceSpy.matchUser.and.returnValue( of(matchedUsers) );
 
 		TestBed.configureTestingModule({
 			declarations: [
@@ -120,8 +116,7 @@ describe('Audit Component Spec', () => {
 			],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
-				BsModalService,
-				{ provide: AdminUsersService, useValue: adminUsersServiceSpy }
+				BsModalService
 			]
 		})
 		.overrideModule(BrowserDynamicTestingModule, {

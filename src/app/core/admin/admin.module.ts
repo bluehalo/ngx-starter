@@ -11,7 +11,6 @@ import { CacheEntriesModule } from './cache-entries/cache-entries.module';
 import { PagingModule } from '../../common/paging.module';
 
 import { AdminTopics } from './admin-topic.model';
-import { AuditModule } from './audit/audit.module';
 
 @NgModule({
 	imports: [
@@ -20,7 +19,6 @@ import { AuditModule } from './audit/audit.module';
 		// App Admin Modules
 		AdminUserModule,
 		AdminEuaModule,
-		AuditModule,
 		CacheEntriesModule,
 
 		CommonModule,

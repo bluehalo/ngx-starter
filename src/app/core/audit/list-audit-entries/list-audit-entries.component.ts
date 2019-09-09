@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
@@ -7,10 +8,8 @@ import { Observable, forkJoin } from 'rxjs';
 
 import { AuditService } from '../audit.service';
 import { AuditViewChangeModal, AuditViewDetailModal } from '../audit-view-change.component';
-import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions, PagingResults } from '../../../../common/paging.module';
-import { AdminUsersService } from '../../user-management/admin-users.service';
+import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions, PagingResults } from '../../../common/paging.module';
 import { AuditOption } from '../audit.classes';
-import { AdminTopics } from '../../admin-topic.model';
 
 @Component({
 	styleUrls: ['./list-audit-entries.component.scss'],
@@ -63,7 +62,6 @@ export class ListAuditEntriesComponent implements OnInit {
 
 	constructor(
 		private auditService: AuditService,
-		private userService: AdminUsersService,
 		private modalService: BsModalService
 	) {}
 
@@ -91,7 +89,7 @@ export class ListAuditEntriesComponent implements OnInit {
 
 		// Bind the search users typeahead to a function
 		this.searchUsersRef = Observable.create((observer: any) => {
-			this.userService.match({}, this.queryUserSearchTerm, this.userPagingOpts, null)
+			this.auditService.matchUser({}, this.queryUserSearchTerm, this.userPagingOpts, null)
 				.subscribe((result: any) => {
 					let formatted = result.elements
 						.map((r: any) => {
@@ -194,9 +192,10 @@ export class ListAuditEntriesComponent implements OnInit {
 	private buildSearchQuery(): any {
 		let query: any = {};
 
-		if (null != this.queryUserObj && null != this.queryUserObj.item._id) {
+		const actorId = _get(this.queryUserObj, 'item.userModel._id', null);
+		if (null !== actorId) {
 			query['audit.actor._id'] = {
-				$obj: this.queryUserObj.item._id
+				$obj: actorId
 			};
 		}
 
@@ -247,11 +246,3 @@ export class ListAuditEntriesComponent implements OnInit {
 			});
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'audit',
-	title: 'Audit',
-	ordinal: 6,
-	path: 'audit'
-});
-

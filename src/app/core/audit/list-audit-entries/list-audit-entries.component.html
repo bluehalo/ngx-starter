@@ -1,8 +1,8 @@
 <section>
 
 	<h1 skipTo>
-		Audit Entries
-		<small>Browse and search audit entries</small>
+		Audit Logs
+		<small>Browse and search audit logs</small>
 	</h1>
 
 	<!-- Alert Notifications -->
@@ -170,7 +170,7 @@
 					</td>
 					<td >
 						<div class="hide-overflow" style="max-width:200px;">
-							<asy-audit-component [auditObject]="(null != entry.audit.object.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
+							<asy-audit-component [auditObject]="(entry.audit.object?.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
 								<small *ngIf="entry.audit.action === 'create' || entry.audit.action === 'delete'">
 									<a class="btn-icon no-href"
@@ -185,7 +185,7 @@
 					</td>
 					<td >
 						<div class="hide-overflow" style="max-width:200px;">
-							<asy-audit-component [auditObject]="entry.audit.object.before" [auditType]="entry.audit.auditType"></asy-audit-component>
+							<asy-audit-component [auditObject]="entry.audit.object?.before" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
 								<small *ngIf="entry.audit.action === 'update' || entry.audit.action === 'admin update'">
 									<a class="btn-icon no-href"
@@ -210,9 +210,9 @@
 
 				<ng-template named-template="table-no-data">
 					<h3>
-						No Audit Entries<br/>
+						No Audit Logs<br/>
 						<small>
-							You may not have access to Audit Entries.<br/>
+							You may not have access to Audit Logs.<br/>
 							Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
 						</small>
 					</h3>
@@ -220,9 +220,9 @@
 
 				<ng-template named-template="table-no-results">
 					<h3>
-						No Audit Entries?<br/>
+						No Audit Logs?<br/>
 						<small>
-							Either there were no Audit Entries that matched your search or you don't have access to Audit Entries.<br/>
+							Either there were no Audit Logs that matched your search or you don't have access to Audit Logs.<br/>
 							Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
 						</small>
 					</h3>

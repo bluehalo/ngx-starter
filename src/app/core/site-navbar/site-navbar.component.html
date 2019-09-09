@@ -92,6 +92,32 @@
 				</ng-template>
 			</li>
 
+			<!-- Auditor Nav	-->
+			<li class="element nav-popover nav-popover-bottom"
+				*hasRole="'auditor'">
+				<a [ngClass]="{'highlight-link': auditorNavOpen}"
+				   [popover]="auditorNav"
+				   container="body"
+				   containerClass="site-nav-popover-container"
+				   #auditorNavPopover="bs-popover"
+				   placement="left"
+				   [outsideClick]="true"
+				   (onShown)="auditorNavOpen = true;"
+				   (onHidden)="auditorNavOpen = false;">
+					<span class="fa fa-fw fa-file-text-o"></span>
+					<span [hidden]="!navbarOpen">Audit Logs</span>
+				</a>
+
+				<ng-template #auditorNav>
+					<ul class="popover-menu" role="menu">
+						<li>
+							<a routerLink="/audit"
+								(click)="auditorNavPopover.hide()">View All</a>
+						</li>
+					</ul>
+				</ng-template>
+			</li>
+
 			<!-- Admin Nav	-->
 			<li class="element nav-popover nav-popover-bottom"
 				*hasRole="'admin'">
