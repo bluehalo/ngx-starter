@@ -1,9 +1,9 @@
 <section>
 
-	<h3 class="page-header">
+	<h1 skipTo>
 		Audit Entries
 		<small>Browse and search audit entries</small>
-	</h3>
+	</h1>
 
 	<!-- Alert Notifications -->
 	<!-- <system-alert></system-alert> -->
@@ -36,68 +36,106 @@
 			</div>
 
 			<!-- Quick Filters -->
-			<div class="row">
-				<div class="col-md-12">
-					<label><i class="fa fa-mouse-pointer"></i>Actions:</label>
-					<div class="media-body controls paging-sort">
-						<label class="column-option" *ngFor="let option of actionOptions">
-							<input type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" />
-							{{option?.display}}
-						</label>
-					</div>
+			<div class="quick-select card">
+				<div>
+					<span class="collapsible" (click)="actionsFormShown = !actionsFormShown">
+						<span class="quick-select-title">
+							<span class="fa fa-mouse-pointer"></span>
+							Actions
+							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': actionsFormShown, 'fa-caret-down': !actionsFormShown }"></span>
+						</span>
+					</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<label><i class="fa fa-tag"></i>Type:</label>
-					<div class="media-body controls paging-sort">
-						<label class="column-option" *ngFor="let option of auditTypeOptions">
-							<input type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" />
-							{{option?.display}}
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<label><i class="fa fa-clock-o"></i> Timestamp:</label>
-				<select style="width:150px;" name="timestamp" class="form-control input-sm" [(ngModel)]="dateRangeFilter.selected" (ngModelChange)="refresh()">
-					<option *ngFor="let option of dateRangeOptions" [value]="option.value">{{option?.display}}</option>
-				</select>
-				<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">Start: </span>
-						<input style="width:255px;" type="text" name="gteDate" class="form-control input-sm"
-									ngModel="{{queryStartDate | date:'shortDate'}}"
-									(click)="showGteDatepicker = !showGteDatepicker"/>
-						<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
-					</div>
-					<div class="row col-md-12">
-						<div style="position: absolute; z-index: 999;">
-							<datepicker [hidden]="!showGteDatepicker"
-										[(ngModel)]="queryStartDate"
-										(ngModelChange)="updateDateRange()"
-										[yearRange]="1">
-							</datepicker>
+				<div *ngIf="actionsFormShown" class="quick-select-header">
+					<div class="form-group">
+						<div class="form-check" *ngFor="let option of actionOptions; let idx = index">
+							<input class="form-check-input"
+								type="checkbox"
+								[id]="'actionOption' + idx"
+								[(ngModel)]="option.selected"
+								(ngModelChange)="refresh()">
+							<label class="form-check-label" [for]="'actionOption' + idx">
+								{{option?.display}}
+							</label>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">Stop: </span>
-						<input type="text" name="lteDate" class="form-control input-sm"
-									style="width: 255px;"
-									ngModel="{{queryEndDate | date:'shortDate'}}"
-									(click)="showLteDatepicker = !showLteDatepicker"/>
-	
-						<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
+			</div>
+			<div class="quick-select card">
+				<div>
+					<span class="collapsible" (click)="typeFormShown = !typeFormShown">
+						<span class="quick-select-title">
+							<span class="fa fa-tag"></span>
+							Type
+							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': typeFormShown, 'fa-caret-down': !typeFormShown }"></span>
+						</span>
+					</span>
+				</div>
+				<div *ngIf="typeFormShown" class="quick-select-header">
+					<div class="form-group">
+						<div class="form-check" *ngFor="let option of auditTypeOptions; let idx = index">
+							<input class="form-check-input"
+								type="checkbox"
+								[id]="'auditTypeOption' + idx"
+								[(ngModel)]="option.selected"
+								(ngModelChange)="refresh()">
+							<label class="form-check-label" [for]="'auditTypeOption' + idx">
+								{{option?.display}}
+							</label>
+						</div>
 					</div>
-					<div class="row col-md-12">
-						<div style="position: absolute; z-index: 999;">
-							<datepicker [hidden]="!showLteDatepicker"
-										[(ngModel)]="queryEndDate"
-										(ngModelChange)="updateDateRange()"
-										[yearRange]="1">
-							</datepicker>
+				</div>
+			</div>
+			<div class="quick-select card">
+				<div>
+					<span class="collapsible" (click)="timestampFormShown = !timestampFormShown">
+						<span class="quick-select-title">
+							<span class="fa fa-clock-o"></span>
+							Timestamp
+							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': timestampFormShown, 'fa-caret-down': !timestampFormShown }"></span>
+						</span>
+					</span>
+				</div>
+				<div *ngIf="timestampFormShown" class="quick-select-header">
+					<select style="width:150px;" name="timestamp" class="form-control input-sm" [(ngModel)]="dateRangeFilter.selected" (ngModelChange)="refresh()">
+						<option *ngFor="let option of dateRangeOptions" [value]="option.value">{{option?.display}}</option>
+					</select>
+					<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">Start: </span>
+							<input style="width:255px;" type="text" name="gteDate" class="form-control input-sm"
+										ngModel="{{queryStartDate | date:'shortDate'}}"
+										(click)="showGteDatepicker = !showGteDatepicker"/>
+							<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
+						</div>
+						<div class="row col-md-12">
+							<div style="position: absolute; z-index: 999;">
+								<datepicker [hidden]="!showGteDatepicker"
+											[(ngModel)]="queryStartDate"
+											(ngModelChange)="updateDateRange()"
+											[yearRange]="1">
+								</datepicker>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">Stop: </span>
+							<input type="text" name="lteDate" class="form-control input-sm"
+										style="width: 255px;"
+										ngModel="{{queryEndDate | date:'shortDate'}}"
+										(click)="showLteDatepicker = !showLteDatepicker"/>
+		
+							<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
+						</div>
+						<div class="row col-md-12">
+							<div style="position: absolute; z-index: 999;">
+								<datepicker [hidden]="!showLteDatepicker"
+											[(ngModel)]="queryEndDate"
+											(ngModelChange)="updateDateRange()"
+											[yearRange]="1">
+								</datepicker>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -105,11 +143,12 @@
 		</div>
 		<div class="col-md-10">
 			<pageable-table [items]="auditEntries"
+				[hasItems]="hasAuditEntries"
 				[pagingOptions]="pagingOpts"
-				[refreshable]="true"
+				[tableStriped]="true"
 				(onPageChange)="goToPage($event)"
 				(onRefresh)="refresh()">
-		
+
 				<ng-template named-template="table-header">
 					<th>
 						<a class="no-href" (click)="setSort('audit.actor.name')">
@@ -196,8 +235,18 @@
 						</div>
 					</td>
 				</ng-template>
-		
-				<ng-template named-template="empty-table">
+
+				<ng-template named-template="table-no-data">
+					<h3>
+						No Audit Entries<br/>
+						<small>
+							You may not have access to Audit Entries.<br/>
+							Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
+						</small>
+					</h3>
+				</ng-template>
+
+				<ng-template named-template="table-no-results">
 					<h3>
 						No Audit Entries?<br/>
 						<small>
@@ -206,6 +255,7 @@
 						</small>
 					</h3>
 				</ng-template>
+
 			</pageable-table>
 		</div>
 	</div>

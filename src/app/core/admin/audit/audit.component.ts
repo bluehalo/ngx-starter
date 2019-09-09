@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import * as _ from 'lodash';
+import _isString from 'lodash/isString';
 import * as moment from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Observable, forkJoin } from 'rxjs';
 
 import { AuditService } from './audit.service';
 import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
-import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions } from '../../../common/paging.module';
+import { PagingOptions, SortDisplayOption, SortDirection, SortableTableHeader, TableSortOptions, PagingResults } from '../../../common/paging.module';
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { AuditOption } from './audit.classes';
 import { AdminTopics } from '../admin-topic.model';
@@ -19,13 +19,17 @@ import { AdminTopics } from '../admin-topic.model';
 	styleUrls: ['audit.scss'],
 	templateUrl: './audit-list.component.html'
 })
-export class AuditComponent {
+export class AuditComponent implements OnInit {
 
 	// List of audit entries
 	auditEntries: any[] = [];
+	hasAuditEntries: boolean = false;
 
 	actionOptions: AuditOption[] = [];
+	actionsFormShown: boolean = true;
 	actorFormShown: boolean = true;
+	timestampFormShown: boolean = true;
+	typeFormShown: boolean = true;
 
 	auditTypeOptions: AuditOption[] = [];
 
@@ -112,8 +116,8 @@ export class AuditComponent {
 			this.auditService.getDistinctAuditValues('audit.action'),
 			this.auditService.getDistinctAuditValues('audit.auditType')
 		]).subscribe((results: any[]) => {
-			this.actionOptions = results[0].filter((r: any) => _.isString(r)).sort().map((r: any) => new AuditOption(r));
-			this.auditTypeOptions = results[1].filter((r: any) => _.isString(r)).sort().map((r: any) => new AuditOption(r));
+			this.actionOptions = results[0].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
+			this.auditTypeOptions = results[1].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
 		});
 
 		this.loadAuditEntries();
@@ -236,11 +240,11 @@ export class AuditComponent {
 		let query = this.buildSearchQuery();
 
 		this.auditService.search(query, '', this.pagingOpts)
-			.subscribe((result: any) => {
+			.subscribe((result: PagingResults) => {
 				if (null != result && null != result.elements && result.elements.length > 0) {
 					// Defensively filter out bad audit entries (null or audit or audit.object object is null)
-					this.auditEntries = result.elements
-						.filter((e: any) => (null != e && null != e.audit && null != e.audit.object));
+					this.auditEntries = result.elements;
+						// .filter((e: any) => (null != e && null != e.audit && null != e.audit.object));
 
 					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 					this.auditEntriesLoaded = true;
@@ -249,6 +253,10 @@ export class AuditComponent {
 					this.auditEntries = [];
 					this.pagingOpts.reset();
 					this.auditEntriesLoaded = false;
+				}
+
+				if (!this.hasAuditEntries) {
+					this.hasAuditEntries = result.totalSize > 0;
 				}
 			});
 	}

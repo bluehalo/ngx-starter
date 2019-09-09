@@ -10,9 +10,11 @@ import { AuditService } from './audit.service';
 import { AuditComponent } from './audit.component';
 import {
 	AuditObjectComponent, UrlAudit,
-	DefaultAudit, ExportAudit
+	DefaultAudit, ExportAudit, UserAudit,
+	UserAuthentication
 } from './audit-object.component';
 
+import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../..//common/pipes.module';
 
@@ -23,6 +25,7 @@ import { PipesModule } from '../../..//common/pipes.module';
 		TypeaheadModule.forRoot(),
 
 		CommonModule,
+		DirectivesModule,
 		FormsModule,
 		PagingModule,
 		PipesModule
@@ -32,18 +35,24 @@ import { PipesModule } from '../../..//common/pipes.module';
 		AuditViewDetailModal,
 
 		DefaultAudit,
-		ExportAudit
+		ExportAudit,
+		UrlAudit,
+		UserAudit,
+		UserAuthentication
 	],
 	exports: [],
 	declarations: [
 		AuditComponent,
-		AuditObjectComponent,
 		AuditViewChangeModal,
 		AuditViewDetailModal,
-		UrlAudit,
+
 		AuditObjectComponent,
+		UrlAudit,
 		DefaultAudit,
-		ExportAudit
+		ExportAudit,
+		UrlAudit,
+		UserAudit,
+		UserAuthentication
 	],
 	providers: [
 		AuditService,

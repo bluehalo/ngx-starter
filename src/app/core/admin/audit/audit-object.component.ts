@@ -25,6 +25,22 @@ auditObjects.push(UrlAudit);
 AuditObjectTypes.registerType('url', UrlAudit);
 
 @Component({
+	selector: 'user',
+	templateUrl: './user-audit.component.html'
+})
+export class UserAudit extends DefaultAudit {}
+auditObjects.push(UserAudit);
+AuditObjectTypes.registerType('user', UserAudit);
+
+@Component({
+	selector: 'user-authentication',
+	template: ''
+})
+export class UserAuthentication extends DefaultAudit {}
+auditObjects.push(UserAuthentication);
+AuditObjectTypes.registerType('user-authentication', UserAuthentication);
+
+@Component({
 	selector: 'export-audit',
 	template: `
 			<span *ngIf='auditObject'>
