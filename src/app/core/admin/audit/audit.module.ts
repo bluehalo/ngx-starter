@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { DatepickerModule, ModalModule, TypeaheadModule } from 'ngx-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
@@ -20,9 +24,10 @@ import { PipesModule } from '../../..//common/pipes.module';
 
 @NgModule({
 	imports: [
-		DatepickerModule.forRoot(),
+		BsDatepickerModule.forRoot(),
 		ModalModule.forRoot(),
 		TypeaheadModule.forRoot(),
+		NgSelectModule,
 
 		CommonModule,
 		DirectivesModule,

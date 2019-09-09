@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 import _isString from 'lodash/isString';
 import { utc } from 'moment';
@@ -49,11 +48,6 @@ export class AuditComponent implements OnInit {
 	dateRangeOptions: any[];
 
 	dateRangeFilter: any;
-
-	// Date picker
-	showGteDatepicker: boolean = false;
-
-	showLteDatepicker: boolean = false;
 
 	queryStartDate: Date = utc().subtract(1, 'days').toDate();
 
@@ -142,8 +136,6 @@ export class AuditComponent implements OnInit {
 	}
 
 	updateDateRange() {
-		this.showGteDatepicker = false;
-		this.showLteDatepicker = false;
 		this.loadAuditEntries();
 	}
 
@@ -176,10 +168,6 @@ export class AuditComponent implements OnInit {
 		}
 
 		this.loadAuditEntries();
-	}
-
-	formatDate(date: Date) {
-		return new DatePipe('en-US').transform(date, 'shortDate');
 	}
 
 	private getTimeFilterQueryObject(): any {

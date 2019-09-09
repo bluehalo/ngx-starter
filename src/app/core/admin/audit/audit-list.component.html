@@ -12,6 +12,47 @@
 		<div class="col-md-2">
 			<div class="quick-select card">
 				<div>
+					<span class="collapsible" (click)="timestampFormShown = !timestampFormShown">
+						<span class="quick-select-title">
+							<span class="fa fa-clock-o"></span>
+							Timestamp
+							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': timestampFormShown, 'fa-caret-down': !timestampFormShown }"></span>
+						</span>
+					</span>
+				</div>
+				<div *ngIf="timestampFormShown" class="quick-select-header">
+					<ng-select [items]="dateRangeOptions" [clearable]="false" bindLabel="display" bindValue="value"
+							   (change)="refresh()"
+							   [(ngModel)]="dateRangeFilter.selected" name="timestamp"
+							   dropdownPosition="bottom">
+					</ng-select>
+					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
+						<input type="text" class="form-control" bsDatepicker #qsDp="bsDatepicker"
+							   name="dob"
+							   autocomplete="off"
+							   placeholder="Enter start date..."
+							   placement="bottom"
+							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
+							   (bsValueChange)="updateDateRange()" [maxDate]="queryEndDate"
+							   [outsideClick]="true" required [(ngModel)]="queryStartDate">
+						<span class="icon fa fa-calendar" (click)="qsDp.toggle()"></span>
+					</div>
+					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
+						<input type="text" class="form-control" bsDatepicker #qeDp="bsDatepicker"
+							   name="dob"
+							   autocomplete="off"
+							   placeholder="Enter end date..."
+							   placement="bottom"
+							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
+							   (bsValueChange)="updateDateRange()" [minDate]="queryStartDate"
+							   [outsideClick]="true" required [(ngModel)]="queryEndDate">
+						<span class="icon fa fa-calendar" (click)="qeDp.toggle()"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="quick-select card">
+				<div>
 					<span class="collapsible" (click)="actorFormShown = !actorFormShown">
 						<span class="quick-select-title">
 							<span class="fa fa-user"></span>
@@ -47,20 +88,13 @@
 					</span>
 				</div>
 				<div *ngIf="actionsFormShown" class="quick-select-header">
-					<div class="form-group">
-						<div class="form-check" *ngFor="let option of actionOptions; let idx = index">
-							<input class="form-check-input"
-								type="checkbox"
-								[id]="'actionOption' + idx"
-								[(ngModel)]="option.selected"
-								(ngModelChange)="refresh()">
-							<label class="form-check-label" [for]="'actionOption' + idx">
-								{{option?.display}}
-							</label>
-						</div>
+					<div *ngFor="let option of actionOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
+						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" id="actionOption{{idx}}">
+						<label class="form-check-label" for="actionOption{{idx}}">{{ option.display }}</label>
 					</div>
 				</div>
 			</div>
+
 			<div class="quick-select card">
 				<div>
 					<span class="collapsible" (click)="typeFormShown = !typeFormShown">
@@ -72,71 +106,9 @@
 					</span>
 				</div>
 				<div *ngIf="typeFormShown" class="quick-select-header">
-					<div class="form-group">
-						<div class="form-check" *ngFor="let option of auditTypeOptions; let idx = index">
-							<input class="form-check-input"
-								type="checkbox"
-								[id]="'auditTypeOption' + idx"
-								[(ngModel)]="option.selected"
-								(ngModelChange)="refresh()">
-							<label class="form-check-label" [for]="'auditTypeOption' + idx">
-								{{option?.display}}
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="quick-select card">
-				<div>
-					<span class="collapsible" (click)="timestampFormShown = !timestampFormShown">
-						<span class="quick-select-title">
-							<span class="fa fa-clock-o"></span>
-							Timestamp
-							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': timestampFormShown, 'fa-caret-down': !timestampFormShown }"></span>
-						</span>
-					</span>
-				</div>
-				<div *ngIf="timestampFormShown" class="quick-select-header">
-					<select style="width:150px;" name="timestamp" class="form-control input-sm" [(ngModel)]="dateRangeFilter.selected" (ngModelChange)="refresh()">
-						<option *ngFor="let option of dateRangeOptions" [value]="option.value">{{option?.display}}</option>
-					</select>
-					<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
-						<div class="input-group input-group-sm">
-							<span class="input-group-addon">Start: </span>
-							<input style="width:255px;" type="text" name="gteDate" class="form-control input-sm"
-										ngModel="{{queryStartDate | date:'shortDate'}}"
-										(click)="showGteDatepicker = !showGteDatepicker"/>
-							<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
-						</div>
-						<div class="row col-md-12">
-							<div style="position: absolute; z-index: 999;">
-								<datepicker [hidden]="!showGteDatepicker"
-											[(ngModel)]="queryStartDate"
-											(ngModelChange)="updateDateRange()"
-											[yearRange]="1">
-								</datepicker>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4" *ngIf="dateRangeFilter.selected === 'choose'">
-						<div class="input-group input-group-sm">
-							<span class="input-group-addon">Stop: </span>
-							<input type="text" name="lteDate" class="form-control input-sm"
-										style="width: 255px;"
-										ngModel="{{queryEndDate | date:'shortDate'}}"
-										(click)="showLteDatepicker = !showLteDatepicker"/>
-		
-							<span class="calendar-picker"><i class="fa fa-calendar"></i></span>
-						</div>
-						<div class="row col-md-12">
-							<div style="position: absolute; z-index: 999;">
-								<datepicker [hidden]="!showLteDatepicker"
-											[(ngModel)]="queryEndDate"
-											(ngModelChange)="updateDateRange()"
-											[yearRange]="1">
-								</datepicker>
-							</div>
-						</div>
+					<div *ngFor="let option of auditTypeOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
+						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" id="auditTypeOption{{idx}}">
+						<label class="form-check-label" for="auditTypeOption{{idx}}">{{ option.display }}</label>
 					</div>
 				</div>
 			</div>
