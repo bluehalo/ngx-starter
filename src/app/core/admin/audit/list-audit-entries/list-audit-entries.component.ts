@@ -5,20 +5,18 @@ import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Observable, forkJoin } from 'rxjs';
 
-import { AuditService } from './audit.service';
-import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
-import { PagingOptions, SortDisplayOption, SortDirection, SortableTableHeader, TableSortOptions, PagingResults } from '../../../common/paging.module';
-import { AdminUsersService } from '../user-management/admin-users.service';
-import { AuditOption } from './audit.classes';
-import { AdminTopics } from '../admin-topic.model';
-
+import { AuditService } from '../audit.service';
+import { AuditViewChangeModal, AuditViewDetailModal } from '../audit-view-change.component';
+import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions, PagingResults } from '../../../../common/paging.module';
+import { AdminUsersService } from '../../user-management/admin-users.service';
+import { AuditOption } from '../audit.classes';
+import { AdminTopics } from '../../admin-topic.model';
 
 @Component({
-	selector: 'audit',
-	styleUrls: ['audit.scss'],
-	templateUrl: './audit-list.component.html'
+	styleUrls: ['./list-audit-entries.component.scss'],
+	templateUrl: './list-audit-entries.component.html'
 })
-export class AuditComponent implements OnInit {
+export class ListAuditEntriesComponent implements OnInit {
 
 	// List of audit entries
 	auditEntries: any[] = [];

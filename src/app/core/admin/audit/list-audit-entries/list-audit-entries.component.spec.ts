@@ -8,26 +8,26 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { BsModalService, BsDatepickerModule, ModalModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 
-import { PagingModule, PagingResults } from '../../../common/paging.module';
-import { PipesModule } from '../../../common/pipes.module';
-import { DirectivesModule } from '../../../common/directives.module';
+import { PagingModule, PagingResults } from '../../../../common/paging.module';
+import { PipesModule } from '../../../../common/pipes.module';
+import { DirectivesModule } from '../../../../common/directives.module';
 
-import { AuditComponent } from './audit.component';
+import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
 	AuditObjectComponent, UrlAudit,
 	DefaultAudit, ExportAudit, UserAudit,
 	UserAuthentication
-} from './audit-object.component';
-import { AuditService } from './audit.service';
-import { AdminUsersService } from '../user-management/admin-users.service';
+} from '../audit-object.component';
+import { AuditService } from '../audit.service';
+import { AdminUsersService } from '../../user-management/admin-users.service';
 
 describe('Audit Component Spec', () => {
 
 	let adminUsersServiceSpy;
 	let auditServiceSpy;
 
-	let fixture: ComponentFixture<AuditComponent>;
-	let component: AuditComponent;
+	let fixture: ComponentFixture<ListAuditEntriesComponent>;
+	let component: ListAuditEntriesComponent;
 	let rootHTMLElement: HTMLElement;
 
 	const matchedUsers = {
@@ -102,7 +102,7 @@ describe('Audit Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [
-				AuditComponent,
+				ListAuditEntriesComponent,
 				AuditObjectComponent, UrlAudit,
 				DefaultAudit, ExportAudit, UserAudit,
 				UserAuthentication
@@ -134,7 +134,7 @@ describe('Audit Component Spec', () => {
 			}
 		});
 
-		fixture = TestBed.createComponent(AuditComponent);
+		fixture = TestBed.createComponent(ListAuditEntriesComponent);
 		component = fixture.componentInstance;
 		rootHTMLElement = fixture.debugElement.nativeElement;
 

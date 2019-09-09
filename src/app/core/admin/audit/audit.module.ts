@@ -11,7 +11,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
 import { AuditService } from './audit.service';
-import { AuditComponent } from './audit.component';
+import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
 import {
 	AuditObjectComponent, UrlAudit,
 	DefaultAudit, ExportAudit, UserAudit,
@@ -47,7 +47,7 @@ import { PipesModule } from '../../..//common/pipes.module';
 	],
 	exports: [],
 	declarations: [
-		AuditComponent,
+		ListAuditEntriesComponent,
 		AuditViewChangeModal,
 		AuditViewDetailModal,
 
@@ -66,4 +66,4 @@ import { PipesModule } from '../../..//common/pipes.module';
 })
 export class AuditModule { }
 
-export { AuditComponent } from './audit.component';
+export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
