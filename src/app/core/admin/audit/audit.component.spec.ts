@@ -58,8 +58,8 @@ describe('Audit Component Spec', () => {
 	const searchResults = {
 		elements: [{
 			created: 1567973747442,
-			id: "5d75617309e3e93d36b1c948",
-			message: "admin user updated",
+			id: '5d75617309e3e93d36b1c948',
+			message: 'admin user updated',
 			audit: {
 				action: 'admin update',
 				actor: {
@@ -123,11 +123,15 @@ describe('Audit Component Spec', () => {
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy }
 			]
 		})
-		.overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [
-			AuditObjectComponent, UrlAudit,
-			DefaultAudit, ExportAudit, UserAudit,
-			UserAuthentication
-		] } });;
+		.overrideModule(BrowserDynamicTestingModule, {
+			set: {
+				entryComponents: [
+					AuditObjectComponent, UrlAudit,
+					DefaultAudit, ExportAudit, UserAudit,
+					UserAuthentication
+				]
+			}
+		});
 
 		fixture = TestBed.createComponent(AuditComponent);
 		component = fixture.componentInstance;
