@@ -20,13 +20,21 @@ describe('SortObjectKeysPipe', () => {
 			one: 'two',
 			foo: {
 				efgh: true,
+				ijhk: [
+					{ b: false, a: false },
+					{ a: true, b: true }
+				],
 				abcd: 1
 			}
 		});
 		expect(JSON.stringify(transformed)).toEqual(JSON.stringify({
 			foo: {
 				abcd: 1,
-				efgh: true
+				efgh: true,
+				ijhk: [
+					{ a: false, b: false },
+					{ a: true, b: true }
+				]
 			},
 			one: 'two'
 		}));
@@ -36,7 +44,11 @@ describe('SortObjectKeysPipe', () => {
 			one: 'two',
 			foo: {
 				abcd: 1,
-				efgh: true
+				efgh: true,
+				ijhk: [
+					{ a: false, b: false },
+					{ a: true, b: true }
+				]
 			}
 		}));
 	});
