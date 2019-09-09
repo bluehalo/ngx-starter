@@ -1,11 +1,16 @@
+import { FormsModule } from '@angular/forms';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { By } from '@angular/platform-browser';
-
 
 import { of } from 'rxjs/index';
 
-import { BsModalService, DatepickerModule, ModalModule, TypeaheadModule } from 'ngx-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+import { BsModalService, BsDatepickerModule, ModalModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
+
+import { PagingModule, PagingResults } from '../../../common/paging.module';
+import { PipesModule } from '../../../common/pipes.module';
+import { DirectivesModule } from '../../../common/directives.module';
 
 import { AuditComponent } from './audit.component';
 import {
@@ -13,11 +18,6 @@ import {
 	DefaultAudit, ExportAudit, UserAudit,
 	UserAuthentication
 } from './audit-object.component';
-import { TooltipModule } from 'ngx-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { PagingModule, PagingResults } from '../../../common/paging.module';
-import { PipesModule } from '../../../common/pipes.module';
-import { DirectivesModule } from '../../../common/directives.module';
 import { AuditService } from './audit.service';
 import { AdminUsersService } from '../user-management/admin-users.service';
 
@@ -108,10 +108,11 @@ describe('Audit Component Spec', () => {
 				UserAuthentication
 			],
 			imports: [
-				DatepickerModule.forRoot(),
+				BsDatepickerModule.forRoot(),
 				ModalModule.forRoot(),
 				TypeaheadModule.forRoot(),
 				TooltipModule.forRoot(),
+				NgSelectModule,
 				DirectivesModule,
 				FormsModule,
 				PagingModule,
