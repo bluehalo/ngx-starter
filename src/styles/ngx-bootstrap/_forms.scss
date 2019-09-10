@@ -17,3 +17,11 @@ $form-label-font-color: $ux-color-primary-dark !default;
 		@include font-color-dark($form-label-font-color);
 	}
 }
+
+input[bsDatepicker] + span {
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin-left: -22px;
+	cursor: pointer;
+}

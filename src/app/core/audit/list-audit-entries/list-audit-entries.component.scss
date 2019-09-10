@@ -1,0 +1,23 @@
+@import '../../../common/paging/quick-filters/quick-filters.component';
+
+.audit-filter {
+
+	label {
+		float: left;
+		line-height: 2;
+		padding-right: 5px;
+		text-align: right;
+		width: 115px;
+
+		&.column-option {
+			width: auto;
+		}
+	}
+
+}
+
+//.quick-select-header
+
+::ng-deep .bs-datepicker.audit-list-filter {
+	left: 58px;
+}

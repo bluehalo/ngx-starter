@@ -70,3 +70,9 @@ $tooltip-color:                     map-get($color-background, 'darkest-contrast
 $tooltip-bg:                        fade-out(map-get($color-background, 'darkest'), .4) !default;
 $tooltip-padding-y:                 8px !default;
 $tooltip-padding-x:                 16px !default;
+
+
+// ngx-bootstrap datepicker;
+$theme-list: (
+	'default': $ux-color-primary
+) !default;

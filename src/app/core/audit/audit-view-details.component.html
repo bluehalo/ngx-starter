@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<h3>
+		<span style="text-transform: capitalize">{{ auditEntry?.audit?.auditType }} {{ auditEntry?.audit?.action + 'd' }}</span><span> by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}</span>
+		<span class="pull-right">
+				<a class="btn-icon no-href"
+				   (click)="modalRef.hide()"
+				   tooltip="Close"
+				   placement="bottom"
+				   container="body">
+					<i class="fa fa-times"></i>
+				</a>
+			</span>
+	</h3>
+</div>
+
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-6">
+			<h4 *ngIf="auditEntry?.audit?.object?.title">{{ auditEntry?.audit?.object?.title }}</h4>
+			<pre>{{ auditEntry?.audit?.object | json }}</pre>
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-link" (click)="modalRef.hide()">Close</button>
+</div>
