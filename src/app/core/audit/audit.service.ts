@@ -12,8 +12,8 @@ import { User } from '../auth/user.model';
 export class AuditService {
 	constructor(private http: HttpClient) {}
 
-	public getDistinctAuditValues(field: string): Observable<Response> {
-		return this.http.get<Response>('api/audit/distinctValues', { params: { field: field } });
+	public getDistinctAuditValues(field: string): Observable<string[]> {
+		return this.http.get<string[]>('api/audit/distinctValues', { params: { field: field } });
 	}
 
 	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
