@@ -42,7 +42,10 @@ export class TeamsService {
 	create(team: Team, firstAdmin?: any): Observable<any> {
 		return this.http.put(
 			`api/team`,
-			JSON.stringify(team),
+			JSON.stringify({
+				team: team,
+				firstAdmin: null === firstAdmin ? null : firstAdmin._id || firstAdmin
+			}),
 			{ headers: this.headers }
 		).pipe(
 			catchError((error: HttpErrorResponse) => {
