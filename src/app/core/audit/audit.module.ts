@@ -66,4 +66,6 @@ import { PipesModule } from '../../common/pipes.module';
 })
 export class AuditModule { }
 
+export { AuditObjectTypes } from './audit.classes';
+export { auditObjects } from './audit-object.component';
 export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
