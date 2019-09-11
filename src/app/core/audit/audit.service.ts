@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagingOptions, PagingResults } from '../../common/paging.module';
 import _isArray from 'lodash/isArray';
-import _includes from 'lodash/includes';
 
 import { User } from '../auth/user.model';
 
@@ -25,7 +24,7 @@ export class AuditService {
 	constructor(private http: HttpClient) {}
 
 	public isViewDetailsAction(action: string) {
-		return _includes(this.viewDetailsActions, action);
+		return this.viewDetailsActions.includes(action);
 	}
 
 	public addViewDetailsAction(action: string) {
@@ -33,7 +32,7 @@ export class AuditService {
 	}
 
 	public isViewChangesAction(action: string) {
-		return _includes(this.viewChangesActions, action);
+		return this.viewChangesActions.includes(action);
 	}
 
 	public addViewChangesAction(action: string) {
