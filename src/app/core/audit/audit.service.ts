@@ -11,19 +11,21 @@ import { User } from '../auth/user.model';
 
 @Injectable()
 export class AuditService {
-	constructor(private http: HttpClient) {}
 
 	private viewDetailsActions: string[] = [
 		'create',
 		'delete'
 	];
+
 	private viewChangesActions: string[] = [
 		'update',
 		'admin update'
 	];
 
+	constructor(private http: HttpClient) {}
+
 	public isViewDetailsAction(action: string) {
-		return _includes(this.viewDetailsActions, action)
+		return _includes(this.viewDetailsActions, action);
 	}
 
 	public addViewDetailsAction(action: string) {
@@ -31,7 +33,7 @@ export class AuditService {
 	}
 
 	public isViewChangesAction(action: string) {
-		return _includes(this.viewChangesActions, action)
+		return _includes(this.viewChangesActions, action);
 	}
 
 	public addViewChangesAction(action: string) {

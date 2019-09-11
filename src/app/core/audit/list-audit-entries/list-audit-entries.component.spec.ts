@@ -81,7 +81,13 @@ describe('Audit Component Spec', () => {
 
 	beforeEach(async () => {
 
-		auditServiceSpy = jasmine.createSpyObj('AuditService', ['getDistinctAuditValues', 'search', 'matchUser']);
+		auditServiceSpy = jasmine.createSpyObj('AuditService', [
+			'getDistinctAuditValues',
+			'isViewDetailsAction',
+			'isViewChangesAction',
+			'search',
+			'matchUser'
+		]);
 		auditServiceSpy.getDistinctAuditValues.and.callFake((field) => {
 			if (field === 'audit.action') {
 				return of(distinctResultsActions);
@@ -93,6 +99,8 @@ describe('Audit Component Spec', () => {
 				throw new Error('should not get here');
 			}
 		});
+		auditServiceSpy.isViewDetailsAction.and.callThrough();
+		auditServiceSpy.isViewChangesAction.and.callThrough();
 		auditServiceSpy.search.and.returnValue( of(searchResults) );
 		auditServiceSpy.matchUser.and.returnValue( of(matchedUsers) );
 
