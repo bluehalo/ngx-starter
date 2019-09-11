@@ -172,7 +172,7 @@
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="(entry.audit.object?.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
-								<small *ngIf="entry.audit.action === 'create' || entry.audit.action === 'delete'">
+								<small *ngIf="auditService.isViewDetailsAction(entry.audit.action)">
 									<a class="btn-icon no-href"
 										[hidden]="null == entry.audit.object"
 										(click)="viewMore(entry, 'viewDetails')">
@@ -187,7 +187,7 @@
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="entry.audit.object?.before" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
-								<small *ngIf="entry.audit.action === 'update' || entry.audit.action === 'admin update'">
+								<small *ngIf="auditService.isViewChangesAction(entry.audit.action)">
 									<a class="btn-icon no-href"
 										[hidden]="null == entry.audit.object || null == entry.audit.object.before"
 										tooltip="See details of the update"
