@@ -23,8 +23,6 @@ export class BreadcrumbComponent {
 
 	breadcrumbs: Breadcrumb[] = [];
 
-	showBreadcrumbs: boolean = true;
-
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router
@@ -34,7 +32,6 @@ export class BreadcrumbComponent {
 			if (null != this._homeBreadcrumb) {
 				this.breadcrumbs = [this._homeBreadcrumb];
 				this.breadcrumbs = this.breadcrumbs.concat(BreadcrumbService.getBreadcrumbs(route.root.snapshot, this._homeBreadcrumb.url));
-				this.showBreadcrumbs = this.breadcrumbs.length > 1;
 			}
 		});
 	}
