@@ -107,7 +107,7 @@ export class CreateTeamComponent implements OnInit {
 	save() {
 		this.submitting = true;
 		this.teamsService
-			.create(this.team, (this.defaultTeamAdmin._id !== this.user.userModel._id) ? this.defaultTeamAdmin : null)
+			.create(this.team, (this.defaultTeamAdmin._id !== this.user.userModel._id) ? this.defaultTeamAdmin._id : null)
 			.pipe(
 				tap(() => this.authenticationService.reloadCurrentUser())
 			)
