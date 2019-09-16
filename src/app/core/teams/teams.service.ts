@@ -39,10 +39,13 @@ export class TeamsService {
 	// 	return this.asyHttp.put(new HttpOptions('team', () => { }, { team, firstAdmin }));
 	// }
 
-	create(team: Team, firstAdmin?: any): Observable<any> {
+	create(team: Team, firstAdmin?: string): Observable<any> {
 		return this.http.put(
 			`api/team`,
-			JSON.stringify(team),
+			JSON.stringify({
+				team: team,
+				firstAdmin: firstAdmin ? firstAdmin : null
+			}),
 			{ headers: this.headers }
 		).pipe(
 			catchError((error: HttpErrorResponse) => {
