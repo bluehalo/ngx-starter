@@ -56,7 +56,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 		{ name: 'Email', sortField: 'email', sortable: false },
 		{ name: 'Phone', sortField: 'phone', sortable: false },
 		{ name: 'EUA', sortField: 'acceptedEua', sortable: false },
-		{ name: 'Last Login', sortField: 'lastLogin', sortable: false },
+		{ name: 'Last Login', sortField: 'lastLogin', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Last Login' },
 		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Create Date' },
 		{ name: 'Updated', sortField: 'updated', sortable: false },
 		{ name: 'Bypass AC', sortField: 'bypassAccessCheck', sortable: false },
