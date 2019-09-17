@@ -10,6 +10,7 @@ import { ExploreComponent } from './explore.component';
 import { WelcomeComponent } from './welcome.component';
 import { ExampleHelpComponent } from './help/example-help.component';
 import { FormsComponent } from './forms/forms.component';
+import { GridComponent } from './grid/grid.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FormsComponent } from './forms/forms.component';
 		SearchComponent,
 		WelcomeComponent,
 		ExampleHelpComponent,
-		FormsComponent
+		FormsComponent,
+		GridComponent
 	],
 	providers: [
 		AuthGuard

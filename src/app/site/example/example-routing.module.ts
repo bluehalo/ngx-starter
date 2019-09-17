@@ -6,6 +6,7 @@ import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
+import { GridComponent } from './grid/grid.component';
 
 
 @NgModule({
@@ -34,6 +35,11 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'forms',
 				component: FormsComponent,
+				canActivate: [ AuthGuard ]
+			},
+			{
+				path: 'grid',
+				component: GridComponent,
 				canActivate: [ AuthGuard ]
 			}
 		])

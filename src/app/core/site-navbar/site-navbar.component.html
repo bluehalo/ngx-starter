@@ -1,5 +1,5 @@
 <div class="navbar-left d-flex flex-column align-items-start"
-  [ngClass]="{'navbar-open': navbarOpen}">
+  [ngClass]="{'navbar-open': navbarOpen, 'navbar-close': !navbarOpen}">
 
 	<!-- Logo -->
 	<ul class="nav nav-logo flex-shrink-0">
@@ -234,6 +234,6 @@
 </div>
 
 <div class="navbar-content"
-     [ngClass]="{'navbar-open': navbarOpen}">
+     [ngClass]="{'navbar-open': navbarOpen, 'navbar-close': !navbarOpen}">
 	<ng-content></ng-content>
 </div>
