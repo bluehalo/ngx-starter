@@ -23,6 +23,8 @@ export class FeedbackModalComponent implements OnInit {
 
 	classificationOptions: any[];
 
+	baseUrl: string = '';
+
 	feedback: Feedback = new Feedback();
 
 	constructor(
@@ -34,7 +36,7 @@ export class FeedbackModalComponent implements OnInit {
 
 	ngOnInit() {
 		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.feedback.currentRoute = `${config.app.baseUrl}${this.router.url}`;
+			this.baseUrl = config.app.clientUrl || '';
 
 			if (Array.isArray(config.feedback.classificationOpts) && !isEmpty(config.feedback.classificationOpts)) {
 				this.classificationOptions = config.feedback.classificationOpts;
@@ -45,6 +47,10 @@ export class FeedbackModalComponent implements OnInit {
 	submit() {
 		this.error = null;
 		this.submitting = true;
+
+		// Get the current URL from the router at the time of submission.
+		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
+
 		this.feedbackService.submit(this.feedback).subscribe(() => {
 			this.success = 'Feedback successfully submitted!';
 			setTimeout(() => this.modalRef.hide(), 1500);
