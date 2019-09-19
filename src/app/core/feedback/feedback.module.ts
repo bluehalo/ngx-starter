@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { AlertModule } from 'ngx-bootstrap/alert';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -24,9 +21,6 @@ import { SearchInputModule } from '../../common/search-input.module';
 
 @NgModule({
 	imports: [
-		AlertModule.forRoot(),
-		BsDropdownModule.forRoot(),
-		ButtonsModule.forRoot(),
 		TooltipModule.forRoot(),
 		NgSelectModule,
 

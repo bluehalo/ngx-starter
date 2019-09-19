@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import isEmpty from 'lodash/isEmpty';
-import { BsModalRef } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';

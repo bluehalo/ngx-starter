@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import get from 'lodash/get';
 
-import { BsModalRef, TypeaheadMatch } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';

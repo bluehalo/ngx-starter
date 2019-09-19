@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import isEmpty from 'lodash/isEmpty';
 
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { BehaviorSubject, Subject, combineLatest, of, Observable } from 'rxjs';
 import { catchError, debounceTime, filter, first, map, switchMap, tap } from 'rxjs/operators';

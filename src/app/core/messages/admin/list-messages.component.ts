@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component } from '@angular/core';
 
-import * as _ from 'lodash';
+import toString from 'lodash/toString';
 
 import { Message } from '../message.class';
 import { MessageService } from '../message.service';
@@ -47,7 +47,7 @@ export class ListMessagesComponent {
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.subscribe((params: Params) => {
-			if (_.toString(params[`clearCachedFilter`]) === 'true' || null == this.messageService.cache.listMessages) {
+			if (toString(params[`clearCachedFilter`]) === 'true' || null == this.messageService.cache.listMessages) {
 				this.messageService.cache.listMessages = {};
 			}
 
