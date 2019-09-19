@@ -35,7 +35,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 	ngOnInit() {
 		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.baseUrl = `${config.app.baseUrl || ''}`;
+			this.baseUrl = config.app.clientUrl || '';
 
 			if (Array.isArray(config.feedback.classificationOpts) && !isEmpty(config.feedback.classificationOpts)) {
 				this.classificationOptions = config.feedback.classificationOpts;
