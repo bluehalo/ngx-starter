@@ -140,27 +140,24 @@ export class TeamsService {
 		);
 	}
 
+	getTeams(): Observable<Team[]> {
+		return this.search(new PagingOptions(0, 1000), {}, null, {}).pipe(
+			map((results: PagingResults) => {
+				return results.elements;
+			}),
+			catchError(() => of([]))
+		);
+	}
+
 	getTeamsCanManageResources(): Observable<Team[]> {
-		return Observable.create((observer: any) => {
-			this.search(new PagingOptions(0, 1000), {}, null, {}).subscribe(
-				(result: any) => {
-					let teams: Team[] = [];
-					if (null != result) {
-						teams = result.elements || [];
-					}
-					observer.next(teams.filter((team) => {
-						return this.authorizationService.isAdmin()
-							|| this.teamAuthorizationService.canManageResources(team);
-					}));
-				},
-				(err: any) => {
-					observer.error(err);
-				},
-				() => {
-					observer.complete();
-				}
-			);
-		});
+		return this.getTeams().pipe(
+			map((teams: Team[]) => {
+				return teams.filter((team) => {
+					return this.authorizationService.isAdmin()
+						|| this.teamAuthorizationService.canManageResources(team);
+				});
+			})
+		);
 	}
 
 	searchUsers(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
