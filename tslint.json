@@ -4,7 +4,7 @@
         "ban-types": false,
         "interface-name" : [true, "never-prefix"],
         "interface-over-type-literal": false,
-		"indent": [ true, "tabs" ],
+		"indent": [ true, "tabs", 4],
 		"trailing-comma": false,
 		"quotemark": [ true, "single" ],
 		"triple-equals": [ true, "allow-null-check" ],
