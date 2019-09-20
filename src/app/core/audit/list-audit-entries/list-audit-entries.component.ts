@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import { utc } from 'moment';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, forkJoin } from 'rxjs';
 
 import { AuditService } from '../audit.service';

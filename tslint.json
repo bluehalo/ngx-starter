@@ -1,10 +1,10 @@
 {
 	"extends": "tslint:recommended",
 	"rules": {
-    "ban-types": false,
-    "interface-name" : [true, "never-prefix"],
-    "interface-over-type-literal": false,
-		"indent": [ true, "tabs" ],
+        "ban-types": false,
+        "interface-name" : [true, "never-prefix"],
+        "interface-over-type-literal": false,
+		"indent": [ true, "tabs", 4],
 		"trailing-comma": false,
 		"quotemark": [ true, "single" ],
 		"triple-equals": [ true, "allow-null-check" ],
@@ -24,7 +24,7 @@
 		"one-line": [ true, "check-open-brace", "check-whitespace" ],
 		"object-literal-key-quotes": false,
 		"array-type": false,
-		"prefer-const": false
-
+		"prefer-const": false,
+        "import-blacklist": [true, "lodash", "ngx-bootstrap"]
 	}
 }

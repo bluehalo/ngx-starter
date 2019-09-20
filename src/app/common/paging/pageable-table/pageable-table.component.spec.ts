@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Subject } from 'rxjs';
-import { TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
 import { PageableTable } from './pageable-table.component';

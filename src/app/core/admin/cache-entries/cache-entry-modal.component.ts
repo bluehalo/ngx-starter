@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { BsModalRef } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { CacheEntry } from './cache-entry.model';
 

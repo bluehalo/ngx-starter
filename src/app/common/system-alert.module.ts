@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { AlertModule } from 'ngx-bootstrap';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { SystemAlertComponent } from './system-alert/system-alert.component';
 import { SystemAlertIconComponent } from './system-alert/system-alert-icon.component';

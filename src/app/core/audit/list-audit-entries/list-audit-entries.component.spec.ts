@@ -6,7 +6,10 @@ import { of } from 'rxjs/index';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { BsModalService, BsDatepickerModule, ModalModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { PagingModule, PagingResults } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
