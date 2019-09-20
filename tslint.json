@@ -1,30 +1,63 @@
 {
-	"extends": "tslint:recommended",
-	"rules": {
-        "ban-types": false,
-        "interface-name" : [true, "never-prefix"],
-        "interface-over-type-literal": false,
-		"indent": [ true, "tabs", 4],
-		"trailing-comma": false,
-		"quotemark": [ true, "single" ],
-		"triple-equals": [ true, "allow-null-check" ],
-		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-		"no-empty": false,
-		"object-literal-sort-keys": false,
-		"max-line-length": false,
-		"no-consecutive-blank-lines": false,
-		"no-string-literal": false,
-		"member-ordering": [ true, { "order": "fields-first" } ],
-		"no-console": [false],
-
-		"ordered-imports": false,
-		"member-access": false,
-		"object-literal-shorthand": false,
-		"max-classes-per-file": false,
-		"one-line": [ true, "check-open-brace", "check-whitespace" ],
-		"object-literal-key-quotes": false,
-		"array-type": false,
-		"prefer-const": false,
-        "import-blacklist": [true, "lodash", "ngx-bootstrap"]
-	}
+  "extends": "tslint:recommended",
+  "rulesDirectory": [
+    "codelyzer"
+  ],
+  "rules": {
+    "array-type": false,
+    "ban-types": false,
+    "import-blacklist": [
+      true,
+      "lodash",
+      "ngx-bootstrap"
+    ],
+    "indent": [
+      true,
+      "tabs",
+      4
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "interface-over-type-literal": false,
+    "max-classes-per-file": false,
+    "max-line-length": false,
+    "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": "fields-first"
+      }
+    ],
+    "no-consecutive-blank-lines": false,
+    "no-console": false,
+    "no-empty": false,
+    "no-string-literal": false,
+    "object-literal-key-quotes": false,
+    "object-literal-shorthand": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "prefer-const": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "trailing-comma": false,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ]
+  }
 }
