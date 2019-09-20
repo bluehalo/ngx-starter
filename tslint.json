@@ -1,63 +1,141 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:recommended"
+  ],
   "rulesDirectory": [
     "codelyzer"
   ],
   "rules": {
     "array-type": false,
-    "ban-types": false,
+    "arrow-parens": false,
+    "deprecation": {
+      "severity": "warn"
+    },
     "import-blacklist": [
       true,
       "lodash",
-      "ngx-bootstrap"
+      "ngx-bootstrap",
+      "rxjs/Rx"
     ],
-    "indent": [
-      true,
-      "tabs",
-      4
-    ],
-    "interface-name": [
-      true,
-      "never-prefix"
-    ],
-    "interface-over-type-literal": false,
+    "indent": [ true, "tabs", 4],
+    "interface-name": false,
     "max-classes-per-file": false,
     "max-line-length": false,
     "member-access": false,
     "member-ordering": [
       true,
       {
-        "order": "fields-first"
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
       }
     ],
     "no-consecutive-blank-lines": false,
-    "no-console": false,
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
     "no-empty": false,
-    "no-string-literal": false,
-    "object-literal-key-quotes": false,
-    "object-literal-shorthand": false,
+    "no-inferrable-types": {
+      "options": [
+        true,
+        "ignore-params"
+      ],
+      "severity": "warning"
+    },
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": {
+      "options": true,
+      "severity": "warning"
+    },
+    "no-switch-case-fall-through": true,
+    "no-use-before-declare": true,
+    "no-var-requires": false,
+    "object-literal-key-quotes": {
+      "options": [
+        true,
+        "as-needed"
+      ],
+      "severity": "warning"
+    },
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-whitespace"
-    ],
-    "prefer-const": false,
     "quotemark": [
       true,
       "single"
     ],
     "trailing-comma": false,
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore"
-    ]
+
+    // codelyzer rules.  To revert to errors, remove/change severity
+    "no-output-on-prefix": {
+      "options": true,
+      "severity": "warning"
+    },
+    "no-inputs-metadata-property": true,
+    "no-outputs-metadata-property": true,
+    "no-host-metadata-property": true,
+    "no-input-rename": {
+      "options": true,
+      "severity": "warning"
+    },
+    "no-output-rename": true,
+    "use-life-cycle-interface": {
+      "options": true,
+      "severity": "warning"
+    },
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": {
+      "options": true,
+      "severity": "warning"
+    },
+    "directive-class-suffix": {
+      "options": true,
+      "severity": "warning"
+    },
+    "no-conflicting-lifecycle": true,
+    "no-lifecycle-call": true,
+    "no-output-native": true,
+    "no-unused-css": true,
+    "prefer-output-readonly": {
+      "options": true,
+      "severity": "warning"
+    },
+    "template-banana-in-box": true,
+    "template-no-call-expression": {
+      "options": true,
+      "severity": "warning"
+    },
+
+    // defaults from ts:recommended.  To revert to errors, just remove
+    "ban-types": {
+      "options": true,
+      "severity": "warning"
+    },
+    "interface-over-type-literal": {
+      "options": true,
+      "severity": "warning"
+    },
+    "no-string-literal": {
+      "options": true,
+      "severity": "warning"
+    },
+    "prefer-const": {
+      "options": true,
+      "severity": "warning"
+    },
+    "object-literal-shorthand": {
+      "options": true,
+      "severity": "warning"
+    },
+
+    "one-line": [ true, "check-open-brace", "check-whitespace" ],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
   }
 }
