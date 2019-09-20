@@ -1,3 +1,4 @@
+@import '../../../styles/overrides';
 @import '../../../styles/shared';
 @import '../../../styles/ngx-bootstrap/shared';
 
@@ -20,37 +21,28 @@ $callout-color-info-dark: #3a87ad !default;
 $callout-border-color: #eee !default;
 
 $help-section-selected-color: #33495f !default;
+$help-section-selected-background-color: $ux-color-light-gray !default;
+
+$help-content-padding-top: 2rem !default;
+$help-nav-link-padding: 1rem !default;
 
 .help-content {
-	& > .row {
-		padding: 10px 20px;
-	}
-
-	.help-main {
-		.card {
-			padding: 10px 20px;
-		}
-	}
+	padding-top: $help-content-padding-top;
 
 	.help-menu {
-		li {
-			margin: 10px;
-			width: 100%;
-		}
-	}
+		.nav-link {
+			padding: $help-nav-link-padding;
 
-	.lead {
-		font-size: 18px;
-	}
+			&.selected {
+				background-color: $help-section-selected-background-color;
+				color: $help-section-selected-color;
+				font-weight: bold;
+				text-decoration: none;
 
-	.topic-selected {
-		background-color: #eee;
-		color: $help-section-selected-color;
-		font-weight: bold;
-		text-decoration: none;
-
-		&:hover {
-			color: $help-section-selected-color;
+				&:hover {
+					color: $help-section-selected-color;
+				}
+			}
 		}
 	}
 }

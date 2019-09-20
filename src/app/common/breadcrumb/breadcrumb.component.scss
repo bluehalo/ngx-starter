@@ -1,19 +1,25 @@
 @import '../../../styles/overrides';
 @import '../../../styles/shared';
+@import '../../core/site-navbar/shared';
+
+$breadcrumb-header-height: $nav-closed-width !default;
+$breadcrumb-font-size: $font-size !default;
+$breadcrumb-line-height: $font-line-height !default;
+$breadcrumb-item-padding-left: .5rem !default;
+$breadcrumb-first-item-padding-left: 1rem !default;
 
 .header {
-	@include font-bold(14px);
-	line-height: 14px;
+	display: flex;
+	align-items: center;
+	@include font-bold($breadcrumb-font-size);
+	line-height: $breadcrumb-line-height;
 	background-color: $color-white;
-	height: 54px;
-	padding-left: 20px;
-	padding-top: 20px;
+	height: $breadcrumb-header-height;
 
-	.header-breadcrumb {
-
-		.header-breadcrumb-separator {
-			padding-left: 5px;
-			padding-right: 5px;
+	.header-breadcrumb, .header-breadcrumb-separator {
+		padding-left: $breadcrumb-item-padding-left;
+		&:first-child {
+			padding-left: $breadcrumb-first-item-padding-left;
 		}
 	}
 }
