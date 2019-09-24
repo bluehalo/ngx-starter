@@ -29,10 +29,6 @@ html {
 	min-height: 100%;
 }
 
-article, aside, footer, header, nav, section {
-	display: block;
-}
-
 @if $form-required == before {
 	.form-required:before {
 		content: '*';
