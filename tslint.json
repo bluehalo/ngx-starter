@@ -48,10 +48,7 @@
       "ignore-params"
     ],
     "no-non-null-assertion": true,
-    "no-redundant-jsdoc": {
-      "options": true,
-      "severity": "warning"
-    },
+    "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-use-before-declare": true,
     "no-var-requires": false,
@@ -80,10 +77,7 @@
       "severity": "warning"
     },
     "no-output-rename": true,
-    "use-life-cycle-interface": {
-      "options": true,
-      "severity": "warning"
-    },
+    "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": {
       "options": ["Component"],
@@ -97,10 +91,7 @@
     "no-lifecycle-call": true,
     "no-output-native": true,
     "no-unused-css": true,
-    "prefer-output-readonly": {
-      "options": true,
-      "severity": "warning"
-    },
+    "prefer-output-readonly": true,
     "template-banana-in-box": true,
     "template-no-call-expression": {
       "options": true,
@@ -109,7 +100,14 @@
 
     // defaults from ts:recommended.  To revert to errors, just remove
     "ban-types": {
-      "options": true,
+      "options": [
+        ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+        ["Function", "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."],
+        ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+        ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+        ["String", "Avoid using the `String` type. Did you mean `string`?"],
+        ["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
+      ],
       "severity": "warning"
     },
 

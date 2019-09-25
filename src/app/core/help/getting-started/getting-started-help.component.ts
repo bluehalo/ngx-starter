@@ -11,7 +11,7 @@ import { ConfigService } from '../../../core/config.service';
 	templateUrl: 'getting-started-help.component.html'
 })
 export class GettingStartedHelpComponent implements OnInit {
-	@Output() backEvent = new EventEmitter();
+	@Output() readonly backEvent = new EventEmitter();
 
 	config: any;
 

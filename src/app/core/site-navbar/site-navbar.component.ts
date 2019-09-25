@@ -40,7 +40,7 @@ export class SiteNavbarComponent implements OnInit {
 	numNewMessages = 0;
 
 	@Output()
-	navbarOpenChange = new EventEmitter<boolean>();
+	readonly navbarOpenChange = new EventEmitter<boolean>();
 
 	@Input()
 	get navbarOpen() {

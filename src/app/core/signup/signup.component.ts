@@ -1,5 +1,5 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import isEmpty from 'lodash/isEmpty';
 import { Observable, Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { SystemAlertService } from '../../common/system-alert.module';
 	selector: 'user-signup',
 	templateUrl: '../admin/user-management/manage-user.component.html'
 })
-export class SignupComponent extends ManageUserComponent {
+export class SignupComponent extends ManageUserComponent implements OnDestroy, OnInit {
 
 	mode = 'signup';
 

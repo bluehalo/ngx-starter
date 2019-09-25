@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { EndUserAgreement } from './eua.model';
@@ -10,7 +10,7 @@ import { ModalService } from '../../../common/modal.module';
 	selector: 'admin-update-eua',
 	templateUrl: './manage-eua.component.html'
 })
-export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
+export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnDestroy, OnInit {
 
 	constructor(
 		router: Router,

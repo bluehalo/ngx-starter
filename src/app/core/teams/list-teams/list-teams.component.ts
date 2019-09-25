@@ -52,7 +52,7 @@ export class ListTeamsComponent implements OnInit {
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		const paging$ = combineLatest(this.pageEvent$, this.sortEvent$)
+		const paging$ = combineLatest([this.pageEvent$, this.sortEvent$])
 			.pipe(
 				map(([paging, sort]: [PagingOptions, SortableTableHeader]) => {
 					paging.sortField = sort.sortField;
@@ -72,7 +72,7 @@ export class ListTeamsComponent implements OnInit {
 				})
 			);
 
-		combineLatest(this.load$, paging$, search$)
+		combineLatest([this.load$, paging$, search$])
 			.pipe(
 				map(([, paging, ]: [boolean, PagingOptions, string]) => {
 					if (this.resetPaging) {

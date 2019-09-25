@@ -1,5 +1,5 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 	selector: 'admin-edit-user',
 	templateUrl: './manage-user.component.html'
 })
-export class AdminUpdateUserComponent extends ManageUserComponent {
+export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
 
 	private mode = 'admin-edit';
 

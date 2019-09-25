@@ -19,7 +19,7 @@ import { TeamsService } from '../teams.service';
 })
 export class EditTeamMetadataComponent implements OnInit {
 
-	@Output() metadataUpdated: EventEmitter<any> = new EventEmitter();
+	@Output() readonly metadataUpdated: EventEmitter<any> = new EventEmitter();
 
 	@Input('team')
 	set _team(t: Team) {

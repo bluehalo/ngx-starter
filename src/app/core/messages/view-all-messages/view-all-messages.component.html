@@ -22,10 +22,10 @@
 						<div class="col-alert-icon {{ message.type | lowercase }}">
 							<span class="fa alert-icon d-flex align-items-center"
 								  [ngClass]="{
-									'fa-check': message.type.toLowerCase() === 'motd',
-									'fa-info': message.type.toLowerCase() === 'info',
-									'fa-exclamation': message.type.toLowerCase() === 'warn',
-									'fa-exclamation-triangle': message.type.toLowerCase() === 'error'
+									'fa-check': message.type === 'MOTD',
+									'fa-info': message.type === 'INFO',
+									'fa-exclamation': message.type === 'WARN',
+									'fa-exclamation-triangle': message.type === 'ERROR'
 									}"></span>
 						</div>
 						<div class="col-alert-body">

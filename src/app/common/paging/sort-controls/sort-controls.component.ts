@@ -25,7 +25,7 @@ export class SortControls {
 
 	@Input() sortOptions: TableSortOptions;
 
-	@Output() onSortChange = new EventEmitter<SortDisplayOption>();
+	@Output() readonly onSortChange = new EventEmitter<SortDisplayOption>();
 
 	private selectedKey: string;
 

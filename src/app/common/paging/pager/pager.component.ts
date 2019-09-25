@@ -109,7 +109,7 @@ export class Pager implements OnInit, OnChanges {
 	@Input() showCountWarning = false;
 	@Input() countWarningMessage = '';
 
-	@Output() onChange: EventEmitter<PageChange> = new EventEmitter();
+	@Output() readonly onChange: EventEmitter<PageChange> = new EventEmitter();
 
 	sortdir: SortDirection = SortDirection.desc;
 

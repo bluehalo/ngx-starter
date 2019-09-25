@@ -22,7 +22,7 @@ export class AddMembersModalComponent implements OnInit {
 
 	@Input() teamId: string;
 
-	@Output() usersAdded: EventEmitter<number> = new EventEmitter();
+	@Output() readonly usersAdded: EventEmitter<number> = new EventEmitter();
 
 	addedMembers: AddedMember[] = [];
 

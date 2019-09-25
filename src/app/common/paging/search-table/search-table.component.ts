@@ -7,6 +7,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class SearchTableComponent {
 	@Input() placeholder = 'Search...';
-	@Output() applySearch: EventEmitter<string> = new EventEmitter();
+	@Output() readonly applySearch: EventEmitter<string> = new EventEmitter();
 	search = '';
 }

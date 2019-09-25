@@ -16,7 +16,7 @@ export class QuickFiltersComponent implements OnDestroy, OnInit {
 
 	@Input() defaultFilters: any;
 
-	@Output() filtersChange: EventEmitter<any> = new EventEmitter();
+	@Output() readonly filtersChange: EventEmitter<any> = new EventEmitter();
 
 	shown = true;
 

@@ -29,8 +29,8 @@ export class PageableTable implements AfterContentInit {
 	@Input() tableHover = false;
 	@Input() tableStriped = false;
 
-	@Output() onPageChange = new EventEmitter<PageChange>();
-	@Output() pageAndScroll = new EventEmitter<PageChange>();
+	@Output() readonly onPageChange = new EventEmitter<PageChange>();
+	@Output() readonly pageAndScroll = new EventEmitter<PageChange>();
 
 	@ContentChildren(NamedTemplate) templates: QueryList<NamedTemplate>;
 

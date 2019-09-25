@@ -32,7 +32,7 @@ import { User } from '../../auth/user.model';
 })
 export class ListTeamMembersComponent implements OnInit {
 
-	@Input('team')
+	@Input()
 	team: Team;
 
 	isUserAdmin: boolean;
@@ -118,7 +118,7 @@ export class ListTeamMembersComponent implements OnInit {
 			this.pagingOptions.sortDir = defaultSort.sortDir;
 		}
 
-		const paging$ = combineLatest(this.pageEvent$, this.sortEvent$)
+		const paging$ = combineLatest([this.pageEvent$, this.sortEvent$])
 			.pipe(
 				map(([paging, sort]: [PagingOptions, SortableTableHeader]) => {
 					paging.sortField = sort.sortField;
@@ -138,7 +138,7 @@ export class ListTeamMembersComponent implements OnInit {
 				})
 			);
 
-		combineLatest(this.load$, paging$, search$)
+		combineLatest([this.load$, paging$, search$])
 			.pipe(
 				map(([, paging, ]: [boolean, PagingOptions, string]) => {
 					if (this.resetPaging) {

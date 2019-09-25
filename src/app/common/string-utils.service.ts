@@ -12,9 +12,6 @@ export class StringUtils {
 
 	/**
 	 * Returns true if input is not a string or if input is empty
-	 *
-	 * @param s
-	 * @returns {boolean}
 	 */
 	public static isInvalid(s: any): boolean {
 		return !StringUtils.isNonEmptyString(s);
@@ -55,8 +52,8 @@ export class StringUtils {
 	/**
 	 * Returns the string with every first letter of each word is upper case and the rest are lower case
 	 *
-	 * @param s
-	 * @returns {string}
+	 * @param s - The string to convert to title case.
+	 * @returns - The input string converted to title case.
 	 */
 	public static toTitleCase(s: string) {
 		if (null == s) {

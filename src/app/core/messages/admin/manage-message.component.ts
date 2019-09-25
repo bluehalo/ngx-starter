@@ -5,8 +5,9 @@ import { Message } from '../message.class';
 import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { HttpErrorResponse } from '@angular/common/http';
+import { OnInit } from '@angular/core';
 
-export abstract class ManageMessageComponent {
+export abstract class ManageMessageComponent implements OnInit {
 
 	message: Message;
 	error: string = null;

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import toString from 'lodash/toString';
 
@@ -21,7 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
 	templateUrl: './list-messages.component.html'
 })
-export class ListMessagesComponent {
+export class ListMessagesComponent implements OnInit {
 
 	messages: Message[] = [];
 	hasMessages = false;

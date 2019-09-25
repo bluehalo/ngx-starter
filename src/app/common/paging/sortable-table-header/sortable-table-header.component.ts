@@ -23,7 +23,7 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() currentSortDir: string;
 
-	@Output() onSortChange = new EventEmitter<any>();
+	@Output() readonly onSortChange = new EventEmitter<any>();
 
 	sortable: boolean;
 
