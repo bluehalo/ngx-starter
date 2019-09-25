@@ -43,13 +43,10 @@
       "trace"
     ],
     "no-empty": false,
-    "no-inferrable-types": {
-      "options": [
-        true,
-        "ignore-params"
-      ],
-      "severity": "warning"
-    },
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": {
       "options": true,
@@ -58,13 +55,10 @@
     "no-switch-case-fall-through": true,
     "no-use-before-declare": true,
     "no-var-requires": false,
-    "object-literal-key-quotes": {
-      "options": [
-        true,
-        "as-needed"
-      ],
-      "severity": "warning"
-    },
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [
@@ -92,11 +86,11 @@
     },
     "use-pipe-transform-interface": true,
     "component-class-suffix": {
-      "options": true,
+      "options": ["Component"],
       "severity": "warning"
     },
     "directive-class-suffix": {
-      "options": true,
+      "options": ["Directive"],
       "severity": "warning"
     },
     "no-conflicting-lifecycle": true,
@@ -115,22 +109,6 @@
 
     // defaults from ts:recommended.  To revert to errors, just remove
     "ban-types": {
-      "options": true,
-      "severity": "warning"
-    },
-    "interface-over-type-literal": {
-      "options": true,
-      "severity": "warning"
-    },
-    "no-string-literal": {
-      "options": true,
-      "severity": "warning"
-    },
-    "prefer-const": {
-      "options": true,
-      "severity": "warning"
-    },
-    "object-literal-shorthand": {
       "options": true,
       "severity": "warning"
     },
