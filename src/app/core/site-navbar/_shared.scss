@@ -3,8 +3,8 @@
 
 // Specify these
 $nav-background-color: $ux-color-primary !default;
-$nav-closed-width: 54px !default;
-$nav-open-width: 238px !default;
+$nav-closed-width: $ux-nav-closed-width !default;
+$nav-open-width: $ux-nav-open-width !default;
 
 $nav-element-font-color: $ux-color-light-gray !default;
 $nav-element-font-size: 16px !default;
