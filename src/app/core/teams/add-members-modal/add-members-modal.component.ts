@@ -22,19 +22,19 @@ export class AddMembersModalComponent implements OnInit {
 
 	@Input() teamId: string;
 
-	@Output() usersAdded: EventEmitter<number> = new EventEmitter();
+	@Output() readonly usersAdded: EventEmitter<number> = new EventEmitter();
 
 	addedMembers: AddedMember[] = [];
 
-	submitting: boolean = false;
+	submitting = false;
 
-	queryUserSearchTerm: string = '';
+	queryUserSearchTerm = '';
 
 	dataSource: Observable<any>;
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
-	private defaultRole: string = 'member';
+	private defaultRole = 'member';
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 

@@ -23,8 +23,8 @@ export class AuthorizationService {
 	}
 
 	public isEuaCurrent() {
-		let euaPublished: number = get(this.session, 'user.eua.published', 0);
-		let euaAccepted: number = get(this.session, 'user.userModel.acceptedEua', 0);
+		const euaPublished: number = get(this.session, 'user.eua.published', 0);
+		const euaAccepted: number = get(this.session, 'user.userModel.acceptedEua', 0);
 
 		return euaAccepted >= euaPublished;
 	}
@@ -34,7 +34,7 @@ export class AuthorizationService {
 	}
 
 	public hasExternalRole(role: string): boolean {
-		let externalRoles = get(this.session, 'user.userModel.externalRoles', []);
+		const externalRoles = get(this.session, 'user.userModel.externalRoles', []);
 
 		return indexOf(externalRoles, role) !== -1;
 	}
@@ -42,7 +42,7 @@ export class AuthorizationService {
 	public hasRole(role: string | Role): boolean {
 		role = this.roleToString(role);
 
-		let roles = get(this.session, 'user.userModel.roles', {});
+		const roles = get(this.session, 'user.userModel.roles', {});
 		return (null != roles[role]) && roles[role];
 	}
 

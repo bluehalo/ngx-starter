@@ -30,7 +30,7 @@ export class FeedbackService {
 	) {}
 
 	getFormattedText(feedback: Feedback): string {
-		let text: string = '';
+		let text = '';
 		const prefix = `${feedback.classification ? feedback.classification.prefix + ' ' : ''}`;
 		if (feedback.subType !== undefined) {
 			text += `${prefix}${feedback.subType}`;

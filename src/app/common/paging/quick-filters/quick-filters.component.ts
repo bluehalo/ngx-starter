@@ -10,15 +10,15 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class QuickFiltersComponent implements OnDestroy, OnInit {
 
-	@Input() title: string = 'Quick Filters';
+	@Input() title = 'Quick Filters';
 
 	@Input() filters: any = {};
 
 	@Input() defaultFilters: any;
 
-	@Output() filtersChange: EventEmitter<any> = new EventEmitter();
+	@Output() readonly filtersChange: EventEmitter<any> = new EventEmitter();
 
-	shown: boolean = true;
+	shown = true;
 
 	filterKeys: string[] = [];
 

@@ -15,9 +15,9 @@ export class ModalComponent {
 
 	message: string;
 
-	okText: string = 'OK';
+	okText = 'OK';
 
-	cancelText: string = 'Cancel';
+	cancelText = 'Cancel';
 
 	onClose: Subject<ModalAction> = new Subject();
 

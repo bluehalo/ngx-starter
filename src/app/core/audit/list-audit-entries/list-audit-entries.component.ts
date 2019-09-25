@@ -19,20 +19,20 @@ export class ListAuditEntriesComponent implements OnInit {
 
 	// List of audit entries
 	auditEntries: any[] = [];
-	hasAuditEntries: boolean = false;
+	hasAuditEntries = false;
 
 	actionOptions: AuditOption[] = [];
-	actionsFormShown: boolean = true;
-	actorFormShown: boolean = true;
-	timestampFormShown: boolean = true;
-	typeFormShown: boolean = true;
+	actionsFormShown = true;
+	actorFormShown = true;
+	timestampFormShown = true;
+	typeFormShown = true;
 
 	auditTypeOptions: AuditOption[] = [];
 
-	queryUserSearchTerm: string = '';
+	queryUserSearchTerm = '';
 
 	// Search phrase
-	search: string = '';
+	search = '';
 
 	pagingOpts: PagingOptions;
 
@@ -56,7 +56,7 @@ export class ListAuditEntriesComponent implements OnInit {
 
 	private queryUserObj: any;
 
-	private auditEntriesLoaded: boolean = false;
+	private auditEntriesLoaded = false;
 
 	private auditModalRef: BsModalRef;
 
@@ -75,8 +75,8 @@ export class ListAuditEntriesComponent implements OnInit {
 		];
 
 		this.pagingOpts = new PagingOptions();
-		this.pagingOpts.sortField = this.sortOpts['created'].sortField;
-		this.pagingOpts.sortDir = this.sortOpts['created'].sortDir;
+		this.pagingOpts.sortField = this.sortOpts.created.sortField;
+		this.pagingOpts.sortDir = this.sortOpts.created.sortDir;
 
 		this.userPagingOpts = new PagingOptions(0, 20);
 		this.userPagingOpts.sortField = 'username';
@@ -91,7 +91,7 @@ export class ListAuditEntriesComponent implements OnInit {
 		this.searchUsersRef = Observable.create((observer: any) => {
 			this.auditService.matchUser({}, this.queryUserSearchTerm, this.userPagingOpts, null)
 				.subscribe((result: any) => {
-					let formatted = result.elements
+					const formatted = result.elements
 						.map((r: any) => {
 							const user = r.userModel;
 							r.displayName = user.name + ' [' + user.username + ']';
@@ -190,7 +190,7 @@ export class ListAuditEntriesComponent implements OnInit {
 	}
 
 	private buildSearchQuery(): any {
-		let query: any = {};
+		const query: any = {};
 
 		const actorId = _get(this.queryUserObj, 'item.userModel._id', null);
 		if (null !== actorId) {
@@ -199,21 +199,21 @@ export class ListAuditEntriesComponent implements OnInit {
 			};
 		}
 
-		let selectedActions = this.actionOptions.filter((opt) => opt.selected);
+		const selectedActions = this.actionOptions.filter((opt) => opt.selected);
 		if (selectedActions.length > 0) {
 			query['audit.action'] = {
 				$in: selectedActions.map((opt) => opt.display)
 			};
 		}
 
-		let selectedAuditTypes = this.auditTypeOptions.filter((opt) => opt.selected);
+		const selectedAuditTypes = this.auditTypeOptions.filter((opt) => opt.selected);
 		if (selectedAuditTypes.length > 0) {
 			query['audit.auditType'] = {
 				$in: selectedAuditTypes.map((opt) => opt.display)
 			};
 		}
 
-		let created = this.getTimeFilterQueryObject();
+		const created = this.getTimeFilterQueryObject();
 		if (null != created) {
 			query.created = created;
 		}
@@ -222,7 +222,7 @@ export class ListAuditEntriesComponent implements OnInit {
 	}
 
 	private loadAuditEntries() {
-		let query = this.buildSearchQuery();
+		const query = this.buildSearchQuery();
 
 		this.auditService.search(query, '', this.pagingOpts)
 			.subscribe((result: PagingResults) => {

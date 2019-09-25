@@ -1,6 +1,6 @@
 export class SortDirection {
-	public static desc: string = 'DESC';
-	public static asc: string = 'ASC';
+	public static desc = 'DESC';
+	public static asc = 'ASC';
 }
 
 export class SortDisplayOption {

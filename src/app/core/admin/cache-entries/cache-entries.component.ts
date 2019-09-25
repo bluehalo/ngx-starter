@@ -20,9 +20,9 @@ import { AdminTopics } from '../admin-topic.model';
 export class CacheEntriesComponent extends PagingComponent implements OnInit {
 
 	cacheEntries: any[] = [];
-	hasCacheEntries: boolean = false;
+	hasCacheEntries = false;
 
-	search: string = '';
+	search = '';
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Key', sortField: 'key', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Key', default: true },
@@ -89,7 +89,7 @@ export class CacheEntriesComponent extends PagingComponent implements OnInit {
 		// temporary flag to show that the entry is refreshing
 		cacheEntry.isRefreshing = true;
 
-		let key = cacheEntry.entry.key;
+		const key = cacheEntry.entry.key;
 		this.cacheEntriesService.refresh(key).subscribe(
 			() => {
 				this.alertService.addAlert(`Refreshed cache entry: ${key}`, 'success');

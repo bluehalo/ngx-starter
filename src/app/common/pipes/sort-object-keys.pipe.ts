@@ -18,10 +18,10 @@ export class SortObjectKeysPipe implements PipeTransform {
 			return obj.map( (o: any) => this.transform(o));
 		}
 
-		let sorted: any = {};
-		let keys: string[] = _keys(obj).sort();
+		const sorted: any = {};
+		const keys: string[] = _keys(obj).sort();
 
-		for (let key of keys) {
+		for (const key of keys) {
 			sorted[key] = this.transform(obj[key]);
 		}
 

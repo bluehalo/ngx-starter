@@ -17,7 +17,7 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 
 	@Input() placeholder: string;
 	@ViewChild(NgModel, { static: false }) model: NgModel;
-	autocompleteOpen: boolean = false;
+	autocompleteOpen = false;
 
 	private innerValue: string[];
 	private changed = new Array<(value: string[]) => void>();

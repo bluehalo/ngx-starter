@@ -2,10 +2,10 @@ import { SortObjectKeysPipe } from './sort-object-keys.pipe';
 
 describe('SortObjectKeysPipe', () => {
 
-	let pipe = new SortObjectKeysPipe();
+	const pipe = new SortObjectKeysPipe();
 
 	it('should not transform sorted object with 2 keys to array of length 2', () => {
-		let transformed = pipe.transform({
+		const transformed = pipe.transform({
 			foo: 'bar',
 			one: 'two'
 		});
@@ -16,7 +16,7 @@ describe('SortObjectKeysPipe', () => {
 	});
 
 	it('should transform unsorted object with 2 keys to array of length 2', () => {
-		let transformed = pipe.transform({
+		const transformed = pipe.transform({
 			one: 'two',
 			foo: {
 				efgh: true,

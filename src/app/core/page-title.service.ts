@@ -23,7 +23,7 @@ export class PageTitleService {
 	init() {
 
 		this.configService.getConfig().subscribe((config) => {
-			let appTitle = get(config, 'app.title', null);
+			const appTitle = get(config, 'app.title', null);
 
 			this.router.events.pipe(
 				filter((event) => event instanceof NavigationEnd),

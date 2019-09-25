@@ -32,16 +32,16 @@ import { User } from '../../auth/user.model';
 })
 export class ListTeamMembersComponent implements OnInit {
 
-	@Input('team')
+	@Input()
 	team: Team;
 
 	isUserAdmin: boolean;
 
 	teamMembers: TeamMember[];
 
-	canManageTeam: boolean = false;
+	canManageTeam = false;
 
-	search: string = '';
+	search = '';
 
 	hasSearch: boolean;
 
@@ -75,7 +75,7 @@ export class ListTeamMembersComponent implements OnInit {
 
 	pagingOptions: PagingOptions = new PagingOptions();
 
-	pageSize: number = 20;
+	pageSize = 20;
 
 	pageEvent$: BehaviorSubject<PagingOptions> = new BehaviorSubject(new PagingOptions(0, this.pageSize));
 
@@ -85,7 +85,7 @@ export class ListTeamMembersComponent implements OnInit {
 
 	private load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-	private resetPaging: boolean = false;
+	private resetPaging = false;
 
 	private modalRef: BsModalRef;
 
@@ -118,7 +118,7 @@ export class ListTeamMembersComponent implements OnInit {
 			this.pagingOptions.sortDir = defaultSort.sortDir;
 		}
 
-		const paging$ = combineLatest(this.pageEvent$, this.sortEvent$)
+		const paging$ = combineLatest([this.pageEvent$, this.sortEvent$])
 			.pipe(
 				map(([paging, sort]: [PagingOptions, SortableTableHeader]) => {
 					paging.sortField = sort.sortField;
@@ -138,7 +138,7 @@ export class ListTeamMembersComponent implements OnInit {
 				})
 			);
 
-		combineLatest(this.load$, paging$, search$)
+		combineLatest([this.load$, paging$, search$])
 			.pipe(
 				map(([, paging, ]: [boolean, PagingOptions, string]) => {
 					if (this.resetPaging) {

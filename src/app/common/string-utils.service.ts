@@ -12,9 +12,6 @@ export class StringUtils {
 
 	/**
 	 * Returns true if input is not a string or if input is empty
-	 *
-	 * @param s
-	 * @returns {boolean}
 	 */
 	public static isInvalid(s: any): boolean {
 		return !StringUtils.isNonEmptyString(s);
@@ -32,7 +29,7 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /([A-Z])/g, ' $1' );
+		const result = s.replace( /([A-Z])/g, ' $1' );
 		return StringUtils.capitalize(result);
 	}
 
@@ -40,7 +37,7 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /-/g, ' ' );
+		const result = s.replace( /-/g, ' ' );
 		return StringUtils.toTitleCase(result);
 	}
 
@@ -48,15 +45,15 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /_/g, ' ' );
+		const result = s.replace( /_/g, ' ' );
 		return StringUtils.toTitleCase(result);
 	}
 
 	/**
 	 * Returns the string with every first letter of each word is upper case and the rest are lower case
 	 *
-	 * @param s
-	 * @returns {string}
+	 * @param s - The string to convert to title case.
+	 * @returns - The input string converted to title case.
 	 */
 	public static toTitleCase(s: string) {
 		if (null == s) {

@@ -21,7 +21,7 @@ export class AdminUsersService {
 	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
 		return this.http.post(
 			'api/admin/users',
-			{ q: query, s: search, options: options },
+			{ q: query, s: search, options },
 			{ params: paging.toObj() }
 		).pipe(
 			map((results: PagingResults) => {
@@ -38,7 +38,7 @@ export class AdminUsersService {
 	}
 
 	getAll(query: any, field: string) {
-		return this.http.post('api/admin/users/getAll', { query: query, field: field });
+		return this.http.post('api/admin/users/getAll', { query, field });
 	}
 
 	create(user: User) {

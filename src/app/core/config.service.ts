@@ -8,7 +8,7 @@ import { Config } from './config.model';
 @Injectable()
 export class ConfigService {
 
-	configSubject = new AsyncSubject <Config>();
+	configSubject = new AsyncSubject<Config>();
 
 	constructor(private http: HttpBackend) {
 		this.reloadConfig();
@@ -16,7 +16,6 @@ export class ConfigService {
 
 	/**
 	 * Get the shared config observable
-	 * @returns {BehaviorSubject<Config>}
 	 */
 	public getConfig(): AsyncSubject<Config> {
 		return this.configSubject;

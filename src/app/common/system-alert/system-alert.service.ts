@@ -10,8 +10,8 @@ class SystemAlerts {
 
 @Injectable()
 export class SystemAlertService {
-	private id: number = 0;
-	private defaultType: string = 'danger';
+	private id = 0;
+	private defaultType = 'danger';
 	private alerts: SystemAlerts = new SystemAlerts();
 
 	constructor() {}
@@ -22,22 +22,22 @@ export class SystemAlertService {
 	}
 
 	clear(index: number) {
-		let alert = this.alerts.list[index];
+		const alert = this.alerts.list[index];
 		this.alerts.list.splice(index, 1);
 		this.alerts.map.delete(alert.id);
 	}
 
 	clearAlertById(id: number) {
-		let alert = this.alerts.map.get(id);
+		const alert = this.alerts.map.get(id);
 		if (null != alert) {
-			let index = this.alerts.list.indexOf(alert);
+			const index = this.alerts.list.indexOf(alert);
 			this.clear(index);
 		}
 	}
 
 	addAlert(msg: string, type?: string, ttl?: number, subtext?: string) {
 		type = type || this.defaultType;
-		let alert = new SystemAlert(
+		const alert = new SystemAlert(
 			this.id++,
 			type || this.defaultType,
 			msg,

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { SessionService } from '../auth/session.service';
@@ -7,13 +7,13 @@ import { SystemAlertService } from '../../common/system-alert.module';
 @Component({
 	templateUrl: 'user-eua.component.html'
 })
-export class UserEuaComponent {
+export class UserEuaComponent implements OnInit {
 
-	agree: boolean = false;
+	agree = false;
 
 	eua: any;
 
-	showAlerts: boolean = false;
+	showAlerts = false;
 
 	constructor(
 		private sessionService: SessionService,

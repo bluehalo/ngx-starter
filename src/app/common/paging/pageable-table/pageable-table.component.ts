@@ -17,20 +17,20 @@ export class PageableTable implements AfterContentInit {
 
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
 	@Input() items: Array<any>;
-	@Input() hasItems: boolean = false;
-	@Input() loading: boolean = false;
-	@Input() showInCard: boolean = false;
-	@Input() showActions: boolean = false;
-	@Input() showFooterActions: boolean = false;
-	@Input() hideTableToData: boolean = false;
-	@Input() disableGoToEnd: boolean = false;
-	@Input() pagerAtTop: boolean = false;
-	@Input() pagerAtBottom: boolean = true;
-	@Input() tableHover: boolean = false;
-	@Input() tableStriped: boolean = false;
+	@Input() hasItems = false;
+	@Input() loading = false;
+	@Input() showInCard = false;
+	@Input() showActions = false;
+	@Input() showFooterActions = false;
+	@Input() hideTableToData = false;
+	@Input() disableGoToEnd = false;
+	@Input() pagerAtTop = false;
+	@Input() pagerAtBottom = true;
+	@Input() tableHover = false;
+	@Input() tableStriped = false;
 
-	@Output() onPageChange = new EventEmitter<PageChange>();
-	@Output() pageAndScroll = new EventEmitter<PageChange>();
+	@Output() readonly onPageChange = new EventEmitter<PageChange>();
+	@Output() readonly pageAndScroll = new EventEmitter<PageChange>();
 
 	@ContentChildren(NamedTemplate) templates: QueryList<NamedTemplate>;
 

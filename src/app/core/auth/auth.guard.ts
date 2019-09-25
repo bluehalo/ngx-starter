@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
 		// Default to requiring authentication if guard is present
-		let requiresAuthentication: boolean = true;
+		let requiresAuthentication = true;
 		if (get(route, 'data.requiresAuthentication', true) === false) {
 			requiresAuthentication = false;
 		}
@@ -68,7 +68,7 @@ export class AuthGuard implements CanActivate {
 
 	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		// Default to requiring authentication if guard is present
-		let requiresEua: boolean = true;
+		let requiresEua = true;
 		if (get(route, 'data.requiresEua', true) === false) {
 			requiresEua = false;
 		}
@@ -99,8 +99,8 @@ export class AuthGuard implements CanActivate {
 			// -----------------------------------------------------------
 
 			// compile a list of roles that are missing
-			let requiredRoles = get(route, 'data.roles', ['user']);
-			let missingRoles: any[] = [];
+			const requiredRoles = get(route, 'data.roles', ['user']);
+			const missingRoles: any[] = [];
 			requiredRoles.forEach( (role: any) => {
 				if (!this.authorizationService.hasRole(role)) {
 					missingRoles.push(role);

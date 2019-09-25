@@ -19,11 +19,11 @@ export class FeedbackModalComponent implements OnInit {
 
 	success: string;
 
-	submitting: boolean = false;
+	submitting = false;
 
 	classificationOptions: any[];
 
-	baseUrl: string = '';
+	baseUrl = '';
 
 	feedback: Feedback = new Feedback();
 

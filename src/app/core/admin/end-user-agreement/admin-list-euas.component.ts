@@ -22,9 +22,9 @@ import { AdminTopics } from '../admin-topic.model';
 export class AdminListEuasComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	euas: EndUserAgreement[] = [];
-	hasEuas: boolean = false;
+	hasEuas = false;
 
-	search: string = '';
+	search = '';
 
 	// Columns to show/hide in user table
 	columns = {
@@ -137,7 +137,7 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
 	private initializeUserFilters() {
-		let cachedFilter = this.euaService.cache.listEuas;
+		const cachedFilter = this.euaService.cache.listEuas;
 
 		this.search = cachedFilter.search ? cachedFilter.search : '';
 
@@ -155,7 +155,7 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 	}
 
 	private loadEuas() {
-		let options: any = {};
+		const options: any = {};
 		this.euaService.cache.listEuas = {search: this.search, paging: this.pagingOpts};
 		this.euaService.search(this.getQuery(), this.search, this.pagingOpts, options)
 			.subscribe((result: PagingResults) => {
@@ -177,7 +177,7 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 
 	private getQuery(): any {
 		let query: any;
-		let elements: any[] = [];
+		const elements: any[] = [];
 
 		if (elements.length > 0) {
 			query = { $or: elements };

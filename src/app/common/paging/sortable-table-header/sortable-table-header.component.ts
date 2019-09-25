@@ -17,13 +17,13 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() header: any;
 
-	@Input() showSort: boolean = true;
+	@Input() showSort = true;
 
 	@Input() currentSortField: string;
 
 	@Input() currentSortDir: string;
 
-	@Output() onSortChange = new EventEmitter<any>();
+	@Output() readonly onSortChange = new EventEmitter<any>();
 
 	sortable: boolean;
 

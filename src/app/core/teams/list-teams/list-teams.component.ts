@@ -18,7 +18,7 @@ export class ListTeamsComponent implements OnInit {
 
 	teams: Team[] = [];
 
-	pageSize: number = 20;
+	pageSize = 20;
 
 	pagingOptions: PagingOptions = new PagingOptions();
 
@@ -36,11 +36,11 @@ export class ListTeamsComponent implements OnInit {
 
 	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
 
-	loading: boolean = true;
+	loading = true;
 
-	hasQuery: boolean = true;
+	hasQuery = true;
 
-	private resetPaging: boolean = false;
+	private resetPaging = false;
 
 	private load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -52,7 +52,7 @@ export class ListTeamsComponent implements OnInit {
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		const paging$ = combineLatest(this.pageEvent$, this.sortEvent$)
+		const paging$ = combineLatest([this.pageEvent$, this.sortEvent$])
 			.pipe(
 				map(([paging, sort]: [PagingOptions, SortableTableHeader]) => {
 					paging.sortField = sort.sortField;
@@ -72,7 +72,7 @@ export class ListTeamsComponent implements OnInit {
 				})
 			);
 
-		combineLatest(this.load$, paging$, search$)
+		combineLatest([this.load$, paging$, search$])
 			.pipe(
 				map(([, paging, ]: [boolean, PagingOptions, string]) => {
 					if (this.resetPaging) {
@@ -100,7 +100,7 @@ export class ListTeamsComponent implements OnInit {
 	}
 
 	private getQuery(): any {
-		let query: any = {};
+		const query: any = {};
 		return query;
 	}
 

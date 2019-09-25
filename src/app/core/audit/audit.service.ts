@@ -40,7 +40,7 @@ export class AuditService {
 	}
 
 	public getDistinctAuditValues(field: string): Observable<string[]> {
-		return this.http.get<string[]>('api/audit/distinctValues', { params: { field: field } });
+		return this.http.get<string[]>('api/audit/distinctValues', { params: { field } });
 	}
 
 	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
@@ -54,7 +54,7 @@ export class AuditService {
 	public matchUser(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
 		return this.http.post(
 			'api/users/match',
-			{ q: query, s: search, options: options },
+			{ q: query, s: search, options },
 			{ params: paging.toObj() }
 		).pipe(
 			map((results: PagingResults) => {

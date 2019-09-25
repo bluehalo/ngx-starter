@@ -1,5 +1,5 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import toString from 'lodash/toString';
 
@@ -21,12 +21,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
 	templateUrl: './list-messages.component.html'
 })
-export class ListMessagesComponent {
+export class ListMessagesComponent implements OnInit {
 
 	messages: Message[] = [];
-	hasMessages: boolean = false;
+	hasMessages = false;
 	pagingOpts: PagingOptions;
-	search: string = '';
+	search = '';
 	filters: any = {};
 	sort: any;
 
@@ -60,7 +60,7 @@ export class ListMessagesComponent {
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
 	initializeMessageFilters() {
-		let cachedFilter: any = this.messageService.cache.listMessages as any;
+		const cachedFilter: any = this.messageService.cache.listMessages as any;
 
 		this.search = cachedFilter.search ? cachedFilter.search : '';
 		this.filters = cachedFilter.filters ? cachedFilter.filters : {};

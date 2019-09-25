@@ -20,7 +20,7 @@ export class FlyoutComponent implements OnInit {
 	@Input()
 	label: string;
 
-	isOpen: boolean = false;
+	isOpen = false;
 
 	constructor() {
 	}

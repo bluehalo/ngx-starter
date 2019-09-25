@@ -1,6 +1,6 @@
 import {
 	Component, Input, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver,
-	ComponentFactory
+	ComponentFactory, OnInit
 } from '@angular/core';
 import { AuditObjectTypes } from './audit.classes';
 
@@ -56,11 +56,11 @@ AuditObjectTypes.registerType('export', ExportAudit);
 	selector: 'asy-audit-component',
 	template: '<div #content></div>'
 })
-export class AuditObjectComponent {
+export class AuditObjectComponent implements OnInit {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content: any;
 
 	@Input() auditObject: any = {};
-	@Input() auditType: string = '';
+	@Input() auditType = '';
 
 	private componentRef: ComponentRef<any>;
 
@@ -73,7 +73,7 @@ export class AuditObjectComponent {
 			this.auditType = 'default';
 		}
 
-		let factory: ComponentFactory<Component> =
+		const factory: ComponentFactory<Component> =
 			this.componentFactoryResolver.resolveComponentFactory(AuditObjectTypes.objects[this.auditType]);
 
 		this.componentRef = this.content.createComponent(factory);
