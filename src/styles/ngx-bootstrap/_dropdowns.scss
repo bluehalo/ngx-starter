@@ -2,9 +2,15 @@
 
 $dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
 
-.btn-group.open {
+.dropdown.open {
 	.dropdown-toggle::after {
 		transform: rotate(180deg);
+	}
+}
+
+.dropdown-toggle.dropdown-toggle-hide-caret {
+	&::after {
+		content: none;
 	}
 }
 
@@ -21,11 +27,6 @@ ul.dropdown-menu {
 	@include font-normal();
 	@include font-color-dark($dropdown-element-font-color);
 
-	&.full-width-menu {
-		margin-left: 15px;
-		width: calc(100% - 30px);
-	}
-
 	li > a.dropdown-item {
 		&:hover {
 			cursor: pointer;
@@ -34,11 +35,5 @@ ul.dropdown-menu {
 		&:active {
 			color: inherit;
 		}
-	}
-}
-
-.dropdown.open {
-	.dropdown-toggle::after {
-		transform: rotate(180deg);
 	}
 }

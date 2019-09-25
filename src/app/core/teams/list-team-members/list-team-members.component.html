@@ -47,9 +47,9 @@
 			<td>
 				<div *ngIf="!canManageTeam">{{ member.roleDisplay }}</div>
 				<div *ngIf="canManageTeam">
-					<div class="btn-group" dropdown container="body">
+					<div class="btn-group dropdown" container="body" dropdown>
 						<button type="button" class="btn dropdown-toggle dropdown-toggle-table" dropdownToggle>
-							<span class="float-left" style="margin-right: 4px;">{{ member.roleDisplay }}</span>
+							<span class="float-left mr-1">{{ member.roleDisplay }}</span>
 						</button>
 
 						<ul *dropdownMenu class="dropdown-menu" role="menu">
