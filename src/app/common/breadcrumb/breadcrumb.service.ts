@@ -8,7 +8,7 @@ export interface Breadcrumb {
 export class BreadcrumbService {
 
 	static getBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
-		const ROUTE_DATA_BREADCRUMB: string = 'breadcrumb';
+		const ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
 		// Get the child routes
 		const children: ActivatedRouteSnapshot[] = route.children;
@@ -18,7 +18,7 @@ export class BreadcrumbService {
 			return breadcrumbs;
 		}
 
-		for (let child of children) {
+		for (const child of children) {
 			// Verify that this is a primary route
 			if (child.outlet !== PRIMARY_OUTLET) {
 				continue;
@@ -30,13 +30,13 @@ export class BreadcrumbService {
 			}
 
 			// Get the route's URL segment
-			let routeURL: string = child.url.map((segment: UrlSegment) => segment.path).join('/');
+			const routeURL: string = child.url.map((segment: UrlSegment) => segment.path).join('/');
 
 			// Append route URL to URL
 			url += `/${routeURL}`;
 
 			// Add breadcrumb
-			breadcrumbs.push({ label: child.data[ROUTE_DATA_BREADCRUMB], url: url });
+			breadcrumbs.push({ label: child.data[ROUTE_DATA_BREADCRUMB], url });
 
 			return this.getBreadcrumbs(child, url, breadcrumbs);
 		}

@@ -8,11 +8,11 @@ import { TeamRole } from './team-role.model';
 
 export class TeamMember extends User {
 
-	public explicit: boolean = false;
+	public explicit = false;
 
-	public active: boolean = false;
+	public active = false;
 
-	public role: string = 'member';
+	public role = 'member';
 
 	public roleDisplay: string;
 
@@ -26,9 +26,9 @@ export class TeamMember extends User {
 
 	public getRoleInTeam(team: Team| { _id: string }): string {
 		if (null != this.userModel) {
-			let teams = get(this, 'userModel.teams', []);
+			const teams = get(this, 'userModel.teams', []);
 			// Find the role of this user in the team
-			let ndx = findIndex(teams, (t: any) => t._id === team._id);
+			const ndx = findIndex(teams, (t: any) => t._id === team._id);
 
 			if (-1 !== ndx) {
 				return teams[ndx].role;

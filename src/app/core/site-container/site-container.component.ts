@@ -14,7 +14,7 @@ export class SiteContainerComponent {
 
 	bannerHtml = undefined;
 	copyrightHtml = undefined;
-	showFeedbackFlyout: boolean = false;
+	showFeedbackFlyout = false;
 
 	constructor(private configService: ConfigService) {
 		configService.getConfig().subscribe((config: Config) => {

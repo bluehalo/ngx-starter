@@ -28,7 +28,7 @@ export class EditTeamMetadataComponent implements OnInit {
 
 	team: Team;
 
-	showExternalTeams: boolean = false;
+	showExternalTeams = false;
 
 	constructor(
 		private configService: ConfigService,

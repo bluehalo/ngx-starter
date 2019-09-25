@@ -29,7 +29,7 @@ export class AdminCreateEuaComponent extends ManageEuaComponent implements OnIni
 	}
 
 	submitEua() {
-		let _eua = new EndUserAgreement();
+		const _eua = new EndUserAgreement();
 		_eua.euaModel = {
 			title: this.eua.euaModel.title,
 			text: this.eua.euaModel.text

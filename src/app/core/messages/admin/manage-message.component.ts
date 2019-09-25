@@ -52,7 +52,7 @@ export abstract class ManageMessageComponent {
 				() => this.router.navigate([this.navigateOnSuccess]),
 				(response: HttpErrorResponse) => {
 					if (response.status >= 400 && response.status < 500) {
-						let errors = response.message.split('\n');
+						const errors = response.message.split('\n');
 						this.error = errors.join(', ');
 					}
 				});

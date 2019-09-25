@@ -18,7 +18,7 @@ export class ListTeamsComponent implements OnInit {
 
 	teams: Team[] = [];
 
-	pageSize: number = 20;
+	pageSize = 20;
 
 	pagingOptions: PagingOptions = new PagingOptions();
 
@@ -36,11 +36,11 @@ export class ListTeamsComponent implements OnInit {
 
 	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
 
-	loading: boolean = true;
+	loading = true;
 
-	hasQuery: boolean = true;
+	hasQuery = true;
 
-	private resetPaging: boolean = false;
+	private resetPaging = false;
 
 	private load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -100,7 +100,7 @@ export class ListTeamsComponent implements OnInit {
 	}
 
 	private getQuery(): any {
-		let query: any = {};
+		const query: any = {};
 		return query;
 	}
 

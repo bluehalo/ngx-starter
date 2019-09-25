@@ -32,7 +32,7 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /([A-Z])/g, ' $1' );
+		const result = s.replace( /([A-Z])/g, ' $1' );
 		return StringUtils.capitalize(result);
 	}
 
@@ -40,7 +40,7 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /-/g, ' ' );
+		const result = s.replace( /-/g, ' ' );
 		return StringUtils.toTitleCase(result);
 	}
 
@@ -48,7 +48,7 @@ export class StringUtils {
 		if (null == s) {
 			return null;
 		}
-		let result = s.replace( /_/g, ' ' );
+		const result = s.replace( /_/g, ' ' );
 		return StringUtils.toTitleCase(result);
 	}
 

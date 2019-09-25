@@ -74,9 +74,9 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const hasRoleChanges = changes['hasRole'];
-		const hasEveryRoleChanges = changes['hasEveryRole'];
-		const hasSomeRolesChanges = changes['hasSomeRoles'];
+		const hasRoleChanges = changes.hasRole;
+		const hasEveryRoleChanges = changes.hasEveryRole;
+		const hasSomeRolesChanges = changes.hasSomeRoles;
 
 		if (hasRoleChanges || hasEveryRoleChanges || hasSomeRolesChanges) {
 			// Due to bug when you pass empty array

@@ -3,7 +3,7 @@ import { Moment, isMoment, utc } from 'moment';
 
 export class UtcDateUtils {
 
-	private static defaultFormat: string = 'YYYY-MM-DD HH:mm:ss[Z]';
+	private static defaultFormat = 'YYYY-MM-DD HH:mm:ss[Z]';
 
 	static format(value: string | number | Moment, format?: string): string {
 		if (null != value) {

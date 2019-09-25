@@ -23,7 +23,7 @@ export class ViewTeamComponent implements OnInit {
 
 	team: Team;
 
-	canManageTeam: boolean = false;
+	canManageTeam = false;
 
 	constructor(
 		private router: Router,
@@ -39,7 +39,7 @@ export class ViewTeamComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.data.pipe(
-			map((data) => data['team'])
+			map((data) => data.team)
 		).subscribe((team) => {
 			this.updateTeam(team);
 		});

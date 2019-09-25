@@ -13,11 +13,11 @@ import { Message } from '../message.class';
 })
 export class ViewAllMessagesComponent implements OnInit {
 
-	pageNumber: number = 0;
+	pageNumber = 0;
 	messages: Message[] = [];
-	loadMore: boolean = true;
+	loadMore = true;
 	search: string = null;
-	newMessages: boolean = false;
+	newMessages = false;
 
 	@ViewChild(SearchInputComponent, { static: true }) searchInput: SearchInputComponent;
 

@@ -24,9 +24,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ListMessagesComponent {
 
 	messages: Message[] = [];
-	hasMessages: boolean = false;
+	hasMessages = false;
 	pagingOpts: PagingOptions;
-	search: string = '';
+	search = '';
 	filters: any = {};
 	sort: any;
 
@@ -60,7 +60,7 @@ export class ListMessagesComponent {
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
 	initializeMessageFilters() {
-		let cachedFilter: any = this.messageService.cache.listMessages as any;
+		const cachedFilter: any = this.messageService.cache.listMessages as any;
 
 		this.search = cachedFilter.search ? cachedFilter.search : '';
 		this.filters = cachedFilter.filters ? cachedFilter.filters : {};

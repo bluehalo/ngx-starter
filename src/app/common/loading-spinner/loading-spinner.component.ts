@@ -9,6 +9,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LoadingSpinnerComponent {
 
 	@Input()
-	message: string = 'Loading...';
+	message = 'Loading...';
 
 }

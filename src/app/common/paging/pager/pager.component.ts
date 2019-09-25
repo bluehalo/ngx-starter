@@ -20,11 +20,11 @@ export const NULL_PAGING_RESULTS: PagingResults = {
 	elements: []
 };
 
-export type PageChange = {
+export interface PageChange {
 	pageNumber: number;
 	pageSize: number;
 	sortdir: SortDirection;
-};
+}
 
 export class PagingOptions {
 	constructor(
@@ -100,26 +100,26 @@ export abstract class PagingComponent {
 })
 export class Pager implements OnInit, OnChanges {
 
-	@Input() pageNumber: number = 0;
-	@Input() pageSize: number = 0;
-	@Input() totalSize: number = 0;
-	@Input() maxPageSize: number = 100;
-	@Input() currentSize: number = 0;
-	@Input() disableGoToEnd: boolean = false;
-	@Input() showCountWarning: boolean = false;
-	@Input() countWarningMessage: string = '';
+	@Input() pageNumber = 0;
+	@Input() pageSize = 0;
+	@Input() totalSize = 0;
+	@Input() maxPageSize = 100;
+	@Input() currentSize = 0;
+	@Input() disableGoToEnd = false;
+	@Input() showCountWarning = false;
+	@Input() countWarningMessage = '';
 
 	@Output() onChange: EventEmitter<PageChange> = new EventEmitter();
 
 	sortdir: SortDirection = SortDirection.desc;
 
-	totalPages: number = 0;
+	totalPages = 0;
 
-	startFormatted: string = '';
+	startFormatted = '';
 
-	endFormatted: string = '';
+	endFormatted = '';
 
-	totalFormatted: string = 'unknown';
+	totalFormatted = 'unknown';
 
 	constructor() {}
 

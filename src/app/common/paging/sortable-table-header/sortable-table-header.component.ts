@@ -17,7 +17,7 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() header: any;
 
-	@Input() showSort: boolean = true;
+	@Input() showSort = true;
 
 	@Input() currentSortField: string;
 

@@ -29,19 +29,19 @@ export class CreateTeamComponent implements OnInit {
 
 	team: Team = new Team();
 
-	showExternalTeams: boolean = false;
+	showExternalTeams = false;
 
-	isAdmin: boolean = false;
+	isAdmin = false;
 
 	defaultTeamAdmin: any;
 
-	editDefaultTeamAdmin: boolean = false;
+	editDefaultTeamAdmin = false;
 
-	queryUserSearchTerm: string = '';
+	queryUserSearchTerm = '';
 
 	searchUsersRef: Observable<any>;
 
-	submitting: boolean = false;
+	submitting = false;
 
 	private user: User;
 
@@ -85,7 +85,7 @@ export class CreateTeamComponent implements OnInit {
 			this.searchUsersRef = Observable.create((observer: any) => {
 				this.userService.search({}, this.queryUserSearchTerm, this.pagingOptions, {})
 					.subscribe((result: PagingResults) => {
-						let formatted = result.elements
+						const formatted = result.elements
 							.filter((user: any) => user._id !== this.defaultTeamAdmin._id)
 							.map((user: any) => user.userModel)
 							.map((user: any) => {

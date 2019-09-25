@@ -29,7 +29,7 @@ export class SiteNavbarComponent implements OnInit {
 	teamNavOpen = false;
 	messagesNavOpen = false;
 
-	showFeedbackOption: boolean = true;
+	showFeedbackOption = true;
 
 	session: Session = null;
 
@@ -37,7 +37,7 @@ export class SiteNavbarComponent implements OnInit {
 
 	navbarItems: NavbarTopic[];
 
-	numNewMessages: number = 0;
+	numNewMessages = 0;
 
 	@Output()
 	navbarOpenChange = new EventEmitter<boolean>();

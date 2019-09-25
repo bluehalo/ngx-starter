@@ -22,9 +22,9 @@ import { AdminTopics } from '../admin-topic.model';
 export class AdminListUsersComponent extends PagingComponent implements OnDestroy, OnInit {
 
 	users: any[] = [];
-	hasUsers: boolean = false;
+	hasUsers = false;
 
-	search: string = '';
+	search = '';
 
 	// Columns to show/hide in user table
 	columns: any = {
@@ -91,7 +91,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 				this.alertService.clearAllAlerts();
 
 				// Clear cache if requested
-				let clearCachedFilter = params[`clearCachedFilter`];
+				const clearCachedFilter = params[`clearCachedFilter`];
 				if (toString(clearCachedFilter) === 'true' || null == this.adminUsersService.cache.listUsers) {
 					this.adminUsersService.cache.listUsers = {};
 				}
@@ -154,7 +154,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
 	private initialize() {
-		let cachedFilter = this.adminUsersService.cache.listUsers;
+		const cachedFilter = this.adminUsersService.cache.listUsers;
 
 		this.search = cachedFilter.search ? cachedFilter.search : '';
 		this.quickFilters = cachedFilter.filters ? cachedFilter.filters : this.getDefaultQuickFilters();
@@ -173,7 +173,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 	}
 
 	private getDefaultQuickFilters() {
-		let roles: any = {
+		const roles: any = {
 			bypassAC: { show: false, display: 'Bypass AC' },
 		};
 
@@ -189,7 +189,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 	}
 
 	private loadUsers() {
-		let options: any = {};
+		const options: any = {};
 
 		this.adminUsersService.cache.listUsers = {
 			filters: this.quickFilters,
@@ -217,23 +217,23 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 
 	private getQuery(): any {
 		let query: any;
-		let elements: any[] = [];
+		const elements: any[] = [];
 
 		if (this.quickFilters.bypassAC.show) {
 			elements.push({ bypassAccessCheck: true });
 		}
 
 		Role.ROLES.forEach((role) => {
-			let filter = this.quickFilters[`${role.role}Role`];
+			const filter = this.quickFilters[`${role.role}Role`];
 			if (filter != null && filter.show) {
-				let element = {};
+				const element = {};
 				element[`roles.${role.role}`] = true;
 				elements.push(element);
 			}
 		});
 
 		if (this.quickFilters.pending.show) {
-			let filter: any = {
+			const filter: any = {
 				$or: [ { 'roles.user': {$ne: true} } ]
 			};
 			if (this.requiredExternalRoles.length > 0) {

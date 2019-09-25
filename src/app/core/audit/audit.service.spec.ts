@@ -133,7 +133,7 @@ describe('Audit Service', () => {
 			expect(req.request.body).toEqual({
 				q: query,
 				s: search,
-				options: options
+				options
 			});
 			req.flush(results);
 		});

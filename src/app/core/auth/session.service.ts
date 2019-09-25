@@ -27,7 +27,7 @@ export class SessionService {
 			if (result == null) {
 				return result;
 			}
-			let user = new User();
+			const user = new User();
 			user.setFromUserModel(result);
 			return {
 				name: result.name,
@@ -115,12 +115,12 @@ export class SessionService {
 		}
 		url = url.split('?')[0];
 
-		let queryParams = this.parseQueryParams(url);
+		const queryParams = this.parseQueryParams(url);
 		if (!isEmpty(queryParams)) {
 			if (null == extras) {
 				extras = {};
 			}
-			extras = assign(extras, { queryParams: queryParams });
+			extras = assign(extras, { queryParams });
 		}
 
 		// Redirect the user
@@ -128,10 +128,10 @@ export class SessionService {
 	}
 
 	private parseQueryParams(url: string): any {
-		let queryParams = {};
+		const queryParams = {};
 
 		if (url && -1 !== url.indexOf('?')) {
-			let queryParamString = url.split('?')[1];
+			const queryParamString = url.split('?')[1];
 			const paramSegments = (!isEmpty(queryParamString)) ? queryParamString.split('&') : [];
 			paramSegments.forEach((segment: string) => {
 				const keyValuePair = segment.split('=');

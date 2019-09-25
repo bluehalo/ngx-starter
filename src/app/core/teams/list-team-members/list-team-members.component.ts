@@ -39,9 +39,9 @@ export class ListTeamMembersComponent implements OnInit {
 
 	teamMembers: TeamMember[];
 
-	canManageTeam: boolean = false;
+	canManageTeam = false;
 
-	search: string = '';
+	search = '';
 
 	hasSearch: boolean;
 
@@ -75,7 +75,7 @@ export class ListTeamMembersComponent implements OnInit {
 
 	pagingOptions: PagingOptions = new PagingOptions();
 
-	pageSize: number = 20;
+	pageSize = 20;
 
 	pageEvent$: BehaviorSubject<PagingOptions> = new BehaviorSubject(new PagingOptions(0, this.pageSize));
 
@@ -85,7 +85,7 @@ export class ListTeamMembersComponent implements OnInit {
 
 	private load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-	private resetPaging: boolean = false;
+	private resetPaging = false;
 
 	private modalRef: BsModalRef;
 

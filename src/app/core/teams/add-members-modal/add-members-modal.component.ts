@@ -26,15 +26,15 @@ export class AddMembersModalComponent implements OnInit {
 
 	addedMembers: AddedMember[] = [];
 
-	submitting: boolean = false;
+	submitting = false;
 
-	queryUserSearchTerm: string = '';
+	queryUserSearchTerm = '';
 
 	dataSource: Observable<any>;
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
-	private defaultRole: string = 'member';
+	private defaultRole = 'member';
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 

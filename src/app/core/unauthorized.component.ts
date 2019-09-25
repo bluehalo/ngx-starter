@@ -16,6 +16,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	`,
 })
 export class UnauthorizedComponent {
-	title: string = `&#x0CA0;_&#x0CA0;<br/><br/>Not Authorized`;
-	message: string = `You are not authorized to view this page. If you got here by accident, please <a href="/">go back home</a> and try again.`;
+	title = `&#x0CA0;_&#x0CA0;<br/><br/>Not Authorized`;
+	message = `You are not authorized to view this page. If you got here by accident, please <a href="/">go back home</a> and try again.`;
 }

@@ -19,9 +19,9 @@ import { FeedbackService } from '../feedback.service';
 export class AdminListFeedbackComponent extends PagingComponent implements OnInit {
 
 	feedbacks: any[];
-	hasFeedback: boolean = false;
+	hasFeedback = false;
 
-	search: string = '';
+	search = '';
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Submitted By', sortField: 'audit.actor', sortDir: SortDirection.asc, sortable: true },

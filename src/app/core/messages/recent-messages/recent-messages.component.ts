@@ -15,7 +15,7 @@ export class RecentMessagesComponent implements OnInit {
 
 	@Input() container: any;
 	messages: Message[];
-	loading: boolean = false;
+	loading = false;
 
 	constructor(
 		private messageService: MessageService,
@@ -37,7 +37,7 @@ export class RecentMessagesComponent implements OnInit {
 		this.loading = true;
 		this.messageService.recent()
 			.subscribe((result) => {
-				let messages = orderBy(result, ['created'], ['desc']);
+				const messages = orderBy(result, ['created'], ['desc']);
 				this.messages = messages as Message[];
 				this.messageService.numMessagesIndicator.next(this.messages.length);
 				this.loading = false;

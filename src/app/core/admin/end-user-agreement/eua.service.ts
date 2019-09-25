@@ -34,7 +34,7 @@ export class EuaService {
 	search(query: any, search: string , paging: PagingOptions, options: any): Observable<any> {
 		return this.http.post(
 			'api/euas',
-			{q: query, s: search, options: options},
+			{q: query, s: search, options},
 			{ params: paging.toObj() }
 		);
 	}

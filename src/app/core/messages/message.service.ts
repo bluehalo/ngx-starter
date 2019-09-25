@@ -16,7 +16,7 @@ export class MessageService {
 	public numMessagesIndicator: BehaviorSubject<number> = new BehaviorSubject(0);
 	cache: any = {};
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
-	private subscribed: number = 0;
+	private subscribed = 0;
 
 	constructor(
 		private alertService: SystemAlertService,
@@ -57,7 +57,7 @@ export class MessageService {
 	getAll(query: any, field: any) {
 		return this.http.post(
 			`api/admin/message/getAll`,
-			{ query: query, field: field },
+			{ query, field },
 			{ headers: this.headers }
 		).pipe(
 			catchError((error: HttpErrorResponse) => {
@@ -181,7 +181,7 @@ export class MessageService {
 
 	private payloadRouterFn = (payload: any) => {
 		if (this.subscribed > 0) {
-			let message = new Message();
+			const message = new Message();
 			message.setFromModel(payload.message);
 			this.messageReceived.emit(message);
 		}

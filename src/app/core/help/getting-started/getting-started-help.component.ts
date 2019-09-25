@@ -17,7 +17,7 @@ export class GettingStartedHelpComponent implements OnInit {
 
 	externalLinksEnabled: boolean;
 
-	appName: string = 'Application';
+	appName = 'Application';
 
 	constructor(private configService: ConfigService) {}
 

@@ -7,9 +7,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SearchInputComponent {
 
-	@Input() placeholder: string = 'Search...';
+	@Input() placeholder = 'Search...';
 	@Output() applySearch: EventEmitter<string> = new EventEmitter();
-	@Input() search: string = '';
+	@Input() search = '';
 
 	private keyupTimeout;
 

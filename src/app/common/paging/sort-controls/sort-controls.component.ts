@@ -3,9 +3,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { KeysPipe } from '../../pipes.module';
 import { SortDirection, SortDisplayOption } from '../sorting.model';
 
-export type TableSortOptions = {
-	[name: string]: SortDisplayOption
-};
+export interface TableSortOptions {
+	[name: string]: SortDisplayOption;
+}
 
 @Component({
 	selector: 'sort-controls',
@@ -13,9 +13,9 @@ export type TableSortOptions = {
 })
 export class SortControls {
 
-	@Input() showHeader: boolean = true;
+	@Input() showHeader = true;
 
-	@Input() showDirectionControl: boolean = false;
+	@Input() showDirectionControl = false;
 
 	@Input()
 	set selectedSort(sort: any) {

@@ -11,7 +11,7 @@ export class HelpTopics {
 
 	static registerTopic(key: string, topicComponent: any, ordinal?: number) {
 		HelpTopics.topics[key] = topicComponent;
-		this.topicOrder[key] = { key: key, ordinal: ordinal };
+		this.topicOrder[key] = { key, ordinal };
 	}
 
 	static getTopicList(): string[] {
@@ -38,7 +38,7 @@ export class HelpTopicComponent {
 
 		if (null != key && null != HelpTopics.topics[key]) {
 			// Dynamically create the component
-			let factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(HelpTopics.topics[key]);
+			const factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(HelpTopics.topics[key]);
 			this.componentRef = this.content.createComponent(factory);
 		}
 		else {

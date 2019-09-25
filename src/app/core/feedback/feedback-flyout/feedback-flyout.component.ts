@@ -19,7 +19,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 	@ViewChild(FlyoutComponent, { static: false }) flyout: FlyoutComponent;
 
-	baseUrl: string = '';
+	baseUrl = '';
 	feedback: Feedback = new Feedback();
 
 	classificationOptions: any[];

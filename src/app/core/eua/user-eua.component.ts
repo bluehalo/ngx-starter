@@ -9,11 +9,11 @@ import { SystemAlertService } from '../../common/system-alert.module';
 })
 export class UserEuaComponent {
 
-	agree: boolean = false;
+	agree = false;
 
 	eua: any;
 
-	showAlerts: boolean = false;
+	showAlerts = false;
 
 	constructor(
 		private sessionService: SessionService,

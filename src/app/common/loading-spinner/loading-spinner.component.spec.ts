@@ -14,7 +14,7 @@ export class LoadingSpinnerDefaultTestHost {}
 	template: '<loading-spinner [message]="message"></loading-spinner>'
 })
 export class LoadingSpinnerProvidedTestHost {
-	message: string = 'Bootstrapping...';
+	message = 'Bootstrapping...';
 }
 
 describe('LoadingSpinnerComponent', () => {

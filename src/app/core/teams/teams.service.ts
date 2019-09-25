@@ -43,7 +43,7 @@ export class TeamsService {
 		return this.http.put(
 			`api/team`,
 			JSON.stringify({
-				team: team,
+				team,
 				firstAdmin: firstAdmin ? firstAdmin : null
 			}),
 			{ headers: this.headers }
@@ -104,7 +104,7 @@ export class TeamsService {
 	addMember(teamId: string, memberId: string, role?: string): Observable<any> {
 		return this.http.post(
 			`api/team/${teamId}/member/${memberId}`,
-			JSON.stringify({ role: role }),
+			JSON.stringify({ role }),
 			{ headers: this.headers }
 		);
 	}
@@ -112,7 +112,7 @@ export class TeamsService {
 	addMembers(newMembers: AddedMember[], teamId: string): Observable<any> {
 		return this.http.put(
 			`api/team/${teamId}/members`,
-			JSON.stringify({ newMembers: newMembers }),
+			JSON.stringify({ newMembers }),
 			{ headers: this.headers }
 		);
 	}
@@ -135,7 +135,7 @@ export class TeamsService {
 	updateMemberRole(teamId: string, memberId: string, role: string): Observable<any> {
 		return this.http.post(
 			`api/team/${teamId}/member/${memberId}/role`,
-			JSON.stringify( { role: role }),
+			JSON.stringify( { role }),
 			{ headers: this.headers }
 		);
 	}
@@ -163,7 +163,7 @@ export class TeamsService {
 	searchUsers(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
 		return this.http.post(
 			'api/users',
-			{ q: query, s: search, options: options },
+			{ q: query, s: search, options },
 			{ params: paging.toObj() }
 		).pipe(
 			map((results: PagingResults) => {

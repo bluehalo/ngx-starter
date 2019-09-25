@@ -14,7 +14,7 @@ export class ExportConfigService {
 	postExportConfig(type: string, config: any): Observable<any> {
 		return this.http.post(
 			'/api/requestExport',
-			JSON.stringify({ type: type, config: config }),
+			JSON.stringify({ type, config }),
 			{ headers: { 'Content-Type': 'application/json'	} }
 		);
 	}

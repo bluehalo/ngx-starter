@@ -60,7 +60,7 @@ export class AuditObjectComponent {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content: any;
 
 	@Input() auditObject: any = {};
-	@Input() auditType: string = '';
+	@Input() auditType = '';
 
 	private componentRef: ComponentRef<any>;
 
@@ -73,7 +73,7 @@ export class AuditObjectComponent {
 			this.auditType = 'default';
 		}
 
-		let factory: ComponentFactory<Component> =
+		const factory: ComponentFactory<Component> =
 			this.componentFactoryResolver.resolveComponentFactory(AuditObjectTypes.objects[this.auditType]);
 
 		this.componentRef = this.content.createComponent(factory);

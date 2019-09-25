@@ -9,9 +9,9 @@ import { QuickFiltersComponent } from '../quick-filters/quick-filters.component'
 })
 export class QuickColumnToggleComponent extends QuickFiltersComponent {
 
-	title: string = 'Show Columns';
+	title = 'Show Columns';
 
-	columnMode: string = 'default';
+	columnMode = 'default';
 
 	toggleQuickFilter(key: string) {
 		if (key === 'all') {
