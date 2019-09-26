@@ -5,23 +5,25 @@ import _isString from 'lodash/isString';
 import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
-import { AuditService } from '../audit.service';
-import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions, PagingResults } from '../../../common/paging.module';
+import {
+	PagingOptions,
+	SortDirection,
+	PagingResults,
+	AbstractPageableDataComponent, SortableTableHeader
+} from '../../../common/paging.module';
+
 import { AuditOption } from '../audit.classes';
+import { AuditService } from '../audit.service';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
-import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	styleUrls: ['./list-audit-entries.component.scss'],
 	templateUrl: './list-audit-entries.component.html'
 })
-export class ListAuditEntriesComponent implements OnInit {
-
-	// List of audit entries
-	auditEntries: any[] = [];
-	hasAuditEntries = false;
+export class ListAuditEntriesComponent extends AbstractPageableDataComponent implements OnInit {
 
 	actionOptions: AuditOption[] = [];
 	actionsFormShown = true;
@@ -33,16 +35,15 @@ export class ListAuditEntriesComponent implements OnInit {
 
 	queryUserSearchTerm = '';
 
-	// Search phrase
-	search = '';
-
-	pagingOpts: PagingOptions;
-
-	sortOpts: TableSortOptions = {
-		created: new SortDisplayOption('Created', 'created', SortDirection.desc),
-		actor: new SortDisplayOption('Actor', 'audit.actor.name', SortDirection.asc),
-		type: new SortDisplayOption('Type', 'audit.auditType', SortDirection.desc)
-	};
+	headers: SortableTableHeader[] = [
+		{ name: 'Actor', sortable: true, sortField: 'audit.actor.name', sortDir: SortDirection.asc, tooltip: 'Sort by Key', iconClass: 'fa-user', default: true },
+		{ name: 'Timestamp', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Timestamp', iconClass: 'fa-clock-o' },
+		{ name: 'Action', sortable: true, sortField: 'audit.action', sortDir: SortDirection.asc, tooltip: 'Sort by Action' },
+		{ name: 'Type', sortable: true, sortField: 'audit.auditType', sortDir: SortDirection.asc, tooltip: 'Sort by Type' },
+		{ name: 'Object', sortable: false },
+		{ name: 'Before', sortable: false, iconClass: 'fa-history' },
+		{ name: 'Message', sortable: false, iconClass: 'fa-file-text-o' }
+	];
 
 	dateRangeOptions: any[];
 
@@ -58,14 +59,14 @@ export class ListAuditEntriesComponent implements OnInit {
 
 	private queryUserObj: any;
 
-	private auditEntriesLoaded = false;
-
 	private auditModalRef: BsModalRef;
 
 	constructor(
 		private auditService: AuditService,
 		private modalService: BsModalService
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.dateRangeOptions = [
@@ -75,10 +76,6 @@ export class ListAuditEntriesComponent implements OnInit {
 			{ value: 'everything', display: 'Everything' },
 			{ value: 'choose', display: 'Select Date Range' }
 		];
-
-		this.pagingOpts = new PagingOptions();
-		this.pagingOpts.sortField = this.sortOpts.created.sortField;
-		this.pagingOpts.sortDir = this.sortOpts.created.sortDir;
 
 		this.userPagingOpts = new PagingOptions(0, 20);
 		this.userPagingOpts.sortField = 'username';
@@ -111,33 +108,16 @@ export class ListAuditEntriesComponent implements OnInit {
 			this.auditTypeOptions = results[1].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
 		});
 
-		this.loadAuditEntries();
+		super.ngOnInit();
 	}
 
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.loadAuditEntries();
-	}
-
-	setSort(name: string) {
-		if (name === this.pagingOpts.sortField) {
-			// Same column, reverse direction
-			this.pagingOpts.sortDir = (this.pagingOpts.sortDir === SortDirection.asc) ? SortDirection.desc : SortDirection.asc;
-		} else {
-			// New column selected, default to ascending sort
-			this.pagingOpts.sortField = name;
-			this.pagingOpts.sortDir = SortDirection.asc;
-		}
-		this.loadAuditEntries();
-	}
-
-	updateDateRange() {
-		this.loadAuditEntries();
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults> {
+		return this.auditService.search(query, search, pagingOptions);
 	}
 
 	typeaheadOnSelect(e: any) {
 		this.queryUserObj = e;
-		this.refresh();
+		this.load$.next(true);
 	}
 
 	viewMore(auditEntry: any, type: string) {
@@ -155,41 +135,13 @@ export class ListAuditEntriesComponent implements OnInit {
 		}
 	}
 
-	refresh() {
-		this.pagingOpts.reset();
+	getQuery(): any {
+		const query: any = {};
 
 		// If actor search bar is empty, clear the actor object, otherwise retain it
 		if (null == this.queryUserSearchTerm || this.queryUserSearchTerm.length === 0) {
 			this.queryUserObj = null;
 		}
-
-		this.loadAuditEntries();
-	}
-
-	private getTimeFilterQueryObject(): any {
-		let timeQuery: any = null;
-
-		if (this.dateRangeFilter.selected === 'choose') {
-			if (null != this.queryStartDate) {
-				timeQuery = (null == timeQuery) ? {} : timeQuery;
-				timeQuery.$gte = utc(this.queryStartDate).startOf('day');
-			}
-			if (null != this.queryEndDate) {
-				timeQuery = (null == timeQuery) ? {} : timeQuery;
-				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
-			}
-		} else if (this.dateRangeFilter.selected !== 'everything') {
-			timeQuery = {
-				$gte: utc().add(this.dateRangeFilter.selected, 'days'),
-				$lt: utc()
-			};
-		}
-
-		return timeQuery;
-	}
-
-	private buildSearchQuery(): any {
-		const query: any = {};
 
 		const actorId = _get(this.queryUserObj, 'item.userModel._id', null);
 		if (null !== actorId) {
@@ -220,38 +172,25 @@ export class ListAuditEntriesComponent implements OnInit {
 		return query;
 	}
 
-	private loadAuditEntries() {
-		const query = this.buildSearchQuery();
+	private getTimeFilterQueryObject(): any {
+		let timeQuery: any = null;
 
-		this.auditService.search(query, '', this.pagingOpts)
-			.subscribe((result: PagingResults) => {
-				if (null != result && null != result.elements && result.elements.length > 0) {
-					// Defensively filter out bad audit entries (null or audit or audit.object object is null)
-					this.auditEntries = result.elements;
-						// .filter((e: any) => (null != e && null != e.audit && null != e.audit.object));
+		if (this.dateRangeFilter.selected === 'choose') {
+			if (null != this.queryStartDate) {
+				timeQuery = (null == timeQuery) ? {} : timeQuery;
+				timeQuery.$gte = utc(this.queryStartDate).startOf('day');
+			}
+			if (null != this.queryEndDate) {
+				timeQuery = (null == timeQuery) ? {} : timeQuery;
+				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
+			}
+		} else if (this.dateRangeFilter.selected !== 'everything') {
+			timeQuery = {
+				$gte: utc().add(this.dateRangeFilter.selected, 'days'),
+				$lt: utc()
+			};
+		}
 
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-					this.auditEntriesLoaded = true;
-
-					this.enrichAuditEntries();
-				} else {
-					this.auditEntries = [];
-					this.pagingOpts.reset();
-					this.auditEntriesLoaded = false;
-				}
-
-				if (!this.hasAuditEntries) {
-					this.hasAuditEntries = result.totalSize > 0;
-				}
-			});
+		return timeQuery;
 	}
-
-	private enrichAuditEntries() {
-		this.auditEntries.forEach((entry) => {
-			entry.isViewDetailsAction = this.auditService.isViewDetailsAction(entry.audit.action);
-			entry.isViewChangesAction = this.auditService.isViewChangesAction(entry.audit.action);
-		});
-	}
-
-
 }

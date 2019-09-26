@@ -10,7 +10,7 @@
 	<div class="row pt-2">
 		<div class="col-md-2">
 			<!-- Quick Filters -->
-			<quick-filters [filters]="quickFilters" (filtersChange)="quickFiltersUpdated($event)"></quick-filters>
+			<quick-filters [filters]="filters" (filtersChange)="filterEvent$.next($event)"></quick-filters>
 
 			<!-- Column Selector -->
 			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
@@ -18,7 +18,7 @@
 
 		<div class="col-md-10">
 			<div class="d-flex mb-3">
-				<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"></asy-search-input>
+				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
 				<div class="btn-group float-right dropdown ml-auto" dropdown>
 					<button type="button" class="btn btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
 					<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
@@ -32,20 +32,20 @@
 				</button>
 			</div>
 
-			<pageable-table [items]="users"
-							[hasItems]="hasUsers"
-							[pagingOptions]="pagingOpts"
+			<pageable-table [items]="items"
+							[hasItems]="hasItems"
+							[pagingOptions]="pagingOptions"
 							[tableStriped]="true"
-							(pageChange)="goToPage($event)">
+							(pageChange)="pageEvent$.next($event)">
 
-				<ng-template namedTemplate="table-header">
+				<ng-template #tableHeader>
 					<th *ngFor="let header of headersToShow">
-						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
+						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 					</th>
 					<th>&nbsp;</th>
 				</ng-template>
 
-				<ng-template namedTemplate="table-row" let-user let-i="index">
+				<ng-template #tableRow let-user="item" let-i="index">
 					<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
 					<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
 					<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
@@ -93,13 +93,13 @@
 					</td>
 				</ng-template>
 
-				<ng-template namedTemplate="table-no-results">
+				<ng-template #tableNoResults>
 					<h2 class="text-center">
 						<small>No Users matched your search</small>
 					</h2>
 				</ng-template>
 
-				<ng-template namedTemplate="table-no-data">
+				<ng-template #tableNoData>
 					<h2 class="text-center">
 						<small>No Users are available</small>
 					</h2>

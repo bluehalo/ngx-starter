@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import isArray from 'lodash/isArray';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
 import { User } from '../../auth/user.model';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 
 @Injectable()
 /**
@@ -16,19 +16,26 @@ export class AdminUsersService {
 
 	cache: any = {};
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
-	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
-		return this.http.post(
+	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults<User>> {
+		return this.http.post<PagingResults>(
 			'api/admin/users',
 			{ q: query, s: search, options },
 			{ params: paging.toObj() }
 		).pipe(
 			map((results: PagingResults) => {
-				if (null != results && isArray(results.elements)) {
+				if (null != results && Array.isArray(results.elements)) {
 					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
 				}
 				return results;
+			}),
+			catchError((error) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(NULL_PAGING_RESULTS);
 			})
 		);
 	}

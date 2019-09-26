@@ -44,8 +44,10 @@ import { SearchTableComponent } from './paging/search-table/search-table.compone
 })
 export class PagingModule { }
 
-export { PagerComponent, PageChange, PagingOptions, PagingComponent, PagingResults, NULL_PAGING_RESULTS } from './paging/pager/pager.component';
-export { SortDirection, SortDisplayOption } from './paging/sorting.model';
+export { AbstractPageableDataComponent } from './paging/abstract-pageable-data-component';
+export { PagerComponent, PagingComponent } from './paging/pager/pager.component';
+export { PageChange, PagingOptions, PagingResults, NULL_PAGING_RESULTS } from './paging/paging.model';
+export { SortChange, SortDirection, SortDisplayOption } from './paging/sorting.model';
 export { SortControlsComponent, TableSortOptions } from './paging/sort-controls/sort-controls.component';
 export { SortableTableHeaderComponent, SortableTableHeader } from './paging/sortable-table-header/sortable-table-header.component';
 export { QuickColumnToggleComponent } from './paging/quick-column-toggle/quick-column-toggle.component';

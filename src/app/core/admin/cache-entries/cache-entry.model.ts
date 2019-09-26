@@ -1,11 +1,10 @@
 export class CacheEntry {
-	date: Date;
+	isRefreshing = false;
 
 	constructor(
 		public key: string,
 		public value: any,
 		public ts: number
 	) {
-		this.date = new Date(ts);
 	}
 }

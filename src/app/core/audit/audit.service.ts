@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { PagingOptions, PagingResults } from '../../common/paging.module';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
 import _isArray from 'lodash/isArray';
 
 import { User } from '../auth/user.model';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 
 @Injectable()
 export class AuditService {
@@ -21,7 +22,9 @@ export class AuditService {
 		'admin update'
 	];
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService) {}
 
 	public isViewDetailsAction(action: string) {
 		return this.viewDetailsActions.includes(action);
@@ -46,8 +49,22 @@ export class AuditService {
 	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
 		return this.http.post<PagingResults>(
 			'api/audit',
-			{ q: query, s: search },
-			{ params: paging.toObj() }
+			{q: query, s: search},
+			{params: paging.toObj()}
+		).pipe(
+			map((results: PagingResults) => {
+				if (null != results && Array.isArray(results.elements)) {
+					results.elements.forEach((entry) => {
+						entry.isViewDetailsAction = this.isViewDetailsAction(entry.audit.action);
+						entry.isViewChangesAction = this.isViewChangesAction(entry.audit.action);
+					});
+				}
+				return results;
+			}),
+			catchError((error) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(NULL_PAGING_RESULTS);
+			})
 		);
 	}
 

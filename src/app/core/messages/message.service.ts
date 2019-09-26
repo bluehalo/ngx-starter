@@ -3,7 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Message } from './message.class';
 import { SocketService } from '../socket.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { PagingOptions } from 'src/app/common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SystemAlertService } from '../../common/system-alert.module';
@@ -92,15 +92,15 @@ export class MessageService {
 		);
 	}
 
-	search(query: any, search: any, paging: PagingOptions = new PagingOptions()) {
-		return this.http.post(
+	search(query: any, search: any, paging: PagingOptions = new PagingOptions()): Observable<PagingResults<Message>> {
+		return this.http.post<PagingResults<Message>>(
 			'api/messages',
 			{ q: query, s: search },
 			{ headers: this.headers, params: paging.toObj() },
 		).pipe(
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
-				return of(null);
+				return of(NULL_PAGING_RESULTS);
 			})
 		);
 	}

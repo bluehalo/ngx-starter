@@ -4,7 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { PagingOptions, PageChange, PagerComponent } from '../pager/pager.component';
+import { PagingOptions, PageChange } from '../paging.model';
+import { PagerComponent } from '../pager/pager.component';
 import { PageableTableComponent } from './pageable-table.component';
 import { SortControlsComponent } from '../sort-controls/sort-controls.component';
 import { FormsModule } from '@angular/forms';
@@ -19,21 +20,21 @@ import { PipesModule } from '../../pipes.module';
 					[pagingOptions]="pagingOptions"
 					(pageChange)="pageChanged$.next($event)">
 
-		<ng-template namedTemplate="table-header">
+		<ng-template #tableHeader>
 			{{ headerContent }}
 		</ng-template>
 
-		<ng-template namedTemplate="table-row" let-item let-index="index">
+		<ng-template #tableRow let-item="item" let-index="index">
 			{{ rowContent }}
 			{{ item }}
 			{{ index }}
 		</ng-template>
 
-		<ng-template namedTemplate="table-no-data">
+		<ng-template #tableNoData>
 			{{ noDataContent }}
 		</ng-template>
 
-		<ng-template namedTemplate="table-no-results">
+		<ng-template #tableNoResults>
 			{{ noResultsContent }}
 		</ng-template>
 

@@ -10,26 +10,26 @@
 	<!-- Search Input -->
 	<div class="pt-2">
 		<div class="d-flex mb-3">
-			<asy-search-input placeholder="Search key and value..." (applySearch)="onSearch($event)"></asy-search-input>
+			<asy-search-input placeholder="Search key and value..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
 		</div>
 
-		<pageable-table [items]="cacheEntries"
-						[hasItems]="hasCacheEntries"
-						[pagingOptions]="pagingOpts"
+		<pageable-table [items]="items"
+						[hasItems]="hasItems"
+						[pagingOptions]="pagingOptions"
 						[tableStriped]="true"
-						(pageChange)="goToPage($event)">
+						(pageChange)="pageEvent$.next($event)">
 
-			<ng-template namedTemplate="table-header">
+			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
+					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 				</th>
 				<th>&nbsp;</th>
 			</ng-template>
 
-			<ng-template namedTemplate="table-row" let-cacheEntry>
-				<td>{{cacheEntry.entry.key}}</td>
-				<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
-				<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
+			<ng-template #tableRow let-cacheEntry="item">
+				<td>{{cacheEntry.key}}</td>
+				<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.value | json}}</td>
+				<td><span [attr.title]="cacheEntry.ts | utcDate">{{cacheEntry.ts | agoDate:false}}</span></td>
 				<td class="text-right" style="max-width: 50px;">
 					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
 						<span class="dropdown-toggle dropdown-toggle-hide-caret px-2" style="cursor: pointer;" dropdownToggle>
@@ -50,13 +50,13 @@
 				</td>
 			</ng-template>
 
-			<ng-template namedTemplate="table-no-results">
+			<ng-template #tableNoResults>
 				<h2 class="text-center">
 					<small>No Cache Entries matched your search</small>
 				</h2>
 			</ng-template>
 
-			<ng-template namedTemplate="table-no-data">
+			<ng-template #tableNoData>
 				<h2 class="text-center">
 					<small>No Cache Entries are available</small>
 				</h2>

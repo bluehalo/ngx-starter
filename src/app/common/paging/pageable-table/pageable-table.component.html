@@ -1,7 +1,7 @@
 <div class="table" [ngClass]="{'card p-3': showInCard}">
 	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions" [hidden]="items?.length === 0">
 		<div class="table-actions d-flex flex-grow-1" *ngIf="showActions">
-			<ng-template [transclusion]="actionTemplate"></ng-template>
+			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
 		</div>
 
 		<div class="table-header-pager" *ngIf="pagerAtTop" [ngClass]="{'ml-auto': !showActions}">
@@ -22,34 +22,29 @@
 		<table class="table" [ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}">
 			<thead>
 			<tr>
-				<ng-template [transclusion]="headerTemplate"></ng-template>
+				<ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
 			</tr>
 			</thead>
 
 			<tbody>
 			<tr *ngFor="let item of items; let i = index" class="table-row">
-				<ng-template
-					*ngIf="rowTemplate"
-					[transclusion]="rowTemplate"
-					[item]="item"
-					[index]="i">
-				</ng-template>
+				<ng-container *ngTemplateOutlet="rowTemplate; context: {item: item, index: i}"></ng-container>
 			</tr>
 			</tbody>
 		</table>
 	</div>
 
 	<div class="table-no-results" *ngIf="!loading && hasItems && items?.length === 0">
-		<ng-template [transclusion]="noResultsTableTemplate"></ng-template>
+		<ng-container *ngTemplateOutlet="noResultsTableTemplate"></ng-container>
 	</div>
 
 	<div class="table-no-data" *ngIf="!hasItems && !loading">
-		<ng-template [transclusion]="noDataTableTemplate"></ng-template>
+		<ng-container *ngTemplateOutlet="noDataTableTemplate"></ng-container>
 	</div>
 
 	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions" [hidden]="items?.length === 0">
 		<div class="table-actions d-flex flex-grow-1" *ngIf="showFooterActions">
-			<ng-template [transclusion]="footerActionTemplate"></ng-template>
+			<ng-container *ngTemplateOutlet="footerActionTemplate"></ng-container>
 		</div>
 
 		<div class="table-footer-pager" *ngIf="pagerAtBottom" [ngClass]="{'ml-auto': !showFooterActions}">

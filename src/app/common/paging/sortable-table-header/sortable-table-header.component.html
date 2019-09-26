@@ -1,4 +1,5 @@
 <span *ngIf="header" class="sortable-table-header hide-overflow limit-width-cell" [ngClass]="{'sortable': sortable}" tooltip="{{ sortable ? header.tooltip : ''}}" (click)="sort()" placement="bottom" container="body">
+	<span *ngIf="header.iconClass" class="fa {{ header.iconClass }}"></span>
 	{{ header?.name }}
 	<ng-container *ngIf="sortable">
 		<span class="fa-stack">

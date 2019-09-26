@@ -79,7 +79,7 @@ export class TeamsService {
 		);
 	}
 
-	search(paging: PagingOptions, query: any, search: string = null, options: any): Observable<PagingResults> {
+	search(paging: PagingOptions, query: any, search: string = null, options: any): Observable<PagingResults<Team>> {
 		return this.http.post(
 			'api/teams',
 			JSON.stringify({s: search, q: query, options}),
@@ -117,9 +117,9 @@ export class TeamsService {
 		);
 	}
 
-	searchMembers(teamId: string, team: Team, query: any, search: any, paging: PagingOptions, options: any): Observable<PagingResults> {
+	searchMembers(team: Team, query: any, search: any, paging: PagingOptions, options: any): Observable<PagingResults> {
 		return this.http.post(
-			`api/team/${teamId}/members?`,
+			`api/team/${team._id}/members?`,
 			JSON.stringify({s: search, q: query, options}),
 			{ params: paging.toObj(), headers: this.headers }
 		).pipe(

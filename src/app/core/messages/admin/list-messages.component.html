@@ -10,26 +10,26 @@
 
 	<div class="pt-2">
 		<div class="d-flex mb-3">
-			<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"></asy-search-input>
+			<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
 			<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
 				<span class="fa fa-plus"></span> Create Message
 			</button>
 		</div>
-		<pageable-table [items]="messages"
-						[hasItems]="hasMessages"
-						[pagingOptions]="pagingOpts"
+		<pageable-table [items]="items"
+						[hasItems]="hasItems"
+						[pagingOptions]="pagingOptions"
 						[tableStriped]="true"
-						(pageChange)="goToPage($event)">
+						(pageChange)="pageEvent$.next($event)">
 
-			<ng-template namedTemplate="table-header">
+			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField"
-						[currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
+					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField"
+						[currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 				</th>
 				<th>&nbsp;</th>
 			</ng-template>
 
-			<ng-template namedTemplate="table-row" let-message>
+			<ng-template #tableRow let-message="item">
 				<td>{{message.title}}</td>
 				<td>{{message.type}}</td>
 				<td>{{message.created | agoDate:false}}</td>
@@ -51,10 +51,16 @@
 				</td>
 			</ng-template>
 
-			<ng-template namedTemplate="empty-table">
-				<h3>
+			<ng-template #tableNoResults>
+				<h2 class="text-center">
 					<small>No Messages matched your search</small>
-				</h3>
+				</h2>
+			</ng-template>
+
+			<ng-template #tableNoData>
+				<h2 class="text-center">
+					<small>No Messages available</small>
+				</h2>
 			</ng-template>
 
 		</pageable-table>

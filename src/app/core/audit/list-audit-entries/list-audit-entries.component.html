@@ -6,7 +6,7 @@
 	</h1>
 
 	<!-- Alert Notifications -->
-	<!-- <system-alert></system-alert> -->
+	<system-alert></system-alert>
 
 	<div class="row pt-2">
 		<div class="col-md-2">
@@ -22,7 +22,7 @@
 				</div>
 				<div *ngIf="timestampFormShown" class="quick-select-header">
 					<ng-select [items]="dateRangeOptions" [clearable]="false" bindLabel="display" bindValue="value"
-							   (change)="refresh()"
+							   (change)="load$.next(true)"
 							   [(ngModel)]="dateRangeFilter.selected" name="timestamp"
 							   dropdownPosition="bottom">
 					</ng-select>
@@ -33,7 +33,7 @@
 							   placeholder="Enter start date..."
 							   placement="bottom"
 							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
-							   (bsValueChange)="updateDateRange()" [maxDate]="queryEndDate"
+							   (bsValueChange)="load$.next(true)" [maxDate]="queryEndDate"
 							   [outsideClick]="true" required [(ngModel)]="queryStartDate">
 						<span class="icon fa fa-calendar" (click)="qsDp.toggle()"></span>
 					</div>
@@ -44,7 +44,7 @@
 							   placeholder="Enter end date..."
 							   placement="bottom"
 							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
-							   (bsValueChange)="updateDateRange()" [minDate]="queryStartDate"
+							   (bsValueChange)="load$.next(true)" [minDate]="queryStartDate"
 							   [outsideClick]="true" required [(ngModel)]="queryEndDate">
 						<span class="icon fa fa-calendar" (click)="qeDp.toggle()"></span>
 					</div>
@@ -71,7 +71,7 @@
 						[typeaheadMinLength]="1"
 						[typeaheadWaitMs]="300"
 						(typeaheadOnSelect)="typeaheadOnSelect($event)"
-						(keyup.enter)="refresh()">
+						(keyup.enter)="load$.next(true)">
 				</div>
 
 			</div>
@@ -89,7 +89,7 @@
 				</div>
 				<div *ngIf="actionsFormShown" class="quick-select-header">
 					<div *ngFor="let option of actionOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
-						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" id="actionOption{{idx}}">
+						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="load$.next(true)" id="actionOption{{idx}}">
 						<label class="form-check-label" for="actionOption{{idx}}">{{ option.display }}</label>
 					</div>
 				</div>
@@ -107,46 +107,26 @@
 				</div>
 				<div *ngIf="typeFormShown" class="quick-select-header">
 					<div *ngFor="let option of auditTypeOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
-						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="refresh()" id="auditTypeOption{{idx}}">
+						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="load$.next(true)" id="auditTypeOption{{idx}}">
 						<label class="form-check-label" for="auditTypeOption{{idx}}">{{ option.display }}</label>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-10">
-			<pageable-table [items]="auditEntries"
-				[hasItems]="hasAuditEntries"
-				[pagingOptions]="pagingOpts"
+			<pageable-table [items]="items"
+				[hasItems]="hasItems"
+				[pagingOptions]="pagingOptions"
 				[tableStriped]="true"
-				(pageChange)="goToPage($event)">
+				(pageChange)="pageEvent$.next($event)">
 
-				<ng-template namedTemplate="table-header">
-					<th>
-						<a class="no-href" (click)="setSort('audit.actor.name')">
-							<i class="fa fa-user"></i> Actor<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'ASC'}"></i>
-						</a>
+				<ng-template #tableHeader>
+					<th *ngFor="let header of headers">
+						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 					</th>
-					<th>
-						<a class="no-href" (click)="setSort('created')">
-							<i class="fa fa-clock-o"></i> Timestamp<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'created' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'created' && pagingOpts.sortDir === 'ASC'}"></i>
-						</a>
-					</th>
-					<th>
-						<a class="no-href" (click)="setSort('audit.action')">
-							Action<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.action' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.action' && pagingOpts.sortDir === 'ASC'}"></i>
-						</a>
-					</th>
-					<th>
-						<a class="no-href" (click)="setSort('audit.auditType')">
-							Type<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.auditType' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.auditType' && pagingOpts.sortDir === 'ASC'}"></i>
-						</a>
-					</th>
-					<th>Object</th>
-					<th><i class="fa fa-history"></i> Before</th>
-					<th><i class="fa fa-file-text-o"></i> Message</th>
 				</ng-template>
 		
-				<ng-template namedTemplate="table-row" let-entry>
+				<ng-template #tableRow let-entry="item">
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="entry.audit.actor" auditType="user"></asy-audit-component>
@@ -207,7 +187,7 @@
 					</td>
 				</ng-template>
 
-				<ng-template namedTemplate="table-no-data">
+				<ng-template #tableNoData>
 					<h3>
 						No Audit Logs<br/>
 						<small>
@@ -217,7 +197,7 @@
 					</h3>
 				</ng-template>
 
-				<ng-template namedTemplate="table-no-results">
+				<ng-template #tableNoResults>
 					<h3>
 						No Audit Logs?<br/>
 						<small>

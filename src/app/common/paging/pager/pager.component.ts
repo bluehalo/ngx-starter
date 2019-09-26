@@ -3,72 +3,11 @@ import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges
 import isNumber from 'lodash/isNumber';
 
 import { SortDirection, SortDisplayOption } from '../sorting.model';
+import { PageChange, PagingOptions } from '../paging.model';
 
-export interface PagingResults {
-	pageNumber: number;
-	pageSize: number;
-	totalPages: number;
-	totalSize: number;
-	elements: any[];
-}
-
-export const NULL_PAGING_RESULTS: PagingResults = {
-	pageNumber: 0,
-	pageSize: 0,
-	totalPages: 0,
-	totalSize: 0,
-	elements: []
-};
-
-export interface PageChange {
-	pageNumber: number;
-	pageSize: number;
-	sortdir: SortDirection;
-}
-
-export class PagingOptions {
-	constructor(
-		public pageNumber: number = 0,
-		public pageSize: number = 50,
-		public totalPages: number = 0,
-		public totalSize: number = 0,
-		public sortField?: string | string[],
-		public sortDir?: SortDirection
-	) {}
-
-	reset() {
-		this.pageNumber = 0;
-		this.pageSize = 50;
-		this.totalPages = 0;
-		this.totalSize = 0;
-	}
-
-	set(pageNumber: number, pageSize: number, totalPages: number, totalSize: number) {
-		this.pageNumber = pageNumber;
-		this.pageSize = pageSize;
-		this.totalPages = totalPages;
-		this.totalSize = totalSize;
-	}
-
-	update(pageNumber: number, pageSize: number) {
-		this.pageNumber = pageNumber;
-		this.pageSize = pageSize;
-	}
-
-	setPageNumber(pageNumber: number) {
-		this.pageNumber = pageNumber;
-	}
-
-	toObj(): any {
-		return {
-			page: this.pageNumber,
-			size: this.pageSize,
-			sort: this.sortField || null,
-			dir: this.sortDir || null
-		};
-	}
-}
-
+/**
+ * @deprecated
+ */
 export abstract class PagingComponent {
 
 	pagingOpts: PagingOptions;
@@ -111,7 +50,7 @@ export class PagerComponent implements OnInit, OnChanges {
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
 
-	sortdir: SortDirection = SortDirection.desc;
+	sortDir: SortDirection = SortDirection.desc;
 
 	totalPages = 0;
 
@@ -171,7 +110,7 @@ export class PagerComponent implements OnInit, OnChanges {
 		this.format();
 
 		// Emit change event
-		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
+		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize});
 	}
 
 	setPageSize(pageSize: number) {
@@ -182,6 +121,6 @@ export class PagerComponent implements OnInit, OnChanges {
 		this.pageNumber = 0;
 
 		// Emit change event
-		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
+		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize});
 	}
 }

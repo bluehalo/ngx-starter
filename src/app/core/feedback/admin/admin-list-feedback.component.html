@@ -9,25 +9,25 @@
 	<div class="pt-2">
 
 		<div class="d-flex mb-3">
-			<asy-search-input placeholder="Search..." (applySearch)="onSearch($event)"></asy-search-input>
+			<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
 			<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
 				<span class="fa fa-download"></span> Export
 			</button>
 		</div>
 
-		<pageable-table [items]="feedbacks"
-						[hasItems]="hasFeedback"
-						[pagingOptions]="pagingOpts"
+		<pageable-table [items]="items"
+						[hasItems]="hasItems"
+						[pagingOptions]="pagingOptions"
 						[tableStriped]="true"
-						(pageChange)="goToPage($event)">
+						(pageChange)="pageEvent$.next($event)">
 
-			<ng-template namedTemplate="table-header">
+			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
+					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 				</th>
 			</ng-template>
 
-			<ng-template namedTemplate="table-row" let-feedback>
+			<ng-template #tableRow let-feedback="item">
 				<td>
 					<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
 				</td>
@@ -54,19 +54,13 @@
 				</td>
 			</ng-template>
 
-			<ng-template namedTemplate="empty-table">
-				<h2>
-					<small>No Feedback</small>
-				</h2>
-			</ng-template>
-
-			<ng-template namedTemplate="table-no-results">
+			<ng-template #tableNoResults>
 				<h2 class="text-center">
 					<small>No Feedback matched your search</small>
 				</h2>
 			</ng-template>
 
-			<ng-template namedTemplate="table-no-data">
+			<ng-template #tableNoData>
 				<h2 class="text-center">
 					<small>No Feedback available</small>
 				</h2>

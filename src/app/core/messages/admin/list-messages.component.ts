@@ -1,32 +1,29 @@
-import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Params } from '@angular/router';
 
+import { Observable } from 'rxjs';
+import { first, filter, switchMap } from 'rxjs/operators';
 import toString from 'lodash/toString';
 
-import { Message } from '../message.class';
-import { MessageService } from '../message.service';
 import {
 	PagingOptions,
-	SortDisplayOption,
 	SortDirection,
 	SortableTableHeader,
-	PagingResults
+	PagingResults, AbstractPageableDataComponent, SortChange
 } from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ModalService, ModalAction } from 'src/app/common/modal.module';
-import { first, filter, switchMap } from 'rxjs/operators';
 import { AdminTopics } from '../../admin/admin.module';
-import { HttpErrorResponse } from '@angular/common/http';
+
+import { Message } from '../message.class';
+import { MessageService } from '../message.service';
 
 @Component({
 	templateUrl: './list-messages.component.html'
 })
-export class ListMessagesComponent implements OnInit {
+export class ListMessagesComponent extends AbstractPageableDataComponent<Message> implements OnInit {
 
-	messages: Message[] = [];
-	hasMessages = false;
-	pagingOpts: PagingOptions;
-	search = '';
 	filters: any = {};
 	sort: any;
 
@@ -42,6 +39,7 @@ export class ListMessagesComponent implements OnInit {
 		public alertService: SystemAlertService,
 		private modalService: ModalService,
 		private route: ActivatedRoute) {
+		super();
 	}
 
 	ngOnInit() {
@@ -51,64 +49,32 @@ export class ListMessagesComponent implements OnInit {
 				this.messageService.cache.listMessages = {};
 			}
 
-			this.initializeMessageFilters();
-			this.applySearch();
+			this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+
+			this.initializeFromCache();
+
+			super.ngOnInit();
 		});
 	}
 
 	/**
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
-	initializeMessageFilters() {
-		const cachedFilter: any = this.messageService.cache.listMessages as any;
+	private initializeFromCache() {
+		const cachedFilter = this.messageService.cache.listMessages;
 
-		this.search = cachedFilter.search ? cachedFilter.search : '';
-		this.filters = cachedFilter.filters ? cachedFilter.filters : {};
+		this.searchEvent$.next(cachedFilter.search);
 
 		if (cachedFilter.paging) {
-			this.pagingOpts = cachedFilter.paging;
-		} else {
-			this.pagingOpts = new PagingOptions();
-			this.pagingOpts.pageSize = 20;
-			this.pagingOpts.sortField = 'created';
-			this.pagingOpts.sortDir = SortDirection.desc;
+			this.pageEvent$.next(cachedFilter.paging);
+			this.sortEvent$.next(cachedFilter.paging);
 		}
 	}
 
-	onSearch(search: string) {
-		this.search = search;
-		this.applySearch();
-	}
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<Message>> {
+		this.messageService.cache.messages = {search, paging: pagingOptions};
 
-	applySearch() {
-		this.messageService.cache.messages = {search: this.search, paging: this.pagingOpts};
-		this.messageService.search({}, this.search, this.pagingOpts)
-			.subscribe((result: PagingResults) => {
-				this.messages = result.elements;
-				if (this.messages.length > 0) {
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-				} else {
-					this.pagingOpts.reset();
-				}
-
-				if (!this.hasMessages) {
-					this.hasMessages = this.messages.length > 0;
-				}
-			}, (error) => {
-				this.alertService.addAlert(error.message);
-			}
-		);
-	}
-
-	goToPage(event: any) {
-		this.pagingOpts.update(event.pageNumber, event.pageSize);
-		this.applySearch();
-	}
-
-	setSort(sortOpt: SortDisplayOption) {
-		this.pagingOpts.sortField = sortOpt.sortField;
-		this.pagingOpts.sortDir = sortOpt.sortDir;
-		this.applySearch();
+		return this.messageService.search(query, search, pagingOptions);
 	}
 
 	confirmDeleteMessage(message: Message) {
@@ -125,7 +91,7 @@ export class ListMessagesComponent implements OnInit {
 			)
 			.subscribe(() => {
 				this.alertService.addAlert(`Deleted message.`, 'success');
-				this.applySearch();
+				this.load$.next(true);
 			}, (error: HttpErrorResponse) => {
 				this.alertService.addAlert(error.message);
 			});
