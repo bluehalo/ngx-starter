@@ -17,9 +17,9 @@ import { DirectivesModule } from '../../../common/directives.module';
 
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
-	AuditObjectComponent, UrlAudit,
-	DefaultAudit, ExportAudit, UserAudit,
-	UserAuthentication
+	AuditObjectComponent, UrlAuditObjectComponent,
+	DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+	UserAuthenticationObjectComponent
 } from '../audit-object.component';
 import { AuditService } from '../audit.service';
 
@@ -108,9 +108,9 @@ describe('Audit Component Spec', () => {
 		TestBed.configureTestingModule({
 			declarations: [
 				ListAuditEntriesComponent,
-				AuditObjectComponent, UrlAudit,
-				DefaultAudit, ExportAudit, UserAudit,
-				UserAuthentication
+				AuditObjectComponent, UrlAuditObjectComponent,
+				DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+				UserAuthenticationObjectComponent
 			],
 			imports: [
 				BsDatepickerModule.forRoot(),
@@ -131,9 +131,9 @@ describe('Audit Component Spec', () => {
 		.overrideModule(BrowserDynamicTestingModule, {
 			set: {
 				entryComponents: [
-					AuditObjectComponent, UrlAudit,
-					DefaultAudit, ExportAudit, UserAudit,
-					UserAuthentication
+					AuditObjectComponent, UrlAuditObjectComponent,
+					DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+					UserAuthenticationObjectComponent
 				]
 			}
 		});
