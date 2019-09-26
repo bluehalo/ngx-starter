@@ -17,17 +17,16 @@
 						[hasItems]="hasCacheEntries"
 						[pagingOptions]="pagingOpts"
 						[tableStriped]="true"
-						(onPageChange)="goToPage($event)"
-						(onSortChange)="setSort($event)">
+						(pageChange)="goToPage($event)">
 
-			<ng-template named-template="table-header">
+			<ng-template namedTemplate="table-header">
 				<th *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
 				</th>
 				<th>&nbsp;</th>
 			</ng-template>
 
-			<ng-template named-template="table-row" let-cacheEntry>
+			<ng-template namedTemplate="table-row" let-cacheEntry>
 				<td>{{cacheEntry.entry.key}}</td>
 				<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.entry.value | json}}</td>
 				<td><span [attr.title]="cacheEntry.entry.ts | utcDate">{{cacheEntry.entry.ts | agoDate:false}}</span></td>
@@ -51,13 +50,13 @@
 				</td>
 			</ng-template>
 
-			<ng-template named-template="table-no-results">
+			<ng-template namedTemplate="table-no-results">
 				<h2 class="text-center">
 					<small>No Cache Entries matched your search</small>
 				</h2>
 			</ng-template>
 
-			<ng-template named-template="table-no-data">
+			<ng-template namedTemplate="table-no-data">
 				<h2 class="text-center">
 					<small>No Cache Entries are available</small>
 				</h2>

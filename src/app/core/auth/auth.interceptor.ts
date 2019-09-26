@@ -36,14 +36,10 @@ export class AuthInterceptor implements HttpInterceptor {
 				if (401 === status && !url.endsWith('auth/signin')) {
 					this.router.navigate(['/signin']);
 
-				}
-
-				// If it was anything other 400 error, take them to the access problem page
-				else if (403 === status) {
+				} else if (403 === status) {
 					if ('eua' === type) {
 						this.router.navigate(['/eua']);
-					}
-					else {
+					} else {
 						this.router.navigate(['/access'], {state: stateObject});
 					}
 				}

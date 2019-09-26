@@ -11,7 +11,7 @@ export interface TableSortOptions {
 	selector: 'sort-controls',
 	templateUrl: 'sort-controls.component.html'
 })
-export class SortControls {
+export class SortControlsComponent {
 
 	@Input() showHeader = true;
 
@@ -25,7 +25,7 @@ export class SortControls {
 
 	@Input() sortOptions: TableSortOptions;
 
-	@Output() readonly onSortChange = new EventEmitter<SortDisplayOption>();
+	@Output() readonly sortChange = new EventEmitter<SortDisplayOption>();
 
 	private selectedKey: string;
 
@@ -36,13 +36,13 @@ export class SortControls {
 		if (this.selectedKey !== this.sortOptions[key].sortField) {
 			this.selectedKey = this.sortOptions[key].sortField as string;
 			this.selectedDir = this.sortOptions[key].sortDir;
-			this.onSortChange.emit(this.sortOptions[key]);
+			this.sortChange.emit(this.sortOptions[key]);
 
 		// Otherwise, toggle the sort direction (if direction controls are enabled)
 		} else if (this.showDirectionControl) {
 			this.selectedDir = this.selectedDir === SortDirection.desc ? SortDirection.asc : SortDirection.desc;
 			this.sortOptions[key].sortDir = this.selectedDir;
-			this.onSortChange.emit(this.sortOptions[key]);
+			this.sortChange.emit(this.sortOptions[key]);
 		}
 	}
 }

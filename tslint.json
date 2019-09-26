@@ -65,28 +65,16 @@
     "trailing-comma": false,
 
     // codelyzer rules.  To revert to errors, remove/change severity
-    "no-output-on-prefix": {
-      "options": true,
-      "severity": "warning"
-    },
+    "no-output-on-prefix": true,
     "no-inputs-metadata-property": true,
     "no-outputs-metadata-property": true,
     "no-host-metadata-property": true,
-    "no-input-rename": {
-      "options": true,
-      "severity": "warning"
-    },
+    "no-input-rename": true,
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": {
-      "options": ["Component"],
-      "severity": "warning"
-    },
-    "directive-class-suffix": {
-      "options": ["Directive"],
-      "severity": "warning"
-    },
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
     "no-conflicting-lifecycle": true,
     "no-lifecycle-call": true,
     "no-output-native": true,
@@ -98,20 +86,6 @@
       "severity": "warning"
     },
 
-    // defaults from ts:recommended.  To revert to errors, just remove
-    "ban-types": {
-      "options": [
-        ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
-        ["Function", "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."],
-        ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
-        ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
-        ["String", "Avoid using the `String` type. Did you mean `string`?"],
-        ["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
-      ],
-      "severity": "warning"
-    },
-
-    "one-line": [ true, "check-open-brace", "check-whitespace" ],
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
   }
 }

@@ -4,9 +4,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { PagingOptions, PageChange, Pager } from '../pager/pager.component';
-import { PageableTable } from './pageable-table.component';
-import { SortControls } from '../sort-controls/sort-controls.component';
+import { PagingOptions, PageChange, PagerComponent } from '../pager/pager.component';
+import { PageableTableComponent } from './pageable-table.component';
+import { SortControlsComponent } from '../sort-controls/sort-controls.component';
 import { FormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../directives.module';
 import { PipesModule } from '../../pipes.module';
@@ -17,30 +17,30 @@ import { PipesModule } from '../../pipes.module';
 	<pageable-table [items]="items"
 					[hasItems]="hasItems"
 					[pagingOptions]="pagingOptions"
-					(onPageChange)="pageChanged$.next($event)">
+					(pageChange)="pageChanged$.next($event)">
 
-		<ng-template named-template="table-header">
+		<ng-template namedTemplate="table-header">
 			{{ headerContent }}
 		</ng-template>
 
-		<ng-template named-template="table-row" let-item let-index="index">
+		<ng-template namedTemplate="table-row" let-item let-index="index">
 			{{ rowContent }}
 			{{ item }}
 			{{ index }}
 		</ng-template>
 
-		<ng-template named-template="table-no-data">
+		<ng-template namedTemplate="table-no-data">
 			{{ noDataContent }}
 		</ng-template>
 
-		<ng-template named-template="table-no-results">
+		<ng-template namedTemplate="table-no-results">
 			{{ noResultsContent }}
 		</ng-template>
 
 	</pageable-table>
 `
 })
-export class PageableTableTestHost {
+export class PageableTableTestHostComponent {
 	@Input() items: Iterable<any>;
 	@Input() hasItems: boolean;
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
@@ -55,8 +55,8 @@ export class PageableTableTestHost {
 
 describe('PageableTableComponent', () => {
 
-	let fixture: ComponentFixture<PageableTableTestHost>;
-	let testHost: PageableTableTestHost;
+	let fixture: ComponentFixture<PageableTableTestHostComponent>;
+	let testHost: PageableTableTestHostComponent;
 	let rootHTMLElement: HTMLElement;
 
 	beforeEach(() => {
@@ -68,14 +68,14 @@ describe('PageableTableComponent', () => {
 				PipesModule
 			],
 			declarations: [
-				PageableTableTestHost,
-				PageableTable,
-				Pager,
-				SortControls,
+				PageableTableTestHostComponent,
+				PageableTableComponent,
+				PagerComponent,
+				SortControlsComponent
 			]
 		});
 
-		fixture = testbed.createComponent(PageableTableTestHost);
+		fixture = testbed.createComponent(PageableTableTestHostComponent);
 		testHost = fixture.componentInstance;
 		rootHTMLElement = fixture.debugElement.nativeElement;
 		fixture.detectChanges();

@@ -98,7 +98,7 @@ export abstract class PagingComponent {
 	templateUrl: './pager.component.html',
 	styleUrls: [ './pager.component.scss' ]
 })
-export class Pager implements OnInit, OnChanges {
+export class PagerComponent implements OnInit, OnChanges {
 
 	@Input() pageNumber = 0;
 	@Input() pageSize = 0;
@@ -109,7 +109,7 @@ export class Pager implements OnInit, OnChanges {
 	@Input() showCountWarning = false;
 	@Input() countWarningMessage = '';
 
-	@Output() readonly onChange: EventEmitter<PageChange> = new EventEmitter();
+	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
 
 	sortdir: SortDirection = SortDirection.desc;
 
@@ -171,7 +171,7 @@ export class Pager implements OnInit, OnChanges {
 		this.format();
 
 		// Emit change event
-		this.onChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
+		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
 	}
 
 	setPageSize(pageSize: number) {
@@ -182,6 +182,6 @@ export class Pager implements OnInit, OnChanges {
 		this.pageNumber = 0;
 
 		// Emit change event
-		this.onChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
+		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize, sortdir: this.sortdir});
 	}
 }

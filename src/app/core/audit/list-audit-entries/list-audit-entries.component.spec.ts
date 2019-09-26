@@ -94,11 +94,9 @@ describe('Audit Component Spec', () => {
 		auditServiceSpy.getDistinctAuditValues.and.callFake((field) => {
 			if (field === 'audit.action') {
 				return of(distinctResultsActions);
-			}
-			else if (field === 'audit.auditType') {
+			} else if (field === 'audit.auditType') {
 				return of(distinctResultsTypes);
-			}
-			else {
+			} else {
 				throw new Error('should not get here');
 			}
 		});

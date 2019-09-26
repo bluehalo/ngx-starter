@@ -8,41 +8,41 @@ import _forEach from 'lodash/forEach';
 @Component({
 	template: '<loading-spinner></loading-spinner>'
 })
-export class LoadingSpinnerDefaultTestHost {}
+export class LoadingSpinnerDefaultTestHostComponent {}
 
 @Component({
 	template: '<loading-spinner [message]="message"></loading-spinner>'
 })
-export class LoadingSpinnerProvidedTestHost {
+export class LoadingSpinnerProvidedTestHostComponent {
 	message = 'Bootstrapping...';
 }
 
 describe('LoadingSpinnerComponent', () => {
 
-	let defaultFixture: ComponentFixture<LoadingSpinnerDefaultTestHost>;
-	let defaultTestHost: LoadingSpinnerDefaultTestHost;
+	let defaultFixture: ComponentFixture<LoadingSpinnerDefaultTestHostComponent>;
+	let defaultTestHost: LoadingSpinnerDefaultTestHostComponent;
 	let defaultRootHTMLElement: HTMLElement;
 
-	let providedFixture: ComponentFixture<LoadingSpinnerProvidedTestHost>;
-	let providedTestHost: LoadingSpinnerProvidedTestHost;
+	let providedFixture: ComponentFixture<LoadingSpinnerProvidedTestHostComponent>;
+	let providedTestHost: LoadingSpinnerProvidedTestHostComponent;
 	let providedRootHTMLElement: HTMLElement;
 
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
 			imports: [],
 			declarations: [
-				LoadingSpinnerDefaultTestHost,
-				LoadingSpinnerProvidedTestHost,
+				LoadingSpinnerDefaultTestHostComponent,
+				LoadingSpinnerProvidedTestHostComponent,
 				LoadingSpinnerComponent
 			]
 		});
 
-		defaultFixture = testbed.createComponent(LoadingSpinnerDefaultTestHost);
+		defaultFixture = testbed.createComponent(LoadingSpinnerDefaultTestHostComponent);
 		defaultTestHost = defaultFixture.componentInstance;
 		defaultRootHTMLElement = defaultFixture.debugElement.nativeElement;
 		defaultFixture.detectChanges();
 
-		providedFixture = testbed.createComponent(LoadingSpinnerProvidedTestHost);
+		providedFixture = testbed.createComponent(LoadingSpinnerProvidedTestHostComponent);
 		providedTestHost = providedFixture.componentInstance;
 		providedRootHTMLElement = providedFixture.debugElement.nativeElement;
 		providedFixture.detectChanges();

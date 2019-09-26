@@ -2,7 +2,7 @@ import { Directive, Input, ViewContainerRef, TemplateRef, OnChanges, SimpleChang
 @Directive({
 	selector: '[transclusion]'
 })
-export class Transclusion implements OnChanges {
+export class TransclusionDirective implements OnChanges {
 	@Input() item: any;
 	@Input() index: number;
 	@Input('transclusion') template: TemplateRef<any>;

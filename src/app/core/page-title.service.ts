@@ -52,12 +52,10 @@ export class PageTitleService {
 
 						if (isEmpty(appTitle) || isEmpty(pathTitle)) {
 							return `${appTitle}${pathTitle}`;
-						}
-						else {
+						} else {
 							return `${appTitle} - ${pathTitle}`;
 						}
-					}
-					catch {
+					} catch {
 						return appTitle;
 					}
 

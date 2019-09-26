@@ -37,14 +37,13 @@ export class SocketService {
 			if (this.authorizationService.isAuthenticated()) {
 				// enable sockets/messaging
 				this.socket.connect();
-			}
-			else {
+			} else {
 				this.socket.disconnect();
 			}
 		});
 	}
 
-	public on(eventName: string, callback: Function) {
+	public on(eventName: string, callback: (event: any) => void) {
 		this.socket.on(eventName, (event: any) => {
 			callback.apply(this.socket, [event]);
 		});

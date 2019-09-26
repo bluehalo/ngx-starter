@@ -8,7 +8,7 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.module';
 
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
@@ -44,13 +44,13 @@ export class AddMembersModalComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.dataSource = Observable.create((observer: any) => {
+		this.dataSource = new Observable((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
 			mergeMap((token: string) => this.teamsService.searchUsers({}, token, this.pagingOptions, {})),
-			map((result: any) => {
+			map((result: PagingResults) => {
 				return result.elements.map((r: any) => {
-					r.displayName = r.userModel.name + ' [' + r.userModel.username + ']';
+					r.displayName = `${r.userModel.name}  [${r.userModel.username}]`;
 					return r;
 				});
 			})

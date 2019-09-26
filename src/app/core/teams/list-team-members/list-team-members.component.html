@@ -10,15 +10,15 @@
 	<!-- Search Input -->
 	<search-table placeholder="Search team members..." (applySearch)="searchEvent$.next($event)"></search-table>
 
-	<pageable-table [items]="teamMembers" [pagingOptions]="pagingOptions" (onPageChange)="pageEvent$.next($event)">
+	<pageable-table [items]="teamMembers" [pagingOptions]="pagingOptions" (pageChange)="pageEvent$.next($event)">
 
-		<ng-template named-template="table-header">
+		<ng-template namedTemplate="table-header">
 			<th *ngFor="let header of headersToShow">
-				<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (onSortChange)="sortEvent$.next($event)"></sortable-table-header>
+				<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 			</th>
 		</ng-template>
 
-		<ng-template named-template="table-row" let-member>
+		<ng-template namedTemplate="table-row" let-member>
 			<!-- Name -->
 			<td>
 				<div>{{ member.userModel.name }}</div>
@@ -73,7 +73,7 @@
 			</td>
 		</ng-template>
 
-		<ng-template named-template="empty-table">
+		<ng-template namedTemplate="empty-table">
 			<div *ngIf="hasSearch">
 				<h4>No team members matched your search</h4>
 			</div>

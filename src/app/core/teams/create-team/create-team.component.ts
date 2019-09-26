@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { first, map, mergeMap, tap } from 'rxjs/operators';
 
 import { PagingResults, PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
@@ -82,19 +82,20 @@ export class CreateTeamComponent implements OnInit {
 
 		// Bind the search users typeahead to a function
 		if (this.isAdmin) {
-			this.searchUsersRef = Observable.create((observer: any) => {
-				this.userService.search({}, this.queryUserSearchTerm, this.pagingOptions, {})
-					.subscribe((result: PagingResults) => {
-						const formatted = result.elements
-							.filter((user: any) => user._id !== this.defaultTeamAdmin._id)
-							.map((user: any) => user.userModel)
-							.map((user: any) => {
-								user.displayName = `${user.name} (${user.username})`;
-								return user;
-							});
-						observer.next(formatted);
-					});
-			});
+			this.searchUsersRef = new Observable((observer: any) => {
+				observer.next(this.queryUserSearchTerm);
+			}).pipe(
+				mergeMap((token: string) => this.userService.search({}, token, this.pagingOptions, {})),
+				map((result: PagingResults) => {
+					return result.elements
+						.filter((user: any) => user._id !== this.defaultTeamAdmin._id)
+						.map((user: any) => user.userModel)
+						.map((user: any) => {
+							user.displayName = `${user.name}  [${user.username}]`;
+							return user;
+						});
+				})
+			);
 		}
 	}
 

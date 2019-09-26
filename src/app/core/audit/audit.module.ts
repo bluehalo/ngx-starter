@@ -9,18 +9,19 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AuditRoutingModule } from './audit-routing.module';
-import { AuditViewChangeModal, AuditViewDetailModal } from './audit-view-change.component';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
 import {
-	AuditObjectComponent, UrlAudit,
-	DefaultAudit, ExportAudit, UserAudit,
-	UserAuthentication
+	AuditObjectComponent, UrlAuditObjectComponent,
+	DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+	UserAuthenticationObjectComponent
 } from './audit-object.component';
 
 import { DirectivesModule } from '../../common/directives.module';
 import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
+import { AuditViewChangeModalComponent } from './audit-view-change-modal/audit-view-change-modal.component';
+import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit-view-details-modal.component';
 
 @NgModule({
 	imports: [
@@ -37,28 +38,28 @@ import { PipesModule } from '../../common/pipes.module';
 		PipesModule
 	],
 	entryComponents: [
-		AuditViewChangeModal,
-		AuditViewDetailModal,
+		AuditViewChangeModalComponent,
+		AuditViewDetailsModalComponent,
 
-		DefaultAudit,
-		ExportAudit,
-		UrlAudit,
-		UserAudit,
-		UserAuthentication
+		DefaultAuditObjectComponent,
+		ExportAuditObjectComponent,
+		UrlAuditObjectComponent,
+		UserAuditObjectComponent,
+		UserAuthenticationObjectComponent
 	],
 	exports: [],
 	declarations: [
 		ListAuditEntriesComponent,
-		AuditViewChangeModal,
-		AuditViewDetailModal,
+		AuditViewChangeModalComponent,
+		AuditViewDetailsModalComponent,
 
 		AuditObjectComponent,
-		UrlAudit,
-		DefaultAudit,
-		ExportAudit,
-		UrlAudit,
-		UserAudit,
-		UserAuthentication
+		UrlAuditObjectComponent,
+		DefaultAuditObjectComponent,
+		ExportAuditObjectComponent,
+		UrlAuditObjectComponent,
+		UserAuditObjectComponent,
+		UserAuthenticationObjectComponent
 	],
 	providers: [
 		AuditService
@@ -67,5 +68,4 @@ import { PipesModule } from '../../common/pipes.module';
 export class AuditModule { }
 
 export { AuditObjectTypes } from './audit.classes';
-export { auditObjects } from './audit-object.component';
 export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';

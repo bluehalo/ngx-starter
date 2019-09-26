@@ -146,8 +146,7 @@ export class MessageService {
 
 		if (this.subscribed === 0) {
 			this.socketService.emit('message:unsubscribe');
-		}
-		else if (this.subscribed < 0) {
+		} else if (this.subscribed < 0) {
 			this.subscribed = 0;
 		}
 	}
