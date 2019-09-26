@@ -155,8 +155,7 @@ export class ListTeamMembersComponent implements OnInit {
 			this.teamMembers = result.elements;
 			if (this.teamMembers.length > 0) {
 				this.pagingOptions.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-			}
-			else {
+			} else {
 				this.pagingOptions.reset();
 			}
 			this.resetPaging = false;
@@ -222,12 +221,10 @@ export class ListTeamMembersComponent implements OnInit {
 					// If we successfully removed the role from ourselves, redirect away
 					this.router.navigate(['/teams', {clearCachedFilter: true}]);
 				});
-		}
-		else if (!member.explicit) {
+		} else if (!member.explicit) {
 			// Member is implicitly in team, should explicitly add this member with the desired role
 			this.addMember(member, role);
-		}
-		else {
+		} else {
 			this.doUpdateRole(member, role)
 				.pipe(
 					catchError((error: HttpErrorResponse) => {

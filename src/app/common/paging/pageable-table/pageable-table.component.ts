@@ -5,7 +5,7 @@ import {
 
 import fromPairs from 'lodash/fromPairs';
 
-import { NamedTemplate } from '../../directives.module';
+import { NamedTemplateDirective } from '../../directives.module';
 import { PagingOptions, PageChange } from '../pager/pager.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { PagingOptions, PageChange } from '../pager/pager.component';
 	templateUrl: './pageable-table.component.html',
 	styleUrls: [ './pageable-table.component.scss' ]
 })
-export class PageableTable implements AfterContentInit {
+export class PageableTableComponent implements AfterContentInit {
 
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
 	@Input() items: Array<any>;
@@ -29,10 +29,10 @@ export class PageableTable implements AfterContentInit {
 	@Input() tableHover = false;
 	@Input() tableStriped = false;
 
-	@Output() readonly onPageChange = new EventEmitter<PageChange>();
+	@Output() readonly pageChange = new EventEmitter<PageChange>();
 	@Output() readonly pageAndScroll = new EventEmitter<PageChange>();
 
-	@ContentChildren(NamedTemplate) templates: QueryList<NamedTemplate>;
+	@ContentChildren(NamedTemplateDirective) templates: QueryList<NamedTemplateDirective>;
 
 	actionTemplate: TemplateRef<any>;
 	headerTemplate: TemplateRef<any>;
@@ -53,5 +53,5 @@ export class PageableTable implements AfterContentInit {
 	}
 
 	private getNamedTemplates = (template): [string, TemplateRef<any>] =>
-		[template.name, template.templateRef]
+		[template.namedTemplate, template.templateRef]
 }

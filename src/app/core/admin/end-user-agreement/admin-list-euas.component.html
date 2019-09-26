@@ -24,17 +24,16 @@
 							[hasItems]="hasEuas"
 							[pagingOptions]="pagingOpts"
 							[tableStriped]="true"
-							(onPageChange)="goToPage($event)"
-							(onSortChange)="setSort($event)">
+							(pageChange)="goToPage($event)">
 
-				<ng-template named-template="table-header">
+				<ng-template namedTemplate="table-header">
 					<th *ngFor="let header of headersToShow">
-						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+						<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
 					</th>
 					<th>&nbsp;</th>
 				</ng-template>
 
-				<ng-template named-template="table-row" let-eua let-i="index">
+				<ng-template namedTemplate="table-row" let-eua let-i="index">
 					<td [hidden]="!columns._id.show">{{eua.euaModel._id}}</td>
 					<td [hidden]="!columns.title.show">
 						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.title}}</div>
@@ -66,13 +65,13 @@
 					</td>
 				</ng-template>
 
-				<ng-template named-template="table-no-results">
+				<ng-template namedTemplate="table-no-results">
 					<h2 class="text-center">
 						<small>No EUAs matched your search</small>
 					</h2>
 				</ng-template>
 
-				<ng-template named-template="table-no-data">
+				<ng-template namedTemplate="table-no-data">
 					<h2 class="text-center">
 						<small>No EUAs are available</small>
 					</h2>

@@ -12,7 +12,7 @@
 				[maxPageSize]="pagingOptions?.pageSize"
 				[currentSize]="items?.length"
 				[disableGoToEnd]="disableGoToEnd"
-				(onChange)="onPageChange.emit($event)">
+				(pageChange)="pageChange.emit($event)">
 			</asy-pager>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 				[maxPageSize]="pagingOptions?.pageSize"
 				[currentSize]="items?.length"
 				[disableGoToEnd]="disableGoToEnd"
-				(onChange)="onPageChange.emit($event)">
+				(pageChange)="pageChange.emit($event)">
 			</asy-pager>
 		</div>
 	</div>

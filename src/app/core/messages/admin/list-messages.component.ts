@@ -67,8 +67,7 @@ export class ListMessagesComponent implements OnInit {
 
 		if (cachedFilter.paging) {
 			this.pagingOpts = cachedFilter.paging;
-		}
-		else {
+		} else {
 			this.pagingOpts = new PagingOptions();
 			this.pagingOpts.pageSize = 20;
 			this.pagingOpts.sortField = 'created';

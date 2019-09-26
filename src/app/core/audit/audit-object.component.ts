@@ -4,41 +4,35 @@ import {
 } from '@angular/core';
 import { AuditObjectTypes } from './audit.classes';
 
-export let auditObjects: any[] = [];
-
 @Component({
 	selector: 'default',
-	templateUrl: './default-audit.component.html'
+	template: '<span>{{ auditObject | json }}</span>'
 })
-export class DefaultAudit {
+export class DefaultAuditObjectComponent {
 	@Input() auditObject: any = {};
 }
-auditObjects.push(DefaultAudit);
-AuditObjectTypes.registerType('default', DefaultAudit);
+AuditObjectTypes.registerType('default', DefaultAuditObjectComponent);
 
 @Component({
 	selector: 'url',
-	templateUrl: './url-audit.component.html'
+	template: '<span>{{ auditObject.url }}</span>'
 })
-export class UrlAudit extends DefaultAudit {}
-auditObjects.push(UrlAudit);
-AuditObjectTypes.registerType('url', UrlAudit);
+export class UrlAuditObjectComponent extends DefaultAuditObjectComponent {}
+AuditObjectTypes.registerType('url', UrlAuditObjectComponent);
 
 @Component({
 	selector: 'user',
-	templateUrl: './user-audit.component.html'
+	template: '<span>{{ auditObject?.username }}</span>'
 })
-export class UserAudit extends DefaultAudit {}
-auditObjects.push(UserAudit);
-AuditObjectTypes.registerType('user', UserAudit);
+export class UserAuditObjectComponent extends DefaultAuditObjectComponent {}
+AuditObjectTypes.registerType('user', UserAuditObjectComponent);
 
 @Component({
 	selector: 'user-authentication',
 	template: ''
 })
-export class UserAuthentication extends DefaultAudit {}
-auditObjects.push(UserAuthentication);
-AuditObjectTypes.registerType('user-authentication', UserAuthentication);
+export class UserAuthenticationObjectComponent extends DefaultAuditObjectComponent {}
+AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectComponent);
 
 @Component({
 	selector: 'export-audit',
@@ -48,9 +42,8 @@ AuditObjectTypes.registerType('user-authentication', UserAuthentication);
 			</span>
 			`
 })
-export class ExportAudit extends DefaultAudit {}
-auditObjects.push(ExportAudit);
-AuditObjectTypes.registerType('export', ExportAudit);
+export class ExportAuditObjectComponent extends DefaultAuditObjectComponent {}
+AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
 
 @Component({
 	selector: 'asy-audit-component',

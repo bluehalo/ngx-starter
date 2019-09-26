@@ -19,17 +19,17 @@
 						[hasItems]="hasMessages"
 						[pagingOptions]="pagingOpts"
 						[tableStriped]="true"
-						(onPageChange)="goToPage($event)">
+						(pageChange)="goToPage($event)">
 
-			<ng-template named-template="table-header">
+			<ng-template namedTemplate="table-header">
 				<th *ngFor="let header of headers">
 					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField"
-						[currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+						[currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
 				</th>
 				<th>&nbsp;</th>
 			</ng-template>
 
-			<ng-template named-template="table-row" let-message>
+			<ng-template namedTemplate="table-row" let-message>
 				<td>{{message.title}}</td>
 				<td>{{message.type}}</td>
 				<td>{{message.created | agoDate:false}}</td>
@@ -51,7 +51,7 @@
 				</td>
 			</ng-template>
 
-			<ng-template named-template="empty-table">
+			<ng-template namedTemplate="empty-table">
 				<h3>
 					<small>No Messages matched your search</small>
 				</h3>

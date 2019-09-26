@@ -10,8 +10,7 @@ export class UtcDateUtils {
 			let momentDate;
 			if (isMoment(value)) {
 				momentDate = value;
-			}
-			else {
+			} else {
 
 				momentDate = utc(value);
 				if (!momentDate.isValid()) {

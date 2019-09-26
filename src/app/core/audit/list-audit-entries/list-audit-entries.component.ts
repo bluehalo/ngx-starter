@@ -7,9 +7,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable, forkJoin } from 'rxjs';
 
 import { AuditService } from '../audit.service';
-import { AuditViewChangeModal, AuditViewDetailModal } from '../audit-view-change.component';
 import { PagingOptions, SortDisplayOption, SortDirection, TableSortOptions, PagingResults } from '../../../common/paging.module';
 import { AuditOption } from '../audit.classes';
+import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
+import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	styleUrls: ['./list-audit-entries.component.scss'],
@@ -88,18 +90,17 @@ export class ListAuditEntriesComponent implements OnInit {
 		};
 
 		// Bind the search users typeahead to a function
-		this.searchUsersRef = Observable.create((observer: any) => {
-			this.auditService.matchUser({}, this.queryUserSearchTerm, this.userPagingOpts, null)
-				.subscribe((result: any) => {
-					const formatted = result.elements
-						.map((r: any) => {
-							const user = r.userModel;
-							r.displayName = user.name + ' [' + user.username + ']';
-							return r;
-						});
-					observer.next(formatted);
+		this.searchUsersRef = new Observable((observer: any) => {
+			observer.next(this.queryUserSearchTerm);
+		}).pipe(
+			mergeMap((token: string) => this.auditService.matchUser({}, token, this.userPagingOpts, {})),
+			map((result: PagingResults) => {
+				return result.elements.map((r: any) => {
+					r.displayName = `${r.userModel.name}  [${r.userModel.username}]`;
+					return r;
 				});
-		});
+			})
+		);
 
 		// Load action and audit type options from the server
 		forkJoin([
@@ -122,8 +123,7 @@ export class ListAuditEntriesComponent implements OnInit {
 		if (name === this.pagingOpts.sortField) {
 			// Same column, reverse direction
 			this.pagingOpts.sortDir = (this.pagingOpts.sortDir === SortDirection.asc) ? SortDirection.desc : SortDirection.asc;
-		}
-		else {
+		} else {
 			// New column selected, default to ascending sort
 			this.pagingOpts.sortField = name;
 			this.pagingOpts.sortDir = SortDirection.asc;
@@ -143,11 +143,11 @@ export class ListAuditEntriesComponent implements OnInit {
 	viewMore(auditEntry: any, type: string) {
 		switch (type) {
 			case 'viewDetails':
-				this.auditModalRef = this.modalService.show(AuditViewDetailModal, { ignoreBackdropClick: true, class: 'modal-lg' });
+				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			case 'viewChanges':
-				this.auditModalRef = this.modalService.show(AuditViewChangeModal, { ignoreBackdropClick: true, class: 'modal-lg' });
+				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			default:
@@ -178,8 +178,7 @@ export class ListAuditEntriesComponent implements OnInit {
 				timeQuery = (null == timeQuery) ? {} : timeQuery;
 				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
 			}
-		}
-		else if (this.dateRangeFilter.selected !== 'everything') {
+		} else if (this.dateRangeFilter.selected !== 'everything') {
 			timeQuery = {
 				$gte: utc().add(this.dateRangeFilter.selected, 'days'),
 				$lt: utc()
@@ -233,8 +232,9 @@ export class ListAuditEntriesComponent implements OnInit {
 
 					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
 					this.auditEntriesLoaded = true;
-				}
-				else {
+
+					this.enrichAuditEntries();
+				} else {
 					this.auditEntries = [];
 					this.pagingOpts.reset();
 					this.auditEntriesLoaded = false;
@@ -245,4 +245,13 @@ export class ListAuditEntriesComponent implements OnInit {
 				}
 			});
 	}
+
+	private enrichAuditEntries() {
+		this.auditEntries.forEach((entry) => {
+			entry.isViewDetailsAction = this.auditService.isViewDetailsAction(entry.audit.action);
+			entry.isViewChangesAction = this.auditService.isViewChangesAction(entry.audit.action);
+		});
+	}
+
+
 }

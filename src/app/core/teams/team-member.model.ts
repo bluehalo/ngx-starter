@@ -46,8 +46,7 @@ export class TeamMember extends User {
 			// Initialize the teams array if needed
 			if (null == userModel.teams) {
 				this.userModel.teams = [];
-			}
-			else if (null != team) {
+			} else if (null != team) {
 				this.role = this.getRoleInTeam(team);
 				this.roleDisplay = TeamRole.getDisplay(this.role);
 			}
@@ -57,8 +56,7 @@ export class TeamMember extends User {
 
 			if (userModel.bypassAccessCheck) {
 				this.active = true;
-			}
-			else if (null != team) {
+			} else if (null != team) {
 				this.active = (0 === difference(team.requiresExternalTeams, userModel.externalGroups).length);
 			}
 		}

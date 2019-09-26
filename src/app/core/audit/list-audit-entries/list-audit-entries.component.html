@@ -118,10 +118,9 @@
 				[hasItems]="hasAuditEntries"
 				[pagingOptions]="pagingOpts"
 				[tableStriped]="true"
-				(onPageChange)="goToPage($event)"
-				(onRefresh)="refresh()">
+				(pageChange)="goToPage($event)">
 
-				<ng-template named-template="table-header">
+				<ng-template namedTemplate="table-header">
 					<th>
 						<a class="no-href" (click)="setSort('audit.actor.name')">
 							<i class="fa fa-user"></i> Actor<i class="fa fa-fw" [ngClass]="{'fa-caret-down': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'DESC', 'fa-caret-up': pagingOpts.sortField === 'audit.actor.name' && pagingOpts.sortDir === 'ASC'}"></i>
@@ -147,32 +146,32 @@
 					<th><i class="fa fa-file-text-o"></i> Message</th>
 				</ng-template>
 		
-				<ng-template named-template="table-row" let-entry>
-					<td >
+				<ng-template namedTemplate="table-row" let-entry>
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="entry.audit.actor" auditType="user"></asy-audit-component>
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							{{entry?.created | utcDate }}
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							{{entry?.audit?.action}}
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							{{entry?.audit?.auditType}}
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="(entry.audit.object?.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
-								<small *ngIf="auditService.isViewDetailsAction(entry.audit.action)">
+								<small *ngIf="entry.isViewDetailsAction">
 									<a class="btn-icon no-href"
 										[hidden]="null == entry.audit.object"
 										(click)="viewMore(entry, 'viewDetails')">
@@ -183,11 +182,11 @@
 							</div>
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							<asy-audit-component [auditObject]="entry.audit.object?.before" [auditType]="entry.audit.auditType"></asy-audit-component>
 							<div>
-								<small *ngIf="auditService.isViewChangesAction(entry.audit.action)">
+								<small *ngIf="entry.isViewChangesAction">
 									<a class="btn-icon no-href"
 										[hidden]="null == entry.audit.object || null == entry.audit.object.before"
 										tooltip="See details of the update"
@@ -201,14 +200,14 @@
 							</div>
 						</div>
 					</td>
-					<td >
+					<td>
 						<div class="hide-overflow" style="max-width:200px;">
 							{{entry?.message}}
 						</div>
 					</td>
 				</ng-template>
 
-				<ng-template named-template="table-no-data">
+				<ng-template namedTemplate="table-no-data">
 					<h3>
 						No Audit Logs<br/>
 						<small>
@@ -218,7 +217,7 @@
 					</h3>
 				</ng-template>
 
-				<ng-template named-template="table-no-results">
+				<ng-template namedTemplate="table-no-results">
 					<h3>
 						No Audit Logs?<br/>
 						<small>

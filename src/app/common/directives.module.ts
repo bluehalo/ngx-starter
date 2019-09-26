@@ -1,24 +1,25 @@
 import { NgModule } from '@angular/core';
 
-import { Transclusion } from './directives/transclusion.directive';
-import { NamedTemplate } from './directives/named-template.directive';
+import { TransclusionDirective } from './directives/transclusion.directive';
+import { NamedTemplateDirective } from './directives/named-template.directive';
 import { SkipToDirective } from './directives/skip-to.directive';
 
 @NgModule({
 	imports: [],
 	exports: [
-		Transclusion,
-		NamedTemplate,
+		TransclusionDirective,
+		NamedTemplateDirective,
 		SkipToDirective
 	],
 	declarations: [
-		Transclusion,
-		NamedTemplate,
+		TransclusionDirective,
+		NamedTemplateDirective,
 		SkipToDirective
 	],
 	providers: []
 })
 export class DirectivesModule { }
 
-export { Transclusion } from './directives/transclusion.directive';
-export { NamedTemplate } from './directives/named-template.directive';
+export { TransclusionDirective } from './directives/transclusion.directive';
+export { NamedTemplateDirective } from './directives/named-template.directive';
+export { SkipToDirective } from './directives/skip-to.directive';

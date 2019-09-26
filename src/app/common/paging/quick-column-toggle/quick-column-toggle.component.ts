@@ -16,8 +16,7 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 	toggleQuickFilter(key: string) {
 		if (key === 'all') {
 			this.filterKeys.forEach((k: string) => this.filters[k].show = true);
-		}
-		else if (key === 'default') {
+		} else if (key === 'default') {
 			this.filters = JSON.parse(JSON.stringify(this.defaultFilters));
 		}
 

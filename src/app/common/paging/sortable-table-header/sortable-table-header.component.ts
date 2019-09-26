@@ -23,7 +23,7 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() currentSortDir: string;
 
-	@Output() readonly onSortChange = new EventEmitter<any>();
+	@Output() readonly sortChange = new EventEmitter<any>();
 
 	sortable: boolean;
 
@@ -35,11 +35,10 @@ export class SortableTableHeaderComponent implements OnInit {
 		if (this.sortable) {
 			// If this header is the currently sorted field, reverse the sort
 			if (this.header.sortField === this.currentSortField) {
-				this.onSortChange.emit({ sortField: this.header.sortField, sortDir: this.currentSortDir === 'ASC' ? 'DESC' : 'ASC' } );
-			}
-			else {
+				this.sortChange.emit({ sortField: this.header.sortField, sortDir: this.currentSortDir === 'ASC' ? 'DESC' : 'ASC' } );
+			} else {
 				// Else select the default sort for this field
-				this.onSortChange.emit({ sortField: this.header.sortField, sortDir: this.header.sortDir } );
+				this.sortChange.emit({ sortField: this.header.sortField, sortDir: this.header.sortDir } );
 			}
 		}
 	}

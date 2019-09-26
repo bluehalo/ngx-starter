@@ -19,15 +19,15 @@
 						[hasItems]="hasFeedback"
 						[pagingOptions]="pagingOpts"
 						[tableStriped]="true"
-						(onPageChange)="goToPage($event)">
+						(pageChange)="goToPage($event)">
 
-			<ng-template named-template="table-header">
+			<ng-template namedTemplate="table-header">
 				<th *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (onSortChange)="setSort($event)"></sortable-table-header>
+					<sortable-table-header [header]="header" [currentSortField]="pagingOpts.sortField" [currentSortDir]="pagingOpts.sortDir" (sortChange)="setSort($event)"></sortable-table-header>
 				</th>
 			</ng-template>
 
-			<ng-template named-template="table-row" let-feedback>
+			<ng-template namedTemplate="table-row" let-feedback>
 				<td>
 					<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
 				</td>
@@ -54,19 +54,19 @@
 				</td>
 			</ng-template>
 
-			<ng-template named-template="empty-table">
+			<ng-template namedTemplate="empty-table">
 				<h2>
 					<small>No Feedback</small>
 				</h2>
 			</ng-template>
 
-			<ng-template named-template="table-no-results">
+			<ng-template namedTemplate="table-no-results">
 				<h2 class="text-center">
 					<small>No Feedback matched your search</small>
 				</h2>
 			</ng-template>
 
-			<ng-template named-template="table-no-data">
+			<ng-template namedTemplate="table-no-data">
 				<h2 class="text-center">
 					<small>No Feedback available</small>
 				</h2>
