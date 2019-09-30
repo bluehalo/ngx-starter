@@ -23,15 +23,15 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 
 	loading = true;
 
-	protected pageEvent$: BehaviorSubject<PageChange> = new BehaviorSubject({ pageNumber: 0, pageSize: this.pageSize });
+	pageEvent$: BehaviorSubject<PageChange> = new BehaviorSubject({ pageNumber: 0, pageSize: this.pageSize });
 
-	protected sortEvent$: BehaviorSubject<SortChange> = new BehaviorSubject({} as SortChange);
+	sortEvent$: BehaviorSubject<SortChange> = new BehaviorSubject({} as SortChange);
 
-	protected filterEvent$: BehaviorSubject<any> = new BehaviorSubject({});
+	filterEvent$: BehaviorSubject<any> = new BehaviorSubject({});
 
-	protected searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
+	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
 
-	protected load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+	load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
 	protected constructor() {}
 
