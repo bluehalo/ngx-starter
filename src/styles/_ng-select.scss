@@ -18,7 +18,7 @@ $ng-select-placeholder: $input-placeholder-color !default;
 $ng-select-height: $input-height !default;
 $ng-select-value-padding-left: $input-padding-x;
 
-@import '~@ng-select/ng-select/scss/default.theme';
+@import '../../node_modules/@ng-select/ng-select/scss/default.theme';
 
 .ng-select {
 	.ng-placeholder {

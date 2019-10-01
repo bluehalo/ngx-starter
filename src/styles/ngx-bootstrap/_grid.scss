@@ -4,7 +4,7 @@
 // Creates 'col-na' classes vs 'col'.
 @mixin make-nav-aware-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
 	// Common properties for all breakpoints
-	%grid-column {
+	%na-grid-column {
 		position: relative;
 		width: 100%;
 		padding-right: $gutter / 2;
@@ -18,12 +18,12 @@
 		// Allow columns to stretch full width below their breakpoints
 		@for $i from 1 through $columns {
 			.col#{$infix}-#{$i} {
-				@extend %grid-column;
+				@extend %na-grid-column;
 			}
 		}
 		.col#{$infix},
 		.col#{$infix}-auto {
-			@extend %grid-column;
+			@extend %na-grid-column;
 		}
 
 		@include media-breakpoint-up($breakpoint, $breakpoints) {
