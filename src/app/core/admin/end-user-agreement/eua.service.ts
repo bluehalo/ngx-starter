@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
 import { EndUserAgreement } from './eua.model';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { catchError, map } from 'rxjs/operators';
+import { User } from '../../auth/user.model';
 
 @Injectable()
 /**
@@ -14,7 +17,10 @@ export class EuaService {
 
 	public cache: any = {};
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
 	/**
 	 * Public methods to be exposed through the service
@@ -31,11 +37,22 @@ export class EuaService {
 	}
 
 	// Search Euas
-	search(query: any, search: string , paging: PagingOptions, options: any): Observable<any> {
+	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults<EndUserAgreement>> {
 		return this.http.post(
 			'api/euas',
 			{q: query, s: search, options},
 			{ params: paging.toObj() }
+		).pipe(
+			map((results: PagingResults) => {
+				if (null != results && Array.isArray(results.elements)) {
+					results.elements = results.elements.map((element: any) => new EndUserAgreement().setFromEuaModel(element));
+				}
+				return results;
+			}),
+			catchError((error) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(NULL_PAGING_RESULTS);
+			})
 		);
 	}
 

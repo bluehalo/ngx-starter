@@ -2,14 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 
 import cloneDeep from 'lodash/cloneDeep';
 import toString from 'lodash/toString';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
-import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import {
+	PagingOptions,
+	PagingResults,
+	SortDirection,
+	SortableTableHeader,
+	AbstractPageableDataComponent
+} from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { EndUserAgreement } from './eua.model';
@@ -19,12 +25,7 @@ import { AdminTopics } from '../admin-topic.model';
 @Component({
 	templateUrl: './admin-list-euas.component.html'
 })
-export class AdminListEuasComponent extends PagingComponent implements OnDestroy, OnInit {
-
-	euas: EndUserAgreement[] = [];
-	hasEuas = false;
-
-	search = '';
+export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement> implements OnDestroy, OnInit {
 
 	// Columns to show/hide in user table
 	columns = {
@@ -39,12 +40,12 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
-		{ name: 'ID', sortField: '_id', sortable: false },
-		{ name: 'Title', sortField: 'title', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Title', default: true },
-		{ name: 'Text', sortField: 'text', sortable: false },
-		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Create Date' },
-		{ name: 'Published', sortField: 'published', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Publish Date' },
-		{ name: 'Updated', sortField: 'updated', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Title' }
+		{ name: 'ID', sortable: false, sortField: '_id' },
+		{ name: 'Title', sortable: true, sortField: 'title', sortDir: SortDirection.asc, tooltip: 'Sort by Title', default: true },
+		{ name: 'Text', sortable: false, sortField: 'text' },
+		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Create Date' },
+		{ name: 'Published', sortable: true, sortField: 'published', sortDir: SortDirection.desc, tooltip: 'Sort by Publish Date' },
+		{ name: 'Updated', sortable: true, sortField: 'updated', sortDir: SortDirection.asc, tooltip: 'Sort by Title' }
 	];
 
 	headersToShow: SortableTableHeader[] = [];
@@ -71,23 +72,14 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 
 		this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
 
-		this.initializeUserFilters();
+		this.initializeFromCache();
 
-		this.loadEuas();
+		super.ngOnInit();
 	}
 
 	ngOnDestroy() {
 		this.destroy$.next(true);
 		this.destroy$.unsubscribe();
-	}
-
-	onSearch(search: string) {
-		this.search = search;
-		this.applySearch();
-	}
-
-	loadData() {
-		this.loadEuas();
 	}
 
 	columnsUpdated(updatedColumns: any) {
@@ -107,10 +99,9 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 				switchMap(() => {
 					return this.euaService.remove(id);
 				})
-			)
-			.subscribe(() => {
+			).subscribe(() => {
 				this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
-				this.loadEuas();
+				this.load$.next(true);
 			},
 			(response: HttpErrorResponse) => {
 				if (response.status >= 400 && response.status < 500) {
@@ -123,68 +114,35 @@ export class AdminListEuasComponent extends PagingComponent implements OnDestroy
 		this.euaService.publish(eua.euaModel._id).subscribe(
 			() => {
 				this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
-				this.loadEuas();
+				this.load$.next(true);
 			},
 			(response: HttpErrorResponse) => {
 				if (response.status >= 400 && response.status < 500) {
 					this.alertService.addAlert(response.error.message);
 				}
 			});
-		this.loadEuas();
+		this.load$.next(true);
 	}
 
 	/**
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
-	private initializeUserFilters() {
+	private initializeFromCache() {
 		const cachedFilter = this.euaService.cache.listEuas;
 
-		this.search = cachedFilter.search ? cachedFilter.search : '';
+		this.searchEvent$.next(cachedFilter.search);
 
 		if (cachedFilter.paging) {
-			this.pagingOpts = cachedFilter.paging;
-		} else {
-			this.pagingOpts = new PagingOptions();
-
-			const defaultSort = this.headers.find((header: any) => header.default);
-			if (null != defaultSort) {
-				this.pagingOpts.sortField = defaultSort.sortField;
-				this.pagingOpts.sortDir = defaultSort.sortDir;
-			}
+			this.pageEvent$.next(cachedFilter.paging);
+			this.sortEvent$.next(cachedFilter.paging);
 		}
 	}
 
-	private loadEuas() {
-		const options: any = {};
-		this.euaService.cache.listEuas = {search: this.search, paging: this.pagingOpts};
-		this.euaService.search(this.getQuery(), this.search, this.pagingOpts, options)
-			.subscribe((result: PagingResults) => {
-				this.euas = result.elements.map((element: any) => new EndUserAgreement().setFromEuaModel(element));
-				if (this.euas.length > 0) {
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-				} else {
-					this.pagingOpts.reset();
-				}
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<EndUserAgreement>> {
+		this.euaService.cache.listEuas = {search, paging: pagingOptions};
 
-				if (!this.hasEuas) {
-					this.hasEuas = this.euas.length > 0;
-				}
-			}, (error) => {
-				this.alertService.addAlert(error.message);
-			}
-		);
+		return this.euaService.search(query, search, pagingOptions, {});
 	}
-
-	private getQuery(): any {
-		let query: any;
-		const elements: any[] = [];
-
-		if (elements.length > 0) {
-			query = { $or: elements };
-		}
-		return query;
-	}
-
 }
 
 AdminTopics.registerTopic({

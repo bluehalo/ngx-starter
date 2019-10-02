@@ -1,4 +1,5 @@
 export class CacheEntry {
+	isRefreshing = false;
 	date: Date;
 
 	constructor(

@@ -4,9 +4,9 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AuditService } from './audit.service';
 
 import _cloneDeep from 'lodash/cloneDeep';
-import _pullAt from 'lodash/pullAt';
 import { PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { User } from '../auth/user.model';
+import { SystemAlertService } from '../../common/system-alert.module';
 
 describe('Audit Service', () => {
 
@@ -18,7 +18,7 @@ describe('Audit Service', () => {
 
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
-			providers: [AuditService]
+			providers: [AuditService, SystemAlertService]
 		});
 
 		injector = getTestBed();
@@ -85,13 +85,14 @@ describe('Audit Service', () => {
 		it('should call once and return an Observable<PagingResults>', () => {
 			const results = {
 				elements: [
-					{ id: '123' },
-					{ id: '456' }
+					{ id: '123', audit: {} },
+					{ id: '456', audit: {} }
 				]
 			} as PagingResults;
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);
 			service.search({ actor: 'test' }, 'some-search', paging).subscribe((actual) => {
+				console.log(actual);
 				expect(actual).toBe(results);
 			});
 

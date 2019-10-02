@@ -11,9 +11,10 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule, PagingResults } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
-import { DirectivesModule } from '../../../common/directives.module';
+import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
 
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
@@ -121,11 +122,13 @@ describe('Audit Component Spec', () => {
 				DirectivesModule,
 				FormsModule,
 				PagingModule,
-				PipesModule
+				PipesModule,
+				SystemAlertModule
 			],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
-				BsModalService
+				BsModalService,
+				SystemAlertService
 			]
 		})
 		.overrideModule(BrowserDynamicTestingModule, {
@@ -140,8 +143,8 @@ describe('Audit Component Spec', () => {
 
 		fixture = TestBed.createComponent(ListAuditEntriesComponent);
 		component = fixture.componentInstance;
-		rootHTMLElement = fixture.debugElement.nativeElement;
 
+		rootHTMLElement = fixture.debugElement.nativeElement;
 	});
 
 	describe('audit list display', () => {
@@ -150,16 +153,20 @@ describe('Audit Component Spec', () => {
 
 			fixture.detectChanges();
 
-			// Verify that the Address String is display in the proper HTML field
-			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('testuser01');
-			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('admin update');
-			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('2019-09-08 20:15:47Z');
+			console.log(component.loading);
 
-			// Verify that the values are formatted properly
+			fixture.whenStable().then(() => {
+				// Verify that the Address String is display in the proper HTML field
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('testuser01');
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('admin update');
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('2019-09-08 20:15:47Z');
 
-			// Verify that we're not spamming the service
-			expect(auditServiceSpy.getDistinctAuditValues).toHaveBeenCalledTimes(2);
-			expect(auditServiceSpy.search).toHaveBeenCalledTimes(1);
+				// Verify that the values are formatted properly
+
+				// Verify that we're not spamming the service
+				expect(auditServiceSpy.getDistinctAuditValues).toHaveBeenCalledTimes(2);
+				expect(auditServiceSpy.search).toHaveBeenCalledTimes(1);
+			});
 		});
 
 	});

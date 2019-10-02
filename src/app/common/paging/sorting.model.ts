@@ -3,6 +3,11 @@ export class SortDirection {
 	public static asc = 'ASC';
 }
 
+export interface SortChange {
+	sortField: string | string[];
+	sortDir: SortDirection;
+}
+
 export class SortDisplayOption {
 	constructor(
 		public label?: string,

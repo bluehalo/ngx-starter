@@ -1,19 +1,15 @@
 import {
-	Component, Input, Output, EventEmitter, ContentChildren, QueryList, TemplateRef,
-	AfterContentInit
+	Component, Input, Output, EventEmitter, TemplateRef, ContentChild
 } from '@angular/core';
 
-import fromPairs from 'lodash/fromPairs';
-
-import { NamedTemplateDirective } from '../../directives.module';
-import { PagingOptions, PageChange } from '../pager/pager.component';
+import { PagingOptions, PageChange } from '../paging.model';
 
 @Component({
 	selector: 'pageable-table',
 	templateUrl: './pageable-table.component.html',
 	styleUrls: [ './pageable-table.component.scss' ]
 })
-export class PageableTableComponent implements AfterContentInit {
+export class PageableTableComponent {
 
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
 	@Input() items: Array<any>;
@@ -30,28 +26,11 @@ export class PageableTableComponent implements AfterContentInit {
 	@Input() tableStriped = false;
 
 	@Output() readonly pageChange = new EventEmitter<PageChange>();
-	@Output() readonly pageAndScroll = new EventEmitter<PageChange>();
 
-	@ContentChildren(NamedTemplateDirective) templates: QueryList<NamedTemplateDirective>;
-
-	actionTemplate: TemplateRef<any>;
-	headerTemplate: TemplateRef<any>;
-	rowTemplate: TemplateRef<any>;
-	noResultsTableTemplate: TemplateRef<any>;
-	noDataTableTemplate: TemplateRef<any>;
-	footerActionTemplate: TemplateRef<any>;
-
-	ngAfterContentInit() {
-		const typeTemplatePairs = this.templates.map(this.getNamedTemplates);
-		const userSuppliedTemplates = fromPairs(typeTemplatePairs);
-		this.actionTemplate = userSuppliedTemplates['table-action'];
-		this.headerTemplate = userSuppliedTemplates['table-header'];
-		this.rowTemplate = userSuppliedTemplates['table-row'];
-		this.noResultsTableTemplate = userSuppliedTemplates['table-no-results'];
-		this.noDataTableTemplate = userSuppliedTemplates['table-no-data'];
-		this.footerActionTemplate = userSuppliedTemplates['table-footer-action'];
-	}
-
-	private getNamedTemplates = (template): [string, TemplateRef<any>] =>
-		[template.namedTemplate, template.templateRef]
+	@ContentChild('tableActions', {static: true}) actionTemplate: TemplateRef<any>;
+	@ContentChild('tableHeader', {static: true}) headerTemplate: TemplateRef<any>;
+	@ContentChild('tableRow', {static: true}) rowTemplate: TemplateRef<any>;
+	@ContentChild('tableNoResults', {static: true}) noResultsTableTemplate: TemplateRef<any>;
+	@ContentChild('tableNoData', {static: true}) noDataTableTemplate: TemplateRef<any>;
+	@ContentChild('tableFooterActions', {static: true}) footerActionTemplate: TemplateRef<any>;
 }

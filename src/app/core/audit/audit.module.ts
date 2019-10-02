@@ -8,6 +8,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+import { DirectivesModule } from '../../common/directives.module';
+import { PagingModule } from '../../common/paging.module';
+import { PipesModule } from '../../common/pipes.module';
+import { SystemAlertModule } from '../../common/system-alert.module';
+
 import { AuditRoutingModule } from './audit-routing.module';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
@@ -16,10 +21,6 @@ import {
 	DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
 	UserAuthenticationObjectComponent
 } from './audit-object.component';
-
-import { DirectivesModule } from '../../common/directives.module';
-import { PagingModule } from '../../common/paging.module';
-import { PipesModule } from '../../common/pipes.module';
 import { AuditViewChangeModalComponent } from './audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit-view-details-modal.component';
 
@@ -35,7 +36,8 @@ import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit
 		DirectivesModule,
 		FormsModule,
 		PagingModule,
-		PipesModule
+		PipesModule,
+		SystemAlertModule
 	],
 	entryComponents: [
 		AuditViewChangeModalComponent,

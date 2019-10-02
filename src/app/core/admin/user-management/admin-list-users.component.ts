@@ -4,10 +4,16 @@ import { ActivatedRoute, Params } from '@angular/router';
 import cloneDeep from 'lodash/cloneDeep';
 import isArray from 'lodash/isArray';
 import toString from 'lodash/toString';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 
-import { PagingComponent, PagingOptions, PagingResults, SortDirection, SortableTableHeader } from '../../../common/paging.module';
+import {
+	PagingOptions,
+	PagingResults,
+	SortDirection,
+	SortableTableHeader,
+	AbstractPageableDataComponent, SortChange
+} from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
@@ -19,12 +25,7 @@ import { AdminTopics } from '../admin-topic.model';
 @Component({
 	templateUrl: './admin-list-users.component.html'
 })
-export class AdminListUsersComponent extends PagingComponent implements OnDestroy, OnInit {
-
-	users: any[] = [];
-	hasUsers = false;
-
-	search = '';
+export class AdminListUsersComponent extends AbstractPageableDataComponent<User> implements OnDestroy, OnInit {
 
 	// Columns to show/hide in user table
 	columns: any = {
@@ -48,26 +49,24 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Name', sortField: 'name', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Name', default: true },
-		{ name: 'Username', sortField: 'username', sortDir: SortDirection.asc, sortable: true, tooltip: 'Sort by Username' },
-		{ name: 'ID', sortField: '_id', sortable: false },
-		// { name: 'Teams', sortField: 'teams', sortable: false },
-		{ name: 'Organization', sortField: 'organization', sortable: false },
-		{ name: 'Email', sortField: 'email', sortable: false },
-		{ name: 'Phone', sortField: 'phone', sortable: false },
-		{ name: 'EUA', sortField: 'acceptedEua', sortable: false },
-		{ name: 'Last Login', sortField: 'lastLogin', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Last Login' },
-		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true, tooltip: 'Sort by Create Date' },
-		{ name: 'Updated', sortField: 'updated', sortable: false },
-		{ name: 'Bypass AC', sortField: 'bypassAccessCheck', sortable: false },
-		{ name: 'External Roles', sortField: 'externalRoles', sortable: false },
-		{ name: 'External Groups', sortField: 'externalGroups', sortable: false },
-		{ name: 'Roles', sortField: 'roles', sortable: false }
+		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name', default: true },
+		{ name: 'Username', sortable: true, sortField: 'username', sortDir: SortDirection.asc, tooltip: 'Sort by Username' },
+		{ name: 'ID', sortable: false, sortField: '_id'},
+		// { name: 'Teams', sortable: false },
+		{ name: 'Organization', sortable: false, sortField: 'organization' },
+		{ name: 'Email', sortable: false, sortField: 'email' },
+		{ name: 'Phone', sortable: false, sortField: 'phone' },
+		{ name: 'EUA', sortable: false, sortField: 'acceptedEua' },
+		{ name: 'Last Login', sortable: true, sortField: 'lastLogin', sortDir: SortDirection.desc, tooltip: 'Sort by Last Login' },
+		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Create Date' },
+		{ name: 'Updated', sortable: false, sortField: 'updated' },
+		{ name: 'Bypass AC', sortable: false, sortField: 'bypassAccessCheck' },
+		{ name: 'External Roles', sortable: false },
+		{ name: 'External Groups', sortable: false },
+		{ name: 'Roles', sortable: false }
 	];
 
 	headersToShow: SortableTableHeader[] = [];
-
-	quickFilters: any = {};
 
 	possibleRoles: Role[] = Role.ROLES;
 
@@ -106,23 +105,18 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 				this.requiredExternalRoles = isArray(config.requiredRoles) ? config.requiredRoles : [];
 
 				this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
-				this.initialize();
-				this.loadUsers();
+
+				this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+
+				this.initializeFromCache();
+
+				super.ngOnInit();
 			});
 	}
 
 	ngOnDestroy() {
 		this.destroy$.next(true);
 		this.destroy$.unsubscribe();
-	}
-
-	onSearch(search: string) {
-		this.search = search;
-		this.applySearch();
-	}
-
-	loadData() {
-		this.loadUsers();
 	}
 
 	confirmDeleteUser(user: User) {
@@ -145,30 +139,18 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 		this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
 	}
 
-	quickFiltersUpdated(updatedFilters: any) {
-		this.quickFilters = cloneDeep(updatedFilters);
-		this.applySearch();
-	}
-
 	/**
 	 * Initialize query, search, and paging options, possibly from cached user settings
 	 */
-	private initialize() {
+	private initializeFromCache() {
 		const cachedFilter = this.adminUsersService.cache.listUsers;
 
-		this.search = cachedFilter.search ? cachedFilter.search : '';
-		this.quickFilters = cachedFilter.filters ? cachedFilter.filters : this.getDefaultQuickFilters();
+		this.filterEvent$.next(cachedFilter.filters || this.getDefaultQuickFilters());
+		this.searchEvent$.next(cachedFilter.search);
 
 		if (cachedFilter.paging) {
-			this.pagingOpts = cachedFilter.paging;
-		} else {
-			this.pagingOpts = new PagingOptions();
-
-			const defaultSort = this.headers.find((header: any) => header.default);
-			if (null != defaultSort) {
-				this.pagingOpts.sortField = defaultSort.sortField;
-				this.pagingOpts.sortDir = defaultSort.sortDir;
-			}
+			this.pageEvent$.next(cachedFilter.paging);
+			this.sortEvent$.next(cachedFilter.paging);
 		}
 	}
 
@@ -188,43 +170,26 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 		return roles;
 	}
 
-	private loadUsers() {
-		const options: any = {};
-
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<User>> {
 		this.adminUsersService.cache.listUsers = {
-			filters: this.quickFilters,
-			search: this.search,
-			paging: this.pagingOpts
+			filters: this.filters,
+			search,
+			paging: pagingOptions
 		};
 
-		this.adminUsersService.search(this.getQuery(), this.search, this.pagingOpts, options)
-			.subscribe((result: PagingResults) => {
-				this.users = result.elements;
-				if (this.users.length > 0) {
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-				} else {
-					this.pagingOpts.reset();
-				}
-
-				if (!this.hasUsers) {
-					this.hasUsers = this.users.length > 0;
-				}
-			}, (error) => {
-				this.alertService.addAlert(error.message);
-			}
-		);
+		return this.adminUsersService.search(query, search, pagingOptions, {});
 	}
 
-	private getQuery(): any {
+	getQuery(): any {
 		let query: any;
 		const elements: any[] = [];
 
-		if (this.quickFilters.bypassAC.show) {
+		if (this.filters.bypassAC.show) {
 			elements.push({ bypassAccessCheck: true });
 		}
 
 		Role.ROLES.forEach((role) => {
-			const filter = this.quickFilters[`${role.role}Role`];
+			const filter = this.filters[`${role.role}Role`];
 			if (filter != null && filter.show) {
 				const element = {};
 				element[`roles.${role.role}`] = true;
@@ -232,7 +197,7 @@ export class AdminListUsersComponent extends PagingComponent implements OnDestro
 			}
 		});
 
-		if (this.quickFilters.pending.show) {
+		if (this.filters.pending.show) {
 			const filter: any = {
 				$or: [ { 'roles.user': {$ne: true} } ]
 			};

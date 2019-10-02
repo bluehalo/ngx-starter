@@ -1,20 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
+import { CacheEntry } from './cache-entry.model';
+import { catchError, map } from 'rxjs/operators';
+import { User } from '../../auth/user.model';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 
 @Injectable()
 export class CacheEntriesService {
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
-	public match(query: any, search: string, paging: PagingOptions): Observable<any> {
-		return this.http.post(
+	public match(query: any, search: string, paging: PagingOptions): Observable<PagingResults<CacheEntry>> {
+		return this.http.post<PagingResults<CacheEntry>>(
 			'api/access-checker/entries/match',
 			{ s: search, q: query },
 			{ params: paging.toObj() }
+		).pipe(
+			catchError((error) => {
+				this.alertService.addClientErrorAlert(error);
+				return of(NULL_PAGING_RESULTS);
+			})
 		);
 	}
 

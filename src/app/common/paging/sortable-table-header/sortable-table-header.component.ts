@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { SortChange } from '../sorting.model';
 
 export interface SortableTableHeader {
 	name: string;
@@ -7,6 +8,7 @@ export interface SortableTableHeader {
 	sortable: boolean;
 	default?: boolean;
 	tooltip?: string;
+	iconClass?: string;
 }
 @Component({
 	selector: 'sortable-table-header',
@@ -23,7 +25,7 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() currentSortDir: string;
 
-	@Output() readonly sortChange = new EventEmitter<any>();
+	@Output() readonly sortChange = new EventEmitter<SortChange>();
 
 	sortable: boolean;
 

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import {
 	PagingResults,
 	PagingOptions,
 	SortDirection,
 	SortableTableHeader,
-	PagingComponent
+	AbstractPageableDataComponent, SortChange
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { ExportConfigService } from '../../export-config.service';
@@ -16,22 +18,17 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	templateUrl: 'admin-list-feedback.component.html'
 })
-export class AdminListFeedbackComponent extends PagingComponent implements OnInit {
-
-	feedbacks: any[];
-	hasFeedback = false;
-
-	search = '';
+export class AdminListFeedbackComponent extends AbstractPageableDataComponent<any> implements OnInit {
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Submitted By', sortField: 'audit.actor', sortDir: SortDirection.asc, sortable: true },
+		{ name: 'Submitted By', sortable: true, sortField: 'audit.actor', sortDir: SortDirection.asc },
 		{ name: 'Email', sortable: false },
-		{ name: 'Type', sortField: 'type', sortDir: SortDirection.asc, sortable: true },
+		{ name: 'Type', sortable: true, sortField: 'type', sortDir: SortDirection.asc },
 		{ name: 'Feedback', sortable: false },
-		{ name: 'Submitted From', sortField: 'url', sortDir: SortDirection.asc, sortable: true },
-		{ name: 'Browser', sortField: 'browser', sortDir: SortDirection.asc, sortable: true },
-		{ name: 'OS', sortField: 'os', sortDir: SortDirection.asc, sortable: true },
-		{ name: 'Submission Time', sortField: 'created', sortDir: SortDirection.desc, sortable: true, default: true }
+		{ name: 'Submitted From', sortable: true, sortField: 'url', sortDir: SortDirection.asc },
+		{ name: 'Browser', sortable: true, sortField: 'browser', sortDir: SortDirection.asc },
+		{ name: 'OS', sortable: true, sortField: 'os', sortDir: SortDirection.asc },
+		{ name: 'Submission Time', sortable: true, sortField: 'created', sortDir: SortDirection.desc, default: true }
 	];
 
 	constructor(
@@ -45,51 +42,21 @@ export class AdminListFeedbackComponent extends PagingComponent implements OnIni
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		this.pagingOpts = new PagingOptions();
+		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
-		const defaultSort = this.headers.find((header: any) => header.default);
-		if (null != defaultSort) {
-			this.pagingOpts.sortField = defaultSort.sortField;
-			this.pagingOpts.sortDir = defaultSort.sortDir;
-		}
-
-		this.loadFeedbackEntries();
-	}
-
-	loadData() {
-		this.loadFeedbackEntries();
-	}
-
-	onSearch(search: string) {
-		this.search = search;
-		this.applySearch();
+		super.ngOnInit();
 	}
 
 	export() {
 		this.exportConfigService
-			.postExportConfig('feedback', { sort: this.pagingOpts.sortField, dir: this.pagingOpts.sortDir })
+			.postExportConfig('feedback', { sort: this.pagingOptions.sortField, dir: this.pagingOptions.sortDir })
 			.subscribe((response: any) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});
 	}
 
-	private loadFeedbackEntries() {
-		this.feedbackService.getFeedback(this.pagingOpts, null, this.search, {})
-			.subscribe((result: PagingResults) => {
-				this.feedbacks = result.elements;
-				if (this.feedbacks.length > 0) {
-					this.pagingOpts.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-				} else {
-					this.pagingOpts.reset();
-				}
-
-				if (!this.hasFeedback) {
-					this.hasFeedback = this.feedbacks.length > 0;
-				}
-			}, (error) => {
-				this.alertService.addAlert(error.message);
-			}
-		);
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<any>> {
+		return this.feedbackService.getFeedback(pagingOptions, query, search, {});
 	}
 }
 

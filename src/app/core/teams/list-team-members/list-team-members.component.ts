@@ -10,7 +10,14 @@ import { BehaviorSubject, Subject, combineLatest, of, Observable } from 'rxjs';
 import { catchError, debounceTime, filter, first, map, switchMap, tap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
-import { PagingOptions, PagingResults, SortableTableHeader, SortDirection } from '../../../common/paging.module';
+import {
+	AbstractPageableDataComponent,
+	PageChange,
+	PagingOptions,
+	PagingResults,
+	SortableTableHeader, SortChange,
+	SortDirection
+} from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { AuthenticationService } from '../../auth/authentication.service';
@@ -30,62 +37,29 @@ import { User } from '../../auth/user.model';
 	templateUrl: './list-team-members.component.html',
 	styleUrls: ['./list-team-members.component.scss']
 })
-export class ListTeamMembersComponent implements OnInit {
+export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember> implements OnInit {
 
 	@Input()
 	team: Team;
 
 	isUserAdmin: boolean;
 
-	teamMembers: TeamMember[];
-
 	canManageTeam = false;
-
-	search = '';
-
-	hasSearch: boolean;
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
 	user: User;
 
 	headers: SortableTableHeader[] = [
-		{
-			name: 'Name',
-			sortField: 'name',
-			sortDir: SortDirection.asc,
-			sortable: true,
-			tooltip: 'Sort by Name',
-			default: true
-		},
-		{
-			name: 'Username',
-			sortField: 'username',
-			sortDir: SortDirection.asc,
-			sortable: true,
-			tooltip: 'Sort by Username'
-		},
-		{name: 'Account Status', sortable: false},
-		{name: 'Bypassed', sortField: 'bypassed', sortable: false},
-		{name: 'Role', sortable: false},
-		{name: '', sortField: 'remove', sortable: false},
+		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name', default: true },
+		{ name: 'Username', sortable: true, sortField: 'username', sortDir: SortDirection.asc, tooltip: 'Sort by Username' },
+		{ name: 'Account Status', sortable: false },
+		{ name: 'Bypassed', sortable: false },
+		{ name: 'Role', sortable: false },
+		{ name: '', sortable: false },
 	];
 
 	headersToShow: SortableTableHeader[] = [];
-
-	pagingOptions: PagingOptions = new PagingOptions();
-
-	pageSize = 20;
-
-	pageEvent$: BehaviorSubject<PagingOptions> = new BehaviorSubject(new PagingOptions(0, this.pageSize));
-
-	sortEvent$: BehaviorSubject<SortableTableHeader> = new BehaviorSubject(this.headers.find((header: any) => header.default));
-
-	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
-
-	private load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
-	private resetPaging = false;
 
 	private modalRef: BsModalRef;
 
@@ -99,7 +73,9 @@ export class ListTeamMembersComponent implements OnInit {
 		private teamAuthorizationService: TeamAuthorizationService,
 		private sessionService: SessionService,
 		private alertService: SystemAlertService
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -112,57 +88,17 @@ export class ListTeamMembersComponent implements OnInit {
 				this.isUserAdmin = this.authorizationService.isAdmin();
 			});
 
-		const defaultSort = this.headers.find((header: any) => header.default);
-		if (null != defaultSort) {
-			this.pagingOptions.sortField = defaultSort.sortField;
-			this.pagingOptions.sortDir = defaultSort.sortDir;
-		}
 
-		const paging$ = combineLatest([this.pageEvent$, this.sortEvent$])
-			.pipe(
-				map(([paging, sort]: [PagingOptions, SortableTableHeader]) => {
-					paging.sortField = sort.sortField;
-					paging.sortDir = sort.sortDir;
-					return paging;
-				}),
-				tap((paging: PagingOptions) => {
-					this.pagingOptions = new PagingOptions(paging.pageNumber, this.pageSize, 0, 0, paging.sortField, paging.sortDir);
-				})
-			);
+		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
-		const search$ = this.searchEvent$
-			.pipe(
-				tap((search: string) => {
-					this.resetPaging = true;
-					this.search = search;
-				})
-			);
-
-		combineLatest([this.load$, paging$, search$])
-			.pipe(
-				map(([, paging, ]: [boolean, PagingOptions, string]) => {
-					if (this.resetPaging) {
-						paging = new PagingOptions(0, this.pageSize, 0, 0, paging.sortField, paging.sortDir);
-					}
-					return paging;
-				}),
-				debounceTime(100),
-				switchMap((pagingOpt: PagingOptions) => {
-					this.hasSearch = !isEmpty(this.search);
-					return this.teamsService.searchMembers(this.team._id, this.team, null, this.search, pagingOpt, {});
-				})
-			).subscribe((result: PagingResults) => {
-			this.teamMembers = result.elements;
-			if (this.teamMembers.length > 0) {
-				this.pagingOptions.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
-			} else {
-				this.pagingOptions.reset();
-			}
-			this.resetPaging = false;
-		});
+		super.ngOnInit();
 
 		this.headersToShow = (this.canManageTeam) ? this.headers.filter((header: SortableTableHeader) => header.sortField !== 'remove') : this.headers;
 		this.headersToShow = (this.isUserAdmin) ? this.headers : this.headers.filter((header: SortableTableHeader) => header.sortField !== 'bypassed');
+	}
+
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<TeamMember>> {
+		return this.teamsService.searchMembers(this.team, query, search, pagingOptions, {});
 	}
 
 	addMembers() {
@@ -206,7 +142,7 @@ export class ListTeamMembersComponent implements OnInit {
 			this.modalService
 				.confirm(
 					'Remove "Team Admin" role?',
-					`Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won\'t be able to give the role back to yourself.</strong>`,
+					'Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won\'t be able to give the role back to yourself.</strong>',
 					'Remove Admin'
 				).pipe(
 					first(),
@@ -262,7 +198,6 @@ export class ListTeamMembersComponent implements OnInit {
 	}
 
 	private reloadTeamMembers() {
-		this.resetPaging = true;
-		this.pageEvent$.next(this.pagingOptions);
+		this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
 	}
 }
