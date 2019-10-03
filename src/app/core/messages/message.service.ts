@@ -159,10 +159,14 @@ export class MessageService {
 			this.subscribed = 0;
 		});
 
-		this.socketService.on('connect', () => {
-			// Register for new notifications from the websocket
+		if (!this.socketService.connected()) {
+			this.socketService.on('connect', () => {
+				// Register for new notifications from the websocket
+				this.subscribe();
+			});
+		} else {
 			this.subscribe();
-		});
+		}
 
 		this.messageReceived
 			.subscribe(() => {

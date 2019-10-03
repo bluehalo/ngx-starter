@@ -52,4 +52,8 @@ export class SocketService {
 	public emit(eventName: string) {
 		this.socket.emit(eventName);
 	}
+
+	public connected(): boolean {
+		return this.socket.connected;
+	}
 }
