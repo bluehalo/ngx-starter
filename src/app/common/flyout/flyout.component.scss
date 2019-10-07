@@ -7,8 +7,65 @@ $flyout-btn-bg-color: $ux-color-highlight !default;
 $flyout-border-top: 10px !default;
 $flyout-box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2) !default;
 
+$flyout-right-top: 25px !default;
+$flyout-top-top: $font-line-height !default;
+$flyout-bottom-bottom: $font-line-height * 2 !default;
+
+:host {
+	position: fixed;
+	right: 0;
+	top: $flyout-right-top;
+	transition: left .15s ease-in-out, right .15s ease-in-out;
+
+	&[placement="left"] {
+		right: auto;
+		left: $ux-nav-open-width;
+	}
+
+	&[placement="top"] {
+		right: auto;
+		top: $flyout-top-top;
+		left: $ux-nav-open-width;
+	}
+
+	&[placement="bottom"] {
+		right: auto;
+		top: auto;
+		bottom: $flyout-bottom-bottom;
+		left: $ux-nav-open-width;
+	}
+}
+
+.navbar-close {
+	:host[placement="left"], :host[placement="top"], :host[placement="bottom"] {
+		left: $ux-nav-closed-width;
+	}
+}
+
 .flyout {
 	z-index: $zindex-popover;
+
+	&.flyout-left {
+		flex-direction: row-reverse;
+	}
+
+	&.flyout-top {
+		flex-direction: column-reverse;
+	}
+
+	&.flyout-bottom {
+		flex-direction: column;
+
+		.flyout-btn .fa-angle-down {
+			transform: rotate(180deg);
+		}
+
+		&.flyout-open {
+			.flyout-btn .fa-angle-down {
+				transform: rotate(0deg);
+			}
+		}
+	}
 
 	&.flyout-open {
 		.flyout-btn .fa-angle-down {
@@ -27,6 +84,19 @@ $flyout-box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2) !default;
 	border-radius: 0 0 $border-radius $border-radius;
 	box-shadow: none;
 
+	.flyout-left & {
+		transform: rotate(-90deg);
+		transform-origin: 100% 0;
+	}
+
+	.flyout-top & {
+		transform: translateY(100%);
+	}
+
+	.flyout-bottom & {
+		transform: translateY(-100%);
+	}
+
 	&:not(:disabled):not(.disabled):active,
 	&:not(:disabled):not(.disabled).active,
 	&.focus,
@@ -41,5 +111,12 @@ $flyout-box-shadow: 0 .25rem .5rem rgba($ux-color-black, .2) !default;
 	box-shadow: $flyout-box-shadow;
 	width: 0;
 
-	transition: width 1s ease-in-out;
+	.flyout-top &, .flyout-bottom & {
+		border-top: none;
+		border-left: $flyout-border-top solid $ux-color-highlight;
+		width: auto;
+		height: 0;
+	}
+
+	transition: width 1s ease-in-out, height 1s ease-in-out;
 }

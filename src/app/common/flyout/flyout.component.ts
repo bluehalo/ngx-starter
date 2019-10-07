@@ -20,6 +20,9 @@ export class FlyoutComponent implements OnInit {
 	@Input()
 	label: string;
 
+	@Input()
+	placement: 'left' | 'right' | 'top' | 'bottom' = 'right';
+
 	isOpen = false;
 
 	constructor() {
@@ -29,10 +32,18 @@ export class FlyoutComponent implements OnInit {
 	}
 
 	toggle() {
-		if (this.isOpen) {
-			this.container.nativeElement.style.width = '0';
+		if (this.placement === 'top' || this.placement === 'bottom') {
+			if (this.isOpen) {
+				this.container.nativeElement.style.height = '0';
+			} else {
+				this.container.nativeElement.style.height = this.content.nativeElement.clientHeight + 'px';
+			}
 		} else {
-			this.container.nativeElement.style.width = this.content.nativeElement.clientWidth + 'px';
+			if (this.isOpen) {
+				this.container.nativeElement.style.width = '0';
+			} else {
+				this.container.nativeElement.style.width = this.content.nativeElement.clientWidth + 'px';
+			}
 		}
 
 		this.isOpen = !this.isOpen;
