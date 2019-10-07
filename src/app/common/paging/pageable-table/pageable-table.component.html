@@ -1,5 +1,5 @@
 <div class="table" [ngClass]="{'card p-3': showInCard}">
-	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions" [hidden]="items?.length === 0">
+	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions" [hidden]="itemsInternal?.length === 0">
 		<div class="table-actions d-flex flex-grow-1" *ngIf="showActions">
 			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
 		</div>
@@ -10,31 +10,43 @@
 				[pageSize]="pagingOptions?.pageSize"
 				[totalSize]="pagingOptions?.totalSize"
 				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="items?.length"
+				[currentSize]="itemsInternal?.length"
 				[disableGoToEnd]="disableGoToEnd"
 				(pageChange)="pageChange.emit($event)">
 			</asy-pager>
 		</div>
 	</div>
 
-	<div class="table-content table-responsive" [hidden]="hideTableToData && items?.length === 0">
+	<div class="table-content table-responsive" [hidden]="hideTableToData && itemsInternal?.length === 0">
 		<!-- Actual Results -->
 		<table class="table" [ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}">
 			<thead>
 			<tr>
+				<th *ngIf="rowExpandedTemplate" class="table-action-expand"></th>
 				<ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
 			</tr>
 			</thead>
 
 			<tbody>
-			<tr *ngFor="let item of items; let i = index" class="table-row">
-				<ng-container *ngTemplateOutlet="rowTemplate; context: {item: item, index: i}"></ng-container>
-			</tr>
+			<ng-container *ngFor="let item of itemsInternal; let i = index">
+				<tr class="table-row">
+					<td *ngIf="rowExpandedTemplate" (click)="itemsExpanded[i] = !itemsExpanded[i]" class="table-action-expand pointer">
+						<span class="fa fa-2x {{ itemsExpanded[i] ? 'fa-angle-up' : 'fa-angle-down'}}"></span>
+					</td>
+					<ng-container *ngTemplateOutlet="rowTemplate; context: {item: item, index: i}"></ng-container>
+				</tr>
+				<ng-container *ngIf="rowExpandedTemplate && itemsExpanded[i]">
+					<tr *ngIf="tableStriped" class="d-none"></tr><!-- Dummy tr to keep row color the same when table-striped -->
+					<tr class="table-row table-row-expanded">
+						<ng-container *ngTemplateOutlet="rowExpandedTemplate; context: {item: item, index: i}"></ng-container>
+					</tr>
+				</ng-container>
+			</ng-container>
 			</tbody>
 		</table>
 	</div>
 
-	<div class="table-no-results" *ngIf="!loading && hasItems && items?.length === 0">
+	<div class="table-no-results" *ngIf="!loading && hasItems && itemsInternal?.length === 0">
 		<ng-container *ngTemplateOutlet="noResultsTableTemplate"></ng-container>
 	</div>
 
@@ -42,7 +54,7 @@
 		<ng-container *ngTemplateOutlet="noDataTableTemplate"></ng-container>
 	</div>
 
-	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions" [hidden]="items?.length === 0">
+	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions" [hidden]="itemsInternal?.length === 0">
 		<div class="table-actions d-flex flex-grow-1" *ngIf="showFooterActions">
 			<ng-container *ngTemplateOutlet="footerActionTemplate"></ng-container>
 		</div>
@@ -53,7 +65,7 @@
 				[pageSize]="pagingOptions?.pageSize"
 				[totalSize]="pagingOptions?.totalSize"
 				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="items?.length"
+				[currentSize]="itemsInternal?.length"
 				[disableGoToEnd]="disableGoToEnd"
 				(pageChange)="pageChange.emit($event)">
 			</asy-pager>

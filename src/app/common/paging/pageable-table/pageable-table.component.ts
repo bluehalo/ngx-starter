@@ -12,8 +12,8 @@ import { PagingOptions, PageChange } from '../paging.model';
 export class PageableTableComponent {
 
 	@Input() pagingOptions: PagingOptions = new PagingOptions();
-	@Input() items: Array<any>;
 	@Input() hasItems = false;
+	@Input() itemIdProperty = '_id';
 	@Input() loading = false;
 	@Input() showInCard = false;
 	@Input() showActions = false;
@@ -25,11 +25,25 @@ export class PageableTableComponent {
 	@Input() tableHover = false;
 	@Input() tableStriped = false;
 
+	itemsInternal: Array<any>;
+	itemsExpanded: Array<boolean>;
+
+	@Input() set items(data: Array<any>) {
+		this.itemsInternal = data;
+		if (data) {
+			this.itemsExpanded = data.map((i) => false);
+		}
+	}
+	get items() {
+		return this.itemsInternal;
+	}
+
 	@Output() readonly pageChange = new EventEmitter<PageChange>();
 
 	@ContentChild('tableActions', {static: true}) actionTemplate: TemplateRef<any>;
 	@ContentChild('tableHeader', {static: true}) headerTemplate: TemplateRef<any>;
 	@ContentChild('tableRow', {static: true}) rowTemplate: TemplateRef<any>;
+	@ContentChild('tableRowExpanded', {static: true}) rowExpandedTemplate: TemplateRef<any>;
 	@ContentChild('tableNoResults', {static: true}) noResultsTableTemplate: TemplateRef<any>;
 	@ContentChild('tableNoData', {static: true}) noDataTableTemplate: TemplateRef<any>;
 	@ContentChild('tableFooterActions', {static: true}) footerActionTemplate: TemplateRef<any>;
