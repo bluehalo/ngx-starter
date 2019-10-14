@@ -61,9 +61,9 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Create Date' },
 		{ name: 'Updated', sortable: false, sortField: 'updated' },
 		{ name: 'Bypass AC', sortable: false, sortField: 'bypassAccessCheck' },
-		{ name: 'External Roles', sortable: false },
-		{ name: 'External Groups', sortable: false },
-		{ name: 'Roles', sortable: false }
+		{ name: 'External Roles', sortable: false, sortField: 'externalRoles' },
+		{ name: 'External Groups', sortable: false, sortField: 'externalGroups' },
+		{ name: 'Roles', sortable: false, sortField: 'roles' }
 	];
 
 	headersToShow: SortableTableHeader[] = [];
