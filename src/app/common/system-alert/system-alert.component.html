@@ -1,4 +1,4 @@
-<alert *ngFor="let alert of alerts; let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >
+<alert *ngFor="let alert of alertService.alerts$ | async; let i = index" [type]="alert.type" (close)="alertService.clear(i)" dismissible="true" >
 	<table>
 		<tbody>
 		<tr>
