@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { SystemAlert } from './system-alert.model';
+import { BehaviorSubject } from 'rxjs';
 
 class SystemAlerts {
 	list: SystemAlert[] = [];
@@ -13,18 +14,21 @@ export class SystemAlertService {
 	private id = 0;
 	private defaultType = 'danger';
 	private alerts: SystemAlerts = new SystemAlerts();
+	private alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts.list);
 
 	constructor() {}
 
 	clearAllAlerts() {
 		this.alerts.list.length = 0;
 		this.alerts.map.clear();
+		this.alerts$.next(this.alerts.list);
 	}
 
 	clear(index: number) {
 		const alert = this.alerts.list[index];
 		this.alerts.list.splice(index, 1);
 		this.alerts.map.delete(alert.id);
+		this.alerts$.next(this.alerts.list);
 	}
 
 	clearAlertById(id: number) {
@@ -50,6 +54,7 @@ export class SystemAlertService {
 		if (null != ttl) {
 			setTimeout(() => this.clearAlertById(alert.id), ttl);
 		}
+		this.alerts$.next(this.alerts.list);
 	}
 
 	addClientErrorAlert(error: HttpErrorResponse) {
@@ -58,7 +63,7 @@ export class SystemAlertService {
 		}
 	}
 
-	getAlerts(): SystemAlert[] {
-		return this.alerts.list;
+	getAlerts(): BehaviorSubject<SystemAlert[]> {
+		return this.alerts$;
 	}
 }
