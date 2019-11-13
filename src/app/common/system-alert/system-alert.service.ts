@@ -14,7 +14,7 @@ export class SystemAlertService {
 	private id = 0;
 	private defaultType = 'danger';
 	private alerts: SystemAlerts = new SystemAlerts();
-	private alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts.list);
+	alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts.list);
 
 	constructor() {}
 
@@ -63,7 +63,7 @@ export class SystemAlertService {
 		}
 	}
 
-	getAlerts(): BehaviorSubject<SystemAlert[]> {
-		return this.alerts$;
+	getAlerts(): SystemAlert[] {
+		return this.alerts.list;
 	}
 }

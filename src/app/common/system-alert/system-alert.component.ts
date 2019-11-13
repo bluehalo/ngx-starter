@@ -15,7 +15,7 @@ export class SystemAlertComponent implements OnInit, OnDestroy {
 	alerts: SystemAlert[];
 
 	ngOnInit() {
-		this.sub = this.alertService.getAlerts().subscribe((alerts) => {
+		this.sub = this.alertService.alerts$.subscribe((alerts) => {
 			this.alerts = alerts;
 		});
 	}
