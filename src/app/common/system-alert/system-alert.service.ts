@@ -4,39 +4,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SystemAlert } from './system-alert.model';
 import { BehaviorSubject } from 'rxjs';
 
-class SystemAlerts {
-	list: SystemAlert[] = [];
-	map: Map<number, SystemAlert> = new Map<number, SystemAlert>();
-}
-
 @Injectable()
 export class SystemAlertService {
 	private id = 0;
 	private defaultType = 'danger';
-	private alerts: SystemAlerts = new SystemAlerts();
-	alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts.list);
+	private alerts: SystemAlert[] = [];
+	alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts);
 
 	constructor() {}
 
 	clearAllAlerts() {
-		this.alerts.list.length = 0;
-		this.alerts.map.clear();
-		this.alerts$.next(this.alerts.list);
+		this.alerts.length = 0;
+		this.alerts$.next(this.alerts);
 	}
 
 	clear(index: number) {
-		const alert = this.alerts.list[index];
-		this.alerts.list.splice(index, 1);
-		this.alerts.map.delete(alert.id);
-		this.alerts$.next(this.alerts.list);
+		this.alerts.splice(index, 1);
+		this.alerts$.next(this.alerts);
 	}
 
 	clearAlertById(id: number) {
-		const alert = this.alerts.map.get(id);
-		if (null != alert) {
-			const index = this.alerts.list.indexOf(alert);
-			this.clear(index);
-		}
+		const index = this.alerts.findIndex((value) => value.id === id);
+		this.clear(index);
 	}
 
 	addAlert(msg: string, type?: string, ttl?: number, subtext?: string) {
@@ -47,14 +36,13 @@ export class SystemAlertService {
 			msg,
 			subtext || null);
 
-		this.alerts.list.push(alert);
-		this.alerts.map.set(alert.id, alert);
+		this.alerts.push(alert);
 
 		// If they passed in a ttl parameter, age off the alert after said timeout
 		if (null != ttl) {
 			setTimeout(() => this.clearAlertById(alert.id), ttl);
 		}
-		this.alerts$.next(this.alerts.list);
+		this.alerts$.next(this.alerts);
 	}
 
 	addClientErrorAlert(error: HttpErrorResponse) {
@@ -64,6 +52,6 @@ export class SystemAlertService {
 	}
 
 	getAlerts(): SystemAlert[] {
-		return this.alerts.list;
+		return this.alerts;
 	}
 }
