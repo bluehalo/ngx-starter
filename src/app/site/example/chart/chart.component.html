@@ -1,0 +1,40 @@
+<section class="row">
+	<div class="col">
+
+		<div sentioDynamicTimeline
+			 class="sentio-dynamic-timeline"
+			 (sentioChartReady)="chartsReady($event)">
+
+			<div class="sentio-controls">
+
+				<span *ngIf="quickLinks" class="sentio-quick-links">
+					<strong>Zoom:</strong>
+					<span *ngFor="let quickLink of quickLinks; let last = last">
+						<a class="link" (click)="zoom(quickLink.value)">{{quickLink.label}}</a>
+						<span *ngIf="!last">|</span>
+					</span>
+				</span>
+
+				<span class="sentio-context-info">
+					<span class="date">{{dateString}}</span>
+					<span class="value">{{valueString}}</span>
+				</span>
+			</div>
+
+			<sentioTimeline style="height: 100px;"
+				class="sentio-timeline"
+				sentioResizeWidth="true"
+				[sentioData]="timelineData"
+				[sentioSeries]="timelineSeries">
+			</sentioTimeline>
+
+			<sentioAutoBrushTimeline style="height: 32px;"
+				class="sentio-timeline-brush"
+				sentioResizeWidth="true"
+				[sentioData]="brushData">
+			</sentioAutoBrushTimeline>
+
+		</div>
+
+	</div>
+</section>

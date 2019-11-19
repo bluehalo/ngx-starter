@@ -7,7 +7,7 @@ import { FormsComponent } from './forms/forms.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 import { GridComponent } from './grid/grid.component';
-
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
 	imports: [
@@ -25,6 +25,11 @@ import { GridComponent } from './grid/grid.component';
 			{
 				path: 'explore',
 				component: ExploreComponent,
+				canActivate: [ AuthGuard ]
+			},
+			{
+				path: 'chart',
+				component: ChartComponent,
 				canActivate: [ AuthGuard ]
 			},
 			{

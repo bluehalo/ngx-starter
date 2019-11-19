@@ -1,0 +1,65 @@
+.sentio-dynamic-timeline {
+
+	.sentio-controls {
+
+		font: 11px sans-serif;
+		padding-left: 32px;
+
+		.sentio-quick-links {
+			padding-bottom: 4px;
+
+			.link {
+				cursor: pointer;
+			}
+		}
+
+		.sentio-context-info {
+
+			padding-left: 16px;
+
+			.value {
+				color: rgba(0, 54, 168, 1);
+			}
+		}
+	}
+
+	.sentio.timeline .grid .tick line {
+		stroke: #eee;
+	}
+
+	.sentio-timeline {
+		.sentio.timeline {
+
+			.line {
+				stroke: rgba(0, 54, 168, 1);
+				stroke-width: 2px;
+			}
+
+			.area {
+				fill: rgba(0, 54, 168, 0.1);
+				stroke: none;
+			}
+
+			.points circle {
+				fill: rgba(0, 54, 168, 1);
+				stroke: none;
+			}
+		}
+
+	}
+
+	.sentio-timeline-brush {
+		.sentio.timeline {
+
+			.line {
+				stroke: #aaa;
+				stroke-width: 2px;
+			}
+
+			.area {
+				fill: #f6f6f6;
+			}
+		}
+	}
+
+}

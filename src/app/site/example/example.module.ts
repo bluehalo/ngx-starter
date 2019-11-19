@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SentioModule } from '@asymmetrik/ngx-sentio';
 
 import { ExampleRoutingModule } from './example-routing.module';
 
@@ -11,12 +13,14 @@ import { WelcomeComponent } from './welcome.component';
 import { ExampleHelpComponent } from './help/example-help.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
-
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
 	imports: [
+		CommonModule,
 		ExampleRoutingModule,
-		NgSelectModule
+		NgSelectModule,
+		SentioModule
 	],
 	entryComponents: [
 		ExampleHelpComponent
@@ -29,7 +33,8 @@ import { GridComponent } from './grid/grid.component';
 		WelcomeComponent,
 		ExampleHelpComponent,
 		FormsComponent,
-		GridComponent
+		GridComponent,
+		ChartComponent
 	],
 	providers: [
 		AuthGuard
