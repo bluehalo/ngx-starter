@@ -148,6 +148,6 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 AdminTopics.registerTopic({
 	id: 'end-user-agreements',
 	title: 'EUAs',
-	ordinal: 1,
+	ordinal: 2,
 	path: 'euas'
 });
