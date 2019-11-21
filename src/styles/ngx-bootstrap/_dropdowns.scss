@@ -2,8 +2,16 @@
 
 $dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
 
-.dropdown.open {
-	.dropdown-toggle::after {
+.dropdown {
+	&.dropdown-table-inline .dropdown-toggle {
+		cursor: pointer;
+
+		&:hover {
+			color: $ux-color-highlight;
+		}
+	}
+
+	&.open .dropdown-toggle::after {
 		transform: rotate(180deg);
 	}
 }

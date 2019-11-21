@@ -71,6 +71,8 @@ $tooltip-bg:                        fade-out(map-get($color-background, 'darkest
 $tooltip-padding-y:                 8px !default;
 $tooltip-padding-x:                 16px !default;
 
+// Tables
+$table-accent-bg: $ux-color-alternate-row-fill !default;
 
 // ngx-bootstrap datepicker;
 $theme-list: (

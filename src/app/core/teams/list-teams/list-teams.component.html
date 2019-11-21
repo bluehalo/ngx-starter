@@ -1,8 +1,8 @@
 <section>
-	<h2 class="mb-3">
+	<h1 class="mb-3">
 		Teams
 		<small>View and manage team membership and roles</small>
-	</h2>
+	</h1>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
@@ -16,7 +16,7 @@
 			</button>
 		</div>
 
-		<pageable-table [items]="items" [hasItems]="hasItems" [pagingOptions]="pagingOptions" (pageChange)="pageEvent$.next($event)" [loading]="loading">
+		<pageable-table [items]="items" [hasItems]="hasItems" [pagingOptions]="pagingOptions" [tableStriped]="true" [loading]="loading" (pageChange)="pageEvent$.next($event)">
 			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">
 					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
@@ -26,14 +26,14 @@
 			<ng-template #tableRow let-team="item" let-i="index">
 				<td>
 					<div>
-						<a [routerLink]="['/team', team._id]">{{ team.name }}</a>
+						<a class="text-decoration-underline" [routerLink]="['/team', team._id]">{{ team.name }}</a>
 					</div>
 				</td>
 				<td>
-					<div>{{ team.description }}</div>
+					<div>{{ team.created | agoDate }}</div>
 				</td>
 				<td>
-					<div>{{ team.created | agoDate }}</div>
+					<div>{{ team.description }}</div>
 				</td>
 			</ng-template>
 

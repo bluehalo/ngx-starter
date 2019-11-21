@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import cloneDeep from 'lodash/cloneDeep';
+
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 
@@ -22,8 +24,11 @@ import { TeamAuthorizationService } from '../team-authorization.service';
 export class ViewTeamComponent implements OnInit {
 
 	team: Team;
+	_team: any;
 
 	canManageTeam = false;
+
+	isEditing = false;
 
 	constructor(
 		private router: Router,
@@ -43,6 +48,27 @@ export class ViewTeamComponent implements OnInit {
 		).subscribe((team) => {
 			this.updateTeam(team);
 		});
+	}
+
+	edit() {
+		this._team = cloneDeep(this.team);
+		this.isEditing = true;
+	}
+
+	cancelEdit() {
+		this.isEditing = false;
+	}
+
+	saveEdit() {
+		this.teamsService.update(this.team._id, this._team)
+			.pipe(
+				tap(() => this.authenticationService.reloadCurrentUser())
+			)
+			.subscribe((team: Team) => {
+				this.isEditing = false;
+				this.team = team;
+				this.alertService.addAlert('Updated team metadata', 'success', 5000);
+			});
 	}
 
 	updateTeam(team: any) {
