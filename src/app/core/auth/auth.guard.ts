@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import get from 'lodash/get';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { catchError, first, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { SessionService } from './session.service';
 
-import { Session } from './session.model';
 import { AuthorizationService } from './authorization.service';
 
 @Injectable()
@@ -16,6 +15,7 @@ export class AuthGuard implements CanActivate {
 
 	constructor(
 		private router: Router,
+		private configService: ConfigService,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
 	) { }
@@ -43,16 +43,21 @@ export class AuthGuard implements CanActivate {
 		// Yes, the user needs to be authenticated
 		// -----------------------------------------------------------
 
-		return this.sessionService.getSession().pipe(
+		const config$ = this.configService.getConfig().pipe(first());
+
+		const session$ = this.sessionService.getSession().pipe(
 			first(),
 			catchError((error) => {
 				// Handle the error
 				console.log(error);
 				return of(null);
-			}),
-			switchMap((session) => {
+			})
+		);
+
+		return combineLatest([config$, session$]).pipe(
+			switchMap(([config, session]) => {
 				// The user isn't authenticated, try reloading
-				if (session == null) {
+				if (session === null && config.auth !== 'proxy-pki') {
 					return this.sessionService.reloadSession();
 				}
 				return of(session);
