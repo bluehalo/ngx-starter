@@ -65,10 +65,10 @@ export class TeamsService {
 		);
 	}
 
-	update(team: Team): Observable<Team> {
+	update(id: string, updateData: any): Observable<Team> {
 		return this.http.post(
-			`api/team/${team._id}`,
-			JSON.stringify(team),
+			`api/team/${id}`,
+			JSON.stringify(updateData),
 			{ headers: this.headers }
 		).pipe(
 			map((result: any) => (null != result) ? new Team(result._id, result.name, result.description, result.created, result.requiresExternalTeams) : null),

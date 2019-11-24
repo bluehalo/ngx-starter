@@ -20,9 +20,9 @@ import {
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team> implements OnInit {
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Team Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Team Name', default: true },
-		{ name: 'Description', sortable: true, sortField: 'description', sortDir: SortDirection.desc, tooltip: 'Sort by Description' },
-		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Created' }
+		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Team Name', default: true },
+		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Created' },
+		{ name: 'Description', sortable: true, sortField: 'description', sortDir: SortDirection.desc, tooltip: 'Sort by Description' }
 	];
 
 	constructor(

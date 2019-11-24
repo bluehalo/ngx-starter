@@ -16,7 +16,6 @@ import { SearchInputModule } from '../../common/search-input.module';
 
 import { AddMembersModalComponent } from './add-members-modal/add-members-modal.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
-import { EditTeamMetadataComponent } from './edit-team-metadata/edit-team-metadata.component';
 import { ListTeamMembersComponent } from './list-team-members/list-team-members.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
@@ -52,7 +51,6 @@ import { TeamsRoutingModule } from './teams-routing.module';
 	declarations: [
 		AddMembersModalComponent,
 		CreateTeamComponent,
-		EditTeamMetadataComponent,
 		ListTeamMembersComponent,
 		ListTeamsComponent,
 		ViewTeamComponent,

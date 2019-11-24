@@ -5,6 +5,14 @@ $card-selected-check-size: 2rem !default;
 
 .card {
 	box-shadow: $card-box-shadow;
+
+	.card-header {
+		height: 4rem;
+
+		h2 {
+			margin-bottom: 0;
+		}
+	}
 }
 
 .card-selectable {

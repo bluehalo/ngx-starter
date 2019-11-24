@@ -2,17 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import isEmpty from 'lodash/isEmpty';
-
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
-import { BehaviorSubject, Subject, combineLatest, of, Observable } from 'rxjs';
-import { catchError, debounceTime, filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
-	PageChange,
 	PagingOptions,
 	PagingResults,
 	SortableTableHeader, SortChange,
@@ -54,7 +51,6 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name', default: true },
 		{ name: 'Username', sortable: true, sortField: 'username', sortDir: SortDirection.asc, tooltip: 'Sort by Username' },
 		{ name: 'Account Status', sortable: false },
-		{ name: 'Bypassed', sortable: false },
 		{ name: 'Role', sortable: false },
 		{ name: '', sortable: false },
 	];
@@ -106,7 +102,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		this.modalRef.content.teamId = this.team._id;
 		this.modalRef.content.usersAdded
 			.subscribe((usersAdded: number) => {
-				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success');
+				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
 				this.modalRef = null;
 				this.reloadTeamMembers();
 			});
