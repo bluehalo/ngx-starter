@@ -57,6 +57,9 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "es5": {
+              "tsConfig": "./src/tsconfig-es5.app.json"
             }
           }
         },
@@ -68,6 +71,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ngx-starter:build:production"
+            },
+            "es5": {
+              "browserTarget": "ngx-starter:build:es5"
             }
           }
         },
