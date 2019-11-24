@@ -71,7 +71,11 @@
 
 					<td [hidden]="!columns.roles.show" style="max-width:200px;">
 						<ng-container *ngFor="let role of possibleRoles">
-							<div *ngIf="user.userModel.roles && user.userModel.roles[role.role]">
+							<div *ngIf="user.userModel.roles && user.userModel.roles[role.role]" class="user-role"
+								 [ngClass]="{
+									'user-role-external': user.userModel.localRoles && !user.userModel.localRoles[role.role]
+								}"
+							>
 								{{ role.role | titlecase }}
 							</div>
 						</ng-container>

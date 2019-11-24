@@ -95,6 +95,6 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 AdminTopics.registerTopic({
 	id: 'cache-entries',
 	title: 'Cache Entries',
-	ordinal: 2,
+	ordinal: 1,
 	path: 'cacheEntries'
 });
