@@ -90,6 +90,6 @@ NavbarTopics.registerTopic({
 	title: 'Charts',
 	ordinal: 3,
 	path: 'chart',
-	iconClass: 'fa-chart',
+	iconClass: 'fa-area-chart',
 	hasSomeRoles: ['user']
 });
