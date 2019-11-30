@@ -26,12 +26,6 @@ import { AuditService } from '../audit.service';
 
 describe('Audit Component Spec', () => {
 
-	let auditServiceSpy;
-
-	let fixture: ComponentFixture<ListAuditEntriesComponent>;
-	let component: ListAuditEntriesComponent;
-	let rootHTMLElement: HTMLElement;
-
 	const matchedUsers = {
 		elements: [{
 			userModel: {
@@ -82,6 +76,8 @@ describe('Audit Component Spec', () => {
 			}
 		}]
 	};
+
+	let auditServiceSpy;
 
 	beforeEach(async () => {
 
@@ -140,22 +136,17 @@ describe('Audit Component Spec', () => {
 				]
 			}
 		});
-
-		fixture = TestBed.createComponent(ListAuditEntriesComponent);
-		component = fixture.componentInstance;
-
-		rootHTMLElement = fixture.debugElement.nativeElement;
 	});
 
 	describe('audit list display', () => {
 
 		it('should display the audit entry on load', () => {
-
+			let fixture = TestBed.createComponent(ListAuditEntriesComponent);
 			fixture.detectChanges();
 
-			console.log(component.loading);
+			return fixture.whenRenderingDone().then(() => {
+				const rootHTMLElement = fixture.debugElement.nativeElement;
 
-			fixture.whenStable().then(() => {
 				// Verify that the Address String is display in the proper HTML field
 				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('testuser01');
 				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('admin update');

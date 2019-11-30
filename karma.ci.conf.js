@@ -9,6 +9,7 @@ module.exports = function (config) {
 			require('karma-jasmine'),
 			require('karma-chrome-launcher'),
 			require('karma-jasmine-html-reporter'),
+			require('karma-junit-reporter'),
 			require('karma-coverage-istanbul-reporter'),
 			require('@angular-devkit/build-angular/plugins/karma')
 		],
@@ -17,16 +18,22 @@ module.exports = function (config) {
 		},
 		coverageIstanbulReporter: {
 			dir: require('path').join(__dirname, './coverage'),
-			reports: ['html', 'lcovonly', 'text-summary'],
-			fixWebpackSourcePaths: true
+			reports: ['html', 'lcovonly'],
+			fixWebpackSourcePaths: true,
+			'report-config': {
+				// Put all HTML files in the ./coverage/html directory
+				html: {
+					subdir: 'html'
+				}
+			}
 		},
-		reporters: ['progress', 'kjhtml'],
+		junitReporter: {
+			outputDir: require('path').join(__dirname, '../test-report'),
+		},
+		reporters: ['progress', 'kjhtml', 'junit', 'coverage-istanbul'],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
-		autoWatch: true,
-		browsers: ['Chrome'],
-		singleRun: false,
-		restartOnFileChange: true
+		browsers: ['ChromeHeadless']
 	});
 };

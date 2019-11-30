@@ -9,6 +9,7 @@ describe('AdminTopics', () => {
 		const specSecond = { id: '2', ordinal: 0, title: 'Second', path: 'second' };
 		const specThird = { id: '3', ordinal: 0, title: 'Third', path: 'third' };
 		const specNoOrdinal = { id: 'none', title: 'None', path: 'none' };
+		const specOrdinalOne = { id: 'none', ordinal: 1, title: 'None', path: 'none'};
 
 		let existingTopics;
 
@@ -23,42 +24,44 @@ describe('AdminTopics', () => {
 			});
 		});
 
+		afterEach(() => {
+			AdminTopics.clearTopics();
+		});
+
 		it('should start with no topics', () => {
 			const topics = AdminTopics.getTopics();
 			expect(topics).toEqual([]);
 		});
-		it('can register a topic', () => {
+
+		it('should be able to register topics', () => {
 			AdminTopics.registerTopic(specFirst);
-		});
-		it('can find registered topic', () => {
-			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([ specFirst ]);
-		});
-		it('can re-register the same topic id', () => {
+			expect(AdminTopics.getTopics()).toEqual([ specFirst ]);
+
+			// Can re-register topics with the same ID
 			AdminTopics.registerTopic(specUpdate);
-			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([ specUpdate ]);
-		});
+			expect(AdminTopics.getTopics()).toEqual([ specUpdate ]);
 
-		it('can register a new topic', () => {
+			// Can register new topics
 			AdminTopics.registerTopic(specSecond);
-			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([ specSecond, specUpdate ]);
-		});
+			expect(AdminTopics.getTopics()).toEqual([ specSecond, specUpdate ]);
 
-		it('can register a new topic with the same ordinal and sort by title', () => {
+			// Can register topics with the same ordinals to sort by title
 			AdminTopics.registerTopic(specThird);
-			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([ specSecond, specThird, specUpdate ]);
+			expect(AdminTopics.getTopics()).toEqual([ specSecond, specThird, specUpdate ]);
+
 		});
 
 		it('can register without an ordinal to use default of 1', () => {
 			AdminTopics.registerTopic(specNoOrdinal);
-			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([ specSecond, specThird, specNoOrdinal, specUpdate ]);
+			expect(AdminTopics.getTopics()).toEqual([ specOrdinalOne ]);
 		});
 
 		it('can clear topics', () => {
+			AdminTopics.registerTopic(specFirst);
+			AdminTopics.registerTopic(specSecond);
+			AdminTopics.registerTopic(specThird);
+			expect(AdminTopics.getTopics()).toEqual([ specSecond, specThird, specFirst ]);
+
 			AdminTopics.clearTopics();
 			expect(AdminTopics.getTopics()).toEqual([]);
 		});

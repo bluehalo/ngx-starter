@@ -52,14 +52,13 @@ describe('LoadingSpinnerComponent', () => {
 		expect(defaultRootHTMLElement.innerText).toContain(expectedContent);
 	});
 
-	it('should display provided loading message', () => {
-		const expectedContent = 'Bootstrapping...';
+	it('should display provided loading message and allow updates', () => {
+		let expectedContent = 'Bootstrapping...';
 		providedFixture.detectChanges();
 		expect(providedRootHTMLElement.innerText).toContain(expectedContent);
-	});
 
-	it('should display changed provided loading message', () => {
-		const expectedContent = 'Almost done...';
+		// should be able to update it as well
+		expectedContent = 'Almost done...';
 		providedTestHost.message = expectedContent;
 		providedFixture.detectChanges();
 		expect(providedRootHTMLElement.innerText).toContain(expectedContent);
