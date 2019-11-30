@@ -4,7 +4,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { User } from '../../auth/user.model';
-import { Role } from '../../auth/role.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 import { ConfigService } from '../../config.service';
@@ -16,9 +15,12 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 })
 export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
 
-	private mode = 'admin-edit';
-
-	private possibleRoles = Role.ROLES;
+	mode = 'admin-edit';
+	title = 'Edit User';
+	subtitle = 'Make changes to the user\'s information';
+	okButtonText = 'Save';
+	navigateOnSuccess = '/admin/users';
+	okDisabled = false;
 
 	private id: string;
 
@@ -38,11 +40,7 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 		this.sub = this.route.params.subscribe( (params: any) => {
 			this.id = params.id;
 
-			this.title = 'Edit User';
-			this.subtitle = 'Make changes to the user\'s information';
-			this.okButtonText = 'Save';
-			this.navigateOnSuccess = '/admin/users';
-			this.okDisabled = false;
+
 			this.adminUsersService.get(this.id).subscribe((userRaw: any) => {
 				this.user = new User().setFromUserModel(userRaw);
 				if (null == this.user.userModel.roles) {

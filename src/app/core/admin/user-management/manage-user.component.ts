@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
+import { Role } from '../../auth/role.model';
 import { ConfigService } from '../../config.service';
 
 export abstract class ManageUserComponent implements OnDestroy, OnInit {
@@ -17,12 +18,16 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 	proxyPki: boolean;
 	metadataLocked: boolean;
 	okDisabled: boolean;
+	refreshing: boolean = false;
+
+	possibleRoles = Role.ROLES;
 
 	// Variables that will be set by implementing classes
-	title: string;
-	subtitle: string;
-	okButtonText: string;
-	navigateOnSuccess: string;
+	abstract mode: string;
+	abstract title: string;
+	abstract subtitle: string;
+	abstract okButtonText: string;
+	abstract navigateOnSuccess: string;
 	user: User;
 
 	protected destroy$: Subject<boolean> = new Subject();
@@ -69,6 +74,10 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 						this.alertService.addClientErrorAlert(response);
 					});
 		}
+	}
+
+	refreshCredentials() {
+		// TODO: Implement this.
 	}
 
 	bypassAccessCheck() {

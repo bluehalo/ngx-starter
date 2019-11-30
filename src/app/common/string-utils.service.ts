@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import isString from 'lodash/isString';
 
 export class StringUtils {

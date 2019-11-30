@@ -5,8 +5,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import capitalize from 'lodash/capitalize';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
-import { of } from 'rxjs';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from './config.service';
 

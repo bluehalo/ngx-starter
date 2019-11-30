@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash';
 import { first, tap } from 'rxjs/operators';
 
 import { SystemAlertService } from '../../../common/system-alert.module';

@@ -3,8 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 
-import _forEach from 'lodash/forEach';
-
 @Component({
 	template: '<loading-spinner></loading-spinner>'
 })

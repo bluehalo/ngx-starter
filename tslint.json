@@ -1,16 +1,26 @@
 {
-  "extends": [
-    "tslint:recommended"
-  ],
-  "rulesDirectory": [
-    "codelyzer"
-  ],
+  "extends": "tslint:recommended",
   "rules": {
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
-      "severity": "warn"
+      "severity": "warning"
     },
+    "component-class-suffix": true,
+    "contextual-lifecycle": true,
+    "directive-class-suffix": true,
+    "directive-selector": [
+      true,
+      "attribute",
+      "app",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "app",
+      "kebab-case"
+    ],
     "import-blacklist": [
       true,
       "lodash",
@@ -20,7 +30,10 @@
     "indent": [ true, "tabs", 4],
     "interface-name": false,
     "max-classes-per-file": false,
-    "max-line-length": false,
+    "max-line-length": [
+      true,
+      140
+    ],
     "member-access": false,
     "member-ordering": [
       true,
@@ -50,7 +63,6 @@
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
-    "no-use-before-declare": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [
       true,
@@ -63,29 +75,20 @@
       "single"
     ],
     "trailing-comma": false,
-
-    // codelyzer rules.  To revert to errors, remove/change severity
-    "no-output-on-prefix": true,
-    "no-inputs-metadata-property": true,
-    "no-outputs-metadata-property": true,
+    "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
     "no-input-rename": true,
-    "no-output-rename": true,
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "no-conflicting-lifecycle": true,
-    "no-lifecycle-call": true,
+    "no-inputs-metadata-property": true,
     "no-output-native": true,
-    "no-unused-css": true,
-    "prefer-output-readonly": true,
+    "no-output-on-prefix": true,
+    "no-output-rename": true,
+    "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
-    "template-no-call-expression": {
-      "options": true,
-      "severity": "warning"
-    },
-
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
-  }
+    "template-no-negated-async": true,
+    "use-lifecycle-interface": true,
+    "use-pipe-transform-interface": true
+  },
+  "rulesDirectory": [
+    "codelyzer"
+  ]
 }

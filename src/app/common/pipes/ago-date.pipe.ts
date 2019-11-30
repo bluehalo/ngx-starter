@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import * as moment from 'moment';
+import { Pipe, PipeTransform } from '@angular/core';
+import moment from 'moment';
 
 @Pipe({name: 'agoDate'})
 export class AgoDatePipe implements PipeTransform {

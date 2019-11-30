@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
@@ -17,6 +17,10 @@ import { SystemAlertService } from '../../common/system-alert.module';
 export class SignupComponent extends ManageUserComponent implements OnDestroy, OnInit {
 
 	mode = 'signup';
+	title = 'New Account Request';
+	subtitle = 'Provide the required information to request an account';
+	okButtonText = 'Submit';
+	navigateOnSuccess = '/signed-up';
 
 	inviteId: string;
 
@@ -43,10 +47,7 @@ export class SignupComponent extends ManageUserComponent implements OnDestroy, O
 	}
 
 	initialize() {
-		this.title = 'New Account Request';
-		this.subtitle = 'Provide the required information to request an account';
-		this.okButtonText = 'Submit';
-		this.navigateOnSuccess = '/signed-up';
+
 		this.user = new User();
 	}
 

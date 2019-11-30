@@ -29,6 +29,8 @@
     "d3": "5",
     "@types/d3": "5",
     "font-awesome": "4.7",
+    "lodash": "4",
+    "@types/lodash": "4",
     "moment": "2.24",
     "ngx-bootstrap": "4.3",
     "roboto-fontface": "0.10",

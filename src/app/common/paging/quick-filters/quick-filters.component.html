@@ -9,8 +9,8 @@
 	</div>
 
 	<div *ngIf="defaultFilters && shown">(
-		<a [class.selected]="columnMode==='default'" (click)="toggleQuickFilter('default')" tabindex="0">Default</a> /
-		<a [class.selected]="columnMode==='all'" (click)="toggleQuickFilter('all')" tabindex="0">All</a> ):
+		<a [class.selected]="filters['default']?.show" (click)="toggleQuickFilter('default')" tabindex="0">Default</a> /
+		<a [class.selected]="filters['default']?.show" (click)="toggleQuickFilter('all')" tabindex="0">All</a> ):
 	</div>
 
 	<div *ngIf="shown" class="quick-select-header">

@@ -16,6 +16,10 @@ import { User } from '../../auth/user.model';
 export class AdminCreateUserComponent extends ManageUserComponent {
 
 	mode = 'admin-create';
+	title = 'Create User';
+	subtitle = 'Provide the required information to create a new user';
+	okButtonText = 'Create';
+	navigateOnSuccess = '/admin/users';
 
 	constructor(
 		protected router: Router,
@@ -27,10 +31,6 @@ export class AdminCreateUserComponent extends ManageUserComponent {
 	}
 
 	initialize() {
-		this.title = 'Create User';
-		this.subtitle = 'Provide the required information to create a new user';
-		this.okButtonText = 'Create';
-		this.navigateOnSuccess = '/admin/users';
 		this.user = new User();
 		this.user.userModel.roles = {};
 	}

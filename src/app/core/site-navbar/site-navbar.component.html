@@ -86,7 +86,7 @@
 					<ul class="popover-menu" role="menu">
 
 						<!-- User Signout -->
-						<li [hidden]="pki"><a href="/api/auth/signout">Sign out</a></li>
+						<li [hidden]="auth === 'pki'"><a href="/api/auth/signout">Sign out</a></li>
 
 					</ul>
 				</ng-template>

@@ -29,6 +29,7 @@ export class SiteNavbarComponent implements OnInit {
 	teamNavOpen = false;
 	messagesNavOpen = false;
 
+	auth = 'local';
 	showFeedbackOption = true;
 
 	session: Session = null;
@@ -72,6 +73,7 @@ export class SiteNavbarComponent implements OnInit {
 
 		this.configService.getConfig().subscribe((config: Config) => {
 			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
+			this.auth = get(config, 'auth', 'local');
 		});
 
 		this.adminMenuItems = AdminTopics.getTopics();
