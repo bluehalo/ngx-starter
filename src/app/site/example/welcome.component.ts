@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<h2>Welcome Page</h2>
+					<h1>Welcome Page</h1>
 					<p>Simple demonstration of routing.</p>
 				</div>
 			</div>

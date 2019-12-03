@@ -4,7 +4,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { User } from '../../auth/user.model';
-import { Role } from '../../auth/role.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 import { ConfigService } from '../../config.service';
@@ -17,8 +16,6 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
 
 	private mode = 'admin-edit';
-
-	private possibleRoles = Role.ROLES;
 
 	private id: string;
 
@@ -48,6 +45,8 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 				if (null == this.user.userModel.roles) {
 					this.user.userModel.roles = {};
 				}
+				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles.join('\n');
+				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups.join('\n');
 				this.user.userModel.providerData = { dn: (null != this.user.userModel.providerData) ? this.user.userModel.providerData.dn : undefined };
 				this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
 			});

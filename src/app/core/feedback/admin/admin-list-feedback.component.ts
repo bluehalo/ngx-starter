@@ -63,6 +63,6 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 AdminTopics.registerTopic({
 	id: 'feedback',
 	title: 'Feedback',
-	ordinal: 3,
+	ordinal: 4,
 	path: 'feedback'
 });

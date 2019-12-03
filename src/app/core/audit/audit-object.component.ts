@@ -38,7 +38,7 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 	selector: 'export-audit',
 	template: `
 			<span *ngIf='auditObject'>
-				<i class='fa fa-download'></i> Export config
+				<span class='fa fa-download'></span> Export config
 			</span>
 			`
 })

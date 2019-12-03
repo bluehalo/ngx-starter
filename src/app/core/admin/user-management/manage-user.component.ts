@@ -9,6 +9,7 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
+import { Role } from '../../auth/role.model';
 
 export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
@@ -25,9 +26,11 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 	navigateOnSuccess: string;
 	user: User;
 
+	possibleRoles = Role.ROLES;
+
 	protected destroy$: Subject<boolean> = new Subject();
 
-	constructor(
+	protected constructor(
 		protected router: Router,
 		protected configService: ConfigService,
 		protected alertService: SystemAlertService

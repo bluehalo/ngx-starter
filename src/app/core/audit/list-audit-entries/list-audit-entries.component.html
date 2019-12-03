@@ -155,7 +155,7 @@
 									<a class="btn-icon no-href"
 										[hidden]="null == entry.audit.object"
 										(click)="viewMore(entry, 'viewDetails')">
-										<i class="fa fa-eye"></i><span>View Details</span>
+										<span class="fa fa-eye"></span><span>View Details</span>
 									</a>
 								</small>
 								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
@@ -173,7 +173,7 @@
 										placement="bottom"
 										container="body"
 										(click)="viewMore(entry, 'viewChanges')">
-										<i class="fa fa-eye"></i><span>View Changes</span>
+										<span class="fa fa-eye"></span><span>View Changes</span>
 									</a>
 								</small>
 								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
