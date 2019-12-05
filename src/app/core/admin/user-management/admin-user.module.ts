@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AdminCreateUserComponent } from './admin-create-user.component';
 import { AdminListUsersComponent } from './admin-list-users.component';
@@ -22,6 +23,7 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		AlertModule.forRoot(),
 		ButtonsModule.forRoot(),
 		BsDropdownModule.forRoot(),
+		TooltipModule.forRoot(),
 
 		CommonModule,
 		DirectivesModule,

@@ -40,7 +40,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		lastLogin: { show: true, display: 'Last Login' },
 		created: { show: false, display: 'Created' },
 		updated: { show: false, display: 'Updated' },
-		bypassAccessCheck: { show: false, display: 'Bypass AC' },
+		// bypassAccessCheck: { show: false, display: 'Bypass AC' },
 		externalRoles: { show: false, display: 'External Roles' },
 		externalGroups: { show: false, display: 'External Groups' },
 		roles: { show: true, display: 'Roles' }
@@ -49,7 +49,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name', default: true },
+		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name' },
 		{ name: 'Username', sortable: true, sortField: 'username', sortDir: SortDirection.asc, tooltip: 'Sort by Username' },
 		{ name: 'ID', sortable: false, sortField: '_id'},
 		// { name: 'Teams', sortable: false },
@@ -57,10 +57,10 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		{ name: 'Email', sortable: false, sortField: 'email' },
 		{ name: 'Phone', sortable: false, sortField: 'phone' },
 		{ name: 'EUA', sortable: false, sortField: 'acceptedEua' },
-		{ name: 'Last Login', sortable: true, sortField: 'lastLogin', sortDir: SortDirection.desc, tooltip: 'Sort by Last Login' },
+		{ name: 'Last Login', sortable: true, sortField: 'lastLogin', sortDir: SortDirection.desc, tooltip: 'Sort by Last Login', default: true },
 		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Create Date' },
 		{ name: 'Updated', sortable: false, sortField: 'updated' },
-		{ name: 'Bypass AC', sortable: false, sortField: 'bypassAccessCheck' },
+		// { name: 'Bypass AC', sortable: false, sortField: 'bypassAccessCheck' },
 		{ name: 'External Roles', sortable: false, sortField: 'externalRoles' },
 		{ name: 'External Groups', sortable: false, sortField: 'externalGroups' },
 		{ name: 'Roles', sortable: false, sortField: 'roles' }
@@ -69,6 +69,8 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	headersToShow: SortableTableHeader[] = [];
 
 	possibleRoles: Role[] = Role.ROLES;
+
+	enableUserBypassAC: false;
 
 	private requiredExternalRoles: string[];
 
@@ -102,6 +104,13 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 				takeUntil(this.destroy$)
 			).subscribe(
 			(config: any) => {
+				this.enableUserBypassAC = config.enableUserBypassAC;
+				if (this.enableUserBypassAC) {
+					this.columns.bypassAccessCheck = { show: false, display: 'Bypass AC' };
+					this.defaultColumns = JSON.parse(JSON.stringify(this.columns));
+					this.headers.push({ name: 'Bypass AC', sortable: false, sortField: 'bypassAccessCheck' });
+				}
+
 				this.requiredExternalRoles = isArray(config.requiredRoles) ? config.requiredRoles : [];
 
 				this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
@@ -155,13 +164,15 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	private getDefaultQuickFilters() {
-		const roles: any = {
-			bypassAC: { show: false, display: 'Bypass AC' },
-		};
+		const roles: any = {};
+
+		if (this.enableUserBypassAC) {
+			roles.bypassAC = { show: false, display: 'Bypass AC' };
+		}
 
 		Role.ROLES.forEach((role) => {
 			if (role.role !== 'user') {
-				roles[`${role.role}Role`] = {show: false, display: role.label};
+				roles[`${role.role}Role`] = { show: false, display: role.label };
 			}
 		});
 
@@ -184,7 +195,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		let query: any;
 		const elements: any[] = [];
 
-		if (this.filters.bypassAC.show) {
+		if (this.filters.bypassAC && this.filters.bypassAC.show) {
 			elements.push({ bypassAccessCheck: true });
 		}
 

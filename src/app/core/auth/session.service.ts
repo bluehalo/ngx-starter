@@ -124,7 +124,9 @@ export class SessionService {
 		}
 
 		// Redirect the user
-		this.router.navigate([ url ], extras);
+		this.router.navigate([ url ], extras).catch(() => {
+			this.router.navigate(['']);
+		});
 	}
 
 	private parseQueryParams(url: string): any {

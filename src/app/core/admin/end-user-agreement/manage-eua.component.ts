@@ -14,7 +14,7 @@ export abstract class ManageEuaComponent {
 	subtitle: string;
 	submitText: string;
 
-	constructor(
+	protected constructor(
 		public router: Router,
 		public modalService: ModalService
 	) {

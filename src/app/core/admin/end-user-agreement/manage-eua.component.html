@@ -5,16 +5,15 @@
 		<span class="fa fa-angle-double-left"></span> Back to EUAs
 	</a>
 
-	<form novalidate name="euaForm" autocomplete="off" class="form-horizontal" role="form"
-		data-ng-submit="updateEua(euaForm.$valid)">
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
 
-		<h2>
+	<form name="euaForm" autocomplete="off" class="pt-3" role="form" (ngSubmit)="submitEua()" novalidate>
+
+		<h1>
 			{{title}}
 			<small>{{subtitle}}</small>
-		</h2>
-
-		<!-- Alert Notifications ->
-		<div class="word-wrap" data-alert data-ng-repeat="alert in alertService.alerts" data-type="{{alert.type}}" data-close="alertService.clear($index)">{{alert.msg}}</div> -->
+		</h1>
 
 		<!-- Basic Information -->
 		<div class="form-group">
@@ -27,25 +26,22 @@
 		<div class="form-group">
 			<label class="form-required" for="text">Text Content of the Agreement</label>
 			<div>
-				<textarea style="height: 20rem" class="form-control" id="text" name="text" [(ngModel)]="eua.euaModel.text" required></textarea>
+				<textarea rows="15" class="form-control" id="text" name="text" [(ngModel)]="eua.euaModel.text" required></textarea>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<div class="float-right">
+			<div class="text-right">
 				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/euas']">Cancel</button>
 				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewEua()">Preview</button>
-				<button type="button" class="btn btn-primary" (click)="submitEua()">{{submitText}}</button>
+				<button type="submit" class="btn btn-primary">{{submitText}}</button>
 			</div>
 		</div>
 
 		<div class="form-group" *ngIf="error">
-			<div class="float-right">
-				<div class="text-danger">
-					<strong>{{error}}</strong>
-				</div>
-			</div>
+			<div class="text-right text-danger font-weight-bolder">{{ error }}</div>
 		</div>
+
 	</form>
 
 </section>

@@ -102,6 +102,6 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 AdminTopics.registerTopic({
 	id: 'messages',
 	title: 'Messages',
-	ordinal: 5,
+	ordinal: 3,
 	path: 'messages'
 });

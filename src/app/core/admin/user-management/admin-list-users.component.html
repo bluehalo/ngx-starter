@@ -58,28 +58,21 @@
 					<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
 					<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>
 					<td [hidden]="!columns.acceptedEua.show">{{user.userModel.acceptedEua | agoDate:false}}</td>
-					<td [hidden]="!columns.lastLogin.show">{{user.userModel.lastLogin | agoDate:false}}</td>
+					<td [hidden]="!columns.lastLogin.show"><span placement="right" tooltip="{{ user.userModel.lastLogin | utcDate }}">{{user.userModel.lastLogin | agoDate:false}}</span></td>
 					<td [hidden]="!columns.created.show">{{user.userModel.created | agoDate:false}}</td>
 					<td [hidden]="!columns.updated.show">{{user.userModel.updated | agoDate:false}}</td>
-
-					<td [hidden]="!columns.bypassAccessCheck.show" class="text-center">
-						<span class="fa fa-fw" disabled [ngClass]="{'fa-check-square-o': user.userModel.bypassAccessCheck, 'fa-square-o': !user.userModel.bypassAccessCheck }"></span>
-					</td>
-
 					<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
 					<td [hidden]="!columns.externalGroups.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalGroups}}</td>
-
 					<td [hidden]="!columns.roles.show" style="max-width:200px;">
 						<ng-container *ngFor="let role of possibleRoles">
 							<div *ngIf="user.userModel.roles && user.userModel.roles[role.role]" class="user-role"
 								 [ngClass]="{
 									'user-role-external': user.userModel.localRoles && !user.userModel.localRoles[role.role]
 								}"
-							>
-								{{ role.role | titlecase }}
-							</div>
+							>{{ role.label }}</div>
 						</ng-container>
 					</td>
+					<td *ngIf="enableUserBypassAC" [hidden]="!columns.bypassAccessCheck.show">{{user.userModel.bypassAccessCheck ? 'Enabled' : ''}}</td>
 					<td class="text-right" style="max-width: 50px;">
 						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
 							<span class="dropdown-toggle dropdown-toggle-hide-caret px-2" style="cursor: pointer;" dropdownToggle>
