@@ -11,7 +11,7 @@ import {
 	PagingOptions,
 	SortDirection,
 	PagingResults,
-	AbstractPageableDataComponent, SortableTableHeader
+	AbstractPageableDataComponent, SortableTableHeader, SortChange
 } from '../../../common/paging.module';
 
 import { AuditOption } from '../audit.classes';
@@ -23,7 +23,7 @@ import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audi
 	styleUrls: ['./list-audit-entries.component.scss'],
 	templateUrl: './list-audit-entries.component.html'
 })
-export class ListAuditEntriesComponent extends AbstractPageableDataComponent implements OnInit {
+export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any> implements OnInit {
 
 	actionOptions: AuditOption[] = [];
 	actionsFormShown = true;
@@ -36,8 +36,8 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent imp
 	queryUserSearchTerm = '';
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Actor', sortable: true, sortField: 'audit.actor.name', sortDir: SortDirection.asc, tooltip: 'Sort by Key', iconClass: 'fa-user', default: true },
-		{ name: 'Timestamp', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Timestamp', iconClass: 'fa-clock-o' },
+		{ name: 'Actor', sortable: true, sortField: 'audit.actor.name', sortDir: SortDirection.asc, tooltip: 'Sort by Key', iconClass: 'fa-user' },
+		{ name: 'Timestamp', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Timestamp', iconClass: 'fa-clock-o', default: true },
 		{ name: 'Action', sortable: true, sortField: 'audit.action', sortDir: SortDirection.asc, tooltip: 'Sort by Action' },
 		{ name: 'Type', sortable: true, sortField: 'audit.auditType', sortDir: SortDirection.asc, tooltip: 'Sort by Type' },
 		{ name: 'Object', sortable: false },
@@ -108,10 +108,12 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent imp
 			this.auditTypeOptions = results[1].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
 		});
 
+		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+
 		super.ngOnInit();
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults> {
+	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<any>> {
 		return this.auditService.search(query, search, pagingOptions);
 	}
 

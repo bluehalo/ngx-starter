@@ -102,8 +102,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			.pipe(
 				first(),
 				takeUntil(this.destroy$)
-			).subscribe(
-			(config: any) => {
+			).subscribe((config: any) => {
 				this.enableUserBypassAC = config.enableUserBypassAC;
 				if (this.enableUserBypassAC) {
 					this.columns.bypassAccessCheck = { show: false, display: 'Bypass AC' };
@@ -115,12 +114,12 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 				this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
 
-				this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
 				this.initializeFromCache();
-
-				super.ngOnInit();
 			});
+
+		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+
+		super.ngOnInit();
 	}
 
 	ngOnDestroy() {
