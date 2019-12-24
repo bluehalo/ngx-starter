@@ -5,8 +5,8 @@
 	[hideSelected]="true"
 	[isOpen]="autocompleteOpen"
 	(add)="onAdd()"
-	[searchFn]="noResults"
 	(search)="onSearch($event)"
+	(focus)="onTouched()"
 	placeholder="{{ placeholder }}"
 	[(ngModel)]="value">
 </ng-select>
