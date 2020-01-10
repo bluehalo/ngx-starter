@@ -52,20 +52,20 @@
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-			<label class="form-check-label" for="defaultCheck1">
+			<input class="form-check-input" type="checkbox" value="" checked id="defaultCheck2">
+			<label class="form-check-label" for="defaultCheck2">
 				Default Checked checkbox
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
-			<label class="form-check-label" for="defaultCheck2">
+			<input class="form-check-input" type="checkbox" value="" id="disabledCheck1" disabled>
+			<label class="form-check-label" for="disabledCheck1">
 				Disabled checkbox
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked disabled>
-			<label class="form-check-label" for="defaultCheck2">
+			<input class="form-check-input" type="checkbox" value="" id="disabledCheck2" checked disabled>
+			<label class="form-check-label" for="disabledCheck2">
 				Disabled and Checked checkbox
 			</label>
 		</div>
@@ -182,5 +182,31 @@
 	<h3 class="pt-2">Disabled State</h3>
 	<button type="button" class="mr-3 btn btn-primary" disabled>Primary button</button>
 	<button type="button" class="mr-3 btn btn-secondary" disabled>Secondary Button</button>
+
+	<h2 class="pt-3">File Input</h2>
+
+	<h3 class="pt-2">Native File Input Component</h3>
+	<input type="file" />
+
+	<h3 class="pt-2">Bootstrap Custom File Input Component</h3>
+
+	<div class="custom-file">
+		<input type="file" class="custom-file-input" id="customFile">
+		<label class="custom-file-label" for="customFile" data-browse="Choose File">Choose file</label>
+	</div>
+
+	<h3 class="pt-2">Bootstrap Standard Button Style File Input Component</h3>
+
+	<div class="custom-file-btn custom-file-btn-primary">
+		<input type="file" class="custom-file-btn-input" id="customFile2">
+		<label class="btn custom-file-btn-label" for="customFile2"><span class="fa fa-upload mr-2"></span>Choose File</label>
+	</div>
+
+	<h3 class="pt-2">Bootstrap Outline Button Style File Input Component</h3>
+
+	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
+		<input type="file" class="custom-file-btn-input" id="customFile3" (change)="$event.target.parentElement.setAttribute('data-after', $event.target.files[0].name)">
+		<label class="btn custom-file-btn-label" for="customFile3"><span class="fa fa-upload mr-2"></span>Choose File</label>
+	</div>
 
 </form>
