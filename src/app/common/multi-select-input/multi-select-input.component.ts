@@ -20,8 +20,9 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 	autocompleteOpen = false;
 
 	private innerValue: string[];
-	private changed = new Array<(value: string[]) => void>();
-	private touched = new Array<() => void>();
+
+	onChange = (_: any) => {};
+	onTouched = () => {};
 
 	constructor() {}
 
@@ -37,10 +38,6 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 		this.autocompleteOpen = false;
 	}
 
-	noResults(term: string, item: string) {
-		return false;
-	}
-
 	get value(): string[] {
 		return this.innerValue;
 	}
@@ -48,7 +45,7 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 	set value(value: string[]) {
 		if (this.innerValue !== value) {
 			this.innerValue = value;
-			this.changed.forEach((f) => f(value));
+			this.onChange(value);
 		}
 	}
 
@@ -56,16 +53,8 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 		this.innerValue = value;
 	}
 
-	registerOnChange(fn: (value: string[]) => void) {
-		this.changed.push(fn);
-	}
+	registerOnChange(fn: (_: any) => void): void { this.onChange = fn; }
 
-	registerOnTouched(fn: () => void) {
-		this.touched.push(fn);
-	}
-
-	touch() {
-		this.touched.forEach((f) => f());
-	}
+	registerOnTouched(fn: () => void): void { this.onTouched = fn; }
 
 }
