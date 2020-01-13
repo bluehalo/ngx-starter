@@ -71,6 +71,6 @@ export class AuthorizationService {
 		if (typeof role !== 'string') {
 			return role.role;
 		}
-		return role;
+		return role.toLowerCase();
 	}
 }

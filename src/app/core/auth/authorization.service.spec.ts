@@ -130,6 +130,11 @@ describe('AuthorizationService', () => {
 			expect(localService.hasRole('user')).toBeTruthy();
 		});
 
+		it('should return true regardless of case', () => {
+			sessionService.sessionSubject.next(USER_SESSION);
+			expect(localService.hasRole('UsEr')).toBeTruthy();
+		});
+
 	});
 
 	describe('hasEveryRole', () => {
