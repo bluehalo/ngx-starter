@@ -6,6 +6,9 @@ import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 	templateUrl: './forms.component.html'
 })
 export class FormsComponent {
+	log($event) {
+		console.log($event);
+	}
 }
 
 

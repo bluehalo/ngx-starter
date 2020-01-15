@@ -61,5 +61,179 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 			box-shadow: 0 0 0 $btn-focus-width $ux-color-highlight;
 		}
 	}
+}
 
+
+// File
+//
+// Custom file input.
+
+.custom-file-btn {
+
+	display: flex;
+	align-items: center;
+
+	@include font-normal($btn-font-size);
+
+	&::after {
+		content: attr(data-after);
+		margin-left: .5rem;
+	}
+
+	.custom-file-btn-input {
+		height: 0;
+		width: 0;
+
+		&:hover ~ .custom-file-btn-label {
+			color: $body-color;
+			text-decoration: none;
+		}
+
+		&:focus ~ .custom-file-btn-label,
+		&.focus ~ .custom-file-btn-label {
+			outline: 0;
+			box-shadow: $btn-focus-box-shadow;
+		}
+
+		// Disabled comes first so active can properly restyle
+		&.disabled ~ .custom-file-btn-label,
+		&:disabled ~ .custom-file-btn-label {
+			opacity: $btn-disabled-opacity;
+			@include box-shadow(none);
+		}
+
+		&:not(:disabled):not(.disabled):active,
+		&:not(:disabled):not(.disabled).active {
+
+			& ~ .custom-file-btn-label {
+				@include box-shadow($btn-active-box-shadow);
+			}
+
+			&:focus ~ .custom-file-btn-label {
+				@include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+			}
+		}
+	}
+
+	.custom-file-btn-label {
+		display: inline-block;
+		font-family: $btn-font-family;
+		font-weight: $btn-font-weight;
+		color: $body-color;
+		text-align: center;
+		vertical-align: middle;
+		user-select: none;
+		background-color: transparent;
+		border: $btn-border-width solid transparent;
+		margin-bottom: 0;
+		@include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+		@include transition($btn-transition);
+	}
+
+	&.custom-file-btn-primary {
+		.custom-file-btn-input {
+
+			&:hover ~ .custom-file-btn-label {
+				color: color-yiq($ux-button-bg-hover);
+				@include gradient-bg($ux-button-bg-hover);
+				border-color: $ux-button-border-hover;
+			}
+
+			&:focus ~ .custom-file-btn-label,
+			&.focus ~ .custom-file-btn-label {
+				// Avoid using mixin so we can pass custom focus shadow properly
+				@if $enable-shadows {
+					box-shadow: $btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+				} @else {
+					box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+				}
+			}
+
+			&.disabled ~ .custom-file-btn-label,
+			&:disabled ~ .custom-file-btn-label {
+				color: color-yiq($ux-button-bg);
+				background-color: $ux-button-bg;
+				border-color: $ux-button-border;
+				// Remove CSS gradients if they're enabled
+				@if $enable-gradients {
+					background-image: none;
+				}
+			}
+
+			&:not(:disabled):not(.disabled):active,
+			&:not(:disabled):not(.disabled).active {
+				~ .custom-file-btn-label {
+					color: color-yiq($ux-button-bg-mouse-down);
+					background-color: $ux-button-bg-mouse-down;
+					@if $enable-gradients {
+						background-image: none; // Remove the gradient for the pressed/active state
+					}
+					border-color: $ux-button-border-mouse-down;
+				}
+
+				&:focus ~ .custom-file-btn-label {
+					// Avoid using mixin so we can pass custom focus shadow properly
+					@if $enable-shadows and $btn-active-box-shadow != none {
+						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					} @else {
+						box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					}
+				}
+			}
+		}
+
+		.custom-file-btn-label {
+			color: color-yiq($ux-button-bg);
+			@include gradient-bg($ux-button-bg);
+			border-color: $ux-button-border;
+			@include box-shadow($btn-box-shadow);
+		}
+	}
+
+	&.custom-file-btn-outline {
+
+		.custom-file-btn-input {
+
+			&:hover ~ .custom-file-btn-label {
+				color: #FFF;
+				background-color: $ux-button-bg-hover;
+				border-color: $ux-button-bg-hover;
+			}
+
+			&:focus ~ .custom-file-btn-label,
+			&.focus ~ .custom-file-btn-label {
+				box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+			}
+
+			&.disabled ~ .custom-file-btn-label,
+			&:disabled ~ .custom-file-btn-label {
+				color: $ux-button-bg;
+				background-color: inherit;
+				border-color: inherit;
+			}
+
+			&:not(:disabled):not(.disabled):active,
+			&:not(:disabled):not(.disabled).active {
+				~ .custom-file-btn-label {
+					color: color-yiq($ux-button-bg-mouse-down);
+					background-color: $ux-button-bg-mouse-down;
+					border-color: $ux-button-bg-mouse-down;
+				}
+
+				&:focus ~ .custom-file-btn-label {
+					// Avoid using mixin so we can pass custom focus shadow properly
+					@if $enable-shadows and $btn-active-box-shadow != none {
+						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+					} @else {
+						box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+					}
+				}
+			}
+		}
+
+		.custom-file-btn-label {
+			color: $ux-button-bg;
+			border-color: $ux-button-bg;
+		}
+	}
 }
