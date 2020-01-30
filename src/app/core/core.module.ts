@@ -9,7 +9,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AdminModule } from './admin/admin.module';
-import { AuditModule } from './audit/audit.module';
 import { HelpModule } from './help/help.module';
 import { FeedbackModule } from './feedback/feedback.module';
 
@@ -61,7 +60,6 @@ export function getConfiguration(configService: ConfigService) {
 		TooltipModule,
 
 		AdminModule,
-		AuditModule,
 		HelpModule,
 		FeedbackModule,
 		TeamsModule,
