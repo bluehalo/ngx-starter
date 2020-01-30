@@ -8,7 +8,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { CreateMessageComponent } from './create-message.component';
 import { ListMessagesComponent } from './list-messages.component';
-import { AdminMessagesRoutingModule } from './admin-messages-routing.module';
 import { UpdateMessageComponent } from './edit-message.component';
 import { PagingModule } from 'src/app/common/paging.module';
 import { PipesModule } from 'src/app/common/pipes.module';
@@ -19,7 +18,6 @@ import { SearchInputModule } from 'src/app/common/search-input.module';
 @NgModule({
 	imports: [
 		BsDropdownModule.forRoot(),
-		AdminMessagesRoutingModule,
 		CommonModule,
 		FormsModule,
 		RouterModule,

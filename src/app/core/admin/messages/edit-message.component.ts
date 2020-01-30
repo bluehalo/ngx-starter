@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { ManageMessageComponent } from './manage-message.component';
-import { MessageService } from '../message.service';
-import { Message } from '../message.class';
+import { MessageService } from '../../messages/message.service';
+import { Message } from '../../messages/message.class';
 import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 

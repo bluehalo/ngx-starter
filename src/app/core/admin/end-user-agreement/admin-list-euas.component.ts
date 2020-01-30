@@ -20,7 +20,6 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
-import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	templateUrl: './admin-list-euas.component.html'
@@ -185,10 +184,3 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		return this.euaService.search(query, search, pagingOptions, {});
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'end-user-agreements',
-	title: 'EUAs',
-	ordinal: 2,
-	path: 'euas'
-});

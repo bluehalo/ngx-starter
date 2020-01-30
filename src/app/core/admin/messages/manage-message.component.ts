@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Message } from '../message.class';
+import { Message } from '../../messages/message.class';
 import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { HttpErrorResponse } from '@angular/common/http';

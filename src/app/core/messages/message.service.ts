@@ -8,7 +8,9 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { SystemAlertService } from '../../common/system-alert.module';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class MessageService {
 	headers: any = { 'Content-Type': 'application/json' };
 

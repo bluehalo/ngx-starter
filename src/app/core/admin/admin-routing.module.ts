@@ -12,12 +12,16 @@ import {
 import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { AdminListFeedbackComponent } from './feedback/admin-list-feedback.component';
+import { ListMessagesComponent } from './messages/list-messages.component';
+import { CreateMessageComponent } from './messages/create-message.component';
+import { UpdateMessageComponent } from './messages/edit-message.component';
 
 @NgModule({
 	imports: [
 		RouterModule.forChild([
 			{
-				path: 'admin',
+				path: '',
 				component: AdminComponent,
 				canActivate: [AuthGuard],
 				data: { roles: ['admin'] },
@@ -48,6 +52,14 @@ import { AuthGuard } from '../auth/auth.guard';
 					},
 
 					/**
+					 * Admin Access Checker Cache Entries Route
+					 */
+					{
+						path: 'cacheEntries',
+						component: CacheEntriesComponent
+					},
+
+					/**
 					 * Admin EUA Routes
 					 */
 					{
@@ -67,8 +79,24 @@ import { AuthGuard } from '../auth/auth.guard';
 					 * Admin Access Checker Cache Entries Route
 					 */
 					{
-						path: 'cacheEntries',
-						component: CacheEntriesComponent
+						path: 'messages',
+						component: ListMessagesComponent
+					},
+					{
+						path: 'message',
+						component: CreateMessageComponent
+					},
+					{
+						path: 'message/:id',
+						component: UpdateMessageComponent
+					},
+
+					/**
+					 * Admin Feedback Routes
+					 */
+					{
+						path: 'feedback',
+						component: AdminListFeedbackComponent
 					}
 				]
 			}

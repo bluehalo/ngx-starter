@@ -6,9 +6,9 @@ import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
 
-import { ConfigService } from '../config.service';
-import { FeedbackService } from './feedback.service';
-import { Feedback } from './feedback.model';
+import { ConfigService } from '../../config.service';
+import { FeedbackService } from '../feedback.service';
+import { Feedback } from '../feedback.model';
 
 @Component({
 	templateUrl: 'feedback-modal.component.html'

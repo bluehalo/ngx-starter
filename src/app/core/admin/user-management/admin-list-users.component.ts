@@ -21,7 +21,6 @@ import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
-import { AdminTopics } from '../admin-topic.model';
 
 @Component({
 	templateUrl: './admin-list-users.component.html'
@@ -272,10 +271,3 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		return query;
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'users',
-	title: 'User',
-	ordinal: 0,
-	path: 'users'
-});
