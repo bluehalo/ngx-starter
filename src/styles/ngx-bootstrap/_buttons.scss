@@ -167,10 +167,10 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 				@if $enable-shadows {
 					box-shadow: $btn-box-shadow,
 						0
-						0
-						0
-						$btn-focus-width
-						rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+							0
+							0
+							$btn-focus-width
+							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				} @else {
 					box-shadow: 0
 						0
@@ -207,10 +207,10 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 					@if $enable-shadows and $btn-active-box-shadow != none {
 						box-shadow: $btn-active-box-shadow,
 							0
-							0
-							0
-							$btn-focus-width
-							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+								0
+								0
+								$btn-focus-width
+								rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					} @else {
 						box-shadow: 0
 							0
