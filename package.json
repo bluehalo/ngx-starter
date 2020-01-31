@@ -46,6 +46,7 @@
     "@types/jasminewd2": "2.0",
     "@types/node": "8.9",
     "codelyzer": "^5.1.1",
+    "husky": "^4.2.1",
     "jasmine-core": "2.99",
     "jasmine-spec-reporter": "4.2",
     "karma": "^4.1.0",
@@ -54,6 +55,7 @@
     "karma-jasmine": "1.1",
     "karma-jasmine-html-reporter": "0.2",
     "karma-junit-reporter": "1.2",
+    "lint-staged": "^10.0.7",
     "nodemon": "1.18.6",
     "prettier": "^1.19.1",
     "protractor": "5.4",
@@ -68,5 +70,14 @@
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "3.5.3",
     "webpack-bundle-analyzer": "3.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{scss, css}": "stylelint --fix",
+    "*.ts": "prettier --write"
   }
 }
