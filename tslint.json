@@ -61,10 +61,6 @@
     ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [
-      true,
-      "single"
-    ],
     "trailing-comma": false,
 
     // codelyzer rules.  To revert to errors, remove/change severity
