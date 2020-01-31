@@ -11,7 +11,7 @@
 
 		<div class="d-flex mb-3 align-items-center">
 			<asy-search-input placeholder="Search teams..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-			<button routerLink="/team/create" type="button" class="btn btn-primary ml-auto">
+			<button routerLink="/team/create" type="button" class="btn btn-primary ml-auto" *ngIf="canCreateTeam">
 				<span class="fa fa-plus"></span> Create Team
 			</button>
 		</div>
