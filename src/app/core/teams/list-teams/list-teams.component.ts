@@ -12,12 +12,15 @@ import {
 	SortableTableHeader,
 	SortChange, AbstractPageableDataComponent
 } from '../../../common/paging.module';
+import { AuthorizationService } from '../../auth/authorization.service';
 
 @Component({
 	templateUrl: './list-teams.component.html',
 	styleUrls: ['./list-teams.component.scss']
 })
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team> implements OnInit {
+
+	canCreateTeam = false;
 
 	headers: SortableTableHeader[] = [
 		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Team Name', default: true },
@@ -27,7 +30,8 @@ export class ListTeamsComponent extends AbstractPageableDataComponent<Team> impl
 
 	constructor(
 		private teamsService: TeamsService,
-		private alertService: SystemAlertService
+		private alertService: SystemAlertService,
+		private authorizationService: AuthorizationService
 	) {
 		super();
 	}
@@ -36,6 +40,8 @@ export class ListTeamsComponent extends AbstractPageableDataComponent<Team> impl
 		this.alertService.clearAllAlerts();
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+
+		this.canCreateTeam = this.authorizationService.hasSomeRoles(['editor', 'admin']);
 
 		super.ngOnInit();
 	}
