@@ -16,6 +16,5 @@ export class Feedback {
 
 	currentRoute: string;
 
-	constructor() {
-	}
+	constructor() {}
 }

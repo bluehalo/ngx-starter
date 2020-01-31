@@ -12,7 +12,8 @@ import {
 	AbstractPageableDataComponent,
 	PagingOptions,
 	PagingResults,
-	SortableTableHeader, SortChange,
+	SortableTableHeader,
+	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
@@ -34,8 +35,8 @@ import { User } from '../../auth/user.model';
 	templateUrl: './list-team-members.component.html',
 	styleUrls: ['./list-team-members.component.scss']
 })
-export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember> implements OnInit {
-
+export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
+	implements OnInit {
 	@Input()
 	team: Team;
 
@@ -48,11 +49,24 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	user: User;
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Name', default: true },
-		{ name: 'Username', sortable: true, sortField: 'username', sortDir: SortDirection.asc, tooltip: 'Sort by Username' },
+		{
+			name: 'Name',
+			sortable: true,
+			sortField: 'name',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Name',
+			default: true
+		},
+		{
+			name: 'Username',
+			sortable: true,
+			sortField: 'username',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Username'
+		},
 		{ name: 'Account Status', sortable: false },
 		{ name: 'Role', sortable: false },
-		{ name: '', sortable: false },
+		{ name: '', sortable: false }
 	];
 
 	headersToShow: SortableTableHeader[] = [];
@@ -76,36 +90,42 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		this.canManageTeam = this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(this.team);
+		this.canManageTeam =
+			this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(this.team);
 
-		this.sessionService.getSession()
-			.subscribe((session) => {
-				this.user = session.user;
-				this.isUserAdmin = this.authorizationService.isAdmin();
-			});
-
+		this.sessionService.getSession().subscribe(session => {
+			this.user = session.user;
+			this.isUserAdmin = this.authorizationService.isAdmin();
+		});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
 		super.ngOnInit();
 
-		this.headersToShow = (this.canManageTeam) ? this.headers.filter((header: SortableTableHeader) => header.sortField !== 'remove') : this.headers;
-		this.headersToShow = (this.isUserAdmin) ? this.headers : this.headers.filter((header: SortableTableHeader) => header.sortField !== 'bypassed');
+		this.headersToShow = this.canManageTeam
+			? this.headers.filter((header: SortableTableHeader) => header.sortField !== 'remove')
+			: this.headers;
+		this.headersToShow = this.isUserAdmin
+			? this.headers
+			: this.headers.filter((header: SortableTableHeader) => header.sortField !== 'bypassed');
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<TeamMember>> {
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<TeamMember>> {
 		return this.teamsService.searchMembers(this.team, query, search, pagingOptions, {});
 	}
 
 	addMembers() {
 		this.modalRef = this.bsModalService.show(AddMembersModalComponent);
 		this.modalRef.content.teamId = this.team._id;
-		this.modalRef.content.usersAdded
-			.subscribe((usersAdded: number) => {
-				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
-				this.modalRef = null;
-				this.reloadTeamMembers();
-			});
+		this.modalRef.content.usersAdded.subscribe((usersAdded: number) => {
+			this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
+			this.modalRef = null;
+			this.reloadTeamMembers();
+		});
 	}
 
 	removeMember(member: TeamMember) {
@@ -113,11 +133,14 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 			.confirm(
 				'Remove member from team?',
 				`Are you sure you want to remove member: "${member.userModel.name}" from this team?`,
-				'Remove Member')
+				'Remove Member'
+			)
 			.pipe(
 				first(),
 				filter((action: ModalAction) => action === ModalAction.OK),
-				switchMap(() => this.teamsService.removeMember(this.team._id, member.userModel._id)),
+				switchMap(() =>
+					this.teamsService.removeMember(this.team._id, member.userModel._id)
+				),
 				tap(() => this.authenticationService.reloadCurrentUser()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
@@ -134,13 +157,18 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		}
 
 		// If user is removing their own admin, verify that they know what they're doing
-		if (this.user.userModel._id === member.userModel._id && member.role === 'admin' && role !== 'admin') {
+		if (
+			this.user.userModel._id === member.userModel._id &&
+			member.role === 'admin' &&
+			role !== 'admin'
+		) {
 			this.modalService
 				.confirm(
 					'Remove "Team Admin" role?',
-					'Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won\'t be able to give the role back to yourself.</strong>',
+					"Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won't be able to give the role back to yourself.</strong>",
 					'Remove Admin'
-				).pipe(
+				)
+				.pipe(
 					first(),
 					filter((action: ModalAction) => action === ModalAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
@@ -149,9 +177,10 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 						this.alertService.addClientErrorAlert(error);
 						return of(null);
 					})
-				).subscribe(() => {
+				)
+				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
-					this.router.navigate(['/teams', {clearCachedFilter: true}]);
+					this.router.navigate(['/teams', { clearCachedFilter: true }]);
 				});
 		} else if (!member.explicit) {
 			// Member is implicitly in team, should explicitly add this member with the desired role
@@ -163,7 +192,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 						this.alertService.addClientErrorAlert(error);
 						return of(null);
 					})
-				).subscribe(() => this.reloadTeamMembers());
+				)
+				.subscribe(() => this.reloadTeamMembers());
 		}
 	}
 
@@ -173,17 +203,23 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 			return;
 		}
 
-		this.teamsService.addMember(this.team._id, member.userModel._id, role)
+		this.teamsService
+			.addMember(this.team._id, member.userModel._id, role)
 			.pipe(
 				tap(() => this.authenticationService.reloadCurrentUser()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
 				})
-			).subscribe(() => this.reloadTeamMembers());
+			)
+			.subscribe(() => this.reloadTeamMembers());
 	}
 
-	private doUpdateRole(member: TeamMember, role: string, persist: boolean = true): Observable<any> {
+	private doUpdateRole(
+		member: TeamMember,
+		role: string,
+		persist: boolean = true
+	): Observable<any> {
 		if (!persist) {
 			member.role = role;
 			member.roleDisplay = TeamRole.getDisplay(member.role);

@@ -10,7 +10,9 @@ import {
 	PagingOptions,
 	SortDirection,
 	SortableTableHeader,
-	PagingResults, AbstractPageableDataComponent, SortChange
+	PagingResults,
+	AbstractPageableDataComponent,
+	SortChange
 } from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ModalService, ModalAction } from 'src/app/common/modal.module';
@@ -22,8 +24,8 @@ import { MessageService } from '../message.service';
 @Component({
 	templateUrl: './list-messages.component.html'
 })
-export class ListMessagesComponent extends AbstractPageableDataComponent<Message> implements OnInit {
-
+export class ListMessagesComponent extends AbstractPageableDataComponent<Message>
+	implements OnInit {
 	filters: any = {};
 	sort: any;
 
@@ -31,21 +33,31 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 		{ name: 'Title', sortField: 'title', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Type', sortField: 'type', sortDir: SortDirection.asc, sortable: true },
 		{ name: 'Created', sortField: 'created', sortDir: SortDirection.desc, sortable: true },
-		{ name: 'Updated', sortField: 'updated', sortDir: SortDirection.desc, sortable: true, default: true }
+		{
+			name: 'Updated',
+			sortField: 'updated',
+			sortDir: SortDirection.desc,
+			sortable: true,
+			default: true
+		}
 	];
 
 	constructor(
 		private messageService: MessageService,
 		public alertService: SystemAlertService,
 		private modalService: ModalService,
-		private route: ActivatedRoute) {
+		private route: ActivatedRoute
+	) {
 		super();
 	}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.subscribe((params: Params) => {
-			if (toString(params[`clearCachedFilter`]) === 'true' || null == this.messageService.cache.listMessages) {
+			if (
+				toString(params[`clearCachedFilter`]) === 'true' ||
+				null == this.messageService.cache.listMessages
+			) {
 				this.messageService.cache.listMessages = {};
 			}
 
@@ -71,8 +83,12 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 		}
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<Message>> {
-		this.messageService.cache.messages = {search, paging: pagingOptions};
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<Message>> {
+		this.messageService.cache.messages = { search, paging: pagingOptions };
 
 		return this.messageService.search(query, search, pagingOptions);
 	}
@@ -81,7 +97,11 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 		const id = message._id;
 
 		this.modalService
-			.confirm('Delete message?', `Are you sure you want to delete message: "${message.title}" ?`, 'Delete')
+			.confirm(
+				'Delete message?',
+				`Are you sure you want to delete message: "${message.title}" ?`,
+				'Delete'
+			)
 			.pipe(
 				first(),
 				filter((action: ModalAction) => action === ModalAction.OK),
@@ -89,14 +109,16 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 					return this.messageService.remove(id);
 				})
 			)
-			.subscribe(() => {
-				this.alertService.addAlert(`Deleted message.`, 'success');
-				this.load$.next(true);
-			}, (error: HttpErrorResponse) => {
-				this.alertService.addAlert(error.message);
-			});
+			.subscribe(
+				() => {
+					this.alertService.addAlert(`Deleted message.`, 'success');
+					this.load$.next(true);
+				},
+				(error: HttpErrorResponse) => {
+					this.alertService.addAlert(error.message);
+				}
+			);
 	}
-
 }
 
 AdminTopics.registerTopic({

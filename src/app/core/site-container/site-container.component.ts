@@ -8,10 +8,9 @@ import { ConfigService } from '../config.service';
 @Component({
 	selector: 'site-container',
 	templateUrl: 'site-container.component.html',
-	styleUrls: [ 'site-container.component.scss' ]
+	styleUrls: ['site-container.component.scss']
 })
 export class SiteContainerComponent {
-
 	bannerHtml = undefined;
 	copyrightHtml = undefined;
 	showFeedbackFlyout = false;
@@ -23,7 +22,6 @@ export class SiteContainerComponent {
 			this.showFeedbackFlyout = get(config, 'feedback.showFlyout', false);
 		});
 	}
-
 
 	skipToMainContent(e: any) {
 		e.preventDefault();

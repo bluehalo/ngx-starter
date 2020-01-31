@@ -19,7 +19,7 @@ import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthorizationService } from './auth/authorization.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { ConfigService} from './config.service';
+import { ConfigService } from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
 import { ExportConfigService } from './export-config.service';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
@@ -38,15 +38,16 @@ import { UserEuaComponent } from './eua/user-eua.component';
 import { TeamsModule } from './teams/teams.module';
 import { MessagesModule } from './messages/messages.module';
 
-
 export function getConfiguration(configService: ConfigService) {
 	return () => {
-		return configService.getConfig().toPromise().catch((error) => {
-			return { error };
-		});
+		return configService
+			.getConfig()
+			.toPromise()
+			.catch(error => {
+				return { error };
+			});
 	};
 }
-
 
 @NgModule({
 	imports: [
@@ -69,11 +70,7 @@ export function getConfiguration(configService: ConfigService) {
 		SystemAlertModule,
 		MessagesModule
 	],
-	exports: [
-		SiteContainerComponent,
-		UserEuaComponent,
-		AuthorizationDirective
-	],
+	exports: [SiteContainerComponent, UserEuaComponent, AuthorizationDirective],
 	declarations: [
 		AboutComponent,
 		AccessComponent,
@@ -94,7 +91,12 @@ export function getConfiguration(configService: ConfigService) {
 		ExportConfigService,
 		PageTitleService,
 		SessionService,
-		{ provide: APP_INITIALIZER, useFactory: getConfiguration, deps: [ ConfigService ], multi: true },
+		{
+			provide: APP_INITIALIZER,
+			useFactory: getConfiguration,
+			deps: [ConfigService],
+			multi: true
+		},
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 	]
 })

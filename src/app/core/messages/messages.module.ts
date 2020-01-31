@@ -21,17 +21,8 @@ import { SearchInputModule } from 'src/app/common/search-input.module';
 		SystemAlertModule,
 		SearchInputModule
 	],
-	exports: [
-		RecentMessagesComponent
-	],
-	declarations: [
-		ViewAllMessagesComponent,
-		RecentMessagesComponent
-	],
-	providers: [
-		MessageService,
-		SocketService
-	]
+	exports: [RecentMessagesComponent],
+	declarations: [ViewAllMessagesComponent, RecentMessagesComponent],
+	providers: [MessageService, SocketService]
 })
-export class MessagesModule {
-}
+export class MessagesModule {}

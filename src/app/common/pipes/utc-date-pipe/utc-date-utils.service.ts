@@ -1,8 +1,6 @@
-
 import { Moment, isMoment, utc } from 'moment';
 
 export class UtcDateUtils {
-
 	private static defaultFormat = 'YYYY-MM-DD HH:mm:ss[Z]';
 
 	static format(value: string | number | Moment, format?: string): string {
@@ -11,7 +9,6 @@ export class UtcDateUtils {
 			if (isMoment(value)) {
 				momentDate = value;
 			} else {
-
 				momentDate = utc(value);
 				if (!momentDate.isValid()) {
 					// converts a string of milliseconds into a number
@@ -23,7 +20,9 @@ export class UtcDateUtils {
 			}
 
 			if (momentDate.isValid()) {
-				return momentDate.utc().format((null != format) ? format : UtcDateUtils.defaultFormat);
+				return momentDate
+					.utc()
+					.format(null != format ? format : UtcDateUtils.defaultFormat);
 			}
 		}
 

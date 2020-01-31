@@ -8,12 +8,9 @@ import { ModalComponent } from './modal.component';
 
 @Injectable()
 export class ModalService {
-
 	private modalRef: BsModalRef;
 
-	constructor(
-		private modalService: BsModalService
-	) {}
+	constructor(private modalService: BsModalService) {}
 
 	alert(title: string, message: string, okText?: string): Observable<ModalAction> {
 		this.showModalHelper(title, message, okText);
@@ -27,7 +24,10 @@ export class ModalService {
 	}
 
 	private showModalHelper(title: string, message: string, okText?: string) {
-		this.modalRef = this.modalService.show(ModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
+		this.modalRef = this.modalService.show(ModalComponent, {
+			ignoreBackdropClick: true,
+			class: 'modal-lg'
+		});
 		this.modalRef.content.title = title;
 		this.modalRef.content.message = message;
 

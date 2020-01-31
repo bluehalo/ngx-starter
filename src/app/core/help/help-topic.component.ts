@@ -1,5 +1,10 @@
 import {
-	Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, ViewChild,
+	Component,
+	ComponentFactory,
+	ComponentFactoryResolver,
+	ComponentRef,
+	Input,
+	ViewChild,
 	ViewContainerRef
 } from '@angular/core';
 import values from 'lodash/values';
@@ -15,7 +20,9 @@ export class HelpTopics {
 	}
 
 	static getTopicList(): string[] {
-		return values(this.topicOrder).sort((a, b) => a.ordinal - b.ordinal).map((v) => v.key);
+		return values(this.topicOrder)
+			.sort((a, b) => a.ordinal - b.ordinal)
+			.map(v => v.key);
 	}
 
 	static getTopicTitle(title: string, short: boolean = false): string {
@@ -38,7 +45,9 @@ export class HelpTopicComponent {
 
 		if (null != key && null != HelpTopics.topics[key]) {
 			// Dynamically create the component
-			const factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(HelpTopics.topics[key]);
+			const factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(
+				HelpTopics.topics[key]
+			);
 			this.componentRef = this.content.createComponent(factory);
 		} else {
 			console.log(`WARNING: No handler for help topic: ${key}.`);
@@ -47,5 +56,5 @@ export class HelpTopicComponent {
 
 	componentRef: ComponentRef<any>;
 
-	constructor(private resolver: ComponentFactoryResolver) { }
+	constructor(private resolver: ComponentFactoryResolver) {}
 }

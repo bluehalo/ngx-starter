@@ -1,17 +1,18 @@
 .row {
 	> .col,
-	> [class^="col-"] {
-		padding-top: .75rem;
-		padding-bottom: .75rem;
-		background-color: rgba(86, 61, 124, .15);
-		border: 1px solid rgba(86, 61, 124, .2);
+	> [class^='col-'] {
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+		background-color: rgba(86, 61, 124, 0.15);
+		border: 1px solid rgba(86, 61, 124, 0.2);
 	}
 }
 
-.row+.row {
+.row + .row {
 	margin-top: 1rem;
 }
 
-.container, .container-fluid {
+.container,
+.container-fluid {
 	margin: 1rem 0;
 }

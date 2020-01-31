@@ -1,11 +1,4 @@
-import {
-	Component,
-	ContentChild,
-	ElementRef,
-	Input,
-	OnInit,
-	ViewChild
-} from '@angular/core';
+import { Component, ContentChild, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-flyout',
@@ -13,9 +6,8 @@ import {
 	styleUrls: ['./flyout.component.scss']
 })
 export class FlyoutComponent implements OnInit {
-
 	@ViewChild('flyoutContentContainer', { static: false }) container: ElementRef;
-	@ContentChild('flyoutContent', { static: false}) content: ElementRef;
+	@ContentChild('flyoutContent', { static: false }) content: ElementRef;
 
 	@Input()
 	label: string;
@@ -25,28 +17,27 @@ export class FlyoutComponent implements OnInit {
 
 	isOpen = false;
 
-	constructor() {
-	}
+	constructor() {}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	toggle() {
 		if (this.placement === 'top' || this.placement === 'bottom') {
 			if (this.isOpen) {
 				this.container.nativeElement.style.height = '0';
 			} else {
-				this.container.nativeElement.style.height = this.content.nativeElement.clientHeight + 'px';
+				this.container.nativeElement.style.height =
+					this.content.nativeElement.clientHeight + 'px';
 			}
 		} else {
 			if (this.isOpen) {
 				this.container.nativeElement.style.width = '0';
 			} else {
-				this.container.nativeElement.style.width = this.content.nativeElement.clientWidth + 'px';
+				this.container.nativeElement.style.width =
+					this.content.nativeElement.clientWidth + 'px';
 			}
 		}
 
 		this.isOpen = !this.isOpen;
 	}
-
 }

@@ -4,7 +4,6 @@
 @import '../site-container/shared';
 @import './shared';
 
-
 // -------------------------------------------------
 // Navbar offsets given the header/footer setup
 // -------------------------------------------------
@@ -24,7 +23,6 @@
 	bottom: $footer-banner-height + $copyright-banner-height;
 }
 
-
 // -------------------------------------------------
 // Navbar Left
 // A left-docked vertical navigation bar
@@ -42,7 +40,7 @@
 	width: $nav-closed-width;
 	z-index: 10000;
 
-	transition: width .15s ease-in-out;
+	transition: width 0.15s ease-in-out;
 
 	// A normal element
 	.element {
@@ -59,7 +57,8 @@
 			&:hover {
 				color: $nav-element-hover-color;
 			}
-			&:hover, &.highlight-link {
+			&:hover,
+			&.highlight-link {
 				background-color: $nav-element-hover-background-color;
 				cursor: pointer;
 				text-decoration: none;
@@ -90,7 +89,6 @@
 		}
 	}
 
-
 	// A divider element
 	.element-divider {
 		border-bottom: $nav-element-font-color solid 1px;
@@ -106,12 +104,12 @@
 		margin-top: $nav-element-padding;
 	}
 
-
 	// The element that contains the logo
 	.element-logo {
 		padding: 0;
 
-		> a, > a:hover {
+		> a,
+		> a:hover {
 			background-color: $nav-element-logo-color-bg;
 			padding: 0;
 
@@ -152,7 +150,8 @@
 			width: $nav-open-width - 2 * $nav-element-logo-img-margin;
 		}
 
-		.nav-inner-scroll, .nav-collapse {
+		.nav-inner-scroll,
+		.nav-collapse {
 			width: $nav-open-width;
 		}
 	}
@@ -168,11 +167,10 @@
 	}
 }
 
-
 // Offset the content by the width of the navbar
 .navbar-content {
 	margin-left: $nav-closed-width;
-	transition: margin-left .15s ease-in-out;
+	transition: margin-left 0.15s ease-in-out;
 
 	&.navbar-open {
 		margin-left: $nav-open-width;
@@ -215,7 +213,7 @@
 	line-height: 16px;
 	font-size: 12px;
 	font-weight: 500;
-	background: #00ABF4;
+	background: #00abf4;
 	font-family: Roboto, sans-serif;
 
 	.navbar-open & {

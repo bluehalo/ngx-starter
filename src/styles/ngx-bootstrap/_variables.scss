@@ -24,52 +24,52 @@ $link-hover-color: $ux-color-highlight !default;
 
 // Navs
 $nav-link-padding-x: 0 !default;
-$nav-tabs-link-hover-border-color:  transparent transparent $ux-color-highlight !default;
-$nav-tabs-link-active-bg:           transparent !default;
+$nav-tabs-link-hover-border-color: transparent transparent $ux-color-highlight !default;
+$nav-tabs-link-active-bg: transparent !default;
 $nav-tabs-link-active-border-color: transparent transparent $ux-color-primary-medium !default;
 
 // Card
-$card-border-color:                 $ux-color-dark-gray !default;
+$card-border-color: $ux-color-dark-gray !default;
 
 // Button
-$btn-disabled-opacity:              0.3 !default;
+$btn-disabled-opacity: 0.3 !default;
 
 // Forms
-$input-font-family:                 $font-family-medium !default;
-$input-font-size:                   .875rem !default;
-$input-font-size-lg:                1rem !default;
-$input-font-size-sm:                .75rem !default;
+$input-font-family: $font-family-medium !default;
+$input-font-size: 0.875rem !default;
+$input-font-size-lg: 1rem !default;
+$input-font-size-sm: 0.75rem !default;
 
-$input-color:                       map-get($color-primary, 'darker') !default;
-$input-border-color:                map-get($color-background, 'darker') !default;
-$input-placeholder-color:           map-get($color-primary, 'lighter') !default;
+$input-color: map-get($color-primary, 'darker') !default;
+$input-border-color: map-get($color-background, 'darker') !default;
+$input-placeholder-color: map-get($color-primary, 'lighter') !default;
 
-$form-check-input-gutter:           0 !default;
+$form-check-input-gutter: 0 !default;
 
 // Dropdown
-$dropdown-padding-y:				0 !default;
-$dropdown-spacer:					0 !default;
-$dropdown-border-color:             $ux-color-dark-gray !default;
-$dropdown-box-shadow: 				0 1px 4px rgba(0, 0, 0, .3) !default;
-$dropdown-link-hover-bg:			$ux-color-light-gray !default;
+$dropdown-padding-y: 0 !default;
+$dropdown-spacer: 0 !default;
+$dropdown-border-color: $ux-color-dark-gray !default;
+$dropdown-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
+$dropdown-link-hover-bg: $ux-color-light-gray !default;
 
-$dropdown-item-padding-y:           10px !default;
-$dropdown-item-padding-x:			24px !default;
+$dropdown-item-padding-y: 10px !default;
+$dropdown-item-padding-x: 24px !default;
 
 // Popovers
-$popover-bg:                        #fff !default;
-$popover-border-color:              map-get($color-background, 'default') !default;
-$popover-border-radius:             $border-radius !default;
-$popover-box-shadow:                0 1px 4px rgba(0, 0, 0, .3) !default;
-$popover-body-padding-y:            0 !default;
-$popover-body-padding-x:            0 !default;
+$popover-bg: #fff !default;
+$popover-border-color: map-get($color-background, 'default') !default;
+$popover-border-radius: $border-radius !default;
+$popover-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
+$popover-body-padding-y: 0 !default;
+$popover-body-padding-x: 0 !default;
 
 // Tooltips
-$tooltip-font-size:                 14px !default;
-$tooltip-color:                     map-get($color-background, 'darkest-contrast') !default;
-$tooltip-bg:                        fade-out(map-get($color-background, 'darkest'), .4) !default;
-$tooltip-padding-y:                 8px !default;
-$tooltip-padding-x:                 16px !default;
+$tooltip-font-size: 14px !default;
+$tooltip-color: map-get($color-background, 'darkest-contrast') !default;
+$tooltip-bg: fade-out(map-get($color-background, 'darkest'), 0.4) !default;
+$tooltip-padding-y: 8px !default;
+$tooltip-padding-x: 16px !default;
 
 // Tables
 $table-accent-bg: $ux-color-alternate-row-fill !default;

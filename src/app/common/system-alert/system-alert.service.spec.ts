@@ -2,10 +2,11 @@ import { SystemAlertService } from './system-alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('SystemAlertService', () => {
-
 	let service: SystemAlertService;
 
-	const testAlertMsgs: string[] = Array(5).fill(0).map((v, i) => `test alert ${i}`);
+	const testAlertMsgs: string[] = Array(5)
+		.fill(0)
+		.map((v, i) => `test alert ${i}`);
 
 	beforeEach(() => {
 		service = new SystemAlertService();
@@ -36,7 +37,7 @@ describe('SystemAlertService', () => {
 	describe('clearAlertById', () => {
 		it('clears single alert by Id', () => {
 			const idToClear = 3;
-			const clearedAlertMsg = service.getAlerts().find((alert) => alert.id === idToClear).msg;
+			const clearedAlertMsg = service.getAlerts().find(alert => alert.id === idToClear).msg;
 			service.clearAlertById(idToClear);
 			const alerts = service.getAlerts();
 			expect(alerts.length).toBe(4);
@@ -94,24 +95,28 @@ describe('SystemAlertService', () => {
 	describe('addClientErrorAlert', () => {
 		it('alert is created from client error', () => {
 			const newAlertMsg = 'client error';
-			service.addClientErrorAlert(new HttpErrorResponse({
-				status: 400,
-				error: {
-					message: newAlertMsg
-				}
-			}));
+			service.addClientErrorAlert(
+				new HttpErrorResponse({
+					status: 400,
+					error: {
+						message: newAlertMsg
+					}
+				})
+			);
 			const alerts = service.getAlerts();
 			expect(alerts.length).toBe(6);
 			expect(alerts[alerts.length - 1].msg).toBe(newAlertMsg);
 		});
 
 		it('no alert is created for non-client error', () => {
-			service.addClientErrorAlert(new HttpErrorResponse({
-				status: 500,
-				error: {
-					message: 'not client error'
-				}
-			}));
+			service.addClientErrorAlert(
+				new HttpErrorResponse({
+					status: 500,
+					error: {
+						message: 'not client error'
+					}
+				})
+			);
 			const alerts = service.getAlerts();
 			expect(alerts.length).toBe(5);
 		});
@@ -126,6 +131,4 @@ describe('SystemAlertService', () => {
 			}
 		});
 	});
-
 });
-

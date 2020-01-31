@@ -7,17 +7,17 @@ import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 
 @Component({
-	templateUrl: './manage-message.component.html',
+	templateUrl: './manage-message.component.html'
 })
 export class CreateMessageComponent extends ManageMessageComponent {
-
 	mode = 'admin-create';
 
 	constructor(
 		router: Router,
 		configService: ConfigService,
 		alertService: SystemAlertService,
-		private messageService: MessageService) {
+		private messageService: MessageService
+	) {
 		super(router, configService, alertService);
 	}
 
@@ -33,5 +33,4 @@ export class CreateMessageComponent extends ManageMessageComponent {
 	submitMessage(message: Message) {
 		return this.messageService.create(message);
 	}
-
 }

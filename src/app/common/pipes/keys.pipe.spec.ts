@@ -1,13 +1,15 @@
 import { KeysPipe } from './keys.pipe';
 
 describe('KeysPipe', () => {
-
 	const keys = new KeysPipe();
 
 	it('transforms object with 2 keys to array of length 2', () => {
-		const transformed = keys.transform({foo: 'bar', one: 'two'});
+		const transformed = keys.transform({ foo: 'bar', one: 'two' });
 		transformed.sort(sortTransformedArray);
-		expect(transformed).toEqual([{key: 'foo', value: 'bar'}, {key: 'one', value: 'two'}]);
+		expect(transformed).toEqual([
+			{ key: 'foo', value: 'bar' },
+			{ key: 'one', value: 'two' }
+		]);
 	});
 
 	it('transforms empty object to empty array', () => {
@@ -21,5 +23,4 @@ describe('KeysPipe', () => {
 		}
 		return obj1.value.localeCompare(obj2.value);
 	}
-
 });

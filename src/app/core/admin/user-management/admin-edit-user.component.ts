@@ -14,7 +14,6 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 	templateUrl: './manage-user.component.html'
 })
 export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
-
 	private mode = 'admin-edit';
 
 	private id: string;
@@ -32,11 +31,11 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 	}
 
 	initialize() {
-		this.sub = this.route.params.subscribe( (params: any) => {
+		this.sub = this.route.params.subscribe((params: any) => {
 			this.id = params.id;
 
 			this.title = 'Edit User';
-			this.subtitle = 'Make changes to the user\'s information';
+			this.subtitle = "Make changes to the user's information";
 			this.okButtonText = 'Save';
 			this.navigateOnSuccess = '/admin/users';
 			this.okDisabled = false;
@@ -45,13 +44,21 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 				if (null == this.user.userModel.roles) {
 					this.user.userModel.roles = {};
 				}
-				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles.join('\n');
-				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups.join('\n');
-				this.user.userModel.providerData = { dn: (null != this.user.userModel.providerData) ? this.user.userModel.providerData.dn : undefined };
+				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles.join(
+					'\n'
+				);
+				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups.join(
+					'\n'
+				);
+				this.user.userModel.providerData = {
+					dn:
+						null != this.user.userModel.providerData
+							? this.user.userModel.providerData.dn
+							: undefined
+				};
 				this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
 			});
 		});
-
 	}
 
 	ngOnDestroy() {
@@ -65,5 +72,4 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 	submitUser(user: User): Observable<any> {
 		return this.adminUsersService.update(user);
 	}
-
 }

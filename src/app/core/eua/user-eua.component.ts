@@ -8,30 +8,29 @@ import { SystemAlertService } from '../../common/system-alert.module';
 	templateUrl: 'user-eua.component.html'
 })
 export class UserEuaComponent implements OnInit {
-
 	agree = false;
 
 	eua: any;
 
 	showAlerts = false;
 
-	constructor(
-		private sessionService: SessionService,
-		private alertService: SystemAlertService
-	) {}
+	constructor(private sessionService: SessionService, private alertService: SystemAlertService) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.sessionService.getCurrentEua().subscribe( (eua: any) => this.eua = eua);
+		this.sessionService.getCurrentEua().subscribe((eua: any) => (this.eua = eua));
 	}
 
 	accept() {
 		this.alertService.clearAllAlerts();
 		this.showAlerts = true;
-		this.sessionService.acceptEua().subscribe(() => {
-			this.sessionService.goToPreviousRoute();
-		}, (error: HttpErrorResponse) => {
-			this.alertService.addAlert(error.error.message);
-		});
+		this.sessionService.acceptEua().subscribe(
+			() => {
+				this.sessionService.goToPreviousRoute();
+			},
+			(error: HttpErrorResponse) => {
+				this.alertService.addAlert(error.error.message);
+			}
+		);
 	}
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { first } from 'rxjs/operators';
 
@@ -9,7 +9,6 @@ import { ConfigService } from '../../config.service';
 	templateUrl: 'external-links.component.html'
 })
 export class ExternalLinksComponent implements OnInit {
-
 	links: any;
 
 	private config: any;
@@ -19,16 +18,18 @@ export class ExternalLinksComponent implements OnInit {
 	constructor(private configService: ConfigService) {}
 
 	ngOnInit() {
-		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.config = config;
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config: any) => {
+				this.config = config;
 
-			this.externalLinksEnabled = config.welcomeLinks && config.welcomeLinks.enabled;
-			this.links = config.welcomeLinks.links;
-		});
+				this.externalLinksEnabled = config.welcomeLinks && config.welcomeLinks.enabled;
+				this.links = config.welcomeLinks.links;
+			});
 	}
 
 	handleLinkClick(evt: any) {
 		evt.stopPropagation();
 	}
-
 }

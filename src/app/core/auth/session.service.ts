@@ -15,7 +15,6 @@ import { ConfigService } from '../config.service';
 
 @Injectable()
 export class SessionService {
-
 	// The current session information
 	sessionSubject = new BehaviorSubject<Session>(null);
 
@@ -40,7 +39,7 @@ export class SessionService {
 		private authService: AuthenticationService,
 		private configService: ConfigService,
 		private http: HttpClient,
-		private router: Router,
+		private router: Router
 	) {}
 
 	reloadSession(): Observable<any> {
@@ -49,7 +48,7 @@ export class SessionService {
 				return of(null);
 			}),
 			this.mapUserModelToSession,
-			tap((session) => {
+			tap(session => {
 				this.sessionSubject.next(session);
 			})
 		);
@@ -58,7 +57,7 @@ export class SessionService {
 	signin(username: string, password: string): Observable<any> {
 		return this.authService.signin(username, password).pipe(
 			this.mapUserModelToSession,
-			tap((session) => {
+			tap(session => {
 				this.sessionSubject.next(session);
 			})
 		);
@@ -85,7 +84,7 @@ export class SessionService {
 				return of(null);
 			}),
 			this.mapUserModelToSession,
-			tap((session) => {
+			tap(session => {
 				this.sessionSubject.next(session);
 			})
 		);
@@ -108,7 +107,6 @@ export class SessionService {
 	}
 
 	private goToRoute(url: string, extras?: NavigationExtras) {
-
 		// Redirect the user to a URL
 		if (null == url) {
 			url = '/';
@@ -124,7 +122,7 @@ export class SessionService {
 		}
 
 		// Redirect the user
-		this.router.navigate([ url ], extras).catch(() => {
+		this.router.navigate([url], extras).catch(() => {
 			this.router.navigate(['']);
 		});
 	}
@@ -134,7 +132,7 @@ export class SessionService {
 
 		if (url && -1 !== url.indexOf('?')) {
 			const queryParamString = url.split('?')[1];
-			const paramSegments = (!isEmpty(queryParamString)) ? queryParamString.split('&') : [];
+			const paramSegments = !isEmpty(queryParamString) ? queryParamString.split('&') : [];
 			paramSegments.forEach((segment: string) => {
 				const keyValuePair = segment.split('=');
 				if (keyValuePair.length === 2) {
@@ -145,6 +143,4 @@ export class SessionService {
 
 		return queryParams;
 	}
-
-
 }

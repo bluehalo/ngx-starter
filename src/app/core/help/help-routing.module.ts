@@ -20,7 +20,7 @@ export class HelpBreadcrumbResolver implements Resolve<string> {
 				path: 'help',
 				component: HelpComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'user' ] },
+				data: { roles: ['user'] },
 				children: [
 					/**
 					 * Default Route
@@ -38,12 +38,10 @@ export class HelpBreadcrumbResolver implements Resolve<string> {
 						}
 					}
 				]
-			}])
+			}
+		])
 	],
-	exports: [
-	],
-	providers: [
-		HelpBreadcrumbResolver
-	]
+	exports: [],
+	providers: [HelpBreadcrumbResolver]
 })
-export class HelpRoutingModule { }
+export class HelpRoutingModule {}

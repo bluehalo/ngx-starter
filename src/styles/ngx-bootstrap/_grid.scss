@@ -2,7 +2,11 @@
 
 // Modified copy of make-grid-columns from Bootstrap (node_modules/bootstrap/scss/mixins/_grid-framework.scss).
 // Creates 'col-na' classes vs 'col'.
-@mixin make-nav-aware-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+@mixin make-nav-aware-grid-columns(
+	$columns: $grid-columns,
+	$gutter: $grid-gutter-width,
+	$breakpoints: $grid-breakpoints
+) {
 	// Common properties for all breakpoints
 	%na-grid-column {
 		position: relative;
@@ -45,17 +49,24 @@
 				}
 			}
 
-			.order#{$infix}-first { order: -1; }
+			.order#{$infix}-first {
+				order: -1;
+			}
 
-			.order#{$infix}-last { order: $columns + 1; }
+			.order#{$infix}-last {
+				order: $columns + 1;
+			}
 
 			@for $i from 0 through $columns {
-				.order#{$infix}-#{$i} { order: $i; }
+				.order#{$infix}-#{$i} {
+					order: $i;
+				}
 			}
 
 			// `$columns - 1` because offsetting by the width of an entire row isn't possible
 			@for $i from 0 through ($columns - 1) {
-				@if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
+				@if not($infix == '' and $i == 0) {
+					// Avoid emitting useless .offset-0
 					.offset#{$infix}-#{$i} {
 						@include make-col-offset($i, $columns);
 					}
@@ -66,7 +77,6 @@
 }
 
 @if $enable-nav-aware-grid-classes and $enable-grid-classes {
-
 	$nav-opened-grid-breakpoints: ();
 
 	@each $key, $value in $grid-breakpoints {
@@ -74,10 +84,19 @@
 		@if $value == 0 {
 			$bp: 0;
 		}
-		$nav-opened-grid-breakpoints: map-merge($nav-opened-grid-breakpoints, ($key: $bp));
+		$nav-opened-grid-breakpoints: map-merge(
+			$nav-opened-grid-breakpoints,
+			(
+				$key: $bp
+			)
+		);
 	}
 
-	@include make-nav-aware-grid-columns($grid-columns, $grid-gutter-width, $nav-opened-grid-breakpoints);
+	@include make-nav-aware-grid-columns(
+		$grid-columns,
+		$grid-gutter-width,
+		$nav-opened-grid-breakpoints
+	);
 
 	.navbar-close {
 		@include make-nav-aware-grid-columns($grid-columns, $grid-gutter-width, $grid-breakpoints);

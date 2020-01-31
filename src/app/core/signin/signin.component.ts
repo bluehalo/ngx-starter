@@ -8,10 +8,9 @@ import { SessionService } from '../auth/session.service';
 
 @Component({
 	templateUrl: 'signin.component.html',
-	styleUrls: [ 'signin.component.scss' ]
+	styleUrls: ['signin.component.scss']
 })
 export class SigninComponent implements OnDestroy, OnInit {
-
 	loaded = false;
 	pkiMode = false;
 
@@ -19,11 +18,7 @@ export class SigninComponent implements OnDestroy, OnInit {
 	password: string;
 	error: string;
 
-	constructor(
-		private configService: ConfigService,
-		private sessionService: SessionService
-	) {}
-
+	constructor(private configService: ConfigService, private sessionService: SessionService) {}
 
 	ngOnInit() {
 		this.configService.getConfig().subscribe((config: Config) => {
@@ -39,16 +34,14 @@ export class SigninComponent implements OnDestroy, OnInit {
 
 	signin() {
 		this.sessionService.signin(this.username, this.password).subscribe(
-			(result) => {
+			result => {
 				this.sessionService.goToPreviousRoute();
 			},
-			(error) => {
+			error => {
 				this.error = get(error, 'error.message', 'Unexpected error signing in.');
 			}
 		);
 	}
 
-	ngOnDestroy() {
-
-	}
+	ngOnDestroy() {}
 }

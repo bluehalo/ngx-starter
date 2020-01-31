@@ -8,21 +8,21 @@ $radio-checkbox-hover-color: $ux-color-highlight !default;
 $radio-checkbox-size: 20px !default;
 $radio-checkbox-border-width: 2px !default;
 $radio-checkbox-label-padding: 10px !default;
-$radio-checkbox-margin-y: .25rem !default;
+$radio-checkbox-margin-y: 0.25rem !default;
 
 // Calculated
 $radio-inner-margin: ($radio-checkbox-border-width * 2) + 1;
-$radio-inner-size: $radio-checkbox-size  - ($radio-inner-margin * 2);
+$radio-inner-size: $radio-checkbox-size - ($radio-inner-margin * 2);
 
 $checkbox-inner-margin: ($radio-checkbox-border-width * 2);
-$checkbox-inner-size: $radio-checkbox-size  - ($checkbox-inner-margin * 2);
+$checkbox-inner-size: $radio-checkbox-size - ($checkbox-inner-margin * 2);
 
 input {
-	&[type="radio"],
-	&[type="checkbox"],
-	&[type="radio"].form-check-input,
-	&[type="checkbox"].form-check-input {
-		left: -9999px;     // hides default ui elements
+	&[type='radio'],
+	&[type='checkbox'],
+	&[type='radio'].form-check-input,
+	&[type='checkbox'].form-check-input {
+		left: -9999px; // hides default ui elements
 		position: absolute;
 
 		& + label {
@@ -88,7 +88,7 @@ input {
 		}
 	}
 
-	&[type="radio"] {
+	&[type='radio'] {
 		+ label {
 			&:before {
 				border-radius: 100%;
@@ -114,7 +114,7 @@ input {
 		}
 	}
 
-	&[type="checkbox"] {
+	&[type='checkbox'] {
 		& + label {
 			&:before {
 				border-radius: $border-radius;

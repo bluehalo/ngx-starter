@@ -14,29 +14,27 @@ import { TeamsResolve } from './teams.resolver';
 				path: 'teams',
 				component: ListTeamsComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'user' ] }
+				data: { roles: ['user'] }
 			},
 			{
 				path: 'team/create',
 				component: CreateTeamComponent,
 				canActivate: [AuthGuard],
 				data: {
-					roles: [ 'editor' ]
+					roles: ['editor']
 				}
 			},
 			{
 				path: 'team/:id',
 				component: ViewTeamComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'user' ] },
+				data: { roles: ['user'] },
 				resolve: {
 					team: TeamsResolve
 				}
 			}
 		])
 	],
-	exports: [
-		RouterModule
-	]
+	exports: [RouterModule]
 })
-export class TeamsRoutingModule { }
+export class TeamsRoutingModule {}

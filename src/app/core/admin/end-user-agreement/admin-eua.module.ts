@@ -31,22 +31,12 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		SystemAlertModule,
 		SearchInputModule
 	],
-	exports: [
-	],
-	entryComponents: [
-	],
-	declarations:   [
-		AdminListEuasComponent,
-		AdminCreateEuaComponent,
-		AdminUpdateEuaComponent
-	],
-	providers:  [
-		AdminUsersService,
-		EuaService,
-		ModalService
-	]
+	exports: [],
+	entryComponents: [],
+	declarations: [AdminListEuasComponent, AdminCreateEuaComponent, AdminUpdateEuaComponent],
+	providers: [AdminUsersService, EuaService, ModalService]
 })
-export class AdminEuaModule { }
+export class AdminEuaModule {}
 
 export { AdminListEuasComponent } from './admin-list-euas.component';
 export { AdminCreateEuaComponent } from './admin-create-eua.component';

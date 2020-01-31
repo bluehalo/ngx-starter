@@ -9,7 +9,6 @@ import { PageChange, PagingOptions, PagingResults } from './paging.model';
 import { SortChange } from './sorting.model';
 
 export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
-
 	items: T[] = [];
 	hasItems = false;
 
@@ -23,7 +22,10 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 
 	loading = true;
 
-	pageEvent$: BehaviorSubject<PageChange> = new BehaviorSubject({ pageNumber: 0, pageSize: this.pageSize });
+	pageEvent$: BehaviorSubject<PageChange> = new BehaviorSubject({
+		pageNumber: 0,
+		pageSize: this.pageSize
+	});
 
 	sortEvent$: BehaviorSubject<SortChange> = new BehaviorSubject({} as SortChange);
 
@@ -38,18 +40,25 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 	ngOnInit() {
 		this.searchEvent$.subscribe((search: string) => {
 			this.search = search;
-			this.pageEvent$.next({pageNumber: 0, pageSize: this.pageSize});
+			this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
 		});
 
 		this.filterEvent$.subscribe((filters: any) => {
 			this.filters = cloneDeep(filters);
-			this.pageEvent$.next({pageNumber: 0, pageSize: this.pageSize});
+			this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
 		});
 
 		combineLatest([this.load$, this.pageEvent$, this.sortEvent$])
 			.pipe(
 				map(([, pageChange, sortChange]: [boolean, PageChange, SortChange]) => {
-					return new PagingOptions(pageChange.pageNumber, pageChange.pageSize, 0, 0, sortChange.sortField, sortChange.sortDir);
+					return new PagingOptions(
+						pageChange.pageNumber,
+						pageChange.pageSize,
+						0,
+						0,
+						sortChange.sortField,
+						sortChange.sortDir
+					);
 				}),
 				tap((paging: PagingOptions) => {
 					this.pagingOptions = paging;
@@ -59,10 +68,16 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 					this.loading = true;
 					return this.loadData(pagingOpt, this.search, this.getQuery());
 				})
-			).subscribe((result: PagingResults<T>) => {
+			)
+			.subscribe((result: PagingResults<T>) => {
 				this.items = result.elements;
 				if (this.items.length > 0) {
-					this.pagingOptions.set(result.pageNumber, result.pageSize, result.totalPages, result.totalSize);
+					this.pagingOptions.set(
+						result.pageNumber,
+						result.pageSize,
+						result.totalPages,
+						result.totalSize
+					);
 				} else {
 					this.pagingOptions.reset();
 				}
@@ -79,5 +94,9 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 		return {};
 	}
 
-	abstract loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<T>>;
+	abstract loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<T>>;
 }

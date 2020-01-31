@@ -26,7 +26,6 @@ import { TeamsService } from '../teams.service';
 	styleUrls: ['./create-team.component.scss']
 })
 export class CreateTeamComponent implements OnInit {
-
 	team: Team = new Team();
 
 	showExternalTeams = false;
@@ -57,14 +56,14 @@ export class CreateTeamComponent implements OnInit {
 		private sessionService: SessionService,
 		private authenticationService: AuthenticationService,
 		private authorizationService: AuthorizationService,
-		private alertService: SystemAlertService,
-	) {
-	}
+		private alertService: SystemAlertService
+	) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		this.configService.getConfig()
+		this.configService
+			.getConfig()
 			.pipe(first())
 			.subscribe((config: any) => {
 				// Need to show external groups when in proxy-pki mode
@@ -73,19 +72,20 @@ export class CreateTeamComponent implements OnInit {
 				}
 			});
 
-		this.sessionService.getSession()
-			.subscribe((session) => {
-				this.user = session.user;
-				this.isAdmin = this.authorizationService.isAdmin();
-				this.defaultTeamAdmin = this.user.userModel;
-			});
+		this.sessionService.getSession().subscribe(session => {
+			this.user = session.user;
+			this.isAdmin = this.authorizationService.isAdmin();
+			this.defaultTeamAdmin = this.user.userModel;
+		});
 
 		// Bind the search users typeahead to a function
 		if (this.isAdmin) {
 			this.searchUsersRef = new Observable((observer: any) => {
 				observer.next(this.queryUserSearchTerm);
 			}).pipe(
-				mergeMap((token: string) => this.userService.search({}, token, this.pagingOptions, {})),
+				mergeMap((token: string) =>
+					this.userService.search({}, token, this.pagingOptions, {})
+				),
 				map((result: PagingResults) => {
 					return result.elements
 						.filter((user: any) => user._id !== this.defaultTeamAdmin._id)
@@ -108,16 +108,21 @@ export class CreateTeamComponent implements OnInit {
 	save() {
 		this.submitting = true;
 		this.teamsService
-			.create(this.team, (this.defaultTeamAdmin._id !== this.user.userModel._id) ? this.defaultTeamAdmin._id : null)
-			.pipe(
-				tap(() => this.authenticationService.reloadCurrentUser())
+			.create(
+				this.team,
+				this.defaultTeamAdmin._id !== this.user.userModel._id
+					? this.defaultTeamAdmin._id
+					: null
 			)
-			.subscribe(() => {
-				return this.router.navigate(['/teams', {clearCachedFilter: true}]);
-			}, (error: HttpErrorResponse) => {
-				this.submitting = false;
-				this.alertService.addClientErrorAlert(error);
-			});
+			.pipe(tap(() => this.authenticationService.reloadCurrentUser()))
+			.subscribe(
+				() => {
+					return this.router.navigate(['/teams', { clearCachedFilter: true }]);
+				},
+				(error: HttpErrorResponse) => {
+					this.submitting = false;
+					this.alertService.addClientErrorAlert(error);
+				}
+			);
 	}
-
 }

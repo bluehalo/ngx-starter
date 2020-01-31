@@ -15,7 +15,6 @@ import { SystemAlertService } from '../../common/system-alert.module';
 	templateUrl: '../admin/user-management/manage-user.component.html'
 })
 export class SignupComponent extends ManageUserComponent implements OnDestroy, OnInit {
-
 	mode = 'signup';
 
 	inviteId: string;
@@ -61,5 +60,4 @@ export class SignupComponent extends ManageUserComponent implements OnDestroy, O
 	ngOnDestroy() {
 		this.routeParamSubscription.unsubscribe();
 	}
-
 }

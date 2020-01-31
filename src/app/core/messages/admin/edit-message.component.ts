@@ -7,12 +7,10 @@ import { Message } from '../message.class';
 import { ConfigService } from '../../config.service';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 
-
 @Component({
 	templateUrl: './manage-message.component.html'
 })
 export class UpdateMessageComponent extends ManageMessageComponent {
-
 	mode = 'admin-edit';
 
 	private id: string;
@@ -32,7 +30,7 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 			this.id = params[`id`];
 
 			this.title = 'Edit Message';
-			this.subtitle = 'Make changes to the message\'s information';
+			this.subtitle = "Make changes to the message's information";
 			this.okButtonText = 'Save';
 			this.navigateOnSuccess = '/admin/messages';
 			this.okDisabled = false;
@@ -45,5 +43,4 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 	submitMessage(message: Message) {
 		return this.messageService.update(message);
 	}
-
 }

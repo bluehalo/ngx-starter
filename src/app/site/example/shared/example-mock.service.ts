@@ -8,7 +8,6 @@ import { ExampleService } from './example.service';
 
 @Injectable()
 export class ExampleMockService extends ExampleService {
-
 	constructor(private http: HttpClient) {
 		super();
 	}
@@ -31,5 +30,4 @@ export class ExampleMockService extends ExampleService {
 			}
 		]);
 	}
-
 }

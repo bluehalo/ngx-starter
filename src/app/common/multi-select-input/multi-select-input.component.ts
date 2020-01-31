@@ -14,7 +14,6 @@ import { NG_VALUE_ACCESSOR, NgModel, ControlValueAccessor } from '@angular/forms
 	]
 })
 export class MultiSelectInputComponent implements ControlValueAccessor {
-
 	@Input() placeholder: string;
 	@ViewChild(NgModel, { static: false }) model: NgModel;
 	autocompleteOpen = false;
@@ -27,7 +26,7 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 	constructor() {}
 
 	onSearch($event) {
-		if ( $event.term.trim().length > 0 ) {
+		if ($event.term.trim().length > 0) {
 			this.autocompleteOpen = true;
 		} else {
 			this.autocompleteOpen = false;
@@ -53,8 +52,11 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 		this.innerValue = value;
 	}
 
-	registerOnChange(fn: (_: any) => void): void { this.onChange = fn; }
+	registerOnChange(fn: (_: any) => void): void {
+		this.onChange = fn;
+	}
 
-	registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-
+	registerOnTouched(fn: () => void): void {
+		this.onTouched = fn;
+	}
 }

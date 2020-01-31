@@ -7,12 +7,9 @@ const defaultKey = 'getting-started';
 	template: '<help-topic [key]="key"></help-topic>'
 })
 export class HelpTopicWrapperComponent {
-
 	key: string = defaultKey;
 
-	constructor(
-		private route: ActivatedRoute,
-	) {
+	constructor(private route: ActivatedRoute) {
 		route.params.subscribe((params: Params) => {
 			this.key = params.topic;
 		});

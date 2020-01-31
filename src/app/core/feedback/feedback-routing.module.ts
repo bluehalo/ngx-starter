@@ -13,7 +13,7 @@ import { AdminComponent } from '../admin/admin.module';
 				path: 'admin',
 				component: AdminComponent,
 				canActivate: [AuthGuard],
-				data: {roles: ['admin']},
+				data: { roles: ['admin'] },
 				children: [
 					{
 						path: 'feedback',
@@ -23,8 +23,6 @@ import { AdminComponent } from '../admin/admin.module';
 			}
 		])
 	],
-	exports: [
-		RouterModule
-	]
+	exports: [RouterModule]
 })
-export class FeedbackRoutingModule { }
+export class FeedbackRoutingModule {}

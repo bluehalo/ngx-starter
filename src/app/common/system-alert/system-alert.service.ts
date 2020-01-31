@@ -24,17 +24,13 @@ export class SystemAlertService {
 	}
 
 	clearAlertById(id: number) {
-		const index = this.alerts.findIndex((value) => value.id === id);
+		const index = this.alerts.findIndex(value => value.id === id);
 		this.clear(index);
 	}
 
 	addAlert(msg: string, type?: string, ttl?: number, subtext?: string) {
 		type = type || this.defaultType;
-		const alert = new SystemAlert(
-			this.id++,
-			type || this.defaultType,
-			msg,
-			subtext || null);
+		const alert = new SystemAlert(this.id++, type || this.defaultType, msg, subtext || null);
 
 		this.alerts.push(alert);
 

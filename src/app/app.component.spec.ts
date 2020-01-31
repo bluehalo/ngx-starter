@@ -8,16 +8,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 describe('AppComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [
-				AppComponent
-			],
-			imports: [
-				AppRoutingModule,
-				CoreModule,
-				SiteModule,
-
-				PopoverModule.forRoot()
-			],
+			declarations: [AppComponent],
+			imports: [AppRoutingModule, CoreModule, SiteModule, PopoverModule.forRoot()]
 		}).compileComponents();
 	}));
 	it('should create the app', async(() => {

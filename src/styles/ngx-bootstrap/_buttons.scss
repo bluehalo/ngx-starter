@@ -13,12 +13,19 @@ $ux-button-border-disabled: $ux-color-light-gray !default;
 $ux-button-color-disabled: $ux-color-medium-gray !default;
 
 .btn {
-
 	@include font-normal($btn-font-size);
 
-	&.btn-primary, &.btn-secondary {
+	&.btn-primary,
+	&.btn-secondary {
 		@include font-color-light();
-		@include button-variant($ux-button-bg, $ux-button-border, $ux-button-bg-hover, $ux-button-border-hover, $ux-button-bg-mouse-down, $ux-button-border-mouse-down);
+		@include button-variant(
+			$ux-button-bg,
+			$ux-button-border,
+			$ux-button-bg-hover,
+			$ux-button-border-hover,
+			$ux-button-bg-mouse-down,
+			$ux-button-border-mouse-down
+		);
 	}
 
 	&.btn-large {
@@ -29,8 +36,14 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 		@include font-normal($font-size-sm);
 	}
 
-	&.btn-outline-primary, &.btn-outline-secondary {
-		@include button-outline-variant($ux-button-bg, #FFF, $ux-button-bg-mouse-down, $ux-button-bg-mouse-down);
+	&.btn-outline-primary,
+	&.btn-outline-secondary {
+		@include button-outline-variant(
+			$ux-button-bg,
+			#fff,
+			$ux-button-bg-mouse-down,
+			$ux-button-bg-mouse-down
+		);
 
 		&:hover {
 			border-color: $ux-button-bg-hover;
@@ -54,7 +67,14 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 	}
 
 	&.btn-card {
-		@include button-variant($ux-color-white, $card-border-color, $ux-color-white, $ux-color-highlight, $ux-color-white, $ux-color-primary-medium);
+		@include button-variant(
+			$ux-color-white,
+			$card-border-color,
+			$ux-color-white,
+			$ux-color-highlight,
+			$ux-color-white,
+			$ux-color-primary-medium
+		);
 
 		&:hover,
 		&.hover {
@@ -63,13 +83,11 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 	}
 }
 
-
 // File
 //
 // Custom file input.
 
 .custom-file-btn {
-
 	display: flex;
 	align-items: center;
 
@@ -77,7 +95,7 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 
 	&::after {
 		content: attr(data-after);
-		margin-left: .5rem;
+		margin-left: 0.5rem;
 	}
 
 	.custom-file-btn-input {
@@ -104,7 +122,6 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 
 		&:not(:disabled):not(.disabled):active,
 		&:not(:disabled):not(.disabled).active {
-
 			& ~ .custom-file-btn-label {
 				@include box-shadow($btn-active-box-shadow);
 			}
@@ -126,13 +143,18 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 		background-color: transparent;
 		border: $btn-border-width solid transparent;
 		margin-bottom: 0;
-		@include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+		@include button-size(
+			$btn-padding-y,
+			$btn-padding-x,
+			$btn-font-size,
+			$btn-line-height,
+			$btn-border-radius
+		);
 		@include transition($btn-transition);
 	}
 
 	&.custom-file-btn-primary {
 		.custom-file-btn-input {
-
 			&:hover ~ .custom-file-btn-label {
 				color: color-yiq($ux-button-bg-hover);
 				@include gradient-bg($ux-button-bg-hover);
@@ -143,9 +165,18 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 			&.focus ~ .custom-file-btn-label {
 				// Avoid using mixin so we can pass custom focus shadow properly
 				@if $enable-shadows {
-					box-shadow: $btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					box-shadow: $btn-box-shadow,
+						0
+						0
+						0
+						$btn-focus-width
+						rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				} @else {
-					box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					box-shadow: 0
+						0
+						0
+						$btn-focus-width
+						rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				}
 			}
 
@@ -174,9 +205,18 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 				&:focus ~ .custom-file-btn-label {
 					// Avoid using mixin so we can pass custom focus shadow properly
 					@if $enable-shadows and $btn-active-box-shadow != none {
-						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+						box-shadow: $btn-active-box-shadow,
+							0
+							0
+							0
+							$btn-focus-width
+							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					} @else {
-						box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+						box-shadow: 0
+							0
+							0
+							$btn-focus-width
+							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					}
 				}
 			}
@@ -191,18 +231,16 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 	}
 
 	&.custom-file-btn-outline {
-
 		.custom-file-btn-input {
-
 			&:hover ~ .custom-file-btn-label {
-				color: #FFF;
+				color: #fff;
 				background-color: $ux-button-bg-hover;
 				border-color: $ux-button-bg-hover;
 			}
 
 			&:focus ~ .custom-file-btn-label,
 			&.focus ~ .custom-file-btn-label {
-				box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+				box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 			}
 
 			&.disabled ~ .custom-file-btn-label,
@@ -223,9 +261,10 @@ $ux-button-color-disabled: $ux-color-medium-gray !default;
 				&:focus ~ .custom-file-btn-label {
 					// Avoid using mixin so we can pass custom focus shadow properly
 					@if $enable-shadows and $btn-active-box-shadow != none {
-						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+						box-shadow: $btn-active-box-shadow,
+							0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 					} @else {
-						box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+						box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 					}
 				}
 			}

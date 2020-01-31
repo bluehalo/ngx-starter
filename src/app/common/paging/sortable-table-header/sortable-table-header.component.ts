@@ -13,10 +13,9 @@ export interface SortableTableHeader {
 @Component({
 	selector: 'sortable-table-header',
 	templateUrl: 'sortable-table-header.component.html',
-	styleUrls: [ 'sortable-table-header.component.scss' ]
+	styleUrls: ['sortable-table-header.component.scss']
 })
 export class SortableTableHeaderComponent implements OnInit {
-
 	@Input() header: any;
 
 	@Input() showSort = true;
@@ -37,10 +36,16 @@ export class SortableTableHeaderComponent implements OnInit {
 		if (this.sortable) {
 			// If this header is the currently sorted field, reverse the sort
 			if (this.header.sortField === this.currentSortField) {
-				this.sortChange.emit({ sortField: this.header.sortField, sortDir: this.currentSortDir === 'ASC' ? 'DESC' : 'ASC' } );
+				this.sortChange.emit({
+					sortField: this.header.sortField,
+					sortDir: this.currentSortDir === 'ASC' ? 'DESC' : 'ASC'
+				});
 			} else {
 				// Else select the default sort for this field
-				this.sortChange.emit({ sortField: this.header.sortField, sortDir: this.header.sortDir } );
+				this.sortChange.emit({
+					sortField: this.header.sortField,
+					sortDir: this.header.sortDir
+				});
 			}
 		}
 	}

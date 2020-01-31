@@ -8,9 +8,7 @@ import { ModalAction } from './modal.model';
 @Component({
 	templateUrl: 'modal.component.html'
 })
-
 export class ModalComponent {
-
 	title: string;
 
 	message: string;
@@ -21,9 +19,7 @@ export class ModalComponent {
 
 	onClose: Subject<ModalAction> = new Subject();
 
-	constructor(
-		public modalRef: BsModalRef
-	) {}
+	constructor(public modalRef: BsModalRef) {}
 
 	ok() {
 		this.modalRef.hide();

@@ -69,7 +69,7 @@ footer.site-footer {
 		margin-bottom: $copyright-banner-height;
 	}
 
-	.copyright-active.footer-active &{
+	.copyright-active.footer-active & {
 		margin-bottom: $footer-banner-height + $copyright-banner-height;
 	}
 }

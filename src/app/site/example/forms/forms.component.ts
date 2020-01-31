@@ -11,7 +11,6 @@ export class FormsComponent {
 	}
 }
 
-
 NavbarTopics.registerTopic({
 	id: 'forms',
 	title: 'Forms',

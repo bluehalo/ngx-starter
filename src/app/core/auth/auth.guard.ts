@@ -12,17 +12,14 @@ import { AuthorizationService } from './authorization.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
 	constructor(
 		private router: Router,
 		private configService: ConfigService,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
-	) { }
-
+	) {}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-
 		// Default to requiring authentication if guard is present
 		let requiresAuthentication = true;
 		if (get(route, 'data.requiresAuthentication', true) === false) {
@@ -38,7 +35,6 @@ export class AuthGuard implements CanActivate {
 			return of(true);
 		}
 
-
 		// -----------------------------------------------------------
 		// Yes, the user needs to be authenticated
 		// -----------------------------------------------------------
@@ -47,7 +43,7 @@ export class AuthGuard implements CanActivate {
 
 		const session$ = this.sessionService.getSession().pipe(
 			first(),
-			catchError((error) => {
+			catchError(error => {
 				// Handle the error
 				console.log(error);
 				return of(null);
@@ -63,7 +59,9 @@ export class AuthGuard implements CanActivate {
 				return of(session);
 			}),
 			switchMap(() => {
-				return this.authorizationService.isAuthenticated() ? this.sessionService.getCurrentEua() : of(null);
+				return this.authorizationService.isAuthenticated()
+					? this.sessionService.getCurrentEua()
+					: of(null);
 			}),
 			map(() => {
 				return this.checkAccess(route, state);
@@ -106,7 +104,7 @@ export class AuthGuard implements CanActivate {
 			// compile a list of roles that are missing
 			const requiredRoles = get(route, 'data.roles', ['user']);
 			const missingRoles: any[] = [];
-			requiredRoles.forEach( (role: any) => {
+			requiredRoles.forEach((role: any) => {
 				if (!this.authorizationService.hasRole(role)) {
 					missingRoles.push(role);
 				}
@@ -119,10 +117,8 @@ export class AuthGuard implements CanActivate {
 				this.router.navigate(['/unauthorized']);
 				return false;
 			}
-
 		}
 
 		return true;
 	}
-
 }

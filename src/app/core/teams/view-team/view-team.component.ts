@@ -22,7 +22,6 @@ import { TeamAuthorizationService } from '../team-authorization.service';
 	styleUrls: ['./view-team.component.scss']
 })
 export class ViewTeamComponent implements OnInit {
-
 	team: Team;
 	_team: any;
 
@@ -39,13 +38,10 @@ export class ViewTeamComponent implements OnInit {
 		private authenticationService: AuthenticationService,
 		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService
-	) {
-	}
+	) {}
 
 	ngOnInit() {
-		this.route.data.pipe(
-			map((data) => data.team)
-		).subscribe((team) => {
+		this.route.data.pipe(map(data => data.team)).subscribe(team => {
 			this.updateTeam(team);
 		});
 	}
@@ -60,10 +56,9 @@ export class ViewTeamComponent implements OnInit {
 	}
 
 	saveEdit() {
-		this.teamsService.update(this.team._id, this._team)
-			.pipe(
-				tap(() => this.authenticationService.reloadCurrentUser())
-			)
+		this.teamsService
+			.update(this.team._id, this._team)
+			.pipe(tap(() => this.authenticationService.reloadCurrentUser()))
 			.subscribe((team: Team) => {
 				this.isEditing = false;
 				this.team = team;
@@ -74,9 +69,10 @@ export class ViewTeamComponent implements OnInit {
 	updateTeam(team: any) {
 		if (null != team) {
 			this.team = team;
-			this.canManageTeam = this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(team);
+			this.canManageTeam =
+				this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(team);
 		} else {
-			this.router.navigate(['resource/invalid', {type: 'team'}]);
+			this.router.navigate(['resource/invalid', { type: 'team' }]);
 		}
 	}
 
@@ -86,7 +82,8 @@ export class ViewTeamComponent implements OnInit {
 				'Delete team?',
 				`Are you sure you want to delete the team: <strong>"${this.team.name}"</strong>?<br/>This action cannot be undone.`,
 				'Delete'
-			).pipe(
+			)
+			.pipe(
 				first(),
 				filter((action: ModalAction) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(this.team._id)),
@@ -95,7 +92,7 @@ export class ViewTeamComponent implements OnInit {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
 				})
-			).subscribe(() => this.router.navigate(['/teams', {clearCachedFilter: true}]));
+			)
+			.subscribe(() => this.router.navigate(['/teams', { clearCachedFilter: true }]));
 	}
-
 }

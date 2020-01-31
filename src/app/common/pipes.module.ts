@@ -7,21 +7,11 @@ import { UtcDatePipe } from './pipes/utc-date-pipe/utc-date.pipe';
 
 @NgModule({
 	imports: [],
-	exports: [
-		AgoDatePipe,
-		KeysPipe,
-		SortObjectKeysPipe,
-		UtcDatePipe
-	],
-	declarations: [
-		AgoDatePipe,
-		KeysPipe,
-		SortObjectKeysPipe,
-		UtcDatePipe
-	],
+	exports: [AgoDatePipe, KeysPipe, SortObjectKeysPipe, UtcDatePipe],
+	declarations: [AgoDatePipe, KeysPipe, SortObjectKeysPipe, UtcDatePipe],
 	providers: []
 })
-export class PipesModule { }
+export class PipesModule {}
 
 export { AgoDatePipe } from './pipes/ago-date.pipe';
 export { KeysPipe } from './pipes/keys.pipe';

@@ -12,17 +12,10 @@ import { ExampleHelpComponent } from './help/example-help.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 
-
 @NgModule({
-	imports: [
-		ExampleRoutingModule,
-		NgSelectModule
-	],
-	entryComponents: [
-		ExampleHelpComponent
-	],
-	exports: [
-	],
+	imports: [ExampleRoutingModule, NgSelectModule],
+	entryComponents: [ExampleHelpComponent],
+	exports: [],
 	declarations: [
 		ExploreComponent,
 		SearchComponent,
@@ -31,8 +24,6 @@ import { GridComponent } from './grid/grid.component';
 		FormsComponent,
 		GridComponent
 	],
-	providers: [
-		AuthGuard
-	]
+	providers: [AuthGuard]
 })
-export class ExampleModule { }
+export class ExampleModule {}

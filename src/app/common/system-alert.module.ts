@@ -10,22 +10,10 @@ import { SystemAlertIconComponent } from './system-alert/system-alert-icon.compo
 import { SystemAlertService } from './system-alert/system-alert.service';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-
-		AlertModule.forRoot()
-	],
-	exports: [
-		SystemAlertComponent
-	],
-	declarations: [
-		SystemAlertComponent,
-		SystemAlertIconComponent
-	],
-	providers: [
-		SystemAlertService
-	]
+	imports: [CommonModule, FormsModule, AlertModule.forRoot()],
+	exports: [SystemAlertComponent],
+	declarations: [SystemAlertComponent, SystemAlertIconComponent],
+	providers: [SystemAlertService]
 })
-export class SystemAlertModule { }
+export class SystemAlertModule {}
 export { SystemAlertService } from './system-alert/system-alert.service';

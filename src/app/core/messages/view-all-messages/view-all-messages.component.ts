@@ -12,7 +12,6 @@ import { Message } from '../message.class';
 	styleUrls: ['./view-all-messages.component.scss']
 })
 export class ViewAllMessagesComponent implements OnInit {
-
 	pageNumber = 0;
 	messages: Message[] = [];
 	loadMore = true;
@@ -21,13 +20,11 @@ export class ViewAllMessagesComponent implements OnInit {
 
 	@ViewChild(SearchInputComponent, { static: true }) searchInput: SearchInputComponent;
 
-	constructor(
-		private messagesService: MessageService
-	) { }
+	constructor(private messagesService: MessageService) {}
 
 	ngOnInit() {
 		this.loadMessages(this.pageNumber);
-		this.messagesService.messageReceived.subscribe((message) => {
+		this.messagesService.messageReceived.subscribe(message => {
 			this.newMessages = true;
 		});
 	}
@@ -35,7 +32,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	@HostListener('window:scroll')
 	onScroll() {
 		// If at the bottom of the page, load more messages
-		if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && this.loadMore) {
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight && this.loadMore) {
 			this.loadMore = false; // Set to false temporarily to avoid multiple loads
 			this.pageNumber++;
 			this.loadMessages(this.pageNumber);
@@ -43,16 +40,22 @@ export class ViewAllMessagesComponent implements OnInit {
 	}
 
 	loadMessages(page: number) {
-		this.messagesService.search({}, this.search, new PagingOptions(page, 20, 0, 0, 'created', SortDirection.desc)).subscribe((messages: PagingResults) => {
-			if (page === 0) {
-				this.messages = messages.elements;
-			} else {
-				this.messages = this.messages.concat(messages.elements);
-			}
-			if (this.messages.length < messages.totalSize) {
-				this.loadMore = true;
-			}
-		});
+		this.messagesService
+			.search(
+				{},
+				this.search,
+				new PagingOptions(page, 20, 0, 0, 'created', SortDirection.desc)
+			)
+			.subscribe((messages: PagingResults) => {
+				if (page === 0) {
+					this.messages = messages.elements;
+				} else {
+					this.messages = this.messages.concat(messages.elements);
+				}
+				if (this.messages.length < messages.totalSize) {
+					this.loadMore = true;
+				}
+			});
 	}
 
 	loadNewMessages() {
@@ -68,5 +71,4 @@ export class ViewAllMessagesComponent implements OnInit {
 		this.pageNumber = 0;
 		this.loadMessages(this.pageNumber);
 	}
-
 }

@@ -11,7 +11,8 @@ import {
 	PagingResults,
 	SortDirection,
 	SortableTableHeader,
-	AbstractPageableDataComponent, SortChange
+	AbstractPageableDataComponent,
+	SortChange
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
@@ -25,12 +26,25 @@ import { Observable } from 'rxjs';
 	selector: 'cache-entries',
 	templateUrl: './cache-entries.component.html'
 })
-export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEntry> implements OnInit {
-
+export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEntry>
+	implements OnInit {
 	headers: SortableTableHeader[] = [
-		{ name: 'Key', sortable: true, sortField: 'key', sortDir: SortDirection.asc, tooltip: 'Sort by Key', default: true },
+		{
+			name: 'Key',
+			sortable: true,
+			sortField: 'key',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Key',
+			default: true
+		},
 		{ name: 'Value', sortable: false },
-		{ name: 'Timestamp', sortable: true, sortField: 'ts', sortDir: SortDirection.desc, tooltip: 'Sort by Timestamp' }
+		{
+			name: 'Timestamp',
+			sortable: true,
+			sortField: 'ts',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Timestamp'
+		}
 	];
 
 	constructor(
@@ -38,7 +52,9 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 		private modalService: ModalService,
 		private bsModalService: BsModalService,
 		private alertService: SystemAlertService
-	) { super(); }
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -48,13 +64,21 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 		super.ngOnInit();
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<CacheEntry>> {
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<CacheEntry>> {
 		return this.cacheEntriesService.match(query, search, pagingOptions);
 	}
 
 	confirmDeleteEntry(cacheEntry: CacheEntry) {
 		this.modalService
-			.confirm('Delete cache entry?', `Are you sure you want to delete entry: ${cacheEntry.key}?`, 'Delete')
+			.confirm(
+				'Delete cache entry?',
+				`Are you sure you want to delete entry: ${cacheEntry.key}?`,
+				'Delete'
+			)
 			.pipe(
 				first(),
 				filter((action: ModalAction) => action === ModalAction.OK),
@@ -62,16 +86,22 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 					return this.cacheEntriesService.remove(cacheEntry.key);
 				})
 			)
-			.subscribe(() => {
-				this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
-				this.load$.next(true);
-			}, (response: HttpErrorResponse) => {
-				this.alertService.addAlert(response.error.message);
-			});
+			.subscribe(
+				() => {
+					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
+					this.load$.next(true);
+				},
+				(response: HttpErrorResponse) => {
+					this.alertService.addAlert(response.error.message);
+				}
+			);
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
-		const cacheEntryModalRef = this.bsModalService.show(CacheEntryModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
+		const cacheEntryModalRef = this.bsModalService.show(CacheEntryModalComponent, {
+			ignoreBackdropClick: true,
+			class: 'modal-lg'
+		});
 		cacheEntryModalRef.content.cacheEntry = cacheEntry;
 	}
 
@@ -84,7 +114,8 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 				this.alertService.addAlert(`Refreshed cache entry: ${cacheEntry.key}`, 'success');
 				cacheEntry.isRefreshing = false;
 				this.load$.next(true);
-			}, (response: HttpErrorResponse) => {
+			},
+			(response: HttpErrorResponse) => {
 				this.alertService.addAlert(response.error.message);
 				cacheEntry.isRefreshing = false;
 			}

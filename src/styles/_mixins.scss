@@ -5,7 +5,7 @@
 	border-radius: $border-radius;
 }
 
-@mixin focus-style($color: $ux-color-primary, $alpha: .5, $spread: 3px, $inset: false) {
+@mixin focus-style($color: $ux-color-primary, $alpha: 0.5, $spread: 3px, $inset: false) {
 	$box-shadow-color: rgba($color, $alpha);
 	outline: none;
 
