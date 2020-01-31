@@ -14,7 +14,7 @@
 		<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Default input"></textarea>
 	</div>
 
-	<h2 class="pt-3">Sizing</h2>
+	<h2 class="pt-4">Sizing</h2>
 	<div class="form-group">
 		<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
 	</div>
@@ -27,7 +27,7 @@
 		<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
 	</div>
 
-	<h2 class="pt-3">ng-select</h2>
+	<h2 class="pt-4">ng-select</h2>
 	<div class="form-group">
 		<input type="text" class="form-control" placeholder="text input for comparison">
 	</div>
@@ -41,9 +41,9 @@
 		</ng-select>
 	</div>
 
-	<h2 class="pt-3">Checkboxes and radios</h2>
+	<h2 class="pt-4">Checkboxes and radios</h2>
 
-	<h3 class="pt-2">Default (stacked)</h3>
+	<h3 class="pt-3">Default (stacked)</h3>
 	<div class="form-group">
 		<div class="form-check">
 			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -98,7 +98,7 @@
 		</div>
 	</div>
 
-	<h3 class="pt-2">Inline</h3>
+	<h3 class="pt-3">Inline</h3>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
 			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -129,7 +129,7 @@
 		</div>
 	</div>
 
-	<h3 class="pt-2">Without labels</h3>
+	<h3 class="pt-3">Without labels</h3>
 	<div class="form-check">
 		<input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
 	</div>
@@ -137,9 +137,9 @@
 		<input class="form-check-input position-static" type="radio" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
 	</div>
 
-	<h2 class="pt-3">Buttons</h2>
+	<h2 class="pt-4">Buttons</h2>
 
-	<h3 class="pt-2">Standard</h3>
+	<h3 class="pt-3">Standard</h3>
 	<button type="button" class="mr-3 btn btn-primary">Primary</button>
 	<button type="button" class="mr-3 btn btn-secondary">Secondary</button>
 	<button type="button" class="mr-3 btn btn-success">Success</button>
@@ -150,7 +150,7 @@
 	<button type="button" class="mr-3 btn btn-dark">Dark</button>
 	<button type="button" class="mr-3 btn btn-link">Link</button>
 
-	<h3 class="pt-2">Outline Buttons</h3>
+	<h3 class="pt-3">Outline Buttons</h3>
 	<button type="button" class="mr-3 btn btn-outline-primary">Primary</button>
 	<button type="button" class="mr-3 btn btn-outline-secondary">Secondary</button>
 	<button type="button" class="mr-3 btn btn-outline-success">Success</button>
@@ -160,49 +160,52 @@
 	<button type="button" class="mr-3 btn btn-outline-light">Light</button>
 	<button type="button" class="mr-3 btn btn-outline-dark">Dark</button>
 
-	<h3 class="pt-2">Button Tags</h3>
+	<h3 class="pt-3">Button Tags</h3>
 	<a class="mr-3 btn btn-primary" href="#" role="button">Link</a>
 	<button class="mr-3 btn btn-primary" type="submit">Button</button>
 	<input class="mr-3 btn btn-primary" type="button" value="Input">
 	<input class="mr-3 btn btn-primary" type="submit" value="Submit">
 	<input class="mr-3 btn btn-primary" type="reset" value="Reset">
 
-	<h3 class="pt-2">Large Buttons</h3>
+	<h3 class="pt-3">Large Buttons</h3>
 	<button type="button" class="mr-3 btn btn-primary btn-lg">Large button</button>
 	<button type="button" class="mr-3 btn btn-secondary btn-lg">Large button</button>
 
-	<h3 class="pt-2">Small Buttons</h3>
+	<h3 class="pt-3">Small Buttons</h3>
 	<button type="button" class="mr-3 btn btn-primary btn-sm">Small button</button>
 	<button type="button" class="mr-3 btn btn-secondary btn-sm">Small button</button>
 
-	<h3 class="pt-2">Active State</h3>
+	<h3 class="pt-3">Active State</h3>
 	<a href="#" class="mr-3 btn btn-primary active" role="button" aria-pressed="true">Primary Button</a>
 	<a href="#" class="mr-3 btn btn-secondary active" role="button" aria-pressed="true">Secondary Button</a>
 
-	<h3 class="pt-2">Disabled State</h3>
+	<h3 class="pt-3">Disabled State</h3>
 	<button type="button" class="mr-3 btn btn-primary" disabled>Primary button</button>
 	<button type="button" class="mr-3 btn btn-secondary" disabled>Secondary Button</button>
 
-	<h2 class="pt-3">File Input</h2>
+	<h2 class="pt-4">Submit Button w/ progress indicator</h2>
+	<button type="button" class="mr-3 btn btn-primary btn-submit" (click)="submit($event)">Submit</button>
 
-	<h3 class="pt-2">Native File Input Component</h3>
+	<h2 class="pt-4">File Input</h2>
+
+	<h3 class="pt-3">Native File Input Component</h3>
 	<input type="file" />
 
-	<h3 class="pt-2">Bootstrap Custom File Input Component</h3>
+	<h3 class="pt-3">Bootstrap Custom File Input Component</h3>
 
 	<div class="custom-file">
 		<input type="file" class="custom-file-input" id="customFile">
 		<label class="custom-file-label" for="customFile" data-browse="Choose File">Choose file</label>
 	</div>
 
-	<h3 class="pt-2">Bootstrap Standard Button Style File Input Component</h3>
+	<h3 class="pt-3">Bootstrap Standard Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-primary">
 		<input type="file" class="custom-file-btn-input" id="customFile2">
 		<label class="btn custom-file-btn-label" for="customFile2"><span class="fa fa-upload mr-2"></span>Choose File</label>
 	</div>
 
-	<h3 class="pt-2">Bootstrap Outline Button Style File Input Component</h3>
+	<h3 class="pt-3">Bootstrap Outline Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
 		<input type="file" class="custom-file-btn-input" id="customFile3" (change)="$event.target.parentElement.setAttribute('data-after', $event.target.files[0].name)">
