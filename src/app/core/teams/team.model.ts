@@ -10,7 +10,7 @@ export class Team {
 		public created?: number,
 		public requiresExternalTeams?: string[]
 	) {
-		this.requiresExternalTeams = (null == requiresExternalTeams) ? [] : requiresExternalTeams;
+		this.requiresExternalTeams = null == requiresExternalTeams ? [] : requiresExternalTeams;
 	}
 
 	setFromModel(model: any): Team {
@@ -34,4 +34,3 @@ export class Team {
 		return false;
 	}
 }
-

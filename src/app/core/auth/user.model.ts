@@ -4,8 +4,8 @@ export class User {
 	constructor(
 		public userModel: any = {}, // raw User model object,
 		public credentials: Credentials = new Credentials(),
-		public eua?: any) {
-	}
+		public eua?: any
+	) {}
 
 	public setEua(eua: any) {
 		this.eua = eua;

@@ -24,7 +24,6 @@ export interface AddedMember {
 
 @Injectable()
 export class TeamsService {
-
 	headers: any = { 'Content-Type': 'application/json' };
 
 	constructor(
@@ -32,32 +31,44 @@ export class TeamsService {
 		private sessionService: SessionService,
 		private alertService: SystemAlertService,
 		private authorizationService: AuthorizationService,
-		private teamAuthorizationService: TeamAuthorizationService) {
-	}
+		private teamAuthorizationService: TeamAuthorizationService
+	) {}
 
 	// create(team: Team, firstAdmin?: any): Observable<any> {
 	// 	return this.asyHttp.put(new HttpOptions('team', () => { }, { team, firstAdmin }));
 	// }
 
 	create(team: Team, firstAdmin?: string): Observable<any> {
-		return this.http.put(
-			`api/team`,
-			JSON.stringify({
-				team,
-				firstAdmin: firstAdmin ? firstAdmin : null
-			}),
-			{ headers: this.headers }
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+		return this.http
+			.put(
+				`api/team`,
+				JSON.stringify({
+					team,
+					firstAdmin: firstAdmin ? firstAdmin : null
+				}),
+				{ headers: this.headers }
+			)
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	get(teamId: string): Observable<Team> {
 		return this.http.get(`api/team/${teamId}`).pipe(
-			map((result: any) => (null != result) ? new Team(result._id, result.name, result.description, result.created, result.requiresExternalTeams) : null),
+			map((result: any) =>
+				null != result
+					? new Team(
+							result._id,
+							result.name,
+							result.description,
+							result.created,
+							result.requiresExternalTeams
+					  )
+					: null
+			),
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
 				return of(null);
@@ -66,35 +77,56 @@ export class TeamsService {
 	}
 
 	update(id: string, updateData: any): Observable<Team> {
-		return this.http.post(
-			`api/team/${id}`,
-			JSON.stringify(updateData),
-			{ headers: this.headers }
-		).pipe(
-			map((result: any) => (null != result) ? new Team(result._id, result.name, result.description, result.created, result.requiresExternalTeams) : null),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+		return this.http
+			.post(`api/team/${id}`, JSON.stringify(updateData), { headers: this.headers })
+			.pipe(
+				map((result: any) =>
+					null != result
+						? new Team(
+								result._id,
+								result.name,
+								result.description,
+								result.created,
+								result.requiresExternalTeams
+						  )
+						: null
+				),
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
-	search(paging: PagingOptions, query: any, search: string = null, options: any): Observable<PagingResults<Team>> {
-		return this.http.post(
-			'api/teams',
-			JSON.stringify({s: search, q: query, options}),
-			{ params: paging.toObj(), headers: this.headers }
-		).pipe(
-			map((result: PagingResults) => {
-				if (null != result && Array.isArray(result.elements)) {
-					result.elements = result.elements.map((element: any) => new Team(element._id, element.name, element.description, element.created).setFromModel(element));
-				}
-				return result;
-			}),
-			catchError(() => {
-				return of(NULL_PAGING_RESULTS);
+	search(
+		paging: PagingOptions,
+		query: any,
+		search: string = null,
+		options: any
+	): Observable<PagingResults<Team>> {
+		return this.http
+			.post('api/teams', JSON.stringify({ s: search, q: query, options }), {
+				params: paging.toObj(),
+				headers: this.headers
 			})
-		);
+			.pipe(
+				map((result: PagingResults) => {
+					if (null != result && Array.isArray(result.elements)) {
+						result.elements = result.elements.map((element: any) =>
+							new Team(
+								element._id,
+								element.name,
+								element.description,
+								element.created
+							).setFromModel(element)
+						);
+					}
+					return result;
+				}),
+				catchError(() => {
+					return of(NULL_PAGING_RESULTS);
+				})
+			);
 	}
 
 	delete(teamId: string): Observable<any> {
@@ -102,30 +134,34 @@ export class TeamsService {
 	}
 
 	addMember(teamId: string, memberId: string, role?: string): Observable<any> {
-		return this.http.post(
-			`api/team/${teamId}/member/${memberId}`,
-			JSON.stringify({ role }),
-			{ headers: this.headers }
-		);
+		return this.http.post(`api/team/${teamId}/member/${memberId}`, JSON.stringify({ role }), {
+			headers: this.headers
+		});
 	}
 
 	addMembers(newMembers: AddedMember[], teamId: string): Observable<any> {
-		return this.http.put(
-			`api/team/${teamId}/members`,
-			JSON.stringify({ newMembers }),
-			{ headers: this.headers }
-		);
+		return this.http.put(`api/team/${teamId}/members`, JSON.stringify({ newMembers }), {
+			headers: this.headers
+		});
 	}
 
-	searchMembers(team: Team, query: any, search: any, paging: PagingOptions, options: any): Observable<PagingResults> {
-		return this.http.post(
-			`api/team/${team._id}/members?`,
-			JSON.stringify({s: search, q: query, options}),
-			{ params: paging.toObj(), headers: this.headers }
-		).pipe(
-			map((result: PagingResults) => this.handleTeamMembers(result, team)),
-			catchError(() => of(NULL_PAGING_RESULTS))
-		);
+	searchMembers(
+		team: Team,
+		query: any,
+		search: any,
+		paging: PagingOptions,
+		options: any
+	): Observable<PagingResults> {
+		return this.http
+			.post(
+				`api/team/${team._id}/members?`,
+				JSON.stringify({ s: search, q: query, options }),
+				{ params: paging.toObj(), headers: this.headers }
+			)
+			.pipe(
+				map((result: PagingResults) => this.handleTeamMembers(result, team)),
+				catchError(() => of(NULL_PAGING_RESULTS))
+			);
 	}
 
 	removeMember(teamId: string, memberId: string): Observable<any> {
@@ -135,7 +171,7 @@ export class TeamsService {
 	updateMemberRole(teamId: string, memberId: string, role: string): Observable<any> {
 		return this.http.post(
 			`api/team/${teamId}/member/${memberId}/role`,
-			JSON.stringify( { role }),
+			JSON.stringify({ role }),
 			{ headers: this.headers }
 		);
 	}
@@ -152,32 +188,41 @@ export class TeamsService {
 	getTeamsCanManageResources(): Observable<Team[]> {
 		return this.getTeams().pipe(
 			map((teams: Team[]) => {
-				return teams.filter((team) => {
-					return this.authorizationService.isAdmin()
-						|| this.teamAuthorizationService.canManageResources(team);
+				return teams.filter(team => {
+					return (
+						this.authorizationService.isAdmin() ||
+						this.teamAuthorizationService.canManageResources(team)
+					);
 				});
 			})
 		);
 	}
 
-	searchUsers(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults> {
-		return this.http.post(
-			'api/users',
-			{ q: query, s: search, options },
-			{ params: paging.toObj() }
-		).pipe(
-			map((results: PagingResults) => {
-				if (null != results && isArray(results.elements)) {
-					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
-				}
-				return results;
-			})
-		);
+	searchUsers(
+		query: any,
+		search: string,
+		paging: PagingOptions,
+		options: any
+	): Observable<PagingResults> {
+		return this.http
+			.post('api/users', { q: query, s: search, options }, { params: paging.toObj() })
+			.pipe(
+				map((results: PagingResults) => {
+					if (null != results && isArray(results.elements)) {
+						results.elements = results.elements.map((element: any) =>
+							new User().setFromUserModel(element)
+						);
+					}
+					return results;
+				})
+			);
 	}
 
 	private handleTeamMembers(result: any, team: Team) {
 		if (null != result && Array.isArray(result.elements)) {
-			result.elements = result.elements.map((element: any) => new TeamMember().setFromTeamMemberModel(team, element));
+			result.elements = result.elements.map((element: any) =>
+				new TeamMember().setFromTeamMemberModel(team, element)
+			);
 		}
 		return result;
 	}

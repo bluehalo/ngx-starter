@@ -4,7 +4,6 @@ $popover-menu-item-font-color: map-get($color-background, 'lightest-contrast') !
 $popover-menu-item-hover-bg-color: map-get($color-background, 'default') !default;
 
 .nav-popover {
-
 	.popover {
 		min-height: 22px;
 
@@ -33,7 +32,7 @@ $popover-menu-item-hover-bg-color: map-get($color-background, 'default') !defaul
 				border-right-color: $popover-border-color;
 
 				&.arrow::before {
-					box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+					box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 					left: 4px;
 					transform: rotate(45deg);
 					width: 14px;
@@ -42,7 +41,6 @@ $popover-menu-item-hover-bg-color: map-get($color-background, 'default') !defaul
 		}
 	}
 }
-
 
 ul.popover-menu {
 	list-style: none;

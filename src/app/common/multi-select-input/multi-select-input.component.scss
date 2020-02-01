@@ -7,7 +7,6 @@ $tag-color: #f9f9f9 !default;
 $tag-bg-color: $ux-color-primary !default;
 
 :host ::ng-deep .ng-select {
-
 	.ng-placeholder {
 		padding-top: 2px;
 		font-weight: 300;
@@ -52,7 +51,7 @@ $tag-bg-color: $ux-color-primary !default;
 		}
 	}
 
-	.ng-select-container .ng-value-container .ng-input>input {
+	.ng-select-container .ng-value-container .ng-input > input {
 		height: 27px;
 		margin-top: -1px;
 	}

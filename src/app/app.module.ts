@@ -11,11 +11,8 @@ import { CoreModule } from './core/core.module';
 import { SessionService } from './core/auth/session.service';
 import { SiteModule } from './site/site.module';
 
-
 @NgModule({
-	declarations: [
-		AppComponent
-	],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
@@ -27,9 +24,7 @@ import { SiteModule } from './site/site.module';
 		CoreModule,
 		SiteModule
 	],
-	providers: [
-		SessionService
-	],
-	bootstrap: [ AppComponent ]
+	providers: [SessionService],
+	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

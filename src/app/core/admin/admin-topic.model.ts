@@ -27,5 +27,4 @@ export class AdminTopics {
 		const topics = values(this.topics);
 		return sortBy(topics, ['ordinal', 'title', 'path']);
 	}
-
 }

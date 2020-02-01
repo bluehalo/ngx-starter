@@ -11,11 +11,9 @@ class MockSessionService {
 	getSession(): Observable<Session> {
 		return this.sessionSubject;
 	}
-
 }
 
 describe('AuthorizationService', () => {
-
 	let localService: AuthorizationService;
 	let sessionService: SessionService;
 
@@ -61,27 +59,24 @@ describe('AuthorizationService', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				AuthorizationService,
-				{ provide: SessionService, useClass: MockSessionService}
+				{ provide: SessionService, useClass: MockSessionService }
 			]
 		});
 	});
 
-	beforeEach(
-		inject(
-			[AuthorizationService, SessionService],
-			(service: AuthorizationService, 	session: SessionService) => {
-				localService = service;
-				sessionService = session;
-			}
-		)
-	);
+	beforeEach(inject(
+		[AuthorizationService, SessionService],
+		(service: AuthorizationService, session: SessionService) => {
+			localService = service;
+			sessionService = session;
+		}
+	));
 
 	it('should create an instance', () => {
 		expect(localService).toBeTruthy();
 	});
 
 	describe('isAuthenticated', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.isAuthenticated()).toBeFalsy();
@@ -91,11 +86,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(USER_SESSION);
 			expect(localService.isAuthenticated()).toBeTruthy();
 		});
-
 	});
 
 	describe('hasExternalRole', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.hasExternalRole('ROLE1')).toBeFalsy();
@@ -110,11 +103,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(USER_SESSION);
 			expect(localService.hasExternalRole('ROLE1')).toBeTruthy();
 		});
-
 	});
 
 	describe('hasRole', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.hasRole('user')).toBeFalsy();
@@ -129,11 +120,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(USER_SESSION);
 			expect(localService.hasRole('user')).toBeTruthy();
 		});
-
 	});
 
 	describe('hasEveryRole', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.hasEveryRole([Role.USER])).toBeFalsy();
@@ -148,11 +137,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(ADMIN_SESSION);
 			expect(localService.hasEveryRole([Role.USER, Role.ADMIN])).toBeTruthy();
 		});
-
 	});
 
 	describe('hasSomeRoles', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.hasSomeRoles([Role.USER])).toBeFalsy();
@@ -169,11 +156,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(ADMIN_SESSION);
 			expect(localService.hasSomeRoles([Role.USER, Role.ADMIN])).toBeTruthy();
 		});
-
 	});
 
 	describe('isAdmin', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.isAdmin()).toBeFalsy();
@@ -188,11 +173,9 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(ADMIN_SESSION);
 			expect(localService.isAdmin()).toBeTruthy();
 		});
-
 	});
 
 	describe('isUser', () => {
-
 		it('should return false when session is null', () => {
 			sessionService.sessionSubject.next(EMPTY_SESSION);
 			expect(localService.isUser()).toBeFalsy();
@@ -209,8 +192,5 @@ describe('AuthorizationService', () => {
 			sessionService.sessionSubject.next(ADMIN_SESSION);
 			expect(localService.isUser()).toBeTruthy();
 		});
-
 	});
-
-
 });

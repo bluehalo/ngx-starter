@@ -17,8 +17,11 @@ import { AuditRoutingModule } from './audit-routing.module';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
 import {
-	AuditObjectComponent, UrlAuditObjectComponent,
-	DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+	AuditObjectComponent,
+	UrlAuditObjectComponent,
+	DefaultAuditObjectComponent,
+	ExportAuditObjectComponent,
+	UserAuditObjectComponent,
 	UserAuthenticationObjectComponent
 } from './audit-object.component';
 import { AuditViewChangeModalComponent } from './audit-view-change-modal/audit-view-change-modal.component';
@@ -63,11 +66,9 @@ import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit
 		UserAuditObjectComponent,
 		UserAuthenticationObjectComponent
 	],
-	providers: [
-		AuditService
-	]
+	providers: [AuditService]
 })
-export class AuditModule { }
+export class AuditModule {}
 
 export { AuditObjectTypes } from './audit.classes';
 export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';

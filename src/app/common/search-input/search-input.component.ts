@@ -6,14 +6,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent {
-
 	@Input() placeholder = 'Search...';
 	@Output() readonly applySearch: EventEmitter<string> = new EventEmitter();
 	@Input() search = '';
 
 	private keyupTimeout;
 
-	constructor() { }
+	constructor() {}
 
 	onKeyup() {
 		clearTimeout(this.keyupTimeout);

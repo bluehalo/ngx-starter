@@ -16,7 +16,6 @@ import { FeedbackService } from '../feedback.service';
 	styleUrls: ['./feedback-flyout.component.scss']
 })
 export class FeedbackFlyoutComponent implements OnInit {
-
 	@ViewChild(FlyoutComponent, { static: false }) flyout: FlyoutComponent;
 
 	baseUrl = '';
@@ -34,13 +33,19 @@ export class FeedbackFlyoutComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.baseUrl = config.app.clientUrl || '';
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config: any) => {
+				this.baseUrl = config.app.clientUrl || '';
 
-			if (Array.isArray(config.feedback.classificationOpts) && !isEmpty(config.feedback.classificationOpts)) {
-				this.classificationOptions = config.feedback.classificationOpts;
-			}
-		});
+				if (
+					Array.isArray(config.feedback.classificationOpts) &&
+					!isEmpty(config.feedback.classificationOpts)
+				) {
+					this.classificationOptions = config.feedback.classificationOpts;
+				}
+			});
 	}
 
 	closeForm() {
@@ -56,15 +61,17 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 		// Get the current URL from the router at the time of submission.
 		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
-		this.feedbackService.submit(this.feedback).subscribe(() => {
-			this.status = 'success';
-			setTimeout(() => {
+		this.feedbackService.submit(this.feedback).subscribe(
+			() => {
+				this.status = 'success';
+				setTimeout(() => {
 					this.closeForm();
-				}, 2000
-			);
-		}, (error: HttpErrorResponse) => {
-			this.status = 'failure';
-			this.errorMsg = error.error.message;
-		});
+				}, 2000);
+			},
+			(error: HttpErrorResponse) => {
+				this.status = 'failure';
+				this.errorMsg = error.error.message;
+			}
+		);
 	}
 }

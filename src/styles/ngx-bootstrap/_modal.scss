@@ -6,7 +6,9 @@ $modal-font-size: $ux-h2-font-size !default;
 $modal-header-border-radius-correction: 1px !default;
 
 .modal-header {
-	@include border-top-radius(calc(#{$modal-content-border-radius} - #{$modal-header-border-radius-correction}));
+	@include border-top-radius(
+		calc(#{$modal-content-border-radius} - #{$modal-header-border-radius-correction})
+	);
 	background-color: $modal-header-bg-color;
 	color: $modal-header-color;
 

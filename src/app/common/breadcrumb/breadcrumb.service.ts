@@ -6,8 +6,11 @@ export interface Breadcrumb {
 }
 
 export class BreadcrumbService {
-
-	static getBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
+	static getBreadcrumbs(
+		route: ActivatedRouteSnapshot,
+		url: string = '',
+		breadcrumbs: Breadcrumb[] = []
+	): Breadcrumb[] {
 		const ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
 		// Get the child routes

@@ -18,14 +18,16 @@ import { SystemAlertModule, SystemAlertService } from '../../../common/system-al
 
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
-	AuditObjectComponent, UrlAuditObjectComponent,
-	DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+	AuditObjectComponent,
+	UrlAuditObjectComponent,
+	DefaultAuditObjectComponent,
+	ExportAuditObjectComponent,
+	UserAuditObjectComponent,
 	UserAuthenticationObjectComponent
 } from '../audit-object.component';
 import { AuditService } from '../audit.service';
 
 describe('Audit Component Spec', () => {
-
 	let auditServiceSpy;
 
 	let fixture: ComponentFixture<ListAuditEntriesComponent>;
@@ -33,58 +35,55 @@ describe('Audit Component Spec', () => {
 	let rootHTMLElement: HTMLElement;
 
 	const matchedUsers = {
-		elements: [{
-			userModel: {
-				name: 'Test User 01',
-				username: 'test01'
+		elements: [
+			{
+				userModel: {
+					name: 'Test User 01',
+					username: 'test01'
+				}
+			},
+			{
+				userModel: {
+					name: 'Test User 02',
+					username: 'test02'
+				}
 			}
-		}, {
-			userModel: {
-				name: 'Test User 02',
-				username: 'test02'
-			}
-		}],
+		],
 		totalPages: 1,
 		totalSize: 2
 	} as PagingResults;
 
-	const distinctResultsActions = [
-		'admin update',
-		'create',
-		'authentication succeeded'
-	];
-	const distinctResultsTypes = [
-		'user',
-		'user-authentication'
-	];
+	const distinctResultsActions = ['admin update', 'create', 'authentication succeeded'];
+	const distinctResultsTypes = ['user', 'user-authentication'];
 	const searchResults = {
-		elements: [{
-			created: 1567973747442,
-			id: '5d75617309e3e93d36b1c948',
-			message: 'admin user updated',
-			audit: {
-				action: 'admin update',
-				actor: {
-					username: 'testuser01',
-					name: 'Test User 01'
-				},
-				auditType: 'user',
-				object: {
-					before: {
-						username: 'testuser01',
-						name: 'Test User 1'
-					},
-					after: {
+		elements: [
+			{
+				created: 1567973747442,
+				id: '5d75617309e3e93d36b1c948',
+				message: 'admin user updated',
+				audit: {
+					action: 'admin update',
+					actor: {
 						username: 'testuser01',
 						name: 'Test User 01'
+					},
+					auditType: 'user',
+					object: {
+						before: {
+							username: 'testuser01',
+							name: 'Test User 1'
+						},
+						after: {
+							username: 'testuser01',
+							name: 'Test User 01'
+						}
 					}
 				}
 			}
-		}]
+		]
 	};
 
 	beforeEach(async () => {
-
 		auditServiceSpy = jasmine.createSpyObj('AuditService', [
 			'getDistinctAuditValues',
 			'isViewDetailsAction',
@@ -92,7 +91,7 @@ describe('Audit Component Spec', () => {
 			'search',
 			'matchUser'
 		]);
-		auditServiceSpy.getDistinctAuditValues.and.callFake((field) => {
+		auditServiceSpy.getDistinctAuditValues.and.callFake(field => {
 			if (field === 'audit.action') {
 				return of(distinctResultsActions);
 			} else if (field === 'audit.auditType') {
@@ -103,14 +102,17 @@ describe('Audit Component Spec', () => {
 		});
 		auditServiceSpy.isViewDetailsAction.and.callThrough();
 		auditServiceSpy.isViewChangesAction.and.callThrough();
-		auditServiceSpy.search.and.returnValue( of(searchResults) );
-		auditServiceSpy.matchUser.and.returnValue( of(matchedUsers) );
+		auditServiceSpy.search.and.returnValue(of(searchResults));
+		auditServiceSpy.matchUser.and.returnValue(of(matchedUsers));
 
 		TestBed.configureTestingModule({
 			declarations: [
 				ListAuditEntriesComponent,
-				AuditObjectComponent, UrlAuditObjectComponent,
-				DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+				AuditObjectComponent,
+				UrlAuditObjectComponent,
+				DefaultAuditObjectComponent,
+				ExportAuditObjectComponent,
+				UserAuditObjectComponent,
 				UserAuthenticationObjectComponent
 			],
 			imports: [
@@ -130,12 +132,14 @@ describe('Audit Component Spec', () => {
 				BsModalService,
 				SystemAlertService
 			]
-		})
-		.overrideModule(BrowserDynamicTestingModule, {
+		}).overrideModule(BrowserDynamicTestingModule, {
 			set: {
 				entryComponents: [
-					AuditObjectComponent, UrlAuditObjectComponent,
-					DefaultAuditObjectComponent, ExportAuditObjectComponent, UserAuditObjectComponent,
+					AuditObjectComponent,
+					UrlAuditObjectComponent,
+					DefaultAuditObjectComponent,
+					ExportAuditObjectComponent,
+					UserAuditObjectComponent,
 					UserAuthenticationObjectComponent
 				]
 			}
@@ -148,18 +152,22 @@ describe('Audit Component Spec', () => {
 	});
 
 	describe('audit list display', () => {
-
 		it('should display the audit entry on load', () => {
-
 			fixture.detectChanges();
 
 			console.log(component.loading);
 
 			fixture.whenStable().then(() => {
 				// Verify that the Address String is display in the proper HTML field
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('testuser01');
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('admin update');
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('2019-09-08 20:15:47Z');
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
+					'testuser01'
+				);
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
+					'admin update'
+				);
+				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
+					'2019-09-08 20:15:47Z'
+				);
 
 				// Verify that the values are formatted properly
 
@@ -168,7 +176,5 @@ describe('Audit Component Spec', () => {
 				expect(auditServiceSpy.search).toHaveBeenCalledTimes(1);
 			});
 		});
-
 	});
-
 });

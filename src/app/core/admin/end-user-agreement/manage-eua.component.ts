@@ -14,10 +14,7 @@ export abstract class ManageEuaComponent {
 	subtitle: string;
 	submitText: string;
 
-	protected constructor(
-		public router: Router,
-		public modalService: ModalService
-	) {
+	protected constructor(public router: Router, public modalService: ModalService) {
 		this.eua = new EndUserAgreement();
 	}
 

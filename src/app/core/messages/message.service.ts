@@ -8,7 +8,6 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SystemAlertService } from '../../common/system-alert.module';
 
-
 @Injectable()
 export class MessageService {
 	headers: any = { 'Content-Type': 'application/json' };
@@ -21,29 +20,24 @@ export class MessageService {
 	constructor(
 		private alertService: SystemAlertService,
 		private http: HttpClient,
-		private socketService: SocketService,
+		private socketService: SocketService
 	) {
 		this.initialize();
 	}
 
 	create(message: Message) {
-		return this.http.post(
-			'api/admin/message',
-			JSON.stringify(message),
-			{ headers: this.headers }
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+		return this.http
+			.post('api/admin/message', JSON.stringify(message), { headers: this.headers })
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	get(id: string) {
-		return this.http.get(
-			`api/admin/message/${id}`,
-			{ headers: this.headers }
-		).pipe(
+		return this.http.get(`api/admin/message/${id}`, { headers: this.headers }).pipe(
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
 				return of(null);
@@ -55,36 +49,31 @@ export class MessageService {
 	 * Retrieves an array of a field's value for all messages in the system
 	 */
 	getAll(query: any, field: any) {
-		return this.http.post(
-			`api/admin/message/getAll`,
-			{ query, field },
-			{ headers: this.headers }
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+		return this.http
+			.post(`api/admin/message/getAll`, { query, field }, { headers: this.headers })
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	update(message: Message) {
-		return this.http.post(
-			`api/admin/message/${message._id}`,
-			JSON.stringify(message),
-			{ headers: this.headers }
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
+		return this.http
+			.post(`api/admin/message/${message._id}`, JSON.stringify(message), {
+				headers: this.headers
 			})
-		);
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	remove(id: string) {
-		return this.http.delete(
-			`api/admin/message/${id}`,
-			{ headers: this.headers }
-		).pipe(
+		return this.http.delete(`api/admin/message/${id}`, { headers: this.headers }).pipe(
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
 				return of(null);
@@ -92,25 +81,27 @@ export class MessageService {
 		);
 	}
 
-	search(query: any, search: any, paging: PagingOptions = new PagingOptions()): Observable<PagingResults<Message>> {
-		return this.http.post<PagingResults<Message>>(
-			'api/messages',
-			{ q: query, s: search },
-			{ headers: this.headers, params: paging.toObj() },
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(NULL_PAGING_RESULTS);
-			})
-		);
+	search(
+		query: any,
+		search: any,
+		paging: PagingOptions = new PagingOptions()
+	): Observable<PagingResults<Message>> {
+		return this.http
+			.post<PagingResults<Message>>(
+				'api/messages',
+				{ q: query, s: search },
+				{ headers: this.headers, params: paging.toObj() }
+			)
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(NULL_PAGING_RESULTS);
+				})
+			);
 	}
 
 	recent(): Observable<any[]> {
-		return this.http.post<any>(
-			'api/messages/recent',
-			{},
-			{ headers: this.headers }
-		).pipe(
+		return this.http.post<any>('api/messages/recent', {}, { headers: this.headers }).pipe(
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
 				return of(null);
@@ -119,16 +110,14 @@ export class MessageService {
 	}
 
 	dismiss(ids: string[]) {
-		return this.http.post(
-			'api/messages/dismiss',
-			{ messageIds: ids },
-			{ headers: this.headers }
-		).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+		return this.http
+			.post('api/messages/dismiss', { messageIds: ids }, { headers: this.headers })
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	/**
@@ -168,14 +157,13 @@ export class MessageService {
 			this.subscribe();
 		}
 
-		this.messageReceived
-			.subscribe(() => {
-				this.updateNewMessageIndicator();
-			});
+		this.messageReceived.subscribe(() => {
+			this.updateNewMessageIndicator();
+		});
 	}
 
 	updateNewMessageIndicator() {
-		this.recent().subscribe((results) => {
+		this.recent().subscribe(results => {
 			if (results !== null) {
 				this.numMessagesIndicator.next(results.length);
 			}
@@ -188,6 +176,5 @@ export class MessageService {
 			message.setFromModel(payload.message);
 			this.messageReceived.emit(message);
 		}
-	}
-
+	};
 }

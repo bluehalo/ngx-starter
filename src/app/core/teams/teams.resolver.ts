@@ -6,10 +6,7 @@ import { TeamsService } from './teams.service';
 
 @Injectable()
 export class TeamsResolve implements Resolve<Team> {
-
-	constructor(
-		private teamsService: TeamsService
-	) {}
+	constructor(private teamsService: TeamsService) {}
 
 	resolve(route: ActivatedRouteSnapshot) {
 		return this.teamsService.get(route.paramMap.get('id'));

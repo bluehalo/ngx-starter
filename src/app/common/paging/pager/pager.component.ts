@@ -1,4 +1,12 @@
-import { Component, Input, Output, SimpleChange, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	Output,
+	SimpleChange,
+	EventEmitter,
+	OnInit,
+	OnChanges
+} from '@angular/core';
 
 import isNumber from 'lodash/isNumber';
 
@@ -9,7 +17,6 @@ import { PageChange, PagingOptions } from '../paging.model';
  * @deprecated
  */
 export abstract class PagingComponent {
-
 	pagingOpts: PagingOptions;
 
 	abstract loadData();
@@ -29,16 +36,14 @@ export abstract class PagingComponent {
 		this.pagingOpts.sortDir = sortOpt.sortDir;
 		this.loadData();
 	}
-
 }
 
 @Component({
 	selector: 'asy-pager',
 	templateUrl: './pager.component.html',
-	styleUrls: [ './pager.component.scss' ]
+	styleUrls: ['./pager.component.scss']
 })
 export class PagerComponent implements OnInit, OnChanges {
-
 	@Input() pageNumber = 0;
 	@Input() pageSize = 0;
 	@Input() totalSize = 0;
@@ -70,29 +75,37 @@ export class PagerComponent implements OnInit, OnChanges {
 		this.format();
 	}
 
-	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-		if (changes.hasOwnProperty('pageNumber') || changes.hasOwnProperty('pageSize') || changes.hasOwnProperty('totalSize')) {
+	ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+		if (
+			changes.hasOwnProperty('pageNumber') ||
+			changes.hasOwnProperty('pageSize') ||
+			changes.hasOwnProperty('totalSize')
+		) {
 			this.calculateTotalPages();
 			this.format();
 		}
 	}
 
 	isValid() {
-		return isNumber(this.pageSize) && isNumber(this.pageNumber) && isNumber(this.currentSize) && isNumber(this.totalSize);
+		return (
+			isNumber(this.pageSize) &&
+			isNumber(this.pageNumber) &&
+			isNumber(this.currentSize) &&
+			isNumber(this.totalSize)
+		);
 	}
 
 	format() {
 		if (this.isValid()) {
-			this.startFormatted = ((this.pageSize * this.pageNumber) + 1).toLocaleString();
+			this.startFormatted = (this.pageSize * this.pageNumber + 1).toLocaleString();
 
-			let end = (this.pageSize * this.pageNumber) + Math.max(this.pageSize, this.currentSize);
-			end = (end > this.totalSize) ? this.totalSize : end;
+			let end = this.pageSize * this.pageNumber + Math.max(this.pageSize, this.currentSize);
+			end = end > this.totalSize ? this.totalSize : end;
 			this.endFormatted = end.toLocaleString();
 
 			if (this.totalSize !== 0) {
 				this.totalFormatted = this.totalSize.toLocaleString();
 			}
-
 		}
 	}
 
@@ -110,7 +123,7 @@ export class PagerComponent implements OnInit, OnChanges {
 		this.format();
 
 		// Emit change event
-		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize});
+		this.pageChange.emit({ pageNumber: this.pageNumber, pageSize: this.pageSize });
 	}
 
 	setPageSize(pageSize: number) {
@@ -121,6 +134,6 @@ export class PagerComponent implements OnInit, OnChanges {
 		this.pageNumber = 0;
 
 		// Emit change event
-		this.pageChange.emit({pageNumber: this.pageNumber, pageSize: this.pageSize});
+		this.pageChange.emit({ pageNumber: this.pageNumber, pageSize: this.pageSize });
 	}
 }

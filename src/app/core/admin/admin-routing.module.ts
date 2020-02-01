@@ -4,7 +4,11 @@ import { RouterModule } from '@angular/router';
 import { AdminCreateUserComponent } from './user-management/admin-create-user.component';
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
-import { AdminCreateEuaComponent, AdminListEuasComponent, AdminUpdateEuaComponent } from './end-user-agreement/admin-eua.module';
+import {
+	AdminCreateEuaComponent,
+	AdminListEuasComponent,
+	AdminUpdateEuaComponent
+} from './end-user-agreement/admin-eua.module';
 import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../auth/auth.guard';
@@ -16,7 +20,7 @@ import { AuthGuard } from '../auth/auth.guard';
 				path: 'admin',
 				component: AdminComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'admin' ] },
+				data: { roles: ['admin'] },
 				children: [
 					/**
 					 * Default Route
@@ -67,10 +71,9 @@ import { AuthGuard } from '../auth/auth.guard';
 						component: CacheEntriesComponent
 					}
 				]
-			}])
+			}
+		])
 	],
-	exports: [
-		RouterModule
-	]
+	exports: [RouterModule]
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

@@ -1,6 +1,12 @@
 import {
-	Component, Input, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver,
-	ComponentFactory, OnInit
+	Component,
+	Input,
+	ViewChild,
+	ViewContainerRef,
+	ComponentRef,
+	ComponentFactoryResolver,
+	ComponentFactory,
+	OnInit
 } from '@angular/core';
 import { AuditObjectTypes } from './audit.classes';
 
@@ -37,10 +43,8 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 @Component({
 	selector: 'export-audit',
 	template: `
-			<span *ngIf='auditObject'>
-				<span class='fa fa-download'></span> Export config
-			</span>
-			`
+		<span *ngIf="auditObject"> <span class="fa fa-download"></span> Export config </span>
+	`
 })
 export class ExportAuditObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
@@ -57,17 +61,16 @@ export class AuditObjectComponent implements OnInit {
 
 	private componentRef: ComponentRef<any>;
 
-	constructor(
-		private componentFactoryResolver: ComponentFactoryResolver
-	) {}
+	constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
 	ngOnInit() {
 		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType)) {
 			this.auditType = 'default';
 		}
 
-		const factory: ComponentFactory<Component> =
-			this.componentFactoryResolver.resolveComponentFactory(AuditObjectTypes.objects[this.auditType]);
+		const factory: ComponentFactory<Component> = this.componentFactoryResolver.resolveComponentFactory(
+			AuditObjectTypes.objects[this.auditType]
+		);
 
 		this.componentRef = this.content.createComponent(factory);
 		this.componentRef.instance.auditObject = this.auditObject;

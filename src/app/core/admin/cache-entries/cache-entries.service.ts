@@ -11,35 +11,37 @@ import { SystemAlertService } from '../../../common/system-alert/system-alert.se
 
 @Injectable()
 export class CacheEntriesService {
+	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
-
-	public match(query: any, search: string, paging: PagingOptions): Observable<PagingResults<CacheEntry>> {
-		return this.http.post<PagingResults<CacheEntry>>(
-			'api/access-checker/entries/match',
-			{ s: search, q: query },
-			{ params: paging.toObj() }
-		).pipe(
-			catchError((error) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(NULL_PAGING_RESULTS);
-			})
-		);
+	public match(
+		query: any,
+		search: string,
+		paging: PagingOptions
+	): Observable<PagingResults<CacheEntry>> {
+		return this.http
+			.post<PagingResults<CacheEntry>>(
+				'api/access-checker/entries/match',
+				{ s: search, q: query },
+				{ params: paging.toObj() }
+			)
+			.pipe(
+				catchError(error => {
+					this.alertService.addClientErrorAlert(error);
+					return of(NULL_PAGING_RESULTS);
+				})
+			);
 	}
 
 	public remove(key: string): Observable<any> {
 		return this.http.delete(
-			`api/access-checker/entry/${ encodeURIComponent(key) }`,
+			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{ params: { key } } // query parameter 'key'
 		);
 	}
 
 	public refresh(key: string): Observable<any> {
 		return this.http.post(
-			`api/access-checker/entry/${ encodeURIComponent(key) }`,
+			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{}, // empty POST body
 			{ params: { key } } // query parameter 'key'
 		);
@@ -51,5 +53,4 @@ export class CacheEntriesService {
 			{} // empty POST body
 		);
 	}
-
 }

@@ -19,7 +19,6 @@ import { AddedMember, TeamsService } from '../teams.service';
 	styleUrls: ['./add-members-modal.component.scss']
 })
 export class AddMembersModalComponent implements OnInit {
-
 	@Input() teamId: string;
 
 	@Output() readonly usersAdded: EventEmitter<number> = new EventEmitter();
@@ -38,16 +37,15 @@ export class AddMembersModalComponent implements OnInit {
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 
-	constructor(
-		private teamsService: TeamsService,
-		public modalRef: BsModalRef
-	) {}
+	constructor(private teamsService: TeamsService, public modalRef: BsModalRef) {}
 
 	ngOnInit() {
 		this.dataSource = new Observable((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
-			mergeMap((token: string) => this.teamsService.searchUsers({}, token, this.pagingOptions, {})),
+			mergeMap((token: string) =>
+				this.teamsService.searchUsers({}, token, this.pagingOptions, {})
+			),
 			map((result: PagingResults) => {
 				return result.elements.map((r: any) => {
 					r.displayName = `${r.userModel.name}  [${r.userModel.username}]`;
@@ -61,12 +59,11 @@ export class AddMembersModalComponent implements OnInit {
 		this.submitting = true;
 
 		// Add users who are already in the system
-		this.teamsService.addMembers(this.addedMembers, this.teamId)
-			.subscribe(() => {
-				this.submitting = false;
-				this.modalRef.hide();
-				this.usersAdded.emit(this.addedMembers.length);
-			});
+		this.teamsService.addMembers(this.addedMembers, this.teamId).subscribe(() => {
+			this.submitting = false;
+			this.modalRef.hide();
+			this.usersAdded.emit(this.addedMembers.length);
+		});
 	}
 
 	remove(ndx: number) {
@@ -85,10 +82,17 @@ export class AddMembersModalComponent implements OnInit {
 	typeaheadOnSelect(e: TypeaheadMatch) {
 		const selectedUsername = get(e, 'item.userModel.username');
 		const selectedUserId = get(e, 'item.userModel._id');
-		if (null != selectedUsername && this.addedMembers.findIndex((u: AddedMember) => u.username === selectedUsername) === -1) {
-			this.addedMembers.push({ username: selectedUsername, _id: selectedUserId, role: this.defaultRole, roleDisplay: TeamRole.getDisplay(this.defaultRole)} as AddedMember);
+		if (
+			null != selectedUsername &&
+			this.addedMembers.findIndex((u: AddedMember) => u.username === selectedUsername) === -1
+		) {
+			this.addedMembers.push({
+				username: selectedUsername,
+				_id: selectedUserId,
+				role: this.defaultRole,
+				roleDisplay: TeamRole.getDisplay(this.defaultRole)
+			} as AddedMember);
 		}
 		this.queryUserSearchTerm = '';
 	}
-
 }

@@ -11,7 +11,6 @@ import { ModalService } from '../../../common/modal.module';
 	templateUrl: './manage-eua.component.html'
 })
 export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
-
 	constructor(
 		router: Router,
 		public modalService: ModalService,
@@ -23,7 +22,7 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 
 	ngOnInit() {
 		this.title = 'Edit EUA';
-		this.subtitle = 'Make changes to the eua\'s information';
+		this.subtitle = "Make changes to the eua's information";
 		this.submitText = 'Save';
 
 		this.route.params.subscribe((params: Params) => {
@@ -42,6 +41,8 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 			text: this.eua.euaModel.text,
 			published: this.eua.euaModel.published
 		};
-		this.euaService.update(_eua).subscribe(() => this.router.navigate(['/admin/euas', {clearCachedFilter: true}]));
+		this.euaService
+			.update(_eua)
+			.subscribe(() => this.router.navigate(['/admin/euas', { clearCachedFilter: true }]));
 	}
 }

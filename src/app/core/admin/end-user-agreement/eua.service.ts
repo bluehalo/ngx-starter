@@ -14,13 +14,9 @@ import { User } from '../../auth/user.model';
  * Admin management of users
  */
 export class EuaService {
-
 	public cache: any = {};
 
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
+	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 
 	/**
 	 * Public methods to be exposed through the service
@@ -37,23 +33,28 @@ export class EuaService {
 	}
 
 	// Search Euas
-	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults<EndUserAgreement>> {
-		return this.http.post(
-			'api/euas',
-			{q: query, s: search, options},
-			{ params: paging.toObj() }
-		).pipe(
-			map((results: PagingResults) => {
-				if (null != results && Array.isArray(results.elements)) {
-					results.elements = results.elements.map((element: any) => new EndUserAgreement().setFromEuaModel(element));
-				}
-				return results;
-			}),
-			catchError((error) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(NULL_PAGING_RESULTS);
-			})
-		);
+	search(
+		query: any,
+		search: string,
+		paging: PagingOptions,
+		options: any
+	): Observable<PagingResults<EndUserAgreement>> {
+		return this.http
+			.post('api/euas', { q: query, s: search, options }, { params: paging.toObj() })
+			.pipe(
+				map((results: PagingResults) => {
+					if (null != results && Array.isArray(results.elements)) {
+						results.elements = results.elements.map((element: any) =>
+							new EndUserAgreement().setFromEuaModel(element)
+						);
+					}
+					return results;
+				}),
+				catchError(error => {
+					this.alertService.addClientErrorAlert(error);
+					return of(NULL_PAGING_RESULTS);
+				})
+			);
 	}
 
 	// Update
@@ -69,5 +70,4 @@ export class EuaService {
 	publish(id: string): Observable<any> {
 		return this.http.post(`api/eua/${id}/publish`, {});
 	}
-
 }

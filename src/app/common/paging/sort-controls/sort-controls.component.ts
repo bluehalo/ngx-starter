@@ -12,7 +12,6 @@ export interface TableSortOptions {
 	templateUrl: 'sort-controls.component.html'
 })
 export class SortControlsComponent {
-
 	@Input() showHeader = true;
 
 	@Input() showDirectionControl = false;
@@ -38,9 +37,10 @@ export class SortControlsComponent {
 			this.selectedDir = this.sortOptions[key].sortDir;
 			this.sortChange.emit(this.sortOptions[key]);
 
-		// Otherwise, toggle the sort direction (if direction controls are enabled)
+			// Otherwise, toggle the sort direction (if direction controls are enabled)
 		} else if (this.showDirectionControl) {
-			this.selectedDir = this.selectedDir === SortDirection.desc ? SortDirection.asc : SortDirection.desc;
+			this.selectedDir =
+				this.selectedDir === SortDirection.desc ? SortDirection.asc : SortDirection.desc;
 			this.sortOptions[key].sortDir = this.selectedDir;
 			this.sortChange.emit(this.sortOptions[key]);
 		}

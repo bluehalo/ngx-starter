@@ -1,11 +1,14 @@
 {
   "extends": [
-    "tslint:recommended"
+    "tslint:recommended",
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
   ],
   "rulesDirectory": [
     "codelyzer"
   ],
   "rules": {
+    "prettier": true,
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
@@ -17,7 +20,6 @@
       "ngx-bootstrap",
       "rxjs/Rx"
     ],
-    "indent": [ true, "tabs", 4],
     "interface-name": false,
     "max-classes-per-file": false,
     "max-line-length": false,
@@ -52,16 +54,8 @@
     "no-switch-case-fall-through": true,
     "no-use-before-declare": true,
     "no-var-requires": false,
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [
-      true,
-      "single"
-    ],
     "trailing-comma": false,
 
     // codelyzer rules.  To revert to errors, remove/change severity

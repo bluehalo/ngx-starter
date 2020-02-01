@@ -44,10 +44,7 @@ import { TeamsRoutingModule } from './teams-routing.module';
 
 		TeamsRoutingModule
 	],
-	entryComponents: [
-		AddMembersModalComponent,
-		TeamsHelpComponent
-	],
+	entryComponents: [AddMembersModalComponent, TeamsHelpComponent],
 	declarations: [
 		AddMembersModalComponent,
 		CreateTeamComponent,
@@ -56,11 +53,6 @@ import { TeamsRoutingModule } from './teams-routing.module';
 		ViewTeamComponent,
 		TeamsHelpComponent
 	],
-	providers: [
-		TeamAuthorizationService,
-		TeamsService,
-		TeamsResolve
-	]
+	providers: [TeamAuthorizationService, TeamsService, TeamsResolve]
 })
-export class TeamsModule {
-}
+export class TeamsModule {}

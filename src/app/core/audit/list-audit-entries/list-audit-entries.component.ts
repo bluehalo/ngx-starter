@@ -11,7 +11,9 @@ import {
 	PagingOptions,
 	SortDirection,
 	PagingResults,
-	AbstractPageableDataComponent, SortableTableHeader, SortChange
+	AbstractPageableDataComponent,
+	SortableTableHeader,
+	SortChange
 } from '../../../common/paging.module';
 
 import { AuditOption } from '../audit.classes';
@@ -23,8 +25,8 @@ import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audi
 	styleUrls: ['./list-audit-entries.component.scss'],
 	templateUrl: './list-audit-entries.component.html'
 })
-export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any> implements OnInit {
-
+export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any>
+	implements OnInit {
 	actionOptions: AuditOption[] = [];
 	actionsFormShown = true;
 	actorFormShown = true;
@@ -36,10 +38,37 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 	queryUserSearchTerm = '';
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Actor', sortable: true, sortField: 'audit.actor.name', sortDir: SortDirection.asc, tooltip: 'Sort by Key', iconClass: 'fa-user' },
-		{ name: 'Timestamp', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Timestamp', iconClass: 'fa-clock-o', default: true },
-		{ name: 'Action', sortable: true, sortField: 'audit.action', sortDir: SortDirection.asc, tooltip: 'Sort by Action' },
-		{ name: 'Type', sortable: true, sortField: 'audit.auditType', sortDir: SortDirection.asc, tooltip: 'Sort by Type' },
+		{
+			name: 'Actor',
+			sortable: true,
+			sortField: 'audit.actor.name',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Key',
+			iconClass: 'fa-user'
+		},
+		{
+			name: 'Timestamp',
+			sortable: true,
+			sortField: 'created',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Timestamp',
+			iconClass: 'fa-clock-o',
+			default: true
+		},
+		{
+			name: 'Action',
+			sortable: true,
+			sortField: 'audit.action',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Action'
+		},
+		{
+			name: 'Type',
+			sortable: true,
+			sortField: 'audit.auditType',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Type'
+		},
 		{ name: 'Object', sortable: false },
 		{ name: 'Before', sortable: false, iconClass: 'fa-history' },
 		{ name: 'Message', sortable: false, iconClass: 'fa-file-text-o' }
@@ -49,7 +78,9 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	dateRangeFilter: any;
 
-	queryStartDate: Date = utc().subtract(1, 'days').toDate();
+	queryStartDate: Date = utc()
+		.subtract(1, 'days')
+		.toDate();
 
 	queryEndDate: Date = utc().toDate();
 
@@ -61,10 +92,7 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	private auditModalRef: BsModalRef;
 
-	constructor(
-		private auditService: AuditService,
-		private modalService: BsModalService
-	) {
+	constructor(private auditService: AuditService, private modalService: BsModalService) {
 		super();
 	}
 
@@ -90,7 +118,9 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		this.searchUsersRef = new Observable((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
-			mergeMap((token: string) => this.auditService.matchUser({}, token, this.userPagingOpts, {})),
+			mergeMap((token: string) =>
+				this.auditService.matchUser({}, token, this.userPagingOpts, {})
+			),
 			map((result: PagingResults) => {
 				return result.elements.map((r: any) => {
 					r.displayName = `${r.userModel.name}  [${r.userModel.username}]`;
@@ -104,8 +134,14 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			this.auditService.getDistinctAuditValues('audit.action'),
 			this.auditService.getDistinctAuditValues('audit.auditType')
 		]).subscribe((results: any[]) => {
-			this.actionOptions = results[0].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
-			this.auditTypeOptions = results[1].filter((r: any) => _isString(r)).sort().map((r: any) => new AuditOption(r));
+			this.actionOptions = results[0]
+				.filter((r: any) => _isString(r))
+				.sort()
+				.map((r: any) => new AuditOption(r));
+			this.auditTypeOptions = results[1]
+				.filter((r: any) => _isString(r))
+				.sort()
+				.map((r: any) => new AuditOption(r));
 		});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
@@ -113,7 +149,11 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		super.ngOnInit();
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<any>> {
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<any>> {
 		return this.auditService.search(query, search, pagingOptions);
 	}
 
@@ -125,11 +165,17 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 	viewMore(auditEntry: any, type: string) {
 		switch (type) {
 			case 'viewDetails':
-				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
+				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, {
+					ignoreBackdropClick: true,
+					class: 'modal-lg'
+				});
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			case 'viewChanges':
-				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
+				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, {
+					ignoreBackdropClick: true,
+					class: 'modal-lg'
+				});
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			default:
@@ -152,17 +198,17 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			};
 		}
 
-		const selectedActions = this.actionOptions.filter((opt) => opt.selected);
+		const selectedActions = this.actionOptions.filter(opt => opt.selected);
 		if (selectedActions.length > 0) {
 			query['audit.action'] = {
-				$in: selectedActions.map((opt) => opt.display)
+				$in: selectedActions.map(opt => opt.display)
 			};
 		}
 
-		const selectedAuditTypes = this.auditTypeOptions.filter((opt) => opt.selected);
+		const selectedAuditTypes = this.auditTypeOptions.filter(opt => opt.selected);
 		if (selectedAuditTypes.length > 0) {
 			query['audit.auditType'] = {
-				$in: selectedAuditTypes.map((opt) => opt.display)
+				$in: selectedAuditTypes.map(opt => opt.display)
 			};
 		}
 
@@ -179,11 +225,11 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 		if (this.dateRangeFilter.selected === 'choose') {
 			if (null != this.queryStartDate) {
-				timeQuery = (null == timeQuery) ? {} : timeQuery;
+				timeQuery = null == timeQuery ? {} : timeQuery;
 				timeQuery.$gte = utc(this.queryStartDate).startOf('day');
 			}
 			if (null != this.queryEndDate) {
-				timeQuery = (null == timeQuery) ? {} : timeQuery;
+				timeQuery = null == timeQuery ? {} : timeQuery;
 				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
 			}
 		} else if (this.dateRangeFilter.selected !== 'everything') {

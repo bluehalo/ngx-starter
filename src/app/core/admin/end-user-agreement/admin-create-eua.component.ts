@@ -11,12 +11,10 @@ import { ModalService } from '../../../common/modal.module';
 	templateUrl: './manage-eua.component.html'
 })
 export class AdminCreateEuaComponent extends ManageEuaComponent implements OnInit {
-
 	constructor(
 		router: Router,
 		public modalService: ModalService,
 		protected euaService: EuaService
-
 	) {
 		super(router, modalService);
 	}
@@ -34,6 +32,8 @@ export class AdminCreateEuaComponent extends ManageEuaComponent implements OnIni
 			title: this.eua.euaModel.title,
 			text: this.eua.euaModel.text
 		};
-		this.euaService.create(_eua).subscribe(() => this.router.navigate(['/admin/euas', {clearCachedFilter: true}]));
+		this.euaService
+			.create(_eua)
+			.subscribe(() => this.router.navigate(['/admin/euas', { clearCachedFilter: true }]));
 	}
 }

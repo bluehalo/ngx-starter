@@ -10,24 +10,19 @@ import { Config } from './config.model';
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 offset-2 jumbotron" style="margin-top: 4rem;">
-
-					<h1>{{appTitle}}</h1>
-					<p>v{{version}}</p>
-
+					<h1>{{ appTitle }}</h1>
+					<p>v{{ version }}</p>
 				</div>
 			</div>
 		</div>
 	`,
-	styles: [ '' ]
+	styles: ['']
 })
 export class AboutComponent implements OnInit {
-
 	appTitle: string = undefined;
 	version: string = undefined;
 
-	constructor(
-		private configService: ConfigService
-	) {}
+	constructor(private configService: ConfigService) {}
 
 	ngOnInit() {
 		this.configService.getConfig().subscribe((config: Config) => {
@@ -35,5 +30,4 @@ export class AboutComponent implements OnInit {
 			this.version = config.version;
 		});
 	}
-
 }

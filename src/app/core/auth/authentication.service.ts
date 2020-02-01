@@ -5,13 +5,9 @@ import { Observable } from 'rxjs';
 
 import { User } from './user.model';
 
-
 @Injectable()
 export class AuthenticationService {
-
-	constructor(
-		private http: HttpClient
-	) {}
+	constructor(private http: HttpClient) {}
 
 	signin(username: string, password: string): Observable<any> {
 		return this.http.post('api/auth/signin', { username, password });
@@ -25,8 +21,7 @@ export class AuthenticationService {
 		return this.http.get('api/user/me');
 	}
 
-	logout() {
-	}
+	logout() {}
 
 	getCurrentEua(): Observable<any> {
 		return this.http.get('api/eua');

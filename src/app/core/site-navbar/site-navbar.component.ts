@@ -16,10 +16,9 @@ import { MessageService } from '../messages/message.service';
 @Component({
 	selector: 'site-navbar',
 	templateUrl: 'site-navbar.component.html',
-	styleUrls: [ 'site-navbar.component.scss' ]
+	styleUrls: ['site-navbar.component.scss']
 })
 export class SiteNavbarComponent implements OnInit {
-
 	navbarOpenValue = false;
 
 	adminNavOpen = false;
@@ -64,11 +63,10 @@ export class SiteNavbarComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.sessionService.getSession()
-			.subscribe((session) => {
-				this.session = session;
-				this.messageService.updateNewMessageIndicator();
-			});
+		this.sessionService.getSession().subscribe(session => {
+			this.session = session;
+			this.messageService.updateNewMessageIndicator();
+		});
 
 		this.configService.getConfig().subscribe((config: Config) => {
 			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
@@ -77,7 +75,7 @@ export class SiteNavbarComponent implements OnInit {
 		this.adminMenuItems = AdminTopics.getTopics();
 
 		this.navbarItems = NavbarTopics.getTopics();
-		this.messageService.numMessagesIndicator.subscribe((count) => {
+		this.messageService.numMessagesIndicator.subscribe(count => {
 			this.numNewMessages = count;
 		});
 	}
@@ -87,6 +85,9 @@ export class SiteNavbarComponent implements OnInit {
 	}
 
 	showFeedbackModal() {
-		this.modalService.show(FeedbackModalComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
+		this.modalService.show(FeedbackModalComponent, {
+			ignoreBackdropClick: true,
+			class: 'modal-lg'
+		});
 	}
 }

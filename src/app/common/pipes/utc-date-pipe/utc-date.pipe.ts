@@ -6,7 +6,6 @@ import { UtcDateUtils } from './utc-date-utils.service';
 	name: 'utcDate'
 })
 export class UtcDatePipe implements PipeTransform {
-
 	transform(value: string | number, format?: string): string {
 		return UtcDateUtils.format(value, format);
 	}

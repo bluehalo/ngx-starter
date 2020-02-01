@@ -8,10 +8,7 @@ import { CacheEntry } from './cache-entry.model';
 	templateUrl: 'cache-entry-modal.component.html'
 })
 export class CacheEntryModalComponent {
-
 	cacheEntry: CacheEntry;
 
-	constructor(
-		public modalRef: BsModalRef
-	) {}
+	constructor(public modalRef: BsModalRef) {}
 }

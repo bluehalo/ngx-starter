@@ -22,7 +22,9 @@ $btn-submit-spinner-content: '\f110' !default;
 $btn-submit-spinner-animation-name: fa-spin !default;
 $btn-submit-spinner-animation-duration: 1s !default;
 $btn-submit-spinner-animation-timing-function: steps(8) !default;
-$btn-submit-spinner-animation: $btn-submit-spinner-animation-name $btn-submit-spinner-animation-duration $btn-submit-animation-iteration-count $btn-submit-spinner-animation-timing-function;
+$btn-submit-spinner-animation: $btn-submit-spinner-animation-name
+	$btn-submit-spinner-animation-duration $btn-submit-animation-iteration-count
+	$btn-submit-spinner-animation-timing-function;
 
 // Submit Button - linear
 $btn-submit-linear-steps: 10 !default;
@@ -30,15 +32,24 @@ $btn-submit-linear-direction: to right !default;
 $btn-submit-linear-animation-name: btn-disabled-gradient !default;
 $btn-submit-linear-animation-duration: 2s !default;
 $btn-submit-linear-animation-timing-function: linear !default;
-$btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-linear-animation-duration $btn-submit-animation-iteration-count $btn-submit-linear-animation-timing-function;
+$btn-submit-linear-animation: $btn-submit-linear-animation-name
+	$btn-submit-linear-animation-duration $btn-submit-animation-iteration-count
+	$btn-submit-linear-animation-timing-function;
 
 .btn {
-
 	@include font-normal($btn-font-size);
 
-	&.btn-primary, &.btn-secondary {
+	&.btn-primary,
+	&.btn-secondary {
 		@include font-color-light();
-		@include button-variant($ux-button-bg, $ux-button-border, $ux-button-bg-hover, $ux-button-border-hover, $ux-button-bg-mouse-down, $ux-button-border-mouse-down);
+		@include button-variant(
+			$ux-button-bg,
+			$ux-button-border,
+			$ux-button-bg-hover,
+			$ux-button-border-hover,
+			$ux-button-bg-mouse-down,
+			$ux-button-border-mouse-down
+		);
 	}
 
 	&.btn-large {
@@ -49,8 +60,14 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 		@include font-normal($font-size-sm);
 	}
 
-	&.btn-outline-primary, &.btn-outline-secondary {
-		@include button-outline-variant($ux-button-bg, #FFF, $ux-button-bg-mouse-down, $ux-button-bg-mouse-down);
+	&.btn-outline-primary,
+	&.btn-outline-secondary {
+		@include button-outline-variant(
+			$ux-button-bg,
+			#fff,
+			$ux-button-bg-mouse-down,
+			$ux-button-bg-mouse-down
+		);
 
 		&:hover {
 			border-color: $ux-button-bg-hover;
@@ -74,7 +91,14 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 	}
 
 	&.btn-card {
-		@include button-variant($ux-color-white, $card-border-color, $ux-color-white, $ux-color-highlight, $ux-color-white, $ux-color-primary-medium);
+		@include button-variant(
+			$ux-color-white,
+			$card-border-color,
+			$ux-color-white,
+			$ux-color-highlight,
+			$ux-color-white,
+			$ux-color-primary-medium
+		);
 
 		&:hover,
 		&.hover {
@@ -123,7 +147,12 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 		@-webkit-keyframes btn-disabled-gradient {
 			@for $i from 0 through $btn-submit-linear-steps {
 				#{$i * (100%/$btn-submit-linear-steps)} {
-					mask-image: linear-gradient($btn-submit-linear-direction, rgba(0, 0, 0, 1.0) #{$i * (100%/$btn-submit-linear-steps)}, rgba(0, 0, 0, .3) #{$i * (100%/$btn-submit-linear-steps)}, rgba(0, 0, 0, $btn-disabled-opacity));
+					mask-image: linear-gradient(
+						$btn-submit-linear-direction,
+						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, 0.3) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, $btn-disabled-opacity)
+					);
 				}
 			}
 		}
@@ -131,7 +160,12 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 		@keyframes btn-disabled-gradient {
 			@for $i from 0 through $btn-submit-linear-steps {
 				#{$i * (100%/$btn-submit-linear-steps)} {
-					mask-image: linear-gradient($btn-submit-linear-direction, rgba(0, 0, 0, 1.0) #{$i * (100%/$btn-submit-linear-steps)}, rgba(0, 0, 0, .3) #{$i * (100%/$btn-submit-linear-steps)}, rgba(0, 0, 0, $btn-disabled-opacity));
+					mask-image: linear-gradient(
+						$btn-submit-linear-direction,
+						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, 0.3) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, $btn-disabled-opacity)
+					);
 				}
 			}
 		}
@@ -143,7 +177,6 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 // Custom file input.
 
 .custom-file-btn {
-
 	display: flex;
 	align-items: center;
 
@@ -151,7 +184,7 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 
 	&::after {
 		content: attr(data-after);
-		margin-left: .5rem;
+		margin-left: 0.5rem;
 	}
 
 	.custom-file-btn-input {
@@ -178,7 +211,6 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 
 		&:not(:disabled):not(.disabled):active,
 		&:not(:disabled):not(.disabled).active {
-
 			& ~ .custom-file-btn-label {
 				@include box-shadow($btn-active-box-shadow);
 			}
@@ -200,13 +232,18 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 		background-color: transparent;
 		border: $btn-border-width solid transparent;
 		margin-bottom: 0;
-		@include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+		@include button-size(
+			$btn-padding-y,
+			$btn-padding-x,
+			$btn-font-size,
+			$btn-line-height,
+			$btn-border-radius
+		);
 		@include transition($btn-transition);
 	}
 
 	&.custom-file-btn-primary {
 		.custom-file-btn-input {
-
 			&:hover ~ .custom-file-btn-label {
 				color: color-yiq($ux-button-bg-hover);
 				@include gradient-bg($ux-button-bg-hover);
@@ -217,9 +254,18 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 			&.focus ~ .custom-file-btn-label {
 				// Avoid using mixin so we can pass custom focus shadow properly
 				@if $enable-shadows {
-					box-shadow: $btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					box-shadow: $btn-box-shadow,
+						0
+							0
+							0
+							$btn-focus-width
+							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				} @else {
-					box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+					box-shadow: 0
+						0
+						0
+						$btn-focus-width
+						rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				}
 			}
 
@@ -248,9 +294,18 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 				&:focus ~ .custom-file-btn-label {
 					// Avoid using mixin so we can pass custom focus shadow properly
 					@if $enable-shadows and $btn-active-box-shadow != none {
-						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+						box-shadow: $btn-active-box-shadow,
+							0
+								0
+								0
+								$btn-focus-width
+								rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					} @else {
-						box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), .5);
+						box-shadow: 0
+							0
+							0
+							$btn-focus-width
+							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					}
 				}
 			}
@@ -265,18 +320,16 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 	}
 
 	&.custom-file-btn-outline {
-
 		.custom-file-btn-input {
-
 			&:hover ~ .custom-file-btn-label {
-				color: #FFF;
+				color: #fff;
 				background-color: $ux-button-bg-hover;
 				border-color: $ux-button-bg-hover;
 			}
 
 			&:focus ~ .custom-file-btn-label,
 			&.focus ~ .custom-file-btn-label {
-				box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+				box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 			}
 
 			&.disabled ~ .custom-file-btn-label,
@@ -297,9 +350,10 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name $btn-submit-line
 				&:focus ~ .custom-file-btn-label {
 					// Avoid using mixin so we can pass custom focus shadow properly
 					@if $enable-shadows and $btn-active-box-shadow != none {
-						box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+						box-shadow: $btn-active-box-shadow,
+							0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 					} @else {
-						box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, .5);
+						box-shadow: 0 0 0 $btn-focus-width rgba($ux-button-bg, 0.5);
 					}
 				}
 			}

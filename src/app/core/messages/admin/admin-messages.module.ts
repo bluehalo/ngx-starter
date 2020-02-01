@@ -31,13 +31,7 @@ import { SearchInputModule } from 'src/app/common/search-input.module';
 		NgSelectModule
 	],
 	exports: [],
-	declarations: [
-		UpdateMessageComponent,
-		CreateMessageComponent,
-		ListMessagesComponent
-	],
-	providers: [
-	]
+	declarations: [UpdateMessageComponent, CreateMessageComponent, ListMessagesComponent],
+	providers: []
 })
-export class AdminMessagesModule {
-}
+export class AdminMessagesModule {}

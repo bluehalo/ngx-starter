@@ -9,10 +9,9 @@ import { BreadcrumbService, Breadcrumb } from './breadcrumb.service';
 @Component({
 	selector: 'breadcrumb',
 	templateUrl: 'breadcrumb.component.html',
-	styleUrls: [ 'breadcrumb.component.scss' ]
+	styleUrls: ['breadcrumb.component.scss']
 })
 export class BreadcrumbComponent {
-
 	@Input()
 	set homeBreadcrumb(hb: Breadcrumb) {
 		this._homeBreadcrumb = hb;
@@ -23,15 +22,16 @@ export class BreadcrumbComponent {
 
 	breadcrumbs: Breadcrumb[] = [];
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router
-	) {
-		const navEnd$: Observable<Event> = router.events.pipe(filter((event: Event) => event instanceof NavigationEnd));
+	constructor(private route: ActivatedRoute, private router: Router) {
+		const navEnd$: Observable<Event> = router.events.pipe(
+			filter((event: Event) => event instanceof NavigationEnd)
+		);
 		merge(navEnd$, this.homeBreadcrumbChanged$).subscribe(() => {
 			if (null != this._homeBreadcrumb) {
 				this.breadcrumbs = [this._homeBreadcrumb];
-				this.breadcrumbs = this.breadcrumbs.concat(BreadcrumbService.getBreadcrumbs(route.root.snapshot, this._homeBreadcrumb.url));
+				this.breadcrumbs = this.breadcrumbs.concat(
+					BreadcrumbService.getBreadcrumbs(route.root.snapshot, this._homeBreadcrumb.url)
+				);
 			}
 		});
 	}

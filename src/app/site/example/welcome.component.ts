@@ -9,9 +9,8 @@ import { Component } from '@angular/core';
 					<p>Simple demonstration of routing.</p>
 				</div>
 			</div>
-		</div>`,
-	styles: [ '' ]
+		</div>
+	`,
+	styles: ['']
 })
-export class WelcomeComponent {
-
-}
+export class WelcomeComponent {}

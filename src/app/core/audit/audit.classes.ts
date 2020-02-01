@@ -1,8 +1,5 @@
 export class AuditOption {
-	constructor(
-		public display?: string,
-		public selected: boolean = false
-	) {}
+	constructor(public display?: string, public selected: boolean = false) {}
 }
 
 export class AuditObjectTypes {

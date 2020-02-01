@@ -14,7 +14,7 @@ import { AuthGuard } from '../../auth/auth.guard';
 				path: 'admin',
 				component: AdminComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'admin' ] },
+				data: { roles: ['admin'] },
 				children: [
 					{
 						path: 'messages',
@@ -22,14 +22,15 @@ import { AuthGuard } from '../../auth/auth.guard';
 					},
 					{
 						path: 'message',
-						component: CreateMessageComponent,
+						component: CreateMessageComponent
 					},
 					{
 						path: 'message/:id',
 						component: UpdateMessageComponent
 					}
 				]
-			}])
+			}
+		])
 	],
 	exports: []
 })

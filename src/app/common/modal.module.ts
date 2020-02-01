@@ -7,23 +7,13 @@ import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
 
 @NgModule({
-	imports: [
-		BsModalModule.forRoot(),
-		CommonModule
-	],
-	entryComponents: [
-		ModalComponent
-	],
-	exports: [
-		ModalComponent
-	],
-	declarations: [
-		ModalComponent
-	],
-	providers: [
-	]
+	imports: [BsModalModule.forRoot(), CommonModule],
+	entryComponents: [ModalComponent],
+	exports: [ModalComponent],
+	declarations: [ModalComponent],
+	providers: []
 })
-export class ModalModule { }
+export class ModalModule {}
 
 export { ModalComponent } from './modal/modal.component';
 export { ModalAction } from './modal/modal.model';

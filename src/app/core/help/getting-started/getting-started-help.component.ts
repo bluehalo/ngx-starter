@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
@@ -22,14 +22,18 @@ export class GettingStartedHelpComponent implements OnInit {
 	constructor(private configService: ConfigService) {}
 
 	ngOnInit() {
-		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.config = config;
-			this.externalLinksEnabled = config.welcomeLinks
-				&& config.welcomeLinks.enabled
-				&& isArray(config.welcomeLinks.links)
-				&& !isEmpty(config.welcomeLinks.links);
-			this.appName = config.app.title;
-		});
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config: any) => {
+				this.config = config;
+				this.externalLinksEnabled =
+					config.welcomeLinks &&
+					config.welcomeLinks.enabled &&
+					isArray(config.welcomeLinks.links) &&
+					!isEmpty(config.welcomeLinks.links);
+				this.appName = config.app.title;
+			});
 	}
 
 	back() {

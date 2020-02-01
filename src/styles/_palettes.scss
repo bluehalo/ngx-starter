@@ -34,7 +34,7 @@ $palette-primary: (
 		A100: $color-black,
 		A200: $color-white,
 		A400: $color-white,
-		A700: $color-white,
+		A700: $color-white
 	)
 );
 
@@ -71,10 +71,9 @@ $palette-gray: (
 		A100: $color-black,
 		A200: $color-black,
 		A400: $color-black,
-		A700: $color-white,
+		A700: $color-white
 	)
 );
-
 
 $palette-red: (
 	50: #f7e3e9,
@@ -138,10 +137,9 @@ $palette-yellow: (
 		A100: $color-black,
 		A200: $color-black,
 		A400: $color-black,
-		A700: $color-black,
+		A700: $color-black
 	)
 );
-
 
 $palette-green: (
 	50: #f1f8e9,
@@ -172,7 +170,7 @@ $palette-green: (
 		A100: $color-black,
 		A200: $color-black,
 		A400: $color-black,
-		A700: $color-black,
+		A700: $color-black
 	)
 );
 
@@ -201,14 +199,13 @@ $palette-teal: (
 		600: $color-white,
 		700: $color-white,
 		800: $color-white,
-		90 : $color-white,
+		90: $color-white,
 		A100: $color-black,
 		A200: $color-black,
 		A400: $color-black,
 		A700: $color-black
 	)
 );
-
 
 $palette-blue: (
 	50: #e1f5fe,
@@ -239,7 +236,7 @@ $palette-blue: (
 		A100: $color-black,
 		A200: $color-black,
 		A400: $color-black,
-		A700: $color-white,
+		A700: $color-white
 	)
 );
 
@@ -258,20 +255,29 @@ $palette-blue: (
 // @param $color-map
 // @param $primary
 // @param $lighter
-@function mat-palette($base-palette, $default: 500, $lighter: 100, $lightest: 50, $darker: 700, $darkest: 900) {
-	$result: map_merge($base-palette, (
-		default: map-get($base-palette, $default),
-		lighter: map-get($base-palette, $lighter),
-		lightest: map-get($base-palette, $lightest),
-		darker: map-get($base-palette, $darker),
-		darkest: map-get($base-palette, $darkest),
-
-		default-contrast: mat-contrast($base-palette, $default),
-		lighter-contrast: mat-contrast($base-palette, $lighter),
-		lightest-contrast: mat-contrast($base-palette, $lightest),
-		darker-contrast: mat-contrast($base-palette, $darker),
-		darkest-contrast: mat-contrast($base-palette, $darkest)
-	));
+@function mat-palette(
+	$base-palette,
+	$default: 500,
+	$lighter: 100,
+	$lightest: 50,
+	$darker: 700,
+	$darkest: 900
+) {
+	$result: map_merge(
+		$base-palette,
+		(
+			default: map-get($base-palette, $default),
+			lighter: map-get($base-palette, $lighter),
+			lightest: map-get($base-palette, $lightest),
+			darker: map-get($base-palette, $darker),
+			darkest: map-get($base-palette, $darkest),
+			default-contrast: mat-contrast($base-palette, $default),
+			lighter-contrast: mat-contrast($base-palette, $lighter),
+			lightest-contrast: mat-contrast($base-palette, $lightest),
+			darker-contrast: mat-contrast($base-palette, $darker),
+			darkest-contrast: mat-contrast($base-palette, $darkest)
+		)
+	);
 
 	@return $result;
 }

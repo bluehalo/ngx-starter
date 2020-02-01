@@ -4,7 +4,9 @@ import {
 	TemplateRef,
 	ViewContainerRef,
 	OnInit,
-	SimpleChanges, OnChanges, EmbeddedViewRef,
+	SimpleChanges,
+	OnChanges,
+	EmbeddedViewRef,
 	ɵstringify as stringify
 } from '@angular/core';
 
@@ -19,10 +21,10 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	@Input() hasEveryRole: string[];
 	@Input() hasSomeRoles: string[];
 
-	private _thenTemplateRef: TemplateRef<any>|null = null;
-	private _elseTemplateRef: TemplateRef<any>|null = null;
-	private _thenViewRef: EmbeddedViewRef<any>|null = null;
-	private _elseViewRef: EmbeddedViewRef<any>|null = null;
+	private _thenTemplateRef: TemplateRef<any> | null = null;
+	private _elseTemplateRef: TemplateRef<any> | null = null;
+	private _thenViewRef: EmbeddedViewRef<any> | null = null;
+	private _elseViewRef: EmbeddedViewRef<any> | null = null;
 
 	constructor(
 		private templateRef: TemplateRef<any>,
@@ -34,36 +36,36 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	}
 
 	@Input()
-	set isAuthenticatedThen(templateRef: TemplateRef<any>|null) {
+	set isAuthenticatedThen(templateRef: TemplateRef<any> | null) {
 		this.setThenTemplate('isAuthenticatedThen', templateRef);
 	}
 	@Input()
-	set hasRoleThen(templateRef: TemplateRef<any>|null) {
+	set hasRoleThen(templateRef: TemplateRef<any> | null) {
 		this.setThenTemplate('hasRoleThen', templateRef);
 	}
 	@Input()
-	set hasEveryRoleThen(templateRef: TemplateRef<any>|null) {
+	set hasEveryRoleThen(templateRef: TemplateRef<any> | null) {
 		this.setThenTemplate('hasEveryRoleThen', templateRef);
 	}
 	@Input()
-	set hasSomeRolesThen(templateRef: TemplateRef<any>|null) {
+	set hasSomeRolesThen(templateRef: TemplateRef<any> | null) {
 		this.setThenTemplate('hasSomeRolesThen', templateRef);
 	}
 
 	@Input()
-	set isAuthenticatedElse(templateRef: TemplateRef<any>|null) {
+	set isAuthenticatedElse(templateRef: TemplateRef<any> | null) {
 		this.setElseTemplate('isAuthenticatedElse', templateRef);
 	}
 	@Input()
-	set hasRoleElse(templateRef: TemplateRef<any>|null) {
+	set hasRoleElse(templateRef: TemplateRef<any> | null) {
 		this.setElseTemplate('hasRoleElse', templateRef);
 	}
 	@Input()
-	set hasEveryRoleElse(templateRef: TemplateRef<any>|null) {
+	set hasEveryRoleElse(templateRef: TemplateRef<any> | null) {
 		this.setElseTemplate('hasEveryRoleElse', templateRef);
 	}
 	@Input()
-	set hasSomeRolesElse(templateRef: TemplateRef<any>|null) {
+	set hasSomeRolesElse(templateRef: TemplateRef<any> | null) {
 		this.setElseTemplate('hasSomeRolesElse', templateRef);
 	}
 
@@ -80,9 +82,11 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 
 		if (hasRoleChanges || hasEveryRoleChanges || hasSomeRolesChanges) {
 			// Due to bug when you pass empty array
-			if ((hasRoleChanges && hasRoleChanges.firstChange)
-				|| (hasEveryRoleChanges && hasEveryRoleChanges.firstChange)
-				|| (hasSomeRolesChanges && hasSomeRolesChanges.firstChange)) {
+			if (
+				(hasRoleChanges && hasRoleChanges.firstChange) ||
+				(hasEveryRoleChanges && hasEveryRoleChanges.firstChange) ||
+				(hasSomeRolesChanges && hasSomeRolesChanges.firstChange)
+			) {
 				return;
 			}
 
@@ -90,14 +94,14 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 		}
 	}
 
-	private setThenTemplate(property: string, templateRef: TemplateRef<any>|null) {
+	private setThenTemplate(property: string, templateRef: TemplateRef<any> | null) {
 		assertTemplate(property, templateRef);
 		this._thenTemplateRef = templateRef;
 		this._thenViewRef = null; // clear previous view if any
 		this._updateView();
 	}
 
-	private setElseTemplate(property: string, templateRef: TemplateRef<any>|null) {
+	private setElseTemplate(property: string, templateRef: TemplateRef<any> | null) {
 		assertTemplate(property, templateRef);
 		this._elseTemplateRef = templateRef;
 		this._elseViewRef = null; // clear previous view if any
@@ -110,7 +114,9 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 				this._viewContainer.clear();
 				this._elseViewRef = null;
 				if (this._thenTemplateRef) {
-					this._thenViewRef = this._viewContainer.createEmbeddedView(this._thenTemplateRef);
+					this._thenViewRef = this._viewContainer.createEmbeddedView(
+						this._thenTemplateRef
+					);
 				}
 			}
 		} else {
@@ -118,7 +124,9 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 				this._viewContainer.clear();
 				this._thenViewRef = null;
 				if (this._elseTemplateRef) {
-					this._elseViewRef = this._viewContainer.createEmbeddedView(this._elseTemplateRef);
+					this._elseViewRef = this._viewContainer.createEmbeddedView(
+						this._elseTemplateRef
+					);
 				}
 			}
 		}
@@ -141,9 +149,11 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	}
 }
 
-function assertTemplate(property: string, templateRef: TemplateRef<any>| null): void {
+function assertTemplate(property: string, templateRef: TemplateRef<any> | null): void {
 	const isTemplateRefOrNull = !!(!templateRef || templateRef.createEmbeddedView);
 	if (!isTemplateRefOrNull) {
-		throw new Error(`${property} must be a TemplateRef, but received '${stringify(templateRef)}'.`);
+		throw new Error(
+			`${property} must be a TemplateRef, but received '${stringify(templateRef)}'.`
+		);
 	}
 }

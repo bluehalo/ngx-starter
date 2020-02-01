@@ -7,19 +7,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SearchInputComponent } from './search-input/search-input.component';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		NgSelectModule
-	],
-	exports: [
-		SearchInputComponent
-	],
-	declarations: [
-		SearchInputComponent
-	],
+	imports: [CommonModule, FormsModule, NgSelectModule],
+	exports: [SearchInputComponent],
+	declarations: [SearchInputComponent],
 	providers: []
 })
-export class SearchInputModule { }
+export class SearchInputModule {}
 
-export  { SearchInputComponent } from './search-input/search-input.component';
+export { SearchInputComponent } from './search-input/search-input.component';

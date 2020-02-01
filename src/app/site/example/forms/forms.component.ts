@@ -18,13 +18,12 @@ export class FormsComponent {
 		btn.classList.add('btn-submitting');
 
 		// Simulate component submitting w/ delay
-		of(true).pipe(
-			delay(4000),
-			first()
-		).subscribe(() => {
-			btn.disabled = false;
-			btn.classList.remove('btn-submitting');
-		});
+		of(true)
+			.pipe(delay(4000), first())
+			.subscribe(() => {
+				btn.disabled = false;
+				btn.classList.remove('btn-submitting');
+			});
 	}
 }
 

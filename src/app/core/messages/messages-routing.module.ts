@@ -8,16 +8,14 @@ import { ViewAllMessagesComponent } from './view-all-messages/view-all-messages.
 	declarations: [],
 	imports: [
 		CommonModule,
-		RouterModule.forChild(
-			[
-				{
-					path: 'messages',
-					component: ViewAllMessagesComponent,
-					canActivate: [AuthGuard],
-					data: { roles: [ 'user' ] }
-				}
-			]
-		)
+		RouterModule.forChild([
+			{
+				path: 'messages',
+				component: ViewAllMessagesComponent,
+				canActivate: [AuthGuard],
+				data: { roles: ['user'] }
+			}
+		])
 	]
 })
-export class MessagesRoutingModule { }
+export class MessagesRoutingModule {}

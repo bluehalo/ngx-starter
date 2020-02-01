@@ -12,7 +12,6 @@ import { ConfigService } from '../../config.service';
 import { Role } from '../../auth/role.model';
 
 export abstract class ManageUserComponent implements OnDestroy, OnInit {
-
 	config: any;
 	error: string = null;
 	proxyPki: boolean;
@@ -34,14 +33,12 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 		protected router: Router,
 		protected configService: ConfigService,
 		protected alertService: SystemAlertService
-	) {
-	}
+	) {}
 
 	ngOnInit() {
-		this.configService.getConfig()
-			.pipe(
-				takeUntil(this.destroy$)
-			)
+		this.configService
+			.getConfig()
+			.pipe(takeUntil(this.destroy$))
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth === 'proxy-pki';
@@ -65,17 +62,17 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	submit() {
 		if (this.validatePassword()) {
-			this.submitUser(this.user)
-				.subscribe(
-					() => this.router.navigate([this.navigateOnSuccess]),
-					(response: HttpErrorResponse) => {
-						this.alertService.addClientErrorAlert(response);
-					});
+			this.submitUser(this.user).subscribe(
+				() => this.router.navigate([this.navigateOnSuccess]),
+				(response: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(response);
+				}
+			);
 		}
 	}
 
 	bypassAccessCheck() {
-		this.metadataLocked = null != (this.user) && !this.user.userModel.bypassAccessCheck;
+		this.metadataLocked = null != this.user && !this.user.userModel.bypassAccessCheck;
 		this.handleBypassAccessCheck();
 	}
 
@@ -86,5 +83,4 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 		this.error = 'Passwords must match';
 		return false;
 	}
-
 }

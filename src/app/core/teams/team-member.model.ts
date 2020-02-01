@@ -7,7 +7,6 @@ import { Team } from './team.model';
 import { TeamRole } from './team-role.model';
 
 export class TeamMember extends User {
-
 	public explicit = false;
 
 	public active = false;
@@ -24,7 +23,7 @@ export class TeamMember extends User {
 		return this.userModel.teams.length > 0;
 	}
 
-	public getRoleInTeam(team: Team| { _id: string }): string {
+	public getRoleInTeam(team: Team | { _id: string }): string {
 		if (null != this.userModel) {
 			const teams = get(this, 'userModel.teams', []);
 			// Find the role of this user in the team
@@ -52,12 +51,13 @@ export class TeamMember extends User {
 			}
 
 			// Determine if user is implicit/explicit and active/inactive
-			this.explicit = (null != userModel.teams && userModel.teams.length > 0);
+			this.explicit = null != userModel.teams && userModel.teams.length > 0;
 
 			if (userModel.bypassAccessCheck) {
 				this.active = true;
 			} else if (null != team) {
-				this.active = (0 === difference(team.requiresExternalTeams, userModel.externalGroups).length);
+				this.active =
+					0 === difference(team.requiresExternalTeams, userModel.externalGroups).length;
 			}
 		}
 

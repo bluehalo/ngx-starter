@@ -26,14 +26,9 @@ import { AdminTopics } from './admin-topic.model';
 		PagingModule
 	],
 	exports: [],
-	declarations:   [
-		AdminComponent,
-	],
-	providers:  [
-		AdminTopics,
-		AuthGuard
-	]
+	declarations: [AdminComponent],
+	providers: [AdminTopics, AuthGuard]
 })
-export class AdminModule { }
+export class AdminModule {}
 export { AdminTopic, AdminTopics } from './admin-topic.model';
 export { AdminComponent } from './admin.component';

@@ -10,7 +10,8 @@ import {
 	PagingResults,
 	SortDirection,
 	SortableTableHeader,
-	SortChange, AbstractPageableDataComponent
+	SortChange,
+	AbstractPageableDataComponent
 } from '../../../common/paging.module';
 import { AuthorizationService } from '../../auth/authorization.service';
 
@@ -19,13 +20,31 @@ import { AuthorizationService } from '../../auth/authorization.service';
 	styleUrls: ['./list-teams.component.scss']
 })
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team> implements OnInit {
-
 	canCreateTeam = false;
 
 	headers: SortableTableHeader[] = [
-		{ name: 'Name', sortable: true, sortField: 'name', sortDir: SortDirection.asc, tooltip: 'Sort by Team Name', default: true },
-		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Created' },
-		{ name: 'Description', sortable: true, sortField: 'description', sortDir: SortDirection.desc, tooltip: 'Sort by Description' }
+		{
+			name: 'Name',
+			sortable: true,
+			sortField: 'name',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Team Name',
+			default: true
+		},
+		{
+			name: 'Created',
+			sortable: true,
+			sortField: 'created',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Created'
+		},
+		{
+			name: 'Description',
+			sortable: true,
+			sortField: 'description',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Description'
+		}
 	];
 
 	constructor(
@@ -46,7 +65,11 @@ export class ListTeamsComponent extends AbstractPageableDataComponent<Team> impl
 		super.ngOnInit();
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<Team>> {
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<Team>> {
 		return this.teamsService.search(pagingOptions, query, search, {});
 	}
 }

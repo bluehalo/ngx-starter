@@ -9,13 +9,11 @@ import { User } from '../auth/user.model';
 import { SystemAlertService } from '../../common/system-alert.module';
 
 describe('Audit Service', () => {
-
 	let injector: TestBed;
 	let service: AuditService;
 	let httpMock: HttpTestingController;
 
 	beforeEach(async () => {
-
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
 			providers: [AuditService, SystemAlertService]
@@ -24,7 +22,6 @@ describe('Audit Service', () => {
 		injector = getTestBed();
 		service = injector.get(AuditService);
 		httpMock = injector.get(HttpTestingController);
-
 	});
 
 	afterEach(() => {
@@ -33,13 +30,9 @@ describe('Audit Service', () => {
 	});
 
 	describe('#getDistinctValues', () => {
-
 		it('should call once and return an Observable<string[]>', () => {
-			const values = [
-				'value01',
-				'value 02'
-			];
-			service.getDistinctAuditValues('test-field').subscribe((actual) => {
+			const values = ['value01', 'value 02'];
+			service.getDistinctAuditValues('test-field').subscribe(actual => {
 				expect(actual).toBe(values);
 			});
 
@@ -47,11 +40,9 @@ describe('Audit Service', () => {
 			expect(req.request.method).toBe('GET');
 			req.flush(values);
 		});
-
 	});
 
 	describe('#isViewDetailsAction', () => {
-
 		it('should include defaults', () => {
 			expect(service.isViewDetailsAction('create')).toBeTruthy();
 			expect(service.isViewDetailsAction('delete')).toBeTruthy();
@@ -62,11 +53,9 @@ describe('Audit Service', () => {
 			service.addViewDetailsAction('new action');
 			expect(service.isViewDetailsAction('new action')).toBeTruthy();
 		});
-
 	});
 
 	describe('#isViewChangesAction', () => {
-
 		it('should include defaults', () => {
 			expect(service.isViewChangesAction('update')).toBeTruthy();
 			expect(service.isViewChangesAction('admin update')).toBeTruthy();
@@ -77,11 +66,9 @@ describe('Audit Service', () => {
 			service.addViewChangesAction('new action');
 			expect(service.isViewChangesAction('new action')).toBeTruthy();
 		});
-
 	});
 
 	describe('#search', () => {
-
 		it('should call once and return an Observable<PagingResults>', () => {
 			const results = {
 				elements: [
@@ -91,7 +78,7 @@ describe('Audit Service', () => {
 			} as PagingResults;
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);
-			service.search({ actor: 'test' }, 'some-search', paging).subscribe((actual) => {
+			service.search({ actor: 'test' }, 'some-search', paging).subscribe(actual => {
 				console.log(actual);
 				expect(actual).toBe(results);
 			});
@@ -104,11 +91,9 @@ describe('Audit Service', () => {
 			});
 			req.flush(results);
 		});
-
 	});
 
 	describe('#matchUser', () => {
-
 		it('should call once and return an Observable<PagingResults>', () => {
 			const results = {
 				elements: [
@@ -117,7 +102,7 @@ describe('Audit Service', () => {
 				]
 			} as PagingResults;
 			const expectedResults = _cloneDeep(results);
-			expectedResults.elements = expectedResults.elements.map((element) => {
+			expectedResults.elements = expectedResults.elements.map(element => {
 				return new User().setFromUserModel(element);
 			});
 			const paging = new PagingOptions();
@@ -125,7 +110,7 @@ describe('Audit Service', () => {
 			const query = { actor: 'test' };
 			const search = 'some-search';
 			const options = { test: false };
-			service.matchUser(query, search, paging, options).subscribe((actual) => {
+			service.matchUser(query, search, paging, options).subscribe(actual => {
 				expect(actual).toEqual(expectedResults);
 			});
 
@@ -138,7 +123,5 @@ describe('Audit Service', () => {
 			});
 			req.flush(results);
 		});
-
 	});
-
 });

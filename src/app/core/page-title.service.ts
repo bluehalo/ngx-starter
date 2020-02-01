@@ -10,7 +10,6 @@ import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { ConfigService } from './config.service';
 
-
 @Injectable()
 export class PageTitleService {
 	constructor(
@@ -21,50 +20,48 @@ export class PageTitleService {
 	) {}
 
 	init() {
-
-		this.configService.getConfig().subscribe((config) => {
+		this.configService.getConfig().subscribe(config => {
 			const appTitle = get(config, 'app.title', null);
 
-			this.router.events.pipe(
-				filter((event) => event instanceof NavigationEnd),
-				map(() => this.activatedRoute),
-				map((route) => {
-					// Get to the leaf route
-					while (null != route.firstChild) {
-						route = route.firstChild;
-					}
-					return route;
-				}),
-				switchMap((route) => route.data),
-				map((data) => {
-
-					try {
-						let pathTitle = data.title;
-
-						// If there wasn't a path title, try to generate one
-						if (null == pathTitle) {
-							pathTitle = this.router.url.split(';')[0]
-								.split('/')
-								.slice(1)
-								.map((frag) => capitalize(frag))
-								.join(' > ');
+			this.router.events
+				.pipe(
+					filter(event => event instanceof NavigationEnd),
+					map(() => this.activatedRoute),
+					map(route => {
+						// Get to the leaf route
+						while (null != route.firstChild) {
+							route = route.firstChild;
 						}
+						return route;
+					}),
+					switchMap(route => route.data),
+					map(data => {
+						try {
+							let pathTitle = data.title;
 
-						if (isEmpty(appTitle) || isEmpty(pathTitle)) {
-							return `${appTitle}${pathTitle}`;
-						} else {
-							return `${appTitle} - ${pathTitle}`;
+							// If there wasn't a path title, try to generate one
+							if (null == pathTitle) {
+								pathTitle = this.router.url
+									.split(';')[0]
+									.split('/')
+									.slice(1)
+									.map(frag => capitalize(frag))
+									.join(' > ');
+							}
+
+							if (isEmpty(appTitle) || isEmpty(pathTitle)) {
+								return `${appTitle}${pathTitle}`;
+							} else {
+								return `${appTitle} - ${pathTitle}`;
+							}
+						} catch {
+							return appTitle;
 						}
-					} catch {
-						return appTitle;
-					}
-
-				})
-			).subscribe((title: string) => {
-				this.titleService.setTitle(title);
-			});
-
+					})
+				)
+				.subscribe((title: string) => {
+					this.titleService.setTitle(title);
+				});
 		});
 	}
-
 }

@@ -13,31 +13,36 @@ import { SystemAlertService } from '../../../common/system-alert/system-alert.se
  * Admin management of users
  */
 export class AdminUsersService {
-
 	cache: any = {};
 
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
+	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 
-	search(query: any, search: string, paging: PagingOptions, options: any): Observable<PagingResults<User>> {
-		return this.http.post<PagingResults>(
-			'api/admin/users',
-			{ q: query, s: search, options },
-			{ params: paging.toObj() }
-		).pipe(
-			map((results: PagingResults) => {
-				if (null != results && Array.isArray(results.elements)) {
-					results.elements = results.elements.map((element: any) => new User().setFromUserModel(element));
-				}
-				return results;
-			}),
-			catchError((error) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(NULL_PAGING_RESULTS);
-			})
-		);
+	search(
+		query: any,
+		search: string,
+		paging: PagingOptions,
+		options: any
+	): Observable<PagingResults<User>> {
+		return this.http
+			.post<PagingResults>(
+				'api/admin/users',
+				{ q: query, s: search, options },
+				{ params: paging.toObj() }
+			)
+			.pipe(
+				map((results: PagingResults) => {
+					if (null != results && Array.isArray(results.elements)) {
+						results.elements = results.elements.map((element: any) =>
+							new User().setFromUserModel(element)
+						);
+					}
+					return results;
+				}),
+				catchError(error => {
+					this.alertService.addClientErrorAlert(error);
+					return of(NULL_PAGING_RESULTS);
+				})
+			);
 	}
 
 	removeUser(id: string) {
@@ -59,5 +64,4 @@ export class AdminUsersService {
 	update(user: User): Observable<any> {
 		return this.http.post(`api/admin/user/${user.userModel._id}`, user.userModel);
 	}
-
 }

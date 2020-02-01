@@ -25,8 +25,8 @@ import { AdminTopics } from '../admin-topic.model';
 @Component({
 	templateUrl: './admin-list-euas.component.html'
 })
-export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement> implements OnDestroy, OnInit {
-
+export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement>
+	implements OnDestroy, OnInit {
 	// Columns to show/hide in user table
 	columns = {
 		_id: { show: false, display: 'ID' },
@@ -41,11 +41,36 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 
 	headers: SortableTableHeader[] = [
 		{ name: 'ID', sortable: false, sortField: '_id' },
-		{ name: 'Title', sortable: true, sortField: 'title', sortDir: SortDirection.asc, tooltip: 'Sort by Title', default: true },
+		{
+			name: 'Title',
+			sortable: true,
+			sortField: 'title',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Title',
+			default: true
+		},
 		{ name: 'Text', sortable: false, sortField: 'text' },
-		{ name: 'Created', sortable: true, sortField: 'created', sortDir: SortDirection.desc, tooltip: 'Sort by Create Date' },
-		{ name: 'Published', sortable: true, sortField: 'published', sortDir: SortDirection.desc, tooltip: 'Sort by Publish Date' },
-		{ name: 'Updated', sortable: true, sortField: 'updated', sortDir: SortDirection.asc, tooltip: 'Sort by Title' }
+		{
+			name: 'Created',
+			sortable: true,
+			sortField: 'created',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Create Date'
+		},
+		{
+			name: 'Published',
+			sortable: true,
+			sortField: 'published',
+			sortDir: SortDirection.desc,
+			tooltip: 'Sort by Publish Date'
+		},
+		{
+			name: 'Updated',
+			sortable: true,
+			sortField: 'updated',
+			sortDir: SortDirection.asc,
+			tooltip: 'Sort by Title'
+		}
 	];
 
 	headersToShow: SortableTableHeader[] = [];
@@ -57,20 +82,25 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		private euaService: EuaService,
 		private route: ActivatedRoute,
 		private alertService: SystemAlertService
-	) { super(); }
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.route.params
-			.pipe(
-				takeUntil(this.destroy$)
-			).subscribe( (params: Params) => {
-				if (toString(params[`clearCachedFilter`]) === 'true' || null == this.euaService.cache.listEuas) {
-					this.euaService.cache.listEuas = {};
-				}
-			});
+		this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
+			if (
+				toString(params[`clearCachedFilter`]) === 'true' ||
+				null == this.euaService.cache.listEuas
+			) {
+				this.euaService.cache.listEuas = {};
+			}
+		});
 
-		this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
+		this.headersToShow = this.headers.filter(
+			(header: SortableTableHeader) =>
+				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
+		);
 
 		this.initializeFromCache();
 
@@ -84,7 +114,10 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 
 	columnsUpdated(updatedColumns: any) {
 		this.columns = cloneDeep(updatedColumns);
-		this.headersToShow = this.headers.filter((header: SortableTableHeader) => this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show);
+		this.headersToShow = this.headers.filter(
+			(header: SortableTableHeader) =>
+				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
+		);
 	}
 
 	confirmDeleteEua(eua: EndUserAgreement) {
@@ -92,22 +125,29 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		const title = eua.euaModel.title;
 
 		this.modalService
-			.confirm('Delete End User Agreement?', `Are you sure you want to delete eua: "${eua.euaModel.title}" ?`, 'Delete')
+			.confirm(
+				'Delete End User Agreement?',
+				`Are you sure you want to delete eua: "${eua.euaModel.title}" ?`,
+				'Delete'
+			)
 			.pipe(
 				first(),
 				filter((action: ModalAction) => action === ModalAction.OK),
 				switchMap(() => {
 					return this.euaService.remove(id);
 				})
-			).subscribe(() => {
-				this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
-				this.load$.next(true);
-			},
-			(response: HttpErrorResponse) => {
-				if (response.status >= 400 && response.status < 500) {
-					this.alertService.addAlert(response.error.message);
+			)
+			.subscribe(
+				() => {
+					this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
+					this.load$.next(true);
+				},
+				(response: HttpErrorResponse) => {
+					if (response.status >= 400 && response.status < 500) {
+						this.alertService.addAlert(response.error.message);
+					}
 				}
-			});
+			);
 	}
 
 	publishEua(eua: EndUserAgreement) {
@@ -120,7 +160,8 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 				if (response.status >= 400 && response.status < 500) {
 					this.alertService.addAlert(response.error.message);
 				}
-			});
+			}
+		);
 		this.load$.next(true);
 	}
 
@@ -138,8 +179,12 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		}
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults<EndUserAgreement>> {
-		this.euaService.cache.listEuas = {search, paging: pagingOptions};
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: any
+	): Observable<PagingResults<EndUserAgreement>> {
+		this.euaService.cache.listEuas = { search, paging: pagingOptions };
 
 		return this.euaService.search(query, search, pagingOptions, {});
 	}

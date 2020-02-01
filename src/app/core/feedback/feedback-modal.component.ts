@@ -14,7 +14,6 @@ import { Feedback } from './feedback.model';
 	templateUrl: 'feedback-modal.component.html'
 })
 export class FeedbackModalComponent implements OnInit {
-
 	error: string;
 
 	success: string;
@@ -35,13 +34,19 @@ export class FeedbackModalComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.configService.getConfig().pipe(first()).subscribe((config: any) => {
-			this.baseUrl = config.app.clientUrl || '';
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config: any) => {
+				this.baseUrl = config.app.clientUrl || '';
 
-			if (Array.isArray(config.feedback.classificationOpts) && !isEmpty(config.feedback.classificationOpts)) {
-				this.classificationOptions = config.feedback.classificationOpts;
-			}
-		});
+				if (
+					Array.isArray(config.feedback.classificationOpts) &&
+					!isEmpty(config.feedback.classificationOpts)
+				) {
+					this.classificationOptions = config.feedback.classificationOpts;
+				}
+			});
 	}
 
 	submit() {
@@ -51,12 +56,15 @@ export class FeedbackModalComponent implements OnInit {
 		// Get the current URL from the router at the time of submission.
 		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
 
-		this.feedbackService.submit(this.feedback).subscribe(() => {
-			this.success = 'Feedback successfully submitted!';
-			setTimeout(() => this.modalRef.hide(), 1500);
-		}, (error: HttpErrorResponse) => {
-			this.submitting = false;
-			this.error = error.error.message;
-		});
+		this.feedbackService.submit(this.feedback).subscribe(
+			() => {
+				this.success = 'Feedback successfully submitted!';
+				setTimeout(() => this.modalRef.hide(), 1500);
+			},
+			(error: HttpErrorResponse) => {
+				this.submitting = false;
+				this.error = error.error.message;
+			}
+		);
 	}
 }

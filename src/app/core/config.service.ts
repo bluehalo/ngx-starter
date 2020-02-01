@@ -7,7 +7,6 @@ import { Config } from './config.model';
 
 @Injectable()
 export class ConfigService {
-
 	configSubject = new AsyncSubject<Config>();
 
 	constructor(private http: HttpBackend) {
@@ -33,10 +32,9 @@ export class ConfigService {
 
 		this.http.handle(request).subscribe(
 			(httpEvent: HttpEvent<Config>) => {
-
 				if (httpEvent instanceof HttpResponse) {
 					let newConfig = null;
-					const response = (httpEvent as HttpResponse<Config>);
+					const response = httpEvent as HttpResponse<Config>;
 
 					if (response.status >= 200 && response.status < 300) {
 						newConfig = response.body;
@@ -49,6 +47,7 @@ export class ConfigService {
 			() => {
 				this.configSubject.next(null);
 				this.configSubject.complete();
-			});
+			}
+		);
 	}
 }

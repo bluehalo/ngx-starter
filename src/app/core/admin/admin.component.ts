@@ -3,7 +3,7 @@ import { AdminTopic, AdminTopics } from './admin-topic.model';
 
 @Component({
 	templateUrl: 'admin.component.html',
-	styleUrls: [ 'admin.component.scss' ]
+	styleUrls: ['admin.component.scss']
 })
 export class AdminComponent {
 	helpTopics: AdminTopic[] = [];

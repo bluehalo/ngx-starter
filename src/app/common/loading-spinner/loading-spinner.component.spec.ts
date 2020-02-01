@@ -18,7 +18,6 @@ export class LoadingSpinnerProvidedTestHostComponent {
 }
 
 describe('LoadingSpinnerComponent', () => {
-
 	let defaultFixture: ComponentFixture<LoadingSpinnerDefaultTestHostComponent>;
 	let defaultTestHost: LoadingSpinnerDefaultTestHostComponent;
 	let defaultRootHTMLElement: HTMLElement;
@@ -66,5 +65,4 @@ describe('LoadingSpinnerComponent', () => {
 		providedFixture.detectChanges();
 		expect(providedRootHTMLElement.innerText).toContain(expectedContent);
 	});
-
 });

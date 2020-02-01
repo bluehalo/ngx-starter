@@ -9,23 +9,21 @@ import { SessionService } from './auth/session.service';
 
 @Injectable()
 export class SocketService {
-
 	protected socket: SocketIOClient.Socket;
 
 	constructor(
 		private authorizationService: AuthorizationService,
-		private sessionService: SessionService) {
+		private sessionService: SessionService
+	) {
 		this.initialize();
 	}
 
 	public initialize(): void {
 		// Do not autoconnect when the socket is created.  We will wait to do that ourselves once the
 		// user has logged in.
-		this.socket = io.connect(
-			{
-				autoConnect: false
-			}
-		);
+		this.socket = io.connect({
+			autoConnect: false
+		});
 
 		// If the user is already active, connect to the socket right away.
 		if (this.authorizationService.isAuthenticated()) {

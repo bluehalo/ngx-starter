@@ -36,25 +36,12 @@ import { SearchInputModule } from '../../common/search-input.module';
 
 		FeedbackRoutingModule
 	],
-	exports: [
-		AdminListFeedbackComponent,
-		FeedbackModalComponent,
-		FeedbackFlyoutComponent
-	],
-	entryComponents: [
-		AdminListFeedbackComponent,
-		FeedbackModalComponent
-	],
-	declarations:   [
-		AdminListFeedbackComponent,
-		FeedbackModalComponent,
-		FeedbackFlyoutComponent
-	],
-	providers:  [
-		FeedbackService
-	],
+	exports: [AdminListFeedbackComponent, FeedbackModalComponent, FeedbackFlyoutComponent],
+	entryComponents: [AdminListFeedbackComponent, FeedbackModalComponent],
+	declarations: [AdminListFeedbackComponent, FeedbackModalComponent, FeedbackFlyoutComponent],
+	providers: [FeedbackService]
 })
-export class FeedbackModule { }
+export class FeedbackModule {}
 export { AdminListFeedbackComponent } from './admin/admin-list-feedback.component';
 export { FeedbackModalComponent } from './feedback-modal.component';
 export { FeedbackService } from './feedback.service';

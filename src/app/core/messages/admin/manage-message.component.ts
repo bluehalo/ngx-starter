@@ -8,7 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 
 export abstract class ManageMessageComponent implements OnInit {
-
 	message: Message;
 	error: string = null;
 	okDisabled: boolean;
@@ -35,12 +34,11 @@ export abstract class ManageMessageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.configService.getConfig()
-			.subscribe((config: any) => {
-				this.config = config;
+		this.configService.getConfig().subscribe((config: any) => {
+			this.config = config;
 
-				this.initialize();
-			});
+			this.initialize();
+		});
 	}
 
 	abstract initialize(): void;
@@ -48,15 +46,14 @@ export abstract class ManageMessageComponent implements OnInit {
 	abstract submitMessage(message: Message): Observable<any>;
 
 	submit() {
-		this.submitMessage(this.message)
-			.subscribe(
-				() => this.router.navigate([this.navigateOnSuccess]),
-				(response: HttpErrorResponse) => {
-					if (response.status >= 400 && response.status < 500) {
-						const errors = response.message.split('\n');
-						this.error = errors.join(', ');
-					}
-				});
+		this.submitMessage(this.message).subscribe(
+			() => this.router.navigate([this.navigateOnSuccess]),
+			(response: HttpErrorResponse) => {
+				if (response.status >= 400 && response.status < 500) {
+					const errors = response.message.split('\n');
+					this.error = errors.join(', ');
+				}
+			}
+		);
 	}
-
 }

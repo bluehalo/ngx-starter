@@ -1,7 +1,7 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
-@Pipe({name: 'agoDate'})
+@Pipe({ name: 'agoDate' })
 export class AgoDatePipe implements PipeTransform {
 	transform(date: Date | number, hideAgo?: boolean): string {
 		if (null != date) {

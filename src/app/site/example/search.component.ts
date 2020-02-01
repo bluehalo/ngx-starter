@@ -10,13 +10,11 @@ import { NavbarTopics } from '../../core/core.module';
 					<p>Simple demonstration of routing.</p>
 				</div>
 			</div>
-		</div>`,
-	styles: [ '' ]
+		</div>
+	`,
+	styles: ['']
 })
-export class SearchComponent {
-
-
-}
+export class SearchComponent {}
 
 NavbarTopics.registerTopic({
 	id: 'search',

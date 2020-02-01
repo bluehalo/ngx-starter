@@ -6,9 +6,7 @@ $loading-spinner-color: map-get($color-primary, 'darker') !default;
 $loading-spinner-size: 42px !default;
 $loading-spinner-message-font-size: 24px !default;
 
-
 .loading-container {
-
 	.loading-spinner {
 		display: inline-block;
 		float: left;
@@ -16,7 +14,7 @@ $loading-spinner-message-font-size: 24px !default;
 		height: $loading-spinner-size;
 
 		&:after {
-			content: " ";
+			content: ' ';
 			display: block;
 			width: $loading-spinner-size;
 			height: $loading-spinner-size;
@@ -26,7 +24,6 @@ $loading-spinner-message-font-size: 24px !default;
 			border-color: $loading-spinner-color transparent $loading-spinner-color transparent;
 			animation: loading-spinner 1.2s linear infinite;
 		}
-
 	}
 	.loading-message {
 		@include font-normal($loading-spinner-message-font-size);

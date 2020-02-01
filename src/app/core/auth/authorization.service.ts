@@ -9,17 +9,12 @@ import { SessionService } from './session.service';
 
 @Injectable()
 export class AuthorizationService {
-
 	private session: Session;
 
-	constructor(
-		private sessionService: SessionService
-	) {
-		this.sessionService.getSession().subscribe(
-			(session: Session) => {
-				this.session = session;
-			}
-		);
+	constructor(private sessionService: SessionService) {
+		this.sessionService.getSession().subscribe((session: Session) => {
+			this.session = session;
+		});
 	}
 
 	public isEuaCurrent() {
@@ -30,7 +25,7 @@ export class AuthorizationService {
 	}
 
 	public isAuthenticated(): boolean {
-		return (null != this.session && null != this.session.name);
+		return null != this.session && null != this.session.name;
 	}
 
 	public hasExternalRole(role: string): boolean {
@@ -43,7 +38,7 @@ export class AuthorizationService {
 		role = this.roleToString(role);
 
 		const roles = get(this.session, 'user.userModel.roles', {});
-		return (null != roles[role]) && roles[role];
+		return null != roles[role] && roles[role];
 	}
 
 	public hasAnyRole(): boolean {

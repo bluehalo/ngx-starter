@@ -8,7 +8,6 @@ import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 import { GridComponent } from './grid/grid.component';
 
-
 @NgModule({
 	imports: [
 		RouterModule.forChild([
@@ -20,32 +19,30 @@ import { GridComponent } from './grid/grid.component';
 			{
 				path: 'welcome',
 				component: WelcomeComponent,
-				canActivate: [ AuthGuard ]
+				canActivate: [AuthGuard]
 			},
 			{
 				path: 'explore',
 				component: ExploreComponent,
-				canActivate: [ AuthGuard ]
+				canActivate: [AuthGuard]
 			},
 			{
 				path: 'search',
 				component: SearchComponent,
-				canActivate: [ AuthGuard ]
+				canActivate: [AuthGuard]
 			},
 			{
 				path: 'forms',
 				component: FormsComponent,
-				canActivate: [ AuthGuard ]
+				canActivate: [AuthGuard]
 			},
 			{
 				path: 'grid',
 				component: GridComponent,
-				canActivate: [ AuthGuard ]
+				canActivate: [AuthGuard]
 			}
 		])
 	],
-	exports: [
-		RouterModule
-	]
+	exports: [RouterModule]
 })
-export class ExampleRoutingModule { }
+export class ExampleRoutingModule {}

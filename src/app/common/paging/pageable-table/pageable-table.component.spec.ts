@@ -13,33 +13,32 @@ import { DirectivesModule } from '../../directives.module';
 import { PipesModule } from '../../pipes.module';
 
 @Component({
-	template:
-		`
-	<pageable-table [items]="items"
-					[hasItems]="hasItems"
-					[pagingOptions]="pagingOptions"
-					(pageChange)="pageChanged$.next($event)">
+	template: `
+		<pageable-table
+			[items]="items"
+			[hasItems]="hasItems"
+			[pagingOptions]="pagingOptions"
+			(pageChange)="pageChanged$.next($event)"
+		>
+			<ng-template #tableHeader>
+				{{ headerContent }}
+			</ng-template>
 
-		<ng-template #tableHeader>
-			{{ headerContent }}
-		</ng-template>
+			<ng-template #tableRow let-item="item" let-index="index">
+				{{ rowContent }}
+				{{ item }}
+				{{ index }}
+			</ng-template>
 
-		<ng-template #tableRow let-item="item" let-index="index">
-			{{ rowContent }}
-			{{ item }}
-			{{ index }}
-		</ng-template>
+			<ng-template #tableNoData>
+				{{ noDataContent }}
+			</ng-template>
 
-		<ng-template #tableNoData>
-			{{ noDataContent }}
-		</ng-template>
-
-		<ng-template #tableNoResults>
-			{{ noResultsContent }}
-		</ng-template>
-
-	</pageable-table>
-`
+			<ng-template #tableNoResults>
+				{{ noResultsContent }}
+			</ng-template>
+		</pageable-table>
+	`
 })
 export class PageableTableTestHostComponent {
 	@Input() items: Iterable<any>;
@@ -55,19 +54,13 @@ export class PageableTableTestHostComponent {
 }
 
 describe('PageableTableComponent', () => {
-
 	let fixture: ComponentFixture<PageableTableTestHostComponent>;
 	let testHost: PageableTableTestHostComponent;
 	let rootHTMLElement: HTMLElement;
 
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
-			imports: [
-				TooltipModule.forRoot(),
-				DirectivesModule,
-				FormsModule,
-				PipesModule
-			],
+			imports: [TooltipModule.forRoot(), DirectivesModule, FormsModule, PipesModule],
 			declarations: [
 				PageableTableTestHostComponent,
 				PageableTableComponent,
@@ -125,26 +118,18 @@ describe('PageableTableComponent', () => {
 	});
 
 	it('binds the item to the row template', () => {
-		const items = [
-			'ITEM_A',
-			'ITEM_B',
-			'ITEM_C'
-		];
+		const items = ['ITEM_A', 'ITEM_B', 'ITEM_C'];
 
 		testHost.items = items;
 		fixture.detectChanges();
 
-		items.forEach((item) => {
+		items.forEach(item => {
 			expect(rootHTMLElement.innerText).toContain(item);
 		});
 	});
 
 	it('binds the index of the item to the row template', () => {
-		const items = [
-			'ITEM_A',
-			'ITEM_B',
-			'ITEM_C'
-		];
+		const items = ['ITEM_A', 'ITEM_B', 'ITEM_C'];
 
 		testHost.items = items;
 		fixture.detectChanges();
@@ -160,5 +145,4 @@ describe('PageableTableComponent', () => {
 			fixture.detectChanges();
 		}).not.toThrow();
 	});
-
 });

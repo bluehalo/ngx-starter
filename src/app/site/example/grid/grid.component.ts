@@ -6,9 +6,7 @@ import { NavbarTopics } from '../../../core/core.module';
 	templateUrl: './grid.component.html',
 	styleUrls: ['./grid.component.scss']
 })
-export class GridComponent {
-}
-
+export class GridComponent {}
 
 NavbarTopics.registerTopic({
 	id: 'grid',

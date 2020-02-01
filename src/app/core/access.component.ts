@@ -6,25 +6,19 @@ import { Router } from '@angular/router';
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 offset-2 jumbotron" style="margin-top: 4rem;">
-
-					<h1>{{status}}</h1>
-					<p>{{message}}</p>
-
+					<h1>{{ status }}</h1>
+					<p>{{ message }}</p>
 				</div>
 			</div>
 		</div>
 	`,
-	styles: [ '' ]
+	styles: ['']
 })
 export class AccessComponent {
-
 	status: string;
 	message: string;
 
-
-	constructor(
-		private router: Router
-	) {
+	constructor(private router: Router) {
 		const navigation = this.router.getCurrentNavigation();
 		const state = navigation.extras.state;
 

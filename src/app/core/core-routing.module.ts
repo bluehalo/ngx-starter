@@ -52,10 +52,7 @@ import { AuthGuard } from './auth/auth.guard';
 			}
 		])
 	],
-	exports: [
-		RouterModule
-	],
-	providers: [ ]
+	exports: [RouterModule],
+	providers: []
 })
-
 export class CoreRoutingModule {}

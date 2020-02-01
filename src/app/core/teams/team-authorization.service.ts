@@ -13,19 +13,20 @@ type TeamIdObj = Team | { _id: string };
 
 @Injectable()
 export class TeamAuthorizationService {
-
 	private member: TeamMember;
 
-	constructor(
-		private sessionService: SessionService
-	) {
-		this.sessionService.getSession()
+	constructor(private sessionService: SessionService) {
+		this.sessionService
+			.getSession()
 			.pipe(
 				first(),
-				map((session: Session) => new TeamMember().setFromTeamMemberModel(null, session.user.userModel))
-			).subscribe((member: TeamMember) => {
-			this.member = member;
-		});
+				map((session: Session) =>
+					new TeamMember().setFromTeamMemberModel(null, session.user.userModel)
+				)
+			)
+			.subscribe((member: TeamMember) => {
+				this.member = member;
+			});
 	}
 
 	hasTeams(): boolean {

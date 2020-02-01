@@ -8,7 +8,6 @@ import { ExampleService } from './example.service';
 
 @Injectable()
 export class ExampleRestService extends ExampleService {
-
 	constructor(private http: HttpClient) {
 		super();
 	}
@@ -18,7 +17,6 @@ export class ExampleRestService extends ExampleService {
 	 */
 
 	public getExamples(): Observable<Example[]> {
-		return this.http.get<Example []>(`api/example`);
+		return this.http.get<Example[]>(`api/example`);
 	}
-
 }

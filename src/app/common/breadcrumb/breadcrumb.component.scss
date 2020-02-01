@@ -5,7 +5,7 @@
 $breadcrumb-header-height: $nav-closed-width !default;
 $breadcrumb-font-size: $font-size !default;
 $breadcrumb-line-height: $font-line-height !default;
-$breadcrumb-item-padding-left: .5rem !default;
+$breadcrumb-item-padding-left: 0.5rem !default;
 $breadcrumb-first-item-padding-left: 1rem !default;
 
 .header {
@@ -16,7 +16,8 @@ $breadcrumb-first-item-padding-left: 1rem !default;
 	background-color: $color-white;
 	height: $breadcrumb-header-height;
 
-	.header-breadcrumb, .header-breadcrumb-separator {
+	.header-breadcrumb,
+	.header-breadcrumb-separator {
 		padding-left: $breadcrumb-item-padding-left;
 		&:first-child {
 			padding-left: $breadcrumb-first-item-padding-left;

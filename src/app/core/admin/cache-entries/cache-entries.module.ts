@@ -29,20 +29,11 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		SearchInputModule,
 		TooltipModule
 	],
-	entryComponents: [
-		CacheEntryModalComponent
-	],
-	declarations: [
-		CacheEntriesComponent,
-		CacheEntryModalComponent
-	],
-	exports: [
-		CacheEntriesComponent
-	],
-	providers: [
-		CacheEntriesService
-	]
+	entryComponents: [CacheEntryModalComponent],
+	declarations: [CacheEntriesComponent, CacheEntryModalComponent],
+	exports: [CacheEntriesComponent],
+	providers: [CacheEntriesService]
 })
-export class CacheEntriesModule { }
+export class CacheEntriesModule {}
 
 export { CacheEntriesComponent } from './cache-entries.component';

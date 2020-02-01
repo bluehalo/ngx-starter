@@ -11,11 +11,10 @@ import { AuthGuard } from '../auth/auth.guard';
 				path: 'audit',
 				component: ListAuditEntriesComponent,
 				canActivate: [AuthGuard],
-				data: { roles: [ 'auditor' ] }
-			}])
+				data: { roles: ['auditor'] }
+			}
+		])
 	],
-	exports: [
-		RouterModule
-	]
+	exports: [RouterModule]
 })
-export class AuditRoutingModule { }
+export class AuditRoutingModule {}

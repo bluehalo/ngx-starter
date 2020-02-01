@@ -1,7 +1,6 @@
 import { StringUtils } from './string-utils.service';
 
 describe('StringUtils', () => {
-
 	describe('isNonEmptyString', () => {
 		it('returns true if input is non-empty string', () => {
 			expect(StringUtils.isNonEmptyString('test-string')).toBe(true);
@@ -11,7 +10,7 @@ describe('StringUtils', () => {
 			expect(StringUtils.isNonEmptyString('')).toBe(false);
 		});
 
-		it ('returns false if input is not a string', () => {
+		it('returns false if input is not a string', () => {
 			expect(StringUtils.isNonEmptyString({})).toBe(false);
 		});
 	});
@@ -25,7 +24,7 @@ describe('StringUtils', () => {
 			expect(StringUtils.isInvalid('')).toBe(true);
 		});
 
-		it ('returns true if input is not a string', () => {
+		it('returns true if input is not a string', () => {
 			expect(StringUtils.isInvalid({})).toBe(true);
 		});
 	});
@@ -68,12 +67,19 @@ describe('StringUtils', () => {
 		});
 
 		it('returns Capitalized on hyphenated word sentence', () => {
-			expect(StringUtils.toTitleCase('hello, test-strings are cool!')).toBe('Hello, Test-strings Are Cool!');
+			expect(StringUtils.toTitleCase('hello, test-strings are cool!')).toBe(
+				'Hello, Test-strings Are Cool!'
+			);
 		});
 
 		it('returns Capitalized on hyphenated word multiple sentences', () => {
-			expect(StringUtils.toTitleCase('hello, test-strings are cool!  I really like how they are capitalized....a lot.')).toBe('Hello, Test-strings Are Cool!  I Really Like How They Are Capitalized....a Lot.');
+			expect(
+				StringUtils.toTitleCase(
+					'hello, test-strings are cool!  I really like how they are capitalized....a lot.'
+				)
+			).toBe(
+				'Hello, Test-strings Are Cool!  I Really Like How They Are Capitalized....a Lot.'
+			);
 		});
 	});
-
 });

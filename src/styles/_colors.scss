@@ -25,12 +25,12 @@ $ux-color-background: $color-white !default;
 $ux-color-white: $color-white !default;
 $ux-color-brand-background: map-get($color-accent, 'default') !default;
 $ux-color-primary-highlight: map-get($color-primary, 'lightest') !default;
-$ux-color-primary-medium:  map-get($color-primary, 'lighter') !default;
-$ux-color-primary:  map-get($color-primary, 'default') !default;
+$ux-color-primary-medium: map-get($color-primary, 'lighter') !default;
+$ux-color-primary: map-get($color-primary, 'default') !default;
 $ux-color-primary-dark: map-get($color-primary, 'darker') !default;
 
 $ux-color-alert-success: map-get($color-success, 'default') !default;
-$ux-color-alert-error:  map-get($color-error, 'default') !default;
+$ux-color-alert-error: map-get($color-error, 'default') !default;
 $ux-color-alert-warning: map-get($color-warning, 'default') !default;
 $ux-color-alert-notification: map-get($color-info, 'default') !default;
 

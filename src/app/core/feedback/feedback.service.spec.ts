@@ -2,7 +2,6 @@ import { FeedbackService } from './feedback.service';
 import { Feedback } from './feedback.model';
 
 describe('FeedbackService', () => {
-
 	it('should exist', () => {
 		expect(new FeedbackService({} as any, {} as any)).toBeDefined();
 	});
@@ -39,12 +38,8 @@ describe('FeedbackService', () => {
 			feedback.text = 'hello there';
 			feedback.subType = 'Other';
 			feedback.otherText = 'yes';
-			feedback.classification = {prefix: 'K', level: 'OK'};
-			expect(service.getFormattedText(feedback)).toEqual(
-				'K Other - yes\n' +
-				'K hello there'
-			);
+			feedback.classification = { prefix: 'K', level: 'OK' };
+			expect(service.getFormattedText(feedback)).toEqual('K Other - yes\n' + 'K hello there');
 		});
 	});
-
 });

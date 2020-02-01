@@ -34,17 +34,9 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		SystemAlertModule,
 		SearchInputModule
 	],
-	exports: [
-	],
-	entryComponents: [
-	],
-	declarations:   [
-		AdminCreateUserComponent,
-		AdminListUsersComponent,
-		AdminUpdateUserComponent
-	],
-	providers:  [
-		AdminUsersService
-	],
+	exports: [],
+	entryComponents: [],
+	declarations: [AdminCreateUserComponent, AdminListUsersComponent, AdminUpdateUserComponent],
+	providers: [AdminUsersService]
 })
-export class AdminUserModule { }
+export class AdminUserModule {}

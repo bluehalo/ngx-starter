@@ -23,18 +23,14 @@ import { GettingStartedHelpComponent } from './getting-started/getting-started-h
 		RouterModule
 	],
 	exports: [],
-	entryComponents: [
-		GettingStartedHelpComponent
-	],
-	declarations:   [
+	entryComponents: [GettingStartedHelpComponent],
+	declarations: [
 		ExternalLinksComponent,
 		GettingStartedHelpComponent,
 		HelpComponent,
 		HelpTopicComponent,
 		HelpTopicWrapperComponent
 	],
-	providers:  [
-		HelpTopics
-	]
+	providers: [HelpTopics]
 })
-export class HelpModule { }
+export class HelpModule {}

@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	OnDestroy,
+	OnInit,
+	Output
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -9,7 +17,6 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 	styleUrls: ['quick-filters.component.scss']
 })
 export class QuickFiltersComponent implements OnDestroy, OnInit {
-
 	@Input() title = 'Quick Filters';
 
 	@Input() filters: any = {};
@@ -28,10 +35,8 @@ export class QuickFiltersComponent implements OnDestroy, OnInit {
 
 	constructor() {
 		this.toggleFilter$
-			.pipe(
-				debounceTime(100),
-				takeUntil(this.destroy$)
-			).subscribe((key: string) => this.toggleQuickFilter(key));
+			.pipe(debounceTime(100), takeUntil(this.destroy$))
+			.subscribe((key: string) => this.toggleQuickFilter(key));
 	}
 
 	ngOnInit() {

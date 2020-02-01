@@ -14,7 +14,6 @@ import { User } from '../../auth/user.model';
 	templateUrl: 'manage-user.component.html'
 })
 export class AdminCreateUserComponent extends ManageUserComponent {
-
 	mode = 'admin-create';
 
 	constructor(
@@ -42,5 +41,4 @@ export class AdminCreateUserComponent extends ManageUserComponent {
 	submitUser(user: User): Observable<any> {
 		return this.adminUsersService.create(user);
 	}
-
 }
