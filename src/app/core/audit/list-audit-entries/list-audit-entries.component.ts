@@ -133,12 +133,12 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		forkJoin([
 			this.auditService.getDistinctAuditValues('audit.action'),
 			this.auditService.getDistinctAuditValues('audit.auditType')
-		]).subscribe((results: any[]) => {
-			this.actionOptions = results[0]
+		]).subscribe(([actionResults, typeResults]) => {
+			this.actionOptions = actionResults
 				.filter((r: any) => _isString(r))
 				.sort()
 				.map((r: any) => new AuditOption(r));
-			this.auditTypeOptions = results[1]
+			this.auditTypeOptions = typeResults
 				.filter((r: any) => _isString(r))
 				.sort()
 				.map((r: any) => new AuditOption(r));

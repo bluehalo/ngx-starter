@@ -5,8 +5,7 @@ import { Observable, of } from 'rxjs';
 
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
 import { CacheEntry } from './cache-entry.model';
-import { catchError, map } from 'rxjs/operators';
-import { User } from '../../auth/user.model';
+import { catchError } from 'rxjs/operators';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 
 @Injectable()

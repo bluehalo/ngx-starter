@@ -23,13 +23,17 @@ export class EuaService {
 	 */
 
 	// Create
-	create(eua: EndUserAgreement): Observable<any> {
-		return this.http.post('api/eua', eua.euaModel);
+	create(eua: EndUserAgreement): Observable<EndUserAgreement> {
+		return this.http
+			.post('api/eua', eua.euaModel)
+			.pipe(map(result => new EndUserAgreement().setFromEuaModel(result)));
 	}
 
 	// Retrieve
-	get(id: string): Observable<any> {
-		return this.http.get(`api/eua/${id}`);
+	get(id: string): Observable<EndUserAgreement> {
+		return this.http
+			.get(`api/eua/${id}`)
+			.pipe(map(result => new EndUserAgreement().setFromEuaModel(result)));
 	}
 
 	// Search Euas
@@ -58,16 +62,22 @@ export class EuaService {
 	}
 
 	// Update
-	update(eua: EndUserAgreement): Observable<any> {
-		return this.http.post(`api/eua/${eua.euaModel._id}`, eua.euaModel);
+	update(eua: EndUserAgreement): Observable<EndUserAgreement> {
+		return this.http
+			.post(`api/eua/${eua.euaModel._id}`, eua.euaModel)
+			.pipe(map(result => new EndUserAgreement().setFromEuaModel(result)));
 	}
 
 	// Delete
-	remove(id: string): Observable<any> {
-		return this.http.delete(`api/eua/${id}`);
+	remove(id: string): Observable<EndUserAgreement> {
+		return this.http
+			.delete(`api/eua/${id}`)
+			.pipe(map(result => new EndUserAgreement().setFromEuaModel(result)));
 	}
 
-	publish(id: string): Observable<any> {
-		return this.http.post(`api/eua/${id}/publish`, {});
+	publish(id: string): Observable<EndUserAgreement> {
+		return this.http
+			.post(`api/eua/${id}/publish`, {})
+			.pipe(map(result => new EndUserAgreement().setFromEuaModel(result)));
 	}
 }

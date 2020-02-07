@@ -22,13 +22,13 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 
 	ngOnInit() {
 		this.title = 'Edit EUA';
-		this.subtitle = "Make changes to the eua's information";
+		this.subtitle = "Make changes to the EUA's information";
 		this.submitText = 'Save';
 
 		this.route.params.subscribe((params: Params) => {
 			this.id = params[`id`];
-			this.euaService.get(this.id).subscribe((euaRaw: any) => {
-				this.eua = new EndUserAgreement().setFromEuaModel(euaRaw);
+			this.euaService.get(this.id).subscribe(eua => {
+				this.eua = eua;
 			});
 		});
 	}

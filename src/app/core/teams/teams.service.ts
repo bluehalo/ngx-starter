@@ -34,10 +34,6 @@ export class TeamsService {
 		private teamAuthorizationService: TeamAuthorizationService
 	) {}
 
-	// create(team: Team, firstAdmin?: any): Observable<any> {
-	// 	return this.asyHttp.put(new HttpOptions('team', () => { }, { team, firstAdmin }));
-	// }
-
 	create(team: Team, firstAdmin?: string): Observable<any> {
 		return this.http
 			.put(
