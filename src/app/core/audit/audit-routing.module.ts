@@ -8,7 +8,7 @@ import { AuthGuard } from '../auth/auth.guard';
 	imports: [
 		RouterModule.forChild([
 			{
-				path: 'audit',
+				path: '',
 				component: ListAuditEntriesComponent,
 				canActivate: [AuthGuard],
 				data: { roles: ['auditor'] }

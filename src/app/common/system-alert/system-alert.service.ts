@@ -4,7 +4,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SystemAlert } from './system-alert.model';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class SystemAlertService {
 	private id = 0;
 	private defaultType = 'danger';

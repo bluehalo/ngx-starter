@@ -49,6 +49,10 @@ import { AuthGuard } from './auth/auth.guard';
 					roles: [], // no roles are needed to get to the "unauthorized" page
 					requiresEua: false
 				}
+			},
+			{
+				path: 'audit',
+				loadChildren: () => import('./audit/audit.module').then(m => m.AuditModule)
 			}
 		])
 	],
