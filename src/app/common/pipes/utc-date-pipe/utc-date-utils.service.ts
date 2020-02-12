@@ -15,8 +15,6 @@ export class UtcDateUtils {
 					value = +value;
 					momentDate = utc(value);
 				}
-
-				momentDate = utc(value);
 			}
 
 			if (momentDate.isValid()) {

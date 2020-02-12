@@ -5,7 +5,7 @@ import { SocketService } from '../socket.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { SystemAlertService } from '../../common/system-alert.module';
 
 @Injectable()
@@ -25,9 +25,9 @@ export class MessageService {
 		this.initialize();
 	}
 
-	create(message: Message) {
+	create(message: Message): Observable<Message> {
 		return this.http
-			.post('api/admin/message', JSON.stringify(message), { headers: this.headers })
+			.post<Message>('api/admin/message', JSON.stringify(message), { headers: this.headers })
 			.pipe(
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
@@ -36,13 +36,15 @@ export class MessageService {
 			);
 	}
 
-	get(id: string) {
-		return this.http.get(`api/admin/message/${id}`, { headers: this.headers }).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+	get(id: string): Observable<Message> {
+		return this.http
+			.get<Message>(`api/admin/message/${id}`, { headers: this.headers })
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	/**
@@ -59,9 +61,9 @@ export class MessageService {
 			);
 	}
 
-	update(message: Message) {
+	update(message: Message): Observable<Message> {
 		return this.http
-			.post(`api/admin/message/${message._id}`, JSON.stringify(message), {
+			.post<Message>(`api/admin/message/${message._id}`, JSON.stringify(message), {
 				headers: this.headers
 			})
 			.pipe(
@@ -72,13 +74,15 @@ export class MessageService {
 			);
 	}
 
-	remove(id: string) {
-		return this.http.delete(`api/admin/message/${id}`, { headers: this.headers }).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
-				return of(null);
-			})
-		);
+	remove(id: string): Observable<Message> {
+		return this.http
+			.delete<Message>(`api/admin/message/${id}`, { headers: this.headers })
+			.pipe(
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				})
+			);
 	}
 
 	search(

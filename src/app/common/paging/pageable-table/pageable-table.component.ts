@@ -28,11 +28,8 @@ export class PageableTableComponent {
 	@Input() set items(data: Array<any>) {
 		this.itemsInternal = data;
 		if (data) {
-			this.itemsExpanded = data.map(i => false);
+			this.itemsExpanded = Array(data.length).fill(false);
 		}
-	}
-	get items() {
-		return this.itemsInternal;
 	}
 
 	@Output() readonly pageChange = new EventEmitter<PageChange>();

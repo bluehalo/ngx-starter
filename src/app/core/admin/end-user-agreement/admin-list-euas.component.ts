@@ -143,9 +143,7 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 					this.load$.next(true);
 				},
 				(response: HttpErrorResponse) => {
-					if (response.status >= 400 && response.status < 500) {
-						this.alertService.addAlert(response.error.message);
-					}
+					this.alertService.addClientErrorAlert(response);
 				}
 			);
 	}
@@ -157,9 +155,7 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 				this.load$.next(true);
 			},
 			(response: HttpErrorResponse) => {
-				if (response.status >= 400 && response.status < 500) {
-					this.alertService.addAlert(response.error.message);
-				}
+				this.alertService.addClientErrorAlert(response);
 			}
 		);
 		this.load$.next(true);
