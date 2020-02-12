@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../auth/auth.guard';
 
-import { AdminListFeedbackComponent } from './admin/admin-list-feedback.component';
+import { AdminListFeedbackComponent } from '../admin/feedback/admin-list-feedback.component';
 import { AdminComponent } from '../admin/admin.module';
 
 @NgModule({

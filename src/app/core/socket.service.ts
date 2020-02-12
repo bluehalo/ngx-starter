@@ -7,7 +7,9 @@ import { SessionService } from './auth/session.service';
  * Handles sockets for the application
  */
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class SocketService {
 	protected socket: SocketIOClient.Socket;
 

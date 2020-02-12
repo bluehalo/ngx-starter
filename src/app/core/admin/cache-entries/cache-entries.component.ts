@@ -6,7 +6,6 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
-	PagingComponent,
 	PagingOptions,
 	PagingResults,
 	SortDirection,
@@ -19,7 +18,6 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 import { CacheEntry } from './cache-entry.model';
 import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
-import { AdminTopics } from '../admin-topic.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -122,10 +120,3 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 		);
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'cache-entries',
-	title: 'Cache Entries',
-	ordinal: 1,
-	path: 'cacheEntries'
-});

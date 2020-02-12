@@ -8,7 +8,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { AdminModule } from './admin/admin.module';
 import { HelpModule } from './help/help.module';
 import { FeedbackModule } from './feedback/feedback.module';
 
@@ -36,6 +35,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { TeamsModule } from './teams/teams.module';
 import { MessagesModule } from './messages/messages.module';
+import { AdminTopics } from './admin/admin-topic.model';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
@@ -59,7 +59,6 @@ export function getConfiguration(configService: ConfigService) {
 		PopoverModule,
 		TooltipModule,
 
-		AdminModule,
 		HelpModule,
 		FeedbackModule,
 		TeamsModule,
@@ -109,3 +108,39 @@ export { User } from './auth/user.model';
 export { Role } from './auth/role.model';
 export { ConfigService } from './config.service';
 export { NavbarTopics } from './site-navbar/navbar-topic.model';
+export { AdminTopics } from './admin/admin-topic.model';
+
+AdminTopics.registerTopic({
+	id: 'users',
+	title: 'User',
+	ordinal: 0,
+	path: 'users'
+});
+
+AdminTopics.registerTopic({
+	id: 'cache-entries',
+	title: 'Cache Entries',
+	ordinal: 1,
+	path: 'cacheEntries'
+});
+
+AdminTopics.registerTopic({
+	id: 'end-user-agreements',
+	title: 'EUAs',
+	ordinal: 2,
+	path: 'euas'
+});
+
+AdminTopics.registerTopic({
+	id: 'messages',
+	title: 'Messages',
+	ordinal: 3,
+	path: 'messages'
+});
+
+AdminTopics.registerTopic({
+	id: 'feedback',
+	title: 'Feedback',
+	ordinal: 4,
+	path: 'feedback'
+});

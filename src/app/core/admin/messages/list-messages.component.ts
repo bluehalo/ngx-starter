@@ -16,10 +16,9 @@ import {
 } from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ModalService, ModalAction } from 'src/app/common/modal.module';
-import { AdminTopics } from '../../admin/admin.module';
 
-import { Message } from '../message.class';
-import { MessageService } from '../message.service';
+import { Message } from '../../messages/message.class';
+import { MessageService } from '../../messages/message.service';
 
 @Component({
 	templateUrl: './list-messages.component.html'
@@ -120,10 +119,3 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 			);
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'messages',
-	title: 'Messages',
-	ordinal: 3,
-	path: 'messages'
-});

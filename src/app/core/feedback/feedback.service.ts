@@ -8,7 +8,9 @@ import { PagingResults, NULL_PAGING_RESULTS, PagingOptions } from '../../common/
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { Feedback } from './feedback.model';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class FeedbackService {
 	static feedbackTypes: any[] = [
 		{ name: 'General Feedback', prompt: 'Ask a question or make a comment' },

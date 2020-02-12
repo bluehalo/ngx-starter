@@ -12,9 +12,8 @@ import {
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { ExportConfigService } from '../../export-config.service';
-import { AdminTopics } from '../../admin/admin.module';
 
-import { FeedbackService } from '../feedback.service';
+import { FeedbackService } from '../../feedback/feedback.service';
 
 @Component({
 	templateUrl: 'admin-list-feedback.component.html'
@@ -78,10 +77,3 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 		return this.feedbackService.getFeedback(pagingOptions, query, search, {});
 	}
 }
-
-AdminTopics.registerTopic({
-	id: 'feedback',
-	title: 'Feedback',
-	ordinal: 4,
-	path: 'feedback'
-});

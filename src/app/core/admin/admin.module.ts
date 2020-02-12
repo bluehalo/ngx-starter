@@ -2,31 +2,31 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { AdminComponent } from './admin.component';
-import { AdminRoutingModule } from './admin-routing.module';
 import { AdminUserModule } from './user-management/admin-user.module';
 import { AdminEuaModule } from './end-user-agreement/admin-eua.module';
+import { AdminFeedbackModule } from './feedback/admin-feedback.module';
+import { AdminMessagesModule } from './messages/admin-messages.module';
 import { CacheEntriesModule } from './cache-entries/cache-entries.module';
-import { PagingModule } from '../../common/paging.module';
 
-import { AdminTopics } from './admin-topic.model';
+import { AdminComponent } from './admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
 	imports: [
-		AdminRoutingModule,
+		CommonModule,
+		FormsModule,
 
 		// App Admin Modules
 		AdminUserModule,
 		AdminEuaModule,
+		AdminFeedbackModule,
 		CacheEntriesModule,
+		AdminMessagesModule,
 
-		CommonModule,
-		FormsModule,
-		PagingModule
+		AdminRoutingModule
 	],
 	exports: [],
 	declarations: [AdminComponent]
 })
 export class AdminModule {}
-export { AdminTopic, AdminTopics } from './admin-topic.model';
 export { AdminComponent } from './admin.component';
