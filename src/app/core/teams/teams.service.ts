@@ -54,17 +54,7 @@ export class TeamsService {
 
 	get(teamId: string): Observable<Team> {
 		return this.http.get(`api/team/${teamId}`).pipe(
-			map((result: any) =>
-				null != result
-					? new Team(
-							result._id,
-							result.name,
-							result.description,
-							result.created,
-							result.requiresExternalTeams
-					  )
-					: null
-			),
+			map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
 			catchError((error: HttpErrorResponse) => {
 				this.alertService.addClientErrorAlert(error);
 				return of(null);
@@ -76,17 +66,7 @@ export class TeamsService {
 		return this.http
 			.post(`api/team/${id}`, JSON.stringify(updateData), { headers: this.headers })
 			.pipe(
-				map((result: any) =>
-					null != result
-						? new Team(
-								result._id,
-								result.name,
-								result.description,
-								result.created,
-								result.requiresExternalTeams
-						  )
-						: null
-				),
+				map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
@@ -109,12 +89,7 @@ export class TeamsService {
 				map((result: PagingResults) => {
 					if (null != result && Array.isArray(result.elements)) {
 						result.elements = result.elements.map((element: any) =>
-							new Team(
-								element._id,
-								element.name,
-								element.description,
-								element.created
-							).setFromModel(element)
+							new Team().setFromModel(element)
 						);
 					}
 					return result;

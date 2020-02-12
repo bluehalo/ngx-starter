@@ -8,9 +8,12 @@ export class Team {
 		public name?: string,
 		public description?: string,
 		public created?: number,
+		public implicitMembers?: boolean,
+		public requiresExternalRoles?: string[],
 		public requiresExternalTeams?: string[]
 	) {
-		this.requiresExternalTeams = null == requiresExternalTeams ? [] : requiresExternalTeams;
+		this.requiresExternalRoles = requiresExternalRoles || [];
+		this.requiresExternalTeams = requiresExternalTeams || [];
 	}
 
 	setFromModel(model: any): Team {
@@ -19,6 +22,8 @@ export class Team {
 			this.name = model.name;
 			this.description = model.description;
 			this.created = model.created;
+			this.implicitMembers = model.implicitMembers;
+			this.requiresExternalRoles = model.requiresExternalRoles || [];
 			this.requiresExternalTeams = model.requiresExternalTeams || [];
 			this.numResources = model.numResources;
 		}

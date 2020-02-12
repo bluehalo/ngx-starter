@@ -7,6 +7,12 @@ interface BannerConfig {
 	style: string;
 }
 
+interface TeamConfig {
+	implicitMembers: {
+		strategy: string;
+	};
+}
+
 export interface Config {
 	auth: string;
 
@@ -16,4 +22,6 @@ export interface Config {
 
 	banner: BannerConfig;
 	copyright: BannerConfig;
+
+	teams: TeamConfig;
 }
