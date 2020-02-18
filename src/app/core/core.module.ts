@@ -35,7 +35,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { TeamsModule } from './teams/teams.module';
 import { MessagesModule } from './messages/messages.module';
-import { AdminTopics } from './admin/admin-topic.model';
+import { AdminTopics } from '../common/admin/admin-topic.model';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {
@@ -108,7 +108,7 @@ export { User } from './auth/user.model';
 export { Role } from './auth/role.model';
 export { ConfigService } from './config.service';
 export { NavbarTopics } from './site-navbar/navbar-topic.model';
-export { AdminTopics } from './admin/admin-topic.model';
+export { AuditObjectTypes, AuditActionTypes } from './audit/audit.classes';
 
 AdminTopics.registerTopic({
 	id: 'users',

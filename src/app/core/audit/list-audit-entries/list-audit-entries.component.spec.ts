@@ -86,8 +86,6 @@ describe('Audit Component Spec', () => {
 	beforeEach(async () => {
 		auditServiceSpy = jasmine.createSpyObj('AuditService', [
 			'getDistinctAuditValues',
-			'isViewDetailsAction',
-			'isViewChangesAction',
 			'search',
 			'matchUser'
 		]);
@@ -100,8 +98,6 @@ describe('Audit Component Spec', () => {
 				throw new Error('should not get here');
 			}
 		});
-		auditServiceSpy.isViewDetailsAction.and.callThrough();
-		auditServiceSpy.isViewChangesAction.and.callThrough();
 		auditServiceSpy.search.and.returnValue(of(searchResults));
 		auditServiceSpy.matchUser.and.returnValue(of(matchedUsers));
 

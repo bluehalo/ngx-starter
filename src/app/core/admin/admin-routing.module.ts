@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { AdminComponent } from '../../common/admin/admin.component';
+
 import { AdminCreateUserComponent } from './user-management/admin-create-user.component';
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
@@ -10,7 +12,6 @@ import {
 	AdminUpdateEuaComponent
 } from './end-user-agreement/admin-eua.module';
 import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
-import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { AdminListFeedbackComponent } from './feedback/admin-list-feedback.component';
 import { ListMessagesComponent } from './messages/list-messages.component';

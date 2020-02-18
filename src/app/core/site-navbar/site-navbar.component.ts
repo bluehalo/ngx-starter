@@ -7,7 +7,7 @@ import get from 'lodash/get';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { FeedbackModalComponent } from '../feedback/feedback.module';
-import { AdminTopic, AdminTopics } from '../admin/admin-topic.model';
+import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';

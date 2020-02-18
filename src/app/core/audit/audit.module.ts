@@ -70,5 +70,4 @@ import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit
 })
 export class AuditModule {}
 
-export { AuditObjectTypes } from './audit.classes';
 export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';

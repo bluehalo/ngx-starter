@@ -42,32 +42,6 @@ describe('Audit Service', () => {
 		});
 	});
 
-	describe('#isViewDetailsAction', () => {
-		it('should include defaults', () => {
-			expect(service.isViewDetailsAction('create')).toBeTruthy();
-			expect(service.isViewDetailsAction('delete')).toBeTruthy();
-		});
-
-		it('should allow for adding actions', () => {
-			expect(service.isViewDetailsAction('new action')).toBeFalsy();
-			service.addViewDetailsAction('new action');
-			expect(service.isViewDetailsAction('new action')).toBeTruthy();
-		});
-	});
-
-	describe('#isViewChangesAction', () => {
-		it('should include defaults', () => {
-			expect(service.isViewChangesAction('update')).toBeTruthy();
-			expect(service.isViewChangesAction('admin update')).toBeTruthy();
-		});
-
-		it('should allow for adding actions', () => {
-			expect(service.isViewChangesAction('new action')).toBeFalsy();
-			service.addViewChangesAction('new action');
-			expect(service.isViewChangesAction('new action')).toBeTruthy();
-		});
-	});
-
 	describe('#search', () => {
 		it('should call once and return an Observable<PagingResults>', () => {
 			const results = {

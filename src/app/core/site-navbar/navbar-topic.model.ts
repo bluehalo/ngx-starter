@@ -1,4 +1,4 @@
-import { Topic, TopicRegistry } from '../topic.model';
+import { Topic, TopicRegistry } from '../../common/topic.model';
 
 export class NavbarTopic extends Topic {
 	iconClass: string;
