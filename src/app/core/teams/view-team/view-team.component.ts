@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import cloneDeep from 'lodash/cloneDeep';
+import get from 'lodash/get';
 
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
@@ -13,6 +14,8 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
+import { ConfigService } from '../../config.service';
+import { Config } from '../../config.model';
 import { TeamsService } from '../teams.service';
 import { TeamAuthorizationService } from '../team-authorization.service';
 
@@ -25,6 +28,8 @@ export class ViewTeamComponent implements OnInit {
 	team: Team;
 	_team: any;
 
+	implicitMembersStrategy: string = null;
+
 	canManageTeam = false;
 
 	isEditing = false;
@@ -33,6 +38,7 @@ export class ViewTeamComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private modalService: ModalService,
+		private configService: ConfigService,
 		private teamsService: TeamsService,
 		private alertService: SystemAlertService,
 		private authenticationService: AuthenticationService,
@@ -41,6 +47,13 @@ export class ViewTeamComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config: Config) => {
+				this.implicitMembersStrategy = get(config, 'teams.implicitMembers.strategy', null);
+			});
+
 		this.route.data.pipe(map(data => data.team)).subscribe(team => {
 			this.updateTeam(team);
 		});

@@ -60,17 +60,38 @@
 			<textarea rows="3" class="form-control" id="description" name="description" [(ngModel)]="team.description"></textarea>
 		</div>
 
-		<!-- External Groups -->
-		<div class="form-group" [hidden]="!showExternalTeams">
+		<!-- Implicit Teams Members -->
+		<div class="form-group mb-2" *ngIf="implicitMembersStrategy !== null">
+			<p class="mt-4 mb-1">Do you want to automatically grant users access to team based on external {{ implicitMembersStrategy }}?</p>
+			<div class="radio">
+				<input type="radio" name="name-type-option-radio" id="implicit-members-option-yes"
+					   [value]="true" [(ngModel)]="team.implicitMembers">
+				<label for="implicit-members-option-yes" class="mb-2">Yes</label>
+			</div>
+			<div class="radio">
+				<input type="radio" name="name-type-option-radio" id="implicit-members-option-no"
+					   [value]="false" [(ngModel)]="team.implicitMembers">
+				<label for="implicit-members-option-no" class="mb-2">No</label>
+			</div>
+		</div>
+
+		<!-- External Roles -->
+		<div class="form-group" *ngIf="implicitMembersStrategy === 'roles'" [hidden]="!team.implicitMembers">
+			<label>External Roles</label>
+			<asy-multi-select-input placeholder="Start typing a role..." name="externalRoles" [(ngModel)]="team.requiresExternalRoles"></asy-multi-select-input>
+		</div>
+
+		<!-- External Teams -->
+		<div class="form-group" *ngIf="implicitMembersStrategy === 'teams'" [hidden]="!team.implicitMembers">
 			<label>External Teams</label>
-			<asy-multi-select-input placeholder="Enter a team name..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
+			<asy-multi-select-input placeholder="Start typing a team..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
 		</div>
 
 		<div class="form-group">
 			<div class="text-right">
-				<!--&lt;!&ndash;<asy-loading-animation text="" *ngIf="submitting"></asy-loading-animation>&ndash;&gt;-->
-				<button type="button" class="btn btn-link mr-1" routerLink="/teams">Cancel</button>
-				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Create</button>
+				<button type="button" class="btn btn-link" routerLink="/teams">Cancel</button>
+				<button type="submit" class="btn btn-primary btn-submit ml-2" [ngClass]="{'btn-submitting': isSubmitting}"
+						[disabled]="!form.form.valid || isSubmitting">Add</button>
 			</div>
 		</div>
 

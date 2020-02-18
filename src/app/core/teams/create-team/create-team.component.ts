@@ -7,12 +7,15 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { Observable } from 'rxjs';
 import { first, map, mergeMap, tap } from 'rxjs/operators';
 
+import get from 'lodash/get';
+
 import { PagingResults, PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { ConfigService } from '../../config.service';
+import { Config } from '../../config.model';
 
 import { SessionService } from '../../auth/session.service';
 import { AuthorizationService } from '../../auth/authorization.service';
@@ -28,7 +31,7 @@ import { TeamsService } from '../teams.service';
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();
 
-	showExternalTeams = false;
+	implicitMembersStrategy: string = null;
 
 	isAdmin = false;
 
@@ -40,7 +43,7 @@ export class CreateTeamComponent implements OnInit {
 
 	searchUsersRef: Observable<any>;
 
-	submitting = false;
+	isSubmitting = false;
 
 	private user: User;
 
@@ -65,11 +68,8 @@ export class CreateTeamComponent implements OnInit {
 		this.configService
 			.getConfig()
 			.pipe(first())
-			.subscribe((config: any) => {
-				// Need to show external groups when in proxy-pki mode
-				if (config.auth === 'proxy-pki') {
-					this.showExternalTeams = this.isAdmin;
-				}
+			.subscribe((config: Config) => {
+				this.implicitMembersStrategy = get(config, 'teams.implicitMembers.strategy', null);
 			});
 
 		this.sessionService.getSession().subscribe(session => {
@@ -106,7 +106,7 @@ export class CreateTeamComponent implements OnInit {
 	}
 
 	save() {
-		this.submitting = true;
+		this.isSubmitting = true;
 		this.teamsService
 			.create(
 				this.team,
@@ -120,7 +120,7 @@ export class CreateTeamComponent implements OnInit {
 					return this.router.navigate(['/teams', { clearCachedFilter: true }]);
 				},
 				(error: HttpErrorResponse) => {
-					this.submitting = false;
+					this.isSubmitting = false;
 					this.alertService.addClientErrorAlert(error);
 				}
 			);

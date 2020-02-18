@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="cards row">
-			<div class="col-xl-8 mb-3">
+			<div class="col-xl-7 mb-3">
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
 						<h2>Members</h2>
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 
-			<div class="col-xl-4">
+			<div class="col-xl-5">
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
 						<h2>Settings
@@ -63,6 +63,14 @@
 			<td>Description</td>
 			<td><span>{{ team.description }}</span></td>
 		</tr>
+		<tr *ngIf="team.implicitMembers && implicitMembersStrategy === 'roles' && team.requiresExternalRoles?.length > 0">
+			<td>External Roles</td>
+			<td><span>{{ team.requiresExternalRoles | join: ', ' }}</span></td>
+		</tr>
+		<tr *ngIf="team.implicitMembers && implicitMembersStrategy === 'teams' && team.requiresExternalTeams?.length > 0">
+			<td>External Teams</td>
+			<td><span>{{ team.requiresExternalTeams | join: ', ' }}</span></td>
+		</tr>
 		</tbody>
 	</table>
 </ng-template>
@@ -90,6 +98,20 @@
 					<textarea class="form-control" placeholder="Enter description" name="description"
 							  [(ngModel)]="_team.description">
 					</textarea>
+				</td>
+			</tr>
+			<tr *ngIf="team.implicitMembers && implicitMembersStrategy === 'roles'">
+				<td>External Roles</td>
+				<td>
+					<asy-multi-select-input placeholder="Start typing a role..." name="externalRoles"
+											[(ngModel)]="_team.requiresExternalRoles"></asy-multi-select-input>
+				</td>
+			</tr>
+			<tr *ngIf="team.implicitMembers && implicitMembersStrategy === 'teams'">
+				<td>External Teams</td>
+				<td>
+					<asy-multi-select-input placeholder="Start typing a team..." name="externalTeams"
+											[(ngModel)]="_team.requiresExternalTeams"></asy-multi-select-input>
 				</td>
 			</tr>
 			</tbody>
