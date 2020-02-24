@@ -11,9 +11,11 @@ import { WelcomeComponent } from './welcome.component';
 import { ExampleHelpComponent } from './help/example-help.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
+import { AdminExampleComponent } from './admin/admin-example.component';
+import { AdminModule } from '../../common/admin.module';
 
 @NgModule({
-	imports: [ExampleRoutingModule, NgSelectModule],
+	imports: [AdminModule, ExampleRoutingModule, NgSelectModule],
 	entryComponents: [ExampleHelpComponent],
 	exports: [],
 	declarations: [
@@ -22,7 +24,8 @@ import { GridComponent } from './grid/grid.component';
 		WelcomeComponent,
 		ExampleHelpComponent,
 		FormsComponent,
-		GridComponent
+		GridComponent,
+		AdminExampleComponent
 	],
 	providers: [AuthGuard]
 })

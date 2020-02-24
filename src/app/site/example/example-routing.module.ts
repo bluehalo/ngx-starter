@@ -7,6 +7,8 @@ import { FormsComponent } from './forms/forms.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 import { GridComponent } from './grid/grid.component';
+import { AdminExampleComponent } from './admin/admin-example.component';
+import { AdminComponent } from '../../common/admin.module';
 
 @NgModule({
 	imports: [
@@ -40,6 +42,18 @@ import { GridComponent } from './grid/grid.component';
 				path: 'grid',
 				component: GridComponent,
 				canActivate: [AuthGuard]
+			},
+			{
+				path: 'admin',
+				component: AdminComponent,
+				canActivate: [AuthGuard],
+				data: { roles: ['admin'] },
+				children: [
+					{
+						path: 'example',
+						component: AdminExampleComponent
+					}
+				]
 			}
 		])
 	],

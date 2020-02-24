@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminListFeedbackComponent } from './admin-list-feedback.component';
-import { FeedbackModalComponent } from '../../feedback/feedback.module';
 import { PagingModule } from '../../../common/paging.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SearchInputModule } from '../../../common/search-input.module';
@@ -20,7 +19,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 		SystemAlertModule
 	],
 	exports: [AdminListFeedbackComponent],
-	entryComponents: [AdminListFeedbackComponent, FeedbackModalComponent],
+	entryComponents: [AdminListFeedbackComponent],
 	declarations: [AdminListFeedbackComponent]
 })
 export class AdminFeedbackModule {}
