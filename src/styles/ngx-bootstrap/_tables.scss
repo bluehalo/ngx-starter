@@ -24,6 +24,10 @@
 	}
 }
 
+.card-body.editing {
+	padding-bottom: 0;
+}
+
 .table-inline-editable,
 .table-inline-edit {
 	table-layout: fixed;
@@ -79,12 +83,4 @@
 	position: sticky;
 	width: calc(100% + #{$card-spacer-x} * 2);
 	z-index: $zindex-sticky;
-}
-
-.card-body.editing {
-	padding-bottom: 0;
-
-	.table-inline-edit:last-of-type {
-		margin-bottom: 0;
-	}
 }
