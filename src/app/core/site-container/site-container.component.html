@@ -42,4 +42,6 @@
 
 </footer>
 
-<app-feedback-flyout *ngIf="showFeedbackFlyout"></app-feedback-flyout>
+<ng-container *isAuthenticated>
+	<app-feedback-flyout *ngIf="showFeedbackFlyout"></app-feedback-flyout>
+</ng-container>
