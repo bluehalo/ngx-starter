@@ -225,9 +225,8 @@
 		<li class="element "
 				(click)="toggleNavbar()">
 			<a>
-				<span class="fa fa-fw"
-				   [class.fa-angle-double-right]="!navbarOpen"
-				   [class.fa-angle-double-left]="navbarOpen"></span>
+				<span class="fa fa-fw fa-angle-double-right"
+				   [class.fa-flip-horizontal]="navbarOpen"></span>
 				<span [hidden]="!navbarOpen">Collapse</span>
 			</a>
 		</li>

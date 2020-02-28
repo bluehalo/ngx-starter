@@ -83,10 +83,6 @@
 				}
 			}
 		}
-
-		&:first-child {
-			margin-top: $nav-element-padding;
-		}
 	}
 
 	// A divider element
@@ -100,18 +96,17 @@
 		width: $nav-closed-width - 2 * $nav-element-divider-margin;
 	}
 
-	.element-divider-collapse {
-		margin-top: $nav-element-padding;
-	}
-
 	// The element that contains the logo
 	.element-logo {
 		padding: 0;
 
-		> a,
-		> a:hover {
+		> a {
 			background-color: $nav-element-logo-color-bg;
 			padding: 0;
+
+			&:hover {
+				background-color: $nav-element-logo-hover-color-bg;
+			}
 
 			> img {
 				margin: $nav-element-logo-img-margin;
