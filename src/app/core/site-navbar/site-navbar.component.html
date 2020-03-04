@@ -41,7 +41,7 @@
 
 			<!-- Team Nav   -->
 			<li class="element nav-popover nav-popover-bottom"
-				*isAuthenticated>
+				*hasRole="'user'">
 				<a [ngClass]="{'highlight-link': teamNavOpen}"
 				   [popover]="teamNav"
 				   container="body"
@@ -148,7 +148,7 @@
 
 			<!-- Messages Nav   -->
 			<li class="element nav-popover nav-popover-bottom"
-				*isAuthenticated>
+				*hasRole="'user'">
 				<a [ngClass]="{'highlight-link': messagesNavOpen}"
 				   [popover]="messagesNav"
 				   container="body"
@@ -199,8 +199,10 @@
 						</li>
 
 						<!-- Feedback -->
-						<li *ngIf="showFeedbackOption"><a class="link"
-							(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
+						<ng-container *isAuthenticated>
+							<li *ngIf="showFeedbackOption"><a class="link"
+								(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
+						</ng-container>
 
 						<!-- About -->
 						<li>

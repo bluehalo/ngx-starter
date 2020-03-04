@@ -12,6 +12,7 @@ import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
 import { MessageService } from '../messages/message.service';
+import { AuthorizationService } from '../auth/authorization.service';
 
 @Component({
 	selector: 'site-navbar',
@@ -59,13 +60,17 @@ export class SiteNavbarComponent implements OnInit {
 		private modalService: BsModalService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
+		private authorizationService: AuthorizationService,
 		private messageService: MessageService
 	) {}
 
 	ngOnInit() {
 		this.sessionService.getSession().subscribe(session => {
 			this.session = session;
-			this.messageService.updateNewMessageIndicator();
+
+			if (this.authorizationService.isUser()) {
+				this.messageService.updateNewMessageIndicator();
+			}
 		});
 
 		this.configService.getConfig().subscribe((config: Config) => {
