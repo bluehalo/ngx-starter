@@ -19,7 +19,6 @@ import { Config } from '../../config.model';
 
 import { SessionService } from '../../auth/session.service';
 import { AuthorizationService } from '../../auth/authorization.service';
-import { AdminUsersService } from '../../admin/user-management/admin-users.service';
 
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -55,7 +54,6 @@ export class CreateTeamComponent implements OnInit {
 		private location: Location,
 		private configService: ConfigService,
 		private teamsService: TeamsService,
-		private userService: AdminUsersService,
 		private sessionService: SessionService,
 		private authenticationService: AuthenticationService,
 		private authorizationService: AuthorizationService,
@@ -84,7 +82,7 @@ export class CreateTeamComponent implements OnInit {
 				observer.next(this.queryUserSearchTerm);
 			}).pipe(
 				mergeMap((token: string) =>
-					this.userService.search({}, token, this.pagingOptions, {})
+					this.teamsService.searchUsers({}, token, this.pagingOptions, {}, true)
 				),
 				map((result: PagingResults) => {
 					return result.elements
