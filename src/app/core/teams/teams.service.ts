@@ -173,10 +173,12 @@ export class TeamsService {
 		query: any,
 		search: string,
 		paging: PagingOptions,
-		options: any
+		options: any,
+		admin = false
 	): Observable<PagingResults> {
+		const url = admin ? 'api/admin/users' : 'api/users';
 		return this.http
-			.post('api/users', { q: query, s: search, options }, { params: paging.toObj() })
+			.post(url, { q: query, s: search, options }, { params: paging.toObj() })
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && isArray(results.elements)) {
@@ -185,6 +187,10 @@ export class TeamsService {
 						);
 					}
 					return results;
+				}),
+				catchError(error => {
+					this.alertService.addClientErrorAlert(error);
+					return of(NULL_PAGING_RESULTS);
 				})
 			);
 	}
