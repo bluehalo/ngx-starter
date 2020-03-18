@@ -18,7 +18,7 @@
 						<span class="fa fa-lg fa-close ml-auto" style="cursor: pointer"
 							  (click)="dismissMessage(message)"></span>
 					</div>
-					<p class="card-text text-truncate">{{ message.body | slice:0:100 }}</p>
+					<p class="card-text text-truncate" [innerHTML]="message.body"></p>
 				</div>
 			</div>
 		</div>

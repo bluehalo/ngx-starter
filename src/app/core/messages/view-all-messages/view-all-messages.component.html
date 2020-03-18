@@ -1,7 +1,7 @@
 <section>
-	<h2 class="mb-3">
+	<h1 class="mb-3">
 		Notifications
-	</h2>
+	</h1>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
@@ -34,7 +34,7 @@
 									<h3 class="card-title">{{ message.title | titlecase }}</h3>
 									<span class="ml-auto">{{ message.created | agoDate }}</span>
 								</div>
-								<p class="mb-0">{{message.body}}</p>
+								<p class="mb-0" [innerHTML]="message.body"></p>
 							</div>
 						</div>
 					</div>
