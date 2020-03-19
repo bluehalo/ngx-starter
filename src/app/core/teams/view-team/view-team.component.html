@@ -77,11 +77,12 @@
 
 <ng-template #fieldsForEditing>
 	<form id="edit-team-form" #editTeamForm="ngForm">
-		<span class="inline-edit-header-btns float-right" style="margin-top: -4.5rem">
-			<button type="button" (click)="cancelEdit()" class="btn btn-outline-secondary">Cancel</button>
+		<div class="inline-edit-header-btns" style="margin: -4.5rem 0 2.125rem">
+			<button type="button" (click)="cancelEdit()" class="btn btn-outline-secondary ml-auto">Cancel</button>
 			<button [disabled]="!editTeamForm.form.valid" type="button" (click)="saveEdit()"
 					class="btn btn-primary ml-2">Save</button>
-		</span>
+		</div>
+
 		<h3>Basic Information</h3>
 		<table class="table table-striped table-inline-edit">
 			<tbody>

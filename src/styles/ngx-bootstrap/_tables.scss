@@ -67,6 +67,10 @@
 	}
 }
 
+.inline-edit-header-btns {
+	display: flex;
+}
+
 @supports (position: sticky) {
 	.inline-edit-header-btns {
 		display: none;
