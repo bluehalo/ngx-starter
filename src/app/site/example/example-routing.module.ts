@@ -9,6 +9,7 @@ import { WelcomeComponent } from './welcome.component';
 import { GridComponent } from './grid/grid.component';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AdminComponent } from '../../common/admin.module';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
 	imports: [
@@ -41,6 +42,11 @@ import { AdminComponent } from '../../common/admin.module';
 			{
 				path: 'grid',
 				component: GridComponent,
+				canActivate: [AuthGuard]
+			},
+			{
+				path: 'modal',
+				component: ModalComponent,
 				canActivate: [AuthGuard]
 			},
 			{

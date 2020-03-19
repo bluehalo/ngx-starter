@@ -131,10 +131,8 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 			)
 			.pipe(
 				first(),
-				filter((action: ModalAction) => action === ModalAction.OK),
-				switchMap(() => {
-					return this.euaService.remove(id);
-				})
+				filter(action => action === ModalAction.OK),
+				switchMap(() => this.euaService.remove(id))
 			)
 			.subscribe(
 				() => {

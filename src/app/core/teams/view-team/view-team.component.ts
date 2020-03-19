@@ -98,7 +98,7 @@ export class ViewTeamComponent implements OnInit {
 			)
 			.pipe(
 				first(),
-				filter((action: ModalAction) => action === ModalAction.OK),
+				filter(action => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(this.team._id)),
 				tap(() => this.authenticationService.reloadCurrentUser()),
 				catchError((error: HttpErrorResponse) => {

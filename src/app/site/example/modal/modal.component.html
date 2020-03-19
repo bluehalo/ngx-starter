@@ -1,0 +1,108 @@
+<form style="max-width: 800px;">
+	<h1 class="pb-3">Common Modal Module Examples</h1>
+
+	<h2>Alert</h2>
+	<div class="row">
+		<div class="form-group col-6">
+			<label for="alertTitle" class="form-required">Title</label>
+			<input type="text" class="form-control" name="alertTitle" id="alertTitle"
+				   placeholder="Enter title..." [(ngModel)]="alertConfig.title">
+		</div>
+		<div class="form-group col-6">
+			<label for="alertOK">OK Text</label>
+			<input type="text" class="form-control" name="alertOK" id="alertOK"
+				   placeholder="Enter OK text..." [(ngModel)]="alertConfig.okText">
+		</div>
+		<div class="form-group col-12">
+			<label for="alertMessage" class="form-required">Message</label>
+			<input type="text" class="form-control" name="alertMessage" id="alertMessage"
+				   placeholder="Enter message..." [(ngModel)]="alertConfig.message">
+		</div>
+	</div>
+	<button type="button" class="mr-3 btn btn-primary" (click)="showAlert()">Show Alert</button>
+
+	<h2 class="pt-5">Confirm</h2>
+	<div class="row">
+		<div class="form-group col-4">
+			<label for="confirmTitle" class="form-required">Title</label>
+			<input type="text" class="form-control" name="confirmTitle" id="confirmTitle"
+				   placeholder="Enter title..." [(ngModel)]="confirmConfig.title">
+		</div>
+		<div class="form-group col-4">
+			<label for="confirmOK" class="form-required">OK Text</label>
+			<input type="text" class="form-control" name="confirmOK" id="confirmOK"
+				   placeholder="Enter OK text..." [(ngModel)]="confirmConfig.okText">
+		</div>
+		<div class="form-group col-4">
+			<label for="confirmCancel" class="form-required">Cancel Text</label>
+			<input type="text" class="form-control" name="confirmCancel" id="confirmCancel"
+				   placeholder="Enter Cancel text..." [(ngModel)]="confirmConfig.cancelText">
+		</div>
+		<div class="form-group col-12">
+			<label for="confirmMessage" class="form-required">Message</label>
+			<input type="text" class="form-control" name="confirmMessage" id="confirmMessage"
+				   placeholder="Enter message..." [(ngModel)]="confirmConfig.message">
+		</div>
+	</div>
+	<button type="button" class="mr-3 btn btn-primary" (click)="showConfirm()">Show Confirm</button>
+
+	<h2 class="pt-5">Prompt</h2>
+	<div class="row">
+		<div class="form-group col-6">
+			<label for="promptTitle" class="form-required">Title</label>
+			<input type="text" class="form-control" name="promptTitle" id="promptTitle"
+				   placeholder="Enter title..." [(ngModel)]="promptConfig.title">
+		</div>
+		<div class="form-group col-6">
+			<label for="promptLabel" class="form-required">Input Label</label>
+			<input type="text" class="form-control" name="promptLabel" id="promptLabel"
+				   placeholder="Enter input label..." [(ngModel)]="promptConfig.inputLabel">
+		</div>
+		<div class="form-group col-6">
+			<label for="promptOK" class="form-required">OK Text</label>
+			<input type="text" class="form-control" name="promptOK" id="promptOK"
+				   placeholder="Enter OK text..." [(ngModel)]="promptConfig.okText">
+		</div>
+		<div class="form-group col-6">
+			<label for="promptCancel" class="form-required">Cancel Text</label>
+			<input type="text" class="form-control" name="promptCancel" id="promptCancel"
+				   placeholder="Enter Cancel text..." [(ngModel)]="promptConfig.cancelText">
+		</div>
+		<div class="form-group col-12">
+			<label for="promptMessage" class="form-required">Message</label>
+			<input type="text" class="form-control" name="promptMessage" id="promptMessage"
+				   placeholder="Enter message..." [(ngModel)]="promptConfig.message">
+		</div>
+	</div>
+	<button type="button" class="mr-3 btn btn-primary" (click)="showPrompt()">Show Prompt</button>
+
+	<h2 class="pt-5">Show</h2>
+	<div class="row">
+		<div class="form-group col-6">
+			<label for="showTitle" class="form-required">Title</label>
+			<input type="text" class="form-control" name="showTitle" id="showTitle"
+				   placeholder="Enter title..." [(ngModel)]="showConfig.title">
+		</div>
+		<div class="form-group col-6">
+			<label for="showOK" class="form-required">OK Text</label>
+			<input type="text" class="form-control" name="showOK" id="showOK"
+				   placeholder="Enter OK text..." [(ngModel)]="showConfig.okText">
+		</div>
+		<div class="form-group col-6">
+			<label for="showCancel" class="form-required">Cancel Text</label>
+			<input type="text" class="form-control" name="showCancel" id="showCancel"
+				   placeholder="Enter Cancel text..." [(ngModel)]="showConfig.cancelText">
+		</div>
+		<div class="form-group col-12">
+			<label for="showMessage" class="form-required">Message</label>
+			<input type="text" class="form-control" name="showMessage" id="showMessage"
+				   placeholder="Enter message..." [(ngModel)]="showConfig.message">
+		</div>
+		<div class="form-group col-12">
+			<label for="showInput" class="form-required">Inputs Config</label>
+			<textarea type="text" class="form-control" name="showInput" id="showInput" style="height: 6.5rem"
+					  placeholder="Enter input config..." [(ngModel)]="showInputConfig"></textarea>
+		</div>
+	</div>
+	<button type="button" class="mr-3 btn btn-primary" (click)="showModal()">Show Modal</button>
+</form>
