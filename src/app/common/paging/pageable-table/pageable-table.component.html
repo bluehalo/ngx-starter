@@ -1,23 +1,23 @@
 <div class="table" [ngClass]="{'card p-3': showInCard}">
-	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions" [hidden]="itemsInternal?.length === 0">
-		<div class="table-actions d-flex flex-grow-1" *ngIf="showActions">
+	<div class="table-header align-items-center mb-3" *ngIf="pagerAtTop || showActions">
+		<div class="table-actions d-flex flex-grow-1" *ngIf="showActions" [hidden]="itemsInternal?.length === 0 && hideActionsNoData">
 			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
 		</div>
 
-		<div class="table-header-pager" *ngIf="pagerAtTop" [ngClass]="{'ml-auto': !showActions}">
+		<div class="table-header-pager" *ngIf="pagerAtTop" [ngClass]="{'ml-auto': !showActions}" [hidden]="itemsInternal?.length === 0">
 			<asy-pager
-				[pageNumber]="pagingOptions?.pageNumber"
-				[pageSize]="pagingOptions?.pageSize"
-				[totalSize]="pagingOptions?.totalSize"
-				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="itemsInternal?.length"
-				[disableGoToEnd]="disableGoToEnd"
-				(pageChange)="pageChange.emit($event)">
+					[pageNumber]="pagingOptions?.pageNumber"
+					[pageSize]="pagingOptions?.pageSize"
+					[totalSize]="pagingOptions?.totalSize"
+					[maxPageSize]="pagingOptions?.pageSize"
+					[currentSize]="itemsInternal?.length"
+					[disableGoToEnd]="disableGoToEnd"
+					(pageChange)="pageChange.emit($event)">
 			</asy-pager>
 		</div>
 	</div>
 
-	<div class="table-content table-responsive" [hidden]="hideTableToData && itemsInternal?.length === 0">
+	<div class="table-content table-responsive" [hidden]="hideTableNoData && itemsInternal?.length === 0">
 		<!-- Actual Results -->
 		<table class="table" [ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}">
 			<thead>
@@ -61,13 +61,13 @@
 
 		<div class="table-footer-pager" *ngIf="pagerAtBottom" [ngClass]="{'ml-auto': !showFooterActions}">
 			<asy-pager
-				[pageNumber]="pagingOptions?.pageNumber"
-				[pageSize]="pagingOptions?.pageSize"
-				[totalSize]="pagingOptions?.totalSize"
-				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="itemsInternal?.length"
-				[disableGoToEnd]="disableGoToEnd"
-				(pageChange)="pageChange.emit($event)">
+					[pageNumber]="pagingOptions?.pageNumber"
+					[pageSize]="pagingOptions?.pageSize"
+					[totalSize]="pagingOptions?.totalSize"
+					[maxPageSize]="pagingOptions?.pageSize"
+					[currentSize]="itemsInternal?.length"
+					[disableGoToEnd]="disableGoToEnd"
+					(pageChange)="pageChange.emit($event)">
 			</asy-pager>
 		</div>
 	</div>

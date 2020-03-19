@@ -6,3 +6,7 @@
 .table-row-expanded ::ng-deep td {
 	border-top: none;
 }
+
+[hidden] {
+	display: none !important;
+}
