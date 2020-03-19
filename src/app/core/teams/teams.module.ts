@@ -7,6 +7,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+import { ModalModule, ModalService } from '../../common/modal.module';
 import { MultiSelectInputModule } from '../../common/multi-select-input.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
 import { PagingModule } from '../../common/paging.module';
@@ -41,6 +42,7 @@ import { TeamsRoutingModule } from './teams-routing.module';
 		SystemAlertModule,
 		PagingModule,
 		SearchInputModule,
+		ModalModule,
 
 		TeamsRoutingModule
 	],
@@ -53,6 +55,6 @@ import { TeamsRoutingModule } from './teams-routing.module';
 		ViewTeamComponent,
 		TeamsHelpComponent
 	],
-	providers: [TeamAuthorizationService, TeamsService, TeamsResolve]
+	providers: [TeamAuthorizationService, TeamsService, TeamsResolve, ModalService]
 })
 export class TeamsModule {}
