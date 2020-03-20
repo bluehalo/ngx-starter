@@ -9,15 +9,19 @@
 
 	<!-- Search Input -->
 	<div class="pt-2">
-		<div class="d-flex mb-3">
-			<asy-search-input placeholder="Search key and value..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-		</div>
 
 		<pageable-table [items]="items"
 						[hasItems]="hasItems"
 						[pagingOptions]="pagingOptions"
+						[showActions]="true"
 						[tableStriped]="true"
 						(pageChange)="pageEvent$.next($event)">
+
+			<ng-template #tableActions>
+				<div class="d-flex w-100">
+					<asy-search-input placeholder="Search key and value..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				</div>
+			</ng-template>
 
 			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">

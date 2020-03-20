@@ -54,12 +54,12 @@
 		<ng-container *ngTemplateOutlet="noDataTableTemplate"></ng-container>
 	</div>
 
-	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions" [hidden]="itemsInternal?.length === 0">
-		<div class="table-actions d-flex flex-grow-1" *ngIf="showFooterActions">
+	<div class="table-footer align-items-center" *ngIf="pagerAtBottom || showFooterActions">
+		<div class="table-actions d-flex flex-grow-1" *ngIf="showFooterActions" [hidden]="itemsInternal?.length === 0 && hideFooterActionsNoData">
 			<ng-container *ngTemplateOutlet="footerActionTemplate"></ng-container>
 		</div>
 
-		<div class="table-footer-pager" *ngIf="pagerAtBottom" [ngClass]="{'ml-auto': !showFooterActions}">
+		<div class="table-footer-pager" *ngIf="pagerAtBottom" [ngClass]="{'ml-auto': !showFooterActions}" [hidden]="itemsInternal?.length === 0">
 			<asy-pager
 					[pageNumber]="pagingOptions?.pageNumber"
 					[pageSize]="pagingOptions?.pageSize"
