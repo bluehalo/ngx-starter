@@ -14,8 +14,10 @@ export class PageableTableComponent {
 	@Input() loading = false;
 	@Input() showInCard = false;
 	@Input() showActions = false;
+	@Input() hideActionsNoData = false;
 	@Input() showFooterActions = false;
-	@Input() hideTableToData = false;
+	@Input() hideFooterActionsNoData = false;
+	@Input() hideTableNoData = false;
 	@Input() disableGoToEnd = false;
 	@Input() pagerAtTop = false;
 	@Input() pagerAtBottom = true;

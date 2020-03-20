@@ -9,22 +9,25 @@
 	<system-alert></system-alert>
 
 	<div class="pt-2">
-		<div class="d-flex mb-3">
-			<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-			<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
-				<span class="fa fa-plus"></span> Create Message
-			</button>
-		</div>
 		<pageable-table [items]="items"
 						[hasItems]="hasItems"
 						[pagingOptions]="pagingOptions"
+						[showActions]="true"
 						[tableStriped]="true"
 						(pageChange)="pageEvent$.next($event)">
+
+			<ng-template #tableActions>
+				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
+					<span class="fa fa-plus"></span> Create Message
+				</button>
+			</ng-template>
 
 			<ng-template #tableHeader>
 				<th *ngFor="let header of headers">
 					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField"
-						[currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+										   [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)">
+					</sortable-table-header>
 				</th>
 				<th>&nbsp;</th>
 			</ng-template>

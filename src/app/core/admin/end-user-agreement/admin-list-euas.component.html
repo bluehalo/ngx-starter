@@ -13,18 +13,19 @@
 			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
 		</div>
 		<div class="col-md-10">
-			<div class="d-flex mb-3">
-				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-				<button [routerLink]="['/admin/eua']" type="button" class="btn btn-primary ml-auto">
-					<span class="fa fa-plus"></span> Create EUA
-				</button>
-			</div>
-
 			<pageable-table [items]="items"
 							[hasItems]="hasItems"
 							[pagingOptions]="pagingOptions"
+							[showActions]="true"
 							[tableStriped]="true"
 							(pageChange)="pageEvent$.next($event)">
+
+				<ng-template #tableActions>
+					<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+					<button [routerLink]="['/admin/eua']" type="button" class="btn btn-primary ml-auto">
+						<span class="fa fa-plus"></span> Create EUA
+					</button>
+				</ng-template>
 
 				<ng-template #tableHeader>
 					<th *ngFor="let header of headersToShow">
@@ -37,7 +38,7 @@
 					<td [hidden]="!columns._id.show">{{eua.euaModel._id}}</td>
 					<td [hidden]="!columns.title.show">
 						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.title}}</div>
-						</td>
+					</td>
 					<td [hidden]="!columns.text.show">
 						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.text}}</div>
 					</td>
