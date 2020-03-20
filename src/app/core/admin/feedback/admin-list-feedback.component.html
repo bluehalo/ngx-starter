@@ -15,12 +15,10 @@
 						(pageChange)="pageEvent$.next($event)">
 
 			<ng-template #tableActions>
-				<div class="d-flex w-100">
-					<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-					<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
-						<span class="fa fa-download"></span> Export
-					</button>
-				</div>
+				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
+					<span class="fa fa-download"></span> Export
+				</button>
 			</ng-template>
 
 			<ng-template #tableHeader>

@@ -17,12 +17,10 @@
 						(pageChange)="pageEvent$.next($event)">
 
 			<ng-template #tableActions>
-				<div class="d-flex w-100">
-					<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-					<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
-						<span class="fa fa-plus"></span> Create Message
-					</button>
-				</div>
+				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				<button [routerLink]="['/admin/message/']" type="button" class="btn btn-primary ml-auto">
+					<span class="fa fa-plus"></span> Create Message
+				</button>
 			</ng-template>
 
 			<ng-template #tableHeader>
