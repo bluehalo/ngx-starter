@@ -137,7 +137,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 			)
 			.pipe(
 				first(),
-				filter((action: ModalAction) => action === ModalAction.OK),
+				filter(action => action === ModalAction.OK),
 				switchMap(() =>
 					this.teamsService.removeMember(this.team._id, member.userModel._id)
 				),
@@ -170,7 +170,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 				)
 				.pipe(
 					first(),
-					filter((action: ModalAction) => action === ModalAction.OK),
+					filter(action => action === ModalAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
 					tap(() => this.authenticationService.reloadCurrentUser()),
 					catchError((error: HttpErrorResponse) => {

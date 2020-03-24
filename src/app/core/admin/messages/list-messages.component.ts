@@ -103,10 +103,8 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 			)
 			.pipe(
 				first(),
-				filter((action: ModalAction) => action === ModalAction.OK),
-				switchMap(() => {
-					return this.messageService.remove(id);
-				})
+				filter(action => action === ModalAction.OK),
+				switchMap(() => this.messageService.remove(id))
 			)
 			.subscribe(
 				() => {

@@ -79,10 +79,8 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 			)
 			.pipe(
 				first(),
-				filter((action: ModalAction) => action === ModalAction.OK),
-				switchMap(() => {
-					return this.cacheEntriesService.remove(cacheEntry.key);
-				})
+				filter(action => action === ModalAction.OK),
+				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key))
 			)
 			.subscribe(
 				() => {

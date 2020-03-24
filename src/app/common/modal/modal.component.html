@@ -1,8 +1,34 @@
-<div class="modal-header">
-	<h2 class="modal-title">{{ title }}</h2>
-</div>
-<div class="modal-body word-wrap" [innerHtml]="message"></div>
-<div class="modal-footer">
+<section class="modal-header">
+	<h2 class="modal-title">
+		{{ title }}
+	</h2>
+</section>
+
+<section class="modal-body max-window-height-overflow">
+	<p *ngIf="message" [innerHTML]="message"></p>
+	<form id="modalForm" #modalForm="ngForm">
+		<div class="form-group" *ngFor="let input of inputs">
+			<label [class.form-required]="input.required">{{ input.label }}</label>
+
+			<textarea class="form-control" *ngIf="input.type === 'textarea'"
+					  placeholder="Enter {{ input.label }}..."
+					  [name]="input.key"
+					  [required]="input.required"
+					  [(ngModel)]="formData[input.key]"
+					  style="height: 4.5em;">
+            </textarea>
+
+			<input class="form-control" *ngIf="input.type !== 'textarea'"
+				   placeholder="Enter {{ input.label | lowercase }}..."
+				   [type]="input.type"
+				   [name]="input.key"
+				   [required]="input.required"
+				   [(ngModel)]="formData[input.key]" />
+		</div>
+	</form>
+</section>
+
+<section class="modal-footer">
 	<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">{{ cancelText }}</button>
-	<button class="btn btn-primary" (click)="ok()">{{ okText }}</button>
-</div>
+	<button class="btn btn-primary" (click)="ok()" [disabled]="!modalForm.form.valid">{{ okText }}</button>
+</section>
