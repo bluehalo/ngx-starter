@@ -38,8 +38,8 @@
     "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.21",
-    "@angular/cli": "8.3.21",
+    "@angular-devkit/build-angular": "~0.803.25",
+    "@angular/cli": "8.3.25",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
     "@types/jasmine": "2.8",
