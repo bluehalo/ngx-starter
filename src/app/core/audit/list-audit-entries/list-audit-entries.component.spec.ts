@@ -129,16 +129,7 @@ describe('Audit Component Spec', () => {
 				SystemAlertService
 			]
 		}).overrideModule(BrowserDynamicTestingModule, {
-			set: {
-				entryComponents: [
-					AuditObjectComponent,
-					UrlAuditObjectComponent,
-					DefaultAuditObjectComponent,
-					ExportAuditObjectComponent,
-					UserAuditObjectComponent,
-					UserAuthenticationObjectComponent
-				]
-			}
+			set: {}
 		});
 
 		fixture = TestBed.createComponent(ListAuditEntriesComponent);

@@ -23,7 +23,6 @@ import { GettingStartedHelpComponent } from './getting-started/getting-started-h
 		RouterModule
 	],
 	exports: [],
-	entryComponents: [GettingStartedHelpComponent],
 	declarations: [
 		ExternalLinksComponent,
 		GettingStartedHelpComponent,
