@@ -20,8 +20,8 @@ describe('Audit Service', () => {
 		});
 
 		injector = getTestBed();
-		service = injector.get(AuditService);
-		httpMock = injector.get(HttpTestingController);
+		service = injector.inject(AuditService);
+		httpMock = injector.inject(HttpTestingController);
 	});
 
 	afterEach(() => {

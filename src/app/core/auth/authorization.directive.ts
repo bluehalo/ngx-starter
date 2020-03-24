@@ -83,9 +83,9 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 		if (hasRoleChanges || hasEveryRoleChanges || hasSomeRolesChanges) {
 			// Due to bug when you pass empty array
 			if (
-				(hasRoleChanges && hasRoleChanges.firstChange) ||
-				(hasEveryRoleChanges && hasEveryRoleChanges.firstChange) ||
-				(hasSomeRolesChanges && hasSomeRolesChanges.firstChange)
+				hasRoleChanges?.firstChange ||
+				hasEveryRoleChanges?.firstChange ||
+				hasSomeRolesChanges?.firstChange
 			) {
 				return;
 			}
@@ -137,9 +137,9 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 
 		if (this.hasRole != null) {
 			hasPermission = this.authorizationService.hasRole(this.hasRole);
-		} else if (this.hasSomeRoles != null && this.hasSomeRoles.length > 0) {
+		} else if (this.hasSomeRoles?.length > 0) {
 			hasPermission = this.authorizationService.hasSomeRoles(this.hasSomeRoles);
-		} else if (this.hasEveryRole != null && this.hasEveryRole.length > 0) {
+		} else if (this.hasEveryRole?.length > 0) {
 			hasPermission = this.authorizationService.hasEveryRole(this.hasEveryRole);
 		} else {
 			hasPermission = this.authorizationService.isAuthenticated();

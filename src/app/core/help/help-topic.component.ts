@@ -5,11 +5,13 @@ import {
 	ComponentRef,
 	Input,
 	ViewChild,
-	ViewContainerRef
+	ViewContainerRef,
+	Injectable
 } from '@angular/core';
 import values from 'lodash/values';
 import { StringUtils } from '../../common/string-utils.service';
 
+@Injectable()
 export class HelpTopics {
 	static topics: any = {};
 	private static topicOrder: any = {};

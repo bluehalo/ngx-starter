@@ -10,13 +10,15 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss",
+          "lintFix": true
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ngx-starter",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -46,7 +48,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -55,10 +56,20 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
             "es5": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "tsConfig": "./src/tsconfig-es5.app.json"
             }
           }
@@ -145,5 +156,8 @@
       }
     }
   },
-  "defaultProject": "ngx-starter"
+  "defaultProject": "ngx-starter",
+  "cli": {
+    "analytics": "fcf3fb3d-d79f-4138-a78c-a3e752aabd8e"
+  }
 }

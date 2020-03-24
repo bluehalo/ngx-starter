@@ -6,8 +6,8 @@ import { Component, ContentChild, ElementRef, Input, OnInit, ViewChild } from '@
 	styleUrls: ['./flyout.component.scss']
 })
 export class FlyoutComponent implements OnInit {
-	@ViewChild('flyoutContentContainer', { static: false }) container: ElementRef;
-	@ContentChild('flyoutContent', { static: false }) content: ElementRef;
+	@ViewChild('flyoutContentContainer') container: ElementRef;
+	@ContentChild('flyoutContent') content: ElementRef;
 
 	@Input()
 	label: string;
