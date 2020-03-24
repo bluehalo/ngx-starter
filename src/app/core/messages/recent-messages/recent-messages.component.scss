@@ -1,52 +1,22 @@
 @import '../../../../styles/overrides';
 @import '../../../../styles/shared';
+@import '../shared';
 
 $card-width: 258px;
 $card-icon-width: 31px;
 
 .card-message {
-	border: none;
-	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
-	display: inline-block;
+	@include card-message();
+
 	width: $card-width;
 
 	.card-body {
 		padding: 0.75rem;
-	}
 
-	.col-alert-icon {
-		max-width: $card-icon-width;
-		flex: 0 0 $card-icon-width;
-		background-color: $ux-color-white;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		.alert-icon {
-			font-size: 1.6rem;
-			color: $ux-color-white;
+		.card-text ::ng-deep a {
+			display: inline;
+			padding: 0;
+			text-decoration: underline;
 		}
-
-		&.warn {
-			background-color: $ux-color-alert-warning;
-		}
-
-		&.error {
-			background-color: $ux-color-alert-error;
-		}
-
-		&.info {
-			background-color: $ux-color-alert-notification;
-		}
-
-		&.motd {
-			background-color: $ux-color-alert-success;
-		}
-	}
-
-	.col-alert-body {
-		max-width: calc(100% - #{$card-icon-width});
-		flex: 0 0 calc(100% - #{$card-icon-width});
 	}
 }
