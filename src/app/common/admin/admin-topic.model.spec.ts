@@ -8,10 +8,9 @@ describe('AdminTopics', () => {
 		const specThird = { id: '3', ordinal: 0, title: 'Third', path: 'third' };
 		const specNoOrdinal = { id: 'none', title: 'None', path: 'none' };
 
-		let existingTopics;
+		const existingTopics = AdminTopics.getTopics();
 
-		beforeAll(() => {
-			existingTopics = AdminTopics.getTopics();
+		beforeEach(() => {
 			AdminTopics.clearTopics();
 		});
 
@@ -27,30 +26,35 @@ describe('AdminTopics', () => {
 		});
 		it('can register a topic', () => {
 			AdminTopics.registerTopic(specFirst);
-		});
-		it('can find registered topic', () => {
 			const topics = AdminTopics.getTopics();
 			expect(topics).toEqual([specFirst]);
 		});
 		it('can re-register the same topic id', () => {
+			AdminTopics.registerTopic(specFirst);
 			AdminTopics.registerTopic(specUpdate);
 			const topics = AdminTopics.getTopics();
 			expect(topics).toEqual([specUpdate]);
 		});
 
 		it('can register a new topic', () => {
+			AdminTopics.registerTopic(specFirst);
 			AdminTopics.registerTopic(specSecond);
 			const topics = AdminTopics.getTopics();
-			expect(topics).toEqual([specSecond, specUpdate]);
+			expect(topics).toEqual([specSecond, specFirst]);
 		});
 
 		it('can register a new topic with the same ordinal and sort by title', () => {
+			AdminTopics.registerTopic(specUpdate);
+			AdminTopics.registerTopic(specSecond);
 			AdminTopics.registerTopic(specThird);
 			const topics = AdminTopics.getTopics();
 			expect(topics).toEqual([specSecond, specThird, specUpdate]);
 		});
 
 		it('can register without an ordinal to use default of 1', () => {
+			AdminTopics.registerTopic(specUpdate);
+			AdminTopics.registerTopic(specSecond);
+			AdminTopics.registerTopic(specThird);
 			AdminTopics.registerTopic(specNoOrdinal);
 			const topics = AdminTopics.getTopics();
 			expect(topics).toEqual([specSecond, specThird, specNoOrdinal, specUpdate]);
