@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { KeysPipe } from '../../pipes.module';
-import { SortDirection, SortDisplayOption } from '../sorting.model';
+import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 
 export interface TableSortOptions {
 	[name: string]: SortDisplayOption;
@@ -26,9 +25,9 @@ export class SortControlsComponent {
 
 	@Output() readonly sortChange = new EventEmitter<SortDisplayOption>();
 
-	private selectedKey: string;
+	selectedKey: string;
 
-	private selectedDir: SortDirection;
+	selectedDir: SortDir;
 
 	updateSort(key: string) {
 		// If the sort type changed, update

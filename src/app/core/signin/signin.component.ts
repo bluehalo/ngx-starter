@@ -22,7 +22,7 @@ export class SigninComponent implements OnDestroy, OnInit {
 
 	ngOnInit() {
 		this.configService.getConfig().subscribe((config: Config) => {
-			this.pkiMode = config.auth === 'proxy-pki';
+			this.pkiMode = config.auth.startsWith('proxy-pki');
 			this.loaded = true;
 
 			if (this.pkiMode) {

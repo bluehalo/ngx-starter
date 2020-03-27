@@ -1,4 +1,4 @@
-import { SortDirection } from './sorting.model';
+import { SortDir } from './sorting.model';
 
 export interface PagingResults<T = any> {
 	pageNumber: number;
@@ -28,7 +28,7 @@ export class PagingOptions {
 		public totalPages: number = 0,
 		public totalSize: number = 0,
 		public sortField?: string | string[],
-		public sortDir?: SortDirection
+		public sortDir?: SortDir
 	) {}
 
 	reset() {

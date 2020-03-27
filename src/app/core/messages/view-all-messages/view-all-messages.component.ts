@@ -4,7 +4,7 @@ import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/pagi
 import { SearchInputComponent } from 'src/app/common/search-input.module';
 
 import { MessageService } from '../message.service';
-import { Message } from '../message.class';
+import { Message, MessageType } from '../message.class';
 
 @Component({
 	selector: 'app-view-all-messages',
@@ -17,6 +17,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	loadMore = true;
 	search: string = null;
 	newMessages = false;
+	messageType = MessageType;
 
 	@ViewChild(SearchInputComponent, { static: true }) searchInput: SearchInputComponent;
 

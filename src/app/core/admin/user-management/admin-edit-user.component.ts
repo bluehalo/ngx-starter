@@ -14,11 +14,11 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 	templateUrl: './manage-user.component.html'
 })
 export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
-	private mode = 'admin-edit';
-
 	private id: string;
 
 	private sub: any;
+
+	mode = 'admin-edit';
 
 	constructor(
 		protected router: Router,
@@ -44,10 +44,10 @@ export class AdminUpdateUserComponent extends ManageUserComponent implements OnD
 				if (null == this.user.userModel.roles) {
 					this.user.userModel.roles = {};
 				}
-				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles.join(
+				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles?.join(
 					'\n'
 				);
-				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups.join(
+				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups?.join(
 					'\n'
 				);
 				this.user.userModel.providerData = {

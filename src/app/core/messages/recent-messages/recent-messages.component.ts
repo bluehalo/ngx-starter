@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import orderBy from 'lodash/orderBy';
 
-import { Message } from '../message.class';
+import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 
 @Component({
@@ -15,6 +15,8 @@ export class RecentMessagesComponent implements OnInit {
 	@Input() container: any;
 	messages: Message[];
 	loading = false;
+
+	messageType = MessageType;
 
 	constructor(private messageService: MessageService, private router: Router) {}
 

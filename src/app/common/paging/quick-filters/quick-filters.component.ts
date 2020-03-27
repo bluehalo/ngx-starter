@@ -25,6 +25,8 @@ export class QuickFiltersComponent implements OnDestroy, OnInit {
 
 	@Output() readonly filtersChange: EventEmitter<any> = new EventEmitter();
 
+	columnMode: string = null;
+
 	shown = true;
 
 	filterKeys: string[] = [];

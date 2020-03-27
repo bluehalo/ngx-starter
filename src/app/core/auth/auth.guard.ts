@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate {
 		return combineLatest([config$, session$]).pipe(
 			switchMap(([config, session]) => {
 				// The user isn't authenticated, try reloading
-				if (session === null && config.auth !== 'proxy-pki') {
+				if (session === null && !config.auth.startsWith('proxy-pki')) {
 					return this.sessionService.reloadSession();
 				}
 				return of(session);
