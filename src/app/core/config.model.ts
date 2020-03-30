@@ -13,6 +13,11 @@ interface TeamConfig {
 	};
 }
 
+interface UserPreferencesConfig {
+	enabled: boolean;
+	path: string;
+}
+
 export interface Config {
 	auth: string;
 
@@ -24,4 +29,6 @@ export interface Config {
 	copyright: BannerConfig;
 
 	teams: TeamConfig;
+
+	userPreferences?: UserPreferencesConfig;
 }

@@ -14,8 +14,6 @@ import { ConfigService } from '../config.service';
 import { MessageService } from '../messages/message.service';
 import { AuthorizationService } from '../auth/authorization.service';
 
-import { TemplateDataStore } from '../template-data.store';
-
 @Component({
 	selector: 'site-navbar',
 	templateUrl: 'site-navbar.component.html',
@@ -33,6 +31,9 @@ export class SiteNavbarComponent implements OnInit {
 
 	showFeedbackOption = true;
 
+	showUserPreferencesLink = false;
+	userPreferencesLink: string = null;
+
 	session: Session = null;
 
 	adminMenuItems: AdminTopic[];
@@ -40,8 +41,6 @@ export class SiteNavbarComponent implements OnInit {
 	navbarItems: NavbarTopic[];
 
 	numNewMessages = 0;
-
-	isUserPreferencesTemplate = false;
 
 	@Output()
 	readonly navbarOpenChange = new EventEmitter<boolean>();
@@ -79,6 +78,8 @@ export class SiteNavbarComponent implements OnInit {
 
 		this.configService.getConfig().subscribe((config: Config) => {
 			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
+			this.showUserPreferencesLink = get(config, 'userPreferences.enabled', false);
+			this.userPreferencesLink = get(config, 'userPreferences.path', '');
 		});
 
 		this.adminMenuItems = AdminTopics.getTopics();
@@ -87,10 +88,6 @@ export class SiteNavbarComponent implements OnInit {
 		this.messageService.numMessagesIndicator.subscribe(count => {
 			this.numNewMessages = count;
 		});
-
-		if (TemplateDataStore.userPreferencesTemplate != null) {
-			this.isUserPreferencesTemplate = true;
-		}
 	}
 
 	toggleNavbar() {

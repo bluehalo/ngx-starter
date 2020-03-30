@@ -5,16 +5,12 @@ import get from 'lodash/get';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
 
-import { TemplateDataStore } from '../template-data.store';
-
 @Component({
 	selector: 'site-container',
 	templateUrl: 'site-container.component.html',
 	styleUrls: ['site-container.component.scss']
 })
-export class SiteContainerComponent implements OnInit {
-	@Input() userPreferencesTemplate: TemplateRef<any>;
-
+export class SiteContainerComponent {
 	bannerHtml = undefined;
 	copyrightHtml = undefined;
 	showFeedbackFlyout = false;
@@ -25,11 +21,6 @@ export class SiteContainerComponent implements OnInit {
 			this.copyrightHtml = get(config, 'copyright.html', undefined);
 			this.showFeedbackFlyout = get(config, 'feedback.showFlyout', false);
 		});
-	}
-
-	ngOnInit(): void {
-		// Set provided templates in template data store
-		TemplateDataStore.userPreferencesTemplate = this.userPreferencesTemplate;
 	}
 
 	skipToMainContent(e: any) {
