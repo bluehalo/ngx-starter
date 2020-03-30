@@ -57,10 +57,6 @@ import { AuthGuard } from './auth/auth.guard';
 			{
 				path: 'audit',
 				loadChildren: () => import('./audit/audit.module').then(m => m.AuditModule)
-			},
-			{
-				path: 'user',
-				loadChildren: () => import('./user/user.module').then(m => m.UserModule)
 			}
 		])
 	],
