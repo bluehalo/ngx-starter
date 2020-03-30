@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import get from 'lodash/get';
 
