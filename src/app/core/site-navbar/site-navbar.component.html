@@ -88,6 +88,14 @@
 						<!-- User Signout -->
 						<li [hidden]="pki"><a href="/api/auth/signout">Sign out</a></li>
 
+						<!-- User Preferences -->
+						<li *ngIf="showUserPreferencesLink">
+							<a [routerLink]="userPreferencesLink"
+							   (click)="userNavPopover.hide()">
+								User Preferences
+							</a>
+						</li>
+
 					</ul>
 				</ng-template>
 			</li>

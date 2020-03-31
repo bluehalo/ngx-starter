@@ -31,6 +31,9 @@ export class SiteNavbarComponent implements OnInit {
 
 	showFeedbackOption = true;
 
+	showUserPreferencesLink = false;
+	userPreferencesLink: string = null;
+
 	session: Session = null;
 
 	adminMenuItems: AdminTopic[];
@@ -75,6 +78,8 @@ export class SiteNavbarComponent implements OnInit {
 
 		this.configService.getConfig().subscribe((config: Config) => {
 			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
+			this.showUserPreferencesLink = get(config, 'userPreferences.enabled', false);
+			this.userPreferencesLink = get(config, 'userPreferences.path', '');
 		});
 
 		this.adminMenuItems = AdminTopics.getTopics();
