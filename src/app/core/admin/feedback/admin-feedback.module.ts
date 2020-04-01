@@ -19,7 +19,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 		SystemAlertModule
 	],
 	exports: [AdminListFeedbackComponent],
-	entryComponents: [AdminListFeedbackComponent],
 	declarations: [AdminListFeedbackComponent]
 })
 export class AdminFeedbackModule {}

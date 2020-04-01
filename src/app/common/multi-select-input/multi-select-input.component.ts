@@ -15,7 +15,7 @@ import { NG_VALUE_ACCESSOR, NgModel, ControlValueAccessor } from '@angular/forms
 })
 export class MultiSelectInputComponent implements ControlValueAccessor {
 	@Input() placeholder: string;
-	@ViewChild(NgModel, { static: false }) model: NgModel;
+	@ViewChild(NgModel) model: NgModel;
 	autocompleteOpen = false;
 
 	private innerValue: string[];

@@ -15,7 +15,6 @@ import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.compo
 @NgModule({
 	imports: [TooltipModule.forRoot(), NgSelectModule, CommonModule, FormsModule, FlyoutModule],
 	exports: [FeedbackModalComponent, FeedbackFlyoutComponent],
-	entryComponents: [FeedbackModalComponent],
 	declarations: [FeedbackModalComponent, FeedbackFlyoutComponent]
 })
 export class FeedbackModule {}

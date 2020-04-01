@@ -16,7 +16,7 @@ import { FeedbackService } from '../feedback.service';
 	styleUrls: ['./feedback-flyout.component.scss']
 })
 export class FeedbackFlyoutComponent implements OnInit {
-	@ViewChild(FlyoutComponent, { static: false }) flyout: FlyoutComponent;
+	@ViewChild(FlyoutComponent) flyout: FlyoutComponent;
 
 	baseUrl = '';
 	feedback: Feedback = new Feedback();

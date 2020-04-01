@@ -208,7 +208,7 @@
 	<h3 class="pt-3">Bootstrap Outline Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
-		<input type="file" class="custom-file-btn-input" id="customFile3" (change)="$event.target.parentElement.setAttribute('data-after', $event.target.files[0].name)">
+		<input type="file" class="custom-file-btn-input" id="customFile3" (change)="fileSelected($event)">
 		<label class="btn custom-file-btn-label" for="customFile3"><span class="fa fa-upload mr-2"></span>Choose File</label>
 	</div>
 

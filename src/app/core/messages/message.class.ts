@@ -4,6 +4,7 @@ export enum MessageType {
 	WARN = 'WARN' as any,
 	ERROR = 'ERROR' as any
 }
+
 export class Message {
 	public _id: string;
 	public title: string;

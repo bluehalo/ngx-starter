@@ -29,7 +29,6 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		SearchInputModule,
 		TooltipModule
 	],
-	entryComponents: [CacheEntryModalComponent],
 	declarations: [CacheEntriesComponent, CacheEntryModalComponent],
 	exports: [CacheEntriesComponent],
 	providers: [CacheEntriesService]

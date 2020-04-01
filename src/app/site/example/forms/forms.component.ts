@@ -12,6 +12,10 @@ export class FormsComponent {
 		console.log($event);
 	}
 
+	fileSelected($event) {
+		$event.target.parentElement.setAttribute('data-after', $event.target.files[0].name);
+	}
+
 	submit($event) {
 		const btn = $event.target;
 		btn.disabled = true;

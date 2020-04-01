@@ -10,7 +10,7 @@ import {
 
 import isNumber from 'lodash/isNumber';
 
-import { SortDirection, SortDisplayOption } from '../sorting.model';
+import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 import { PageChange, PagingOptions } from '../paging.model';
 
 /**
@@ -55,7 +55,7 @@ export class PagerComponent implements OnInit, OnChanges {
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
 
-	sortDir: SortDirection = SortDirection.desc;
+	sortDir: SortDir = SortDirection.desc;
 
 	totalPages = 0;
 

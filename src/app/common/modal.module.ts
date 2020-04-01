@@ -9,7 +9,6 @@ import { ModalService } from './modal/modal.service';
 
 @NgModule({
 	imports: [BsModalModule.forRoot(), CommonModule, FormsModule],
-	entryComponents: [ModalComponent],
 	exports: [ModalComponent],
 	declarations: [ModalComponent],
 	providers: []

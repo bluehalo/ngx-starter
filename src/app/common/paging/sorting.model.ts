@@ -1,18 +1,20 @@
 export class SortDirection {
-	public static desc = 'DESC';
-	public static asc = 'ASC';
+	public static readonly desc = 'DESC';
+	public static readonly asc = 'ASC';
 }
+
+export type SortDir = 'DESC' | 'ASC';
 
 export interface SortChange {
 	sortField: string | string[];
-	sortDir: SortDirection;
+	sortDir: SortDir;
 }
 
 export class SortDisplayOption {
 	constructor(
 		public label?: string,
 		public sortField?: string | string[],
-		public sortDir?: SortDirection
+		public sortDir?: SortDir
 	) {}
 
 	public setFromModel(model: any) {

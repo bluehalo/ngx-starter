@@ -46,7 +46,6 @@ import { TeamsRoutingModule } from './teams-routing.module';
 
 		TeamsRoutingModule
 	],
-	entryComponents: [AddMembersModalComponent, TeamsHelpComponent],
 	declarations: [
 		AddMembersModalComponent,
 		CreateTeamComponent,

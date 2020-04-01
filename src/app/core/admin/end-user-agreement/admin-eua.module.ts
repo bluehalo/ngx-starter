@@ -32,7 +32,6 @@ import { SearchInputModule } from '../../../common/search-input.module';
 		SearchInputModule
 	],
 	exports: [],
-	entryComponents: [],
 	declarations: [AdminListEuasComponent, AdminCreateEuaComponent, AdminUpdateEuaComponent],
 	providers: [AdminUsersService, EuaService, ModalService]
 })

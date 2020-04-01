@@ -42,16 +42,6 @@ import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit
 		PipesModule,
 		SystemAlertModule
 	],
-	entryComponents: [
-		AuditViewChangeModalComponent,
-		AuditViewDetailsModalComponent,
-
-		DefaultAuditObjectComponent,
-		ExportAuditObjectComponent,
-		UrlAuditObjectComponent,
-		UserAuditObjectComponent,
-		UserAuthenticationObjectComponent
-	],
 	exports: [],
 	declarations: [
 		ListAuditEntriesComponent,

@@ -21,7 +21,6 @@ import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
 	imports: [FormsModule, AdminModule, ExampleRoutingModule, NgSelectModule, ModalModule],
-	entryComponents: [ExampleHelpComponent],
 	exports: [],
 	declarations: [
 		ExploreComponent,
