@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import get from 'lodash/get';
 import indexOf from 'lodash/indexOf';
 
 import { Session } from './session.model';
@@ -18,18 +17,18 @@ export class AuthorizationService {
 	}
 
 	public isEuaCurrent() {
-		const euaPublished: number = get(this.session, 'user.eua.published', 0);
-		const euaAccepted: number = get(this.session, 'user.userModel.acceptedEua', 0);
+		const euaPublished: number = this.session?.user?.eua?.published ?? 0;
+		const euaAccepted: number = this.session?.user?.userModel?.acceptedEua ?? 0;
 
 		return euaAccepted >= euaPublished;
 	}
 
 	public isAuthenticated(): boolean {
-		return null != this.session && null != this.session.name;
+		return this.session?.name != null;
 	}
 
 	public hasExternalRole(role: string): boolean {
-		const externalRoles = get(this.session, 'user.userModel.externalRoles', []);
+		const externalRoles = this.session?.user?.userModel?.externalRoles ?? [];
 
 		return indexOf(externalRoles, role) !== -1;
 	}
@@ -37,7 +36,7 @@ export class AuthorizationService {
 	public hasRole(role: string | Role): boolean {
 		role = this.roleToString(role);
 
-		const roles = get(this.session, 'user.userModel.roles', {});
+		const roles = this.session?.user?.userModel?.roles ?? {};
 		return null != roles[role] && roles[role];
 	}
 
@@ -51,7 +50,6 @@ export class AuthorizationService {
 
 	public hasEveryRole(roles: Array<string | Role>): boolean {
 		return roles.every((role: string | Role) => this.hasRole(role));
-		// return roles.reduce( (p: boolean, c: string) => p && this.hasRole(c), true);
 	}
 
 	public isUser(): boolean {

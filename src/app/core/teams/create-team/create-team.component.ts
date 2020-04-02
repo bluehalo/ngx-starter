@@ -7,8 +7,6 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { Observable } from 'rxjs';
 import { first, map, mergeMap, tap } from 'rxjs/operators';
 
-import get from 'lodash/get';
-
 import { PagingResults, PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
@@ -67,7 +65,7 @@ export class CreateTeamComponent implements OnInit {
 			.getConfig()
 			.pipe(first())
 			.subscribe((config: Config) => {
-				this.implicitMembersStrategy = get(config, 'teams.implicitMembers.strategy', null);
+				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 			});
 
 		this.sessionService.getSession().subscribe(session => {

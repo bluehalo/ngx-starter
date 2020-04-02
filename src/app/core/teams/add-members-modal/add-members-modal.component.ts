@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import get from 'lodash/get';
-
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
@@ -80,8 +78,8 @@ export class AddMembersModalComponent implements OnInit {
 	}
 
 	typeaheadOnSelect(e: TypeaheadMatch) {
-		const selectedUsername = get(e, 'item.userModel.username');
-		const selectedUserId = get(e, 'item.userModel._id');
+		const selectedUsername = e?.item?.userModel?.username;
+		const selectedUserId = e?.item?.userModel?._id;
 		if (
 			null != selectedUsername &&
 			this.addedMembers.findIndex((u: AddedMember) => u.username === selectedUsername) === -1

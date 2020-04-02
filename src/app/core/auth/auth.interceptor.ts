@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import get from 'lodash/get';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -21,10 +20,10 @@ export class AuthInterceptor implements HttpInterceptor {
 		return next.handle(req).pipe(
 			catchError(err => {
 				// Grab all the useful stuff out of the error response
-				const status = get(err, 'status', 200);
-				const type = get(err, 'error.type', '');
-				const url = get(err, 'url', '');
-				const message = get(err, 'error.message', '');
+				const status = err?.status ?? 200;
+				const type = err?.error?.type ?? '';
+				const url = err?.url ?? '';
+				const message = err?.error?.message ?? '';
 
 				const stateObject = { status, type, message, url };
 

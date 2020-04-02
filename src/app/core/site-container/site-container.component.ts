@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import get from 'lodash/get';
-
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
 
@@ -17,9 +15,9 @@ export class SiteContainerComponent {
 
 	constructor(private configService: ConfigService) {
 		configService.getConfig().subscribe((config: Config) => {
-			this.bannerHtml = get(config, 'banner.html', undefined);
-			this.copyrightHtml = get(config, 'copyright.html', undefined);
-			this.showFeedbackFlyout = get(config, 'feedback.showFlyout', false);
+			this.bannerHtml = config?.banner?.html ?? undefined;
+			this.copyrightHtml = config?.copyright?.html ?? undefined;
+			this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;
 		});
 	}
 

@@ -7,6 +7,11 @@ interface BannerConfig {
 	style: string;
 }
 
+interface FeedbackConfig {
+	showFlyout: boolean;
+	showInSidebar: boolean;
+}
+
 interface TeamConfig {
 	implicitMembers: {
 		strategy: string;
@@ -29,6 +34,8 @@ export interface Config {
 	copyright: BannerConfig;
 
 	teams: TeamConfig;
+
+	feedback?: FeedbackConfig;
 
 	userPreferences?: UserPreferencesConfig;
 }
