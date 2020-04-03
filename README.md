@@ -29,6 +29,7 @@ build:bundle-report | Builds for development and starts a Webpack Bundle Analyze
 test | Run karma tests with a watcher that will update as you change files.
 test:ci | Runs karma tests once and outputs code coverage results upon successful execution.
 lint | Runs the Angular CLI lint task (`ng lint`) and runs `stylelint` to lint scss files as configured by `stylelint.config.js`
+lint:fix | Runs the lint task and stylelint with the `--fix` option. Will make corrections to files where able.
 e2e | Runs end-to-end tests once and outputs test results to the console.
 
 ### Running the Development Server
