@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import cloneDeep from 'lodash/cloneDeep';
-import toString from 'lodash/toString';
 import { Observable, Subject } from 'rxjs';
 import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 import { ModalAction, ModalService } from '../../../common/modal.module';
@@ -85,10 +84,8 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
-			if (
-				toString(params[`clearCachedFilter`]) === 'true' ||
-				null == this.euaService.cache.listEuas
-			) {
+			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
+			if (clearCachedFilter === 'true' || null == this.euaService.cache.listEuas) {
 				this.euaService.cache.listEuas = {};
 			}
 		});

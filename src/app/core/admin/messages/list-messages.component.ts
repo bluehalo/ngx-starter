@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import toString from 'lodash/toString';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 import { ModalAction, ModalService } from 'src/app/common/modal.module';
@@ -51,10 +50,8 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.subscribe((params: Params) => {
-			if (
-				toString(params[`clearCachedFilter`]) === 'true' ||
-				null == this.messageService.cache.listMessages
-			) {
+			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
+			if (clearCachedFilter === 'true' || null == this.messageService.cache.listMessages) {
 				this.messageService.cache.listMessages = {};
 			}
 

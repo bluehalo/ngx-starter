@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
-import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs/index';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -116,7 +115,7 @@ export class SessionService {
 			if (null == extras) {
 				extras = {};
 			}
-			extras = assign(extras, { queryParams });
+			extras = Object.assign(extras, { queryParams });
 		}
 
 		// Redirect the user

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import _isArray from 'lodash/isArray';
 import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
@@ -51,7 +50,7 @@ export class AuditService {
 			.post('api/users/match', { q: query, s: search, options }, { params: paging.toObj() })
 			.pipe(
 				map((results: PagingResults) => {
-					if (null != results && _isArray(results.elements)) {
+					if (null != results && Array.isArray(results.elements)) {
 						results.elements = results.elements.map((element: any) =>
 							new User().setFromUserModel(element)
 						);

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import indexOf from 'lodash/indexOf';
 import { Role } from './role.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
@@ -29,7 +28,7 @@ export class AuthorizationService {
 	public hasExternalRole(role: string): boolean {
 		const externalRoles = this.session?.user?.userModel?.externalRoles ?? [];
 
-		return indexOf(externalRoles, role) !== -1;
+		return externalRoles.indexOf(role) !== -1;
 	}
 
 	public hasRole(role: string | Role): boolean {

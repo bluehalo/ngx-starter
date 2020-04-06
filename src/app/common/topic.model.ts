@@ -1,6 +1,4 @@
-import isNil from 'lodash/isNil';
 import sortBy from 'lodash/sortBy';
-import values from 'lodash/values';
 
 export class Topic {
 	id: string;
@@ -17,14 +15,14 @@ export class TopicRegistry<T extends Topic> {
 	}
 
 	registerTopic(topic: T) {
-		if (isNil(topic.ordinal)) {
+		if (topic.ordinal == null) {
 			topic.ordinal = 1;
 		}
 		this.topics[topic.id] = topic;
 	}
 
 	getTopics(): T[] {
-		const topics = values(this.topics);
+		const topics = Object.values(this.topics);
 		return sortBy(topics, ['ordinal', 'title', 'path']);
 	}
 }

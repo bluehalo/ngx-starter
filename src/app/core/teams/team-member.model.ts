@@ -1,5 +1,4 @@
 import difference from 'lodash/difference';
-import findIndex from 'lodash/findIndex';
 import { User } from '../auth/user.model';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
@@ -25,7 +24,7 @@ export class TeamMember extends User {
 		if (null != this.userModel && null != team) {
 			const teams = this?.userModel?.teams ?? [];
 			// Find the role of this user in the team
-			const ndx = findIndex(teams, (t: any) => t._id === team._id);
+			const ndx = teams.findIndex((t: any) => t._id === team._id);
 
 			if (-1 !== ndx) {
 				return teams[ndx].role;
