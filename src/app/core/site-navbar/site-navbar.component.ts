@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import get from 'lodash/get';
-
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { FeedbackModalComponent } from '../feedback/feedback.module';
@@ -77,9 +75,9 @@ export class SiteNavbarComponent implements OnInit {
 		});
 
 		this.configService.getConfig().subscribe((config: Config) => {
-			this.showFeedbackOption = get(config, 'feedback.showInSidebar', true);
-			this.showUserPreferencesLink = get(config, 'userPreferences.enabled', false);
-			this.userPreferencesLink = get(config, 'userPreferences.path', '');
+			this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
+			this.showUserPreferencesLink = config?.userPreferences?.enabled ?? false;
+			this.userPreferencesLink = config?.userPreferences?.path ?? '';
 		});
 
 		this.adminMenuItems = AdminTopics.getTopics();

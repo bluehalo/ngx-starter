@@ -72,7 +72,7 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 	}
 
 	bypassAccessCheck() {
-		this.metadataLocked = null != this.user && !this.user.userModel.bypassAccessCheck;
+		this.metadataLocked = !(this.user?.userModel?.bypassAccessCheck ?? false);
 		this.handleBypassAccessCheck();
 	}
 

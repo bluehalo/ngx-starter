@@ -1,6 +1,5 @@
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
-import get from 'lodash/get';
 
 import { User } from '../auth/user.model';
 import { Team } from './team.model';
@@ -25,7 +24,7 @@ export class TeamMember extends User {
 
 	public getRoleInTeam(team: Team | { _id: string }): string {
 		if (null != this.userModel) {
-			const teams = get(this, 'userModel.teams', []);
+			const teams = this?.userModel?.teams ?? [];
 			// Find the role of this user in the team
 			const ndx = findIndex(teams, (t: any) => t._id === team._id);
 
@@ -51,7 +50,7 @@ export class TeamMember extends User {
 			}
 
 			// Determine if user is implicit/explicit and active/inactive
-			this.explicit = null != userModel.teams && userModel.teams.length > 0;
+			this.explicit = (userModel.teams?.length ?? 0) > 0;
 
 			if (userModel.bypassAccessCheck) {
 				this.active = true;

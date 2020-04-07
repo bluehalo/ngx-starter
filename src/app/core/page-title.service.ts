@@ -3,10 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 import capitalize from 'lodash/capitalize';
-import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
-import { of } from 'rxjs';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { ConfigService } from './config.service';
 
@@ -21,7 +19,7 @@ export class PageTitleService {
 
 	init() {
 		this.configService.getConfig().subscribe(config => {
-			const appTitle = get(config, 'app.title', null);
+			const appTitle = config?.app?.title;
 
 			this.router.events
 				.pipe(

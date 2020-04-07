@@ -24,7 +24,7 @@ export class ExternalLinksComponent implements OnInit {
 			.subscribe((config: any) => {
 				this.config = config;
 
-				this.externalLinksEnabled = config.welcomeLinks && config.welcomeLinks.enabled;
+				this.externalLinksEnabled = config?.welcomeLinks?.enabled ?? false;
 				this.links = config.welcomeLinks.links;
 			});
 	}

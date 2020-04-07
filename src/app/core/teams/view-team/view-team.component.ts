@@ -3,7 +3,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import cloneDeep from 'lodash/cloneDeep';
-import get from 'lodash/get';
 
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
@@ -51,7 +50,7 @@ export class ViewTeamComponent implements OnInit {
 			.getConfig()
 			.pipe(first())
 			.subscribe((config: Config) => {
-				this.implicitMembersStrategy = get(config, 'teams.implicitMembers.strategy', null);
+				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 			});
 
 		this.route.data.pipe(map(data => data.team)).subscribe(team => {

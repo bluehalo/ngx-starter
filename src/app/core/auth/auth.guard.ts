@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
-import get from 'lodash/get';
 import { combineLatest, Observable, of } from 'rxjs';
 import { catchError, first, map, switchMap } from 'rxjs/operators';
 
@@ -21,10 +20,7 @@ export class AuthGuard implements CanActivate {
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 		// Default to requiring authentication if guard is present
-		let requiresAuthentication = true;
-		if (get(route, 'data.requiresAuthentication', true) === false) {
-			requiresAuthentication = false;
-		}
+		const requiresAuthentication = route?.data?.requiresAuthentication ?? true;
 
 		// -----------------------------------------------------------
 		// Does the user need to be authenticated?
@@ -71,10 +67,7 @@ export class AuthGuard implements CanActivate {
 
 	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		// Default to requiring authentication if guard is present
-		let requiresEua = true;
-		if (get(route, 'data.requiresEua', true) === false) {
-			requiresEua = false;
-		}
+		const requiresEua = route?.data?.requiresEua ?? true;
 
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
@@ -102,7 +95,7 @@ export class AuthGuard implements CanActivate {
 			// -----------------------------------------------------------
 
 			// compile a list of roles that are missing
-			const requiredRoles = get(route, 'data.roles', ['user']);
+			const requiredRoles = route?.data?.roles ?? ['user'];
 			const missingRoles: any[] = [];
 			requiredRoles.forEach((role: any) => {
 				if (!this.authorizationService.hasRole(role)) {

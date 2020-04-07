@@ -237,13 +237,13 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		let query: any;
 		const elements: any[] = [];
 
-		if (this.filters.bypassAC && this.filters.bypassAC.show) {
+		if (this.filters.bypassAC?.show) {
 			elements.push({ bypassAccessCheck: true });
 		}
 
 		Role.ROLES.forEach(role => {
 			const filter = this.filters[`${role.role}Role`];
-			if (filter != null && filter.show) {
+			if (filter?.show) {
 				const element = {};
 				element[`roles.${role.role}`] = true;
 				elements.push(element);

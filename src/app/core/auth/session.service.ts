@@ -3,7 +3,6 @@ import { NavigationExtras, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import assign from 'lodash/assign';
-import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import { BehaviorSubject, Observable, of, pipe } from 'rxjs/index';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -64,7 +63,7 @@ export class SessionService {
 	}
 
 	getCurrentEua(): Observable<any> {
-		if (get(this.sessionSubject, 'value.user.eua', undefined) !== undefined) {
+		if (this.sessionSubject?.value?.user?.eua) {
 			return of(this.sessionSubject.value.user.eua);
 		}
 		return this.authService.getCurrentEua().pipe(

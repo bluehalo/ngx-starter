@@ -1,4 +1,4 @@
-<section *ngIf="user && user.userModel">
+<section *ngIf="user?.userModel">
 
 	<!-- Show a breadcrumb to the list users page -->
 	<a *ngIf="mode === 'admin-edit' || mode === 'admin-create'" class="back-link" routerLink="/admin/users">

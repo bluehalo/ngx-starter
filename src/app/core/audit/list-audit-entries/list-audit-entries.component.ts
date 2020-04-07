@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -191,8 +190,8 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			this.queryUserObj = null;
 		}
 
-		const actorId = _get(this.queryUserObj, 'item.userModel._id', null);
-		if (null !== actorId) {
+		const actorId = this.queryUserObj?.item?.userModel?._id;
+		if (undefined !== actorId) {
 			query['audit.actor._id'] = {
 				$obj: actorId
 			};
