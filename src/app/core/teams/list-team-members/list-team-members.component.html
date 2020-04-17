@@ -30,10 +30,15 @@
 				<div>{{ member.active ? 'Active': 'Not Active' }}</div>
 			</td>
 
+			<!-- Explicit -->
+			<td *ngIf="team.implicitMembers">
+				<div>{{ member.explicit }}</div>
+			</td>
+
 			<!-- Role -->
 			<td>
-				<div *ngIf="!canManageTeam">{{ member.roleDisplay }}</div>
-				<ng-container *ngIf="canManageTeam">
+				<div *ngIf="!canManageTeam || !member.explicit">{{ member.roleDisplay }}</div>
+				<ng-container *ngIf="canManageTeam && member.explicit">
 					<div class="dropdown dropdown-table-inline" dropdown container="body">
 						<span class="dropdown-toggle" dropdownToggle>
 							<span class="mr-1">{{ member.roleDisplay }}</span>
@@ -49,8 +54,9 @@
 			</td>
 
 			<!-- Delete -->
-			<td *ngIf="canManageTeam && member.explicit">
-				<a class="btn-icon"
+			<td *ngIf="canManageTeam">
+				<a *ngIf="member.explicit"
+				   class="btn-icon"
 				   tooltip="Remove Member"
 				   container="body"
 				   placement="bottom"
