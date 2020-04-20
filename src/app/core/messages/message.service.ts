@@ -1,12 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
-
-import { Message } from './message.class';
-import { SocketService } from '../socket.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+
+import { of, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
+import { SocketService } from '../socket.service';
+import { Message } from './message.class';
 
 @Injectable({
 	providedIn: 'root'

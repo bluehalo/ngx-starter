@@ -1,11 +1,11 @@
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { Message } from '../../messages/message.class';
-import { ConfigService } from '../../config.service';
-import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
+import { SystemAlertService } from 'src/app/common/system-alert.module';
+import { ConfigService } from '../../config.service';
+import { Message } from '../../messages/message.class';
 
 export abstract class ManageMessageComponent implements OnInit {
 	message: Message;

@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
-
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
-import { CacheEntry } from './cache-entry.model';
+import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { CacheEntry } from './cache-entry.model';
 
 @Injectable()
 export class CacheEntriesService {

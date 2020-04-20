@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 
-import { Observable, BehaviorSubject, merge } from 'rxjs';
+import { merge, BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import { BreadcrumbService, Breadcrumb } from './breadcrumb.service';
+import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 
 @Component({
 	selector: 'breadcrumb',

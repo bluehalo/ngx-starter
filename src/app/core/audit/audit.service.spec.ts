@@ -1,12 +1,11 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-import { AuditService } from './audit.service';
+import { getTestBed, TestBed } from '@angular/core/testing';
 
 import _cloneDeep from 'lodash/cloneDeep';
 import { PagingOptions, PagingResults } from 'src/app/common/paging.module';
-import { User } from '../auth/user.model';
 import { SystemAlertService } from '../../common/system-alert.module';
+import { User } from '../auth/user.model';
+import { AuditService } from './audit.service';
 
 describe('Audit Service', () => {
 	let injector: TestBed;

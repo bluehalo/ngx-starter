@@ -1,9 +1,8 @@
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
-
 import { User } from '../auth/user.model';
-import { Team } from './team.model';
 import { TeamRole } from './team-role.model';
+import { Team } from './team.model';
 
 export class TeamMember extends User {
 	public explicit = false;

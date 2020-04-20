@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { AsyncSubject } from 'rxjs';
-
 import { Config } from './config.model';
 
 @Injectable()

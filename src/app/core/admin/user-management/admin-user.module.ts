@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-import { AdminCreateUserComponent } from './admin-create-user.component';
-import { AdminListUsersComponent } from './admin-list-users.component';
-import { AdminUpdateUserComponent } from './admin-edit-user.component';
-import { AdminUsersService } from './admin-users.service';
 import { DirectivesModule } from '../../../common/directives.module';
-import { PipesModule } from '../../../common/pipes.module';
 import { PagingModule } from '../../../common/paging.module';
-import { SystemAlertModule } from '../../../common/system-alert.module';
+import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
+import { AdminCreateUserComponent } from './admin-create-user.component';
+import { AdminUpdateUserComponent } from './admin-edit-user.component';
+import { AdminListUsersComponent } from './admin-list-users.component';
+import { AdminUsersService } from './admin-users.service';
 
 @NgModule({
 	imports: [

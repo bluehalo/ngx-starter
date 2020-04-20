@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import _isArray from 'lodash/isArray';
+import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
-import _isArray from 'lodash/isArray';
-
-import { User } from '../auth/user.model';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
+import { User } from '../auth/user.model';
 import { AuditActionTypes } from './audit.classes';
 
 @Injectable()

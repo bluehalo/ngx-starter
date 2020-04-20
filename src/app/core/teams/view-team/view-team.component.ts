@@ -1,22 +1,19 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import cloneDeep from 'lodash/cloneDeep';
-
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
-
-import { Team } from '../team.model';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
-import { ConfigService } from '../../config.service';
 import { Config } from '../../config.model';
-import { TeamsService } from '../teams.service';
+import { ConfigService } from '../../config.service';
 import { TeamAuthorizationService } from '../team-authorization.service';
+import { Team } from '../team.model';
+import { TeamsService } from '../teams.service';
 
 @Component({
 	selector: 'app-view-team',

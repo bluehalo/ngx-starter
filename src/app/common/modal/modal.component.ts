@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Subject } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-
+import { Subject } from 'rxjs';
 import { ModalAction, ModalCloseEvent, ModalInput } from './modal.model';
 
 @Component({

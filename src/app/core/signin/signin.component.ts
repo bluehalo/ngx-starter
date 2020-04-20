@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
+import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
-import { SessionService } from '../auth/session.service';
 
 @Component({
 	templateUrl: 'signin.component.html',

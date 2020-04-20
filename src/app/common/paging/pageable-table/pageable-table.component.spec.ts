@@ -1,16 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { Subject } from 'rxjs';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-import { PagingOptions, PageChange } from '../paging.model';
-import { PagerComponent } from '../pager/pager.component';
-import { PageableTableComponent } from './pageable-table.component';
-import { SortControlsComponent } from '../sort-controls/sort-controls.component';
 import { FormsModule } from '@angular/forms';
+
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { Subject } from 'rxjs';
 import { DirectivesModule } from '../../directives.module';
 import { PipesModule } from '../../pipes.module';
+import { PagerComponent } from '../pager/pager.component';
+import { PageChange, PagingOptions } from '../paging.model';
+import { SortControlsComponent } from '../sort-controls/sort-controls.component';
+import { PageableTableComponent } from './pageable-table.component';
 
 @Component({
 	template: `

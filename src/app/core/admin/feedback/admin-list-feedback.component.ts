@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
-
 import {
-	PagingResults,
-	PagingOptions,
-	SortDirection,
-	SortableTableHeader,
 	AbstractPageableDataComponent,
-	SortChange
+	PagingOptions,
+	PagingResults,
+	SortableTableHeader,
+	SortChange,
+	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { ExportConfigService } from '../../export-config.service';
-
 import { FeedbackService } from '../../feedback/feedback.service';
 
 @Component({

@@ -1,17 +1,17 @@
 import {
 	Directive,
+	EmbeddedViewRef,
 	Input,
-	TemplateRef,
-	ViewContainerRef,
+	OnChanges,
 	OnInit,
 	SimpleChanges,
-	OnChanges,
-	EmbeddedViewRef,
+	TemplateRef,
+	ViewContainerRef,
 	ɵstringify as stringify
 } from '@angular/core';
 
-import { SessionService } from './session.service';
 import { AuthorizationService } from './authorization.service';
+import { SessionService } from './session.service';
 
 @Directive({
 	selector: '[isAuthenticated], [hasRole], [hasEveryRole], [hasSomeRoles]'

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { first } from 'rxjs/operators';
-
 import { ConfigService } from '../../config.service';
 
 @Component({

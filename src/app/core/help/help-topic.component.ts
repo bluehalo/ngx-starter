@@ -3,11 +3,12 @@ import {
 	ComponentFactory,
 	ComponentFactoryResolver,
 	ComponentRef,
+	Injectable,
 	Input,
 	ViewChild,
-	ViewContainerRef,
-	Injectable
+	ViewContainerRef
 } from '@angular/core';
+
 import values from 'lodash/values';
 import { StringUtils } from '../../common/string-utils.service';
 

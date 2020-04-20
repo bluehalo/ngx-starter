@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
-
-import { BreadcrumbService, Breadcrumb } from '../../common/breadcrumb/breadcrumb.service';
+import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
 import { HelpTopics } from './help-topic.component';
 
 export class HelpTopic {

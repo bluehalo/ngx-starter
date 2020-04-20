@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NgModel, ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NgModel, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
 	selector: 'asy-multi-select-input',

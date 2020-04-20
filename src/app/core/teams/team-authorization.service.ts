@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { first, map } from 'rxjs/operators';
-
-import { SessionService } from '../auth/session.service';
 import { Session } from '../auth/session.model';
-
-import { Team } from './team.model';
-import { TeamRole } from './team-role.model';
+import { SessionService } from '../auth/session.service';
 import { TeamMember } from './team-member.model';
+import { TeamRole } from './team-role.model';
+import { Team } from './team.model';
 
 type TeamIdObj = Team | { _id: string };
 

@@ -1,10 +1,8 @@
 import { OnInit } from '@angular/core';
 
 import cloneDeep from 'lodash/cloneDeep';
-
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
-
 import { PageChange, PagingOptions, PagingResults } from './paging.model';
 import { SortChange } from './sorting.model';
 

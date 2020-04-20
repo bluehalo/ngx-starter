@@ -1,31 +1,27 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
-import { of } from 'rxjs/index';
-
 import { NgSelectModule } from '@ng-select/ng-select';
-
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
+import { of } from 'rxjs/index';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule, PagingResults } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
 import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
-
-import { ListAuditEntriesComponent } from './list-audit-entries.component';
 import {
 	AuditObjectComponent,
-	UrlAuditObjectComponent,
 	DefaultAuditObjectComponent,
 	ExportAuditObjectComponent,
+	UrlAuditObjectComponent,
 	UserAuditObjectComponent,
 	UserAuthenticationObjectComponent
 } from '../audit-object.component';
 import { AuditService } from '../audit.service';
+import { ListAuditEntriesComponent } from './list-audit-entries.component';
 
 describe('Audit Component Spec', () => {
 	let auditServiceSpy;

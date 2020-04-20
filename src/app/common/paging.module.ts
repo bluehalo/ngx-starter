@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-import { PipesModule } from './pipes.module';
 import { DirectivesModule } from './directives.module';
+import { PageableTableComponent } from './paging/pageable-table/pageable-table.component';
+import { PagerComponent } from './paging/pager/pager.component';
+import { QuickColumnToggleComponent } from './paging/quick-column-toggle/quick-column-toggle.component';
+import { QuickFiltersComponent } from './paging/quick-filters/quick-filters.component';
+import { SearchTableComponent } from './paging/search-table/search-table.component';
 import {
 	SortControlsComponent,
 	TableSortOptions
@@ -14,11 +17,7 @@ import {
 	SortableTableHeader,
 	SortableTableHeaderComponent
 } from './paging/sortable-table-header/sortable-table-header.component';
-import { PagerComponent } from './paging/pager/pager.component';
-import { PageableTableComponent } from './paging/pageable-table/pageable-table.component';
-import { QuickColumnToggleComponent } from './paging/quick-column-toggle/quick-column-toggle.component';
-import { QuickFiltersComponent } from './paging/quick-filters/quick-filters.component';
-import { SearchTableComponent } from './paging/search-table/search-table.component';
+import { PipesModule } from './pipes.module';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, DirectivesModule, TooltipModule, PipesModule],

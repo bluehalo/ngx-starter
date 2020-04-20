@@ -6,19 +6,17 @@ import isArray from 'lodash/isArray';
 import toString from 'lodash/toString';
 import { Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-
 import {
+	AbstractPageableDataComponent,
 	PagingOptions,
 	PagingResults,
-	SortDirection,
 	SortableTableHeader,
-	AbstractPageableDataComponent,
-	SortChange
+	SortChange,
+	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { User } from '../../auth/user.model';
 import { Role } from '../../auth/role.model';
+import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 

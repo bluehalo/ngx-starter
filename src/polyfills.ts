@@ -30,6 +30,7 @@
 
 /** IE10 and IE11 requires the following for the Reflect API. */
 import 'core-js/es6/reflect';
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /**
  * Web Animations `@angular/platform-browser/animations`
@@ -56,7 +57,6 @@ import 'core-js/es6/reflect';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

@@ -1,9 +1,10 @@
-import { AuthorizationService } from './authorization.service';
 import { inject, TestBed } from '@angular/core/testing';
-import { SessionService } from './session.service';
-import { Session } from './session.model';
+
 import { BehaviorSubject, Observable } from 'rxjs/index';
+import { AuthorizationService } from './authorization.service';
 import { Role } from './role.model';
+import { Session } from './session.model';
+import { SessionService } from './session.service';
 
 class MockSessionService {
 	sessionSubject = new BehaviorSubject<Session>(null);

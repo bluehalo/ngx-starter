@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
+
 import { ModalService } from '../../../common/modal.module';
 import { ModalConfig } from '../../../common/modal/modal.model';
+import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'app-modal',

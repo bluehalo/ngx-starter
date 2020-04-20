@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, ContentChild } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
-import { PagingOptions, PageChange } from '../paging.model';
+import { PageChange, PagingOptions } from '../paging.model';
 
 @Component({
 	selector: 'pageable-table',

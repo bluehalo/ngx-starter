@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
-
 import { FlyoutComponent } from '../../../common/flyout/flyout.component';
 import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';

@@ -1,41 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-import { HelpModule } from './help/help.module';
-import { FeedbackModule } from './feedback/feedback.module';
-
+import { AdminTopics } from '../common/admin/admin-topic.model';
+import { LoadingSpinnerModule } from '../common/loading-spinner.module';
+import { SystemAlertModule } from '../common/system-alert.module';
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
-import { AuthenticationService } from './auth/authentication.service';
 import { AuthGuard } from './auth/auth.guard';
-import { AuthorizationService } from './auth/authorization.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthenticationService } from './auth/authentication.service';
+import { AuthorizationDirective } from './auth/authorization.directive';
+import { AuthorizationService } from './auth/authorization.service';
+import { SessionService } from './auth/session.service';
 import { ConfigService } from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
+import { UserEuaComponent } from './eua/user-eua.component';
 import { ExportConfigService } from './export-config.service';
-import { LoadingSpinnerModule } from '../common/loading-spinner.module';
+import { FeedbackModule } from './feedback/feedback.module';
+import { HelpModule } from './help/help.module';
+import { MessagesModule } from './messages/messages.module';
 import { PageTitleService } from './page-title.service';
-import { SessionService } from './auth/session.service';
-import { SignedUpComponent } from './signup/signed-up.component';
 import { SigninComponent } from './signin/signin.component';
+import { SignedUpComponent } from './signup/signed-up.component';
 import { SignupComponent } from './signup/signup.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
-import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 import { NavbarTopics } from './site-navbar/navbar-topic.model';
-import { SystemAlertModule } from '../common/system-alert.module';
-import { AuthorizationDirective } from './auth/authorization.directive';
-import { UnauthorizedComponent } from './unauthorized.component';
-import { UserEuaComponent } from './eua/user-eua.component';
+import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 import { TeamsModule } from './teams/teams.module';
-import { MessagesModule } from './messages/messages.module';
-import { AdminTopics } from '../common/admin/admin-topic.model';
+import { UnauthorizedComponent } from './unauthorized.component';
 
 export function getConfiguration(configService: ConfigService) {
 	return () => {

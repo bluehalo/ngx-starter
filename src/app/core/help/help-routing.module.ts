@@ -1,10 +1,10 @@
 import { Injectable, NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterModule } from '@angular/router';
 
+import { AuthGuard } from '../auth/auth.guard';
+import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
 import { HelpTopics } from './help-topic.component';
 import { HelpComponent } from './help.component';
-import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
-import { AuthGuard } from '../auth/auth.guard';
 
 @Injectable()
 export class HelpBreadcrumbResolver implements Resolve<string> {

@@ -1,16 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
-
+import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
+import { AuthorizationService } from '../auth/authorization.service';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
-import { FeedbackModalComponent } from '../feedback/feedback.module';
-import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
-import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
+import { FeedbackModalComponent } from '../feedback/feedback.module';
 import { MessageService } from '../messages/message.service';
-import { AuthorizationService } from '../auth/authorization.service';
+import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 
 @Component({
 	selector: 'site-navbar',

@@ -1,16 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FlyoutModule } from '../../common/flyout.module';
-
-import { FeedbackService } from './feedback.service';
-import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
 import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.component';
+import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
+import { FeedbackService } from './feedback.service';
 
 @NgModule({
 	imports: [TooltipModule.forRoot(), NgSelectModule, CommonModule, FormsModule, FlyoutModule],

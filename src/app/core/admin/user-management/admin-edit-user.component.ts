@@ -1,13 +1,12 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { User } from '../../auth/user.model';
+import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
-import { ConfigService } from '../../config.service';
-import { SystemAlertService } from '../../../common/system-alert.module';
 
 @Component({
 	selector: 'admin-edit-user',

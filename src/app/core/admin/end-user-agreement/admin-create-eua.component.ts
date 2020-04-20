@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ModalService } from '../../../common/modal.module';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
-import { ModalService } from '../../../common/modal.module';
 
 @Component({
 	selector: 'admin-create-eua',

@@ -1,13 +1,14 @@
 import {
 	Component,
-	Input,
-	ViewChild,
-	ViewContainerRef,
-	ComponentRef,
-	ComponentFactoryResolver,
 	ComponentFactory,
-	OnInit
+	ComponentFactoryResolver,
+	ComponentRef,
+	Input,
+	OnInit,
+	ViewChild,
+	ViewContainerRef
 } from '@angular/core';
+
 import { AuditObjectTypes } from './audit.classes';
 
 @Component({

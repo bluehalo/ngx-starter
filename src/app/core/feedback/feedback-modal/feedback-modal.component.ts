@@ -1,14 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
-
 import { ConfigService } from '../../config.service';
-import { FeedbackService } from '../feedback.service';
 import { Feedback } from '../feedback.model';
+import { FeedbackService } from '../feedback.service';
 
 @Component({
 	templateUrl: 'feedback-modal.component.html'
