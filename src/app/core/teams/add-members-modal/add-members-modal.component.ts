@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.module';
 
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
+import { User } from '../../auth/user.model';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
 	selector: 'app-add-members-modal',
@@ -31,6 +32,10 @@ export class AddMembersModalComponent implements OnInit {
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
+	usersLoading = false;
+	usersInput$ = new Subject<string>();
+	users$: Observable<User[]>;
+
 	private defaultRole = 'member';
 
 	private pagingOptions: PagingOptions = new PagingOptions();
@@ -51,6 +56,25 @@ export class AddMembersModalComponent implements OnInit {
 				});
 			})
 		);
+
+		this.users$ = concat(
+			of([]), // default items
+			this.usersInput$.pipe(
+				debounceTime(200),
+				distinctUntilChanged(),
+				tap(() => (this.usersLoading = true)),
+				switchMap(term => this.teamsService.searchUsers({}, term, this.pagingOptions, {})),
+				map(result =>
+					result.elements.filter(
+						(user: any) =>
+							!this.addedMembers.map(m => m._id).includes(user?.userModel._id)
+					)
+				),
+				tap(() => {
+					this.usersLoading = false;
+				})
+			)
+		);
 	}
 
 	submit() {
@@ -70,26 +94,23 @@ export class AddMembersModalComponent implements OnInit {
 		}
 	}
 
-	updateRoleSelection(ndx: number, role: string) {
-		if (ndx >= 0 && ndx < this.addedMembers.length) {
-			this.addedMembers[ndx].role = role;
-			this.addedMembers[ndx].roleDisplay = TeamRole.getDisplay(role);
-		}
+	updateRoleSelection(addedMember: AddedMember, role: string) {
+		addedMember.role = role;
+		addedMember.roleDisplay = TeamRole.getDisplay(role);
 	}
 
-	typeaheadOnSelect(e: TypeaheadMatch) {
-		const selectedUsername = e?.item?.userModel?.username;
-		const selectedUserId = e?.item?.userModel?._id;
-		if (
-			null != selectedUsername &&
-			this.addedMembers.findIndex((u: AddedMember) => u.username === selectedUsername) === -1
-		) {
+	typeaheadOnSelect(user: User, comp: NgSelectComponent) {
+		const selectedUsername = user?.userModel?.username;
+		const selectedUserId = user?.userModel?._id;
+		if (null != selectedUsername) {
 			this.addedMembers.push({
 				username: selectedUsername,
 				_id: selectedUserId,
 				role: this.defaultRole,
 				roleDisplay: TeamRole.getDisplay(this.defaultRole)
 			} as AddedMember);
+
+			comp.clearModel();
 		}
 		this.queryUserSearchTerm = '';
 	}

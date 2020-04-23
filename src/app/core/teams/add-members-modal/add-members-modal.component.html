@@ -14,14 +14,17 @@
 <section class="modal-body">
 	<h3>Add users</h3>
 	<div class="form-group">
-		<input type="text" name="member" class="form-control"
-			   placeholder="Start typing a username to add..."
-			   [(ngModel)]="queryUserSearchTerm"
-			   [typeahead]="dataSource"
-			   [typeaheadOptionField]="'displayName'"
-			   [typeaheadMinLength]="2"
-			   [typeaheadWaitMs]="300"
-			   (typeaheadOnSelect)="typeaheadOnSelect($event)">
+		<ng-select name="teamAdmin"
+				   bindLabel="userModel.name"
+				   placeholder="Search for user..."
+				   [items]="users$ | async"
+				   [loading]="usersLoading"
+				   [typeahead]="usersInput$"
+				   (change)="typeaheadOnSelect($event, selectDropdown)"
+				   #selectDropdown>
+			<ng-template ng-label-tmp let-item="item">
+			</ng-template>
+		</ng-select>
 	</div>
 
 	<ng-container *ngIf="addedMembers.length > 0">
@@ -29,39 +32,39 @@
 
 		<table class="table table-condensed">
 			<thead>
-			<tr>
-				<th>Username</th>
-				<th>Role</th>
-				<th>&nbsp;</th>
-			</tr>
+				<tr>
+					<th>Username</th>
+					<th>Role</th>
+					<th>&nbsp;</th>
+				</tr>
 			</thead>
 
 			<tbody>
-			<tr *ngFor="let invited of addedMembers; let i = index" class="table-row">
-				<td><div class="hide-overflow" [attr.title]="invited.username">{{ invited.username }}</div></td>
-				<td>
-					<div class="dropdown dropdown-table-inline" dropdown>
-						<span class="dropdown-toggle" dropdownToggle>
-							<span class="mr-1">{{ invited.roleDisplay }}</span>
-						</span>
+				<tr *ngFor="let invited of addedMembers; let i = index" class="table-row">
+					<td><div class="hide-overflow" [attr.title]="invited.username">{{ invited.username }}</div></td>
+					<td>
+						<div class="dropdown dropdown-table-inline" dropdown>
+							<span class="dropdown-toggle" dropdownToggle>
+								<span class="mr-1">{{ invited.roleDisplay }}</span>
+							</span>
 
-						<ul *dropdownMenu class="dropdown-menu" role="menu">
-							<li *ngFor="let role of teamRoleOptions" [value]="role.role" (click)="updateRoleSelection(i, role.role)">
-								<a class="dropdown-item">{{ role.label }}</a>
-							</li>
-						</ul>
-					</div>
-				</td>
-				<td>
-					<a class="btn-icon"
-					   tooltip="Remove User"
-					   container="body"
-					   placement="bottom"
-					   (click)="remove(i)">
-						<span class="fa fa-lg fa-trash"></span>
-					</a>
-				</td>
-			</tr>
+							<ul *dropdownMenu class="dropdown-menu" role="menu">
+								<li *ngFor="let role of teamRoleOptions" [value]="role.role" (click)="updateRoleSelection(invited, role.role)">
+									<a class="dropdown-item">{{ role.label }}</a>
+								</li>
+							</ul>
+						</div>
+					</td>
+					<td>
+						<a class="btn-icon"
+						   tooltip="Remove User"
+						   container="body"
+						   placement="bottom"
+						   (click)="remove(i)">
+							<span class="fa fa-lg fa-trash"></span>
+						</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</ng-container>

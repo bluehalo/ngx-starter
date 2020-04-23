@@ -9,9 +9,8 @@
 	<system-alert></system-alert>
 
 	<form #form="ngForm" autocomplete="off" class="pt-3" role="form" (ngSubmit)="save()" novalidate>
-
 		<h1>
-			Create Team<br/>
+			Create Team
 			<small>Provide some basic metadata to create a new team</small>
 		</h1>
 
@@ -27,31 +26,18 @@
 		</div>
 
 		<!-- Team Admin -->
-		<div class="form-group d-inline-block" *ngIf="isAdmin">
+		<div class="form-group" *ngIf="isAdmin">
 			<label class="form-required">Team Admin</label>
-
-			<div *ngIf="!editDefaultTeamAdmin">
-				<span class="fa fa-user"></span> {{ defaultTeamAdmin.name }} ({{ defaultTeamAdmin.username }})
-				<button type="button" class="btn btn-link" (click)="editDefaultTeamAdmin = true">(Select Another Admin)</button>
-			</div>
-
-			<div *ngIf="editDefaultTeamAdmin" class="form-row">
-				<div class="col">
-					<input type="text" name="admin" id="admin" class="form-control" style="width: 500px"
-						   placeholder="Start typing a user to add..."
-						   [(ngModel)]="queryUserSearchTerm"
-						   [typeahead]="searchUsersRef"
-						   [typeaheadOptionField]="'displayName'"
-						   [typeaheadMinLength]="2"
-						   [typeaheadWaitMs]="300"
-						   (typeaheadOnSelect)="typeaheadOnSelect($event)">
-				</div>
-
-				<div class="col">
-					<!-- Cancel Button -->
-					<button type="button" class="btn btn-outline-secondary" (click)="editDefaultTeamAdmin = false">Cancel</button>
-				</div>
-			</div>
+			<ng-select style="width: 400px;"
+					   name="teamAdmin"
+					   bindLabel="userModel.name"
+					   placeholder="Search for user..."
+					   [items]="users$ | async"
+					   [loading]="usersLoading"
+					   [typeahead]="usersInput$"
+					   [(ngModel)]="teamAdmin">
+			</ng-select>
+			<button type="button" class="btn btn-sm btn-link px-0 pb-0" (click)="setCurrentUserAsAdmin()">I am the Team Admin</button>
 		</div>
 
 		<!-- Description -->
@@ -61,17 +47,18 @@
 		</div>
 
 		<!-- Implicit Teams Members -->
-		<div class="form-group mb-2" *ngIf="implicitMembersStrategy !== null">
-			<p class="mt-4 mb-1">Do you want to automatically grant users access to team based on external {{ implicitMembersStrategy }}?</p>
-			<div class="radio">
-				<input type="radio" name="name-type-option-radio" id="implicit-members-option-yes"
-					   [value]="true" [(ngModel)]="team.implicitMembers">
-				<label for="implicit-members-option-yes" class="mb-2">Yes</label>
+		<div class="form-group" *ngIf="implicitMembersStrategy !== null">
+			<label class="form-required">Implicit Team Members</label>
+			<p class="mt-n1 mb-1">Do you want to automatically grant users access to team based on external {{ implicitMembersStrategy }}?</p>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="name-type-option-radio"
+					   id="implicit-members-option-yes" [value]="true" [(ngModel)]="team.implicitMembers" required>
+				<label class="form-check-label mb-2" for="implicit-members-option-yes">Yes</label>
 			</div>
-			<div class="radio">
-				<input type="radio" name="name-type-option-radio" id="implicit-members-option-no"
-					   [value]="false" [(ngModel)]="team.implicitMembers">
-				<label for="implicit-members-option-no" class="mb-2">No</label>
+			<div class="form-check">
+				<input class="form-check-label" type="radio" name="name-type-option-radio"
+					   id="implicit-members-option-no" [value]="false" [(ngModel)]="team.implicitMembers" required>
+				<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
 			</div>
 		</div>
 
@@ -90,7 +77,7 @@
 		<div class="form-group">
 			<div class="text-right">
 				<button type="button" class="btn btn-link" routerLink="/teams">Cancel</button>
-				<button type="submit" class="btn btn-primary btn-submit ml-2" [ngClass]="{'btn-submitting': isSubmitting}"
+				<button type="submit" class="btn btn-primary btn-submit ml-2" [class.btn-submitting]="isSubmitting"
 						[disabled]="!form.form.valid || isSubmitting">Add</button>
 			</div>
 		</div>

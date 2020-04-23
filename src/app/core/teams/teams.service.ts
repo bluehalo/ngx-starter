@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import isArray from 'lodash/isArray';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { PagingOptions, PagingResults, NULL_PAGING_RESULTS } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
@@ -17,6 +17,7 @@ import { TeamAuthorizationService } from './team-authorization.service';
 import { User } from '../auth/user.model';
 
 export interface AddedMember {
+	_id: string;
 	username?: string;
 	role: string;
 	roleDisplay: string;
@@ -86,13 +87,12 @@ export class TeamsService {
 				headers: this.headers
 			})
 			.pipe(
-				map((result: PagingResults) => {
+				tap((result: PagingResults) => {
 					if (null != result && Array.isArray(result.elements)) {
 						result.elements = result.elements.map((element: any) =>
 							new Team().setFromModel(element)
 						);
 					}
-					return result;
 				}),
 				catchError(() => {
 					return of(NULL_PAGING_RESULTS);
@@ -122,7 +122,7 @@ export class TeamsService {
 		search: any,
 		paging: PagingOptions,
 		options: any
-	): Observable<PagingResults> {
+	): Observable<PagingResults<TeamMember>> {
 		return this.http
 			.post(
 				`api/team/${team._id}/members?`,
@@ -149,9 +149,7 @@ export class TeamsService {
 
 	getTeams(): Observable<Team[]> {
 		return this.search(new PagingOptions(0, 1000), {}, null, {}).pipe(
-			map((results: PagingResults) => {
-				return results.elements;
-			}),
+			map((results: PagingResults) => results.elements),
 			catchError(() => of([]))
 		);
 	}
@@ -159,12 +157,11 @@ export class TeamsService {
 	getTeamsCanManageResources(): Observable<Team[]> {
 		return this.getTeams().pipe(
 			map((teams: Team[]) => {
-				return teams.filter(team => {
-					return (
+				return teams.filter(
+					team =>
 						this.authorizationService.isAdmin() ||
 						this.teamAuthorizationService.canManageResources(team)
-					);
-				});
+				);
 			})
 		);
 	}
@@ -175,18 +172,17 @@ export class TeamsService {
 		paging: PagingOptions,
 		options: any,
 		admin = false
-	): Observable<PagingResults> {
+	): Observable<PagingResults<User>> {
 		const url = admin ? 'api/admin/users' : 'api/users';
 		return this.http
 			.post(url, { q: query, s: search, options }, { params: paging.toObj() })
 			.pipe(
-				map((results: PagingResults) => {
+				tap((results: PagingResults) => {
 					if (null != results && isArray(results.elements)) {
 						results.elements = results.elements.map((element: any) =>
 							new User().setFromUserModel(element)
 						);
 					}
-					return results;
 				}),
 				catchError(error => {
 					this.alertService.addClientErrorAlert(error);
@@ -195,7 +191,7 @@ export class TeamsService {
 			);
 	}
 
-	private handleTeamMembers(result: any, team: Team) {
+	private handleTeamMembers(result: any, team: Team): PagingResults<TeamMember> {
 		if (null != result && Array.isArray(result.elements)) {
 			result.elements = result.elements.map((element: any) =>
 				new TeamMember().setFromTeamMemberModel(team, element)

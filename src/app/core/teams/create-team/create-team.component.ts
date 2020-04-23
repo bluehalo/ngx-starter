@@ -1,13 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
-import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
-import { Observable } from 'rxjs';
-import { first, map, mergeMap, tap } from 'rxjs/operators';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
 
-import { PagingResults, PagingOptions } from '../../../common/paging.module';
+import { PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { User } from '../../auth/user.model';
@@ -32,13 +30,11 @@ export class CreateTeamComponent implements OnInit {
 
 	isAdmin = false;
 
-	defaultTeamAdmin: any;
+	teamAdmin: User;
 
-	editDefaultTeamAdmin = false;
-
-	queryUserSearchTerm = '';
-
-	searchUsersRef: Observable<any>;
+	usersLoading = false;
+	usersInput$ = new Subject<string>();
+	users$: Observable<User[]>;
 
 	isSubmitting = false;
 
@@ -71,54 +67,45 @@ export class CreateTeamComponent implements OnInit {
 		this.sessionService.getSession().subscribe(session => {
 			this.user = session.user;
 			this.isAdmin = this.authorizationService.isAdmin();
-			this.defaultTeamAdmin = this.user.userModel;
+			if (!this.isAdmin) {
+				this.setCurrentUserAsAdmin();
+			}
 		});
 
-		// Bind the search users typeahead to a function
 		if (this.isAdmin) {
-			this.searchUsersRef = new Observable((observer: any) => {
-				observer.next(this.queryUserSearchTerm);
-			}).pipe(
-				mergeMap((token: string) =>
-					this.teamsService.searchUsers({}, token, this.pagingOptions, {}, true)
-				),
-				map((result: PagingResults) => {
-					return result.elements
-						.filter((user: any) => user._id !== this.defaultTeamAdmin._id)
-						.map((user: any) => user.userModel)
-						.map((user: any) => {
-							user.displayName = `${user.name}  [${user.username}]`;
-							return user;
-						});
-				})
+			this.users$ = concat(
+				of([]), // default items
+				this.usersInput$.pipe(
+					debounceTime(200),
+					distinctUntilChanged(),
+					tap(() => (this.usersLoading = true)),
+					switchMap(term =>
+						this.teamsService.searchUsers({}, term, this.pagingOptions, {}, true)
+					),
+					map(result =>
+						result.elements.filter(
+							(user: any) => user?.userModel._id !== this.teamAdmin?.userModel._id
+						)
+					),
+					tap(() => {
+						this.usersLoading = false;
+					})
+				)
 			);
 		}
 	}
 
-	typeaheadOnSelect(selected: TypeaheadMatch) {
-		this.defaultTeamAdmin = selected.item;
-		this.queryUserSearchTerm = '';
-		this.editDefaultTeamAdmin = false;
+	setCurrentUserAsAdmin() {
+		this.teamAdmin = this.user;
 	}
 
 	save() {
 		this.isSubmitting = true;
 		this.teamsService
-			.create(
-				this.team,
-				this.defaultTeamAdmin._id !== this.user.userModel._id
-					? this.defaultTeamAdmin._id
-					: null
-			)
+			.create(this.team, this.teamAdmin.userModel._id)
 			.pipe(tap(() => this.authenticationService.reloadCurrentUser()))
-			.subscribe(
-				() => {
-					return this.router.navigate(['/teams', { clearCachedFilter: true }]);
-				},
-				(error: HttpErrorResponse) => {
-					this.isSubmitting = false;
-					this.alertService.addClientErrorAlert(error);
-				}
-			);
+			.subscribe(() => {
+				return this.router.navigate(['/teams', { clearCachedFilter: true }]);
+			});
 	}
 }

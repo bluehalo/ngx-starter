@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -36,7 +36,7 @@ import { User } from '../../auth/user.model';
 	styleUrls: ['./list-team-members.component.scss']
 })
 export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
-	implements OnInit {
+	implements OnDestroy, OnInit {
 	@Input()
 	team: Team;
 
@@ -65,8 +65,9 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 			tooltip: 'Sort by Username'
 		},
 		{ name: 'Account Status', sortable: false },
+		{ name: 'Explicit', sortable: false },
 		{ name: 'Role', sortable: false },
-		{ name: '', sortable: false }
+		{ name: '', sortField: 'remove', sortable: false }
 	];
 
 	headersToShow: SortableTableHeader[] = [];
@@ -102,12 +103,13 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 
 		super.ngOnInit();
 
-		this.headersToShow = this.canManageTeam
-			? this.headers.filter((header: SortableTableHeader) => header.sortField !== 'remove')
-			: this.headers;
-		this.headersToShow = this.isUserAdmin
-			? this.headers
-			: this.headers.filter((header: SortableTableHeader) => header.sortField !== 'bypassed');
+		this.headersToShow = this.headers
+			.filter(header => this.canManageTeam || header.sortField !== 'remove')
+			.filter(header => this.team.implicitMembers || header.name !== 'Explicit');
+	}
+
+	ngOnDestroy(): void {
+		this.modalRef?.hide();
 	}
 
 	loadData(
