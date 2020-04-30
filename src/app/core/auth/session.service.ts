@@ -4,7 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 
 import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
-import { of, pipe, BehaviorSubject, Observable } from 'rxjs/index';
+import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
 import { AuthenticationService } from './authentication.service';
