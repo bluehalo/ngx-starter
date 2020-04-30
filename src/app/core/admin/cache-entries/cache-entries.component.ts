@@ -1,24 +1,22 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
-
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
+	AbstractPageableDataComponent,
 	PagingOptions,
 	PagingResults,
-	SortDirection,
 	SortableTableHeader,
-	AbstractPageableDataComponent,
-	SortChange
+	SortChange,
+	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { CacheEntry } from './cache-entry.model';
 import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
-import { Observable } from 'rxjs';
+import { CacheEntry } from './cache-entry.model';
 
 @Component({
 	selector: 'cache-entries',

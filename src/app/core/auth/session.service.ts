@@ -1,16 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
-import { BehaviorSubject, Observable, of, pipe } from 'rxjs/index';
+import { of, pipe, BehaviorSubject, Observable } from 'rxjs/index';
 import { catchError, map, tap } from 'rxjs/operators';
-
+import { ConfigService } from '../config.service';
 import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
 import { User } from './user.model';
-import { ConfigService } from '../config.service';
 
 @Injectable()
 export class SessionService {

@@ -1,14 +1,13 @@
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import isEmpty from 'lodash/isEmpty';
 import { Observable, Subscription } from 'rxjs';
-
-import { ManageUserComponent } from '../admin/user-management/manage-user.component';
+import { SystemAlertService } from '../../common/system-alert.module';
 import { ConfigService } from '../../core/config.service';
+import { ManageUserComponent } from '../admin/user-management/manage-user.component';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
-import { SystemAlertService } from '../../common/system-alert.module';
 
 @Component({
 	selector: 'user-signup',

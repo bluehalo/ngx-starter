@@ -1,13 +1,12 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-
 import { SystemAlertService } from '../../../common/system-alert.module';
-import { ManageUserComponent } from './manage-user.component';
-import { AdminUsersService } from './admin-users.service';
-import { ConfigService } from '../../config.service';
 import { User } from '../../auth/user.model';
+import { ConfigService } from '../../config.service';
+import { AdminUsersService } from './admin-users.service';
+import { ManageUserComponent } from './manage-user.component';
 
 @Component({
 	selector: 'admin-create-user',

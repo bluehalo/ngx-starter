@@ -1,15 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { SystemAlertService } from '../../../common/system-alert.module';
-
+import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
-import { Role } from '../../auth/role.model';
 
 export abstract class ManageUserComponent implements OnDestroy, OnInit {
 	config: any;

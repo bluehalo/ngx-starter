@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { FlyoutComponent } from './flyout/flyout.component';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { FlyoutComponent } from './flyout/flyout.component';
 
 @NgModule({
 	imports: [CommonModule],

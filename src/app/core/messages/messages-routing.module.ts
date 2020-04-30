@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { AuthGuard } from '../auth/auth.guard';
 import { ViewAllMessagesComponent } from './view-all-messages/view-all-messages.component';
 

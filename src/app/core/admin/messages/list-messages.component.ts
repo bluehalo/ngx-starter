@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { first, filter, switchMap } from 'rxjs/operators';
 import toString from 'lodash/toString';
-
+import { Observable } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
+import { ModalAction, ModalService } from 'src/app/common/modal.module';
 import {
-	PagingOptions,
-	SortDirection,
-	SortableTableHeader,
-	PagingResults,
 	AbstractPageableDataComponent,
-	SortChange
+	PagingOptions,
+	PagingResults,
+	SortableTableHeader,
+	SortChange,
+	SortDirection
 } from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
-import { ModalService, ModalAction } from 'src/app/common/modal.module';
-
 import { Message } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
 

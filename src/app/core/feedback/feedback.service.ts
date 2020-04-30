@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-import { PagingResults, NULL_PAGING_RESULTS, PagingOptions } from '../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { Feedback } from './feedback.model';
 

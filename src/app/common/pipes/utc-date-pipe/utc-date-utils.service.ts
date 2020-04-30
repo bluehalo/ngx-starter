@@ -1,4 +1,4 @@
-import { Moment, isMoment, utc } from 'moment';
+import { isMoment, utc, Moment } from 'moment';
 
 export class UtcDateUtils {
 	private static defaultFormat = 'YYYY-MM-DD HH:mm:ss[Z]';

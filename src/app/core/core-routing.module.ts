@@ -3,12 +3,12 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
-import { SignedUpComponent } from './signup/signed-up.component';
+import { AuthGuard } from './auth/auth.guard';
+import { UserEuaComponent } from './eua/user-eua.component';
 import { SigninComponent } from './signin/signin.component';
+import { SignedUpComponent } from './signup/signed-up.component';
 import { SignupComponent } from './signup/signup.component';
 import { UnauthorizedComponent } from './unauthorized.component';
-import { UserEuaComponent } from './eua/user-eua.component';
-import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
 	imports: [

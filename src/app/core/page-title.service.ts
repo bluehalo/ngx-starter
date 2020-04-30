@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-
 import { ConfigService } from './config.service';
 
 @Injectable()

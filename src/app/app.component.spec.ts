@@ -1,9 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { async, TestBed } from '@angular/core/testing';
+
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SiteModule } from './site/site.module';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 
 describe('AppComponent', () => {
 	beforeEach(async(() => {

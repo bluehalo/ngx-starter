@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../auth/auth.guard';
-import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
-import { ViewTeamComponent } from './view-team/view-team.component';
+import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamsResolve } from './teams.resolver';
+import { ViewTeamComponent } from './view-team/view-team.component';
 
 @NgModule({
 	imports: [

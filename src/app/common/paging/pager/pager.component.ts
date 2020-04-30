@@ -1,17 +1,16 @@
 import {
 	Component,
-	Input,
-	Output,
-	SimpleChange,
 	EventEmitter,
+	Input,
+	OnChanges,
 	OnInit,
-	OnChanges
+	Output,
+	SimpleChange
 } from '@angular/core';
 
 import isNumber from 'lodash/isNumber';
-
-import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 import { PageChange, PagingOptions } from '../paging.model';
+import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 
 /**
  * @deprecated

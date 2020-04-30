@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
 import { QuickFiltersComponent } from '../quick-filters/quick-filters.component';
 
 @Component({

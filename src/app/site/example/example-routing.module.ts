@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { AdminComponent } from '../../common/admin.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
+import { AdminExampleComponent } from './admin/admin-example.component';
 import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
+import { GridComponent } from './grid/grid.component';
+import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
-import { GridComponent } from './grid/grid.component';
-import { AdminExampleComponent } from './admin/admin-example.component';
-import { AdminComponent } from '../../common/admin.module';
-import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
 	imports: [

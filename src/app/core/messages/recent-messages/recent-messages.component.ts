@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import orderBy from 'lodash/orderBy';
-
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 

@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 
-import { EndUserAgreement } from './eua.model';
 import { ModalService } from '../../../common/modal.module';
+import { EndUserAgreement } from './eua.model';
 
 export abstract class ManageEuaComponent {
 	error: any;

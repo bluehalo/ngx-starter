@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import isArray from 'lodash/isArray';
-import { Observable, of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-import { PagingOptions, PagingResults, NULL_PAGING_RESULTS } from '../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
-
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
-
-import { Team } from './team.model';
-import { TeamMember } from './team-member.model';
-import { TeamAuthorizationService } from './team-authorization.service';
 import { User } from '../auth/user.model';
+import { TeamAuthorizationService } from './team-authorization.service';
+import { TeamMember } from './team-member.model';
+import { Team } from './team.model';
 
 export interface AddedMember {
 	_id: string;

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import indexOf from 'lodash/indexOf';
-
-import { Session } from './session.model';
 import { Role } from './role.model';
+import { Session } from './session.model';
 import { SessionService } from './session.service';
 
 @Injectable()

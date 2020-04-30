@@ -1,12 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
 import { of, Observable } from 'rxjs';
 import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
-
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -17,18 +15,16 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
-
-import { TeamRole } from '../team-role.model';
-import { TeamMember } from '../team-member.model';
-import { Team } from '../team.model';
-import { TeamsService } from '../teams.service';
-import { AddMembersModalComponent } from '../add-members-modal/add-members-modal.component';
-import { TeamAuthorizationService } from '../team-authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
+import { AddMembersModalComponent } from '../add-members-modal/add-members-modal.component';
+import { TeamAuthorizationService } from '../team-authorization.service';
+import { TeamMember } from '../team-member.model';
+import { TeamRole } from '../team-role.model';
+import { Team } from '../team.model';
+import { TeamsService } from '../teams.service';
 
 @Component({
 	selector: 'list-team-members',

@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { SessionService } from '../auth/session.service';
 import { SystemAlertService } from '../../common/system-alert.module';
+import { SessionService } from '../auth/session.service';
 
 @Component({
 	templateUrl: 'user-eua.component.html'

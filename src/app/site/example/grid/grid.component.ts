@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { NavbarTopics } from '../../../core/core.module';
 
 @Component({

@@ -3,22 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import _isString from 'lodash/isString';
 import { utc } from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-
 import {
-	PagingOptions,
-	SortDirection,
-	PagingResults,
 	AbstractPageableDataComponent,
+	PagingOptions,
+	PagingResults,
 	SortableTableHeader,
-	SortChange
+	SortChange,
+	SortDirection
 } from '../../../common/paging.module';
-
-import { AuditOption } from '../audit.classes';
-import { AuditService } from '../audit.service';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
+import { AuditOption } from '../audit.classes';
+import { AuditService } from '../audit.service';
 
 @Component({
 	styleUrls: ['./list-audit-entries.component.scss'],

@@ -1,5 +1,4 @@
 import { utc } from 'moment';
-
 import { UtcDateUtils } from './utc-date-utils.service';
 
 describe('UtcDateUtils', () => {

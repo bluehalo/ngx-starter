@@ -1,11 +1,10 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
-
-import { HelpTopics } from '../help-topic.component';
 import { ConfigService } from '../../../core/config.service';
+import { HelpTopics } from '../help-topic.component';
 
 @Component({
 	templateUrl: 'getting-started-help.component.html'

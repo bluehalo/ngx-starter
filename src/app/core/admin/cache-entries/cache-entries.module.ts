@@ -1,20 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
-import { CacheEntryModalComponent } from './cache-entry-modal.component';
-import { CacheEntriesService } from './cache-entries.service';
-import { CacheEntriesComponent } from './cache-entries.component';
-
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
-import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SearchInputModule } from '../../../common/search-input.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
+import { CacheEntriesComponent } from './cache-entries.component';
+import { CacheEntriesService } from './cache-entries.service';
+import { CacheEntryModalComponent } from './cache-entry-modal.component';
 
 @NgModule({
 	imports: [

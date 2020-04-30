@@ -1,5 +1,5 @@
-import { FeedbackService } from './feedback.service';
 import { Feedback } from './feedback.model';
+import { FeedbackService } from './feedback.service';
 
 describe('FeedbackService', () => {
 	it('should exist', () => {

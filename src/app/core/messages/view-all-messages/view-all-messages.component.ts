@@ -1,10 +1,9 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 
 import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/paging.module';
 import { SearchInputComponent } from 'src/app/common/search-input.module';
-
-import { MessageService } from '../message.service';
 import { Message, MessageType } from '../message.class';
+import { MessageService } from '../message.service';
 
 @Component({
 	selector: 'app-view-all-messages',

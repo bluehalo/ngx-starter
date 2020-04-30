@@ -1,23 +1,20 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-
-import { Observable, Subject } from 'rxjs';
-import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 
 import cloneDeep from 'lodash/cloneDeep';
 import toString from 'lodash/toString';
-
+import { Observable, Subject } from 'rxjs';
+import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
+	AbstractPageableDataComponent,
 	PagingOptions,
 	PagingResults,
-	SortDirection,
 	SortableTableHeader,
-	AbstractPageableDataComponent
+	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 

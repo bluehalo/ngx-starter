@@ -1,21 +1,17 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { concat, Observable, of, Subject } from 'rxjs';
+import { concat, of, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
-
 import { PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { User } from '../../auth/user.model';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { ConfigService } from '../../config.service';
-import { Config } from '../../config.model';
-
-import { SessionService } from '../../auth/session.service';
 import { AuthorizationService } from '../../auth/authorization.service';
-
+import { SessionService } from '../../auth/session.service';
+import { User } from '../../auth/user.model';
+import { Config } from '../../config.model';
+import { ConfigService } from '../../config.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
