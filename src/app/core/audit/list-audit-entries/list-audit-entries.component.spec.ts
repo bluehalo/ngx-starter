@@ -7,7 +7,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { of } from 'rxjs/index';
+import { of } from 'rxjs';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingModule, PagingResults } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
