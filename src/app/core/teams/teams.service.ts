@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import isArray from 'lodash/isArray';
 import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
@@ -175,7 +174,7 @@ export class TeamsService {
 			.post(url, { q: query, s: search, options }, { params: paging.toObj() })
 			.pipe(
 				tap((results: PagingResults) => {
-					if (null != results && isArray(results.elements)) {
+					if (null != results && Array.isArray(results.elements)) {
 						results.elements = results.elements.map((element: any) =>
 							new User().setFromUserModel(element)
 						);

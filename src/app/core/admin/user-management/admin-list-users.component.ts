@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import cloneDeep from 'lodash/cloneDeep';
-import isArray from 'lodash/isArray';
-import toString from 'lodash/toString';
 import { Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import {
@@ -114,11 +112,8 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			this.alertService.clearAllAlerts();
 
 			// Clear cache if requested
-			const clearCachedFilter = params[`clearCachedFilter`];
-			if (
-				toString(clearCachedFilter) === 'true' ||
-				null == this.adminUsersService.cache.listUsers
-			) {
+			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
+			if (clearCachedFilter === 'true' || null == this.adminUsersService.cache.listUsers) {
 				this.adminUsersService.cache.listUsers = {};
 			}
 		});
@@ -138,7 +133,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 					});
 				}
 
-				this.requiredExternalRoles = isArray(config.requiredRoles)
+				this.requiredExternalRoles = Array.isArray(config.requiredRoles)
 					? config.requiredRoles
 					: [];
 

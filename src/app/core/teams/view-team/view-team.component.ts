@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import cloneDeep from 'lodash/cloneDeep';
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { ModalAction, ModalService } from '../../../common/modal.module';
@@ -56,7 +55,7 @@ export class ViewTeamComponent implements OnInit {
 	}
 
 	edit() {
-		this._team = cloneDeep(this.team);
+		this._team = new Team().setFromModel(this.team);
 		this.isEditing = true;
 	}
 

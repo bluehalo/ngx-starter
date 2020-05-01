@@ -9,6 +9,7 @@
     "build": "npm run lint && ng build",
     "build:prod": "npm run lint && ng build --prod",
     "build:bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats-es2015.json",
+    "build:bundle-report:prod": "ng build --prod --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats-es2015.json",
     "test": "ng test --code-coverage",
     "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint && stylelint './src/**/*.scss'",

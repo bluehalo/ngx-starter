@@ -9,7 +9,6 @@ import {
 	ViewContainerRef
 } from '@angular/core';
 
-import values from 'lodash/values';
 import { StringUtils } from '../../common/string-utils.service';
 
 @Injectable()
@@ -23,9 +22,9 @@ export class HelpTopics {
 	}
 
 	static getTopicList(): string[] {
-		return values(this.topicOrder)
-			.sort((a, b) => a.ordinal - b.ordinal)
-			.map(v => v.key);
+		return Object.values(this.topicOrder)
+			.sort((a: any, b: any) => a.ordinal - b.ordinal)
+			.map((v: any) => v.key);
 	}
 
 	static getTopicTitle(title: string, short: boolean = false): string {

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import _forEach from 'lodash/forEach';
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 
 @Component({
