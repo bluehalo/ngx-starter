@@ -26,18 +26,18 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			sortDir: SortDirection.asc
 		},
 		{ name: 'Email', sortable: false },
-		{ name: 'Type', sortable: true, sortField: 'type', sortDir: SortDirection.asc },
-		{ name: 'Feedback', sortable: false },
-		{ name: 'Submitted From', sortable: true, sortField: 'url', sortDir: SortDirection.asc },
-		{ name: 'Browser', sortable: true, sortField: 'browser', sortDir: SortDirection.asc },
-		{ name: 'OS', sortable: true, sortField: 'os', sortDir: SortDirection.asc },
 		{
-			name: 'Submission Time',
+			name: 'Submitted Date',
 			sortable: true,
 			sortField: 'created',
-			sortDir: SortDirection.desc,
+			sortDir: SortDirection.asc,
 			default: true
-		}
+		},
+		{ name: 'Type', sortable: true, sortField: 'type', sortDir: SortDirection.asc },
+		{ name: 'Feedback', sortable: false },
+		{ name: 'Browser', sortable: true, sortField: 'browser', sortDir: SortDirection.asc },
+		{ name: 'OS', sortable: true, sortField: 'os', sortDir: SortDirection.asc },
+		{ name: 'Submitted From', sortable: true, sortField: 'url', sortDir: SortDirection.asc }
 	];
 
 	constructor(
