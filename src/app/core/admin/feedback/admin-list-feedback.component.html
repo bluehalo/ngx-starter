@@ -35,13 +35,13 @@
 					<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
 				</td>
 				<td>
+					<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">{{ feedback?.created | agoDate }}</div>
+				</td>
+				<td>
 					<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
 				</td>
 				<td>
 					<div style="width: 300px; white-space: pre-wrap">{{ feedback?.body }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.url }}</div>
 				</td>
 				<td>
 					<div class="hide-overflow">{{ feedback?.browser }}</div>
@@ -49,8 +49,8 @@
 				<td>
 					<div class="hide-overflow">{{ feedback?.os }}</div>
 				</td>
-				<td tooltip="{{ feedback?.created | utcDate }}" container="body" placement="top">
-					<div class="hide-overflow">{{ feedback?.created | agoDate:false }}</div>
+				<td>
+					<div class="hide-overflow">{{ feedback?.url }}</div>
 				</td>
 			</ng-template>
 

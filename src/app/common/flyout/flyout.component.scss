@@ -108,9 +108,10 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 }
 
 .flyout-content {
-	overflow: hidden;
+	overflow: auto;
 	border-top: $flyout-border-top solid $ux-color-highlight;
 	box-shadow: $flyout-box-shadow;
+	max-height: calc(100vh - 80px);
 	width: 0;
 
 	.flyout-top &,
@@ -119,6 +120,7 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 		border-left: $flyout-border-top solid $ux-color-highlight;
 		width: auto;
 		height: 0;
+		max-height: calc(100vh - 100px);
 	}
 
 	transition: width 1s ease-in-out, height 1s ease-in-out;
