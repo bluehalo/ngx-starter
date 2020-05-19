@@ -25,3 +25,81 @@ input[bsDatepicker] + span {
 	margin-left: -22px;
 	cursor: pointer;
 }
+
+.card-body.editing {
+	padding-bottom: 0;
+}
+
+.inline-edit-header-btns {
+	display: inline-block;
+}
+
+@supports (position: sticky) {
+	.inline-edit-header-btns {
+		display: none;
+	}
+}
+
+.inline-edit-btns {
+	background: $ux-color-white;
+	border-top: 1px solid $border-color;
+	bottom: 2.5rem;
+	margin-left: -1 * $card-spacer-x;
+	padding: $card-spacer-y $card-spacer-x;
+	position: sticky;
+	width: calc(100% + #{$card-spacer-x} * 2);
+	z-index: $zindex-sticky;
+}
+
+$form-inline-edit-label-col-width: 30% !default;
+
+.form-inline-edit {
+	border-top: $border-width solid $border-color;
+
+	textarea.form-control {
+		padding-top: calc(#{$input-padding-y} + 1px);
+	}
+
+	.form-check-inline .form-check-label {
+		margin-top: $spacer / 2;
+		margin-bottom: 0;
+	}
+
+	.form-group {
+		border-bottom: $border-width solid $border-color;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 0;
+		padding: 0.75 * $spacer;
+
+		&:nth-of-type(odd) {
+			background-color: $ux-color-background;
+		}
+
+		.col:first-child {
+			-webkit-box-flex: 0;
+			flex: 0 0 $form-inline-edit-label-col-width;
+			max-width: $form-inline-edit-label-col-width;
+		}
+
+		.col:last-child {
+			padding-right: 0;
+		}
+
+		.col-form-readonly-value {
+			-webkit-box-flex: 0;
+			flex: 0 0 100% - $form-inline-edit-label-col-width;
+			max-width: 100% - $form-inline-edit-label-col-width;
+
+			& div {
+				padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
+					calc(#{$input-padding-x} + #{$input-border-width}) calc(#{$input-padding-y});
+			}
+		}
+
+		.col-form-label {
+			padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
+				calc(#{$grid-gutter-width / 2} + #{$input-border-width}) calc(#{$input-padding-y});
+		}
+	}
+}
