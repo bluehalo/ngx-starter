@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { of, BehaviorSubject, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter, first } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
 import { AuthorizationService } from '../auth/authorization.service';
@@ -29,11 +29,13 @@ export class MessageService {
 		private http: HttpClient,
 		private socketService: SocketService
 	) {
-		this.sessionService.getSession().subscribe((session: Session) => {
-			if (authorizationService.isUser()) {
+		this.sessionService
+			.getSession()
+			.pipe(first(() => authorizationService.isUser()))
+			.subscribe((session: Session) => {
 				this.initialize();
-			}
-		});
+				this.updateNewMessageIndicator();
+			});
 	}
 
 	create(message: Message): Observable<Message> {
@@ -178,11 +180,11 @@ export class MessageService {
 	}
 
 	updateNewMessageIndicator() {
-		this.recent().subscribe(results => {
-			if (results !== null) {
+		this.recent()
+			.pipe(filter(results => results !== null))
+			.subscribe(results => {
 				this.numMessagesIndicator.next(results.length);
-			}
-		});
+			});
 	}
 
 	private payloadRouterFn = (payload: any) => {
