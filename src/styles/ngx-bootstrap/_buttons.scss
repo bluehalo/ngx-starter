@@ -52,12 +52,22 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name
 		);
 	}
 
+	&.btn-square {
+		padding: $input-btn-padding-square;
+	}
+
 	&.btn-large {
 		@include font-normal($font-size-lg);
+		&.btn-square {
+			padding: $input-btn-padding-square-lg;
+		}
 	}
 
 	&.btn-sm {
 		@include font-normal($font-size-sm);
+		&.btn-square {
+			padding: $input-btn-padding-square-sm;
+		}
 	}
 
 	&.btn-outline-primary,
