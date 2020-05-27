@@ -36,6 +36,10 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name
 	$btn-submit-linear-animation-duration $btn-submit-animation-iteration-count
 	$btn-submit-linear-animation-timing-function;
 
+$btn-padding-square: $input-btn-padding-y !default;
+$btn-padding-square-sm: $input-btn-padding-y-sm !default;
+$btn-padding-square-lg: $input-btn-padding-y-lg !default;
+
 .btn {
 	@include font-normal($btn-font-size);
 
@@ -53,20 +57,20 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name
 	}
 
 	&.btn-square {
-		padding: $input-btn-padding-square;
+		padding: $btn-padding-square;
 	}
 
 	&.btn-large {
 		@include font-normal($font-size-lg);
 		&.btn-square {
-			padding: $input-btn-padding-square-lg;
+			padding: $btn-padding-square-lg;
 		}
 	}
 
 	&.btn-sm {
 		@include font-normal($font-size-sm);
 		&.btn-square {
-			padding: $input-btn-padding-square-sm;
+			padding: $btn-padding-square-sm;
 		}
 	}
 
