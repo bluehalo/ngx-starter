@@ -60,7 +60,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 		padding: $btn-padding-square;
 	}
 
-	&.btn-large {
+	&.btn-lg {
 		@include font-normal($font-size-lg);
 		&.btn-square {
 			padding: $btn-padding-square-lg;
