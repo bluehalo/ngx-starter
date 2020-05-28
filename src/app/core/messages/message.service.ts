@@ -2,9 +2,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { of, BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, filter, first } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
+import { AuthorizationService } from '../auth/authorization.service';
+import { Session } from '../auth/session.model';
+import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
 import { Message } from './message.class';
 
@@ -20,11 +23,19 @@ export class MessageService {
 	private subscribed = 0;
 
 	constructor(
+		private sessionService: SessionService,
+		private authorizationService: AuthorizationService,
 		private alertService: SystemAlertService,
 		private http: HttpClient,
 		private socketService: SocketService
 	) {
-		this.initialize();
+		this.sessionService
+			.getSession()
+			.pipe(first(() => authorizationService.isUser()))
+			.subscribe((session: Session) => {
+				this.initialize();
+				this.updateNewMessageIndicator();
+			});
 	}
 
 	create(message: Message): Observable<Message> {
@@ -169,11 +180,11 @@ export class MessageService {
 	}
 
 	updateNewMessageIndicator() {
-		this.recent().subscribe(results => {
-			if (results !== null) {
+		this.recent()
+			.pipe(filter(results => results !== null))
+			.subscribe(results => {
 				this.numMessagesIndicator.next(results.length);
-			}
-		});
+			});
 	}
 
 	private payloadRouterFn = (payload: any) => {

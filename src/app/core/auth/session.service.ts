@@ -61,7 +61,7 @@ export class SessionService {
 	}
 
 	getCurrentEua(): Observable<any> {
-		if (this.sessionSubject?.value?.user?.eua) {
+		if (this.sessionSubject?.value?.user?.eua !== undefined) {
 			return of(this.sessionSubject.value.user.eua);
 		}
 		return this.authService.getCurrentEua().pipe(

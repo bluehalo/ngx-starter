@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
-import { AuthorizationService } from '../auth/authorization.service';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
@@ -60,17 +59,12 @@ export class SiteNavbarComponent implements OnInit {
 		private modalService: BsModalService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
-		private authorizationService: AuthorizationService,
 		private messageService: MessageService
 	) {}
 
 	ngOnInit() {
 		this.sessionService.getSession().subscribe(session => {
 			this.session = session;
-
-			if (this.authorizationService.isUser()) {
-				this.messageService.updateNewMessageIndicator();
-			}
 		});
 
 		this.configService.getConfig().subscribe((config: Config) => {
