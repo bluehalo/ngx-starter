@@ -21,9 +21,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 	headers: SortableTableHeader[] = [
 		{
 			name: 'Submitted By',
-			sortable: true,
-			sortField: 'audit.actor',
-			sortDir: SortDirection.asc
+			sortable: false
 		},
 		{ name: 'Email', sortable: false },
 		{
