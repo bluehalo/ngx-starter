@@ -11,6 +11,7 @@ import {
 	PagingOptions,
 	PagingResults,
 	SortableTableHeader,
+	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
@@ -94,6 +95,8 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 			(header: SortableTableHeader) =>
 				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
 		);
+
+		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
 		this.initializeFromCache();
 
