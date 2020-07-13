@@ -10,9 +10,11 @@ import {
 	ɵstringify as stringify
 } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';
 
+@UntilDestroy()
 @Directive({
 	selector: '[isAuthenticated], [hasRole], [hasEveryRole], [hasSomeRoles]'
 })
@@ -70,9 +72,12 @@ export class AuthorizationDirective implements OnChanges, OnInit {
 	}
 
 	ngOnInit() {
-		this.sessionService.getSession().subscribe(() => {
-			this._updateView();
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this._updateView();
+			});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

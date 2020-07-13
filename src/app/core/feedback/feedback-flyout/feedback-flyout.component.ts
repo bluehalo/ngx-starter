@@ -2,13 +2,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FlyoutComponent } from '../../../common/flyout/flyout.component';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
-import { FlyoutComponent } from '../../../common/flyout/flyout.component';
 import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-feedback-flyout',
 	templateUrl: './feedback-flyout.component.html',
@@ -34,7 +37,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first())
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.baseUrl = config.app.clientUrl || '';
 
@@ -60,17 +63,20 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 		// Get the current URL from the router at the time of submission.
 		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
-		this.feedbackService.submit(this.feedback).subscribe(
-			() => {
-				this.status = 'success';
-				setTimeout(() => {
-					this.closeForm();
-				}, 2000);
-			},
-			(error: HttpErrorResponse) => {
-				this.status = 'failure';
-				this.errorMsg = error.error.message;
-			}
-		);
+		this.feedbackService
+			.submit(this.feedback)
+			.pipe(untilDestroyed(this))
+			.subscribe(
+				() => {
+					this.status = 'success';
+					setTimeout(() => {
+						this.closeForm();
+					}, 2000);
+				},
+				(error: HttpErrorResponse) => {
+					this.status = 'failure';
+					this.errorMsg = error.error.message;
+				}
+			);
 	}
 }

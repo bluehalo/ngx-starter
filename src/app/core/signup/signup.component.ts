@@ -1,14 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { SystemAlertService } from '../../common/system-alert.module';
+
+import { ConfigService } from '../../core/config.service';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { Observable, Subscription } from 'rxjs';
-import { SystemAlertService } from '../../common/system-alert.module';
-import { ConfigService } from '../../core/config.service';
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
 
+@UntilDestroy()
 @Component({
 	selector: 'user-signup',
 	templateUrl: '../admin/user-management/manage-user.component.html'
@@ -32,12 +36,14 @@ export class SignupComponent extends ManageUserComponent implements OnDestroy, O
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.routeParamSubscription = this.route.queryParams.subscribe((params: Params) => {
-			this.inviteId = params.inviteId;
-			if (!isEmpty(params.email)) {
-				this.user.userModel.email = params.email;
-			}
-		});
+		this.routeParamSubscription = this.route.queryParams
+			.pipe(untilDestroyed(this))
+			.subscribe((params: Params) => {
+				this.inviteId = params.inviteId;
+				if (!isEmpty(params.email)) {
+					this.user.userModel.email = params.email;
+				}
+			});
 	}
 
 	initialize() {

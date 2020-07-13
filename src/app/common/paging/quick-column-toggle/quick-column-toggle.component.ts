@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { QuickFiltersComponent } from '../quick-filters/quick-filters.component';
 
+@UntilDestroy()
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'quick-column-toggle',

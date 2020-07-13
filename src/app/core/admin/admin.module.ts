@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AdminModule as CommonAdminModule } from '../../common/admin.module';
+
 import { AdminRoutingModule } from './admin-routing.module';
 import { CacheEntriesModule } from './cache-entries/cache-entries.module';
 import { AdminEuaModule } from './end-user-agreement/admin-eua.module';

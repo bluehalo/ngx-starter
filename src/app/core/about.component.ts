@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { first } from 'rxjs/operators';
 import { Config } from './config.model';
 import { ConfigService } from './config.service';
 
+@UntilDestroy()
 @Component({
 	template: `
 		<div class="container">
@@ -23,9 +26,12 @@ export class AboutComponent implements OnInit {
 	constructor(private configService: ConfigService) {}
 
 	ngOnInit() {
-		this.configService.getConfig().subscribe((config: Config) => {
-			this.appTitle = config?.app?.title ?? '';
-			this.version = config.version;
-		});
+		this.configService
+			.getConfig()
+			.pipe(first(), untilDestroyed(this))
+			.subscribe((config: Config) => {
+				this.appTitle = config?.app?.title ?? '';
+				this.version = config.version;
+			});
 	}
 }

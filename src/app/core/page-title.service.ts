@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, first, map, switchMap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 
+@UntilDestroy()
 @Injectable()
 export class PageTitleService {
 	constructor(
@@ -17,48 +19,51 @@ export class PageTitleService {
 	) {}
 
 	init() {
-		this.configService.getConfig().subscribe(config => {
-			const appTitle = config?.app?.title;
+		this.configService
+			.getConfig()
+			.pipe(first(), untilDestroyed(this))
+			.subscribe(config => {
+				const appTitle = config?.app?.title;
 
-			this.router.events
-				.pipe(
-					filter(event => event instanceof NavigationEnd),
-					map(() => this.activatedRoute),
-					map(route => {
-						// Get to the leaf route
-						while (null != route.firstChild) {
-							route = route.firstChild;
-						}
-						return route;
-					}),
-					switchMap(route => route.data),
-					map(data => {
-						try {
-							let pathTitle = data.title;
-
-							// If there wasn't a path title, try to generate one
-							if (null == pathTitle) {
-								pathTitle = this.router.url
-									.split(';')[0]
-									.split('/')
-									.slice(1)
-									.map(frag => capitalize(frag))
-									.join(' > ');
+				this.router.events
+					.pipe(
+						filter(event => event instanceof NavigationEnd),
+						map(() => this.activatedRoute),
+						map(route => {
+							// Get to the leaf route
+							while (null != route.firstChild) {
+								route = route.firstChild;
 							}
+							return route;
+						}),
+						switchMap(route => route.data),
+						map(data => {
+							try {
+								let pathTitle = data.title;
 
-							if (isEmpty(appTitle) || isEmpty(pathTitle)) {
-								return `${appTitle}${pathTitle}`;
-							} else {
-								return `${appTitle} - ${pathTitle}`;
+								// If there wasn't a path title, try to generate one
+								if (null == pathTitle) {
+									pathTitle = this.router.url
+										.split(';')[0]
+										.split('/')
+										.slice(1)
+										.map(frag => capitalize(frag))
+										.join(' > ');
+								}
+
+								if (isEmpty(appTitle) || isEmpty(pathTitle)) {
+									return `${appTitle}${pathTitle}`;
+								} else {
+									return `${appTitle} - ${pathTitle}`;
+								}
+							} catch {
+								return appTitle;
 							}
-						} catch {
-							return appTitle;
-						}
-					})
-				)
-				.subscribe((title: string) => {
-					this.titleService.setTitle(title);
-				});
-		});
+						})
+					)
+					.subscribe((title: string) => {
+						this.titleService.setTitle(title);
+					});
+			});
 	}
 }

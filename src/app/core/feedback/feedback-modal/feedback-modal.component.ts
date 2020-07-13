@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
@@ -9,6 +10,7 @@ import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: 'feedback-modal.component.html'
 })
@@ -35,7 +37,7 @@ export class FeedbackModalComponent implements OnInit {
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first())
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.baseUrl = config.app.clientUrl || '';
 
@@ -55,15 +57,18 @@ export class FeedbackModalComponent implements OnInit {
 		// Get the current URL from the router at the time of submission.
 		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
 
-		this.feedbackService.submit(this.feedback).subscribe(
-			() => {
-				this.success = 'Feedback successfully submitted!';
-				setTimeout(() => this.modalRef.hide(), 1500);
-			},
-			(error: HttpErrorResponse) => {
-				this.submitting = false;
-				this.error = error.error.message;
-			}
-		);
+		this.feedbackService
+			.submit(this.feedback)
+			.pipe(untilDestroyed(this))
+			.subscribe(
+				() => {
+					this.success = 'Feedback successfully submitted!';
+					setTimeout(() => this.modalRef.hide(), 1500);
+				},
+				(error: HttpErrorResponse) => {
+					this.submitting = false;
+					this.error = error.error.message;
+				}
+			);
 	}
 }

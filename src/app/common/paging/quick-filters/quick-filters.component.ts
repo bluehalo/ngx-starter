@@ -3,21 +3,22 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	OnDestroy,
 	OnInit,
 	Output
 } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'quick-filters',
 	templateUrl: 'quick-filters.component.html',
 	styleUrls: ['quick-filters.component.scss']
 })
-export class QuickFiltersComponent implements OnDestroy, OnInit {
+export class QuickFiltersComponent implements OnInit {
 	@Input() title = 'Quick Filters';
 
 	@Input() filters: any = {};
@@ -34,21 +35,14 @@ export class QuickFiltersComponent implements OnDestroy, OnInit {
 
 	toggleFilter$: Subject<string> = new Subject();
 
-	private destroy$: Subject<boolean> = new Subject();
-
 	constructor() {
 		this.toggleFilter$
-			.pipe(debounceTime(100), takeUntil(this.destroy$))
+			.pipe(debounceTime(100), untilDestroyed(this))
 			.subscribe((key: string) => this.toggleQuickFilter(key));
 	}
 
 	ngOnInit() {
 		this.filterKeys = Object.keys(this.filters);
-	}
-
-	ngOnDestroy() {
-		this.destroy$.next(true);
-		this.destroy$.unsubscribe();
 	}
 
 	toggleQuickFilter(key: string) {

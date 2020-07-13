@@ -1,5 +1,6 @@
 import { OnInit } from '@angular/core';
 
+import { untilDestroyed } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
 import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
@@ -36,12 +37,12 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 	protected constructor() {}
 
 	ngOnInit() {
-		this.searchEvent$.subscribe((search: string) => {
+		this.searchEvent$.pipe(untilDestroyed(this)).subscribe((search: string) => {
 			this.search = search;
 			this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
 		});
 
-		this.filterEvent$.subscribe((filters: any) => {
+		this.filterEvent$.pipe(untilDestroyed(this)).subscribe((filters: any) => {
 			this.filters = cloneDeep(filters);
 			this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
 		});
@@ -65,7 +66,8 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 				switchMap((pagingOpt: PagingOptions) => {
 					this.loading = true;
 					return this.loadData(pagingOpt, this.search, this.getQuery());
-				})
+				}),
+				untilDestroyed(this)
 			)
 			.subscribe((result: PagingResults<T>) => {
 				this.items = result.elements;

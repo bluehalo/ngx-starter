@@ -1,15 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { OnDestroy, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 
-export abstract class ManageUserComponent implements OnDestroy, OnInit {
+export abstract class ManageUserComponent implements OnInit {
 	config: any;
 	error: string = null;
 	proxyPki: boolean;
@@ -25,8 +27,6 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	possibleRoles = Role.ROLES;
 
-	protected destroy$: Subject<boolean> = new Subject();
-
 	protected constructor(
 		protected router: Router,
 		protected configService: ConfigService,
@@ -36,7 +36,7 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(takeUntil(this.destroy$))
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth.startsWith('proxy-pki');
@@ -47,11 +47,6 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 			});
 	}
 
-	ngOnDestroy() {
-		this.destroy$.next(true);
-		this.destroy$.unsubscribe();
-	}
-
 	abstract initialize(): any;
 
 	abstract submitUser(user: User): Observable<any>;
@@ -60,12 +55,14 @@ export abstract class ManageUserComponent implements OnDestroy, OnInit {
 
 	submit() {
 		if (this.validatePassword()) {
-			this.submitUser(this.user).subscribe(
-				() => this.router.navigate([this.navigateOnSuccess]),
-				(response: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(response);
-				}
-			);
+			this.submitUser(this.user)
+				.pipe(untilDestroyed(this))
+				.subscribe(
+					() => this.router.navigate([this.navigateOnSuccess]),
+					(response: HttpErrorResponse) => {
+						this.alertService.addClientErrorAlert(response);
+					}
+				);
 		}
 	}
 

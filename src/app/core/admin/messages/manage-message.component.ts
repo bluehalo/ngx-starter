@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
@@ -34,11 +36,14 @@ export abstract class ManageMessageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.configService.getConfig().subscribe((config: any) => {
-			this.config = config;
+		this.configService
+			.getConfig()
+			.pipe(first(), untilDestroyed(this))
+			.subscribe((config: any) => {
+				this.config = config;
 
-			this.initialize();
-		});
+				this.initialize();
+			});
 	}
 
 	abstract initialize(): void;
@@ -46,14 +51,16 @@ export abstract class ManageMessageComponent implements OnInit {
 	abstract submitMessage(message: Message): Observable<any>;
 
 	submit() {
-		this.submitMessage(this.message).subscribe(
-			() => this.router.navigate([this.navigateOnSuccess]),
-			(response: HttpErrorResponse) => {
-				if (response.status >= 400 && response.status < 500) {
-					const errors = response.message.split('\n');
-					this.error = errors.join(', ');
+		this.submitMessage(this.message)
+			.pipe(untilDestroyed(this))
+			.subscribe(
+				() => this.router.navigate([this.navigateOnSuccess]),
+				(response: HttpErrorResponse) => {
+					if (response.status >= 400 && response.status < 500) {
+						const errors = response.message.split('\n');
+						this.error = errors.join(', ');
+					}
 				}
-			}
-		);
+			);
 	}
 }

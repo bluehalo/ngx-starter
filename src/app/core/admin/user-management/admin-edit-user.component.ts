@@ -1,13 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 
+@UntilDestroy()
 @Component({
 	selector: 'admin-edit-user',
 	templateUrl: './manage-user.component.html'

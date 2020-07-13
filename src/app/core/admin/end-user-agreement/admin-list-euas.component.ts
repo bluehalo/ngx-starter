@@ -2,9 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import cloneDeep from 'lodash/cloneDeep';
-import { Observable, Subject } from 'rxjs';
-import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -15,14 +12,20 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { Observable, Subject } from 'rxjs';
+import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './admin-list-euas.component.html'
 })
 export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement>
-	implements OnDestroy, OnInit {
+	implements OnInit {
 	// Columns to show/hide in user table
 	columns = {
 		_id: { show: false, display: 'ID' },
@@ -71,8 +74,6 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 
 	headersToShow: SortableTableHeader[] = [];
 
-	private destroy$: Subject<boolean> = new Subject();
-
 	constructor(
 		private modalService: ModalService,
 		private euaService: EuaService,
@@ -84,7 +85,7 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
+		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
 			if (clearCachedFilter === 'true' || null == this.euaService.cache.listEuas) {
 				this.euaService.cache.listEuas = {};
@@ -101,11 +102,6 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		this.initializeFromCache();
 
 		super.ngOnInit();
-	}
-
-	ngOnDestroy() {
-		this.destroy$.next(true);
-		this.destroy$.unsubscribe();
 	}
 
 	columnsUpdated(updatedColumns: any) {
@@ -129,7 +125,8 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 			.pipe(
 				first(),
 				filter(action => action === ModalAction.OK),
-				switchMap(() => this.euaService.remove(id))
+				switchMap(() => this.euaService.remove(id)),
+				untilDestroyed(this)
 			)
 			.subscribe(
 				() => {
@@ -143,15 +140,18 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 	}
 
 	publishEua(eua: EndUserAgreement) {
-		this.euaService.publish(eua.euaModel._id).subscribe(
-			() => {
-				this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
-				this.load$.next(true);
-			},
-			(response: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(response);
-			}
-		);
+		this.euaService
+			.publish(eua.euaModel._id)
+			.pipe(untilDestroyed(this))
+			.subscribe(
+				() => {
+					this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
+					this.load$.next(true);
+				},
+				(response: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(response);
+				}
+			);
 		this.load$.next(true);
 	}
 

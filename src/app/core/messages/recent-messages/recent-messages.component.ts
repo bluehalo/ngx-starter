@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import orderBy from 'lodash/orderBy';
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-recent-messages',
 	templateUrl: './recent-messages.component.html',
@@ -22,7 +24,7 @@ export class RecentMessagesComponent implements OnInit {
 	ngOnInit() {
 		this.messages = [];
 
-		this.messageService.messageReceived.subscribe(() => {
+		this.messageService.messageReceived.pipe(untilDestroyed(this)).subscribe(() => {
 			// Redo search on a new message
 			this.load();
 		});
@@ -31,24 +33,33 @@ export class RecentMessagesComponent implements OnInit {
 
 	load() {
 		this.loading = true;
-		this.messageService.recent().subscribe(result => {
-			const messages = orderBy(result, ['created'], ['desc']);
-			this.messages = messages as Message[];
-			this.messageService.numMessagesIndicator.next(this.messages.length);
-			this.loading = false;
-		});
+		this.messageService
+			.recent()
+			.pipe(untilDestroyed(this))
+			.subscribe(result => {
+				const messages = orderBy(result, ['created'], ['desc']);
+				this.messages = messages as Message[];
+				this.messageService.numMessagesIndicator.next(this.messages.length);
+				this.loading = false;
+			});
 	}
 
 	dismissMessage(message: Message) {
-		this.messageService.dismiss([message._id]).subscribe(result => {
-			this.load();
-		});
+		this.messageService
+			.dismiss([message._id])
+			.pipe(untilDestroyed(this))
+			.subscribe(result => {
+				this.load();
+			});
 	}
 
 	dismissAll() {
-		this.messageService.dismiss(this.messages.map(m => m._id)).subscribe(() => {
-			this.load();
-		});
+		this.messageService
+			.dismiss(this.messages.map(m => m._id))
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.load();
+			});
 	}
 
 	viewAll() {

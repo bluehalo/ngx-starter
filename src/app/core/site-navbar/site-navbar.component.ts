@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { first } from 'rxjs/operators';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
@@ -10,6 +13,7 @@ import { FeedbackModalComponent } from '../feedback/feedback.module';
 import { MessageService } from '../messages/message.service';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 
+@UntilDestroy()
 @Component({
 	selector: 'site-navbar',
 	templateUrl: 'site-navbar.component.html',
@@ -63,20 +67,26 @@ export class SiteNavbarComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.sessionService.getSession().subscribe(session => {
-			this.session = session;
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(session => {
+				this.session = session;
+			});
 
-		this.configService.getConfig().subscribe((config: Config) => {
-			this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
-			this.showUserPreferencesLink = config?.userPreferences?.enabled ?? false;
-			this.userPreferencesLink = config?.userPreferences?.path ?? '';
-		});
+		this.configService
+			.getConfig()
+			.pipe(first(), untilDestroyed(this))
+			.subscribe((config: Config) => {
+				this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
+				this.showUserPreferencesLink = config?.userPreferences?.enabled ?? false;
+				this.userPreferencesLink = config?.userPreferences?.path ?? '';
+			});
 
 		this.adminMenuItems = AdminTopics.getTopics();
 
 		this.navbarItems = NavbarTopics.getTopics();
-		this.messageService.numMessagesIndicator.subscribe(count => {
+		this.messageService.numMessagesIndicator.pipe(untilDestroyed(this)).subscribe(count => {
 			this.numNewMessages = count;
 		});
 	}

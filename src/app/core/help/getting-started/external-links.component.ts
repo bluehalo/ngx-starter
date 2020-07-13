@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 import { ConfigService } from '../../config.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'external-links',
 	templateUrl: 'external-links.component.html'
@@ -19,7 +21,7 @@ export class ExternalLinksComponent implements OnInit {
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first())
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.config = config;
 

@@ -2,9 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { of, Observable } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -15,6 +12,11 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { of, Observable } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -26,6 +28,7 @@ import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'list-team-members',
 	templateUrl: './list-team-members.component.html',
@@ -90,10 +93,13 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		this.canManageTeam =
 			this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(this.team);
 
-		this.sessionService.getSession().subscribe(session => {
-			this.user = session.user;
-			this.isUserAdmin = this.authorizationService.isAdmin();
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(session => {
+				this.user = session.user;
+				this.isUserAdmin = this.authorizationService.isAdmin();
+			});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
@@ -119,11 +125,13 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	addMembers() {
 		this.modalRef = this.bsModalService.show(AddMembersModalComponent);
 		this.modalRef.content.teamId = this.team._id;
-		this.modalRef.content.usersAdded.subscribe((usersAdded: number) => {
-			this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
-			this.modalRef = null;
-			this.reloadTeamMembers();
-		});
+		this.modalRef.content.usersAdded
+			.pipe(untilDestroyed(this))
+			.subscribe((usersAdded: number) => {
+				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
+				this.modalRef = null;
+				this.reloadTeamMembers();
+			});
 	}
 
 	removeMember(member: TeamMember) {
@@ -143,7 +151,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
-				})
+				}),
+				untilDestroyed(this)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}
@@ -174,7 +183,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 					catchError((error: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(error);
 						return of(null);
-					})
+					}),
+					untilDestroyed(this)
 				)
 				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
@@ -189,7 +199,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 					catchError((error: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(error);
 						return of(null);
-					})
+					}),
+					untilDestroyed(this)
 				)
 				.subscribe(() => this.reloadTeamMembers());
 		}
@@ -208,7 +219,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
-				})
+				}),
+				untilDestroyed(this)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}

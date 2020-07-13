@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalService } from '../../../common/modal.module';
 import { ModalConfig } from '../../../common/modal/modal.model';
+
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({

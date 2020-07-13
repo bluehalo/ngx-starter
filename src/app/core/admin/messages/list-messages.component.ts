@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 import { ModalAction, ModalService } from 'src/app/common/modal.module';
@@ -17,6 +18,7 @@ import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { Message } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './list-messages.component.html'
 })
@@ -49,7 +51,7 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.route.params.subscribe((params: Params) => {
+		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
 			if (clearCachedFilter === 'true' || null == this.messageService.cache.listMessages) {
 				this.messageService.cache.listMessages = {};
@@ -99,7 +101,8 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 			.pipe(
 				first(),
 				filter(action => action === ModalAction.OK),
-				switchMap(() => this.messageService.remove(id))
+				switchMap(() => this.messageService.remove(id)),
+				untilDestroyed(this)
 			)
 			.subscribe(
 				() => {
