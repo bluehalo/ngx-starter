@@ -2,10 +2,12 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { concat, of, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
 import { PagingOptions } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { concat, of, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -15,6 +17,7 @@ import { ConfigService } from '../../config.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './create-team.component.html',
 	styleUrls: ['./create-team.component.scss']
@@ -55,18 +58,21 @@ export class CreateTeamComponent implements OnInit {
 
 		this.configService
 			.getConfig()
-			.pipe(first())
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: Config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 			});
 
-		this.sessionService.getSession().subscribe(session => {
-			this.user = session.user;
-			this.isAdmin = this.authorizationService.isAdmin();
-			if (!this.isAdmin) {
-				this.setCurrentUserAsAdmin();
-			}
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(session => {
+				this.user = session.user;
+				this.isAdmin = this.authorizationService.isAdmin();
+				if (!this.isAdmin) {
+					this.setCurrentUserAsAdmin();
+				}
+			});
 
 		if (this.isAdmin) {
 			this.users$ = concat(
@@ -99,7 +105,10 @@ export class CreateTeamComponent implements OnInit {
 		this.isSubmitting = true;
 		this.teamsService
 			.create(this.team, this.teamAdmin.userModel._id)
-			.pipe(tap(() => this.authenticationService.reloadCurrentUser()))
+			.pipe(
+				tap(() => this.authenticationService.reloadCurrentUser()),
+				untilDestroyed(this)
+			)
 			.subscribe(() => {
 				return this.router.navigate(['/teams', { clearCachedFilter: true }]);
 			});

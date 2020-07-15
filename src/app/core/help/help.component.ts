@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 
-import { filter } from 'rxjs/operators';
 import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { filter } from 'rxjs/operators';
 import { HelpTopics } from './help-topic.component';
 
 export class HelpTopic {
@@ -10,6 +12,7 @@ export class HelpTopic {
 	title: string;
 }
 
+@UntilDestroy()
 @Component({
 	templateUrl: 'help.component.html',
 	styleUrls: ['help.component.scss']
@@ -28,7 +31,10 @@ export class HelpComponent {
 		}));
 
 		router.events
-			.pipe(filter((event: Event) => event instanceof NavigationEnd))
+			.pipe(
+				filter((event: Event) => event instanceof NavigationEnd),
+				untilDestroyed(this)
+			)
 			.subscribe(() => (this.title = BreadcrumbService.getBreadcrumbLabel(route.snapshot)));
 	}
 }

@@ -1,16 +1,19 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
+import { SystemAlertService } from '../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, first } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
-import { SystemAlertService } from '../../common/system-alert.module';
 import { AuthorizationService } from '../auth/authorization.service';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
 import { Message } from './message.class';
 
+@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
@@ -31,7 +34,10 @@ export class MessageService {
 	) {
 		this.sessionService
 			.getSession()
-			.pipe(first(() => authorizationService.isUser()))
+			.pipe(
+				first(() => authorizationService.isUser()),
+				untilDestroyed(this)
+			)
 			.subscribe((session: Session) => {
 				this.initialize();
 				this.updateNewMessageIndicator();

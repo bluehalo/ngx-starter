@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './manage-message.component.html'
 })

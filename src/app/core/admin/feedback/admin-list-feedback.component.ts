@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -10,9 +9,13 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 import { ExportConfigService } from '../../export-config.service';
 import { FeedbackService } from '../../feedback/feedback.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: 'admin-list-feedback.component.html'
 })
@@ -60,6 +63,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 				sort: this.pagingOptions.sortField,
 				dir: this.pagingOptions.sortDir
 			})
+			.pipe(untilDestroyed(this))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});

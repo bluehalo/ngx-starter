@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import _isString from 'lodash/isString';
-import { utc } from 'moment';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { forkJoin, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -13,11 +8,19 @@ import {
 	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import _isString from 'lodash/isString';
+import { utc } from 'moment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { forkJoin, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
 import { AuditOption } from '../audit.classes';
 import { AuditService } from '../audit.service';
 
+@UntilDestroy()
 @Component({
 	styleUrls: ['./list-audit-entries.component.scss'],
 	templateUrl: './list-audit-entries.component.html'
@@ -130,16 +133,18 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		forkJoin([
 			this.auditService.getDistinctAuditValues('audit.action'),
 			this.auditService.getDistinctAuditValues('audit.auditType')
-		]).subscribe(([actionResults, typeResults]) => {
-			this.actionOptions = actionResults
-				.filter((r: any) => _isString(r))
-				.sort()
-				.map((r: any) => new AuditOption(r));
-			this.auditTypeOptions = typeResults
-				.filter((r: any) => _isString(r))
-				.sort()
-				.map((r: any) => new AuditOption(r));
-		});
+		])
+			.pipe(untilDestroyed(this))
+			.subscribe(([actionResults, typeResults]) => {
+				this.actionOptions = actionResults
+					.filter((r: any) => _isString(r))
+					.sort()
+					.map((r: any) => new AuditOption(r));
+				this.auditTypeOptions = typeResults
+					.filter((r: any) => _isString(r))
+					.sort()
+					.map((r: any) => new AuditOption(r));
+			});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 

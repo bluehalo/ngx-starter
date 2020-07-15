@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import * as io from 'socket.io-client';
 import { AuthorizationService } from './auth/authorization.service';
 import { SessionService } from './auth/session.service';
@@ -8,6 +9,7 @@ import { SessionService } from './auth/session.service';
  * Handles sockets for the application
  */
 
+@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
@@ -34,14 +36,17 @@ export class SocketService {
 		}
 
 		// Subscribe to authorization changes
-		this.sessionService.getSession().subscribe(() => {
-			if (this.authorizationService.isAuthenticated()) {
-				// enable sockets/messaging
-				this.socket.connect();
-			} else {
-				this.socket.disconnect();
-			}
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				if (this.authorizationService.isAuthenticated()) {
+					// enable sockets/messaging
+					this.socket.connect();
+				} else {
+					this.socket.disconnect();
+				}
+			});
 	}
 
 	public on(eventName: string, callback: (event: any) => void) {

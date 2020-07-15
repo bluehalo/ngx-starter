@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './manage-message.component.html'
 })
@@ -34,9 +36,12 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 			this.okButtonText = 'Save';
 			this.navigateOnSuccess = '/admin/messages';
 			this.okDisabled = false;
-			this.messageService.get(this.id).subscribe((messageRaw: any) => {
-				this.message = new Message().setFromModel(messageRaw);
-			});
+			this.messageService
+				.get(this.id)
+				.pipe(untilDestroyed(this))
+				.subscribe((messageRaw: any) => {
+					this.message = new Message().setFromModel(messageRaw);
+				});
 		});
 	}
 

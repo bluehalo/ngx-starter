@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+
 import { AdminModule } from '../../common/admin.module';
 import { ModalModule, ModalService } from '../../common/modal.module';
+
 import { AuthGuard } from '../../core/core.module';
+
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { ExampleRoutingModule } from './example-routing.module';
 import { ExploreComponent } from './explore.component';

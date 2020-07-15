@@ -3,13 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { DirectivesModule } from '../../../common/directives.module';
 import { ModalModule, ModalService } from '../../../common/modal.module';
 import { PagingModule } from '../../../common/paging.module';
 import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
+
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AdminUsersService } from '../user-management/admin-users.service';
 import { AdminCreateEuaComponent } from './admin-create-eua.component';
 import { AdminUpdateEuaComponent } from './admin-edit-eua.component';

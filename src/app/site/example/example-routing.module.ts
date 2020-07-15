@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from '../../common/admin.module';
+
 import { AuthGuard } from '../../core/auth/auth.guard';
+
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';

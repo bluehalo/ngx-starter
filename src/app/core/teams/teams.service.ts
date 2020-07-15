@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { of, Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert.module';
+
+import { of, Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';

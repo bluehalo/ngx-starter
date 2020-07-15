@@ -1,9 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import cloneDeep from 'lodash/cloneDeep';
-import { Observable, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -13,16 +10,21 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './admin-list-users.component.html'
 })
-export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
-	implements OnDestroy, OnInit {
+export class AdminListUsersComponent extends AbstractPageableDataComponent<User> implements OnInit {
 	// Columns to show/hide in user table
 	columns: any = {
 		name: { show: true, display: 'Name' },
@@ -95,8 +97,6 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 	private requiredExternalRoles: string[];
 
-	private destroy$: Subject<boolean> = new Subject();
-
 	constructor(
 		private route: ActivatedRoute,
 		private configService: ConfigService,
@@ -107,7 +107,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	ngOnInit() {
-		this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params: Params) => {
+		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			// Clear any alerts
 			this.alertService.clearAllAlerts();
 
@@ -120,7 +120,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 		this.configService
 			.getConfig()
-			.pipe(first(), takeUntil(this.destroy$))
+			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.enableUserBypassAC = config.enableUserBypassAC;
 				if (this.enableUserBypassAC) {
@@ -149,11 +149,6 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 
 		super.ngOnInit();
-	}
-
-	ngOnDestroy() {
-		this.destroy$.next(true);
-		this.destroy$.unsubscribe();
 	}
 
 	confirmDeleteUser(user: User) {

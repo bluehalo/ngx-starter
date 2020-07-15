@@ -3,15 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+
+import { DirectivesModule } from '../../../common/directives.module';
+import { PagingModule, PagingResults } from '../../../common/paging.module';
+import { PipesModule } from '../../../common/pipes.module';
+import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
+
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { of } from 'rxjs';
-import { DirectivesModule } from '../../../common/directives.module';
-import { PagingModule, PagingResults } from '../../../common/paging.module';
-import { PipesModule } from '../../../common/pipes.module';
-import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
 import {
 	AuditObjectComponent,
 	DefaultAuditObjectComponent,

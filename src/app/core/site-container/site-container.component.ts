@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { first } from 'rxjs/operators';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'site-container',
 	templateUrl: 'site-container.component.html',
@@ -14,11 +17,14 @@ export class SiteContainerComponent {
 	showFeedbackFlyout = false;
 
 	constructor(private configService: ConfigService) {
-		configService.getConfig().subscribe((config: Config) => {
-			this.bannerHtml = config?.banner?.html ?? undefined;
-			this.copyrightHtml = config?.copyright?.html ?? undefined;
-			this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;
-		});
+		configService
+			.getConfig()
+			.pipe(first(), untilDestroyed(this))
+			.subscribe((config: Config) => {
+				this.bannerHtml = config?.banner?.html ?? undefined;
+				this.copyrightHtml = config?.copyright?.html ?? undefined;
+				this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;
+			});
 	}
 
 	skipToMainContent(e: any) {

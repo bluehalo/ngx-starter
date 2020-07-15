@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -10,10 +9,14 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
+@UntilDestroy()
 @Component({
 	templateUrl: './list-teams.component.html',
 	styleUrls: ['./list-teams.component.scss']

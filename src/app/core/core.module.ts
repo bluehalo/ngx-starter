@@ -4,12 +4,13 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { PopoverModule } from 'ngx-bootstrap/popover';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AdminTopics } from '../common/admin/admin-topic.model';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
 import { SystemAlertModule } from '../common/system-alert.module';
+
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
 import { AuthGuard } from './auth/auth.guard';

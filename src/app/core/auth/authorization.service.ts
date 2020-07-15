@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Role } from './role.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
 
+@UntilDestroy()
 @Injectable()
 export class AuthorizationService {
 	private session: Session;
 
 	constructor(private sessionService: SessionService) {
-		this.sessionService.getSession().subscribe((session: Session) => {
-			this.session = session;
-		});
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe((session: Session) => {
+				this.session = session;
+			});
 	}
 
 	public isEuaCurrent() {
