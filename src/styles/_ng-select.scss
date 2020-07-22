@@ -16,13 +16,46 @@ $ng-select-border-radius: $border-radius !default;
 $ng-select-box-shadow: get-box-shadow() !default;
 $ng-select-placeholder: $input-placeholder-color !default;
 $ng-select-height: $input-height !default;
-$ng-select-value-padding-left: $input-padding-x;
+$ng-select-value-padding-left: $input-padding-x !default;
 
 @import '../../node_modules/@ng-select/ng-select/scss/default.theme';
+
+$ng-select-tag-color: #f9f9f9 !default;
+$ng-select-tag-bg-color: $ux-color-primary !default;
 
 .ng-select {
 	.ng-placeholder {
 		font-family: $font-family-light;
 		font-weight: 300;
+	}
+
+	&.ng-hide-arrow-wrapper .ng-arrow-wrapper {
+		display: none;
+	}
+
+	&.ng-select-multiple {
+		.ng-placeholder {
+			margin-top: 1px;
+		}
+
+		.ng-value-icon {
+			border-right: none !important;
+			&:hover {
+				background-color: inherit !important;
+			}
+		}
+
+		.ng-value {
+			display: flex;
+			flex-direction: row-reverse;
+			background-color: $ng-select-tag-bg-color !important;
+			color: $ng-select-tag-color !important;
+			box-shadow: 0 1px 4px 1px #d4d1d1;
+			font-size: inherit !important;
+
+			&:hover {
+				background-color: $ux-color-highlight !important;
+			}
+		}
 	}
 }

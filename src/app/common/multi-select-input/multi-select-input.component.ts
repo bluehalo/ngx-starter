@@ -4,7 +4,6 @@ import { ControlValueAccessor, NgModel, NG_VALUE_ACCESSOR } from '@angular/forms
 @Component({
 	selector: 'asy-multi-select-input',
 	templateUrl: './multi-select-input.component.html',
-	styleUrls: ['./multi-select-input.component.scss'],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
