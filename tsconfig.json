@@ -18,7 +18,14 @@
     "emitDecoratorMetadata": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "strictTemplates": true,
