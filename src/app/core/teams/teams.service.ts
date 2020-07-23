@@ -79,7 +79,7 @@ export class TeamsService {
 		options: any
 	): Observable<PagingResults<Team>> {
 		return this.http
-			.post('api/teams', JSON.stringify({ s: search, q: query, options }), {
+			.post<PagingResults>('api/teams', JSON.stringify({ s: search, q: query, options }), {
 				params: paging.toObj(),
 				headers: this.headers
 			})
@@ -121,7 +121,7 @@ export class TeamsService {
 		options: any
 	): Observable<PagingResults<TeamMember>> {
 		return this.http
-			.post(
+			.post<PagingResults>(
 				`api/team/${team._id}/members?`,
 				JSON.stringify({ s: search, q: query, options }),
 				{ params: paging.toObj(), headers: this.headers }
@@ -172,7 +172,7 @@ export class TeamsService {
 	): Observable<PagingResults<User>> {
 		const url = admin ? 'api/admin/users' : 'api/users';
 		return this.http
-			.post(url, { q: query, s: search, options }, { params: paging.toObj() })
+			.post<PagingResults>(url, { q: query, s: search, options }, { params: paging.toObj() })
 			.pipe(
 				tap((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {

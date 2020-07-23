@@ -22,8 +22,8 @@ import { AuditService } from '../audit.service';
 
 @UntilDestroy()
 @Component({
-	styleUrls: ['./list-audit-entries.component.scss'],
-	templateUrl: './list-audit-entries.component.html'
+	templateUrl: './list-audit-entries.component.html',
+	styleUrls: ['./list-audit-entries.component.scss']
 })
 export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any>
 	implements OnInit {
@@ -115,7 +115,7 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		};
 
 		// Bind the search users typeahead to a function
-		this.searchUsersRef = new Observable((observer: any) => {
+		this.searchUsersRef = new Observable<string>((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
 			mergeMap((token: string) =>

@@ -6,7 +6,6 @@ import { SystemAlertService } from '../../../common/system-alert/system-alert.se
 
 import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../../auth/user.model';
 import { EndUserAgreement } from './eua.model';
 
 @Injectable()
@@ -44,7 +43,11 @@ export class EuaService {
 		options: any
 	): Observable<PagingResults<EndUserAgreement>> {
 		return this.http
-			.post('api/euas', { q: query, s: search, options }, { params: paging.toObj() })
+			.post<PagingResults>(
+				'api/euas',
+				{ q: query, s: search, options },
+				{ params: paging.toObj() }
+			)
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {

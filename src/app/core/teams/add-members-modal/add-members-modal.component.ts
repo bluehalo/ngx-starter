@@ -29,8 +29,6 @@ export class AddMembersModalComponent implements OnInit {
 
 	queryUserSearchTerm = '';
 
-	dataSource: Observable<any>;
-
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
 	usersLoading = false;
@@ -44,20 +42,6 @@ export class AddMembersModalComponent implements OnInit {
 	constructor(private teamsService: TeamsService, public modalRef: BsModalRef) {}
 
 	ngOnInit() {
-		this.dataSource = new Observable((observer: any) => {
-			observer.next(this.queryUserSearchTerm);
-		}).pipe(
-			mergeMap((token: string) =>
-				this.teamsService.searchUsers({}, token, this.pagingOptions, {})
-			),
-			map((result: PagingResults) => {
-				return result.elements.map((r: any) => {
-					r.displayName = `${r.userModel.name}  [${r.userModel.username}]`;
-					return r;
-				});
-			})
-		);
-
 		this.users$ = concat(
 			of([]), // default items
 			this.usersInput$.pipe(
