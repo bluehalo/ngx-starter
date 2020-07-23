@@ -125,7 +125,7 @@ export class SessionService {
 	}
 
 	private parseQueryParams(url: string): any {
-		const queryParams = {};
+		const queryParams: Record<string, string> = {};
 
 		if (url && -1 !== url.indexOf('?')) {
 			const queryParamString = url.split('?')[1];

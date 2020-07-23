@@ -53,7 +53,7 @@ export class TeamMember extends User {
 			if (userModel.bypassAccessCheck) {
 				this.active = true;
 			} else if (null != team) {
-				this.explicit = userModel.teams.map(t => t._id).includes(team._id);
+				this.explicit = userModel.teams.map((t: any) => t._id).includes(team._id);
 
 				this.active =
 					0 === difference(team.requiresExternalTeams, userModel.externalGroups).length &&

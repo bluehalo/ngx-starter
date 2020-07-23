@@ -232,7 +232,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		Role.ROLES.forEach(role => {
 			const filter = this.filters[`${role.role}Role`];
 			if (filter?.show) {
-				const element = {};
+				const element: Record<string, boolean> = {};
 				element[`roles.${role.role}`] = true;
 				elements.push(element);
 			}

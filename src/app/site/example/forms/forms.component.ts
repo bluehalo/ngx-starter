@@ -10,16 +10,13 @@ import { delay, first } from 'rxjs/operators';
 	templateUrl: './forms.component.html'
 })
 export class FormsComponent {
-	log($event) {
-		console.log($event);
+	fileSelected($event: Event) {
+		const target = $event.target as HTMLInputElement;
+		target.parentElement.setAttribute('data-after', target.files[0].name);
 	}
 
-	fileSelected($event) {
-		$event.target.parentElement.setAttribute('data-after', $event.target.files[0].name);
-	}
-
-	submit($event) {
-		const btn = $event.target;
+	submit($event: Event) {
+		const btn = $event.target as HTMLButtonElement;
 		btn.disabled = true;
 		btn.classList.add('btn-submitting');
 

@@ -10,7 +10,7 @@ export class SearchInputComponent {
 	@Output() readonly applySearch: EventEmitter<string> = new EventEmitter();
 	@Input() search = '';
 
-	private keyupTimeout;
+	private keyupTimeout: number;
 
 	constructor() {}
 
