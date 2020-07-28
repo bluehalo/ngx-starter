@@ -1,13 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { PagingOptions } from '../../../common/paging.module';
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { concat, of, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
+
+import { PagingOptions } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -19,8 +18,7 @@ import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './create-team.component.html',
-	styleUrls: ['./create-team.component.scss']
+	templateUrl: './create-team.component.html'
 })
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();

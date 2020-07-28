@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 
 import {
 	AbstractPageableDataComponent,
@@ -9,17 +11,13 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './list-teams.component.html',
-	styleUrls: ['./list-teams.component.scss']
+	templateUrl: './list-teams.component.html'
 })
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team> implements OnInit {
 	canCreateTeam = false;

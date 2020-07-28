@@ -33,7 +33,7 @@ export class ConfigService {
 			(httpEvent: HttpEvent<Config>) => {
 				if (httpEvent instanceof HttpResponse) {
 					let newConfig = null;
-					const response = httpEvent as HttpResponse<Config>;
+					const response: HttpResponse<Config> = httpEvent;
 
 					if (response.status >= 200 && response.status < 300) {
 						newConfig = response.body;

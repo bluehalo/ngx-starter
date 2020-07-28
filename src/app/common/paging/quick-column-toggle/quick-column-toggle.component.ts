@@ -29,12 +29,13 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 	private checkColumnConfiguration() {
 		// Check first to see if all columns are turned on
 		this.columnMode = 'all';
-		this.filterKeys.some((key: string) => {
+
+		for (const key of this.filterKeys) {
 			if (!this.filters[key].show) {
 				this.columnMode = 'custom';
 				return true;
 			}
-		});
+		}
 
 		if (this.columnMode === 'all') {
 			return;
@@ -42,11 +43,11 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 
 		// Check if our default columns are enabled
 		this.columnMode = 'default';
-		this.filterKeys.some((key: string) => {
+		for (const key of this.filterKeys) {
 			if (this.filters[key].show !== this.defaultFilters[key].show) {
 				this.columnMode = 'custom';
 				return true;
 			}
-		});
+		}
 	}
 }
