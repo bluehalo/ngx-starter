@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { NgSelectComponent } from '@ng-select/ng-select';
+
+import { PagingOptions, PagingResults } from '../../../common/paging.module';
+
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { concat, of, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';

@@ -1,10 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { of, Observable } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
@@ -16,6 +12,11 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { of, Observable } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';

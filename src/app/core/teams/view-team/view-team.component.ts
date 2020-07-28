@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { of } from 'rxjs';
-import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { of } from 'rxjs';
+import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Config } from '../../config.model';

@@ -3,13 +3,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+
 import { NgSelectModule } from '@ng-select/ng-select';
+
 import { AsyncSubject } from 'rxjs';
 import { FlyoutComponent } from 'src/app/common/flyout/flyout.component';
-
 import { ConfigService } from '../../config.service';
 import { FeedbackService } from '../feedback.service';
-
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
 
 // mock configuration object

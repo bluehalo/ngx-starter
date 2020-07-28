@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { NgSelectModule } from '@ng-select/ng-select';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { FlyoutModule } from '../../common/flyout.module';
 
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.component';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
 
