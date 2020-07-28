@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
+
 import { ModalComponent } from './modal/modal.component';
-import { ModalService } from './modal/modal.service';
 
 @NgModule({
 	imports: [BsModalModule.forRoot(), CommonModule, FormsModule],

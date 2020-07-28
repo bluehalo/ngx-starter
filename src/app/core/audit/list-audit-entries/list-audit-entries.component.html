@@ -121,11 +121,11 @@
 				(pageChange)="pageEvent$.next($event)">
 
 				<ng-template #tableHeader>
-					<th *ngFor="let header of headers">
+					<th scope="col" *ngFor="let header of headers">
 						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 					</th>
 				</ng-template>
-		
+
 				<ng-template #tableRow let-entry="item">
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">

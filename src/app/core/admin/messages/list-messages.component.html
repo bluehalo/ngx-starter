@@ -24,12 +24,12 @@
 			</ng-template>
 
 			<ng-template #tableHeader>
-				<th *ngFor="let header of headers">
+				<th scope="col" *ngFor="let header of headers">
 					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField"
 										   [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)">
 					</sortable-table-header>
 				</th>
-				<th>&nbsp;</th>
+				<th scope="col">&nbsp;</th>
 			</ng-template>
 
 			<ng-template #tableRow let-message="item">
