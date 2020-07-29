@@ -27,27 +27,14 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 	}
 
 	private checkColumnConfiguration() {
-		// Check first to see if all columns are turned on
-		this.columnMode = 'all';
-
-		for (const key of this.filterKeys) {
-			if (!this.filters[key].show) {
-				this.columnMode = 'custom';
-				return true;
-			}
-		}
-
-		if (this.columnMode === 'all') {
-			return;
-		}
-
-		// Check if our default columns are enabled
-		this.columnMode = 'default';
-		for (const key of this.filterKeys) {
-			if (this.filters[key].show !== this.defaultFilters[key].show) {
-				this.columnMode = 'custom';
-				return true;
-			}
+		if (this.filterKeys.every(key => this.filters[key].show)) {
+			this.columnMode = 'all';
+		} else if (
+			this.filterKeys.some(key => this.filters[key].show !== this.defaultFilters[key].show)
+		) {
+			this.columnMode = 'custom';
+		} else {
+			this.columnMode = 'default';
 		}
 	}
 }
