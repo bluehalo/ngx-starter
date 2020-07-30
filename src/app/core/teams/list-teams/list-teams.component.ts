@@ -18,8 +18,7 @@ import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './list-teams.component.html',
-	styleUrls: ['./list-teams.component.scss']
+	templateUrl: './list-teams.component.html'
 })
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team> implements OnInit {
 	canCreateTeam = false;

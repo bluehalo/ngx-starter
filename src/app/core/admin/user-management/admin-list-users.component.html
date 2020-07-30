@@ -40,21 +40,16 @@
 				</ng-template>
 
 				<ng-template #tableHeader>
-					<th *ngFor="let header of headersToShow">
+					<th scope="col" *ngFor="let header of headersToShow">
 						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
 					</th>
-					<th>&nbsp;</th>
+					<th scope="col">&nbsp;</th>
 				</ng-template>
 
 				<ng-template #tableRow let-user="item" let-i="index">
 					<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
 					<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
 					<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
-					<!--<td [hidden]="!columns.teams.show">-->
-						<!--<div class="hide-overflow" style="max-width: 300px;">-->
-							<!--<span *ngFor="let team of user.userModel.teams; let last = last" [attr.title]="team._id">{{ teamMap[team._id] }}{{ last? '' : ', ' }}</span>-->
-						<!--</div>-->
-					<!--</td>-->
 					<td [hidden]="!columns.organization.show">{{user.userModel.organization}}</td>
 					<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
 					<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>

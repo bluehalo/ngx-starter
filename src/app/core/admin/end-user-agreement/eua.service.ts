@@ -6,7 +6,6 @@ import { SystemAlertService } from '../../../common/system-alert/system-alert.se
 
 import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../../auth/user.model';
 import { EndUserAgreement } from './eua.model';
 
 @Injectable()

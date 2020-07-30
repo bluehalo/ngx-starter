@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoadingSpinnerComponent } from './loading-spinner.component';
@@ -17,7 +17,6 @@ export class LoadingSpinnerProvidedTestHostComponent {
 
 describe('LoadingSpinnerComponent', () => {
 	let defaultFixture: ComponentFixture<LoadingSpinnerDefaultTestHostComponent>;
-	let defaultTestHost: LoadingSpinnerDefaultTestHostComponent;
 	let defaultRootHTMLElement: HTMLElement;
 
 	let providedFixture: ComponentFixture<LoadingSpinnerProvidedTestHostComponent>;
@@ -35,7 +34,6 @@ describe('LoadingSpinnerComponent', () => {
 		});
 
 		defaultFixture = testbed.createComponent(LoadingSpinnerDefaultTestHostComponent);
-		defaultTestHost = defaultFixture.componentInstance;
 		defaultRootHTMLElement = defaultFixture.debugElement.nativeElement;
 		defaultFixture.detectChanges();
 

@@ -31,7 +31,6 @@ import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
 import { SignupComponent } from './signup/signup.component';
 import { SiteContainerComponent } from './site-container/site-container.component';
-import { NavbarTopics } from './site-navbar/navbar-topic.model';
 import { SiteNavbarComponent } from './site-navbar/site-navbar.component';
 import { TeamsModule } from './teams/teams.module';
 import { UnauthorizedComponent } from './unauthorized.component';

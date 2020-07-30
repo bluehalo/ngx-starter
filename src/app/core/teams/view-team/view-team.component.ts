@@ -19,8 +19,7 @@ import { TeamsService } from '../teams.service';
 @UntilDestroy()
 @Component({
 	selector: 'app-view-team',
-	templateUrl: './view-team.component.html',
-	styleUrls: ['./view-team.component.scss']
+	templateUrl: './view-team.component.html'
 })
 export class ViewTeamComponent implements OnInit {
 	team: Team;

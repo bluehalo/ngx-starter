@@ -31,8 +31,7 @@ import { TeamsService } from '../teams.service';
 @UntilDestroy()
 @Component({
 	selector: 'list-team-members',
-	templateUrl: './list-team-members.component.html',
-	styleUrls: ['./list-team-members.component.scss']
+	templateUrl: './list-team-members.component.html'
 })
 export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
 	implements OnDestroy, OnInit {

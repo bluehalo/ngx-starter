@@ -9,7 +9,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AsyncSubject } from 'rxjs';
 import { FlyoutComponent } from 'src/app/common/flyout/flyout.component';
 import { ConfigService } from '../../config.service';
-import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
 

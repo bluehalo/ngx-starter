@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { QuickFiltersComponent } from '../quick-filters/quick-filters.component';
@@ -27,26 +27,14 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 	}
 
 	private checkColumnConfiguration() {
-		// Check first to see if all columns are turned on
-		this.columnMode = 'all';
-		this.filterKeys.some((key: string) => {
-			if (!this.filters[key].show) {
-				this.columnMode = 'custom';
-				return true;
-			}
-		});
-
-		if (this.columnMode === 'all') {
-			return;
+		if (this.filterKeys.every(key => this.filters[key].show)) {
+			this.columnMode = 'all';
+		} else if (
+			this.filterKeys.some(key => this.filters[key].show !== this.defaultFilters[key].show)
+		) {
+			this.columnMode = 'custom';
+		} else {
+			this.columnMode = 'default';
 		}
-
-		// Check if our default columns are enabled
-		this.columnMode = 'default';
-		this.filterKeys.some((key: string) => {
-			if (this.filters[key].show !== this.defaultFilters[key].show) {
-				this.columnMode = 'custom';
-				return true;
-			}
-		});
 	}
 }

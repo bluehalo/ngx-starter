@@ -19,8 +19,7 @@ import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './create-team.component.html',
-	styleUrls: ['./create-team.component.scss']
+	templateUrl: './create-team.component.html'
 })
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();

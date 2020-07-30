@@ -19,10 +19,13 @@
 
 	<div class="table-content table-responsive" [hidden]="hideTableNoData && itemsInternal?.length === 0">
 		<!-- Actual Results -->
-		<table class="table" [ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}">
+		<table
+			class="table"
+			[ngClass]="{'table-striped': tableStriped, 'table-hover': tableHover}"
+			aria-describedby="Results table">
 			<thead>
 			<tr>
-				<th *ngIf="rowExpandedTemplate" class="table-action-expand"></th>
+				<th scope="col" *ngIf="rowExpandedTemplate" class="table-action-expand"></th>
 				<ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
 			</tr>
 			</thead>

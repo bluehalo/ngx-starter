@@ -9,14 +9,8 @@ import { PagerComponent } from './paging/pager/pager.component';
 import { QuickColumnToggleComponent } from './paging/quick-column-toggle/quick-column-toggle.component';
 import { QuickFiltersComponent } from './paging/quick-filters/quick-filters.component';
 import { SearchTableComponent } from './paging/search-table/search-table.component';
-import {
-	SortControlsComponent,
-	TableSortOptions
-} from './paging/sort-controls/sort-controls.component';
-import {
-	SortableTableHeader,
-	SortableTableHeaderComponent
-} from './paging/sortable-table-header/sortable-table-header.component';
+import { SortControlsComponent } from './paging/sort-controls/sort-controls.component';
+import { SortableTableHeaderComponent } from './paging/sortable-table-header/sortable-table-header.component';
 import { PipesModule } from './pipes.module';
 
 @NgModule({

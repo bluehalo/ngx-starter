@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -15,8 +15,7 @@ import { AddedMember, TeamsService } from '../teams.service';
 @UntilDestroy()
 @Component({
 	selector: 'app-add-members-modal',
-	templateUrl: './add-members-modal.component.html',
-	styleUrls: ['./add-members-modal.component.scss']
+	templateUrl: './add-members-modal.component.html'
 })
 export class AddMembersModalComponent implements OnInit {
 	@Input() teamId: string;
