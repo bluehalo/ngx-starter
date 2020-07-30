@@ -12,8 +12,8 @@ import { ConfigService } from '../config.service';
 	styleUrls: ['site-container.component.scss']
 })
 export class SiteContainerComponent {
-	bannerHtml = undefined;
-	copyrightHtml = undefined;
+	bannerHtml: string = undefined;
+	copyrightHtml: string = undefined;
 	showFeedbackFlyout = false;
 
 	constructor(private configService: ConfigService) {
@@ -21,8 +21,8 @@ export class SiteContainerComponent {
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: Config) => {
-				this.bannerHtml = config?.banner?.html ?? undefined;
-				this.copyrightHtml = config?.copyright?.html ?? undefined;
+				this.bannerHtml = config?.banner?.html;
+				this.copyrightHtml = config?.copyright?.html;
 				this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;
 			});
 	}

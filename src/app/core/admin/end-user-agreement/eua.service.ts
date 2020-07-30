@@ -43,7 +43,11 @@ export class EuaService {
 		options: any
 	): Observable<PagingResults<EndUserAgreement>> {
 		return this.http
-			.post('api/euas', { q: query, s: search, options }, { params: paging.toObj() })
+			.post<PagingResults>(
+				'api/euas',
+				{ q: query, s: search, options },
+				{ params: paging.toObj() }
+			)
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {

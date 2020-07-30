@@ -27,7 +27,7 @@ import { EuaService } from './eua.service';
 export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement>
 	implements OnInit {
 	// Columns to show/hide in user table
-	columns = {
+	columns: Record<string, { show: boolean; display: string }> = {
 		_id: { show: false, display: 'ID' },
 		title: { show: true, display: 'Title' },
 		text: { show: false, display: 'Text' },

@@ -18,7 +18,7 @@ import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 export abstract class PagingComponent {
 	pagingOpts: PagingOptions;
 
-	abstract loadData();
+	abstract loadData(): any;
 
 	applySearch() {
 		this.pagingOpts.setPageNumber(0);

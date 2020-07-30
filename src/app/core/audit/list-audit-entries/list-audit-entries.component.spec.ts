@@ -26,7 +26,7 @@ import { AuditService } from '../audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 
 describe('Audit Component Spec', () => {
-	let auditServiceSpy;
+	let auditServiceSpy: any;
 
 	let fixture: ComponentFixture<ListAuditEntriesComponent>;
 	let component: ListAuditEntriesComponent;
@@ -87,7 +87,7 @@ describe('Audit Component Spec', () => {
 			'search',
 			'matchUser'
 		]);
-		auditServiceSpy.getDistinctAuditValues.and.callFake(field => {
+		auditServiceSpy.getDistinctAuditValues.and.callFake((field: string) => {
 			if (field === 'audit.action') {
 				return of(distinctResultsActions);
 			} else if (field === 'audit.auditType') {

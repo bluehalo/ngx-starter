@@ -32,7 +32,7 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 
 	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
 
-	load$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+	load$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
 	protected constructor() {}
 

@@ -48,7 +48,11 @@ export class AuditService {
 		options: any
 	): Observable<PagingResults> {
 		return this.http
-			.post('api/users/match', { q: query, s: search, options }, { params: paging.toObj() })
+			.post<PagingResults>(
+				'api/users/match',
+				{ q: query, s: search, options },
+				{ params: paging.toObj() }
+			)
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {
