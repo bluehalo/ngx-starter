@@ -52,7 +52,7 @@ export class HelpTopicComponent {
 			);
 			this.componentRef = this.content.createComponent(factory);
 		} else {
-			console.log(`WARNING: No handler for help topic: ${key}.`);
+			console.warn(`WARNING: No handler for help topic: ${key}.`);
 		}
 	}
 

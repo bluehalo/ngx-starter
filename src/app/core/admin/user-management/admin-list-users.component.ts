@@ -155,15 +155,15 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		const id = user.userModel._id;
 		const username = user.userModel.username;
 
-		console.log('Delete User not yet implemented.');
+		console.error('Delete User not yet implemented.');
 	}
 
 	exportUserData() {
-		console.log('Export User Data coming soon...');
+		console.error('Export User Data coming soon...');
 	}
 
 	exportCurrentView() {
-		console.log('Export Current View coming soon...');
+		console.error('Export Current View coming soon...');
 	}
 
 	columnsUpdated(updatedColumns: any) {

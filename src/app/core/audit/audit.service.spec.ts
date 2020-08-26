@@ -53,7 +53,6 @@ describe('Audit Service', () => {
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);
 			service.search({ actor: 'test' }, 'some-search', paging).subscribe(actual => {
-				console.log(actual);
 				expect(actual).toBe(results);
 			});
 

@@ -53,7 +53,11 @@ describe('Audit Component Spec', () => {
 
 	const distinctResultsActions = ['admin update', 'create', 'authentication succeeded'];
 	const distinctResultsTypes = ['user', 'user-authentication'];
-	const searchResults = {
+	const searchResults: PagingResults<any> = {
+		pageNumber: 1,
+		pageSize: 20,
+		totalPages: 1,
+		totalSize: 1,
 		elements: [
 			{
 				created: 1567973747442,
@@ -137,29 +141,29 @@ describe('Audit Component Spec', () => {
 	});
 
 	describe('audit list display', () => {
-		it('should display the audit entry on load', () => {
+		it('should display the audit entry on load', async () => {
+			// initialize the component, and make the first service calls
 			fixture.detectChanges();
+			await fixture.whenStable();
 
-			console.log(component.loading);
+			expect(component.loading).toEqual(false);
 
-			fixture.whenStable().then(() => {
-				// Verify that the Address String is display in the proper HTML field
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
-					'testuser01'
-				);
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
-					'admin update'
-				);
-				expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
-					'2019-09-08 20:15:47Z'
-				);
+			// Verify that we're not spamming the service
+			expect(auditServiceSpy.getDistinctAuditValues).toHaveBeenCalledTimes(2);
+			expect(auditServiceSpy.search).toHaveBeenCalledTimes(1);
 
-				// Verify that the values are formatted properly
+			// translate service responses into the html bindings
+			fixture.detectChanges();
+			await fixture.whenStable();
 
-				// Verify that we're not spamming the service
-				expect(auditServiceSpy.getDistinctAuditValues).toHaveBeenCalledTimes(2);
-				expect(auditServiceSpy.search).toHaveBeenCalledTimes(1);
-			});
+			// Verify that the values are formatted properly
+			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain('testuser01');
+			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
+				'admin update'
+			);
+			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
+				'2019-09-08 20:15:47Z'
+			);
 		});
 	});
 });
