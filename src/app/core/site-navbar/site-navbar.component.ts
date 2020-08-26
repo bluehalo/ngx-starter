@@ -29,6 +29,9 @@ export class SiteNavbarComponent implements OnInit {
 	teamNavOpen = false;
 	messagesNavOpen = false;
 
+	apiDocsLink: string;
+	showApiDocsLink = false;
+
 	showFeedbackOption = true;
 
 	showUserPreferencesLink = false;
@@ -78,6 +81,8 @@ export class SiteNavbarComponent implements OnInit {
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: Config) => {
+				this.showApiDocsLink = config?.apiDocs?.enabled ?? false;
+				this.apiDocsLink = config?.apiDocs?.path ?? null;
 				this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
 				this.showUserPreferencesLink = config?.userPreferences?.enabled ?? false;
 				this.userPreferencesLink = config?.userPreferences?.path ?? '';

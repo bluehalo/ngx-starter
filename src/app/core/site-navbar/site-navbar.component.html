@@ -212,6 +212,12 @@
 								(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
 						</ng-container>
 
+						<!-- API Docs -->
+						<li *ngIf="showApiDocsLink">
+							<a [href]="apiDocsLink" target="_blank"
+							   (click)="helpNavPopover.hide()">API Docs</a>
+						</li>
+
 						<!-- About -->
 						<li>
 							<a routerLink="/about"
