@@ -2,6 +2,11 @@ interface AppConfig {
 	title: string;
 }
 
+interface ApiDocsConfig {
+	enabled: boolean;
+	path: string;
+}
+
 interface BannerConfig {
 	html: string;
 	style: string;
@@ -29,6 +34,8 @@ export interface Config {
 	app: AppConfig;
 	version: string;
 	contactEmail: string;
+
+	apiDocs: ApiDocsConfig;
 
 	banner: BannerConfig;
 	copyright: BannerConfig;
