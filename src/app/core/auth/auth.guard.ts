@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
 			first(),
 			catchError(error => {
 				// Handle the error
-				console.log(error);
+				console.error(error);
 				return of(null);
 			})
 		);
