@@ -31,7 +31,7 @@
 						<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
 							<li><a class="dropdown-item" (click)="exportCurrentView()" tabindex="0">Export Current View</a></li>
-							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0">Export Single Field</a></li>
+							<li><a class="dropdown-item" (click)="exportUserData()" tabindex="0" disabled>Export Single Field</a></li>
 						</ul>
 					</div>
 					<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
