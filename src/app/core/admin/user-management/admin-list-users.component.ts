@@ -167,7 +167,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	exportCurrentView() {
 		let viewColumns = Object.keys(this.columns)
 			.filter((key: string) => this.columns[key].show)
-			.map((key: any) => ({ key: key, title: this.columns[key].title }));
+			.map((key: string) => ({ key: key, title: this.columns[key].display }));
 
 		let rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
 
