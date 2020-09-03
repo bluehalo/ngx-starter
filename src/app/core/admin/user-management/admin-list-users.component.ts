@@ -18,8 +18,8 @@ import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
-import { AdminUsersService } from './admin-users.service';
 import { ExportConfigService } from '../../export-config.service';
+import { AdminUsersService } from './admin-users.service';
 
 @UntilDestroy()
 @Component({
@@ -165,11 +165,11 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	exportCurrentView() {
-		let viewColumns = Object.keys(this.columns)
+		const viewColumns = Object.keys(this.columns)
 			.filter((key: string) => this.columns[key].show)
-			.map((key: string) => ({ key: key, title: this.columns[key].display }));
+			.map((key: string) => ({ key, title: this.columns[key].display }));
 
-		let rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
+		const rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
 
 		if (rolesIndex !== -1) {
 			viewColumns.splice(
