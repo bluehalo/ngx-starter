@@ -6,7 +6,7 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 	styleUrls: ['notification.component.scss']
 })
 export class NotificationComponent {
-	@Input() readonly notificationType: 'info' | 'success' | 'warning' | 'danger';
+	@Input() readonly notificationType: 'info' | 'success' | 'warning' | 'danger' = 'info';
 	@Input() readonly message: string;
 	@Input() showActions = false;
 	@Input() small = false;
