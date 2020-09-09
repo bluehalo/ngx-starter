@@ -18,6 +18,7 @@ import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
+import { ExportConfigService } from '../../export-config.service';
 import { AdminUsersService } from './admin-users.service';
 
 @UntilDestroy()
@@ -101,6 +102,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
+		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService
 	) {
 		super();
@@ -159,11 +161,34 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	exportUserData() {
-		console.error('Export User Data coming soon...');
+		console.error('Export of single user field is not yet supported.');
 	}
 
 	exportCurrentView() {
-		console.error('Export Current View coming soon...');
+		const viewColumns = Object.keys(this.columns)
+			.filter((key: string) => this.columns[key].show)
+			.map((key: string) => ({ key, title: this.columns[key].display }));
+
+		const rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
+
+		if (rolesIndex !== -1) {
+			const roleColumns = Role.ROLES.map(role => {
+				return { key: `roles.${role.role}`, title: `${role.label} Role` };
+			});
+			viewColumns.splice(rolesIndex, 1, ...roleColumns);
+		}
+
+		this.exportConfigService
+			.postExportConfig('user', {
+				q: this.getQuery(),
+				s: this.search,
+				cols: viewColumns,
+				sort: this.pagingOptions.sortField,
+				dir: this.pagingOptions.sortDir
+			})
+			.subscribe((response: any) => {
+				window.open(`/api/admin/users/csv/${response._id}`);
+			});
 	}
 
 	columnsUpdated(updatedColumns: any) {
