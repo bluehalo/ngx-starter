@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AdminModule } from '../../common/admin.module';
-import {LoadingOverlayModule} from "../../common/loading-overlay.module";
+import { LoadingOverlayModule } from '../../common/loading-overlay.module';
 import { ModalModule, ModalService } from '../../common/modal.module';
 
 import { AuthGuard } from '../../core/core.module';
@@ -27,7 +28,8 @@ import { WelcomeComponent } from './welcome.component';
 		ExampleRoutingModule,
 		NgSelectModule,
 		ModalModule,
-		LoadingOverlayModule
+		LoadingOverlayModule,
+		CommonModule
 	],
 	exports: [],
 	declarations: [

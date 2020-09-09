@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
-	imports: [],
+	imports: [CommonModule],
 	exports: [NotificationComponent],
 	declarations: [NotificationComponent],
 	providers: []
