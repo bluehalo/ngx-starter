@@ -172,14 +172,10 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		const rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
 
 		if (rolesIndex !== -1) {
-			viewColumns.splice(
-				rolesIndex,
-				1,
-				{ key: 'roles.user', title: 'User Role' },
-				{ key: 'roles.editor', title: 'Editor Role' },
-				{ key: 'roles.auditor', title: 'Auditor Role' },
-				{ key: 'roles.admin', title: 'Admin Role' }
-			);
+			const roleColumns = Role.ROLES.map(role => {
+				return { key: `roles.${role.role}`, title: `${role.label} Role` };
+			});
+			viewColumns.splice(rolesIndex, 1, ...roleColumns);
 		}
 
 		this.exportConfigService
