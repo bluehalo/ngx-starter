@@ -28,7 +28,11 @@ import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 				<button class="btn btn-primary" (click)="toggleLoading()" [disabled]="isError">
 					{{ isLoading ? 'Stop' : 'Start' }} Loading
 				</button>
-				<button class="btn btn-primary ml-3" (click)="toggleError()">
+				<button
+					class="btn btn-primary ml-3"
+					(click)="toggleError()"
+					[disabled]="!isLoading"
+				>
 					{{ isError ? 'Hide' : 'Show' }} Error
 				</button>
 			</div>
