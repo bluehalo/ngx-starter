@@ -9,6 +9,7 @@ import { AdminExampleComponent } from './admin/admin-example.component';
 import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
+import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
 import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
@@ -49,6 +50,11 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'modal',
 				component: ModalComponent,
+				canActivate: [AuthGuard]
+			},
+			{
+				path: 'loading-overlay',
+				component: ExampleLoadingOverlayComponent,
 				canActivate: [AuthGuard]
 			},
 			{

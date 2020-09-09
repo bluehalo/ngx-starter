@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AdminModule } from '../../common/admin.module';
+import {LoadingOverlayModule} from "../../common/loading-overlay.module";
 import { ModalModule, ModalService } from '../../common/modal.module';
 
 import { AuthGuard } from '../../core/core.module';
@@ -14,12 +15,20 @@ import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 import { ExampleHelpComponent } from './help/example-help.component';
+import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
 import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 
 @NgModule({
-	imports: [FormsModule, AdminModule, ExampleRoutingModule, NgSelectModule, ModalModule],
+	imports: [
+		FormsModule,
+		AdminModule,
+		ExampleRoutingModule,
+		NgSelectModule,
+		ModalModule,
+		LoadingOverlayModule
+	],
 	exports: [],
 	declarations: [
 		ExploreComponent,
@@ -29,7 +38,8 @@ import { WelcomeComponent } from './welcome.component';
 		FormsComponent,
 		GridComponent,
 		AdminExampleComponent,
-		ModalComponent
+		ModalComponent,
+		ExampleLoadingOverlayComponent
 	],
 	providers: [AuthGuard, ModalService]
 })
