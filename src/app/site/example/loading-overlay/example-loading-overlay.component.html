@@ -1,0 +1,23 @@
+<div class="container-fluid">
+	<h1>Loading Overlay</h1>
+	<div class="position-relative mb-3" style="border: dashed black">
+		<loading-overlay
+			[isLoading]="isLoading"
+			[isError]="isError"
+			[errorMessage]="errorMessage"
+			(retry)="handleRetry()"
+		></loading-overlay>
+		<p>This is the where the loaded content will go</p>
+		<br />
+		<br />
+	</div>
+
+	<div class="btn-group">
+		<button class="btn btn-primary" (click)="toggleLoading()" [disabled]="isError">
+			{{ isLoading ? 'Stop' : 'Start' }} Loading
+		</button>
+		<button class="btn btn-primary ml-3" (click)="toggleError()" [disabled]="!isLoading">
+			{{ isError ? 'Hide' : 'Show' }} Error
+		</button>
+	</div>
+</div>

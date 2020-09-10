@@ -4,40 +4,7 @@ import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'example-loading-overlay',
-	template: `
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col">
-					<h1>Loading Overlay</h1>
-					<div style="border: dashed black; position: relative">
-						<loading-overlay
-							[isLoading]="isLoading"
-							[isError]="isError"
-							[errorMessage]="errorMessage"
-							(retry)="handleRetry()"
-						></loading-overlay>
-						<p>This is the where the loaded content will go</p>
-						<br />
-						<br />
-					</div>
-				</div>
-			</div>
-
-			<br />
-			<div class="btn-group">
-				<button class="btn btn-primary" (click)="toggleLoading()" [disabled]="isError">
-					{{ isLoading ? 'Stop' : 'Start' }} Loading
-				</button>
-				<button
-					class="btn btn-primary ml-3"
-					(click)="toggleError()"
-					[disabled]="!isLoading"
-				>
-					{{ isError ? 'Hide' : 'Show' }} Error
-				</button>
-			</div>
-		</div>
-	`
+	templateUrl: './example-loading-overlay.component.html'
 })
 export class ExampleLoadingOverlayComponent {
 	isLoading = true;
