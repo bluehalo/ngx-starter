@@ -8,6 +8,7 @@ import { PagingModule, PagingResults } from 'src/app/common/paging.module';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
+import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
@@ -130,14 +131,11 @@ describe('Admin List Users Component Spec', () => {
 			return { key, title: component.columns[key].display };
 		});
 
-		const expectedColumns = [
-			...expectedBaseColumns,
-			// add roles explicitly
-			{ key: 'roles.user', title: 'User Role' },
-			{ key: 'roles.editor', title: 'Editor Role' },
-			{ key: 'roles.auditor', title: 'Auditor Role' },
-			{ key: 'roles.admin', title: 'Admin Role' }
-		];
+		const roleColumns = Role.ROLES.map(role => {
+			return { key: `roles.${role.role}`, title: `${role.label} Role` };
+		});
+
+		const expectedColumns = [...expectedBaseColumns, ...roleColumns];
 
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledWith('user', {
