@@ -1,0 +1,17 @@
+<ng-template #popHelpTemplate>
+	<div *ngIf="null != help">
+		<div *ngIf="null != help.tooltip" class="help-tooltip-content" [innerHtml]="help.tooltip"></div>
+		<div *ngIf="showSearchLink" class="help-tooltip-link">
+			<a class="no-href inherit-color" target="_blank" [routerLink]="['/help/search']"><i class="fa fa-external-link btn-icon"></i>More on search fields</a>
+		</div>
+		<div class="help-tooltip-link">
+			<a *ngIf="help.isEnriched" class="no-href inherit-color" target="_blank" [routerLink]="['/help/enrichments']"><i class="fa fa-external-link btn-icon"></i>More on enrichments</a>
+		</div>
+	</div>
+</ng-template>
+
+<span class="help-icon" *ngIf="!help.hideIcon">
+	<a class="no-href btn-icon" [popover]="popHelpTemplate" container="body" placement="right" [outsideClick]="true" containerClass="site">
+		<i class="fa fa-question-circle"></i>
+	</a>
+</span>

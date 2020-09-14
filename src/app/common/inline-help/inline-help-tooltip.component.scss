@@ -1,0 +1,15 @@
+@import '../../../styles/colors';
+@import '../../../styles/typography';
+
+.help-tooltip-content {
+	margin-bottom: 5px;
+}
+
+.help-tooltip-link {
+	text-decoration: underline;
+
+	i {
+		margin-right: 5px;
+		vertical-align: -1px;
+	}
+}

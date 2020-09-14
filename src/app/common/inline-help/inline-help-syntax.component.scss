@@ -1,0 +1,7 @@
+@import '../../../styles/colors';
+@import '../../../styles/typography';
+
+.inline-help-syntax {
+	@include font-normal(11px, $ux-color-dark-gray, 20px);
+	display: inline-block;
+}

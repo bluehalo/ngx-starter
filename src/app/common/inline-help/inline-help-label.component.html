@@ -1,0 +1,10 @@
+<div *ngIf="label" class="inline-help-label">
+	<label class="control-label">
+		<span *ngIf="required" class="text-danger"><strong>* </strong></span>
+		{{ label }}
+		<inline-help-tooltip [help]="help" *ngIf="showTooltip"></inline-help-tooltip>
+	</label>
+	<div *ngIf="null != help?.above" class="inline-help-label-above">
+		{{ help?.above }}
+	</div>
+</div>
