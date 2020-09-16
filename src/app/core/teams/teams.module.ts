@@ -54,6 +54,12 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ViewTeamComponent,
 		TeamsHelpComponent
 	],
-	providers: [TeamAuthorizationService, TeamsService, TeamsResolve, ModalService]
+	providers: [
+		TeamAuthorizationService,
+		TeamsService,
+		TeamsResolve,
+		ModalService,
+		TeamsHelpComponent
+	]
 })
 export class TeamsModule {}
