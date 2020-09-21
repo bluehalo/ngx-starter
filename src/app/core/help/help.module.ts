@@ -30,6 +30,6 @@ import { HelpComponent } from './help.component';
 		HelpTopicComponent,
 		HelpTopicWrapperComponent
 	],
-	providers: [HelpTopics]
+	providers: [HelpTopics, GettingStartedHelpComponent]
 })
 export class HelpModule {}

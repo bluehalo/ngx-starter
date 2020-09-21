@@ -43,6 +43,6 @@ import { WelcomeComponent } from './welcome.component';
 		ModalComponent,
 		ExampleLoadingOverlayComponent
 	],
-	providers: [AuthGuard, ModalService]
+	providers: [AuthGuard, ModalService, ExampleHelpComponent]
 })
 export class ExampleModule {}
