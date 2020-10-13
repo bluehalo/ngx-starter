@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			catchError(err => {
-				if (err.bypassAuthInterceptors) {
+				if (!err.bypassAuthInterceptors) {
 					this.handleError(err);
 				}
 				return throwError(err);
