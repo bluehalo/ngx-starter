@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { AuthInterceptor } from './auth.interceptor';
+import { Interceptor } from './interceptor';
 
+/**
+ * HTTP Interceptor that will interpret EUA related HTTP calls
+ */
 @Injectable()
-export class EuaAuthInterceptor extends AuthInterceptor {
+export class EuaAuthInterceptor extends Interceptor {
 	handleError(err: any): void {
 		const { status, type } = this.parseError(err);
 		if (status === 403 && type === 'eua') {
