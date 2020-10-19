@@ -6,17 +6,17 @@ import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 /**
- * HTTP Interceptor
+ * Abstract HTTP Interceptor
  */
 @Injectable()
-export abstract class Interceptor implements HttpInterceptor {
+export abstract class AbstractHttpInterceptor implements HttpInterceptor {
 	protected constructor(public router: Router) {}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			catchError(err => {
 				if (!err.bypassAuthInterceptors) {
-					this.handleError(err);
+					this.handleError(err, req);
 				}
 				return throwError(err);
 			})
@@ -36,14 +36,7 @@ export abstract class Interceptor implements HttpInterceptor {
 	}
 
 	/**
-	 * Set a flag in the error to alert future interceptors to pass the error through
-	 */
-	bypassRemainingInterceptors(err: any) {
-		err.bypassAuthInterceptors = true;
-	}
-
-	/**
 	 * Implement this in any interceptors extending the AuthInterceptor class
 	 */
-	abstract handleError(err: any): void;
+	abstract handleError(err: any, req: HttpRequest<any>): void;
 }
