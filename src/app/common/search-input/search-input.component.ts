@@ -32,13 +32,13 @@ export class SearchInputComponent {
 	/**
 	 * If true, searches will be made on `input` events, otherwise searches will be made on `keyup` events
 	 */
-	@Input() preferInputEvent: boolean = false;
+	@Input() preferInputEvent = false;
 
 	/**
 	 * Specifies a minimum character count required to search.
 	 * In the event the number of characters is between 0 and the minimum, a warning message is shown beneath the search bar
 	 */
-	@Input() minSearchCharacterCount: number = 0;
+	@Input() minSearchCharacterCount = 0;
 
 	searchInput$ = new Subject<void>();
 	showMinCountMessage = false;
