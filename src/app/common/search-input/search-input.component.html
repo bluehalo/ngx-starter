@@ -1,5 +1,15 @@
-<div class="search-input-container d-flex">
-	<input [placeholder]="placeholder" type="text" class="form-control" [(ngModel)]="search" (keyup)="onKeyup()">
+<div class="search-input-container d-flex" [style.width]="width">
+	<input
+		type="text"
+		[placeholder]="placeholder"
+		class="form-control"
+		[(ngModel)]="search"
+		(keyup)="onKeyup()"
+		(input)="onInput()"
+	/>
 	<span *ngIf="search.length === 0" class="icon fa fa-search"></span>
 	<span *ngIf="search.length > 0" (click)="clearSearch($event)" class="icon fa fa-times"></span>
+</div>
+<div *ngIf="showMinCountMessage" [@minCount] class="min-count">
+	<div>Searches require a minimum of {{ minSearchCharacterCount }} characters.</div>
 </div>
