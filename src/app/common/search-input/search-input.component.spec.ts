@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,9 +7,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchInputComponent } from './search-input.component';
 
 describe('SearchInputComponent', () => {
-	let fixture: ComponentFixture<SearchInputComponent>,
-		componentInstance: SearchInputComponent,
-		inputElement: ElementRef<HTMLInputElement>;
+	let fixture: ComponentFixture<SearchInputComponent>;
+	let componentInstance: SearchInputComponent;
+	let inputElement: ElementRef<HTMLInputElement>;
 
 	beforeEach(() => {
 		fixture = TestBed.configureTestingModule({
