@@ -27,7 +27,6 @@ export class SearchInputComponent {
 	@Input() placeholder = 'Search...';
 	@Output() readonly applySearch: EventEmitter<string> = new EventEmitter();
 	@Input() search = '';
-	@Input() width = '350px';
 
 	/**
 	 * If true, searches will be made on `input` events, otherwise searches will be made on `keyup` events
