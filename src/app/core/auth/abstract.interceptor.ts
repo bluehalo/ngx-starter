@@ -15,9 +15,7 @@ export abstract class AbstractHttpInterceptor implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			catchError(err => {
-				if (!err.bypassAuthInterceptors) {
-					this.handleError(err, req);
-				}
+				this.handleError(err, req);
 				return throwError(err);
 			})
 		);
