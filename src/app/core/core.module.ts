@@ -18,7 +18,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthenticationService } from './auth/authentication.service';
 import { AuthorizationDirective } from './auth/authorization.directive';
 import { AuthorizationService } from './auth/authorization.service';
+import { EuaInterceptor } from './auth/eua.interceptor';
 import { SessionService } from './auth/session.service';
+import { SigninInterceptor } from './auth/signin.interceptor';
 import { ConfigService } from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
 import { UserEuaComponent } from './eua/user-eua.component';
@@ -92,7 +94,11 @@ export function getConfiguration(configService: ConfigService) {
 			deps: [ConfigService],
 			multi: true
 		},
-		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+		[
+			{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+			{ provide: HTTP_INTERCEPTORS, useClass: EuaInterceptor, multi: true },
+			{ provide: HTTP_INTERCEPTORS, useClass: SigninInterceptor, multi: true }
+		]
 	]
 })
 export class CoreModule {
