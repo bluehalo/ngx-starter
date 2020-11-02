@@ -37,7 +37,7 @@ import { PipesModule } from './pipes.module';
 })
 export class PagingModule {}
 
-export { AbstractPageableDataComponent } from './paging/abstract-pageable-data-component';
+export { AbstractPageableDataComponent } from './paging/abstract-pageable-data.component';
 export { PagerComponent, PagingComponent } from './paging/pager/pager.component';
 export {
 	PageChange,
