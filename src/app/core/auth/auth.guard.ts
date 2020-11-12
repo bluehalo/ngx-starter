@@ -108,6 +108,11 @@ export class AuthGuard implements CanActivate {
 				this.router.navigate(['/unauthorized']);
 				return false;
 			}
+
+			// redirect a user to the homepage if they are authorized
+			if (missingRoles.length === 0 && state.url === '/unauthorized') {
+				this.router.navigate(['']);
+			}
 		}
 
 		return true;
