@@ -19,8 +19,6 @@ export class HelpBreadcrumbResolver implements Resolve<string> {
 			{
 				path: 'help',
 				component: HelpComponent,
-				canActivate: [AuthGuard],
-				data: { roles: ['user'] },
 				children: [
 					/**
 					 * Default Route
