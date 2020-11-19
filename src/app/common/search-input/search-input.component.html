@@ -10,6 +10,6 @@
 	<span *ngIf="search.length === 0" class="icon fa fa-search"></span>
 	<span *ngIf="search.length > 0" (click)="clearSearch($event)" class="icon fa fa-times"></span>
 </div>
-<div *ngIf="showMinCountMessage" [@minCount] class="min-count">
+<div *ngIf="!disableMinCountMessage && showMinCountMessage" [@minCount] class="text-muted pt-2">
 	<div class="pt-2">Searches require a minimum of {{ minSearchCharacterCount }} characters.</div>
 </div>

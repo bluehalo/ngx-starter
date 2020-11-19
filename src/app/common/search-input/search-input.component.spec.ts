@@ -92,7 +92,7 @@ describe('SearchInputComponent', () => {
 		fixture.detectChanges();
 
 		expect(
-			(fixture.debugElement.query(By.css('.min-count')).nativeElement as HTMLElement)
+			(fixture.debugElement.query(By.css('.text-muted')).nativeElement as HTMLElement)
 				.textContent
 		).toEqual('Searches require a minimum of 3 characters.');
 	}));
@@ -109,7 +109,39 @@ describe('SearchInputComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.query(By.css('.min-count'))).toBeNull();
+		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
+	}));
+
+	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is adhered to', fakeAsync(() => {
+		componentInstance.minSearchCharacterCount = 3;
+		componentInstance.disableMinCountMessage = true;
+		inputElement.nativeElement.value = 'sea';
+		fixture.detectChanges();
+
+		inputElement.nativeElement.dispatchEvent(new Event('input'));
+		inputElement.nativeElement.dispatchEvent(new Event('keyup'));
+
+		tick(350);
+
+		fixture.detectChanges();
+
+		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
+	}));
+
+	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is not adhered to', fakeAsync(() => {
+		componentInstance.minSearchCharacterCount = 3;
+		componentInstance.disableMinCountMessage = true;
+		inputElement.nativeElement.value = 'se';
+		fixture.detectChanges();
+
+		inputElement.nativeElement.dispatchEvent(new Event('input'));
+		inputElement.nativeElement.dispatchEvent(new Event('keyup'));
+
+		tick(350);
+
+		fixture.detectChanges();
+
+		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
 	}));
 
 	it('should show clear-search options if search input length > 0', () => {

@@ -39,7 +39,15 @@ export class SearchInputComponent {
 	 */
 	@Input() minSearchCharacterCount = 0;
 
+	/**
+	 * When set to true, the minimum search character
+	 * message count will not be displayed, even if the search
+	 * value is less than the minimum number of characters.
+	 */
+	@Input() disableMinCountMessage = false;
+
 	searchInput$ = new Subject<void>();
+
 	showMinCountMessage = false;
 
 	constructor() {
