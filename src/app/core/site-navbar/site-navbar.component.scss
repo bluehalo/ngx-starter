@@ -172,12 +172,12 @@
 	}
 }
 
-::ng-deep .site-nav-popover-container {
+::ng-deep .popover.site-nav-popover-container {
 	width: 192px;
 	z-index: 10001;
 }
 
-::ng-deep .site-nav-popover-container-messages {
+::ng-deep .popover.site-nav-popover-container-messages {
 	width: 298px;
 	max-width: 298px;
 	z-index: 10001;
