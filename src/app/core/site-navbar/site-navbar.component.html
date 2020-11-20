@@ -26,6 +26,7 @@
 				*hasSomeRoles="navbarItem.hasSomeRoles">
 				<a tooltip="{{ navbarItem.title }}"
 				   placement="left"
+				   container="body"
 				   [isDisabled]="navbarOpen"
 				   routerLinkActive="active-link"
 				   [routerLink]="navbarItem.path">
@@ -46,6 +47,8 @@
 				   [popover]="teamNav"
 				   container="body"
 				   containerClass="site-nav-popover-container"
+				   tooltip="Teams"
+				   [isDisabled]="navbarOpen"
 				   #teamNavPopover="bs-popover"
 				   placement="left"
 				   [outsideClick]="true"
@@ -73,6 +76,8 @@
 				   [popover]="userNav"
 				   container="body"
 				   containerClass="site-nav-popover-container"
+				   tooltip="User Profile"
+				   [isDisabled]="navbarOpen"
 				   #userNavPopover="bs-popover"
 				   placement="left"
 				   [outsideClick]="true"
@@ -107,6 +112,8 @@
 				   [popover]="auditorNav"
 				   container="body"
 				   containerClass="site-nav-popover-container"
+				   tooltip="Audit Logs"
+				   [isDisabled]="navbarOpen"
 				   #auditorNavPopover="bs-popover"
 				   placement="left"
 				   [outsideClick]="true"
@@ -133,6 +140,8 @@
 				   [popover]="adminNav"
 				   container="body"
 				   containerClass="site-nav-popover-container"
+				   tooltip="Admin"
+				   [isDisabled]="navbarOpen"
 				   #adminNavPopover="bs-popover"
 				   placement="left"
 				   [outsideClick]="true"
@@ -161,6 +170,8 @@
 				   [popover]="messagesNav"
 				   container="body"
 				   containerClass="site-nav-popover-container-messages"
+				   tooltip="Notifications"
+				   [isDisabled]="navbarOpen"
 				   #messagesNavPopover="bs-popover"
 				   placement="left"
 				   [outsideClick]="true"
@@ -185,14 +196,16 @@
 			<!-- Help Nav -->
 			<li class="element nav-popover nav-popover-bottom">
 				<a [ngClass]="{'highlight-link': helpNavOpen}"
-				   [popover]="helpNav"
-				   container="body"
-				   containerClass="site-nav-popover-container"
-				   #helpNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="helpNavOpen = true;"
-				   (onHidden)="helpNavOpen = false;">
+				[popover]="helpNav"
+				container="body"
+				containerClass="site-nav-popover-container"
+				tooltip="Help"
+				[isDisabled]="navbarOpen"
+				#helpNavPopover="bs-popover"
+				placement="left"
+				[outsideClick]="true"
+				(onShown)="helpNavOpen = true;"
+				(onHidden)="helpNavOpen = false;">
 					<span class="fa fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
 				</a>
@@ -238,7 +251,7 @@
 		<!-- Collapse/Expand -->
 		<li class="element "
 				(click)="toggleNavbar()">
-			<a>
+			<a tooltip="Expand" placement="left" container="body" [isDisabled]="navbarOpen">
 				<span class="fa fa-fw fa-angle-double-right"
 				   [class.fa-flip-horizontal]="navbarOpen"></span>
 				<span [hidden]="!navbarOpen">Collapse</span>
