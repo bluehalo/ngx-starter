@@ -1,12 +1,14 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
+/* tslint:disable:ordered-imports */
+// we need to import this file first in order to use fakeAsync
+import 'zone.js/dist/zone-testing';
+
 import { getTestBed } from '@angular/core/testing';
 import {
 	platformBrowserDynamicTesting,
 	BrowserDynamicTestingModule
 } from '@angular/platform-browser-dynamic/testing';
-
-import 'zone.js/dist/zone-testing';
 
 declare const require: any;
 
