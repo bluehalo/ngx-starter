@@ -44,6 +44,9 @@
 						</span>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 							<li>
+								<a class="dropdown-item" (click)="previewMessage(message)">Preview</a>
+							</li>
+							<li>
 								<a class="dropdown-item" [routerLink]="['/admin/message', message._id]">Edit</a>
 							</li>
 							<li>
