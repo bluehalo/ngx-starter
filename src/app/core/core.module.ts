@@ -95,9 +95,9 @@ export function getConfiguration(configService: ConfigService) {
 			multi: true
 		},
 		[
-			{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+			{ provide: HTTP_INTERCEPTORS, useClass: SigninInterceptor, multi: true },
 			{ provide: HTTP_INTERCEPTORS, useClass: EuaInterceptor, multi: true },
-			{ provide: HTTP_INTERCEPTORS, useClass: SigninInterceptor, multi: true }
+			{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 		]
 	]
 })
