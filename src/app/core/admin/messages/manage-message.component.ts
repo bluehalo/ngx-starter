@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
@@ -30,6 +31,7 @@ export abstract class ManageMessageComponent implements OnInit {
 	protected navigateOnSuccess: string;
 
 	constructor(
+		protected modalService: ModalService,
 		protected router: Router,
 		protected configService: ConfigService,
 		public alertService: SystemAlertService

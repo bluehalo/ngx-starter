@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.class';
@@ -16,12 +17,13 @@ export class CreateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-create';
 
 	constructor(
+		protected modalService: ModalService,
 		router: Router,
 		configService: ConfigService,
 		alertService: SystemAlertService,
 		private messageService: MessageService
 	) {
-		super(router, configService, alertService);
+		super(modalService, router, configService, alertService);
 	}
 
 	initialize() {

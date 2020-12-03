@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
@@ -18,13 +19,14 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 	private id: string;
 
 	constructor(
+		protected modalService: ModalService,
 		router: Router,
 		protected route: ActivatedRoute,
 		configService: ConfigService,
 		alertService: SystemAlertService,
 		protected messageService: MessageService
 	) {
-		super(router, configService, alertService);
+		super(modalService, router, configService, alertService);
 	}
 
 	initialize() {
