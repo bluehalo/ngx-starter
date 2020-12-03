@@ -52,6 +52,11 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	abstract submitMessage(message: Message): Observable<any>;
 
+	previewMessage() {
+		const { body, title } = this.message;
+		this.modalService.alert(title, body);
+	}
+
 	submit() {
 		this.submitMessage(this.message)
 			.pipe(untilDestroyed(this))
