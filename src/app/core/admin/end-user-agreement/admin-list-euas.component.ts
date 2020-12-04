@@ -185,7 +185,6 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 	 * @param endUserAgreement - the end user agreement used to populate the modal
 	 */
 	previewEndUserAgreement(endUserAgreement: any) {
-		console.log(endUserAgreement);
 		const { text, title } = endUserAgreement;
 		this.modalService.alert(title, text);
 	}
