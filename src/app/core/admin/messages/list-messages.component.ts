@@ -114,4 +114,14 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 				}
 			);
 	}
+
+	/**
+	 * Opens a preview modal containing the body and title of this message.
+	 *
+	 * @param message - the message used to populate the modal
+	 */
+	previewMessage(message: Message) {
+		const { body, title } = message;
+		this.modalService.alert(title, body);
+	}
 }

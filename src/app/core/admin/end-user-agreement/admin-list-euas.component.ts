@@ -178,4 +178,14 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 
 		return this.euaService.search(query, search, pagingOptions, {});
 	}
+
+	/**
+	 * Opens a preview modal containing the text and title of this end user agreement.
+	 *
+	 * @param endUserAgreement - the end user agreement used to populate the modal
+	 */
+	previewEndUserAgreement(endUserAgreement: any) {
+		const { text, title } = endUserAgreement;
+		this.modalService.alert(title, text);
+	}
 }

@@ -53,6 +53,9 @@
 							</span>
 							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 								<li>
+									<a class="dropdown-item" (click)="previewEndUserAgreement(eua.euaModel)">Preview</a>
+								</li>
+								<li>
 									<a class="dropdown-item" [routerLink]="['/admin/eua', eua.euaModel._id]">Edit</a>
 								</li>
 								<li>

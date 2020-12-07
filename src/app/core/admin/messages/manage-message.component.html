@@ -37,6 +37,7 @@
 		<div class="form-group">
 			<div class="text-right">
 				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/messages']">Cancel</button>
+				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewMessage()">Preview</button>
 				<button type="submit" class="btn btn-primary" [disabled]="okDisabled">{{okButtonText}}</button>
 			</div>
 		</div>
