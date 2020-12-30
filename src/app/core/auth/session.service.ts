@@ -108,7 +108,6 @@ export class SessionService {
 		if (null == url) {
 			url = '/';
 		}
-		url = url.split('?')[0];
 
 		const queryParams = this.parseQueryParams(url);
 		if (!isEmpty(queryParams)) {
@@ -117,6 +116,9 @@ export class SessionService {
 			}
 			extras = Object.assign(extras, { queryParams });
 		}
+
+		// strip the query parameters from the URL
+		url = url.split('?')[0];
 
 		// Redirect the user
 		this.router.navigate([url], extras).catch(() => {
