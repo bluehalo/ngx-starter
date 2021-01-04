@@ -196,16 +196,16 @@
 			<!-- Help Nav -->
 			<li class="element nav-popover nav-popover-bottom">
 				<a [ngClass]="{'highlight-link': helpNavOpen}"
-				[popover]="helpNav"
-				container="body"
-				containerClass="site-nav-popover-container"
-				tooltip="Help"
-				[isDisabled]="navbarOpen"
-				#helpNavPopover="bs-popover"
-				placement="left"
-				[outsideClick]="true"
-				(onShown)="helpNavOpen = true;"
-				(onHidden)="helpNavOpen = false;">
+					[popover]="helpNav"
+					container="body"
+					containerClass="site-nav-popover-container"
+					tooltip="Help"
+					[isDisabled]="navbarOpen"
+					#helpNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="helpNavOpen = true;"
+					(onHidden)="helpNavOpen = false;">
 					<span class="fa fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
 				</a>
