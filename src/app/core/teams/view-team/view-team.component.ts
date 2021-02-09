@@ -25,6 +25,7 @@ export class ViewTeamComponent implements OnInit {
 	team: Team;
 	_team: any;
 
+	nestedTeamsEnabled = false;
 	implicitMembersStrategy: string = null;
 
 	canManageTeam = false;
@@ -49,6 +50,7 @@ export class ViewTeamComponent implements OnInit {
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: Config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
+				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
 			});
 
 		this.route.data

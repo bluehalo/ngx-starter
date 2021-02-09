@@ -1,17 +1,21 @@
 <section>
-	<h1 class="mb-3">
-		Teams
-		<small>View and manage team membership and roles</small>
-	</h1>
+	<ng-container *ngIf="!embedded">
+		<h1 class="mb-3">
+			Teams
+			<small>View and manage team membership and roles</small>
+		</h1>
 
-	<!-- Alert Notifications -->
-	<system-alert></system-alert>
+		<!-- Alert Notifications -->
+		<system-alert></system-alert>
 
-	<div class="pt-2">
+	</ng-container>
+
+	<div [class.pt-2]="!embedded">
 
 		<div class="d-flex mb-3 align-items-center">
 			<asy-search-input placeholder="Search teams..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-			<button routerLink="/team/create" type="button" class="btn btn-primary ml-auto" *ngIf="canCreateTeam">
+			<button [routerLink]="['/team/create']" [queryParams]="{ parent: parent?._id }"
+					type="button" class="btn btn-primary ml-auto" *ngIf="canCreateTeam">
 				<span class="fa fa-plus"></span> Create Team
 			</button>
 		</div>

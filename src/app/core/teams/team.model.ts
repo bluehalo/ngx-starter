@@ -10,10 +10,13 @@ export class Team {
 		public created?: number,
 		public implicitMembers?: boolean,
 		public requiresExternalRoles?: string[],
-		public requiresExternalTeams?: string[]
+		public requiresExternalTeams?: string[],
+		public parent?: Team,
+		public ancestors?: Team[]
 	) {
 		this.requiresExternalRoles = requiresExternalRoles || [];
 		this.requiresExternalTeams = requiresExternalTeams || [];
+		this.ancestors = ancestors || [];
 	}
 
 	setFromModel(model: any): Team {
@@ -26,6 +29,11 @@ export class Team {
 			this.requiresExternalRoles = model.requiresExternalRoles || [];
 			this.requiresExternalTeams = model.requiresExternalTeams || [];
 			this.numResources = model.numResources;
+			this.ancestors = model.ancestors;
+
+			if (model.parent) {
+				this.parent = new Team().setFromModel(model.parent);
+			}
 		}
 
 		return this;

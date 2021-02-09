@@ -21,6 +21,7 @@ import { TeamsHelpComponent } from './help/teams-help.component';
 import { ListTeamMembersComponent } from './list-team-members/list-team-members.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamAuthorizationService } from './team-authorization.service';
+import { TeamSelectInputComponent } from './team-select-input/team-select-input.component';
 import { TeamsRoutingModule } from './teams-routing.module';
 import { TeamsResolve } from './teams.resolver';
 import { TeamsService } from './teams.service';
@@ -52,7 +53,9 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ListTeamMembersComponent,
 		ListTeamsComponent,
 		ViewTeamComponent,
-		TeamsHelpComponent
+		TeamsHelpComponent,
+		TeamSelectInputComponent,
+		TeamSelectInputComponent
 	],
 	providers: [
 		TeamAuthorizationService,

@@ -22,7 +22,8 @@
 		<!-- Team Name -->
 		<div class="form-group pt-4">
 			<label class="form-required" for="name">Team Name</label>
-			<input type="text" class="form-control" id="name" name="name" [(ngModel)]="team.name" required/>
+			<input type="text" class="form-control" id="name" name="name"
+				   placeholder="Enter team name..." [(ngModel)]="team.name" required/>
 		</div>
 
 		<!-- Team Admin -->
@@ -43,7 +44,20 @@
 		<!-- Description -->
 		<div class="form-group">
 			<label for="description">Description</label>
-			<textarea rows="3" class="form-control" id="description" name="description" [(ngModel)]="team.description"></textarea>
+			<textarea rows="3" class="form-control" id="description" name="description"
+					  placeholder="Enter description..." [(ngModel)]="team.description"></textarea>
+		</div>
+
+		<!-- Team Parent -->
+		<div class="form-group" *ngIf="nestedTeamsEnabled">
+			<label for="parent">Parent Team</label>
+			<app-team-select-input
+				id="parent" name="parent"
+				placeholder="Select parent..."
+				class="d-block"
+				style="width: 400px;"
+				[(ngModel)]="team.parent">
+			</app-team-select-input>
 		</div>
 
 		<!-- Implicit Teams Members -->
