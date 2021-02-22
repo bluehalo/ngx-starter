@@ -9,43 +9,67 @@
 
 	<!-- Search Input -->
 	<div class="pt-2">
-
-		<pageable-table [items]="items"
-						[hasItems]="hasItems"
-						[pagingOptions]="pagingOptions"
-						[showActions]="true"
-						[tableStriped]="true"
-						(pageChange)="pageEvent$.next($event)">
-
+		<pageable-table
+			[items]="items"
+			[hasItems]="hasItems"
+			[pagingOptions]="pagingOptions"
+			[showActions]="true"
+			[tableStriped]="true"
+			(pageChange)="pageEvent$.next($event)"
+		>
 			<ng-template #tableActions>
-				<asy-search-input placeholder="Search key and value..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				<asy-search-input
+					placeholder="Search key and value..."
+					(applySearch)="searchEvent$.next($event)"
+				></asy-search-input>
 			</ng-template>
 
 			<ng-template #tableHeader>
 				<th scope="col" *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+					<sortable-table-header
+						[header]="header"
+						[currentSortField]="pagingOptions.sortField"
+						[currentSortDir]="pagingOptions.sortDir"
+						(sortChange)="sortEvent$.next($event)"
+					></sortable-table-header>
 				</th>
 				<th scope="col">&nbsp;</th>
 			</ng-template>
 
 			<ng-template #tableRow let-cacheEntry="item">
-				<td>{{cacheEntry.key}}</td>
-				<td class="hide-overflow" style="max-width: 300px;">{{cacheEntry.value | json}}</td>
-				<td><span [attr.title]="cacheEntry.ts | utcDate">{{cacheEntry.ts | agoDate:false}}</span></td>
+				<td>{{ cacheEntry.key }}</td>
+				<td class="hide-overflow" style="max-width: 300px;">
+					{{ cacheEntry.value | json }}
+				</td>
+				<td>
+					<span [attr.title]="cacheEntry.ts | utcDate">{{
+						cacheEntry.ts | agoDate: false
+					}}</span>
+				</td>
 				<td class="text-right" style="max-width: 50px;">
 					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-						<span class="dropdown-toggle dropdown-toggle-hide-caret px-2" style="cursor: pointer;" dropdownToggle>
+						<span
+							class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+							style="cursor: pointer;"
+							dropdownToggle
+						>
 							<span class="fa fa-lg fa-ellipsis-v"></span>
 						</span>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 							<li>
-								<a class="dropdown-item" (click)="viewCacheEntry(cacheEntry)">View</a>
+								<a class="dropdown-item" (click)="viewCacheEntry(cacheEntry)"
+									>View</a
+								>
 							</li>
 							<li>
-								<a class="dropdown-item" (click)="refreshCacheEntry(cacheEntry)">Refresh</a>
+								<a class="dropdown-item" (click)="refreshCacheEntry(cacheEntry)"
+									>Refresh</a
+								>
 							</li>
 							<li>
-								<a class="dropdown-item" (click)="confirmDeleteEntry(cacheEntry)">Delete</a>
+								<a class="dropdown-item" (click)="confirmDeleteEntry(cacheEntry)"
+									>Delete</a
+								>
 							</li>
 						</ul>
 					</span>
@@ -63,8 +87,6 @@
 					<small>No Cache Entries are available</small>
 				</h2>
 			</ng-template>
-
 		</pageable-table>
 	</div>
-
 </section>

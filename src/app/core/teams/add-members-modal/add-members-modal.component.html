@@ -2,11 +2,14 @@
 	<h2 class="modal-title">
 		Add Team Members
 	</h2>
-	<button type="button" class="close"
-			(click)="modalRef.hide()"
-			tooltip="Close"
-			placement="bottom"
-			aria-label="Close">
+	<button
+		type="button"
+		class="close"
+		(click)="modalRef.hide()"
+		tooltip="Close"
+		placement="bottom"
+		aria-label="Close"
+	>
 		<span class="fa fa-times" aria-hidden="true"></span>
 	</button>
 </section>
@@ -14,16 +17,17 @@
 <section class="modal-body">
 	<h3>Add users</h3>
 	<div class="form-group">
-		<ng-select name="teamAdmin"
-				   bindLabel="userModel.name"
-				   placeholder="Search for user..."
-				   [items]="users$ | async"
-				   [loading]="usersLoading"
-				   [typeahead]="usersInput$"
-				   (change)="typeaheadOnSelect($event, selectDropdown)"
-				   #selectDropdown>
-			<ng-template ng-label-tmp let-item="item">
-			</ng-template>
+		<ng-select
+			name="teamAdmin"
+			bindLabel="userModel.name"
+			placeholder="Search for user..."
+			[items]="users$ | async"
+			[loading]="usersLoading"
+			[typeahead]="usersInput$"
+			(change)="typeaheadOnSelect($event, selectDropdown)"
+			#selectDropdown
+		>
+			<ng-template ng-label-tmp let-item="item"> </ng-template>
 		</ng-select>
 	</div>
 
@@ -41,7 +45,11 @@
 
 			<tbody>
 				<tr *ngFor="let invited of addedMembers; let i = index" class="table-row">
-					<td><div class="hide-overflow" [attr.title]="invited.username">{{ invited.username }}</div></td>
+					<td>
+						<div class="hide-overflow" [attr.title]="invited.username">
+							{{ invited.username }}
+						</div>
+					</td>
 					<td>
 						<div class="dropdown dropdown-table-inline" dropdown>
 							<span class="dropdown-toggle" dropdownToggle>
@@ -49,18 +57,24 @@
 							</span>
 
 							<ul *dropdownMenu class="dropdown-menu" role="menu">
-								<li *ngFor="let role of teamRoleOptions" [value]="role.role" (click)="updateRoleSelection(invited, role.role)">
+								<li
+									*ngFor="let role of teamRoleOptions"
+									[value]="role.role"
+									(click)="updateRoleSelection(invited, role.role)"
+								>
 									<a class="dropdown-item">{{ role.label }}</a>
 								</li>
 							</ul>
 						</div>
 					</td>
 					<td>
-						<a class="btn-icon"
-						   tooltip="Remove User"
-						   container="body"
-						   placement="bottom"
-						   (click)="remove(i)">
+						<a
+							class="btn-icon"
+							tooltip="Remove User"
+							container="body"
+							placement="bottom"
+							(click)="remove(i)"
+						>
 							<span class="fa fa-lg fa-trash"></span>
 						</a>
 					</td>
@@ -72,5 +86,12 @@
 
 <section class="modal-footer">
 	<button type="button" class="btn btn-link" (click)="modalRef.hide()">Cancel</button>
-	<button type="button" class="btn btn-primary" [disabled]="addedMembers.length === 0 || submitting" (click)="submit()">Add Users</button>
+	<button
+		type="button"
+		class="btn btn-primary"
+		[disabled]="addedMembers.length === 0 || submitting"
+		(click)="submit()"
+	>
+		Add Users
+	</button>
 </section>

@@ -6,7 +6,12 @@
 			<nav class="card">
 				<ul class="nav flex-column">
 					<li *ngFor="let topic of helpTopics" class="nav-item" role="presentation">
-						<a class="nav-link no-href btn-link" routerLinkActive="selected" [routerLink]="['/help/' + topic.id]">{{ topic.title }}</a>
+						<a
+							class="nav-link no-href btn-link"
+							routerLinkActive="selected"
+							[routerLink]="['/help/' + topic.id]"
+							>{{ topic.title }}</a
+						>
 					</li>
 				</ul>
 			</nav>

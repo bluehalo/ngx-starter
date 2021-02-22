@@ -10,25 +10,35 @@
 		<div class="form-group" *ngFor="let input of inputs">
 			<label [class.form-required]="input.required">{{ input.label }}</label>
 
-			<textarea class="form-control" *ngIf="input.type === 'textarea'"
-					  placeholder="Enter {{ input.label }}..."
-					  [name]="input.key"
-					  [required]="input.required"
-					  [(ngModel)]="formData[input.key]"
-					  style="height: 4.5em;">
-            </textarea>
+			<textarea
+				class="form-control"
+				*ngIf="input.type === 'textarea'"
+				placeholder="Enter {{ input.label }}..."
+				[name]="input.key"
+				[required]="input.required"
+				[(ngModel)]="formData[input.key]"
+				style="height: 4.5em;"
+			>
+			</textarea>
 
-			<input class="form-control" *ngIf="input.type !== 'textarea'"
-				   placeholder="Enter {{ input.label | lowercase }}..."
-				   [type]="input.type"
-				   [name]="input.key"
-				   [required]="input.required"
-				   [(ngModel)]="formData[input.key]" />
+			<input
+				class="form-control"
+				*ngIf="input.type !== 'textarea'"
+				placeholder="Enter {{ input.label | lowercase }}..."
+				[type]="input.type"
+				[name]="input.key"
+				[required]="input.required"
+				[(ngModel)]="formData[input.key]"
+			/>
 		</div>
 	</form>
 </section>
 
 <section class="modal-footer">
-	<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">{{ cancelText }}</button>
-	<button class="btn btn-primary" (click)="ok()" [disabled]="!modalForm.form.valid">{{ okText }}</button>
+	<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">
+		{{ cancelText }}
+	</button>
+	<button class="btn btn-primary" (click)="ok()" [disabled]="!modalForm.form.valid">
+		{{ okText }}
+	</button>
 </section>

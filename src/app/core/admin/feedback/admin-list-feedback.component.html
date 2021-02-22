@@ -7,15 +7,19 @@
 	<system-alert></system-alert>
 
 	<div class="pt-2">
-		<pageable-table [items]="items"
-						[hasItems]="hasItems"
-						[pagingOptions]="pagingOptions"
-						[showActions]="true"
-						[tableStriped]="true"
-						(pageChange)="pageEvent$.next($event)">
-
+		<pageable-table
+			[items]="items"
+			[hasItems]="hasItems"
+			[pagingOptions]="pagingOptions"
+			[showActions]="true"
+			[tableStriped]="true"
+			(pageChange)="pageEvent$.next($event)"
+		>
 			<ng-template #tableActions>
-				<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+				<asy-search-input
+					placeholder="Search..."
+					(applySearch)="searchEvent$.next($event)"
+				></asy-search-input>
 				<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
 					<span class="fa fa-download"></span> Export
 				</button>
@@ -23,7 +27,12 @@
 
 			<ng-template #tableHeader>
 				<th scope="col" *ngFor="let header of headers">
-					<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+					<sortable-table-header
+						[header]="header"
+						[currentSortField]="pagingOptions.sortField"
+						[currentSortDir]="pagingOptions.sortDir"
+						(sortChange)="sortEvent$.next($event)"
+					></sortable-table-header>
 				</th>
 			</ng-template>
 
@@ -35,7 +44,9 @@
 					<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
 				</td>
 				<td>
-					<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">{{ feedback?.created | agoDate }}</div>
+					<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">
+						{{ feedback?.created | agoDate }}
+					</div>
 				</td>
 				<td>
 					<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
@@ -65,9 +76,6 @@
 					<small>No Feedback available</small>
 				</h2>
 			</ng-template>
-
 		</pageable-table>
-
 	</div>
-
 </section>

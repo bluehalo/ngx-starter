@@ -1,5 +1,4 @@
 <section>
-
 	<!-- Show a breadcrumb to the list EUAs page -->
 	<a class="back-link" [routerLink]="['/admin/euas']">
 		<span class="fa fa-angle-double-left"></span> Back to EUAs
@@ -8,40 +7,62 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form name="euaForm" autocomplete="off" class="pt-3" role="form" (ngSubmit)="submitEua()" novalidate>
-
+	<form
+		name="euaForm"
+		autocomplete="off"
+		class="pt-3"
+		role="form"
+		(ngSubmit)="submitEua()"
+		novalidate
+	>
 		<h1>
-			{{title}}
-			<small>{{subtitle}}</small>
+			{{ title }}
+			<small>{{ subtitle }}</small>
 		</h1>
 
 		<!-- Basic Information -->
 		<div class="form-group">
 			<label class="form-required" for="title">Title of the Agreement</label>
 			<div>
-				<input type="text" class="form-control" id="title" name="title" [(ngModel)]="eua.euaModel.title" required />
+				<input
+					type="text"
+					class="form-control"
+					id="title"
+					name="title"
+					[(ngModel)]="eua.euaModel.title"
+					required
+				/>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label class="form-required" for="text">Text Content of the Agreement</label>
 			<div>
-				<textarea rows="15" class="form-control" id="text" name="text" [(ngModel)]="eua.euaModel.text" required></textarea>
+				<textarea
+					rows="15"
+					class="form-control"
+					id="text"
+					name="text"
+					[(ngModel)]="eua.euaModel.text"
+					required
+				></textarea>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="text-right">
-				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/euas']">Cancel</button>
-				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewEua()">Preview</button>
-				<button type="submit" class="btn btn-primary">{{submitText}}</button>
+				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/euas']">
+					Cancel
+				</button>
+				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewEua()">
+					Preview
+				</button>
+				<button type="submit" class="btn btn-primary">{{ submitText }}</button>
 			</div>
 		</div>
 
 		<div class="form-group" *ngIf="error">
 			<div class="text-right text-danger font-weight-bolder">{{ error }}</div>
 		</div>
-
 	</form>
-
 </section>

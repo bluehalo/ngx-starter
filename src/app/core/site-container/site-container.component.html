@@ -4,42 +4,34 @@
 
 <!-- Site Header -->
 <header class="site-header">
-
 	<div class="site-banner" *ngIf="null != bannerHtml">
-		<div class="header-banner"
-		     [innerHtml]="bannerHtml"></div>
+		<div class="header-banner" [innerHtml]="bannerHtml"></div>
 	</div>
-
 </header>
 
-
 <!-- Site content -->
-<section [ngClass]="{'header-active footer-active' : null != bannerHtml, 'copyright-active': null != copyrightHtml}">
-
+<section
+	[ngClass]="{
+		'header-active footer-active': null != bannerHtml,
+		'copyright-active': null != copyrightHtml
+	}"
+>
 	<site-navbar>
-
 		<section class="site-content" id="app-content" tabindex="-1">
 			<ng-content></ng-content>
 		</section>
-
 	</site-navbar>
-
 </section>
-
 
 <!-- Site Footer -->
 <footer class="site-footer">
-
 	<div class="site-banner" *ngIf="null != copyrightHtml">
-		<div class="copyright-banner"
-		     [innerHtml]="copyrightHtml"></div>
+		<div class="copyright-banner" [innerHtml]="copyrightHtml"></div>
 	</div>
 
 	<div class="site-banner" *ngIf="null != bannerHtml">
-		<div class="footer-banner"
-		     [innerHtml]="bannerHtml"></div>
+		<div class="footer-banner" [innerHtml]="bannerHtml"></div>
 	</div>
-
 </footer>
 
 <ng-container *isAuthenticated>

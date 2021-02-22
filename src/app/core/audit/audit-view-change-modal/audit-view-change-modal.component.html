@@ -1,15 +1,20 @@
 <div class="modal-header">
 	<h3>
-		<span>Changes to {{ auditEntry?.audit?.auditType }} by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}</span>
+		<span
+			>Changes to {{ auditEntry?.audit?.auditType }} by
+			{{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}</span
+		>
 		<span class="pull-right">
-				<a class="btn-icon no-href"
-				   (click)="modalRef.hide()"
-				   tooltip="Close"
-				   placement="bottom"
-				   container="body">
-				   <span class="fa fa-times"></span>
-				</a>
-			</span>
+			<a
+				class="btn-icon no-href"
+				(click)="modalRef.hide()"
+				tooltip="Close"
+				placement="bottom"
+				container="body"
+			>
+				<span class="fa fa-times"></span>
+			</a>
+		</span>
 	</h3>
 </div>
 

@@ -10,24 +10,41 @@
 	<div class="row pt-2">
 		<div class="col-md-2">
 			<!-- Quick Filters -->
-			<quick-filters [filters]="filters" (filtersChange)="filterEvent$.next($event)"></quick-filters>
+			<quick-filters
+				[filters]="filters"
+				(filtersChange)="filterEvent$.next($event)"
+			></quick-filters>
 
 			<!-- Column Selector -->
-			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
+			<quick-column-toggle
+				[filters]="columns"
+				[defaultFilters]="defaultColumns"
+				(filtersChange)="columnsUpdated($event)"
+			></quick-column-toggle>
 		</div>
 
 		<div class="col-md-10">
-			<pageable-table [items]="items"
-							[hasItems]="hasItems"
-							[pagingOptions]="pagingOptions"
-							[showActions]="true"
-							[tableStriped]="true"
-							(pageChange)="pageEvent$.next($event)">
-
+			<pageable-table
+				[items]="items"
+				[hasItems]="hasItems"
+				[pagingOptions]="pagingOptions"
+				[showActions]="true"
+				[tableStriped]="true"
+				(pageChange)="pageEvent$.next($event)"
+			>
 				<ng-template #tableActions>
-					<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
+					<asy-search-input
+						placeholder="Search..."
+						(applySearch)="searchEvent$.next($event)"
+					></asy-search-input>
 					<div class="btn-group dropdown ml-auto" dropdown>
-						<button type="button" class="btn btn-outline-secondary" (click)="exportCurrentView()"><span class="fa fa-download"></span> Export </button>
+						<button
+							type="button"
+							class="btn btn-outline-secondary"
+							(click)="exportCurrentView()"
+						>
+							<span class="fa fa-download"></span> Export
+						</button>
 						<!-- TODO Restore this when we've implemented "Export Single Field" -->
 						<!-- <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" dropdownToggle></button>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
@@ -42,45 +59,99 @@
 
 				<ng-template #tableHeader>
 					<th scope="col" *ngFor="let header of headersToShow">
-						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+						<sortable-table-header
+							[header]="header"
+							[currentSortField]="pagingOptions.sortField"
+							[currentSortDir]="pagingOptions.sortDir"
+							(sortChange)="sortEvent$.next($event)"
+						></sortable-table-header>
 					</th>
 					<th scope="col">&nbsp;</th>
 				</ng-template>
 
 				<ng-template #tableRow let-user="item" let-i="index">
-					<td [hidden]="!columns.name.show">{{user.userModel.name}}</td>
-					<td [hidden]="!columns.username.show" style="min-width: 200px;max-width: 200px;"><div class="hide-overflow" style="max-width:400px;">{{user.userModel.username}}</div></td>
-					<td [hidden]="!columns._id.show">{{user.userModel._id}}</td>
-					<td [hidden]="!columns.organization.show">{{user.userModel.organization}}</td>
-					<td [hidden]="!columns.email.show">{{user.userModel.email}}</td>
-					<td [hidden]="!columns.phone.show">{{user.userModel.phone}}</td>
-					<td [hidden]="!columns.acceptedEua.show">{{user.userModel.acceptedEua | agoDate:false}}</td>
-					<td [hidden]="!columns.lastLogin.show"><span placement="right" tooltip="{{ user.userModel.lastLogin | utcDate }}">{{user.userModel.lastLogin | agoDate:false}}</span></td>
-					<td [hidden]="!columns.created.show">{{user.userModel.created | agoDate:false}}</td>
-					<td [hidden]="!columns.updated.show">{{user.userModel.updated | agoDate:false}}</td>
-					<td [hidden]="!columns.externalRoles.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalRoles}}</td>
-					<td [hidden]="!columns.externalGroups.show" class="hide-overflow" style="max-width:200px;">{{user.userModel.externalGroups}}</td>
+					<td [hidden]="!columns.name.show">{{ user.userModel.name }}</td>
+					<td
+						[hidden]="!columns.username.show"
+						style="min-width: 200px;max-width: 200px;"
+					>
+						<div class="hide-overflow" style="max-width:400px;">
+							{{ user.userModel.username }}
+						</div>
+					</td>
+					<td [hidden]="!columns._id.show">{{ user.userModel._id }}</td>
+					<td [hidden]="!columns.organization.show">{{ user.userModel.organization }}</td>
+					<td [hidden]="!columns.email.show">{{ user.userModel.email }}</td>
+					<td [hidden]="!columns.phone.show">{{ user.userModel.phone }}</td>
+					<td [hidden]="!columns.acceptedEua.show">
+						{{ user.userModel.acceptedEua | agoDate: false }}
+					</td>
+					<td [hidden]="!columns.lastLogin.show">
+						<span
+							placement="right"
+							tooltip="{{ user.userModel.lastLogin | utcDate }}"
+							>{{ user.userModel.lastLogin | agoDate: false }}</span
+						>
+					</td>
+					<td [hidden]="!columns.created.show">
+						{{ user.userModel.created | agoDate: false }}
+					</td>
+					<td [hidden]="!columns.updated.show">
+						{{ user.userModel.updated | agoDate: false }}
+					</td>
+					<td
+						[hidden]="!columns.externalRoles.show"
+						class="hide-overflow"
+						style="max-width:200px;"
+					>
+						{{ user.userModel.externalRoles }}
+					</td>
+					<td
+						[hidden]="!columns.externalGroups.show"
+						class="hide-overflow"
+						style="max-width:200px;"
+					>
+						{{ user.userModel.externalGroups }}
+					</td>
 					<td [hidden]="!columns.roles.show" style="max-width:200px;">
 						<ng-container *ngFor="let role of possibleRoles">
-							<div *ngIf="user.userModel.roles && user.userModel.roles[role.role]" class="user-role"
-								 [ngClass]="{
-									'user-role-external': user.userModel.localRoles && !user.userModel.localRoles[role.role]
+							<div
+								*ngIf="user.userModel.roles && user.userModel.roles[role.role]"
+								class="user-role"
+								[ngClass]="{
+									'user-role-external':
+										user.userModel.localRoles &&
+										!user.userModel.localRoles[role.role]
 								}"
-							>{{ role.label }}</div>
+							>
+								{{ role.label }}
+							</div>
 						</ng-container>
 					</td>
-					<td *ngIf="enableUserBypassAC" [hidden]="!columns.bypassAccessCheck.show">{{user.userModel.bypassAccessCheck ? 'Enabled' : ''}}</td>
+					<td *ngIf="enableUserBypassAC" [hidden]="!columns.bypassAccessCheck.show">
+						{{ user.userModel.bypassAccessCheck ? 'Enabled' : '' }}
+					</td>
 					<td class="text-right" style="max-width: 50px;">
 						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-							<span class="dropdown-toggle dropdown-toggle-hide-caret px-2" style="cursor: pointer;" dropdownToggle>
+							<span
+								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+								style="cursor: pointer;"
+								dropdownToggle
+							>
 								<span class="fa fa-lg fa-ellipsis-v"></span>
 							</span>
 							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 								<li>
-									<a class="dropdown-item" [routerLink]="['/admin/user', user.userModel._id]">Edit</a>
+									<a
+										class="dropdown-item"
+										[routerLink]="['/admin/user', user.userModel._id]"
+										>Edit</a
+									>
 								</li>
 								<li>
-									<a class="dropdown-item" (click)="confirmDeleteUser(user)">Delete</a>
+									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
+										>Delete</a
+									>
 								</li>
 							</ul>
 						</span>

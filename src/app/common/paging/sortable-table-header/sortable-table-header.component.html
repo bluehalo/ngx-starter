@@ -1,13 +1,28 @@
-<span *ngIf="header" class="sortable-table-header hide-overflow limit-width-cell" [ngClass]="{'sortable': sortable}" tooltip="{{ sortable ? header.tooltip : ''}}" (click)="sort()" placement="bottom" container="body">
+<span
+	*ngIf="header"
+	class="sortable-table-header hide-overflow limit-width-cell"
+	[ngClass]="{ sortable: sortable }"
+	tooltip="{{ sortable ? header.tooltip : '' }}"
+	(click)="sort()"
+	placement="bottom"
+	container="body"
+>
 	<span *ngIf="header.iconClass" class="fa {{ header.iconClass }}"></span>
 	{{ header?.name }}
 	<ng-container *ngIf="sortable">
 		<span class="fa-stack">
-		  <span class="fa fa-sort-desc fa-stack-1x low-opacity"
-				[ngClass]="{'sorted': currentSortField === header.sortField && currentSortDir === 'DESC' }"></span>
-		  <span class="fa fa-sort-asc fa-stack-1x low-opacity"
-				[ngClass]="{'sorted': currentSortField === header.sortField && currentSortDir === 'ASC' }"></span>
+			<span
+				class="fa fa-sort-desc fa-stack-1x low-opacity"
+				[ngClass]="{
+					sorted: currentSortField === header.sortField && currentSortDir === 'DESC'
+				}"
+			></span>
+			<span
+				class="fa fa-sort-asc fa-stack-1x low-opacity"
+				[ngClass]="{
+					sorted: currentSortField === header.sortField && currentSortDir === 'ASC'
+				}"
+			></span>
 		</span>
 	</ng-container>
 </span>
-

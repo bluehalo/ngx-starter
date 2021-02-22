@@ -3,20 +3,44 @@
 		<span class="collapsible" (click)="shown = !shown">
 			<span class="quick-select-title">
 				{{ title }}
-				<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': shown, 'fa-caret-down': !shown }"></span>
+				<span
+					class="fa fa-fw"
+					[ngClass]="{ 'fa-caret-up': shown, 'fa-caret-down': !shown }"
+				></span>
 			</span>
 		</span>
 	</div>
 
-	<div *ngIf="defaultFilters && shown">(
-		<a [class.selected]="columnMode==='default'" (click)="toggleQuickFilter('default')" tabindex="0">Default</a> /
-		<a [class.selected]="columnMode==='all'" (click)="toggleQuickFilter('all')" tabindex="0">All</a> ):
+	<div *ngIf="defaultFilters && shown">
+		(
+		<a
+			[class.selected]="columnMode === 'default'"
+			(click)="toggleQuickFilter('default')"
+			tabindex="0"
+			>Default</a
+		>
+		/
+		<a [class.selected]="columnMode === 'all'" (click)="toggleQuickFilter('all')" tabindex="0"
+			>All</a
+		>
+		):
 	</div>
 
 	<div *ngIf="shown" class="quick-select-header">
-		<div *ngFor="let key of filterKeys" class="form-check hide-overflow m-n1 p-1" tooltip="{{ filters[key].display }}">
-			<input class="form-check-input" type="checkbox" [ngModel]="filters[key].show" (ngModelChange)="toggleFilter$.next(key)">
-			<label class="form-check-label" (click)="toggleFilter$.next(key)">{{ filters[key].display }}</label>
+		<div
+			*ngFor="let key of filterKeys"
+			class="form-check hide-overflow m-n1 p-1"
+			tooltip="{{ filters[key].display }}"
+		>
+			<input
+				class="form-check-input"
+				type="checkbox"
+				[ngModel]="filters[key].show"
+				(ngModelChange)="toggleFilter$.next(key)"
+			/>
+			<label class="form-check-label" (click)="toggleFilter$.next(key)">{{
+				filters[key].display
+			}}</label>
 		</div>
 	</div>
 </div>

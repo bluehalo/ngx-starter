@@ -3,20 +3,25 @@
 	<div class="card card-message mb-3" *ngFor="let message of messages">
 		<div class="row no-gutters">
 			<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
-				<span class="fa alert-icon {{ messageType[message.type] | lowercase }}"
-					  [ngClass]="{
+				<span
+					class="fa alert-icon {{ messageType[message.type] | lowercase }}"
+					[ngClass]="{
 						'fa-check': message.type === messageType.MOTD,
 						'fa-info': message.type === messageType.INFO,
 						'fa-exclamation': message.type === messageType.WARN,
 						'fa-exclamation-triangle': message.type === messageType.ERROR
-						}"></span>
+					}"
+				></span>
 			</div>
 			<div class="col-alert-body">
 				<div class="card-body">
 					<div class="d-flex">
 						<h4 class="card-title text-truncate mr-3">{{ message.title }}</h4>
-						<span class="fa fa-lg fa-close ml-auto" style="cursor: pointer"
-							  (click)="dismissMessage(message)"></span>
+						<span
+							class="fa fa-lg fa-close ml-auto"
+							style="cursor: pointer"
+							(click)="dismissMessage(message)"
+						></span>
 					</div>
 					<p class="card-text text-truncate" [innerHTML]="message.body"></p>
 				</div>
@@ -25,8 +30,15 @@
 	</div>
 
 	<div class="row m-0">
-		<button type="button" class="btn btn-sm btn-link pl-0" (click)="dismissAll()">Dismiss all</button>
-		<button type="button" class="btn btn-sm btn-outline-secondary px-3 ml-auto" (click)="viewAll()">View All
+		<button type="button" class="btn btn-sm btn-link pl-0" (click)="dismissAll()">
+			Dismiss all
+		</button>
+		<button
+			type="button"
+			class="btn btn-sm btn-outline-secondary px-3 ml-auto"
+			(click)="viewAll()"
+		>
+			View All
 		</button>
 	</div>
 </div>
@@ -34,5 +46,7 @@
 <div *ngIf="messages.length === 0 && !loading" class="text-center">
 	<h2 class="mt-4">You're all caught up!</h2>
 	<p class="mb-4">You don't have any new notifications.</p>
-	<button type="button" class="btn btn-sm btn-outline-secondary px-3 mb-2" (click)="viewAll()">View All</button>
+	<button type="button" class="btn btn-sm btn-outline-secondary px-3 mb-2" (click)="viewAll()">
+		View All
+	</button>
 </div>
