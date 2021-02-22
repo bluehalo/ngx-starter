@@ -21,6 +21,7 @@ interface TeamConfig {
 	implicitMembers: {
 		strategy: string;
 	};
+	nestedTeams?: boolean;
 }
 
 interface UserPreferencesConfig {
@@ -40,7 +41,7 @@ export interface Config {
 	banner: BannerConfig;
 	copyright: BannerConfig;
 
-	teams: TeamConfig;
+	teams?: TeamConfig;
 
 	feedback?: FeedbackConfig;
 

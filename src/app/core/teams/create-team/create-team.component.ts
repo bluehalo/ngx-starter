@@ -7,7 +7,15 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { concat, of, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, first, map, switchMap, tap } from 'rxjs/operators';
+import {
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	first,
+	map,
+	switchMap,
+	tap
+} from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -24,6 +32,7 @@ import { TeamsService } from '../teams.service';
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();
 
+	nestedTeamsEnabled = false;
 	implicitMembersStrategy: string = null;
 
 	isAdmin = false;
@@ -60,6 +69,7 @@ export class CreateTeamComponent implements OnInit {
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: Config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
+				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
 			});
 
 		this.sessionService
@@ -71,6 +81,17 @@ export class CreateTeamComponent implements OnInit {
 				if (!this.isAdmin) {
 					this.setCurrentUserAsAdmin();
 				}
+			});
+
+		this.route.queryParamMap
+			.pipe(
+				untilDestroyed(this),
+				filter(params => params.has('parent')),
+				map(params => params.get('parent')),
+				switchMap(id => this.teamsService.get(id))
+			)
+			.subscribe((parent: Team) => {
+				this.team.parent = parent;
 			});
 
 		if (this.isAdmin) {

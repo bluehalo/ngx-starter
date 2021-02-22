@@ -11,6 +11,7 @@
 <ng-container *ngIf="team; else noTeam">
 <div class="d-flex mb-3">
 	<h1>{{ team.name }} (Date Created: {{ team.created | utcDate:'MM/DD/YYYY' }})</h1>
+
 	<button type="button" class="btn btn-link ml-auto" (click)="remove()" *ngIf="canManageTeam">
 		Delete Team
 	</button>
@@ -69,6 +70,17 @@
 							</div>
 						</div>
 
+						<div class="form-group" *ngIf="team.parent">
+							<label class="col col-form-label">Parent</label>
+							<div class="col col-form-readonly-value">
+								<div>
+									<a class="text-decoration-underline" [routerLink]="['/team', team.parent._id || team.parent]">
+										{{ team.parent.name }}
+									</a>
+								</div>
+							</div>
+						</div>
+
 						<div class="form-group"
 							 *ngIf="team.implicitMembers && implicitMembersStrategy === 'roles'
 								&& (team.requiresExternalRoles?.length > 0 || isEditing)">
@@ -106,6 +118,17 @@
 					<button class="btn btn-primary ml-2" type="button" [disabled]="!editTeamForm.form.valid"
 							(click)="saveEdit()">Save</button>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col col-na-xl-7 col-12" *ngIf="nestedTeamsEnabled">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h2>Sub-Teams</h2>
+			</div>
+			<div class="card-body">
+				<app-list-teams [parent]="team" [embedded]="true"></app-list-teams>
 			</div>
 		</div>
 	</div>
