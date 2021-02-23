@@ -1,5 +1,4 @@
 <section class="p-3">
-
 	<!-- Show a breadcrumb to the list teams page -->
 	<a class="back-link" [routerLink]="['/teams']">
 		<span class="fa fa-angle-double-left"></span> Back to Teams
@@ -16,86 +15,148 @@
 
 		<!-- Required Indicator -->
 		<div>
-			<span class="required"><span class="text-danger"><strong> *</strong></span> Required</span>
+			<span class="required"
+				><span class="text-danger"><strong> *</strong></span> Required</span
+			>
 		</div>
 
 		<!-- Team Name -->
 		<div class="form-group pt-4">
 			<label class="form-required" for="name">Team Name</label>
-			<input type="text" class="form-control" id="name" name="name"
-				   placeholder="Enter team name..." [(ngModel)]="team.name" required/>
+			<input
+				type="text"
+				class="form-control"
+				id="name"
+				name="name"
+				placeholder="Enter team name..."
+				[(ngModel)]="team.name"
+				required
+			/>
 		</div>
 
 		<!-- Team Admin -->
 		<div class="form-group" *ngIf="isAdmin">
 			<label class="form-required">Team Admin</label>
-			<ng-select style="width: 400px;"
-					   name="teamAdmin"
-					   bindLabel="userModel.name"
-					   placeholder="Search for user..."
-					   [items]="users$ | async"
-					   [loading]="usersLoading"
-					   [typeahead]="usersInput$"
-					   [(ngModel)]="teamAdmin">
+			<ng-select
+				style="width: 400px;"
+				name="teamAdmin"
+				bindLabel="userModel.name"
+				placeholder="Search for user..."
+				[items]="users$ | async"
+				[loading]="usersLoading"
+				[typeahead]="usersInput$"
+				[(ngModel)]="teamAdmin"
+			>
 			</ng-select>
-			<button type="button" class="btn btn-sm btn-link px-0 pb-0" (click)="setCurrentUserAsAdmin()">I am the Team Admin</button>
+			<button
+				type="button"
+				class="btn btn-sm btn-link px-0 pb-0"
+				(click)="setCurrentUserAsAdmin()"
+			>
+				I am the Team Admin
+			</button>
 		</div>
 
 		<!-- Description -->
 		<div class="form-group">
 			<label for="description">Description</label>
-			<textarea rows="3" class="form-control" id="description" name="description"
-					  placeholder="Enter description..." [(ngModel)]="team.description"></textarea>
+			<textarea
+				rows="3"
+				class="form-control"
+				id="description"
+				name="description"
+				placeholder="Enter description..."
+				[(ngModel)]="team.description"
+			></textarea>
 		</div>
 
 		<!-- Team Parent -->
 		<div class="form-group" *ngIf="nestedTeamsEnabled">
 			<label for="parent">Parent Team</label>
 			<app-team-select-input
-				id="parent" name="parent"
+				id="parent"
+				name="parent"
 				placeholder="Select parent..."
 				class="d-block"
 				style="width: 400px;"
-				[(ngModel)]="team.parent">
+				[(ngModel)]="team.parent"
+			>
 			</app-team-select-input>
 		</div>
 
 		<!-- Implicit Teams Members -->
 		<div class="form-group" *ngIf="implicitMembersStrategy !== null">
 			<label class="form-required">Implicit Team Members</label>
-			<p class="mt-n1 mb-1">Do you want to automatically grant users access to team based on external {{ implicitMembersStrategy }}?</p>
+			<p class="mt-n1 mb-1">
+				Do you want to automatically grant users access to team based on external
+				{{ implicitMembersStrategy }}?
+			</p>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="name-type-option-radio"
-					   id="implicit-members-option-yes" [value]="true" [(ngModel)]="team.implicitMembers" required>
+				<input
+					class="form-check-input"
+					type="radio"
+					name="name-type-option-radio"
+					id="implicit-members-option-yes"
+					[value]="true"
+					[(ngModel)]="team.implicitMembers"
+					required
+				/>
 				<label class="form-check-label mb-2" for="implicit-members-option-yes">Yes</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-label" type="radio" name="name-type-option-radio"
-					   id="implicit-members-option-no" [value]="false" [(ngModel)]="team.implicitMembers" required>
+				<input
+					class="form-check-label"
+					type="radio"
+					name="name-type-option-radio"
+					id="implicit-members-option-no"
+					[value]="false"
+					[(ngModel)]="team.implicitMembers"
+					required
+				/>
 				<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
 			</div>
 		</div>
 
 		<!-- External Roles -->
-		<div class="form-group" *ngIf="implicitMembersStrategy === 'roles'" [hidden]="!team.implicitMembers">
+		<div
+			class="form-group"
+			*ngIf="implicitMembersStrategy === 'roles'"
+			[hidden]="!team.implicitMembers"
+		>
 			<label>External Roles</label>
-			<asy-multi-select-input placeholder="Start typing a role..." name="externalRoles" [(ngModel)]="team.requiresExternalRoles"></asy-multi-select-input>
+			<asy-multi-select-input
+				placeholder="Start typing a role..."
+				name="externalRoles"
+				[(ngModel)]="team.requiresExternalRoles"
+			></asy-multi-select-input>
 		</div>
 
 		<!-- External Teams -->
-		<div class="form-group" *ngIf="implicitMembersStrategy === 'teams'" [hidden]="!team.implicitMembers">
+		<div
+			class="form-group"
+			*ngIf="implicitMembersStrategy === 'teams'"
+			[hidden]="!team.implicitMembers"
+		>
 			<label>External Teams</label>
-			<asy-multi-select-input placeholder="Start typing a team..." name="externalTeams" [(ngModel)]="team.requiresExternalTeams"></asy-multi-select-input>
+			<asy-multi-select-input
+				placeholder="Start typing a team..."
+				name="externalTeams"
+				[(ngModel)]="team.requiresExternalTeams"
+			></asy-multi-select-input>
 		</div>
 
 		<div class="form-group">
 			<div class="text-right">
 				<button type="button" class="btn btn-link" routerLink="/teams">Cancel</button>
-				<button type="submit" class="btn btn-primary btn-submit ml-2" [class.btn-submitting]="isSubmitting"
-						[disabled]="!form.form.valid || isSubmitting">Add</button>
+				<button
+					type="submit"
+					class="btn btn-primary btn-submit ml-2"
+					[class.btn-submitting]="isSubmitting"
+					[disabled]="!form.form.valid || isSubmitting"
+				>
+					Add
+				</button>
 			</div>
 		</div>
-
 	</form>
-
 </section>

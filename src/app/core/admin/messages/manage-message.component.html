@@ -1,51 +1,90 @@
 <section>
-
 	<!-- Show a breadcrumb to the list messages page -->
-	<a *ngIf="mode === 'admin-edit' || mode === 'admin-create'" class="back-link" [routerLink]="['/admin/messages']">
+	<a
+		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
+		class="back-link"
+		[routerLink]="['/admin/messages']"
+	>
 		<span class="fa fa-angle-double-left"></span> Back to Messages
 	</a>
 
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form *ngIf="message" autocomplete="off" class="pt-3" role="form" (ngSubmit)="submit()" novalidate>
-
+	<form
+		*ngIf="message"
+		autocomplete="off"
+		class="pt-3"
+		role="form"
+		(ngSubmit)="submit()"
+		novalidate
+	>
 		<h1>
-			{{title}}
-			<small>{{subtitle}}</small>
+			{{ title }}
+			<small>{{ subtitle }}</small>
 		</h1>
 
 		<!-- Type -->
 		<div class="form-group">
 			<label class="form-required" for="messageType">Type</label>
-			<ng-select id="messageType" name="type" [items]="typeOptions" [(ngModel)]="message.type" bindValue="value" bindLabel="display" style="width: 350px"></ng-select>
+			<ng-select
+				id="messageType"
+				name="type"
+				[items]="typeOptions"
+				[(ngModel)]="message.type"
+				bindValue="value"
+				bindLabel="display"
+				style="width: 350px"
+			></ng-select>
 		</div>
 
 		<!-- Title -->
 		<div class="form-group">
 			<label class="form-required" for="title">Title</label>
-			<input type="text" class="form-control" id="title" name="title" [(ngModel)]="message.title" required />
+			<input
+				type="text"
+				class="form-control"
+				id="title"
+				name="title"
+				[(ngModel)]="message.title"
+				required
+			/>
 		</div>
 
 		<!-- Body -->
 		<div class="form-group">
 			<label class="form-required" for="text">Message Body</label>
-			<textarea rows="6" class="form-control" id="text" name="text" [(ngModel)]="message.body" required></textarea>
+			<textarea
+				rows="6"
+				class="form-control"
+				id="text"
+				name="text"
+				[(ngModel)]="message.body"
+				required
+			></textarea>
 		</div>
 
 		<!-- Buttons -->
 		<div class="form-group">
 			<div class="text-right">
-				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/messages']">Cancel</button>
-				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewMessage()">Preview</button>
-				<button type="submit" class="btn btn-primary" [disabled]="okDisabled">{{okButtonText}}</button>
+				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/messages']">
+					Cancel
+				</button>
+				<button
+					type="button"
+					class="btn btn-outline-secondary mr-2"
+					(click)="previewMessage()"
+				>
+					Preview
+				</button>
+				<button type="submit" class="btn btn-primary" [disabled]="okDisabled">
+					{{ okButtonText }}
+				</button>
 			</div>
 		</div>
 
 		<div class="form-group" *ngIf="error">
-			<div class="text-right text-danger font-weight-bolder">{{error}}</div>
+			<div class="text-right text-danger font-weight-bolder">{{ error }}</div>
 		</div>
-
 	</form>
-
 </section>

@@ -2,7 +2,7 @@
 	<div class="row padding-top-20">
 		<div *ngIf="eua" class="col-md-8 offset-2">
 			<h5>
-				End User Agreement (EUA)<br/>
+				End User Agreement (EUA)<br />
 				<small>Please review and acknowledge the end user agreement</small>
 			</h5>
 
@@ -18,14 +18,29 @@
 
 					<div class="card-footer">
 						<div class="form-check">
-							<input type="checkbox" class="form-check-input" name="acknowledge" id="acknowledge" [(ngModel)]="agree">
-							<label class="form-check-label" for="acknowledge">I have read and acknowledge the end user agreement (EUA)</label>
+							<input
+								type="checkbox"
+								class="form-check-input"
+								name="acknowledge"
+								id="acknowledge"
+								[(ngModel)]="agree"
+							/>
+							<label class="form-check-label" for="acknowledge"
+								>I have read and acknowledge the end user agreement (EUA)</label
+							>
 						</div>
 					</div>
 				</div>
 
 				<div class="padding-top-20">
-					<button type="submit" class="btn btn-primary" [disabled]="!agree" (click)="accept()">Submit Acknowledgement</button>
+					<button
+						type="submit"
+						class="btn btn-primary"
+						[disabled]="!agree"
+						(click)="accept()"
+					>
+						Submit Acknowledgement
+					</button>
 				</div>
 			</form>
 		</div>

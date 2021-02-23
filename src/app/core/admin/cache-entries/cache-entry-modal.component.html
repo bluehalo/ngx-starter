@@ -2,11 +2,14 @@
 	<h2 class="modal-title">
 		Cache Entry Details
 	</h2>
-	<button type="button" class="close"
+	<button
+		type="button"
+		class="close"
 		(click)="modalRef.hide()"
 		tooltip="Close"
 		placement="bottom"
-		aria-label="Close">
+		aria-label="Close"
+	>
 		<span class="fa fa-times" aria-hidden="true"></span>
 	</button>
 </section>
@@ -15,13 +18,13 @@
 	<div class="row">
 		<div class="col-md-12">
 			<label>Key</label>
-			<div>{{ cacheEntry?.key}}</div>
+			<div>{{ cacheEntry?.key }}</div>
 
 			<label>Last Updated</label>
-			<div>{{ cacheEntry?.date | utcDate }} ({{ cacheEntry?.date | agoDate:false }})</div>
+			<div>{{ cacheEntry?.date | utcDate }} ({{ cacheEntry?.date | agoDate: false }})</div>
 
 			<label>Value</label>
-			<pre>{{ cacheEntry?.value | json}}</pre>
+			<pre>{{ cacheEntry?.value | json }}</pre>
 		</div>
 	</div>
 </section>

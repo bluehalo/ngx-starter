@@ -7,11 +7,17 @@
 	<system-alert></system-alert>
 
 	<div class="pt-2 d-flex flex-column align-items-stretch ">
-		<asy-search-input class="mx-auto mb-4" placeholder="Search messages..." (applySearch)="onSearch($event)">
+		<asy-search-input
+			class="mx-auto mb-4"
+			placeholder="Search messages..."
+			(applySearch)="onSearch($event)"
+		>
 		</asy-search-input>
 		<div class="p-2 text-center">
 			<div *ngIf="newMessages">
-				<button class="btn btn-sm btn-link" (click)="loadNewMessages()">Load new messages</button>
+				<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
+					Load new messages
+				</button>
 			</div>
 			<div *ngIf="messages.length === 0">
 				<p>No messages to display.</p>
@@ -20,13 +26,15 @@
 				<div class="card card-message mb-4 text-left">
 					<div class="row no-gutters">
 						<div class="col-alert-icon {{ messageType[message.type] | lowercase }}">
-							<span class="fa alert-icon d-flex align-items-center"
-								  [ngClass]="{
+							<span
+								class="fa alert-icon d-flex align-items-center"
+								[ngClass]="{
 									'fa-check': message.type === messageType.MOTD,
 									'fa-info': message.type === messageType.INFO,
 									'fa-exclamation': message.type === messageType.WARN,
 									'fa-exclamation-triangle': message.type === messageType.ERROR
-									}"></span>
+								}"
+							></span>
 						</div>
 						<div class="col-alert-body">
 							<div class="card-body">

@@ -1,5 +1,4 @@
 <section>
-
 	<h1 skipTo>
 		Audit Logs
 		<small>Browse and search audit logs</small>
@@ -16,36 +15,72 @@
 						<span class="quick-select-title">
 							<span class="fa fa-clock-o"></span>
 							Timestamp
-							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': timestampFormShown, 'fa-caret-down': !timestampFormShown }"></span>
+							<span
+								class="fa fa-fw"
+								[ngClass]="{
+									'fa-caret-up': timestampFormShown,
+									'fa-caret-down': !timestampFormShown
+								}"
+							></span>
 						</span>
 					</span>
 				</div>
 				<div *ngIf="timestampFormShown" class="quick-select-header">
-					<ng-select [items]="dateRangeOptions" [clearable]="false" bindLabel="display" bindValue="value"
-							   (change)="load$.next(true)"
-							   [(ngModel)]="dateRangeFilter.selected" name="timestamp"
-							   dropdownPosition="bottom">
+					<ng-select
+						[items]="dateRangeOptions"
+						[clearable]="false"
+						bindLabel="display"
+						bindValue="value"
+						(change)="load$.next(true)"
+						[(ngModel)]="dateRangeFilter.selected"
+						name="timestamp"
+						dropdownPosition="bottom"
+					>
 					</ng-select>
 					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
-						<input type="text" class="form-control" bsDatepicker #qsDp="bsDatepicker"
-							   name="dob"
-							   autocomplete="off"
-							   placeholder="Enter start date..."
-							   placement="bottom"
-							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
-							   (bsValueChange)="load$.next(true)" [maxDate]="queryEndDate"
-							   [outsideClick]="true" required [(ngModel)]="queryStartDate">
+						<input
+							type="text"
+							class="form-control"
+							bsDatepicker
+							#qsDp="bsDatepicker"
+							name="dob"
+							autocomplete="off"
+							placeholder="Enter start date..."
+							placement="bottom"
+							[bsConfig]="{
+								dateInputFormat: 'YYYY-MM-DD',
+								showWeekNumbers: false,
+								containerClass: 'theme-default audit-list-filter'
+							}"
+							(bsValueChange)="load$.next(true)"
+							[maxDate]="queryEndDate"
+							[outsideClick]="true"
+							required
+							[(ngModel)]="queryStartDate"
+						/>
 						<span class="icon fa fa-calendar" (click)="qsDp.toggle()"></span>
 					</div>
 					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
-						<input type="text" class="form-control" bsDatepicker #qeDp="bsDatepicker"
-							   name="dob"
-							   autocomplete="off"
-							   placeholder="Enter end date..."
-							   placement="bottom"
-							   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', showWeekNumbers: false, containerClass: 'theme-default audit-list-filter'}"
-							   (bsValueChange)="load$.next(true)" [minDate]="queryStartDate"
-							   [outsideClick]="true" required [(ngModel)]="queryEndDate">
+						<input
+							type="text"
+							class="form-control"
+							bsDatepicker
+							#qeDp="bsDatepicker"
+							name="dob"
+							autocomplete="off"
+							placeholder="Enter end date..."
+							placement="bottom"
+							[bsConfig]="{
+								dateInputFormat: 'YYYY-MM-DD',
+								showWeekNumbers: false,
+								containerClass: 'theme-default audit-list-filter'
+							}"
+							(bsValueChange)="load$.next(true)"
+							[minDate]="queryStartDate"
+							[outsideClick]="true"
+							required
+							[(ngModel)]="queryEndDate"
+						/>
 						<span class="icon fa fa-calendar" (click)="qeDp.toggle()"></span>
 					</div>
 				</div>
@@ -57,13 +92,22 @@
 						<span class="quick-select-title">
 							<span class="fa fa-user"></span>
 							Actor:
-							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': actorFormShown, 'fa-caret-down': !actorFormShown }"></span>
+							<span
+								class="fa fa-fw"
+								[ngClass]="{
+									'fa-caret-up': actorFormShown,
+									'fa-caret-down': !actorFormShown
+								}"
+							></span>
 						</span>
 					</span>
 				</div>
 
 				<div *ngIf="actorFormShown" class="quick-select-header">
-					<input type="text" name="actor" class="form-control input-sm"
+					<input
+						type="text"
+						name="actor"
+						class="form-control input-sm"
 						placeholder="Search..."
 						[(ngModel)]="queryUserSearchTerm"
 						[typeahead]="searchUsersRef"
@@ -71,9 +115,9 @@
 						[typeaheadMinLength]="1"
 						[typeaheadWaitMs]="300"
 						(typeaheadOnSelect)="typeaheadOnSelect($event)"
-						(keyup.enter)="load$.next(true)">
+						(keyup.enter)="load$.next(true)"
+					/>
 				</div>
-
 			</div>
 
 			<!-- Quick Filters -->
@@ -83,14 +127,31 @@
 						<span class="quick-select-title">
 							<span class="fa fa-mouse-pointer"></span>
 							Actions
-							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': actionsFormShown, 'fa-caret-down': !actionsFormShown }"></span>
+							<span
+								class="fa fa-fw"
+								[ngClass]="{
+									'fa-caret-up': actionsFormShown,
+									'fa-caret-down': !actionsFormShown
+								}"
+							></span>
 						</span>
 					</span>
 				</div>
 				<div *ngIf="actionsFormShown" class="quick-select-header">
-					<div *ngFor="let option of actionOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
-						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="load$.next(true)" id="actionOption{{idx}}">
-						<label class="form-check-label" for="actionOption{{idx}}">{{ option.display }}</label>
+					<div
+						*ngFor="let option of actionOptions; let idx = index"
+						class="form-check hide-overflow m-n1 p-1"
+					>
+						<input
+							class="form-check-input"
+							type="checkbox"
+							[(ngModel)]="option.selected"
+							(ngModelChange)="load$.next(true)"
+							id="actionOption{{ idx }}"
+						/>
+						<label class="form-check-label" for="actionOption{{ idx }}">{{
+							option.display
+						}}</label>
 					</div>
 				</div>
 			</div>
@@ -101,114 +162,162 @@
 						<span class="quick-select-title">
 							<span class="fa fa-tag"></span>
 							Type
-							<span class="fa fa-fw" [ngClass]="{ 'fa-caret-up': typeFormShown, 'fa-caret-down': !typeFormShown }"></span>
+							<span
+								class="fa fa-fw"
+								[ngClass]="{
+									'fa-caret-up': typeFormShown,
+									'fa-caret-down': !typeFormShown
+								}"
+							></span>
 						</span>
 					</span>
 				</div>
 				<div *ngIf="typeFormShown" class="quick-select-header">
-					<div *ngFor="let option of auditTypeOptions; let idx = index" class="form-check hide-overflow m-n1 p-1">
-						<input class="form-check-input" type="checkbox" [(ngModel)]="option.selected" (ngModelChange)="load$.next(true)" id="auditTypeOption{{idx}}">
-						<label class="form-check-label" for="auditTypeOption{{idx}}">{{ option.display }}</label>
+					<div
+						*ngFor="let option of auditTypeOptions; let idx = index"
+						class="form-check hide-overflow m-n1 p-1"
+					>
+						<input
+							class="form-check-input"
+							type="checkbox"
+							[(ngModel)]="option.selected"
+							(ngModelChange)="load$.next(true)"
+							id="auditTypeOption{{ idx }}"
+						/>
+						<label class="form-check-label" for="auditTypeOption{{ idx }}">{{
+							option.display
+						}}</label>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-10">
-			<pageable-table [items]="items"
+			<pageable-table
+				[items]="items"
 				[hasItems]="hasItems"
 				[pagingOptions]="pagingOptions"
 				[tableStriped]="true"
-				(pageChange)="pageEvent$.next($event)">
-
+				(pageChange)="pageEvent$.next($event)"
+			>
 				<ng-template #tableHeader>
 					<th scope="col" *ngFor="let header of headers">
-						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+						<sortable-table-header
+							[header]="header"
+							[currentSortField]="pagingOptions.sortField"
+							[currentSortDir]="pagingOptions.sortDir"
+							(sortChange)="sortEvent$.next($event)"
+						></sortable-table-header>
 					</th>
 				</ng-template>
 
 				<ng-template #tableRow let-entry="item">
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							<asy-audit-component [auditObject]="entry.audit.actor" auditType="user"></asy-audit-component>
+							<asy-audit-component
+								[auditObject]="entry.audit.actor"
+								auditType="user"
+							></asy-audit-component>
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							{{entry?.created | utcDate }}
+							{{ entry?.created | utcDate }}
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							{{entry?.audit?.action}}
+							{{ entry?.audit?.action }}
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							{{entry?.audit?.auditType}}
+							{{ entry?.audit?.auditType }}
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							<asy-audit-component [auditObject]="(entry.audit.object?.after) ? entry.audit.object.after : entry.audit.object" [auditType]="entry.audit.auditType"></asy-audit-component>
+							<asy-audit-component
+								[auditObject]="
+									entry.audit.object?.after
+										? entry.audit.object.after
+										: entry.audit.object
+								"
+								[auditType]="entry.audit.auditType"
+							></asy-audit-component>
 							<div>
 								<small *ngIf="entry.isViewDetailsAction">
-									<a class="btn-icon no-href"
+									<a
+										class="btn-icon no-href"
 										[hidden]="null == entry.audit.object"
-										(click)="viewMore(entry, 'viewDetails')">
+										(click)="viewMore(entry, 'viewDetails')"
+									>
 										<span class="fa fa-eye"></span><span>View Details</span>
 									</a>
 								</small>
-								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
+								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
+									><span>No Changes Detected</span></small
+								>
 							</div>
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							<asy-audit-component [auditObject]="entry.audit.object?.before" [auditType]="entry.audit.auditType"></asy-audit-component>
+							<asy-audit-component
+								[auditObject]="entry.audit.object?.before"
+								[auditType]="entry.audit.auditType"
+							></asy-audit-component>
 							<div>
 								<small *ngIf="entry.isViewChangesAction">
-									<a class="btn-icon no-href"
-										[hidden]="null == entry.audit.object || null == entry.audit.object.before"
+									<a
+										class="btn-icon no-href"
+										[hidden]="
+											null == entry.audit.object ||
+											null == entry.audit.object.before
+										"
 										tooltip="See details of the update"
 										placement="bottom"
 										container="body"
-										(click)="viewMore(entry, 'viewChanges')">
+										(click)="viewMore(entry, 'viewChanges')"
+									>
 										<span class="fa fa-eye"></span><span>View Changes</span>
 									</a>
 								</small>
-								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"><span>No Changes Detected</span></small>
+								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
+									><span>No Changes Detected</span></small
+								>
 							</div>
 						</div>
 					</td>
 					<td>
 						<div class="hide-overflow" style="max-width:200px;">
-							{{entry?.message}}
+							{{ entry?.message }}
 						</div>
 					</td>
 				</ng-template>
 
 				<ng-template #tableNoData>
 					<h3>
-						No Audit Logs<br/>
+						No Audit Logs<br />
 						<small>
-							You may not have access to Audit Logs.<br/>
-							Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
+							You may not have access to Audit Logs.<br />
+							Read our <a data-ui-sref="help.overview">getting started page</a> for
+							more details.
 						</small>
 					</h3>
 				</ng-template>
 
 				<ng-template #tableNoResults>
 					<h3>
-						No Audit Logs?<br/>
+						No Audit Logs?<br />
 						<small>
-							Either there were no Audit Logs that matched your search or you don't have access to Audit Logs.<br/>
-							Read our <a data-ui-sref="help.overview">getting started page</a> for more details.
+							Either there were no Audit Logs that matched your search or you don't
+							have access to Audit Logs.<br />
+							Read our <a data-ui-sref="help.overview">getting started page</a> for
+							more details.
 						</small>
 					</h3>
 				</ng-template>
-
 			</pageable-table>
 		</div>
 	</div>
-
 </section>

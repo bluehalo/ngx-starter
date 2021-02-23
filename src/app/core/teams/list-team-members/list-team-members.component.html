@@ -1,16 +1,35 @@
 <section>
 	<!-- Search Input -->
 	<div class="d-flex mb-3 align-items-center">
-		<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-		<button *ngIf="canManageTeam" (click)="addMembers()" type="button" class="btn btn-primary ml-auto">
+		<asy-search-input
+			placeholder="Search..."
+			(applySearch)="searchEvent$.next($event)"
+		></asy-search-input>
+		<button
+			*ngIf="canManageTeam"
+			(click)="addMembers()"
+			type="button"
+			class="btn btn-primary ml-auto"
+		>
 			<span class="fa fa-plus"></span> Add New
 		</button>
 	</div>
 
-	<pageable-table [items]="items" [hasItems]="hasItems" [pagingOptions]="pagingOptions" [tableStriped]="true" (pageChange)="pageEvent$.next($event)">
+	<pageable-table
+		[items]="items"
+		[hasItems]="hasItems"
+		[pagingOptions]="pagingOptions"
+		[tableStriped]="true"
+		(pageChange)="pageEvent$.next($event)"
+	>
 		<ng-template #tableHeader>
 			<th scope="col" *ngFor="let header of headersToShow">
-				<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+				<sortable-table-header
+					[header]="header"
+					[currentSortField]="pagingOptions.sortField"
+					[currentSortDir]="pagingOptions.sortDir"
+					(sortChange)="sortEvent$.next($event)"
+				></sortable-table-header>
 			</th>
 		</ng-template>
 
@@ -27,7 +46,7 @@
 
 			<!-- Active -->
 			<td>
-				<div>{{ member.active ? 'Active': 'Not Active' }}</div>
+				<div>{{ member.active ? 'Active' : 'Not Active' }}</div>
 			</td>
 
 			<!-- Explicit -->
@@ -45,7 +64,11 @@
 						</span>
 
 						<ul *dropdownMenu class="dropdown-menu" role="menu">
-							<li *ngFor="let role of teamRoleOptions" [value]="role.role" (click)="updateRole(member, role.role)">
+							<li
+								*ngFor="let role of teamRoleOptions"
+								[value]="role.role"
+								(click)="updateRole(member, role.role)"
+							>
 								<a class="dropdown-item">{{ role.label }}</a>
 							</li>
 						</ul>
@@ -55,12 +78,14 @@
 
 			<!-- Delete -->
 			<td *ngIf="canManageTeam">
-				<a *ngIf="member.explicit"
-				   class="btn-icon"
-				   tooltip="Remove Member"
-				   container="body"
-				   placement="bottom"
-				   (click)="removeMember(member)">
+				<a
+					*ngIf="member.explicit"
+					class="btn-icon"
+					tooltip="Remove Member"
+					container="body"
+					placement="bottom"
+					(click)="removeMember(member)"
+				>
 					<span class="fa fa-lg fa-trash"></span>
 				</a>
 			</td>
@@ -74,10 +99,11 @@
 
 		<ng-template #tableNoData>
 			<h2 class="text-center">
-				<small>There are no members on this team. Read our <a [routerLink]="['/help/teams']">help page</a> for more details.</small>
+				<small
+					>There are no members on this team. Read our
+					<a [routerLink]="['/help/teams']">help page</a> for more details.</small
+				>
 			</h2>
 		</ng-template>
-
 	</pageable-table>
-
 </section>

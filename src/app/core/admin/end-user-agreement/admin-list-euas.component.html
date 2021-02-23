@@ -10,59 +10,96 @@
 	<div class="row pt-2">
 		<div class="col-md-2">
 			<!-- Column Selector -->
-			<quick-column-toggle [filters]="columns" [defaultFilters]="defaultColumns" (filtersChange)="columnsUpdated($event)"></quick-column-toggle>
+			<quick-column-toggle
+				[filters]="columns"
+				[defaultFilters]="defaultColumns"
+				(filtersChange)="columnsUpdated($event)"
+			></quick-column-toggle>
 		</div>
 		<div class="col-md-10">
-			<pageable-table [items]="items"
-							[hasItems]="hasItems"
-							[pagingOptions]="pagingOptions"
-							[showActions]="true"
-							[tableStriped]="true"
-							(pageChange)="pageEvent$.next($event)">
-
+			<pageable-table
+				[items]="items"
+				[hasItems]="hasItems"
+				[pagingOptions]="pagingOptions"
+				[showActions]="true"
+				[tableStriped]="true"
+				(pageChange)="pageEvent$.next($event)"
+			>
 				<ng-template #tableActions>
-					<asy-search-input placeholder="Search..." (applySearch)="searchEvent$.next($event)"></asy-search-input>
-					<button [routerLink]="['/admin/eua']" type="button" class="btn btn-primary ml-auto">
+					<asy-search-input
+						placeholder="Search..."
+						(applySearch)="searchEvent$.next($event)"
+					></asy-search-input>
+					<button
+						[routerLink]="['/admin/eua']"
+						type="button"
+						class="btn btn-primary ml-auto"
+					>
 						<span class="fa fa-plus"></span> Create EUA
 					</button>
 				</ng-template>
 
 				<ng-template #tableHeader>
 					<th scope="col" *ngFor="let header of headersToShow">
-						<sortable-table-header [header]="header" [currentSortField]="pagingOptions.sortField" [currentSortDir]="pagingOptions.sortDir" (sortChange)="sortEvent$.next($event)"></sortable-table-header>
+						<sortable-table-header
+							[header]="header"
+							[currentSortField]="pagingOptions.sortField"
+							[currentSortDir]="pagingOptions.sortDir"
+							(sortChange)="sortEvent$.next($event)"
+						></sortable-table-header>
 					</th>
 					<th scope="col">&nbsp;</th>
 				</ng-template>
 
 				<ng-template #tableRow let-eua="item" let-i="index">
-					<td [hidden]="!columns._id.show">{{eua.euaModel._id}}</td>
+					<td [hidden]="!columns._id.show">{{ eua.euaModel._id }}</td>
 					<td [hidden]="!columns.title.show">
-						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.title}}</div>
+						<div class="hide-overflow" style="max-width:400px;">
+							{{ eua.euaModel.title }}
+						</div>
 					</td>
 					<td [hidden]="!columns.text.show">
-						<div class="hide-overflow" style="max-width:400px;">{{eua.euaModel.text}}</div>
+						<div class="hide-overflow" style="max-width:400px;">
+							{{ eua.euaModel.text }}
+						</div>
 					</td>
 					<td [hidden]="!columns.created.show">{{ eua.euaModel.created | utcDate }}</td>
 					<td [hidden]="!columns.updated.show">{{ eua.euaModel.updated | utcDate }}</td>
-					<td [hidden]="!columns.published.show">{{ eua.euaModel.published | utcDate }}</td>
+					<td [hidden]="!columns.published.show">
+						{{ eua.euaModel.published | utcDate }}
+					</td>
 
 					<td class="text-right" style="max-width: 50px;">
 						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-							<span class="dropdown-toggle dropdown-toggle-hide-caret px-2" style="cursor: pointer;" dropdownToggle>
+							<span
+								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+								style="cursor: pointer;"
+								dropdownToggle
+							>
 								<span class="fa fa-lg fa-ellipsis-v"></span>
 							</span>
 							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 								<li>
-									<a class="dropdown-item" (click)="previewEndUserAgreement(eua.euaModel)">Preview</a>
+									<a
+										class="dropdown-item"
+										(click)="previewEndUserAgreement(eua.euaModel)"
+										>Preview</a
+									>
 								</li>
 								<li>
-									<a class="dropdown-item" [routerLink]="['/admin/eua', eua.euaModel._id]">Edit</a>
+									<a
+										class="dropdown-item"
+										[routerLink]="['/admin/eua', eua.euaModel._id]"
+										>Edit</a
+									>
 								</li>
 								<li>
 									<a class="dropdown-item" (click)="publishEua(eua)">Publish</a>
 								</li>
 								<li>
-									<a class="dropdown-item" (click)="confirmDeleteEua(eua)">Delete</a>
+									<a class="dropdown-item" (click)="confirmDeleteEua(eua)"
+										>Delete</a
+									>
 								</li>
 							</ul>
 						</span>

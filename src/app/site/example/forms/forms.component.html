@@ -1,43 +1,54 @@
 <form style="max-width: 900px;">
-
 	<h1 class="pb-3">Bootstrap Form Examples</h1>
 
 	<h2>Form Controls</h2>
 	<div class="form-group">
 		<label for="exampleFormControlText" class="form-required">Example text</label>
-		<input type="text" class="form-control" id="exampleFormControlText" placeholder="Default input">
+		<input
+			type="text"
+			class="form-control"
+			id="exampleFormControlText"
+			placeholder="Default input"
+		/>
 		<small class="form-text text-muted">Extra explanation provided if necessary.</small>
 	</div>
 
 	<div class="form-group">
 		<label for="exampleFormControlTextarea1">Example textarea</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Default input"></textarea>
+		<textarea
+			class="form-control"
+			id="exampleFormControlTextarea1"
+			rows="4"
+			placeholder="Default input"
+		></textarea>
 	</div>
 
 	<h2 class="pt-4">Sizing</h2>
 	<div class="form-group">
-		<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+		<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" />
 	</div>
 
 	<div class="form-group">
-		<input class="form-control" type="text" placeholder="Default input">
+		<input class="form-control" type="text" placeholder="Default input" />
 	</div>
 
 	<div class="form-group">
-		<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+		<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" />
 	</div>
 
 	<h2 class="pt-4">ng-select</h2>
 	<div class="form-group">
-		<input type="text" class="form-control" placeholder="text input for comparison">
+		<input type="text" class="form-control" placeholder="text input for comparison" />
 	</div>
 
 	<div class="form-group">
-		<ng-select [items]="[{value: 'item1'}, {value: 'item2', disabled: true}, {value: 'item3'}]"
-				   bindLabel="value"
-				   bindValue="value"
-				   placeholder="Select a value..."
-				   id="ngSelectBS">
+		<ng-select
+			[items]="[{ value: 'item1' }, { value: 'item2', disabled: true }, { value: 'item3' }]"
+			bindLabel="value"
+			bindValue="value"
+			placeholder="Select a value..."
+			id="ngSelectBS"
+		>
 		</ng-select>
 	</div>
 
@@ -46,25 +57,32 @@
 	<h3 class="pt-3">Default (stacked)</h3>
 	<div class="form-group">
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
 			<label class="form-check-label" for="defaultCheck1">
 				Default checkbox
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" checked id="defaultCheck2">
+			<input class="form-check-input" type="checkbox" value="" checked id="defaultCheck2" />
 			<label class="form-check-label" for="defaultCheck2">
 				Default Checked checkbox
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="disabledCheck1" disabled>
+			<input class="form-check-input" type="checkbox" value="" id="disabledCheck1" disabled />
 			<label class="form-check-label" for="disabledCheck1">
 				Disabled checkbox
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="disabledCheck2" checked disabled>
+			<input
+				class="form-check-input"
+				type="checkbox"
+				value=""
+				id="disabledCheck2"
+				checked
+				disabled
+			/>
 			<label class="form-check-label" for="disabledCheck2">
 				Disabled and Checked checkbox
 			</label>
@@ -73,25 +91,53 @@
 
 	<div class="form-group">
 		<div class="form-check">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+			<input
+				class="form-check-input"
+				type="radio"
+				name="exampleRadios"
+				id="exampleRadios1"
+				value="option1"
+				checked
+			/>
 			<label class="form-check-label" for="exampleRadios1">
 				Default radio
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="exampleRadios"
+				id="exampleRadios2"
+				value="option2"
+			/>
 			<label class="form-check-label" for="exampleRadios2">
 				Second default radio
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+			<input
+				class="form-check-input"
+				type="radio"
+				name="exampleRadios"
+				id="exampleRadios3"
+				value="option3"
+				disabled
+			/>
 			<label class="form-check-label" for="exampleRadios3">
 				Disabled radio
 			</label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios4" value="option4" checked disabled>
+			<input
+				class="form-check-input"
+				type="radio"
+				name="exampleRadios2"
+				id="exampleRadios4"
+				value="option4"
+				checked
+				disabled
+			/>
 			<label class="form-check-label" for="exampleRadios3">
 				Disabled and Checked radio
 			</label>
@@ -101,40 +147,78 @@
 	<h3 class="pt-3">Inline</h3>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
 			<label class="form-check-label" for="inlineCheckbox1">1</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+			<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
 			<label class="form-check-label" for="inlineCheckbox2">2</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+			<input
+				class="form-check-input"
+				type="checkbox"
+				id="inlineCheckbox3"
+				value="option3"
+				disabled
+			/>
 			<label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="inlineRadioOptions"
+				id="inlineRadio1"
+				value="option1"
+			/>
 			<label class="form-check-label" for="inlineRadio1">1</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="inlineRadioOptions"
+				id="inlineRadio2"
+				value="option2"
+			/>
 			<label class="form-check-label" for="inlineRadio2">2</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+			<input
+				class="form-check-input"
+				type="radio"
+				name="inlineRadioOptions"
+				id="inlineRadio3"
+				value="option3"
+				disabled
+			/>
 			<label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
 		</div>
 	</div>
 
 	<h3 class="pt-3">Without labels</h3>
 	<div class="form-check">
-		<input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+		<input
+			class="form-check-input position-static"
+			type="checkbox"
+			id="blankCheckbox"
+			value="option1"
+			aria-label="..."
+		/>
 	</div>
 	<div class="form-check">
-		<input class="form-check-input position-static" type="radio" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+		<input
+			class="form-check-input position-static"
+			type="radio"
+			name="blankRadio"
+			id="blankRadio1"
+			value="option1"
+			aria-label="..."
+		/>
 	</div>
 
 	<h2 class="pt-4">Buttons</h2>
@@ -163,9 +247,9 @@
 	<h3 class="pt-3">Button Tags</h3>
 	<a class="mr-3 btn btn-primary" href="#" role="button">Link</a>
 	<button class="mr-3 btn btn-primary" type="submit">Button</button>
-	<input class="mr-3 btn btn-primary" type="button" value="Input">
-	<input class="mr-3 btn btn-primary" type="submit" value="Submit">
-	<input class="mr-3 btn btn-primary" type="reset" value="Reset">
+	<input class="mr-3 btn btn-primary" type="button" value="Input" />
+	<input class="mr-3 btn btn-primary" type="submit" value="Submit" />
+	<input class="mr-3 btn btn-primary" type="reset" value="Reset" />
 
 	<h3 class="pt-3">Large Buttons</h3>
 	<button type="button" class="mr-3 btn btn-primary btn-lg">Large button</button>
@@ -176,20 +260,32 @@
 	<button type="button" class="mr-3 btn btn-secondary btn-sm">Small button</button>
 
 	<h3 class="pt-3">Active State</h3>
-	<a href="#" class="mr-3 btn btn-primary active" role="button" aria-pressed="true">Primary Button</a>
-	<a href="#" class="mr-3 btn btn-secondary active" role="button" aria-pressed="true">Secondary Button</a>
+	<a href="#" class="mr-3 btn btn-primary active" role="button" aria-pressed="true"
+		>Primary Button</a
+	>
+	<a href="#" class="mr-3 btn btn-secondary active" role="button" aria-pressed="true"
+		>Secondary Button</a
+	>
 
 	<h3 class="pt-3">Disabled State</h3>
 	<button type="button" class="mr-3 btn btn-primary" disabled>Primary button</button>
 	<button type="button" class="mr-3 btn btn-secondary" disabled>Secondary Button</button>
 
 	<h2 class="pt-4">Submit Button w/ progress indicator</h2>
-	<button type="button" class="mr-3 btn btn-primary btn-submit" (click)="submit($event)">Submit</button>
+	<button type="button" class="mr-3 btn btn-primary btn-submit" (click)="submit($event)">
+		Submit
+	</button>
 
 	<h3 class="pt-3">Square Buttons <small>(for use with fa-fw icons)</small></h3>
-	<button type="button" class="mr-3 btn btn-primary btn-square btn-sm"><span class="fa fa-fw fa-upload"></span></button>
-	<button type="button" class="mr-3 btn btn-primary btn-square"><span class="fa fa-fw fa-upload"></span></button>
-	<button type="button" class="mr-3 btn btn-primary btn-square btn-lg"><span class="fa fa-fw fa-upload"></span></button>
+	<button type="button" class="mr-3 btn btn-primary btn-square btn-sm">
+		<span class="fa fa-fw fa-upload"></span>
+	</button>
+	<button type="button" class="mr-3 btn btn-primary btn-square">
+		<span class="fa fa-fw fa-upload"></span>
+	</button>
+	<button type="button" class="mr-3 btn btn-primary btn-square btn-lg">
+		<span class="fa fa-fw fa-upload"></span>
+	</button>
 
 	<h2 class="pt-4">File Input</h2>
 
@@ -199,22 +295,32 @@
 	<h3 class="pt-3">Bootstrap Custom File Input Component</h3>
 
 	<div class="custom-file">
-		<input type="file" class="custom-file-input" id="customFile">
-		<label class="custom-file-label" for="customFile" data-browse="Choose File">Choose file</label>
+		<input type="file" class="custom-file-input" id="customFile" />
+		<label class="custom-file-label" for="customFile" data-browse="Choose File"
+			>Choose file</label
+		>
 	</div>
 
 	<h3 class="pt-3">Bootstrap Standard Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-primary">
-		<input type="file" class="custom-file-btn-input" id="customFile2">
-		<label class="btn custom-file-btn-label" for="customFile2"><span class="fa fa-upload mr-2"></span>Choose File</label>
+		<input type="file" class="custom-file-btn-input" id="customFile2" />
+		<label class="btn custom-file-btn-label" for="customFile2"
+			><span class="fa fa-upload mr-2"></span>Choose File</label
+		>
 	</div>
 
 	<h3 class="pt-3">Bootstrap Outline Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
-		<input type="file" class="custom-file-btn-input" id="customFile3" (change)="fileSelected($event)">
-		<label class="btn custom-file-btn-label" for="customFile3"><span class="fa fa-upload mr-2"></span>Choose File</label>
+		<input
+			type="file"
+			class="custom-file-btn-input"
+			id="customFile3"
+			(change)="fileSelected($event)"
+		/>
+		<label class="btn custom-file-btn-label" for="customFile3"
+			><span class="fa fa-upload mr-2"></span>Choose File</label
+		>
 	</div>
-
 </form>

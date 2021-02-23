@@ -1,59 +1,57 @@
-<div class="navbar-left d-flex flex-column align-items-start"
-  [ngClass]="{'navbar-open': navbarOpen, 'navbar-close': !navbarOpen}">
-
+<div
+	class="navbar-left d-flex flex-column align-items-start"
+	[ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }"
+>
 	<!-- Logo -->
 	<ul class="nav nav-logo flex-shrink-0">
-
 		<!-- Logo -->
 		<li class="element element-logo">
 			<a href="/#/" [hidden]="navbarOpen">
-				<img class="logo" src="/assets/images/nav-logo-icon.png" alt="Logo"/>
+				<img class="logo" src="/assets/images/nav-logo-icon.png" alt="Logo" />
 			</a>
 			<a href="/#/" [hidden]="!navbarOpen">
-				<img class="logo" src="/assets/images/nav-logo.png" alt="Logo"/>
+				<img class="logo" src="/assets/images/nav-logo.png" alt="Logo" />
 			</a>
 		</li>
-
 	</ul>
 
 	<div class="nav-inner-scroll d-flex flex-column align-items-start flex-grow-1">
-
 		<!-- Main Nav -->
 		<ul class="nav nav-main flex-shrink-0 mb-auto">
 			<ng-container *ngFor="let navbarItem of navbarItems">
-			<li
-				class="element"
-				*hasSomeRoles="navbarItem.hasSomeRoles">
-				<a tooltip="{{ navbarItem.title }}"
-				   placement="left"
-				   container="body"
-				   [isDisabled]="navbarOpen"
-				   routerLinkActive="active-link"
-				   [routerLink]="navbarItem.path">
-					<span class="fa fa-fw {{ navbarItem.iconClass }}"></span>
-					<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
-				</a>
-			</li>
+				<li class="element" *hasSomeRoles="navbarItem.hasSomeRoles">
+					<a
+						tooltip="{{ navbarItem.title }}"
+						placement="left"
+						container="body"
+						[isDisabled]="navbarOpen"
+						routerLinkActive="active-link"
+						[routerLink]="navbarItem.path"
+					>
+						<span class="fa fa-fw {{ navbarItem.iconClass }}"></span>
+						<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
+					</a>
+				</li>
 			</ng-container>
 		</ul>
 
 		<!-- Bottom Aux Nav -->
 		<ul class="nav nav-aux flex-shrink-0">
-
 			<!-- Team Nav   -->
-			<li class="element nav-popover nav-popover-bottom"
-				*hasRole="'user'">
-				<a [ngClass]="{'highlight-link': teamNavOpen}"
-				   [popover]="teamNav"
-				   container="body"
-				   containerClass="site-nav-popover-container"
-				   tooltip="Teams"
-				   [isDisabled]="navbarOpen"
-				   #teamNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="teamNavOpen = true;"
-				   (onHidden)="teamNavOpen = false;">
+			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
+				<a
+					[ngClass]="{ 'highlight-link': teamNavOpen }"
+					[popover]="teamNav"
+					container="body"
+					containerClass="site-nav-popover-container"
+					tooltip="Teams"
+					[isDisabled]="navbarOpen"
+					#teamNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="teamNavOpen = true"
+					(onHidden)="teamNavOpen = false"
+				>
 					<span class="fa fa-fw fa-users"></span>
 					<span [hidden]="!navbarOpen">Teams</span>
 				</a>
@@ -62,63 +60,61 @@
 					<ul class="popover-menu" role="menu">
 						<!-- List Teams -->
 						<li>
-							<a routerLink="/teams"
-							   (click)="teamNavPopover.hide()">View All</a>
+							<a routerLink="/teams" (click)="teamNavPopover.hide()">View All</a>
 						</li>
 					</ul>
 				</ng-template>
 			</li>
 
 			<!-- User Nav	-->
-			<li class="element nav-popover nav-popover-bottom"
-				*isAuthenticated>
-				<a [ngClass]="{'highlight-link': userNavOpen}"
-				   [popover]="userNav"
-				   container="body"
-				   containerClass="site-nav-popover-container"
-				   tooltip="User Profile"
-				   [isDisabled]="navbarOpen"
-				   #userNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="userNavOpen = true;"
-				   (onHidden)="userNavOpen = false;">
+			<li class="element nav-popover nav-popover-bottom" *isAuthenticated>
+				<a
+					[ngClass]="{ 'highlight-link': userNavOpen }"
+					[popover]="userNav"
+					container="body"
+					containerClass="site-nav-popover-container"
+					tooltip="User Profile"
+					[isDisabled]="navbarOpen"
+					#userNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="userNavOpen = true"
+					(onHidden)="userNavOpen = false"
+				>
 					<span class="fa fa-fw fa-user-circle"></span>
 					<span [hidden]="!navbarOpen">{{ session?.name }}</span>
 				</a>
 
 				<ng-template #userNav>
 					<ul class="popover-menu" role="menu">
-
 						<!-- User Signout -->
 						<li><a href="/api/auth/signout">Sign out</a></li>
 
 						<!-- User Preferences -->
 						<li *ngIf="showUserPreferencesLink">
-							<a [routerLink]="userPreferencesLink"
-							   (click)="userNavPopover.hide()">
+							<a [routerLink]="userPreferencesLink" (click)="userNavPopover.hide()">
 								User Preferences
 							</a>
 						</li>
-
 					</ul>
 				</ng-template>
 			</li>
 
 			<!-- Auditor Nav	-->
-			<li class="element nav-popover nav-popover-bottom"
-				*hasRole="'auditor'">
-				<a [ngClass]="{'highlight-link': auditorNavOpen}"
-				   [popover]="auditorNav"
-				   container="body"
-				   containerClass="site-nav-popover-container"
-				   tooltip="Audit Logs"
-				   [isDisabled]="navbarOpen"
-				   #auditorNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="auditorNavOpen = true;"
-				   (onHidden)="auditorNavOpen = false;">
+			<li class="element nav-popover nav-popover-bottom" *hasRole="'auditor'">
+				<a
+					[ngClass]="{ 'highlight-link': auditorNavOpen }"
+					[popover]="auditorNav"
+					container="body"
+					containerClass="site-nav-popover-container"
+					tooltip="Audit Logs"
+					[isDisabled]="navbarOpen"
+					#auditorNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="auditorNavOpen = true"
+					(onHidden)="auditorNavOpen = false"
+				>
 					<span class="fa fa-fw fa-file-text-o"></span>
 					<span [hidden]="!navbarOpen">Audit Logs</span>
 				</a>
@@ -126,27 +122,27 @@
 				<ng-template #auditorNav>
 					<ul class="popover-menu" role="menu">
 						<li>
-							<a routerLink="/audit"
-								(click)="auditorNavPopover.hide()">View All</a>
+							<a routerLink="/audit" (click)="auditorNavPopover.hide()">View All</a>
 						</li>
 					</ul>
 				</ng-template>
 			</li>
 
 			<!-- Admin Nav	-->
-			<li class="element nav-popover nav-popover-bottom"
-				*hasRole="'admin'">
-				<a [ngClass]="{'highlight-link': adminNavOpen}"
-				   [popover]="adminNav"
-				   container="body"
-				   containerClass="site-nav-popover-container"
-				   tooltip="Admin"
-				   [isDisabled]="navbarOpen"
-				   #adminNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="adminNavOpen = true;"
-				   (onHidden)="adminNavOpen = false;">
+			<li class="element nav-popover nav-popover-bottom" *hasRole="'admin'">
+				<a
+					[ngClass]="{ 'highlight-link': adminNavOpen }"
+					[popover]="adminNav"
+					container="body"
+					containerClass="site-nav-popover-container"
+					tooltip="Admin"
+					[isDisabled]="navbarOpen"
+					#adminNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="adminNavOpen = true"
+					(onHidden)="adminNavOpen = false"
+				>
 					<span class="fa fa-fw fa-cog"></span>
 					<span [hidden]="!navbarOpen">Admin</span>
 				</a>
@@ -154,8 +150,13 @@
 				<ng-template #adminNav>
 					<ul class="popover-menu" role="menu">
 						<li *ngFor="let adminItem of adminMenuItems">
-							<a [routerLink]="['admin/' + adminItem.path, { clearCachedFilter: true }]"
-								(click)="adminNavPopover.hide()">
+							<a
+								[routerLink]="[
+									'admin/' + adminItem.path,
+									{ clearCachedFilter: true }
+								]"
+								(click)="adminNavPopover.hide()"
+							>
 								{{ adminItem.title }}
 							</a>
 						</li>
@@ -164,21 +165,25 @@
 			</li>
 
 			<!-- Messages Nav   -->
-			<li class="element nav-popover nav-popover-bottom"
-				*hasRole="'user'">
-				<a [ngClass]="{'highlight-link': messagesNavOpen}"
-				   [popover]="messagesNav"
-				   container="body"
-				   containerClass="site-nav-popover-container-messages"
-				   tooltip="Notifications"
-				   [isDisabled]="navbarOpen"
-				   #messagesNavPopover="bs-popover"
-				   placement="left"
-				   [outsideClick]="true"
-				   (onShown)="messagesNavOpen = true;"
-				   (onHidden)="messagesNavOpen = false;">
-					<span class="fa fa-fw fa-bell" attr.newMessagesCount="{{numNewMessages}}"
-						  [ngClass]="{'messages-icon-new-messages-badge': numNewMessages > 0 }"></span>
+			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
+				<a
+					[ngClass]="{ 'highlight-link': messagesNavOpen }"
+					[popover]="messagesNav"
+					container="body"
+					containerClass="site-nav-popover-container-messages"
+					tooltip="Notifications"
+					[isDisabled]="navbarOpen"
+					#messagesNavPopover="bs-popover"
+					placement="left"
+					[outsideClick]="true"
+					(onShown)="messagesNavOpen = true"
+					(onHidden)="messagesNavOpen = false"
+				>
+					<span
+						class="fa fa-fw fa-bell"
+						attr.newMessagesCount="{{ numNewMessages }}"
+						[ngClass]="{ 'messages-icon-new-messages-badge': numNewMessages > 0 }"
+					></span>
 					<span [hidden]="!navbarOpen">Notifications</span>
 				</a>
 				<ng-template #messagesNav>
@@ -186,7 +191,9 @@
 						<!-- List Messages -->
 						<li>
 							<a>
-								<app-recent-messages [container]="messagesNavPopover"></app-recent-messages>
+								<app-recent-messages
+									[container]="messagesNavPopover"
+								></app-recent-messages>
 							</a>
 						</li>
 					</ul>
@@ -195,7 +202,8 @@
 
 			<!-- Help Nav -->
 			<li class="element nav-popover nav-popover-bottom">
-				<a [ngClass]="{'highlight-link': helpNavOpen}"
+				<a
+					[ngClass]="{ 'highlight-link': helpNavOpen }"
 					[popover]="helpNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -204,43 +212,43 @@
 					#helpNavPopover="bs-popover"
 					placement="left"
 					[outsideClick]="true"
-					(onShown)="helpNavOpen = true;"
-					(onHidden)="helpNavOpen = false;">
+					(onShown)="helpNavOpen = true"
+					(onHidden)="helpNavOpen = false"
+				>
 					<span class="fa fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
 				</a>
 
 				<ng-template #helpNav>
 					<ul class="popover-menu" role="menu">
-
 						<!-- Help -->
 						<li>
-							<a routerLink="/help"
-							   (click)="helpNavPopover.hide()">Help Docs</a>
+							<a routerLink="/help" (click)="helpNavPopover.hide()">Help Docs</a>
 						</li>
 
 						<!-- Feedback -->
 						<ng-container *isAuthenticated>
-							<li *ngIf="showFeedbackOption"><a class="link"
-								(click)="showFeedbackModal();helpNavPopover.hide()">Give Feedback</a></li>
+							<li *ngIf="showFeedbackOption">
+								<a class="link" (click)="showFeedbackModal(); helpNavPopover.hide()"
+									>Give Feedback</a
+								>
+							</li>
 						</ng-container>
 
 						<!-- API Docs -->
 						<li *ngIf="showApiDocsLink">
-							<a [href]="apiDocsLink" target="_blank"
-							   (click)="helpNavPopover.hide()">API Docs</a>
+							<a [href]="apiDocsLink" target="_blank" (click)="helpNavPopover.hide()"
+								>API Docs</a
+							>
 						</li>
 
 						<!-- About -->
 						<li>
-							<a routerLink="/about"
-							   (click)="helpNavPopover.hide()">About</a>
+							<a routerLink="/about" (click)="helpNavPopover.hide()">About</a>
 						</li>
-
 					</ul>
 				</ng-template>
 			</li>
-
 		</ul>
 	</div>
 
@@ -249,19 +257,18 @@
 		<li class="element element-divider element-divider-collapse"></li>
 
 		<!-- Collapse/Expand -->
-		<li class="element "
-				(click)="toggleNavbar()">
+		<li class="element " (click)="toggleNavbar()">
 			<a tooltip="Expand" placement="left" container="body" [isDisabled]="navbarOpen">
-				<span class="fa fa-fw fa-angle-double-right"
-				   [class.fa-flip-horizontal]="navbarOpen"></span>
+				<span
+					class="fa fa-fw fa-angle-double-right"
+					[class.fa-flip-horizontal]="navbarOpen"
+				></span>
 				<span [hidden]="!navbarOpen">Collapse</span>
 			</a>
 		</li>
 	</ul>
-
 </div>
 
-<div class="navbar-content"
-     [ngClass]="{'navbar-open': navbarOpen, 'navbar-close': !navbarOpen}">
+<div class="navbar-content" [ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }">
 	<ng-content></ng-content>
 </div>

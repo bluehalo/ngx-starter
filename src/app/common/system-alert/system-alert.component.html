@@ -1,15 +1,22 @@
-<alert *ngFor="let alert of alertService.alerts$ | async; let i = index" [type]="alert.type" (close)="alertService.clear(i)" [dismissible]="true" >
+<alert
+	*ngFor="let alert of alertService.alerts$ | async; let i = index"
+	[type]="alert.type"
+	(close)="alertService.clear(i)"
+	[dismissible]="true"
+>
 	<table aria-describedby="System alerts">
 		<tbody>
-		<tr>
-			<th scope="row" class="align-middle">
-				<system-alert-icon [icon]="alert.type"></system-alert-icon>
-			</th>
-			<td class="align-middle">
-				<div class="system-alert-message">{{ alert.msg }}</div>
-				<div class="system-alert-subtext" *ngIf="alert.subtext">{{ alert.subtext }}</div>
-			</td>
-		</tr>
+			<tr>
+				<th scope="row" class="align-middle">
+					<system-alert-icon [icon]="alert.type"></system-alert-icon>
+				</th>
+				<td class="align-middle">
+					<div class="system-alert-message">{{ alert.msg }}</div>
+					<div class="system-alert-subtext" *ngIf="alert.subtext">
+						{{ alert.subtext }}
+					</div>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </alert>
