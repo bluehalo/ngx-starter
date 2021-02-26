@@ -31,7 +31,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			name: 'Submitted Date',
 			sortable: true,
 			sortField: 'created',
-			sortDir: SortDirection.asc,
+			sortDir: SortDirection.desc,
 			default: true
 		},
 		{ name: 'Type', sortable: true, sortField: 'type', sortDir: SortDirection.asc },
