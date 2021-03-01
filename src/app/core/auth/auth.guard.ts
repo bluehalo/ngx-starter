@@ -94,15 +94,22 @@ export class AuthGuard implements CanActivate {
 
 			// compile a list of roles that are missing
 			const requiredRoles = route?.data?.roles ?? ['user'];
+			const requireAllRoles = route?.data?.requireAllRoles;
 			const missingRoles: any[] = [];
+			const userRoles: any[] = [];
 			requiredRoles.forEach((role: any) => {
 				if (!this.authorizationService.hasRole(role)) {
 					missingRoles.push(role);
+				} else {
+					userRoles.push(role);
 				}
 			});
 
 			// If there are roles missing then we need to do something
-			if (missingRoles.length > 0) {
+			if (
+				((missingRoles.length > 0 && requireAllRoles) || userRoles.length === 0) &&
+				state.url !== '/unauthorized'
+			) {
 				// The user doesn't have the needed roles to view the page
 				this.sessionService.setPreviousUrl(state.url);
 				this.router.navigate(['/unauthorized']);
