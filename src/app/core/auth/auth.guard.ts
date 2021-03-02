@@ -94,7 +94,7 @@ export class AuthGuard implements CanActivate {
 
 			// compile a list of roles that are missing
 			const requiredRoles = route?.data?.roles ?? ['user'];
-			const requireAllRoles = route?.data?.requireAllRoles;
+			const requireAllRoles = route?.data?.requireAllRoles ?? true;
 			const missingRoles: any[] = [];
 			const userRoles: any[] = [];
 			requiredRoles.forEach((role: any) => {
