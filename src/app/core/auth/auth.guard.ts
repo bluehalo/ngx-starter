@@ -107,7 +107,8 @@ export class AuthGuard implements CanActivate {
 
 			// If there are roles missing then we need to do something
 			if (
-				((missingRoles.length > 0 && requireAllRoles) || userRoles.length === 0) &&
+				((missingRoles.length > 0 && requireAllRoles) ||
+					(userRoles.length === 0 && requiredRoles.length > 0)) &&
 				state.url !== '/unauthorized'
 			) {
 				// The user doesn't have the needed roles to view the page
