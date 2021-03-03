@@ -54,7 +54,6 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ListTeamsComponent,
 		ViewTeamComponent,
 		TeamsHelpComponent,
-		TeamSelectInputComponent,
 		TeamSelectInputComponent
 	],
 	providers: [
