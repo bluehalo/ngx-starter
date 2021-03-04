@@ -1,14 +1,15 @@
-import { AuthGuard } from './auth.guard';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { ConfigService } from '../config.service';
-import { AuthorizationService } from './authorization.service';
-import { SessionService } from './session.service';
 import { TestBed } from '@angular/core/testing';
-import { AuthenticationService } from './authentication.service';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+
+import { of } from 'rxjs';
 import SpyObj = jasmine.SpyObj;
 import { Config } from '../config.model';
+import { ConfigService } from '../config.service';
+import { AuthGuard } from './auth.guard';
+import { AuthenticationService } from './authentication.service';
+import { AuthorizationService } from './authorization.service';
 import { Session } from './session.model';
+import { SessionService } from './session.service';
 
 describe('AuthGuard', () => {
 	let guard: AuthGuard;
