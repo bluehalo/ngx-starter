@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 		// Default to requiring authentication if guard is present
-		const requiresAuthentication = route?.data?.requiresAuthentication ?? true;
+		const requiresAuthentication = route.data?.requiresAuthentication ?? true;
 
 		// -----------------------------------------------------------
 		// Does the user need to be authenticated?
@@ -32,17 +32,8 @@ export class AuthGuard implements CanActivate {
 		// -----------------------------------------------------------
 		// Yes, the user needs to be authenticated
 		// -----------------------------------------------------------
-
 		const config$ = this.configService.getConfig().pipe(first());
-
-		const session$ = this.sessionService.getSession().pipe(
-			first(),
-			catchError(error => {
-				// Handle the error
-				console.error(error);
-				return of(null);
-			})
-		);
+		const session$ = this.sessionService.getSession().pipe(first());
 
 		return combineLatest([config$, session$]).pipe(
 			switchMap(([config, session]) => {
@@ -64,9 +55,6 @@ export class AuthGuard implements CanActivate {
 	}
 
 	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		// Default to requiring authentication if guard is present
-		const requiresEua = route?.data?.requiresEua ?? true;
-
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
 			// Send them to signin with a redirect to the previous URL
@@ -80,12 +68,13 @@ export class AuthGuard implements CanActivate {
 			// Does the user need to accept the user agreement??
 			// -----------------------------------------------------------
 			// Check to see if the user needs to agree to the end user agreement
-			if (!this.authorizationService.isEuaCurrent()) {
-				if (requiresEua) {
-					this.sessionService.setPreviousUrl(state.url);
-					this.router.navigate(['/eua']);
-					return false;
-				}
+			// Default to requiring authentication if guard is present
+			const requiresEua = route.data?.requiresEua ?? true;
+
+			if (requiresEua && !this.authorizationService.isEuaCurrent()) {
+				this.sessionService.setPreviousUrl(state.url);
+				this.router.navigate(['/eua']);
+				return false;
 			}
 
 			// -----------------------------------------------------------
@@ -93,8 +82,8 @@ export class AuthGuard implements CanActivate {
 			// -----------------------------------------------------------
 
 			// compile a list of roles that are missing
-			const requiredRoles = route?.data?.roles ?? ['user'];
-			const requireAllRoles = route?.data?.requireAllRoles ?? true;
+			const requiredRoles = route.data?.roles ?? ['user'];
+			const requireAllRoles = route.data?.requireAllRoles ?? true;
 			const missingRoles: any[] = [];
 			const userRoles: any[] = [];
 			requiredRoles.forEach((role: any) => {
