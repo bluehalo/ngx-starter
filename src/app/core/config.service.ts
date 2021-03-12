@@ -1,7 +1,7 @@
 import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AsyncSubject } from 'rxjs';
+import { AsyncSubject, Observable } from 'rxjs';
 import { Config } from './config.model';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class ConfigService {
 	/**
 	 * Get the shared config observable
 	 */
-	public getConfig(): AsyncSubject<Config> {
+	public getConfig(): Observable<Config> {
 		return this.configSubject;
 	}
 

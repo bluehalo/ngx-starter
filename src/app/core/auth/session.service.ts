@@ -35,7 +35,6 @@ export class SessionService {
 	constructor(
 		private authService: AuthenticationService,
 		private configService: ConfigService,
-		private http: HttpClient,
 		private router: Router
 	) {}
 
