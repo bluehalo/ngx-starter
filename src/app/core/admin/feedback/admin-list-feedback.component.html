@@ -6,76 +6,189 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<div class="pt-2">
-		<pageable-table
-			[items]="items"
-			[hasItems]="hasItems"
-			[pagingOptions]="pagingOptions"
-			[showActions]="true"
-			[tableStriped]="true"
-			(pageChange)="pageEvent$.next($event)"
-		>
-			<ng-template #tableActions>
-				<asy-search-input
-					placeholder="Search..."
-					(applySearch)="searchEvent$.next($event)"
-				></asy-search-input>
-				<button type="button" class="btn btn-outline-secondary ml-auto" (click)="export()">
-					<span class="fa fa-download"></span> Export
-				</button>
-			</ng-template>
+	<div class="row pt-2">
+		<div class="col-md-2">
+			<!-- Quick Filters -->
+			<quick-filters
+				[filters]="filters"
+				(filtersChange)="filterEvent$.next($event)"
+			></quick-filters>
 
-			<ng-template #tableHeader>
-				<th scope="col" *ngFor="let header of headers">
-					<sortable-table-header
-						[header]="header"
-						[currentSortField]="pagingOptions.sortField"
-						[currentSortDir]="pagingOptions.sortDir"
-						(sortChange)="sortEvent$.next($event)"
-					></sortable-table-header>
-				</th>
-			</ng-template>
+			<!-- Column Selector -->
+			<quick-column-toggle
+				[filters]="columns"
+				[defaultFilters]="defaultColumns"
+				(filtersChange)="columnsUpdated($event)"
+			></quick-column-toggle>
+		</div>
 
-			<ng-template #tableRow let-feedback="item">
-				<td>
-					<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">
-						{{ feedback?.created | agoDate }}
-					</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
-				</td>
-				<td>
-					<div style="width: 300px; white-space: pre-wrap">{{ feedback?.body }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.browser }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.os }}</div>
-				</td>
-				<td>
-					<div class="hide-overflow">{{ feedback?.url }}</div>
-				</td>
-			</ng-template>
+		<div class="col-md-10">
+			<pageable-table
+				[items]="items"
+				[hasItems]="hasItems"
+				[pagingOptions]="pagingOptions"
+				[showActions]="true"
+				[tableStriped]="true"
+				(pageChange)="pageEvent$.next($event)"
+			>
+				<ng-template #tableActions>
+					<asy-search-input
+						placeholder="Search..."
+						(applySearch)="searchEvent$.next($event)"
+					></asy-search-input>
+					<button
+						type="button"
+						class="btn btn-outline-secondary ml-auto"
+						(click)="exportCurrentView()"
+					>
+						<span class="fa fa-download"></span> Export
+					</button>
+				</ng-template>
 
-			<ng-template #tableNoResults>
-				<h2 class="text-center">
-					<small>No Feedback matched your search</small>
-				</h2>
-			</ng-template>
+				<ng-template #tableHeader>
+					<th scope="col" *ngFor="let header of headersToShow">
+						<sortable-table-header
+							[header]="header"
+							[currentSortField]="pagingOptions.sortField"
+							[currentSortDir]="pagingOptions.sortDir"
+							(sortChange)="sortEvent$.next($event)"
+						></sortable-table-header>
+					</th>
+				</ng-template>
 
-			<ng-template #tableNoData>
-				<h2 class="text-center">
-					<small>No Feedback available</small>
-				</h2>
-			</ng-template>
-		</pageable-table>
+				<ng-template #tableRow let-feedback="item" let-index="index">
+					<td [hidden]="!columns['creator.name'].show">
+						<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
+					</td>
+					<td [hidden]="!columns['creator.username'].show">
+						<div class="hide-overflow">{{ feedback?.creator?.username }}</div>
+					</td>
+					<td [hidden]="!columns['creator.email'].show">
+						<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
+					</td>
+					<td [hidden]="!columns['creator.organization'].show">
+						<div class="hide-overflow">{{ feedback?.creator?.organization }}</div>
+					</td>
+					<td [hidden]="!columns.created.show">
+						<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">
+							{{ feedback?.created | agoDate }}
+						</div>
+					</td>
+					<td [hidden]="!columns.type.show">
+						<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
+					</td>
+					<td [hidden]="!columns.body.show">
+						<div class="feedback-body">{{ feedback?.body }}</div>
+					</td>
+					<td [hidden]="!columns.status.show">
+						<div class="btn-group" dropdown container="body" placement="bottom left">
+							<button
+								dropdownToggle
+								class="dropdown-toggle feedback-status-button"
+								type="button"
+								[class.feedback-status-new]="
+									feedback.status === feedbackStatusOptions.NEW
+								"
+								[class.feedback-status-open]="
+									feedback.status === feedbackStatusOptions.OPEN
+								"
+								[class.feedback-status-closed]="
+									feedback.status === feedbackStatusOptions.CLOSED
+								"
+							>
+								{{ feedback.status }}
+							</button>
+							<ul role="menu" *dropdownMenu class="dropdown-menu">
+								<li
+									role="menuitem"
+									*ngIf="feedback.status !== feedbackStatusOptions.OPEN"
+								>
+									<button
+										class="dropdown-item"
+										(click)="
+											updateFeedbackStatus(index, feedbackStatusOptions.OPEN)
+										"
+									>
+										Open
+									</button>
+								</li>
+								<li
+									role="menuitem"
+									*ngIf="feedback.status !== feedbackStatusOptions.CLOSED"
+								>
+									<button
+										class="dropdown-item"
+										(click)="
+											updateFeedbackStatus(
+												index,
+												feedbackStatusOptions.CLOSED
+											)
+										"
+									>
+										Close
+									</button>
+								</li>
+							</ul>
+						</div>
+					</td>
+					<td [hidden]="!columns.assignee.show">
+						<div class="btn-group" dropdown container="body" placement="bottom left">
+							<button
+								dropdownToggle
+								class="dropdown-toggle feedback-status-button"
+								type="button"
+								[class.feedback-status-open]="!!feedback.assignee"
+							>
+								{{ feedback.assignee || 'None' }}
+							</button>
+							<ul role="menu" *dropdownMenu class="dropdown-menu">
+								<li role="menuitem">
+									<button
+										class="dropdown-item"
+										(click)="updateFeedbackAssignee(index, null)"
+									>
+										None
+									</button>
+								</li>
+								<li role="menuitem" *ngFor="let username of assigneeUsernames">
+									<button
+										class="dropdown-item"
+										(click)="updateFeedbackAssignee(index, username)"
+									>
+										{{ username }}
+									</button>
+								</li>
+							</ul>
+						</div>
+					</td>
+					<td [hidden]="!columns.updated.show">
+						<div class="hide-overflow" tooltip="{{ feedback?.updated | utcDate }}">
+							{{ feedback?.updated | agoDate }}
+						</div>
+					</td>
+					<td [hidden]="!columns.browser.show">
+						<div class="hide-overflow">{{ feedback?.browser }}</div>
+					</td>
+					<td [hidden]="!columns.os.show">
+						<div class="hide-overflow">{{ feedback?.os }}</div>
+					</td>
+					<td [hidden]="!columns.url.show">
+						<div class="hide-overflow">{{ feedback?.url }}</div>
+					</td>
+				</ng-template>
+
+				<ng-template #tableNoResults>
+					<h2 class="text-center">
+						<small>No Feedback matched your search</small>
+					</h2>
+				</ng-template>
+
+				<ng-template #tableNoData>
+					<h2 class="text-center">
+						<small>No Feedback available</small>
+					</h2>
+				</ng-template>
+			</pageable-table>
+		</div>
 	</div>
 </section>

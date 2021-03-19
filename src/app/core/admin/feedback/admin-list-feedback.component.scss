@@ -1,0 +1,35 @@
+@import 'src/styles/colors';
+
+$dropdown-min-width: 100px;
+
+.dropdown-menu {
+	min-width: $dropdown-min-width;
+}
+
+.feedback-body {
+	width: 300px;
+	white-space: pre-wrap;
+}
+
+.feedback-status-button {
+	min-width: $dropdown-min-width;
+	border-radius: 15px;
+	border-width: 2px;
+	border-style: solid;
+}
+
+// TODO - do I need to use ux presets? I didn't find ones that looked good here
+.feedback-status-new {
+	border-color: $ux-color-alert-error;
+	background-color: #f2ded6;
+}
+
+.feedback-status-open {
+	border-color: $ux-color-alert-notification;
+	background-color: lightcyan;
+}
+
+.feedback-status-closed {
+	border-color: $ux-color-alert-success;
+	background-color: #e9f0dc;
+}

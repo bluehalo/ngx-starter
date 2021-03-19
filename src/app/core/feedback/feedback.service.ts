@@ -6,7 +6,7 @@ import { SystemAlertService } from '../../common/system-alert/system-alert.servi
 
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Feedback } from './feedback.model';
+import { Feedback, FeedbackStatusOption } from './feedback.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -61,9 +61,9 @@ export class FeedbackService {
 		query: any,
 		search: string,
 		options: any
-	): Observable<PagingResults> {
+	): Observable<PagingResults<Feedback>> {
 		return this.http
-			.post<PagingResults>(
+			.post<PagingResults<Feedback>>(
 				'api/admin/feedback',
 				JSON.stringify({ s: search, q: query, options }),
 				{ params: paging.toObj(), headers: this.headers }
@@ -74,5 +74,15 @@ export class FeedbackService {
 					return of(NULL_PAGING_RESULTS);
 				})
 			);
+	}
+
+	updateFeedbackAssignee(feedbackId: string, assignee: string): Observable<Feedback> {
+		return this.http.patch<Feedback>(`api/admin/feedback/${feedbackId}/assignee`, {
+			assignee
+		});
+	}
+
+	updateFeedbackStatus(feedbackId: string, status: FeedbackStatusOption): Observable<Feedback> {
+		return this.http.patch<Feedback>(`api/admin/feedback/${feedbackId}/status`, { status });
 	}
 }
