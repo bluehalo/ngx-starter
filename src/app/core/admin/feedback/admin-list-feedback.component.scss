@@ -18,18 +18,18 @@ $dropdown-min-width: 100px;
 	border-style: solid;
 }
 
-// TODO - do I need to use ux presets? I didn't find ones that looked good here
 .feedback-status-new {
 	border-color: $ux-color-alert-error;
-	background-color: #f2ded6;
+	background-color: lighten($ux-color-alert-error, 50%);
 }
 
 .feedback-status-open {
 	border-color: $ux-color-alert-notification;
-	background-color: lightcyan;
+	background-color: lighten($ux-color-alert-notification, 40%);
 }
 
 .feedback-status-closed {
 	border-color: $ux-color-alert-success;
-	background-color: #e9f0dc;
+	//background-color: #e9f0dc;
+	background-color: lighten($ux-color-alert-success, 40%);
 }
