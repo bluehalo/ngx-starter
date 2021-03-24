@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import {
@@ -8,6 +9,7 @@ import {
 	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
+import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -27,7 +29,7 @@ import { AdminUsersService } from '../user-management/admin-users.service';
 export class AdminListFeedbackComponent extends AbstractPageableDataComponent<any>
 	implements OnInit {
 	// Columns to show/hide in user table
-	columns: any = {
+	columns: ColumnConfig = {
 		'creator.name': { show: true, display: 'Submitted By' },
 		'creator.username': { show: false, display: 'Username' },
 		'creator.email': { show: false, display: 'Email' },
@@ -43,7 +45,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 		url: { show: false, display: 'Submitted From' }
 	};
 
-	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
+	defaultColumns: ColumnConfig = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
 		{
@@ -97,7 +99,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 
 	feedbackStatusOptions = FeedbackStatusOption;
 
-	assigneeUsernames: any;
+	assigneeUsernames: string[];
 
 	constructor(
 		private feedbackService: FeedbackService,
@@ -111,7 +113,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.pipe(take(1), untilDestroyed(this))
 			.subscribe({
 				next: usernames => {
-					this.assigneeUsernames = usernames;
+					this.assigneeUsernames = usernames as string[];
 				}
 			});
 	}
@@ -127,8 +129,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 	columnsUpdated(updatedColumns: any) {
 		this.columns = cloneDeep(updatedColumns);
 		this.headersToShow = this.headers.filter(
-			(header: SortableTableHeader) =>
-				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
+			(header: SortableTableHeader) => this.columns?.[header.sortField].show
 		);
 	}
 
@@ -162,7 +163,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 
 		if (this.filters.open.show) {
 			query = {
-				$or: [{ status: FeedbackStatusOption.NEW }, { status: FeedbackStatusOption.OPEN }]
+				status: { $not: FeedbackStatusOption.CLOSED }
 			};
 		}
 		return query;
@@ -183,6 +184,10 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.subscribe({
 				next: updatedFeedback => {
 					this.items[index] = updatedFeedback;
+				},
+				error: (err: HttpErrorResponse) => {
+					// TODO - Ask why alertService.addClientErrorAlert doesn't include 500 errors
+					this.alertService.addAlert(err.error.message);
 				}
 			});
 	}
@@ -194,6 +199,9 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.subscribe({
 				next: updatedFeedback => {
 					this.items[index] = updatedFeedback;
+				},
+				error: (err: HttpErrorResponse) => {
+					this.alertService.addAlert(err.error.message);
 				}
 			});
 	}
