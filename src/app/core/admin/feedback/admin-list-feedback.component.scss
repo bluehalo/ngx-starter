@@ -30,6 +30,5 @@ $dropdown-min-width: 100px;
 
 .feedback-status-closed {
 	border-color: $ux-color-alert-success;
-	//background-color: #e9f0dc;
 	background-color: lighten($ux-color-alert-success, 40%);
 }
