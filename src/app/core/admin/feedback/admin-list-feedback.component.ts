@@ -186,7 +186,6 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 					this.items[index] = updatedFeedback;
 				},
 				error: (err: HttpErrorResponse) => {
-					// TODO - Ask why alertService.addClientErrorAlert doesn't include 500 errors
 					this.alertService.addAlert(err.error.message);
 				}
 			});
