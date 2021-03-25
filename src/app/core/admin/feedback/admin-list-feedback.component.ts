@@ -126,7 +126,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 		super.ngOnInit();
 	}
 
-	columnsUpdated(updatedColumns: any) {
+	columnsUpdated(updatedColumns: ColumnConfig) {
 		this.columns = cloneDeep(updatedColumns);
 		this.headersToShow = this.headers.filter(
 			(header: SortableTableHeader) => this.columns?.[header.sortField].show
