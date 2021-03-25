@@ -163,7 +163,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 
 		if (this.filters.open.show) {
 			query = {
-				status: { $not: FeedbackStatusOption.CLOSED }
+				status: { $ne: FeedbackStatusOption.CLOSED }
 			};
 		}
 		return query;
