@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
@@ -11,12 +11,13 @@ import {
 	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
+import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
-import { Observable, Subject } from 'rxjs';
-import { filter, first, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 
@@ -27,7 +28,7 @@ import { EuaService } from './eua.service';
 export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement>
 	implements OnInit {
 	// Columns to show/hide in user table
-	columns: Record<string, { show: boolean; display: string }> = {
+	columns: ColumnConfig = {
 		_id: { show: false, display: 'ID' },
 		title: { show: true, display: 'Title' },
 		text: { show: false, display: 'Text' },
@@ -36,7 +37,7 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		updated: { show: true, display: 'Updated' }
 	};
 
-	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
+	defaultColumns: ColumnConfig = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
 		{ name: 'ID', sortable: false, sortField: '_id' },
@@ -104,11 +105,10 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 		super.ngOnInit();
 	}
 
-	columnsUpdated(updatedColumns: any) {
+	columnsUpdated(updatedColumns: ColumnConfig) {
 		this.columns = cloneDeep(updatedColumns);
 		this.headersToShow = this.headers.filter(
-			(header: SortableTableHeader) =>
-				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
+			(header: SortableTableHeader) => this.columns?.[header.sortField].show
 		);
 	}
 

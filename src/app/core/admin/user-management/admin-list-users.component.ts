@@ -9,6 +9,7 @@ import {
 	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
+import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -27,7 +28,7 @@ import { AdminUsersService } from './admin-users.service';
 })
 export class AdminListUsersComponent extends AbstractPageableDataComponent<User> implements OnInit {
 	// Columns to show/hide in user table
-	columns: any = {
+	columns: ColumnConfig = {
 		name: { show: true, display: 'Name' },
 		username: { show: true, display: 'Username' },
 		_id: { show: false, display: 'ID' },
@@ -45,7 +46,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		roles: { show: true, display: 'Roles' }
 	};
 
-	defaultColumns: any = JSON.parse(JSON.stringify(this.columns));
+	defaultColumns: ColumnConfig = JSON.parse(JSON.stringify(this.columns));
 
 	headers: SortableTableHeader[] = [
 		{
@@ -191,11 +192,10 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			});
 	}
 
-	columnsUpdated(updatedColumns: any) {
+	columnsUpdated(updatedColumns: ColumnConfig) {
 		this.columns = cloneDeep(updatedColumns);
 		this.headersToShow = this.headers.filter(
-			(header: SortableTableHeader) =>
-				this.columns.hasOwnProperty(header.sortField) && this.columns[header.sortField].show
+			(header: SortableTableHeader) => this.columns?.[header.sortField].show
 		);
 	}
 
