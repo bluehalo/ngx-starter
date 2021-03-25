@@ -3,6 +3,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { QuickFiltersComponent } from '../quick-filters/quick-filters.component';
 
+export type ColumnConfig = {
+	[key: string]: {
+		show: boolean;
+		display: string;
+		disabled?: boolean;
+		[key: string]: any;
+	};
+};
+
 @UntilDestroy()
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
