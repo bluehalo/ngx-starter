@@ -1,20 +1,41 @@
-import { Feedback } from './feedback.model';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
+
+import { Feedback, FeedbackStatusOption } from './feedback.model';
 import { FeedbackService } from './feedback.service';
 
 describe('FeedbackService', () => {
+	let injector: TestBed;
+	let service: FeedbackService;
+	let httpMock: HttpTestingController;
+
+	beforeEach(async () => {
+		TestBed.configureTestingModule({
+			imports: [HttpClientTestingModule],
+			providers: [FeedbackService]
+		});
+
+		injector = getTestBed();
+		service = injector.inject(FeedbackService);
+		httpMock = injector.inject(HttpTestingController);
+	});
+
+	afterEach(() => {
+		// Ensure there are no outstanding requests
+		httpMock.verify();
+	});
+
 	it('should exist', () => {
 		expect(new FeedbackService({} as any, {} as any)).toBeDefined();
 	});
 
 	describe('feedback formatting', () => {
 		it('should repeat back out normal feedback text without any options', () => {
-			const service = new FeedbackService({} as any, {} as any);
 			const feedback = new Feedback();
 			feedback.text = 'hello there';
 			expect(service.getFormattedText(feedback)).toEqual(feedback.text);
 		});
 		it('should include subtype on a newline, and include otherText if subtype is other', () => {
-			const service = new FeedbackService({} as any, {} as any);
 			const feedback = new Feedback();
 			feedback.text = 'hello there';
 			feedback.subType = 'words';
@@ -25,7 +46,6 @@ describe('FeedbackService', () => {
 		});
 
 		it('should prefix a message with a classification prefix, if applicable', () => {
-			const service = new FeedbackService({} as any, {} as any);
 			const feedback = new Feedback();
 			feedback.text = 'hello there';
 			feedback.classification = { prefix: 'K', level: 'K' };
@@ -33,13 +53,44 @@ describe('FeedbackService', () => {
 		});
 
 		it('should include classification prefix on every line', () => {
-			const service = new FeedbackService({} as any, {} as any);
 			const feedback = new Feedback();
 			feedback.text = 'hello there';
 			feedback.subType = 'Other';
 			feedback.otherText = 'yes';
 			feedback.classification = { prefix: 'K', level: 'OK' };
 			expect(service.getFormattedText(feedback)).toEqual('K Other - yes\n' + 'K hello there');
+		});
+	});
+
+	describe('#updateFeedbackAssingee', () => {
+		it('should call once and return an Observable<Feedback>', () => {
+			const feedbackId = 'test';
+			const assignee = 'testuser';
+			const expected = new Feedback();
+
+			service.updateFeedbackAssignee(feedbackId, assignee).subscribe(actual => {
+				expect(actual).toBe(expected);
+			}, fail); // should not error
+
+			const req = httpMock.expectOne(`api/admin/feedback/${feedbackId}/assignee`);
+			expect(req.request.method).toBe('PATCH');
+			req.flush(expected);
+		});
+	});
+
+	describe('#updateFeedbackStatus', () => {
+		it('should call once and return an Observable<Feedback>', () => {
+			const feedbackId = 'test';
+			const status = FeedbackStatusOption.CLOSED;
+			const expected = new Feedback();
+
+			service.updateFeedbackStatus(feedbackId, status).subscribe(actual => {
+				expect(actual).toBe(expected);
+			}, fail); // should not error
+
+			const req = httpMock.expectOne(`api/admin/feedback/${feedbackId}/status`);
+			expect(req.request.method).toBe('PATCH');
+			req.flush(expected);
 		});
 	});
 });
