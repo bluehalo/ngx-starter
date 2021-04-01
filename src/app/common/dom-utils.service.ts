@@ -7,7 +7,7 @@ export class DOMUtils {
 	 */
 	public static getFocusableElements(
 		document: Document,
-		querySelector: string = '*',
+		querySelector: string,
 		focusableElementsSelector: string = [
 			'button',
 			'[href]',

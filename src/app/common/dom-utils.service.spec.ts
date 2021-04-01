@@ -34,11 +34,6 @@ describe('DOMUtils', () => {
 		fixture.detectChanges();
 	});
 	describe('#getFocusableElements', () => {
-		it('should return only the default focusable elements for the whole document', () => {
-			// The expected number, 8, is the 5 elements that should be included from the template
-			// plus 3 that are added by jasmine that each have href attributes
-			expect(DOMUtils.getFocusableElements(document).length).toBe(8);
-		});
 		it('should return only the default focusable elements for the indicated subset of the document', () => {
 			expect(DOMUtils.getFocusableElements(document, '#subset').length).toBe(5);
 		});
