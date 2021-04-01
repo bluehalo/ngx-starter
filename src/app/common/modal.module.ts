@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
+import { ContainerModalComponent } from './modal/container-modal/container-modal.component';
 import { ModalComponent } from './modal/modal/modal.component';
 
 @NgModule({
 	imports: [BsModalModule.forRoot(), CommonModule, FormsModule],
 	exports: [ModalComponent],
-	declarations: [ModalComponent],
+	declarations: [ModalComponent, ContainerModalComponent],
 	providers: []
 })
 export class ModalModule {}
