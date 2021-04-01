@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { AbstractModalizedDirective } from '../../../common/modal/abstract-modalized.directive';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
@@ -14,7 +17,9 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	templateUrl: 'feedback-modal.component.html'
 })
-export class FeedbackModalComponent implements OnInit {
+export class FeedbackModalComponent extends AbstractModalizedDirective implements OnInit {
+	@ViewChild('submitFeedbackForm') submitFeedbackForm: FormGroupDirective;
+
 	error: string;
 
 	success: string;
@@ -32,7 +37,9 @@ export class FeedbackModalComponent implements OnInit {
 		private configService: ConfigService,
 		private feedbackService: FeedbackService,
 		public modalRef: BsModalRef
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit() {
 		this.configService
@@ -48,9 +55,10 @@ export class FeedbackModalComponent implements OnInit {
 					this.classificationOptions = config.feedback.classificationOpts;
 				}
 			});
+		this.disableOkSubject.next(true);
 	}
 
-	submit() {
+	onOk() {
 		this.error = null;
 		this.submitting = true;
 
@@ -70,5 +78,11 @@ export class FeedbackModalComponent implements OnInit {
 					this.error = error.error.message;
 				}
 			);
+	}
+
+	onCancel(): void {}
+
+	validateForm() {
+		this.disableOkSubject.next(!this.submitFeedbackForm.valid);
 	}
 }

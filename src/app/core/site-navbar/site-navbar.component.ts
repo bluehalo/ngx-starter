@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
+import { ModalService } from '../../common/modal/modal.service';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
@@ -63,7 +63,7 @@ export class SiteNavbarComponent implements OnInit {
 	}
 
 	constructor(
-		private modalService: BsModalService,
+		private modalService: ModalService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
 		private messageService: MessageService
@@ -101,9 +101,11 @@ export class SiteNavbarComponent implements OnInit {
 	}
 
 	showFeedbackModal() {
-		this.modalService.show(FeedbackModalComponent, {
-			ignoreBackdropClick: true,
-			class: 'modal-lg'
+		this.modalService.showContainerModal({
+			title: 'Give Feedback',
+			okText: 'Submit',
+			cancelText: 'Cancel',
+			modalizedComponent: FeedbackModalComponent
 		});
 	}
 }
