@@ -6,7 +6,7 @@ import { AbstractModalizedDirective } from './abstract-modalized.directive';
 
 @UntilDestroy()
 @Component({
-	selector: 'ce-test-modalized-component',
+	selector: 'test-modalized-component',
 	template: ``
 })
 class ConcreteModalizedComponent extends AbstractModalizedDirective {

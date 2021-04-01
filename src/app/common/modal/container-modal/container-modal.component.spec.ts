@@ -8,7 +8,7 @@ import { ContainerModalComponent } from './container-modal.component';
 
 @UntilDestroy()
 @Component({
-	selector: 'ce-test-modalized-component',
+	selector: 'test-modalized-component',
 	template: `
 		<button></button><button></button>
 	`

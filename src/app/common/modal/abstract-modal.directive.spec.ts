@@ -9,7 +9,7 @@ import { ModalAction } from './modal.model';
 
 @UntilDestroy()
 @Component({
-	selector: 'ce-test-modal-component',
+	selector: 'test-modal-component',
 	template: `
 		<button></button>
 		<button></button>
