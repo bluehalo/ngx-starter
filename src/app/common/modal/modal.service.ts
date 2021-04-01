@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModalComponent } from './modal.component';
+import { ModalComponent } from './modal/modal.component';
 import { ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
 
 @Injectable()
