@@ -50,8 +50,7 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 		Object.entries(this.modalizedComponentProperties).forEach(([key, value]) => {
 			Object.defineProperty(componentRef.instance, key, {
 				value,
-				writable: true,
-				enumerable: true
+				writable: true
 			});
 		});
 

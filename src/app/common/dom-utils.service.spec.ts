@@ -31,6 +31,7 @@ describe('DOMUtils', () => {
 
 		fixture = TestBed.createComponent(TestComponent);
 		comp = fixture.componentInstance;
+		fixture.detectChanges();
 	});
 	describe('#getFocusableElements', () => {
 		it('should return only the default focusable elements for the whole document', () => {
@@ -54,6 +55,41 @@ describe('DOMUtils', () => {
 			DOMUtils.trapFocus(document, 'subset');
 			expect(DOMUtils.getFocusableElements).toHaveBeenCalledTimes(1);
 			expect(document.addEventListener).toHaveBeenCalledTimes(1);
+		});
+
+		it('should loop to first element when last element is focused and tab key is pressed', done => {
+			window.setTimeout(() => {
+				const focusableElements = DOMUtils.getFocusableElements(document, '#subset');
+				DOMUtils.trapFocus(document, '#subset');
+
+				focusableElements[focusableElements.length - 1].focus();
+				document.dispatchEvent(
+					new KeyboardEvent('keydown', {
+						key: 'Tab'
+					})
+				);
+				expect(document.activeElement).toEqual(focusableElements[0]);
+				done();
+			}, 0);
+		});
+
+		it('should loop to last element when first element is focused and shift-tab key is pressed', done => {
+			window.setTimeout(() => {
+				const focusableElements = DOMUtils.getFocusableElements(document, '#subset');
+				DOMUtils.trapFocus(document, '#subset');
+
+				focusableElements[0].focus();
+				document.dispatchEvent(
+					new KeyboardEvent('keydown', {
+						key: 'Tab',
+						shiftKey: true
+					})
+				);
+				expect(document.activeElement).toEqual(
+					focusableElements[focusableElements.length - 1]
+				);
+				done();
+			}, 0);
 		});
 	});
 });
