@@ -40,27 +40,16 @@ describe('Abstract Modal Directive', () => {
 	describe('#ngAfterViewInit', () => {
 		beforeEach(() => {
 			spyOn(window, 'setTimeout').and.callThrough();
-			spyOn(DOMUtils, 'trapFocus').and.callThrough();
 			spyOn(DOMUtils, 'getFocusableElements').and.returnValue(
 				document.querySelectorAll('button')
 			);
 		});
 
-		it('should call DOMUtils.trapFocus', done => {
-			fixture.detectChanges();
-			expect(window.setTimeout).toHaveBeenCalledTimes(1);
-			setTimeout(() => {
-				expect(DOMUtils.trapFocus).toHaveBeenCalledTimes(1);
-				expect(DOMUtils.getFocusableElements).toHaveBeenCalledTimes(1);
-				done();
-			}, 0);
-		});
-
-		it('should call DOMUtils.getFocusableElements an extra time if focusFirstElement is true', done => {
+		it('should call DOMUtils.getFocusableElements if focusFirstElement is true', done => {
 			comp.focusFirstElement = true;
 			fixture.detectChanges();
 			setTimeout(() => {
-				expect(DOMUtils.getFocusableElements).toHaveBeenCalledTimes(2);
+				expect(DOMUtils.getFocusableElements).toHaveBeenCalledTimes(1);
 				done();
 			}, 0);
 		});

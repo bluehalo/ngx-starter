@@ -39,6 +39,7 @@ export class FeedbackModalComponent extends AbstractModalizedDirective implement
 		public modalRef: BsModalRef
 	) {
 		super();
+		this.disableOkSubject.next(true);
 	}
 
 	ngOnInit() {
@@ -55,7 +56,6 @@ export class FeedbackModalComponent extends AbstractModalizedDirective implement
 					this.classificationOptions = config.feedback.classificationOpts;
 				}
 			});
-		this.disableOkSubject.next(true);
 	}
 
 	onOk() {

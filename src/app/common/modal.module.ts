@@ -1,3 +1,4 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,7 @@ import { ContainerModalComponent } from './modal/container-modal/container-modal
 import { ModalComponent } from './modal/modal/modal.component';
 
 @NgModule({
-	imports: [BsModalModule.forRoot(), CommonModule, FormsModule],
+	imports: [BsModalModule.forRoot(), CommonModule, FormsModule, A11yModule],
 	exports: [ModalComponent],
 	declarations: [ModalComponent, ContainerModalComponent],
 	providers: []

@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 /**
  * The AbstractModalizedDirective is meant to make any component that extends it 'modalized.' Modalized components
@@ -24,7 +24,7 @@ export abstract class AbstractModalizedDirective {
 	 * If there is any kind of validation being performed in the modalized component, the component can call '.next()'
 	 * on this subject to indicate to the ContainerModalComponent whether or not the 'ok' button should be active.\
 	 */
-	disableOkSubject: Subject<boolean> = new Subject<boolean>();
+	disableOkSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor() {
 		this.okSubject.pipe(untilDestroyed(this)).subscribe({
@@ -49,10 +49,10 @@ export abstract class AbstractModalizedDirective {
 	/**
 	 * Actions to perform when the modal's 'ok' button is pressed
 	 */
-	abstract onOk(): void;
+	abstract onOk(): any;
 
 	/**
 	 * Actions to perform when the modal's 'cancel' button is pressed
 	 */
-	abstract onCancel(): void;
+	abstract onCancel(): any;
 }

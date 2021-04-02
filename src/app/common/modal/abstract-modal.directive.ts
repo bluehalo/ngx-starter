@@ -51,10 +51,9 @@ export abstract class AbstractModalDirective implements AfterViewInit {
 	ngAfterViewInit(): void {
 		window.setTimeout(() => {
 			const modalQuerySelector = 'modal-container';
-			DOMUtils.trapFocus(document, modalQuerySelector);
 			if (this.focusFirstElement) {
-				// Focus the second focusable element, as the first is the 'Close' button
-				DOMUtils.getFocusableElements(document, modalQuerySelector)[1].focus();
+				// Focus the third focusable element, as the first is the div itself and the second is the 'Close' button
+				DOMUtils.getFocusableElements(document, modalQuerySelector)[2].focus();
 			}
 		}, 0);
 	}
