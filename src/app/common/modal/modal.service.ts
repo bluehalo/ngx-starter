@@ -101,7 +101,7 @@ export class ModalService {
 			modalOptions
 		);
 
-		config.initialState = Object.assign({ focusFirstElement: true }, contentConfig);
+		config.initialState = contentConfig;
 		this.modalRef = this.modalService.show(ContainerModalComponent, config);
 		return this.modalRef.content.onClose;
 	}

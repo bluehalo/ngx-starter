@@ -26,11 +26,6 @@ export abstract class AbstractModalDirective {
 	cancelText: string;
 
 	/**
-	 * Whether or not to focus the first element
-	 */
-	focusFirstElement = false;
-
-	/**
 	 * ModalCloseEvent Subject that emits when the modal is closed for any reason
 	 */
 	onClose: Subject<ModalCloseEvent> = new Subject();

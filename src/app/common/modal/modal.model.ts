@@ -16,7 +16,6 @@ interface BaseModalConfig {
 	title: string;
 	okText?: string;
 	cancelText?: string;
-	focusFirstElement?: boolean;
 }
 
 export interface ModalConfig extends BaseModalConfig {
