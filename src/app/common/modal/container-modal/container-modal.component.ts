@@ -18,12 +18,12 @@ import { AbstractModalizableDirective } from '../abstract-modalizable.directive'
 	templateUrl: 'container-modal.component.html'
 })
 export class ContainerModalComponent extends AbstractModalDirective implements AfterViewInit {
-	@ViewChild('modalizedComponentContainer', { read: ViewContainerRef })
-	modalizedComponentContainer: ViewContainerRef;
+	@ViewChild('modalizableComponentContainer', { read: ViewContainerRef })
+	modalizableComponentContainer: ViewContainerRef;
 
-	modalizedComponent: Type<AbstractModalizableDirective>;
+	modalizableComponent: Type<AbstractModalizableDirective>;
 
-	modalizedComponentProperties: { [key: string]: any } = {};
+	modalizableComponentProperties: { [key: string]: any } = {};
 
 	okSubject: Subject<void>;
 
@@ -40,19 +40,22 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 
 	ngAfterViewInit(): void {
 		// Add the supplied modalized component to the content container
-		this.modalizedComponentContainer.clear();
+		this.modalizableComponentContainer.clear();
 		const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-			this.modalizedComponent
+			this.modalizableComponent
 		);
-		const componentRef = this.modalizedComponentContainer.createComponent(componentFactory);
+		const componentRef = this.modalizableComponentContainer.createComponent(componentFactory);
 
 		// Set any supplied component properties
-		Object.entries(this.modalizedComponentProperties).forEach(([key, value]) => {
+		Object.entries(this.modalizableComponentProperties).forEach(([key, value]) => {
 			Object.defineProperty(componentRef.instance, key, {
 				value,
 				writable: true
 			});
 		});
+
+		// Make the component aware that it is a modal
+		componentRef.instance.isModal = true;
 
 		// References to the modalized component's ok/cancel subjects
 		this.okSubject = componentRef.instance.okSubject;

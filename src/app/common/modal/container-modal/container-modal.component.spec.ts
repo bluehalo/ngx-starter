@@ -31,8 +31,8 @@ describe('Container Modal Component', () => {
 
 		fixture = TestBed.createComponent(ContainerModalComponent);
 		comp = fixture.componentInstance;
-		comp.modalizedComponent = ConcreteModalizedComponent;
-		comp.modalizedComponentProperties = { testProperty: 'foo' };
+		comp.modalizableComponent = ConcreteModalizedComponent;
+		comp.modalizableComponentProperties = { testProperty: 'foo' };
 		comp.modalRef = new BsModalRef();
 		fixture.detectChanges();
 	});
@@ -43,13 +43,13 @@ describe('Container Modal Component', () => {
 
 	describe('#ngAfterViewInit', () => {
 		it('should define ok/cancel observables', () => {
-			spyOn(comp.modalizedComponentContainer, 'clear').and.callThrough();
-			spyOn(comp.modalizedComponentContainer, 'createComponent').and.callThrough();
+			spyOn(comp.modalizableComponentContainer, 'clear').and.callThrough();
+			spyOn(comp.modalizableComponentContainer, 'createComponent').and.callThrough();
 			// tslint:disable-next-line:no-lifecycle-call
 			comp.ngAfterViewInit();
 
-			expect(comp.modalizedComponentContainer.clear).toHaveBeenCalledTimes(1);
-			expect(comp.modalizedComponentContainer.createComponent).toHaveBeenCalledTimes(1);
+			expect(comp.modalizableComponentContainer.clear).toHaveBeenCalledTimes(1);
+			expect(comp.modalizableComponentContainer.createComponent).toHaveBeenCalledTimes(1);
 
 			expect(comp.okSubject).toBeDefined();
 			expect(comp.cancelSubject).toBeDefined();

@@ -10,6 +10,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 @UntilDestroy()
 @Directive()
 export abstract class AbstractModalizableDirective {
+	isModal = false;
+
 	/**
 	 * The ContainerModalComponent will call '.next()' on this subject when the modal's 'ok' button is pressed
 	 */
@@ -49,10 +51,10 @@ export abstract class AbstractModalizableDirective {
 	/**
 	 * Actions to perform when the modal's 'ok' button is pressed
 	 */
-	abstract onOk();
+	abstract onOk(): any;
 
 	/**
 	 * Actions to perform when the modal's 'cancel' button is pressed
 	 */
-	abstract onCancel();
+	abstract onCancel(): any;
 }
