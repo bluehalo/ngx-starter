@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 
-import { AbstractModalizedDirective } from './abstract-modalized.directive';
+import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 
 export enum ModalAction {
 	OK = 0,
@@ -25,8 +25,8 @@ export interface ModalConfig extends BaseModalConfig {
 }
 
 export interface ContainerModalConfig extends BaseModalConfig {
-	modalizedComponent: Type<AbstractModalizedDirective>;
-	modalizedComponentProperties?: any;
+	modalizableComponent: Type<AbstractModalizableDirective>;
+	modalizableComponentProperties?: object;
 }
 
 export interface ModalInput {

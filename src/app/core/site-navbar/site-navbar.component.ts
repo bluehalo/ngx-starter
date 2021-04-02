@@ -105,7 +105,7 @@ export class SiteNavbarComponent implements OnInit {
 			title: 'Give Feedback',
 			okText: 'Submit',
 			cancelText: 'Cancel',
-			modalizedComponent: FeedbackModalComponent
+			modalizableComponent: FeedbackModalComponent
 		});
 	}
 }

@@ -11,7 +11,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { AbstractModalDirective } from '../abstract-modal.directive';
-import { AbstractModalizedDirective } from '../abstract-modalized.directive';
+import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +21,7 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 	@ViewChild('modalizedComponentContainer', { read: ViewContainerRef })
 	modalizedComponentContainer: ViewContainerRef;
 
-	modalizedComponent: Type<AbstractModalizedDirective>;
+	modalizedComponent: Type<AbstractModalizableDirective>;
 
 	modalizedComponentProperties: { [key: string]: any } = {};
 
@@ -67,8 +67,6 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 				console.error(err);
 			}
 		});
-
-		super.ngAfterViewInit();
 	}
 
 	ok() {

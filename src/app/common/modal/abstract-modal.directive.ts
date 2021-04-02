@@ -1,8 +1,7 @@
-import { AfterViewInit, Directive } from '@angular/core';
+import { Directive } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { DOMUtils } from '../dom-utils.service';
 import { ModalAction, ModalCloseEvent } from './modal.model';
 
 /**
@@ -10,7 +9,7 @@ import { ModalAction, ModalCloseEvent } from './modal.model';
  * the class properties and functions common to both.
  */
 @Directive()
-export abstract class AbstractModalDirective implements AfterViewInit {
+export abstract class AbstractModalDirective {
 	/**
 	 * Title to display in the modal header
 	 */
@@ -46,15 +45,5 @@ export abstract class AbstractModalDirective implements AfterViewInit {
 	cancel() {
 		this.modalRef.hide();
 		this.onClose.next({ action: ModalAction.CANCEL });
-	}
-
-	ngAfterViewInit(): void {
-		window.setTimeout(() => {
-			const modalQuerySelector = 'modal-container';
-			if (this.focusFirstElement) {
-				// Focus the third focusable element, as the first is the div itself and the second is the 'Close' button
-				DOMUtils.getFocusableElements(document, modalQuerySelector)[2].focus();
-			}
-		}, 0);
 	}
 }

@@ -3,17 +3,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { DOMUtils } from '../dom-utils.service';
 import { AbstractModalDirective } from './abstract-modal.directive';
 import { ModalAction } from './modal.model';
 
 @UntilDestroy()
 @Component({
 	selector: 'test-modal-component',
-	template: `
-		<button></button>
-		<button></button>
-	`
+	template: ``
 })
 class ConcreteModalComponent extends AbstractModalDirective {}
 
@@ -35,24 +31,6 @@ describe('Abstract Modal Directive', () => {
 	it('should exist and be initialized', () => {
 		fixture.detectChanges();
 		expect(comp).toBeDefined();
-	});
-
-	describe('#ngAfterViewInit', () => {
-		beforeEach(() => {
-			spyOn(window, 'setTimeout').and.callThrough();
-			spyOn(DOMUtils, 'getFocusableElements').and.returnValue(
-				document.querySelectorAll('button')
-			);
-		});
-
-		it('should call DOMUtils.getFocusableElements if focusFirstElement is true', done => {
-			comp.focusFirstElement = true;
-			fixture.detectChanges();
-			setTimeout(() => {
-				expect(DOMUtils.getFocusableElements).toHaveBeenCalledTimes(1);
-				done();
-			}, 0);
-		});
 	});
 
 	describe('#ok', () => {

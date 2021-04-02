@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AbstractModalizedDirective } from '../../../common/modal/abstract-modalized.directive';
+import { AbstractModalizableDirective } from '../../../common/modal/abstract-modalizable.directive';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
@@ -17,7 +17,7 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	templateUrl: 'feedback-modal.component.html'
 })
-export class FeedbackModalComponent extends AbstractModalizedDirective implements OnInit {
+export class FeedbackModalComponent extends AbstractModalizableDirective implements OnInit {
 	@ViewChild('submitFeedbackForm') submitFeedbackForm: FormGroupDirective;
 
 	error: string;

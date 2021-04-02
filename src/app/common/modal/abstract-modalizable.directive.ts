@@ -4,12 +4,12 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 /**
- * The AbstractModalizedDirective is meant to make any component that extends it 'modalized.' Modalized components
- * can be used with the ContainerModalComponent.
+ * The AbstractModalizableDirective is meant to make any component that extends it 'modalizable.' Modalizable components
+ * can be used with the ModalService's showContainerModal to create custom modals.
  */
 @UntilDestroy()
 @Directive()
-export abstract class AbstractModalizedDirective {
+export abstract class AbstractModalizableDirective {
 	/**
 	 * The ContainerModalComponent will call '.next()' on this subject when the modal's 'ok' button is pressed
 	 */
@@ -49,10 +49,10 @@ export abstract class AbstractModalizedDirective {
 	/**
 	 * Actions to perform when the modal's 'ok' button is pressed
 	 */
-	abstract onOk(): any;
+	abstract onOk();
 
 	/**
 	 * Actions to perform when the modal's 'cancel' button is pressed
 	 */
-	abstract onCancel(): any;
+	abstract onCancel();
 }

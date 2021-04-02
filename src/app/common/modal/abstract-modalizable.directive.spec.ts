@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { AbstractModalizedDirective } from './abstract-modalized.directive';
+import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 
 @UntilDestroy()
 @Component({
 	selector: 'test-modalized-component',
 	template: ``
 })
-class ConcreteModalizedComponent extends AbstractModalizedDirective {
+class ConcreteModalizedComponent extends AbstractModalizableDirective {
 	onCancel() {}
 	onOk() {}
 }

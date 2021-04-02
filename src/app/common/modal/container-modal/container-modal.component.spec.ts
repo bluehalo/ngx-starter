@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { AbstractModalizedDirective } from '../abstract-modalized.directive';
+import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 import { ContainerModalComponent } from './container-modal.component';
 
 @UntilDestroy()
@@ -13,7 +13,7 @@ import { ContainerModalComponent } from './container-modal.component';
 		<button></button><button></button>
 	`
 })
-class ConcreteModalizedComponent extends AbstractModalizedDirective {
+class ConcreteModalizedComponent extends AbstractModalizableDirective {
 	onCancel() {}
 	onOk() {}
 }
