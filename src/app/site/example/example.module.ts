@@ -17,6 +17,7 @@ import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 import { ExampleHelpComponent } from './help/example-help.component';
 import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
+import { FormModalComponent } from './modal/form-modal.component';
 import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
@@ -40,6 +41,7 @@ import { WelcomeComponent } from './welcome.component';
 		FormsComponent,
 		GridComponent,
 		AdminExampleComponent,
+		FormModalComponent,
 		ModalComponent,
 		ExampleLoadingOverlayComponent
 	],
