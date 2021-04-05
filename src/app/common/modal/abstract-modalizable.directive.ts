@@ -6,6 +6,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 /**
  * The AbstractModalizableDirective is meant to make any component that extends it 'modalizable.' Modalizable components
  * can be used with the ModalService's showContainerModal to create custom modals.
+ *
+ * Components extending the AbstractModalizableDirective that need to auto-focus a particular element when the modal is
+ * opened should add a cdkFocusInitial attribute to the element to be focused.
  */
 @UntilDestroy()
 @Directive()

@@ -1,4 +1,5 @@
 import {
+	AfterContentChecked,
 	AfterViewInit,
 	Component,
 	ComponentFactoryResolver,
@@ -17,7 +18,8 @@ import { AbstractModalizableDirective } from '../abstract-modalizable.directive'
 @Component({
 	templateUrl: 'container-modal.component.html'
 })
-export class ContainerModalComponent extends AbstractModalDirective implements AfterViewInit {
+export class ContainerModalComponent extends AbstractModalDirective
+	implements AfterViewInit, AfterContentChecked {
 	@ViewChild('modalizableComponentContainer', { read: ViewContainerRef })
 	modalizableComponentContainer: ViewContainerRef;
 
@@ -30,6 +32,8 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 	cancelSubject: Subject<void>;
 
 	isOkDisabled = false;
+
+	isCdkFocusInitial = false;
 
 	constructor(
 		public modalRef: BsModalRef,
@@ -80,5 +84,14 @@ export class ContainerModalComponent extends AbstractModalDirective implements A
 	cancel() {
 		this.cancelSubject.next();
 		super.cancel();
+	}
+
+	ngAfterContentChecked(): void {
+		// If there is a 'cdkFocusInitial' attribute in the document, turn auto-focus on.
+		// If there isn't, leave it off to prevent the cdkTrapFocusAutoCapture from automatically focusing the
+		// first element, which in this component is the 'Close' button.
+		if (document.querySelector('[cdkFocusInitial]')) {
+			this.isCdkFocusInitial = true;
+		}
 	}
 }
