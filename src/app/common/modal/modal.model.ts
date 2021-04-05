@@ -23,9 +23,12 @@ export interface ModalConfig extends BaseModalConfig {
 	inputs?: ModalInput[];
 }
 
-export interface ContainerModalConfig extends BaseModalConfig {
-	modalizableComponent: Type<AbstractModalizableDirective>;
-	modalizableComponentProperties?: object;
+export interface ContainerModalConfig<T extends AbstractModalizableDirective>
+	extends BaseModalConfig {
+	modalizableComponent: Type<T>;
+	modalizableComponentProperties?: {
+		[Property in keyof T]?: unknown;
+	};
 }
 
 export interface ModalInput {

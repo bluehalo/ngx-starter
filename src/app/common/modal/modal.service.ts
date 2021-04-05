@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { ContainerModalComponent } from './container-modal/container-modal.component';
 import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
 import { ModalComponent } from './modal/modal.component';
+import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 
 @Injectable()
 export class ModalService {
@@ -88,15 +89,15 @@ export class ModalService {
 	/**
 	 * The showContainerModal method will display a modal containing any modalized component of your choosing.
 	 */
-	showContainerModal(
-		contentConfig: ContainerModalConfig,
+	showContainerModal<T extends AbstractModalizableDirective>(
+		contentConfig: ContainerModalConfig<T>,
 		modalOptions: ModalOptions = {}
 	): Observable<ModalCloseEvent> {
 		const config = Object.assign(
 			{
 				ignoreBackdropClick: true,
 				keyboard: false,
-				class: 'modal-lg'
+				class: 'modal-dialog-scrollable modal-lg'
 			},
 			modalOptions
 		);
