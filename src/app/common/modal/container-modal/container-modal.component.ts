@@ -16,7 +16,8 @@ import { AbstractModalizableDirective } from '../abstract-modalizable.directive'
 
 @UntilDestroy()
 @Component({
-	templateUrl: 'container-modal.component.html'
+	templateUrl: 'container-modal.component.html',
+	styleUrls: ['container-modal.component.scss']
 })
 export class ContainerModalComponent extends AbstractModalDirective
 	implements AfterViewInit, AfterContentChecked {
