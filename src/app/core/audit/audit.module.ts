@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { DirectivesModule } from '../../common/directives.module';
+import { ModalModule } from '../../common/modal.module';
 import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
@@ -25,7 +26,6 @@ import { AuditViewChangeModalComponent } from './audit-view-change-modal/audit-v
 import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit-view-details-modal.component';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
-import { ModalModule } from '../../common/modal.module';
 
 @NgModule({
 	imports: [

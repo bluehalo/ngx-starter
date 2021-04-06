@@ -5,11 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FlyoutModule } from '../../common/flyout.module';
+import { ModalModule } from '../../common/modal.module';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.component';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
-import { ModalModule } from '../../common/modal.module';
 
 @NgModule({
 	imports: [

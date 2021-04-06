@@ -4,9 +4,9 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AbstractModalizableDirective } from './abstract-modalizable.directive';
+import { ConfigurableModalComponent } from './configurable-modal/configurable-modal.component';
 import { ContainerModalComponent } from './container-modal/container-modal.component';
 import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
-import { ConfigurableModalComponent } from './configurable-modal/configurable-modal.component';
 
 @Injectable()
 export class ModalService {

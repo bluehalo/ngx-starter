@@ -17,13 +17,13 @@ export class ModalComponent {
 	 * Text to display on the modal 'ok' button
 	 */
 	@Input()
-	okText: string = 'OK';
+	okText = 'OK';
 
 	/**
 	 * Text to display on the modal 'cancel' button
 	 */
 	@Input()
-	cancelText: string = 'Cancel';
+	cancelText = 'Cancel';
 
 	@Input()
 	disableOk: boolean;
@@ -32,10 +32,10 @@ export class ModalComponent {
 	autoCaptureFocus: boolean;
 
 	@Output()
-	ok = new EventEmitter();
+	readonly ok = new EventEmitter();
 
 	@Output()
-	cancel = new EventEmitter();
+	readonly cancel = new EventEmitter();
 
 	constructor() {}
 }
