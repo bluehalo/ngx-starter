@@ -1,9 +1,10 @@
 @import 'shared';
 
+$modal-font-size: $ux-h2-font-size !default;
 $modal-header-bg-color: $ux-color-modal-header !default;
 $modal-header-color: $ux-color-white !default;
-$modal-font-size: $ux-h2-font-size !default;
 $modal-header-border-radius-correction: 1px !default;
+$modal-footer-box-shadow: rgba($ux-color-modal-header, 0.5) !default;
 
 .modal-header {
 	@include border-top-radius(
@@ -20,4 +21,8 @@ $modal-header-border-radius-correction: 1px !default;
 
 .modal-close {
 	font-size: $modal-font-size;
+}
+
+.modal-footer {
+	box-shadow: 0px 0px 7px $modal-footer-box-shadow;
 }
