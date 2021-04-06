@@ -3,10 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ModalService } from '../../common/modal.module';
-
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
@@ -85,7 +83,7 @@ describe('Site Navbar Component Spec', () => {
 			],
 			providers: [
 				AuthGuard,
-				ModalService,
+				BsModalService,
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: MessageService, useValue: messageServiceSpy },

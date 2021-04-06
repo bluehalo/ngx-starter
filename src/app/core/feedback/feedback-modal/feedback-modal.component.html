@@ -1,10 +1,25 @@
+<section class="modal-header">
+	<h2 class="modal-title">
+		Give Feedback
+	</h2>
+	<button
+		type="button"
+		class="close"
+		(click)="modalRef.hide()"
+		tooltip="Close"
+		placement="bottom"
+		aria-label="Close"
+	>
+		<span class="fa fa-times" aria-hidden="true"></span>
+	</button>
+</section>
+
 <section class="modal-body">
-	<form #submitFeedbackForm="ngForm" (change)="validateForm()" (keyup)="validateForm()">
+	<form #submitFeedbackForm="ngForm">
 		<h2 class="pb-2">What's on your mind?</h2>
 
 		<div class="form-check pl-0">
 			<input
-				cdkFocusInitial
 				class="form-check-input"
 				type="radio"
 				name="type-option-radio"
@@ -159,4 +174,22 @@
 			</div>
 		</ng-template>
 	</form>
+</section>
+
+<section class="modal-footer">
+	<div *ngIf="error" class="text-danger font-weight-bolder">
+		{{ error }}
+	</div>
+	<div *ngIf="success" class="text-success font-weight-bolder">
+		{{ success }}
+	</div>
+	<button type="button" class="btn btn-link mr-2" (click)="modalRef.hide()">Cancel</button>
+	<button
+		type="button"
+		class="btn btn-primary"
+		[disabled]="submitting || !submitFeedbackForm.form.valid"
+		(click)="submit()"
+	>
+		Submit
+	</button>
 </section>
