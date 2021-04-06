@@ -14,7 +14,7 @@
 	</section>
 
 	<section class="modal-footer">
-		<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel.next()">
+		<button *ngIf="cancelText" class="btn btn-outline-secondary mr-2" (click)="cancel.next()">
 			{{ cancelText }}
 		</button>
 		<button class="btn btn-primary" (click)="ok.next()" [disabled]="disableOk">
