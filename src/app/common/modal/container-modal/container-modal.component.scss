@@ -2,9 +2,9 @@
 
 $box-shadow-color: rgba($ux-color-modal-header, 0.5);
 
-.modal-body {
-	max-height: calc(100vh - 250px);
-	overflow-y: auto;
+:host,
+div[cdkTrapFocus] {
+	display: contents;
 }
 
 .modal-footer {

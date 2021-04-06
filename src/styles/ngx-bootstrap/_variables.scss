@@ -56,6 +56,9 @@ $dropdown-link-hover-bg: $ux-color-light-gray !default;
 $dropdown-item-padding-y: 10px !default;
 $dropdown-item-padding-x: 24px !default;
 
+// Modals
+$modal-dialog-margin-y-sm-up: 3rem !default;
+
 // Popovers
 $popover-bg: #fff !default;
 $popover-border-color: map-get($color-background, 'default') !default;
