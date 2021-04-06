@@ -1,6 +1,6 @@
-@import '../../../../styles/ngx-bootstrap/modal';
+@import '../../../../styles/shared';
 
-$box-shadow-color: rgba($modal-header-bg-color, 0.5);
+$box-shadow-color: rgba($ux-color-modal-header, 0.5);
 
 .modal-body {
 	max-height: calc(100vh - 250px);
