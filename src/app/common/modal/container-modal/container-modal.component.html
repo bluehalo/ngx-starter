@@ -1,0 +1,24 @@
+<div cdkTrapFocus [cdkTrapFocusAutoCapture]="isCdkFocusInitial">
+	<section class="modal-header">
+		<h2 class="modal-title">
+			{{ title }}
+		</h2>
+
+		<button type="button" class="close" aria-label="Cancel" (click)="cancel()">
+			<span class="fa fa-remove" aria-hidden="true"></span>
+		</button>
+	</section>
+
+	<section class="modal-body">
+		<ng-container #modalizableComponentContainer></ng-container>
+	</section>
+
+	<section class="modal-footer">
+		<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">
+			{{ cancelText }}
+		</button>
+		<button class="btn btn-primary" (click)="ok()" [disabled]="isOkDisabled">
+			{{ okText }}
+		</button>
+	</section>
+</div>

@@ -1,28 +1,22 @@
 import { Component } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Subject } from 'rxjs';
-import { ModalAction, ModalCloseEvent, ModalInput } from './modal.model';
+import { AbstractModalDirective } from '../abstract-modal.directive';
+import { ModalAction, ModalCloseEvent, ModalInput } from '../modal.model';
 
 @Component({
 	templateUrl: 'modal.component.html'
 })
-export class ModalComponent {
-	title: string;
-
+export class ModalComponent extends AbstractModalDirective {
 	message: string;
 
 	inputs: ModalInput[];
 
-	okText: string;
-
-	cancelText: string;
-
 	formData: any = {};
 
-	onClose: Subject<ModalCloseEvent> = new Subject();
-
-	constructor(public modalRef: BsModalRef) {}
+	constructor(public modalRef: BsModalRef) {
+		super(modalRef);
+	}
 
 	ok() {
 		this.modalRef.hide();
@@ -31,10 +25,5 @@ export class ModalComponent {
 			event.inputData = this.formData;
 		}
 		this.onClose.next(event);
-	}
-
-	cancel() {
-		this.modalRef.hide();
-		this.onClose.next({ action: ModalAction.CANCEL });
 	}
 }

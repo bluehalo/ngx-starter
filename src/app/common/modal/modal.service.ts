@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModalComponent } from './modal.component';
-import { ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
+import { AbstractModalizableDirective } from './abstract-modalizable.directive';
+import { ContainerModalComponent } from './container-modal/container-modal.component';
+import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
+import { ModalComponent } from './modal/modal.component';
 
 @Injectable()
 export class ModalService {
@@ -66,6 +68,9 @@ export class ModalService {
 		);
 	}
 
+	/**
+	 * The show method will display a modal that can include a message and a form
+	 */
 	show(contentConfig: ModalConfig, modalOptions: ModalOptions = {}): Observable<ModalCloseEvent> {
 		const config = Object.assign(
 			{
@@ -76,10 +81,29 @@ export class ModalService {
 			modalOptions
 		);
 
+		config.initialState = contentConfig;
 		this.modalRef = this.modalService.show(ModalComponent, config);
+		return this.modalRef.content.onClose;
+	}
 
-		Object.assign(this.modalRef.content, contentConfig);
+	/**
+	 * The showContainerModal method will display a modal containing any modalized component of your choosing.
+	 */
+	showContainerModal<T extends AbstractModalizableDirective>(
+		contentConfig: ContainerModalConfig<T>,
+		modalOptions: ModalOptions = {}
+	): Observable<ModalCloseEvent> {
+		const config = Object.assign(
+			{
+				ignoreBackdropClick: true,
+				keyboard: false,
+				class: 'modal-dialog-scrollable modal-lg'
+			},
+			modalOptions
+		);
 
+		config.initialState = contentConfig;
+		this.modalRef = this.modalService.show(ContainerModalComponent, config);
 		return this.modalRef.content.onClose;
 	}
 }

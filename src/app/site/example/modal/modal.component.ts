@@ -5,6 +5,8 @@ import { ModalConfig } from '../../../common/modal/modal.model';
 
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
+import { FormModalComponent } from './form-modal.component';
+
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html'
@@ -71,6 +73,15 @@ export class ModalComponent implements OnInit {
 	showModal() {
 		this.showConfig.inputs = JSON.parse(this.showInputConfig);
 		this.modalService.show(this.showConfig);
+	}
+
+	showComponentModal() {
+		this.modalService.showContainerModal({
+			title: 'Showing My Component',
+			okText: 'Submit',
+			cancelText: 'Cancel',
+			modalizableComponent: FormModalComponent
+		});
 	}
 }
 
