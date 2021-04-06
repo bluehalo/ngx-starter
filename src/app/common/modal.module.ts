@@ -5,16 +5,16 @@ import { FormsModule } from '@angular/forms';
 
 import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
 import { ContainerModalComponent } from './modal/container-modal/container-modal.component';
-import { ModalComponent } from './modal/modal/modal.component';
+import { ConfigurableModalComponent } from './modal/configurable-modal/configurable-modal.component';
 
 @NgModule({
 	imports: [BsModalModule.forRoot(), CommonModule, FormsModule, A11yModule],
-	exports: [ModalComponent],
-	declarations: [ModalComponent, ContainerModalComponent],
+	exports: [ConfigurableModalComponent],
+	declarations: [ConfigurableModalComponent, ContainerModalComponent],
 	providers: []
 })
 export class ModalModule {}
 
-export { ModalComponent } from './modal/modal/modal.component';
+export { ConfigurableModalComponent } from './modal/configurable-modal/configurable-modal.component';
 export { ModalAction } from './modal/modal.model';
 export { ModalService } from './modal/modal.service';

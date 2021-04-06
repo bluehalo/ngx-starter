@@ -3,20 +3,20 @@ import { FormsModule } from '@angular/forms';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalAction } from '../modal.model';
-import { ModalComponent } from './modal.component';
+import { ConfigurableModalComponent } from './configurable-modal.component';
 
 describe('Modal Component', () => {
-	let fixture: ComponentFixture<ModalComponent>;
-	let comp: ModalComponent;
+	let fixture: ComponentFixture<ConfigurableModalComponent>;
+	let comp: ConfigurableModalComponent;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [FormsModule],
-			declarations: [ModalComponent],
+			declarations: [ConfigurableModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 
-		fixture = TestBed.createComponent(ModalComponent);
+		fixture = TestBed.createComponent(ConfigurableModalComponent);
 		comp = fixture.componentInstance;
 	});
 

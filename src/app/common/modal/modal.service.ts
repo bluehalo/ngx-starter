@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 import { ContainerModalComponent } from './container-modal/container-modal.component';
 import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
-import { ModalComponent } from './modal/modal.component';
+import { ConfigurableModalComponent } from './configurable-modal/configurable-modal.component';
 
 @Injectable()
 export class ModalService {
@@ -82,7 +82,7 @@ export class ModalService {
 		);
 
 		config.initialState = contentConfig;
-		this.modalRef = this.modalService.show(ModalComponent, config);
+		this.modalRef = this.modalService.show(ConfigurableModalComponent, config);
 		return this.modalRef.content.onClose;
 	}
 
