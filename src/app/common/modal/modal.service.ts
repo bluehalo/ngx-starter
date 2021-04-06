@@ -76,7 +76,7 @@ export class ModalService {
 			{
 				ignoreBackdropClick: true,
 				keyboard: false,
-				class: 'modal-lg'
+				class: 'modal-dialog-scrollable modal-lg'
 			},
 			modalOptions
 		);

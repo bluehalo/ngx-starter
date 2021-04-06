@@ -5,7 +5,8 @@ import { AbstractModalDirective } from '../abstract-modal.directive';
 import { ModalAction, ModalCloseEvent, ModalInput } from '../modal.model';
 
 @Component({
-	templateUrl: 'configurable-modal.component.html'
+	templateUrl: 'configurable-modal.component.html',
+	styleUrls: ['configurable-modal.component.scss']
 })
 export class ConfigurableModalComponent extends AbstractModalDirective {
 	message: string;
