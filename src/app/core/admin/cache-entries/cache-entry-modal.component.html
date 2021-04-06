@@ -1,20 +1,10 @@
-<section class="modal-header">
-	<h2 class="modal-title">
-		Cache Entry Details
-	</h2>
-	<button
-		type="button"
-		class="close"
-		(click)="modalRef.hide()"
-		tooltip="Close"
-		placement="bottom"
-		aria-label="Close"
-	>
-		<span class="fa fa-times" aria-hidden="true"></span>
-	</button>
-</section>
-
-<section class="modal-body">
+<asy-modal
+	title="Cache Entry Details"
+	okText="Close"
+	cancelText=""
+	(cancel)="modalRef.hide()"
+	(ok)="modalRef.hide()"
+>
 	<div class="row">
 		<div class="col-md-12">
 			<label>Key</label>
@@ -27,11 +17,4 @@
 			<pre>{{ cacheEntry?.value | json }}</pre>
 		</div>
 	</div>
-</section>
-
-<section class="modal-footer">
-	<button class="btn btn-outline-secondary" (click)="modalRef.hide()">
-		<span class="fa fa-times"></span>
-		Close
-	</button>
-</section>
+</asy-modal>

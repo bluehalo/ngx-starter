@@ -4,7 +4,14 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CacheEntry } from './cache-entry.model';
 
 @Component({
-	templateUrl: 'cache-entry-modal.component.html'
+	templateUrl: 'cache-entry-modal.component.html',
+	styles: [
+		`
+			:host {
+				display: contents;
+			}
+		`
+	]
 })
 export class CacheEntryModalComponent {
 	cacheEntry: CacheEntry;

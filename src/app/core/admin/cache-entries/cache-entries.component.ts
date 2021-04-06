@@ -98,7 +98,7 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 	viewCacheEntry(cacheEntry: CacheEntry) {
 		const cacheEntryModalRef = this.bsModalService.show(CacheEntryModalComponent, {
 			ignoreBackdropClick: true,
-			class: 'modal-lg'
+			class: 'modal-dialog-scrollable modal-lg'
 		});
 		cacheEntryModalRef.content.cacheEntry = cacheEntry;
 	}
