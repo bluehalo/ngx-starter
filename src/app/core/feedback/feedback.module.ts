@@ -9,9 +9,17 @@ import { FlyoutModule } from '../../common/flyout.module';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FeedbackFlyoutComponent } from './feedback-flyout/feedback-flyout.component';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
+import { ModalModule } from '../../common/modal.module';
 
 @NgModule({
-	imports: [TooltipModule.forRoot(), NgSelectModule, CommonModule, FormsModule, FlyoutModule],
+	imports: [
+		TooltipModule.forRoot(),
+		NgSelectModule,
+		CommonModule,
+		FormsModule,
+		FlyoutModule,
+		ModalModule
+	],
 	exports: [FeedbackModalComponent, FeedbackFlyoutComponent],
 	declarations: [FeedbackModalComponent, FeedbackFlyoutComponent]
 })

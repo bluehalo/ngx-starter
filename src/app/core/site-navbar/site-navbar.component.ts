@@ -103,7 +103,7 @@ export class SiteNavbarComponent implements OnInit {
 	showFeedbackModal() {
 		this.modalService.show(FeedbackModalComponent, {
 			ignoreBackdropClick: true,
-			class: 'modal-lg'
+			class: 'modal-dialog-scrollable modal-lg'
 		});
 	}
 }
