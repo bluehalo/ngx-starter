@@ -10,7 +10,7 @@ import { PipesModule } from '../../common/pipes.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import {
 	AuditObjectComponent,
@@ -25,11 +25,12 @@ import { AuditViewChangeModalComponent } from './audit-view-change-modal/audit-v
 import { AuditViewDetailsModalComponent } from './audit-view-details-modal/audit-view-details-modal.component';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
+import { ModalModule } from '../../common/modal.module';
 
 @NgModule({
 	imports: [
 		BsDatepickerModule.forRoot(),
-		ModalModule.forRoot(),
+		BsModalModule.forRoot(),
 		TypeaheadModule.forRoot(),
 		NgSelectModule,
 
@@ -39,7 +40,8 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 		FormsModule,
 		PagingModule,
 		PipesModule,
-		SystemAlertModule
+		SystemAlertModule,
+		ModalModule
 	],
 	exports: [],
 	declarations: [

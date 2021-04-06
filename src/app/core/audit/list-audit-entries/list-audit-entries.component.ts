@@ -169,14 +169,14 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			case 'viewDetails':
 				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, {
 					ignoreBackdropClick: true,
-					class: 'modal-lg'
+					class: 'modal-dialog-scrollable modal-lg'
 				});
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			case 'viewChanges':
 				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, {
 					ignoreBackdropClick: true,
-					class: 'modal-lg'
+					class: 'modal-dialog-scrollable modal-lg'
 				});
 				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
