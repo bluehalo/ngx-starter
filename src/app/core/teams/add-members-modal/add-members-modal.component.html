@@ -1,20 +1,11 @@
-<section class="modal-header">
-	<h2 class="modal-title">
-		Add Team Members
-	</h2>
-	<button
-		type="button"
-		class="close"
-		(click)="modalRef.hide()"
-		tooltip="Close"
-		placement="bottom"
-		aria-label="Close"
-	>
-		<span class="fa fa-times" aria-hidden="true"></span>
-	</button>
-</section>
-
-<section class="modal-body">
+<asy-modal
+	title="Add Team Members"
+	okText="Add Users"
+	(ok)="submit()"
+	(cancel)="modalRef.hide()"
+	[disableOk]="submitting || addedMembers.length === 0"
+	[autoCaptureFocus]="true"
+>
 	<h3>Add users</h3>
 	<div class="form-group">
 		<ng-select
@@ -25,7 +16,9 @@
 			[loading]="usersLoading"
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"
+			appendTo="body"
 			#selectDropdown
+			cdkFocusInitial
 		>
 			<ng-template ng-label-tmp let-item="item"> </ng-template>
 		</ng-select>
@@ -82,16 +75,4 @@
 			</tbody>
 		</table>
 	</ng-container>
-</section>
-
-<section class="modal-footer">
-	<button type="button" class="btn btn-link" (click)="modalRef.hide()">Cancel</button>
-	<button
-		type="button"
-		class="btn btn-primary"
-		[disabled]="addedMembers.length === 0 || submitting"
-		(click)="submit()"
-	>
-		Add Users
-	</button>
-</section>
+</asy-modal>

@@ -122,7 +122,10 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	}
 
 	addMembers() {
-		this.modalRef = this.bsModalService.show(AddMembersModalComponent);
+		this.modalRef = this.bsModalService.show(AddMembersModalComponent, {
+			ignoreBackdropClick: true,
+			class: 'modal-dialog-scrollable modal-lg'
+		});
 		this.modalRef.content.teamId = this.team._id;
 		this.modalRef.content.usersAdded
 			.pipe(untilDestroyed(this))
