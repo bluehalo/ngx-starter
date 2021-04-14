@@ -5,12 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { DirectivesModule } from '../../common/directives.module';
+import { ModalModule } from '../../common/modal.module';
 import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import {
 	AuditObjectComponent,
@@ -29,7 +30,7 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 @NgModule({
 	imports: [
 		BsDatepickerModule.forRoot(),
-		ModalModule.forRoot(),
+		BsModalModule.forRoot(),
 		TypeaheadModule.forRoot(),
 		NgSelectModule,
 
@@ -39,7 +40,8 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 		FormsModule,
 		PagingModule,
 		PipesModule,
-		SystemAlertModule
+		SystemAlertModule,
+		ModalModule
 	],
 	exports: [],
 	declarations: [

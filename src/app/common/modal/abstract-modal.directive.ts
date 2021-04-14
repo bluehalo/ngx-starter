@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { ModalAction, ModalCloseEvent } from './modal.model';
 
 /**
- * The AbstractModalDirective serves as the base for the ModalComponent and ContainerModalComponent and contains
+ * The AbstractModalDirective serves as the base for the ConfigurableModalComponent and ContainerModalComponent and contains
  * the class properties and functions common to both.
  */
 @Directive()

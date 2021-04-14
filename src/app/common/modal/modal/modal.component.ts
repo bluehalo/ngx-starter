@@ -1,29 +1,41 @@
-import { Component } from '@angular/core';
-
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { AbstractModalDirective } from '../abstract-modal.directive';
-import { ModalAction, ModalCloseEvent, ModalInput } from '../modal.model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-	templateUrl: 'modal.component.html'
+	selector: 'asy-modal',
+	templateUrl: './modal.component.html',
+	styleUrls: ['./modal.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModalComponent extends AbstractModalDirective {
-	message: string;
+export class ModalComponent {
+	/**
+	 * Title to display in the modal header
+	 */
+	@Input()
+	title: string;
 
-	inputs: ModalInput[];
+	/**
+	 * Text to display on the modal 'ok' button
+	 */
+	@Input()
+	okText = 'OK';
 
-	formData: any = {};
+	/**
+	 * Text to display on the modal 'cancel' button
+	 */
+	@Input()
+	cancelText = 'Cancel';
 
-	constructor(public modalRef: BsModalRef) {
-		super(modalRef);
-	}
+	@Input()
+	disableOk: boolean;
 
-	ok() {
-		this.modalRef.hide();
-		const event: ModalCloseEvent = { action: ModalAction.OK };
-		if (this.inputs) {
-			event.inputData = this.formData;
-		}
-		this.onClose.next(event);
-	}
+	@Input()
+	autoCaptureFocus: boolean;
+
+	@Output()
+	readonly ok = new EventEmitter();
+
+	@Output()
+	readonly cancel = new EventEmitter();
+
+	constructor() {}
 }

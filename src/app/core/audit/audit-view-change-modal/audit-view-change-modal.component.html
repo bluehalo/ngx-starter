@@ -1,24 +1,12 @@
-<div class="modal-header">
-	<h3>
-		<span
-			>Changes to {{ auditEntry?.audit?.auditType }} by
-			{{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}</span
-		>
-		<span class="pull-right">
-			<a
-				class="btn-icon no-href"
-				(click)="modalRef.hide()"
-				tooltip="Close"
-				placement="bottom"
-				container="body"
-			>
-				<span class="fa fa-times"></span>
-			</a>
-		</span>
-	</h3>
-</div>
-
-<div class="modal-body">
+<asy-modal
+	title="Changes to {{ auditEntry?.audit?.auditType }} by {{
+		auditEntry?.audit?.actor?.username
+	}} on {{ auditEntry?.created | utcDate }}"
+	okText="Close"
+	cancelText=""
+	(ok)="modalRef.hide()"
+	(cancel)="modalRef.hide()"
+>
 	<div class="row">
 		<div class="col-md-6">
 			<h4>Before</h4>
@@ -29,8 +17,4 @@
 			<pre>{{ auditEntry?.audit?.object?.after | sortObjectKeys | json }}</pre>
 		</div>
 	</div>
-</div>
-
-<div class="modal-footer">
-	<button class="btn btn-link" (click)="modalRef.hide()">Close</button>
-</div>
+</asy-modal>

@@ -1,48 +1,23 @@
-<div role="dialog">
+<div cdkTrapFocus [cdkTrapFocusAutoCapture]="autoCaptureFocus">
 	<section class="modal-header">
 		<h2 class="modal-title">
 			{{ title }}
 		</h2>
 
-		<button type="button" class="close" aria-label="Cancel" (click)="cancel()">
+		<button type="button" class="close" aria-label="Cancel" (click)="cancel.next()">
 			<span class="fa fa-remove" aria-hidden="true"></span>
 		</button>
 	</section>
 
-	<section class="modal-body max-window-height-overflow">
-		<p *ngIf="message" [innerHTML]="message"></p>
-		<form id="modalForm" #modalForm="ngForm">
-			<div class="form-group" *ngFor="let input of inputs">
-				<label [class.form-required]="input.required">{{ input.label }}</label>
-
-				<textarea
-					class="form-control text-area"
-					*ngIf="input.type === 'textarea'"
-					placeholder="Enter {{ input.label }}..."
-					[name]="input.key"
-					[required]="input.required"
-					[(ngModel)]="formData[input.key]"
-				>
-				</textarea>
-
-				<input
-					class="form-control"
-					*ngIf="input.type !== 'textarea'"
-					placeholder="Enter {{ input.label | lowercase }}..."
-					[type]="input.type"
-					[name]="input.key"
-					[required]="input.required"
-					[(ngModel)]="formData[input.key]"
-				/>
-			</div>
-		</form>
+	<section class="modal-body">
+		<ng-content></ng-content>
 	</section>
 
 	<section class="modal-footer">
-		<button *ngIf="cancelText" class="btn btn-link mr-2" (click)="cancel()">
+		<button *ngIf="cancelText" class="btn btn-outline-secondary mr-2" (click)="cancel.next()">
 			{{ cancelText }}
 		</button>
-		<button class="btn btn-primary" (click)="ok()" [disabled]="!modalForm.form.valid">
+		<button class="btn btn-primary" (click)="ok.next()" [disabled]="disableOk">
 			{{ okText }}
 		</button>
 	</section>

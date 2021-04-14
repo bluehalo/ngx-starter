@@ -15,7 +15,14 @@ import { AddedMember, TeamsService } from '../teams.service';
 @UntilDestroy()
 @Component({
 	selector: 'app-add-members-modal',
-	templateUrl: './add-members-modal.component.html'
+	templateUrl: './add-members-modal.component.html',
+	styles: [
+		`
+			:host {
+				display: contents;
+			}
+		`
+	]
 })
 export class AddMembersModalComponent implements OnInit {
 	@Input() teamId: string;

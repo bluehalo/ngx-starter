@@ -12,7 +12,8 @@ import { FeedbackService } from '../feedback.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: 'feedback-modal.component.html'
+	templateUrl: 'feedback-modal.component.html',
+	styleUrls: ['feedback-modal.component.scss']
 })
 export class FeedbackModalComponent implements OnInit {
 	error: string;
