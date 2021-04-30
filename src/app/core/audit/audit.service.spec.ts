@@ -56,7 +56,7 @@ describe('Audit Service', () => {
 				expect(actual).toBe(results);
 			});
 
-			const req = httpMock.expectOne('api/audit?page=2&size=50&sort=null&dir=null');
+			const req = httpMock.expectOne('api/audit?page=2&size=50');
 			expect(req.request.method).toBe('POST');
 			expect(req.request.body).toEqual({
 				q: { actor: 'test' },
@@ -87,7 +87,7 @@ describe('Audit Service', () => {
 				expect(actual).toEqual(expectedResults);
 			});
 
-			const req = httpMock.expectOne('api/users/match?page=2&size=50&sort=null&dir=null');
+			const req = httpMock.expectOne('api/users/match?page=2&size=50');
 			expect(req.request.method).toBe('POST');
 			expect(req.request.body).toEqual({
 				q: query,

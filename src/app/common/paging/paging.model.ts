@@ -58,8 +58,8 @@ export class PagingOptions {
 		return {
 			page: this.pageNumber,
 			size: this.pageSize,
-			sort: this.sortField || null,
-			dir: this.sortDir || null
+			...(this.sortField && { sort: this.sortField }),
+			...(this.sortDir && { dir: this.sortDir })
 		};
 	}
 }
