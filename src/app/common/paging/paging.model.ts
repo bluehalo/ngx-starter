@@ -59,7 +59,7 @@ export class PagingOptions {
 			page: this.pageNumber,
 			size: this.pageSize,
 			...(this.sortField && { sort: this.sortField }),
-			...(this.sortDir && { sort: this.sortDir })
+			...(this.sortDir && { dir: this.sortDir })
 		};
 	}
 }
