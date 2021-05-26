@@ -6,11 +6,11 @@ import { AdminComponent } from '../../common/admin.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
 
 import { AdminExampleComponent } from './admin/admin-example.component';
+import { AlertsComponent } from './alerts/alerts.component';
 import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
-import { AlertsComponent } from './alerts/alerts.component';
 import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
