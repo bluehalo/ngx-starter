@@ -10,6 +10,7 @@ import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
+import { AlertsComponent } from './alerts/alerts.component';
 import { ModalComponent } from './modal/modal.component';
 import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
@@ -55,6 +56,11 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'loading-overlay',
 				component: ExampleLoadingOverlayComponent,
+				canActivate: [AuthGuard]
+			},
+			{
+				path: 'alerts',
+				component: AlertsComponent,
 				canActivate: [AuthGuard]
 			},
 			{
