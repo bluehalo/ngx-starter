@@ -1,7 +1,7 @@
 @import '../../../styles/overrides';
 @import '../../../styles/shared';
 
-.alert {
+:host ::ng-deep .alert {
 	.alert-icon {
 		margin-left: -5px;
 		margin-right: 5px;
