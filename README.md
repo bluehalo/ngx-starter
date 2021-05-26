@@ -54,8 +54,10 @@ When running the development server, all requests to `api/*` are proxied to `loc
 
 ### Proxy Config with PKI
 To configure the development server for PKI mode, you can proxy the back-end requests through nginx.
+
 To do this, configure nginx to listen on port 3000 and proxy requests through to your REST API.
-You can configure nginx to hardcode append the `X-SSL-Client-S-DN` header for all requests so you don't actually have to use PKI in the browser.
+
+You can configure nginx to hardcode append the `X-SSL-Client-S-DN` header for all requests so you don't actually have to use PKI in the browser. For example, the value of this header is configurable through the `proxyPkiPrimaryUserHeader` property in the [Node REST Starter API](https://github.com/Asymmetrik/node-rest-starter).
 
 ```
 # Cluster Definition
