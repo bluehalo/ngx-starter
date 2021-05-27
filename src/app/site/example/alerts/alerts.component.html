@@ -1,2 +1,30 @@
-<h1>System Alerts</h1>
-<system-alert></system-alert>
+<div class="container">
+	<h1>System Alerts</h1>
+	<div class="row">
+		<div class="col-md-3">
+			<button class="mr-3 btn btn-primary" (click)="addAlert('Success', 'success')">
+				Success
+			</button>
+		</div>
+		<div class="col-md-3">
+			<button class="mr-3 btn btn-primary" (click)="addAlert('Danger', 'danger')">
+				Danger
+			</button>
+		</div>
+		<div class="col-md-3">
+			<button class="mr-3 btn btn-primary" (click)="addAlert('Warning', 'warning')">
+				Warning
+			</button>
+		</div>
+		<div class="col-md-3">
+			<button class="mr-3 btn btn-primary" (click)="addAlert('Info', 'info')">
+				Info
+			</button>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-12">
+			<system-alert></system-alert>
+		</div>
+	</div>
+</div>

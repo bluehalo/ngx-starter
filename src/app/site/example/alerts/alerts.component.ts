@@ -13,9 +13,14 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 export class AlertsComponent implements OnInit {
 	constructor(public alertService: SystemAlertService) {}
 	ngOnInit(): void {
+		this.alertService.clearAllAlerts();
 		this.alertService.addAlert('Success', 'success');
 		this.alertService.addAlert('Danger', 'danger');
 		this.alertService.addAlert('Warning', 'warning');
+	}
+
+	addAlert(msg: string, type: string): void {
+		this.alertService.addAlert(msg, type);
 	}
 }
 
