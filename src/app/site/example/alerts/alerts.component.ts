@@ -17,6 +17,7 @@ export class AlertsComponent implements OnInit {
 		this.alertService.addAlert('Success', 'success');
 		this.alertService.addAlert('Danger', 'danger');
 		this.alertService.addAlert('Warning', 'warning');
+		this.alertService.addAlert('Info', 'info');
 	}
 
 	addAlert(msg: string, type: string): void {

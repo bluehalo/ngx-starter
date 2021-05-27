@@ -54,6 +54,17 @@
 		}
 	}
 
+	&.alert-info {
+		@include border($ux-color-alert-notification, 2px, 3px);
+		background: $ux-color-white;
+
+		.alert-icon {
+			.fa-fw {
+				color: $ux-color-alert-notification;
+			}
+		}
+	}
+
 	button {
 		&.close {
 			color: $ux-color-body-text;
