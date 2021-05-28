@@ -1,7 +1,7 @@
 @import '../../../styles/overrides';
 @import '../../../styles/shared';
 
-.alert {
+:host ::ng-deep .alert {
 	.alert-icon {
 		margin-left: -5px;
 		margin-right: 5px;
@@ -54,10 +54,22 @@
 		}
 	}
 
+	&.alert-info {
+		@include border($ux-color-alert-notification, 2px, 3px);
+		background: $ux-color-white;
+
+		.alert-icon {
+			.fa-fw {
+				color: $ux-color-alert-notification;
+			}
+		}
+	}
+
 	button {
 		&.close {
 			color: $ux-color-body-text;
 			opacity: 1;
+			padding: 1rem 1.25rem;
 		}
 	}
 }

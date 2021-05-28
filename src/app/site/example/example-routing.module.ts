@@ -6,6 +6,7 @@ import { AdminComponent } from '../../common/admin.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
 
 import { AdminExampleComponent } from './admin/admin-example.component';
+import { AlertsComponent } from './alerts/alerts.component';
 import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
@@ -55,6 +56,11 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'loading-overlay',
 				component: ExampleLoadingOverlayComponent,
+				canActivate: [AuthGuard]
+			},
+			{
+				path: 'alerts',
+				component: AlertsComponent,
 				canActivate: [AuthGuard]
 			},
 			{
