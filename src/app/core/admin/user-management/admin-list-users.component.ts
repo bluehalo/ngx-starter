@@ -17,8 +17,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
-import { Session } from '../../auth/session.model';
-import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
@@ -101,26 +99,17 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 	private requiredExternalRoles: string[];
 
-	session: Session;
-
 	constructor(
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService,
-		private sessionService: SessionService
+		private alertService: SystemAlertService
 	) {
 		super();
 	}
 
 	ngOnInit() {
-		this.sessionService
-			.getSession()
-			.pipe(untilDestroyed(this))
-			.subscribe(session => {
-				this.session = session;
-			});
 		this.reload();
 		super.ngOnInit();
 	}
@@ -170,8 +159,14 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 	confirmDeleteUser(user: User) {
 		const id = user.userModel._id;
-		this.adminUsersService.removeUser(id);
-		this.reload();
+		this.adminUsersService.removeUser(id).subscribe({
+			next: data => {
+				this.reload();
+			},
+			error: error => {
+				console.error('There was an error!', error);
+			}
+		});
 	}
 
 	exportUserData() {
