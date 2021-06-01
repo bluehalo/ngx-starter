@@ -17,6 +17,8 @@ import cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
+import { Session } from '../../auth/session.model';
+import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
@@ -99,17 +101,31 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 	private requiredExternalRoles: string[];
 
+	session: Session;
+
 	constructor(
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService
+		private alertService: SystemAlertService,
+		private sessionService: SessionService
 	) {
 		super();
 	}
 
 	ngOnInit() {
+		this.sessionService
+			.getSession()
+			.pipe(untilDestroyed(this))
+			.subscribe(session => {
+				this.session = session;
+			});
+		this.reload();
+		super.ngOnInit();
+	}
+
+	reload() {
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			// Clear any alerts
 			this.alertService.clearAllAlerts();
@@ -150,15 +166,12 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
-		super.ngOnInit();
 	}
 
 	confirmDeleteUser(user: User) {
 		const id = user.userModel._id;
-		const username = user.userModel.username;
-
-		console.error('Delete User not yet implemented.');
+		this.adminUsersService.removeUser(id);
+		this.reload();
 	}
 
 	exportUserData() {

@@ -9,6 +9,7 @@ import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
 import { Role } from '../../auth/role.model';
+import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
@@ -20,6 +21,7 @@ describe('Admin List Users Component Spec', () => {
 	let configServiceSpy: any;
 	let exportConfigServiceSpy: any;
 	let exportResponseId: string;
+	let sessionServiceSpy: any;
 
 	const mockUsers: PagingResults<User> = {
 		elements: [],
@@ -77,6 +79,11 @@ describe('Admin List Users Component Spec', () => {
 			})
 		);
 
+		sessionServiceSpy = jasmine.createSpyObj('SessionService', ['getSession']);
+		sessionServiceSpy.getSession.and.returnValue(
+			of({ user: { userModel: { username: 'fakeUser', name: 'Fake User' } } })
+		);
+
 		TestBed.configureTestingModule({
 			declarations: [AdminListUsersComponent],
 			imports: [
@@ -91,7 +98,8 @@ describe('Admin List Users Component Spec', () => {
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
-				{ provide: ExportConfigService, useValue: exportConfigServiceSpy }
+				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
+				{ provide: SessionService, useValue: sessionServiceSpy }
 			]
 		});
 

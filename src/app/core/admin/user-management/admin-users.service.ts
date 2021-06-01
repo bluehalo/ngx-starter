@@ -46,7 +46,12 @@ export class AdminUsersService {
 	}
 
 	removeUser(id: string) {
-		return this.http.delete(`api/admin/user/${id}`);
+		return this.http.delete(`api/admin/user/${id}`).subscribe({
+			next: data => {},
+			error: error => {
+				console.error('There was an error!', error);
+			}
+		});
 	}
 
 	getAll(query: any, field: string) {

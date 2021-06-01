@@ -149,7 +149,10 @@
 									>
 								</li>
 								<li>
-									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
+									<a
+										*ngIf="user.userModel.name != this.session.name"
+										class="dropdown-item"
+										(click)="confirmDeleteUser(user)"
 										>Delete</a
 									>
 								</li>
