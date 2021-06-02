@@ -175,13 +175,13 @@
 
 ::ng-deep .popover.site-nav-popover-container {
 	width: 192px;
-	z-index: 20001;
+	z-index: 10001;
 }
 
 ::ng-deep .popover.site-nav-popover-container-messages {
 	width: 298px;
 	max-width: 298px;
-	z-index: 20001;
+	z-index: 10001;
 
 	.popover-menu {
 		li {
