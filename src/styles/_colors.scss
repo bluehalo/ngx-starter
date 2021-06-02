@@ -1,11 +1,13 @@
 @import './palettes';
+@import './overrides/colors';
 
 //==================================
 // Theme Colors
 //==================================
 $color-primary: mat-palette($palette-primary) !default;
-$color-accent: mat-palette($palette-teal, 500, 300, A400) !default;
+$color-accent: mat-palette($palette-teal, 500, 300, 50, A400) !default;
 $color-background: mat-palette($palette-gray, 200, 50, A200, 800, 900) !default;
+$color-blue: mat-palette($palette-blue) !default;
 
 //==================================
 // Status Colors

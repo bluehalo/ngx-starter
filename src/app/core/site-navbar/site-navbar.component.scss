@@ -77,6 +77,7 @@
 			&.active-link {
 				background-color: $nav-element-active-background-color;
 				border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
+				color: $nav-element-active-color;
 
 				> span.fa {
 					margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
@@ -174,13 +175,13 @@
 
 ::ng-deep .popover.site-nav-popover-container {
 	width: 192px;
-	z-index: 10001;
+	z-index: 20001;
 }
 
 ::ng-deep .popover.site-nav-popover-container-messages {
 	width: 298px;
 	max-width: 298px;
-	z-index: 10001;
+	z-index: 20001;
 
 	.popover-menu {
 		li {
