@@ -1,5 +1,5 @@
-$color-black: #000;
-$color-white: #fff;
+$color-black: #000 !default;
+$color-white: #fff !default;
 
 //==================================
 // Custom Palettes
@@ -36,7 +36,7 @@ $palette-primary: (
 		A400: $color-white,
 		A700: $color-white
 	)
-);
+) !default;
 
 //==================================
 // Default Palettes
@@ -73,7 +73,7 @@ $palette-gray: (
 		A400: $color-black,
 		A700: $color-white
 	)
-);
+) !default;
 
 $palette-red: (
 	50: #f7e3e9,
@@ -106,7 +106,7 @@ $palette-red: (
 		A400: $color-black,
 		A700: $color-white
 	)
-);
+) !default;
 
 $palette-yellow: (
 	50: #fff8e1,
@@ -139,7 +139,7 @@ $palette-yellow: (
 		A400: $color-black,
 		A700: $color-black
 	)
-);
+) !default;
 
 $palette-green: (
 	50: #f1f8e9,
@@ -172,7 +172,7 @@ $palette-green: (
 		A400: $color-black,
 		A700: $color-black
 	)
-);
+) !default;
 
 $palette-teal: (
 	50: #e4f8f9,
@@ -205,7 +205,7 @@ $palette-teal: (
 		A400: $color-black,
 		A700: $color-black
 	)
-);
+) !default;
 
 $palette-blue: (
 	50: #e1f5fe,
@@ -238,7 +238,7 @@ $palette-blue: (
 		A400: $color-black,
 		A700: $color-white
 	)
-);
+) !default;
 
 //==================================
 // Color Helper Methods
