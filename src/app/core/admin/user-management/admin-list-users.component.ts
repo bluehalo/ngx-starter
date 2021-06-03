@@ -110,11 +110,6 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	ngOnInit() {
-		this.reload();
-		super.ngOnInit();
-	}
-
-	reload() {
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			// Clear any alerts
 			this.alertService.clearAllAlerts();
@@ -155,16 +150,17 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
+		super.ngOnInit();
 	}
 
 	confirmDeleteUser(user: User) {
 		const id = user.userModel._id;
 		this.adminUsersService.removeUser(id).subscribe({
 			next: data => {
-				this.reload();
+				this.load$.next(true);
 			},
 			error: error => {
-				console.error('There was an error!', error);
+				this.alertService.addClientErrorAlert(error);
 			}
 		});
 	}
