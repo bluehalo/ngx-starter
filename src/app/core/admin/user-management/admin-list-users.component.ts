@@ -150,15 +150,19 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			});
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
 		super.ngOnInit();
 	}
 
 	confirmDeleteUser(user: User) {
 		const id = user.userModel._id;
-		const username = user.userModel.username;
-
-		console.error('Delete User not yet implemented.');
+		this.adminUsersService.removeUser(id).subscribe({
+			next: data => {
+				this.load$.next(true);
+			},
+			error: error => {
+				this.alertService.addClientErrorAlert(error);
+			}
+		});
 	}
 
 	exportUserData() {
