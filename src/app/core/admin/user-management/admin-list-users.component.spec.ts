@@ -53,7 +53,6 @@ describe('Admin List Users Component Spec', () => {
 
 	const clickExportButton = async () => {
 		const exportButtonElement = rootHTMLElement.querySelector('span.fa-download').parentElement;
-		// console.log(exportButtonElement);
 		expect(exportButtonElement.textContent.trim()).toEqual('Export');
 		exportButtonElement.click();
 		fixture.detectChanges();
