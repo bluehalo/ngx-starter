@@ -55,15 +55,9 @@
 					<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
 						<span class="fa fa-user-plus"></span> Create User
 					</button>
-					<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
-						<span class="fa fa-arrow-up"></span> Create User
-					</button>
 				</ng-template>
 
 				<ng-template #tableHeader>
-					<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
-						<span class="fa fa-arrow-down"></span> Create User
-					</button>
 					<th scope="col" *ngFor="let header of headersToShow">
 						<sortable-table-header
 							[header]="header"
@@ -76,9 +70,6 @@
 				</ng-template>
 
 				<ng-template #tableRow let-user="item" let-i="index">
-					<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
-						<span class="fa fa-angle-right"></span> Create User
-					</button>
 					<td [hidden]="!columns.name.show">{{ user.userModel.name }}</td>
 					<td
 						[hidden]="!columns.username.show"
