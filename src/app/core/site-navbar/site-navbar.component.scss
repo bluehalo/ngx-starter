@@ -75,7 +75,8 @@
 
 			&.active-link {
 				background-color: $nav-element-active-background-color;
-				border-left: $nav-element-active-indicator-width solid $nav-element-active-color;
+				border-left: $nav-element-active-indicator-width solid
+					$nav-element-active-border-color;
 				color: $nav-element-active-color;
 
 				> span.fa {
