@@ -1,5 +1,6 @@
-import { PageTitleService } from './page-title.service';
 import { Router } from '@angular/router';
+
+import { PageTitleService } from './page-title.service';
 
 describe('PageTitleService', () => {
 	describe('generatePathTitle', () => {

@@ -16,7 +16,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	pageNumber = 0;
 	messages: Message[] = [];
 	loadMore = true;
-	search: string = '';
+	search = '';
 	newMessages = false;
 	messageType = MessageType;
 

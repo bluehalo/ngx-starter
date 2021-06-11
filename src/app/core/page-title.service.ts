@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import capitalize from 'lodash/capitalize';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-
 import { ConfigService } from './config.service';
 
 @UntilDestroy()
