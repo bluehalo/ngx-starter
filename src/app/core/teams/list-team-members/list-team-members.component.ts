@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
@@ -34,7 +34,7 @@ import { TeamsService } from '../teams.service';
 	templateUrl: './list-team-members.component.html'
 })
 export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
-	implements OnDestroy, OnInit {
+	implements OnChanges, OnDestroy, OnInit {
 	@Input()
 	team: Team;
 
@@ -107,6 +107,12 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		this.headersToShow = this.headers
 			.filter(header => this.canManageTeam || header.sortField !== 'remove')
 			.filter(header => this.team.implicitMembers || header.name !== 'Explicit');
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes.team) {
+			this.load$.next(true);
+		}
 	}
 
 	ngOnDestroy(): void {
