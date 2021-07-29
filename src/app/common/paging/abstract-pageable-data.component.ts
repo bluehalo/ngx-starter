@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 
 import { untilDestroyed } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
@@ -7,6 +7,7 @@ import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 import { PageChange, PagingOptions, PagingResults } from './paging.model';
 import { SortChange } from './sorting.model';
 
+@Directive()
 export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 	items: T[] = [];
 	hasItems = false;
@@ -30,7 +31,7 @@ export abstract class AbstractPageableDataComponent<T = any> implements OnInit {
 
 	filterEvent$: BehaviorSubject<any> = new BehaviorSubject({});
 
-	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>(this.search);
+	searchEvent$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 	load$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 

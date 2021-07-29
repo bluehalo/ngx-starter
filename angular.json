@@ -34,11 +34,15 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "socket.io-client"
+            ],
             "outputPath": "dist/ngx-starter",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -95,7 +99,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "tsConfig": "./src/tsconfig-es5.app.json"
+              "tsConfig": "tsconfig-es5.app.json"
             }
           }
         },
@@ -124,8 +128,8 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -142,8 +146,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -172,7 +176,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
+            "tsConfig": "e2e/tsconfig.json",
             "exclude": [
               "**/node_modules/**"
             ]

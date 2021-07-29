@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter } from '@angular/core';
-import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, tick, waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -160,29 +160,32 @@ describe('SearchInputComponent', () => {
 		expect(fixture.debugElement.queryAll(By.css('span.icon.fa-times')).length).toBe(0);
 	});
 
-	it('should clear the search when the clearSearch span is clicked', async(() => {
-		const clearSearchSpy = spyOn(componentInstance, 'clearSearch').and.callThrough();
+	it(
+		'should clear the search when the clearSearch span is clicked',
+		waitForAsync(() => {
+			const clearSearchSpy = spyOn(componentInstance, 'clearSearch').and.callThrough();
 
-		inputElement.nativeElement.value = 'search';
-		inputElement.nativeElement.dispatchEvent(new Event('input'));
-		fixture.detectChanges();
+			inputElement.nativeElement.value = 'search';
+			inputElement.nativeElement.dispatchEvent(new Event('input'));
+			fixture.detectChanges();
 
-		// click the clear-search option
-		(fixture.debugElement.query(By.css('span.icon.fa-times'))
-			.nativeElement as HTMLElement).click();
+			// click the clear-search option
+			(fixture.debugElement.query(By.css('span.icon.fa-times'))
+				.nativeElement as HTMLElement).click();
 
-		fixture.detectChanges();
+			fixture.detectChanges();
 
-		expect(clearSearchSpy).toHaveBeenCalledTimes(1);
-		expect(componentInstance.search).toBe('');
-		expect(componentInstance.applySearch.emit).toHaveBeenCalledTimes(1);
-		expect(componentInstance.applySearch.emit).toHaveBeenCalledWith('');
+			expect(clearSearchSpy).toHaveBeenCalledTimes(1);
+			expect(componentInstance.search).toBe('');
+			expect(componentInstance.applySearch.emit).toHaveBeenCalledTimes(1);
+			expect(componentInstance.applySearch.emit).toHaveBeenCalledWith('');
 
-		fixture.whenRenderingDone().then(() => {
-			expect(
-				(fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement)
-					.value
-			).toBe('');
-		});
-	}));
+			fixture.whenRenderingDone().then(() => {
+				expect(
+					(fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement)
+						.value
+				).toBe('');
+			});
+		})
+	);
 });

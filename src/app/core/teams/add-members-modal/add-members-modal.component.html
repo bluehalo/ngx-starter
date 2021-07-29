@@ -12,6 +12,7 @@
 			name="teamAdmin"
 			bindLabel="userModel.name"
 			placeholder="Search for user..."
+			[tabIndex]="-1"
 			[items]="users$ | async"
 			[loading]="usersLoading"
 			[typeahead]="usersInput$"

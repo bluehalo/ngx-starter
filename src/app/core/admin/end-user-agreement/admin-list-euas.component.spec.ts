@@ -2,10 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { PagingModule } from '../../../common/paging.module';
+import { SearchInputModule } from '../../../common/search-input.module';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 import { ModalService } from 'src/app/common/modal.module';
-import { SystemAlertService } from 'src/app/common/system-alert.module';
+import { SystemAlertModule, SystemAlertService } from 'src/app/common/system-alert.module';
 import { AdminListEuasComponent } from './admin-list-euas.component';
 import { EuaService } from './eua.service';
 
@@ -33,7 +36,13 @@ describe('Admin List End User Agreements Component', () => {
 		});
 		const testBed = TestBed.configureTestingModule({
 			declarations: [AdminListEuasComponent],
-			imports: [ModalModule.forRoot(), RouterTestingModule],
+			imports: [
+				ModalModule.forRoot(),
+				RouterTestingModule,
+				SystemAlertModule,
+				PagingModule,
+				SearchInputModule
+			],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
 				{ provide: EuaService, useValue: endUserAgreementServiceSpy },

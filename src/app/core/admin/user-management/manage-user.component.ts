@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { OnInit } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SystemAlertService } from '../../../common/system-alert.module';
@@ -11,6 +11,7 @@ import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 
+@Directive()
 export abstract class ManageUserComponent implements OnInit {
 	config: any;
 	error?: string;

@@ -72,16 +72,14 @@ export class ModalService {
 	 * The show method will display a modal that can include a message and a form
 	 */
 	show(contentConfig: ModalConfig, modalOptions: ModalOptions = {}): Observable<ModalCloseEvent> {
-		const config = Object.assign(
-			{
-				ignoreBackdropClick: true,
-				keyboard: false,
-				class: 'modal-dialog-scrollable modal-lg'
-			},
-			modalOptions
-		);
+		const config = {
+			ignoreBackdropClick: true,
+			keyboard: false,
+			class: 'modal-dialog-scrollable modal-lg',
+			initialState: contentConfig,
+			...modalOptions
+		} as ModalOptions;
 
-		config.initialState = contentConfig;
 		this.modalRef = this.modalService.show(ConfigurableModalComponent, config);
 		return this.modalRef.content.onClose;
 	}
@@ -93,16 +91,14 @@ export class ModalService {
 		contentConfig: ContainerModalConfig<T>,
 		modalOptions: ModalOptions = {}
 	): Observable<ModalCloseEvent> {
-		const config = Object.assign(
-			{
-				ignoreBackdropClick: true,
-				keyboard: false,
-				class: 'modal-dialog-scrollable modal-lg'
-			},
-			modalOptions
-		);
+		const config = {
+			ignoreBackdropClick: true,
+			keyboard: false,
+			class: 'modal-dialog-scrollable modal-lg',
+			initialState: contentConfig,
+			...modalOptions
+		} as ModalOptions;
 
-		config.initialState = contentConfig;
 		this.modalRef = this.modalService.show(ContainerModalComponent, config);
 		return this.modalRef.content.onClose;
 	}

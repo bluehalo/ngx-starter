@@ -1,3 +1,4 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -19,7 +20,7 @@ describe('Abstract Modal Directive', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [],
+			imports: [A11yModule],
 			declarations: [ConcreteModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});

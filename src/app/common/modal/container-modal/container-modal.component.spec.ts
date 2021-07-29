@@ -1,9 +1,11 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
+import { ModalComponent } from '../modal/modal.component';
 import { ContainerModalComponent } from './container-modal.component';
 
 @UntilDestroy()
@@ -24,8 +26,8 @@ describe('Container Modal Component', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [],
-			declarations: [ContainerModalComponent],
+			imports: [A11yModule],
+			declarations: [ContainerModalComponent, ModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 

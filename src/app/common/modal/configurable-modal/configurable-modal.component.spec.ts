@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalAction } from '../modal.model';
+import { ModalComponent } from '../modal/modal.component';
 import { ConfigurableModalComponent } from './configurable-modal.component';
 
 describe('Modal Component', () => {
@@ -12,7 +13,7 @@ describe('Modal Component', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [FormsModule],
-			declarations: [ConfigurableModalComponent],
+			declarations: [ConfigurableModalComponent, ModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 
