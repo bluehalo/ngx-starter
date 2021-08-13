@@ -78,8 +78,8 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	dateRangeFilter: any;
 
-	queryStartDate: Date = DateTime.now()
-		.toUTC(1440)
+	queryStartDate: Date = DateTime.utc()
+		.minus({ days: 1 })
 		.toJSDate();
 
 	queryEndDate: Date = DateTime.utc().toJSDate();
