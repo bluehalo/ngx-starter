@@ -162,7 +162,7 @@ describe('Audit Component Spec', () => {
 				'admin update'
 			);
 			expect(rootHTMLElement.querySelector('.table-row').textContent).toContain(
-				'2019-09-08 20:15:47Z'
+				'2019-09-08 20:15:47'
 			);
 		});
 	});
