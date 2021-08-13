@@ -1,26 +1,29 @@
-import _isString from 'lodash/isString';
-import { isMoment, utc, Moment } from 'moment';
+import { DateTime } from 'luxon';
 
 export class UtcDateUtils {
-	private static defaultFormat = 'YYYY-MM-DD HH:mm:ss[Z]';
+	private static defaultFormat = 'yyyy-MM-dd HH:mm:ss';
 
-	static format(value: string | number | Moment | null | undefined, format?: string): string {
+	static format(value: string | number | DateTime | null | undefined, format?: string): string {
 		if (null != value) {
-			let momentDate;
-			if (isMoment(value)) {
-				momentDate = value;
-			} else if (_isString(value) && new Date(value).toString() === 'Invalid Date') {
-				// converts a string of milliseconds into a number
-				value = +value;
-				momentDate = utc(value);
+			let luxonDate;
+			if (value instanceof DateTime) {
+				luxonDate = value;
 			} else {
-				momentDate = utc(value);
+				if (typeof value === 'string') {
+					luxonDate = DateTime.fromISO(value).toUTC();
+				}
+				if (typeof value === 'number') {
+					luxonDate = DateTime.fromMillis(value).toUTC();
+				}
+				if (!luxonDate.isValid) {
+					// converts a string of milliseconds into a number
+					value = +value;
+					luxonDate = DateTime.fromMillis(value).toUTC();
+				}
 			}
 
-			if (momentDate.isValid()) {
-				return momentDate
-					.utc()
-					.format(null != format ? format : UtcDateUtils.defaultFormat);
+			if (luxonDate.isValid) {
+				return luxonDate.toFormat(null != format ? format : UtcDateUtils.defaultFormat);
 			}
 		}
 

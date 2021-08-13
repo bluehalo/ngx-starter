@@ -11,7 +11,7 @@ import {
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import _isString from 'lodash/isString';
-import { utc } from 'moment';
+import { DateTime } from 'luxon';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -78,11 +78,11 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	dateRangeFilter: any;
 
-	queryStartDate: Date = utc()
-		.subtract(1, 'days')
-		.toDate();
+	queryStartDate: Date = DateTime.utc()
+		.minus({ days: 1 })
+		.toJSDate();
 
-	queryEndDate: Date = utc().toDate();
+	queryEndDate: Date = DateTime.utc().toJSDate();
 
 	searchUsersRef: Observable<any>;
 
@@ -228,16 +228,20 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		if (this.dateRangeFilter.selected === 'choose') {
 			if (null != this.queryStartDate) {
 				timeQuery = null == timeQuery ? {} : timeQuery;
-				timeQuery.$gte = utc(this.queryStartDate).startOf('day');
+				timeQuery.$gte = DateTime.fromJSDate(this.queryStartDate)
+					.startOf('day')
+					.toUTC();
 			}
 			if (null != this.queryEndDate) {
 				timeQuery = null == timeQuery ? {} : timeQuery;
-				timeQuery.$lt = utc(this.queryEndDate).endOf('day');
+				timeQuery.$lt = DateTime.fromJSDate(this.queryEndDate)
+					.endOf('day')
+					.toUTC();
 			}
 		} else if (this.dateRangeFilter.selected !== 'everything') {
 			timeQuery = {
-				$gte: utc().add(this.dateRangeFilter.selected, 'days'),
-				$lt: utc()
+				$gte: DateTime.utc().plus({ days: this.dateRangeFilter.selected }),
+				$lt: DateTime.utc()
 			};
 		}
 
