@@ -21,9 +21,9 @@ export class SortableTableHeaderComponent implements OnInit {
 
 	@Input() showSort = true;
 
-	@Input() currentSortField: string | string[];
+	@Input() currentSortField?: string | string[];
 
-	@Input() currentSortDir: string;
+	@Input() currentSortDir?: string;
 
 	@Output() readonly sortChange = new EventEmitter<SortChange>();
 
@@ -38,7 +38,7 @@ export class SortableTableHeaderComponent implements OnInit {
 			// If this header is the currently sorted field, reverse the sort
 			if (
 				this.header.sortField === this.currentSortField ||
-				this.currentSortField.includes(this.header.sortField)
+				this.currentSortField?.includes(this.header.sortField)
 			) {
 				this.sortChange.emit({
 					sortField: this.header.sortField,

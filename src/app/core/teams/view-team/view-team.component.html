@@ -67,7 +67,7 @@
 							<div class="form-group">
 								<label class="col col-form-label">Name</label>
 								<div class="col col-form-readonly-value" *ngIf="!isEditing">
-									<div>{{ team.name | titlecase }}</div>
+									<div>{{ team.name || '' | titlecase }}</div>
 								</div>
 								<div class="col" *ngIf="isEditing">
 									<input
@@ -83,7 +83,7 @@
 							<div class="form-group">
 								<label class="col col-form-label">Description</label>
 								<div class="col col-form-readonly-value" *ngIf="!isEditing">
-									<div>{{ team.description | titlecase }}</div>
+									<div>{{ team.description || '' | titlecase }}</div>
 								</div>
 								<div class="col" *ngIf="isEditing">
 									<textarea
@@ -115,7 +115,7 @@
 								*ngIf="
 									team.implicitMembers &&
 									implicitMembersStrategy === 'roles' &&
-									(team.requiresExternalRoles?.length > 0 || isEditing)
+									((team.requiresExternalRoles?.length || 0) > 0 || isEditing)
 								"
 							>
 								<label class="col col-form-label">External Roles</label>
@@ -136,7 +136,7 @@
 								*ngIf="
 									team.implicitMembers &&
 									implicitMembersStrategy === 'teams' &&
-									(team.requiresExternalTeams?.length > 0 || isEditing)
+									((team.requiresExternalTeams?.length || 0) > 0 || isEditing)
 								"
 							>
 								<label class="col col-form-label">External Teams</label>

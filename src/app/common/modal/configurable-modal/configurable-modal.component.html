@@ -5,7 +5,7 @@
 	(ok)="ok()"
 	(cancel)="cancel()"
 	[disableOk]="!modalForm.form.valid"
-	[autoCaptureFocus]="inputs?.length > 0"
+	[autoCaptureFocus]="inputs && inputs.length > 0"
 >
 	<p *ngIf="message" [innerHTML]="message"></p>
 	<form id="modalForm" #modalForm="ngForm">

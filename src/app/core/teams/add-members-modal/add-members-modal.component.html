@@ -13,7 +13,7 @@
 			bindLabel="userModel.name"
 			placeholder="Search for user..."
 			[tabIndex]="-1"
-			[items]="users$ | async"
+			[items]="(users$ | async) || []"
 			[loading]="usersLoading"
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"

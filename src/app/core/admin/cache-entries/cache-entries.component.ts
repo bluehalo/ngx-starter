@@ -100,7 +100,9 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 			ignoreBackdropClick: true,
 			class: 'modal-dialog-scrollable modal-lg'
 		});
-		cacheEntryModalRef.content.cacheEntry = cacheEntry;
+		if (cacheEntryModalRef?.content) {
+			cacheEntryModalRef.content.cacheEntry = cacheEntry;
+		}
 	}
 
 	refreshCacheEntry(cacheEntry: CacheEntry) {
