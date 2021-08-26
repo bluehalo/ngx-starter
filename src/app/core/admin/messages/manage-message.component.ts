@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { OnInit } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed } from '@ngneat/until-destroy';
@@ -10,6 +10,7 @@ import { SystemAlertService } from 'src/app/common/system-alert.module';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
 
+@Directive()
 export abstract class ManageMessageComponent implements OnInit {
 	message: Message;
 	error?: string;

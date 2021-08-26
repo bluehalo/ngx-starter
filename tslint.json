@@ -12,7 +12,7 @@
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
-      "severity": "warn"
+      "severity": "warning"
     },
     "import-blacklist": [
       true,
@@ -78,6 +78,7 @@
       "options": true,
       "severity": "warning"
     },
+    "directive-class-suffix": [true, "Directive", "Component"],
 
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
   }

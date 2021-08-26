@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 
-import { SystemAlertService } from '../../common/system-alert.module';
+import { SystemAlertModule, SystemAlertService } from '../../common/system-alert.module';
 
 import _cloneDeep from 'lodash/cloneDeep';
 import { PagingOptions, PagingResults } from 'src/app/common/paging.module';
@@ -15,7 +15,7 @@ describe('Audit Service', () => {
 
 	beforeEach(async () => {
 		TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
+			imports: [HttpClientTestingModule, SystemAlertModule],
 			providers: [AuditService, SystemAlertService]
 		});
 

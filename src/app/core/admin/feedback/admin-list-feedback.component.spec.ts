@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 import { PagingModule, PagingResults } from 'src/app/common/paging.module';
@@ -87,6 +89,7 @@ describe('Admin List Feedback Component Spec', () => {
 				PipesModule,
 				SearchInputModule,
 				SystemAlertModule,
+				NgSelectModule,
 				TooltipModule.forRoot()
 			],
 			providers: [
@@ -141,7 +144,7 @@ describe('Admin List Feedback Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledWith('feedback', {
 			q: undefined,
-			s: undefined,
+			s: '',
 			cols: expectedColumns,
 			sort: 'created',
 			dir: 'DESC'
@@ -172,7 +175,7 @@ describe('Admin List Feedback Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledWith('feedback', {
 			q: undefined,
-			s: undefined,
+			s: '',
 			cols: expectedColumns,
 			sort: 'created',
 			dir: 'DESC'
