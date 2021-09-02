@@ -42,7 +42,7 @@
 				name="teamAdmin"
 				bindLabel="userModel.name"
 				placeholder="Search for user..."
-				[items]="users$ | async"
+				[items]="(users$ | async) || []"
 				[loading]="usersLoading"
 				[typeahead]="usersInput$"
 				[(ngModel)]="teamAdmin"

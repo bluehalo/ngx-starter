@@ -76,7 +76,7 @@ export class FeedbackService {
 			);
 	}
 
-	updateFeedbackAssignee(feedbackId: string, assignee: string): Observable<Feedback> {
+	updateFeedbackAssignee(feedbackId: string, assignee: string | null): Observable<Feedback> {
 		return this.http.patch<Feedback>(`api/admin/feedback/${feedbackId}/assignee`, {
 			assignee
 		});

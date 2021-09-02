@@ -24,8 +24,8 @@ export class PageableTableComponent {
 	@Input() tableHover = false;
 	@Input() tableStriped = false;
 
-	itemsInternal: Array<any>;
-	itemsExpanded: Array<boolean>;
+	itemsInternal: Array<any> = [];
+	itemsExpanded: Array<boolean> = [];
 
 	@Input() set items(data: Array<any>) {
 		this.itemsInternal = data;

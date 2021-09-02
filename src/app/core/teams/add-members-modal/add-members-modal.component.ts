@@ -7,7 +7,15 @@ import { PagingOptions, PagingResults } from '../../../common/paging.module';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { concat, of, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import {
+	debounceTime,
+	distinctUntilChanged,
+	map,
+	mergeMap,
+	startWith,
+	switchMap,
+	tap
+} from 'rxjs/operators';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
@@ -48,9 +56,8 @@ export class AddMembersModalComponent implements OnInit {
 	constructor(private teamsService: TeamsService, public modalRef: BsModalRef) {}
 
 	ngOnInit() {
-		this.users$ = concat(
-			of([]), // default items
-			this.usersInput$.pipe(
+		this.users$ = this.usersInput$
+			.pipe(
 				debounceTime(200),
 				distinctUntilChanged(),
 				tap(() => (this.usersLoading = true)),
@@ -65,7 +72,7 @@ export class AddMembersModalComponent implements OnInit {
 					this.usersLoading = false;
 				})
 			)
-		);
+			.pipe(startWith([]));
 	}
 
 	submit() {

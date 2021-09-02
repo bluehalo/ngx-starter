@@ -3,7 +3,7 @@
 		<div
 			class="table-actions d-flex flex-grow-1"
 			*ngIf="showActions"
-			[hidden]="itemsInternal?.length === 0 && hideActionsNoData"
+			[hidden]="itemsInternal.length === 0 && hideActionsNoData"
 		>
 			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
 		</div>
@@ -12,14 +12,14 @@
 			class="table-header-pager"
 			*ngIf="pagerAtTop"
 			[ngClass]="{ 'ml-auto': !showActions }"
-			[hidden]="itemsInternal?.length === 0"
+			[hidden]="itemsInternal.length === 0"
 		>
 			<asy-pager
-				[pageNumber]="pagingOptions?.pageNumber"
-				[pageSize]="pagingOptions?.pageSize"
-				[totalSize]="pagingOptions?.totalSize"
-				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="itemsInternal?.length"
+				[pageNumber]="pagingOptions.pageNumber"
+				[pageSize]="pagingOptions.pageSize"
+				[totalSize]="pagingOptions.totalSize"
+				[maxPageSize]="pagingOptions.pageSize"
+				[currentSize]="itemsInternal.length"
 				[disableGoToEnd]="disableGoToEnd"
 				(pageChange)="pageChange.emit($event)"
 			>
@@ -29,7 +29,7 @@
 
 	<div
 		class="table-content table-responsive"
-		[hidden]="hideTableNoData && itemsInternal?.length === 0"
+		[hidden]="hideTableNoData && itemsInternal.length === 0"
 	>
 		<!-- Actual Results -->
 		<table
@@ -79,7 +79,7 @@
 		</table>
 	</div>
 
-	<div class="table-no-results" *ngIf="!loading && hasItems && itemsInternal?.length === 0">
+	<div class="table-no-results" *ngIf="!loading && hasItems && itemsInternal.length === 0">
 		<ng-container *ngTemplateOutlet="noResultsTableTemplate"></ng-container>
 	</div>
 
@@ -91,7 +91,7 @@
 		<div
 			class="table-actions d-flex flex-grow-1"
 			*ngIf="showFooterActions"
-			[hidden]="itemsInternal?.length === 0 && hideFooterActionsNoData"
+			[hidden]="itemsInternal.length === 0 && hideFooterActionsNoData"
 		>
 			<ng-container *ngTemplateOutlet="footerActionTemplate"></ng-container>
 		</div>
@@ -100,14 +100,14 @@
 			class="table-footer-pager"
 			*ngIf="pagerAtBottom"
 			[ngClass]="{ 'ml-auto': !showFooterActions }"
-			[hidden]="itemsInternal?.length === 0"
+			[hidden]="itemsInternal.length === 0"
 		>
 			<asy-pager
-				[pageNumber]="pagingOptions?.pageNumber"
-				[pageSize]="pagingOptions?.pageSize"
-				[totalSize]="pagingOptions?.totalSize"
-				[maxPageSize]="pagingOptions?.pageSize"
-				[currentSize]="itemsInternal?.length"
+				[pageNumber]="pagingOptions.pageNumber"
+				[pageSize]="pagingOptions.pageSize"
+				[totalSize]="pagingOptions.totalSize"
+				[maxPageSize]="pagingOptions.pageSize"
+				[currentSize]="itemsInternal.length"
 				[disableGoToEnd]="disableGoToEnd"
 				(pageChange)="pageChange.emit($event)"
 			>

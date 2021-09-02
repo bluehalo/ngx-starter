@@ -178,7 +178,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 		return this.feedbackService.getFeedback(pagingOptions, query, search, {});
 	}
 
-	updateFeedbackAssignee(index: number, assignee: string) {
+	updateFeedbackAssignee(index: number, assignee: string | null) {
 		this.feedbackService
 			.updateFeedbackAssignee(this.items[index].id, assignee)
 			.pipe(take(1), untilDestroyed(this))
