@@ -14,12 +14,14 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
+import { AdminDeleteUserModalComponent } from './admin-delete-user-modal.component';
 import { AdminUsersService } from './admin-users.service';
 
 @UntilDestroy()
@@ -98,13 +100,15 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	enableUserBypassAC: false;
 
 	private requiredExternalRoles: string[];
+	private modalRef: BsModalRef;
 
 	constructor(
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService
+		private alertService: SystemAlertService,
+		private bsModalService: BsModalService
 	) {
 		super();
 	}
@@ -155,13 +159,12 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	confirmDeleteUser(user: User) {
-		const id = user.userModel._id;
-		this.adminUsersService.removeUser(id).subscribe({
-			next: data => {
-				this.load$.next(true);
-			},
-			error: error => {
-				this.alertService.addClientErrorAlert(error);
+		this.modalRef = this.bsModalService.show(AdminDeleteUserModalComponent, {
+			class: 'modal-lg',
+			ignoreBackdropClick: true,
+			initialState: {
+				user,
+				load$: this.load$
 			}
 		});
 	}

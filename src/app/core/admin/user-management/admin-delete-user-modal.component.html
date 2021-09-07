@@ -1,0 +1,27 @@
+<section class="modal-header">
+	<h1 class="modal-title">
+		Delete User
+		<span class="float-right modal-close">
+			<a
+				class="btn-icon no-href"
+				(click)="modalRef.hide()"
+				tooltip="Close"
+				placement="bottom"
+				container="body"
+			>
+				<span class="fa fa-times"></span>
+			</a>
+		</span>
+	</h1>
+</section>
+
+<section class="modal-body">
+	This action will permanently delete user {{ user.userModel.name }}, do you want to continue?
+</section>
+
+<section class="modal-footer">
+	<button type="button" class="btn btn-link" (click)="modalRef.hide()">Cancel</button>
+	<button class="btn btn-primary" type="button" (click)="submit()">
+		Confirm
+	</button>
+</section>
