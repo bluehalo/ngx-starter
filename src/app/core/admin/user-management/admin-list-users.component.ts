@@ -110,7 +110,6 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService,
-		private authenticationService: AuthenticationService,
 		private modalService: ModalService
 	) {
 		super();
@@ -172,7 +171,6 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 				first(),
 				filter(action => action === ModalAction.OK),
 				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
-				tap(() => this.authenticationService.reloadCurrentUser()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
@@ -277,8 +275,8 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		}
 
 		Role.ROLES.forEach(role => {
-			const filter = this.filters[`${role.role}Role`];
-			if (filter?.show) {
+			const roleFilter = this.filters[`${role.role}Role`];
+			if (roleFilter?.show) {
 				const element: Record<string, boolean> = {};
 				element[`roles.${role.role}`] = true;
 				elements.push(element);
@@ -286,18 +284,18 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		});
 
 		if (this.filters.pending.show) {
-			const filter: any = {
+			const pendingFilter: any = {
 				$or: [{ 'roles.user': { $ne: true } }]
 			};
 			if (this.requiredExternalRoles.length > 0) {
-				filter.$or.push({
+				pendingFilter.$or.push({
 					$and: [
 						{ bypassAccessCheck: { $ne: true } },
 						{ externalRoles: { $not: { $all: this.requiredExternalRoles } } }
 					]
 				});
 			}
-			elements.push(filter);
+			elements.push(pendingFilter);
 		}
 
 		if (elements.length > 0) {
