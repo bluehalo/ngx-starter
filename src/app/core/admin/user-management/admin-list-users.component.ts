@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { ModalAction } from '../../../common/modal/modal.model';
+import { ModalService } from '../../../common/modal/modal.service';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -14,14 +17,13 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { of, Observable, Subject } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { AuthenticationService } from '../../auth/authentication.service';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
-import { AdminDeleteUserModalComponent } from './admin-delete-user-modal.component';
 import { AdminUsersService } from './admin-users.service';
 
 @UntilDestroy()
@@ -100,15 +102,16 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	enableUserBypassAC: false;
 
 	private requiredExternalRoles: string[];
-	private modalRef: BsModalRef;
 
 	constructor(
+		private router: Router,
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService,
-		private bsModalService: BsModalService
+		private authenticationService: AuthenticationService,
+		private modalService: ModalService
 	) {
 		super();
 	}
@@ -159,14 +162,24 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	confirmDeleteUser(user: User) {
-		this.modalRef = this.bsModalService.show(AdminDeleteUserModalComponent, {
-			class: 'modal-lg',
-			ignoreBackdropClick: true,
-			initialState: {
-				user,
-				load$: this.load$
-			}
-		});
+		this.modalService
+			.confirm(
+				'Delete user?',
+				`Are you sure you want to delete the user: <strong>"${user.userModel.name}"</strong>?<br/>This action cannot be undone.`,
+				'Delete'
+			)
+			.pipe(
+				first(),
+				filter(action => action === ModalAction.OK),
+				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
+				tap(() => this.authenticationService.reloadCurrentUser()),
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				}),
+				untilDestroyed(this)
+			)
+			.subscribe(() => this.load$.next(true));
 	}
 
 	exportUserData() {
