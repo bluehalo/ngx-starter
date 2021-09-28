@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { ModalService } from '../../../common/modal.module';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 import { PagingModule, PagingResults } from 'src/app/common/paging.module';
@@ -91,7 +94,9 @@ describe('Admin List Users Component Spec', () => {
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
-				{ provide: ExportConfigService, useValue: exportConfigServiceSpy }
+				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
+				BsModalService,
+				ModalService
 			]
 		});
 

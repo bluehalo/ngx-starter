@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { ModalAction } from '../../../common/modal/modal.model';
+import { ModalService } from '../../../common/modal/modal.service';
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -14,8 +17,9 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { of, Observable, Subject } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { AuthenticationService } from '../../auth/authentication.service';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
@@ -100,11 +104,13 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	private requiredExternalRoles: string[];
 
 	constructor(
+		private router: Router,
 		private route: ActivatedRoute,
 		private configService: ConfigService,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService
+		private alertService: SystemAlertService,
+		private modalService: ModalService
 	) {
 		super();
 	}
@@ -155,15 +161,23 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 	}
 
 	confirmDeleteUser(user: User) {
-		const id = user.userModel._id;
-		this.adminUsersService.removeUser(id).subscribe({
-			next: data => {
-				this.load$.next(true);
-			},
-			error: error => {
-				this.alertService.addClientErrorAlert(error);
-			}
-		});
+		this.modalService
+			.confirm(
+				'Delete user?',
+				`Are you sure you want to delete the user: <strong>"${user.userModel.name}"</strong>?<br/>This action cannot be undone.`,
+				'Delete'
+			)
+			.pipe(
+				first(),
+				filter(action => action === ModalAction.OK),
+				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
+				catchError((error: HttpErrorResponse) => {
+					this.alertService.addClientErrorAlert(error);
+					return of(null);
+				}),
+				untilDestroyed(this)
+			)
+			.subscribe(() => this.load$.next(true));
 	}
 
 	exportUserData() {
@@ -261,8 +275,8 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		}
 
 		Role.ROLES.forEach(role => {
-			const filter = this.filters[`${role.role}Role`];
-			if (filter?.show) {
+			const roleFilter = this.filters[`${role.role}Role`];
+			if (roleFilter?.show) {
 				const element: Record<string, boolean> = {};
 				element[`roles.${role.role}`] = true;
 				elements.push(element);
@@ -270,18 +284,18 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		});
 
 		if (this.filters.pending.show) {
-			const filter: any = {
+			const pendingFilter: any = {
 				$or: [{ 'roles.user': { $ne: true } }]
 			};
 			if (this.requiredExternalRoles.length > 0) {
-				filter.$or.push({
+				pendingFilter.$or.push({
 					$and: [
 						{ bypassAccessCheck: { $ne: true } },
 						{ externalRoles: { $not: { $all: this.requiredExternalRoles } } }
 					]
 				});
 			}
-			elements.push(filter);
+			elements.push(pendingFilter);
 		}
 
 		if (elements.length > 0) {
