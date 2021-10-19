@@ -38,16 +38,16 @@ import { TeamsModule } from './teams/teams.module';
 import { UnauthorizedComponent } from './unauthorized.component';
 
 export function getConfiguration(configService: ConfigService) {
-	return () => {
-		return configService
+	return () =>
+		configService
 			.getConfig()
 			.toPromise()
 			.then(config => {
 				if (config === null) {
 					throw new Error('Error loading application configuration.');
 				}
+				return config;
 			});
-	};
 }
 
 @NgModule({
