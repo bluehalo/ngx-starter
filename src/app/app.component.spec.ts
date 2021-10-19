@@ -1,11 +1,11 @@
 import { waitForAsync, TestBed } from '@angular/core/testing';
 
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { of } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfigService, CoreModule } from './core/core.module';
 import { SiteModule } from './site/site.module';
-import { of } from 'rxjs';
 
 describe('AppComponent', () => {
 	let configServiceSpy: any;
