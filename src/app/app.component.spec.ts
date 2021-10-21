@@ -1,17 +1,24 @@
 import { waitForAsync, TestBed } from '@angular/core/testing';
 
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { of } from 'rxjs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
+import { ConfigService, CoreModule } from './core/core.module';
 import { SiteModule } from './site/site.module';
 
 describe('AppComponent', () => {
+	let configServiceSpy: any;
+
 	beforeEach(
 		waitForAsync(() => {
+			configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
+			configServiceSpy.getConfig.and.returnValue(of({}));
+
 			TestBed.configureTestingModule({
 				declarations: [AppComponent],
-				imports: [AppRoutingModule, CoreModule, SiteModule, PopoverModule.forRoot()]
+				imports: [AppRoutingModule, CoreModule, SiteModule, PopoverModule.forRoot()],
+				providers: [{ provide: ConfigService, useValue: configServiceSpy }]
 			}).compileComponents();
 		})
 	);
