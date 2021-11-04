@@ -10,16 +10,11 @@
 </header>
 
 <!-- Site content -->
-<section
-	[ngClass]="{
-		'header-active footer-active': bannerHtml,
-		'copyright-active': copyrightHtml
-	}"
->
+<section class="site-body">
 	<site-navbar>
-		<section class="site-content" id="app-content" tabindex="-1">
+		<main class="site-content h-100 overflow-auto" id="app-content" tabindex="-1">
 			<ng-content></ng-content>
-		</section>
+		</main>
 	</site-navbar>
 </section>
 

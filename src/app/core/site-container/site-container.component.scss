@@ -1,21 +1,23 @@
 @import '../../../styles/shared';
 @import './shared';
 
-$banner-z-index: 10002;
+$skip-link-z-index: 10002;
 
-header.site-header {
-	z-index: $banner-z-index;
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: auto;
 }
 
-footer.site-footer {
-	z-index: $banner-z-index;
+.site-body {
+	flex: 1 1;
+	overflow: auto;
 }
 
 .site-banner {
 	text-align: center;
-
 	width: 100%;
-	z-index: $banner-z-index;
 }
 
 .copyright-banner {
@@ -36,41 +38,8 @@ footer.site-footer {
 	height: $header-banner-height;
 }
 
-.site-footer {
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	width: 100%;
-}
-
-.site-header {
-	left: 0;
-	top: 0;
-	position: fixed;
-	width: 100%;
-}
-
 .site-content {
-	margin-bottom: 0;
-	margin-top: 0;
-
 	padding: $site-content-padding-y $site-content-padding-x;
-
-	.header-active & {
-		margin-top: $header-banner-height;
-	}
-
-	.footer-active & {
-		margin-bottom: $footer-banner-height;
-	}
-
-	.copyright-active & {
-		margin-bottom: $copyright-banner-height;
-	}
-
-	.copyright-active.footer-active & {
-		margin-bottom: $footer-banner-height + $copyright-banner-height;
-	}
 }
 
 a.skip-link {
@@ -81,7 +50,7 @@ a.skip-link {
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: $banner-z-index + 1;
+		z-index: $skip-link-z-index;
 
 		padding: 10px;
 		background-color: $ux-color-primary;
