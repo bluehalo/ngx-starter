@@ -17,7 +17,6 @@ export class TeamAuthorizationService {
 		this.sessionService
 			.getSession()
 			.pipe(
-				first(),
 				map(session =>
 					new TeamMember().setFromTeamMemberModel(null, session?.user.userModel)
 				),
