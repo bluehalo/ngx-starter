@@ -8,9 +8,8 @@ import { SystemAlertService } from '../../../common/system-alert.module';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
-import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
-import { Config } from '../../config.model';
+import { SessionService } from '../../auth/session.service';
 import { ConfigService } from '../../config.service';
 import { TeamAuthorizationService } from '../team-authorization.service';
 import { Team } from '../team.model';
@@ -39,8 +38,8 @@ export class ViewTeamComponent implements OnInit {
 		private configService: ConfigService,
 		private teamsService: TeamsService,
 		private alertService: SystemAlertService,
-		private authenticationService: AuthenticationService,
 		private authorizationService: AuthorizationService,
+		private sessionService: SessionService,
 		private teamAuthorizationService: TeamAuthorizationService
 	) {}
 
@@ -76,16 +75,17 @@ export class ViewTeamComponent implements OnInit {
 		this.teamsService
 			.update(this._team)
 			.pipe(
-				tap(() => this.authenticationService.reloadCurrentUser()),
+				tap((team: Team | null) => {
+					this.isEditing = false;
+					if (team) {
+						this.team = team;
+						this.alertService.addAlert('Updated team metadata', 'success', 5000);
+					}
+				}),
+				switchMap(() => this.sessionService.reloadSession()),
 				untilDestroyed(this)
 			)
-			.subscribe(team => {
-				this.isEditing = false;
-				if (team) {
-					this.team = team;
-					this.alertService.addAlert('Updated team metadata', 'success', 5000);
-				}
-			});
+			.subscribe();
 	}
 
 	updateTeam(team: any) {
@@ -109,7 +109,7 @@ export class ViewTeamComponent implements OnInit {
 				first(),
 				filter(action => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(this.team)),
-				tap(() => this.authenticationService.reloadCurrentUser()),
+				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);

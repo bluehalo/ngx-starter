@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 import isEmpty from 'lodash/isEmpty';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
 import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
 import { User } from './user.model';
@@ -19,7 +17,7 @@ export class SessionService {
 	private previousUrl: string;
 
 	private readonly mapUserModelToSession = pipe(
-		map((result: any) => {
+		map((result: any): Session | null => {
 			if (result == null) {
 				return result;
 			}
@@ -32,13 +30,9 @@ export class SessionService {
 		})
 	);
 
-	constructor(
-		private authService: AuthenticationService,
-		private configService: ConfigService,
-		private router: Router
-	) {}
+	constructor(private authService: AuthenticationService, private router: Router) {}
 
-	reloadSession(): Observable<any> {
+	reloadSession(): Observable<Session | null> {
 		return this.authService.reloadCurrentUser().pipe(
 			catchError(() => {
 				return of(null);
@@ -50,7 +44,7 @@ export class SessionService {
 		);
 	}
 
-	signin(username: string, password: string): Observable<any> {
+	signin(username: string, password: string): Observable<Session | null> {
 		return this.authService.signin(username, password).pipe(
 			this.mapUserModelToSession,
 			tap(session => {
