@@ -17,7 +17,6 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { of, Observable } from 'rxjs';
 import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
-import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
@@ -77,7 +76,6 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		private modalService: ModalService,
 		private router: Router,
 		private teamsService: TeamsService,
-		private authenticationService: AuthenticationService,
 		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService,
 		private sessionService: SessionService,
@@ -153,7 +151,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 				first(),
 				filter(action => action === ModalAction.OK),
 				switchMap(() => this.teamsService.removeMember(this.team, member.userModel._id)),
-				tap(() => this.authenticationService.reloadCurrentUser()),
+				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);
@@ -185,7 +183,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 					first(),
 					filter(action => action === ModalAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
-					tap(() => this.authenticationService.reloadCurrentUser()),
+					switchMap(() => this.sessionService.reloadSession()),
 					catchError((error: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(error);
 						return of(null);
@@ -221,7 +219,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		this.teamsService
 			.addMember(this.team, member.userModel._id, role)
 			.pipe(
-				tap(() => this.authenticationService.reloadCurrentUser()),
+				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(null);

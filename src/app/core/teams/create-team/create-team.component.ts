@@ -127,7 +127,7 @@ export class CreateTeamComponent implements OnInit {
 		this.teamsService
 			.create(this.team, this?.teamAdmin?.userModel._id)
 			.pipe(
-				tap(() => this.authenticationService.reloadCurrentUser()),
+				switchMap(() => this.sessionService.reloadSession()),
 				untilDestroyed(this)
 			)
 			.subscribe(() => {
