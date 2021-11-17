@@ -1,9 +1,6 @@
-<div
-	class="navbar-left d-flex flex-column align-items-start"
-	[ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }"
->
+<div class="navbar-left" [ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }">
 	<!-- Logo -->
-	<ul class="nav nav-logo flex-shrink-0">
+	<ul class="nav nav-logo">
 		<!-- Logo -->
 		<li class="element element-logo">
 			<a href="/#/" [hidden]="navbarOpen">
@@ -15,9 +12,9 @@
 		</li>
 	</ul>
 
-	<div class="nav-inner-scroll d-flex flex-column align-items-start flex-grow-1">
+	<div class="nav-inner-scroll">
 		<!-- Main Nav -->
-		<ul class="nav nav-main flex-shrink-0 mb-auto">
+		<ul class="nav nav-main">
 			<ng-container *ngFor="let navbarItem of navbarItems">
 				<li class="element" *hasSomeRoles="navbarItem.hasSomeRoles">
 					<a
@@ -36,11 +33,11 @@
 		</ul>
 
 		<!-- Bottom Aux Nav -->
-		<ul class="nav nav-aux flex-shrink-0">
+		<ul class="nav nav-aux">
 			<!-- Team Nav   -->
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
 				<a
-					[ngClass]="{ 'highlight-link': teamNavOpen }"
+					[class.highlight-link]="teamNavOpen"
 					[popover]="teamNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -69,7 +66,7 @@
 			<!-- User Nav	-->
 			<li class="element nav-popover nav-popover-bottom" *isAuthenticated>
 				<a
-					[ngClass]="{ 'highlight-link': userNavOpen }"
+					[class.highlight-link]="userNavOpen"
 					[popover]="userNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -103,7 +100,7 @@
 			<!-- Auditor Nav	-->
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'auditor'">
 				<a
-					[ngClass]="{ 'highlight-link': auditorNavOpen }"
+					[class.highlight-link]="auditorNavOpen"
 					[popover]="auditorNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -131,7 +128,7 @@
 			<!-- Admin Nav	-->
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'admin'">
 				<a
-					[ngClass]="{ 'highlight-link': adminNavOpen }"
+					[class.highlight-link]="adminNavOpen"
 					[popover]="adminNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -167,7 +164,7 @@
 			<!-- Messages Nav   -->
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
 				<a
-					[ngClass]="{ 'highlight-link': messagesNavOpen }"
+					[class.highlight-link]="messagesNavOpen"
 					[popover]="messagesNav"
 					container="body"
 					containerClass="site-nav-popover-container-messages"
@@ -182,7 +179,7 @@
 					<span
 						class="fa fa-fw fa-bell"
 						attr.newMessagesCount="{{ numNewMessages }}"
-						[ngClass]="{ 'messages-icon-new-messages-badge': numNewMessages > 0 }"
+						[class.messages-icon-new-messages-badge]="numNewMessages > 0"
 					></span>
 					<span [hidden]="!navbarOpen">Notifications</span>
 				</a>
@@ -203,7 +200,7 @@
 			<!-- Help Nav -->
 			<li class="element nav-popover nav-popover-bottom">
 				<a
-					[ngClass]="{ 'highlight-link': helpNavOpen }"
+					[class.highlight-link]="helpNavOpen"
 					[popover]="helpNav"
 					container="body"
 					containerClass="site-nav-popover-container"
@@ -252,7 +249,7 @@
 		</ul>
 	</div>
 
-	<ul class="nav nav-collapse flex-shrink-0">
+	<ul class="nav nav-collapse">
 		<!-- Divider -->
 		<li class="element element-divider element-divider-collapse"></li>
 
