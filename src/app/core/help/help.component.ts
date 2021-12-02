@@ -22,7 +22,7 @@ export class HelpComponent {
 
 	homeBreadcrumb: Breadcrumb = { label: 'Help', url: '/help' };
 
-	title: string;
+	title = '';
 
 	constructor(private route: ActivatedRoute, private router: Router) {
 		this.helpTopics = HelpTopics.getTopicList().map((topic: string) => ({

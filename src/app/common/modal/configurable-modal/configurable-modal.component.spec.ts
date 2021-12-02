@@ -33,7 +33,8 @@ describe('Modal Component', () => {
 			comp.ok();
 			expect(comp.modalRef.hide).toHaveBeenCalledTimes(1);
 			expect(comp.onClose.next).toHaveBeenCalledOnceWith({
-				action: ModalAction.OK
+				action: ModalAction.OK,
+				inputData: {}
 			});
 		});
 		it('should hide the modal and next an OK ModalAction and form data to the onClose Subject if there are inputs', () => {

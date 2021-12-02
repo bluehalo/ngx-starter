@@ -1,7 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgModel, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { NgSelectComponent } from '@ng-select/ng-select';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
@@ -21,42 +19,38 @@ import { TeamsService } from '../teams.service';
 		}
 	]
 })
-export class TeamSelectInputComponent implements ControlValueAccessor, OnDestroy, OnInit {
+export class TeamSelectInputComponent implements ControlValueAccessor {
 	@ViewChild(NgModel, { static: true })
-	model: NgModel;
+	model?: NgModel;
 
-	@Input() placeholder: string;
+	@Input() placeholder = '';
 
-	private innerValue: Team;
-	private changed = new Array<(value: Team) => void>();
+	private innerValue?: Team;
+	private changed = new Array<(value: Team | undefined) => void>();
 	private touched = new Array<() => void>();
 
 	options$: Observable<Team[]>;
 
-	constructor(private teamsService: TeamsService) {}
-
-	ngOnDestroy() {}
-
-	ngOnInit() {
+	constructor(private teamsService: TeamsService) {
 		this.options$ = this.teamsService.getTeamsCanManageResources().pipe(untilDestroyed(this));
 	}
 
-	get value(): Team {
+	get value(): Team | undefined {
 		return this.innerValue;
 	}
 
-	set value(value: Team) {
+	set value(value: Team | undefined) {
 		if (this.innerValue !== value) {
 			this.writeValue(value);
 			this.propagateChange();
 		}
 	}
 
-	writeValue(value: Team) {
+	writeValue(value: Team | undefined) {
 		this.innerValue = value;
 	}
 
-	registerOnChange(fn: (value: Team) => void) {
+	registerOnChange(fn: (value: Team | undefined) => void) {
 		this.changed.push(fn);
 	}
 

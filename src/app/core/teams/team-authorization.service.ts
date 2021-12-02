@@ -11,7 +11,7 @@ import { Team } from './team.model';
 @UntilDestroy()
 @Injectable()
 export class TeamAuthorizationService {
-	private member: TeamMember;
+	private member!: TeamMember;
 
 	constructor(private sessionService: SessionService) {
 		this.sessionService

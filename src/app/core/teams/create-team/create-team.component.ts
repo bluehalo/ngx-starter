@@ -20,7 +20,6 @@ import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
-import { Config } from '../../config.model';
 import { ConfigService } from '../../config.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -37,7 +36,7 @@ export class CreateTeamComponent implements OnInit {
 
 	isAdmin = false;
 
-	teamAdmin: User | null;
+	teamAdmin: User | null = null;
 
 	usersLoading = false;
 	usersInput$ = new Subject<string>();
@@ -45,7 +44,7 @@ export class CreateTeamComponent implements OnInit {
 
 	isSubmitting = false;
 
-	private user: User | null;
+	private user: User | null = null;
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 

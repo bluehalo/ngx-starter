@@ -9,9 +9,9 @@ import { ModalAction, ModalCloseEvent, ModalInput } from '../modal.model';
 	styleUrls: ['configurable-modal.component.scss']
 })
 export class ConfigurableModalComponent extends AbstractModalDirective {
-	message: string;
+	message = '';
 
-	inputs: ModalInput[];
+	inputs: ModalInput[] = [];
 
 	formData: any = {};
 

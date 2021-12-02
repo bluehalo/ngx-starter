@@ -33,9 +33,9 @@ import { AddedMember, TeamsService } from '../teams.service';
 	]
 })
 export class AddMembersModalComponent implements OnInit {
-	@Input() teamId: string;
+	@Input() teamId!: string;
 
-	@Output() readonly usersAdded: EventEmitter<number> = new EventEmitter();
+	@Output() readonly usersAdded = new EventEmitter<number>();
 
 	addedMembers: AddedMember[] = [];
 
@@ -47,7 +47,7 @@ export class AddMembersModalComponent implements OnInit {
 
 	usersLoading = false;
 	usersInput$ = new Subject<string>();
-	users$: Observable<User[]>;
+	users$!: Observable<User[]>;
 
 	private defaultRole = 'member';
 
@@ -56,12 +56,23 @@ export class AddMembersModalComponent implements OnInit {
 	constructor(private teamsService: TeamsService, public modalRef: BsModalRef) {}
 
 	ngOnInit() {
+		if (!this.teamId) {
+			throw new TypeError(`'TeamId' is required`);
+		}
+
 		this.users$ = this.usersInput$
 			.pipe(
 				debounceTime(200),
 				distinctUntilChanged(),
 				tap(() => (this.usersLoading = true)),
-				switchMap(term => this.teamsService.searchUsers({}, term, this.pagingOptions, {})),
+				switchMap(term =>
+					this.teamsService.searchUsers(
+						{ 'teams._id': { $ne: this.teamId } },
+						term,
+						this.pagingOptions,
+						{}
+					)
+				),
 				map(result =>
 					result.elements.filter(
 						(user: any) =>

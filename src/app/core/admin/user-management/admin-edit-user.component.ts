@@ -15,7 +15,7 @@ import { ManageUserComponent } from './manage-user.component';
 	selector: 'admin-edit-user',
 	templateUrl: './manage-user.component.html'
 })
-export class AdminUpdateUserComponent extends ManageUserComponent implements OnDestroy {
+export class AdminEditUserComponent extends ManageUserComponent implements OnDestroy {
 	private id: string;
 
 	private sub: any;

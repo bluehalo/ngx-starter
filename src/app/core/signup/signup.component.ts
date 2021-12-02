@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { SystemAlertService } from '../../common/system-alert.module';
@@ -17,12 +17,10 @@ import { User } from '../auth/user.model';
 	selector: 'user-signup',
 	templateUrl: '../admin/user-management/manage-user.component.html'
 })
-export class SignupComponent extends ManageUserComponent implements OnDestroy, OnInit {
+export class SignupComponent extends ManageUserComponent implements OnInit {
 	mode = 'signup';
 
-	inviteId: string;
-
-	private routeParamSubscription: Subscription;
+	inviteId?: string;
 
 	constructor(
 		protected router: Router,
@@ -36,14 +34,12 @@ export class SignupComponent extends ManageUserComponent implements OnDestroy, O
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.routeParamSubscription = this.route.queryParams
-			.pipe(untilDestroyed(this))
-			.subscribe((params: Params) => {
-				this.inviteId = params.inviteId;
-				if (!isEmpty(params.email)) {
-					this.user.userModel.email = params.email;
-				}
-			});
+		this.route.queryParams.pipe(untilDestroyed(this)).subscribe((params: Params) => {
+			this.inviteId = params.inviteId;
+			if (!isEmpty(params.email)) {
+				this.user.userModel.email = params.email;
+			}
+		});
 	}
 
 	initialize() {
@@ -60,9 +56,5 @@ export class SignupComponent extends ManageUserComponent implements OnDestroy, O
 
 	submitUser(user: User): Observable<any> {
 		return this.authService.signup(user);
-	}
-
-	ngOnDestroy() {
-		this.routeParamSubscription.unsubscribe();
 	}
 }

@@ -28,7 +28,7 @@ export class SiteNavbarComponent implements OnInit {
 	teamNavOpen = false;
 	messagesNavOpen = false;
 
-	apiDocsLink: string;
+	apiDocsLink = '';
 	showApiDocsLink = false;
 
 	showFeedbackOption = true;
@@ -66,7 +66,10 @@ export class SiteNavbarComponent implements OnInit {
 		private configService: ConfigService,
 		private sessionService: SessionService,
 		private messageService: MessageService
-	) {}
+	) {
+		this.adminMenuItems = AdminTopics.getTopics();
+		this.navbarItems = NavbarTopics.getTopics();
+	}
 
 	ngOnInit() {
 		this.sessionService
@@ -87,9 +90,6 @@ export class SiteNavbarComponent implements OnInit {
 				this.userPreferencesLink = config?.userPreferences?.path ?? '';
 			});
 
-		this.adminMenuItems = AdminTopics.getTopics();
-
-		this.navbarItems = NavbarTopics.getTopics();
 		this.messageService.numMessagesIndicator.pipe(untilDestroyed(this)).subscribe(count => {
 			this.numNewMessages = count;
 		});

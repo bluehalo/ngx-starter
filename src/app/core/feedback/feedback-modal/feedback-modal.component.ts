@@ -16,13 +16,11 @@ import { FeedbackService } from '../feedback.service';
 	styleUrls: ['feedback-modal.component.scss']
 })
 export class FeedbackModalComponent implements OnInit {
-	error: string | null;
-
-	success: string;
+	error: string | null = null;
 
 	submitting = false;
 
-	classificationOptions: any[];
+	classificationOptions: any[] = [];
 
 	baseUrl = '';
 
@@ -63,7 +61,6 @@ export class FeedbackModalComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(
 				() => {
-					this.success = 'Feedback successfully submitted!';
 					setTimeout(() => this.modalRef.hide(), 1500);
 				},
 				(error: HttpErrorResponse) => {

@@ -74,7 +74,13 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		{ name: 'Message', sortable: false, iconClass: 'fa-file-text-o' }
 	];
 
-	dateRangeOptions: any[];
+	dateRangeOptions = [
+		{ value: -1, display: 'Last 24 Hours' },
+		{ value: -3, display: 'Last 3 Days' },
+		{ value: -7, display: 'Last 7 Days' },
+		{ value: 'everything', display: 'Everything' },
+		{ value: 'choose', display: 'Select Date Range' }
+	];
 
 	dateRangeFilter: any;
 
@@ -86,28 +92,14 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	searchUsersRef: Observable<any>;
 
-	private userPagingOpts: PagingOptions;
+	private userPagingOpts = new PagingOptions(0, 20, 0, 0, 'username', SortDirection.asc);
 
 	private queryUserObj: any;
 
-	private auditModalRef: BsModalRef;
+	private auditModalRef: BsModalRef | null = null;
 
 	constructor(private auditService: AuditService, private modalService: BsModalService) {
 		super();
-	}
-
-	ngOnInit() {
-		this.dateRangeOptions = [
-			{ value: -1, display: 'Last 24 Hours' },
-			{ value: -3, display: 'Last 3 Days' },
-			{ value: -7, display: 'Last 7 Days' },
-			{ value: 'everything', display: 'Everything' },
-			{ value: 'choose', display: 'Select Date Range' }
-		];
-
-		this.userPagingOpts = new PagingOptions(0, 20);
-		this.userPagingOpts.sortField = 'username';
-		this.userPagingOpts.sortDir = SortDirection.asc;
 
 		// Default date range to last day
 		this.dateRangeFilter = {
@@ -128,7 +120,9 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 				});
 			})
 		);
+	}
 
+	ngOnInit() {
 		// Load action and audit type options from the server
 		forkJoin([
 			this.auditService.getDistinctAuditValues('audit.action'),
@@ -169,16 +163,20 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			case 'viewDetails':
 				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, {
 					ignoreBackdropClick: true,
-					class: 'modal-dialog-scrollable modal-lg'
+					class: 'modal-dialog-scrollable modal-lg',
+					initialState: {
+						auditEntry
+					}
 				});
-				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			case 'viewChanges':
 				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, {
 					ignoreBackdropClick: true,
-					class: 'modal-dialog-scrollable modal-lg'
+					class: 'modal-dialog-scrollable modal-lg',
+					initialState: {
+						auditEntry
+					}
 				});
-				this.auditModalRef.content.auditEntry = auditEntry;
 				break;
 			default:
 				break;

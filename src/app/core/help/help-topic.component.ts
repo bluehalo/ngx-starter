@@ -37,15 +37,15 @@ export class HelpTopics {
 	template: '<div #content></div>'
 })
 export class HelpTopicComponent {
-	@ViewChild('content', { read: ViewContainerRef, static: true }) content: ViewContainerRef;
+	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
 
 	@Input()
 	set key(key: string) {
-		if (null != this.componentRef) {
+		if (this.componentRef) {
 			this.componentRef.destroy();
 		}
 
-		if (null != key && null != HelpTopics.topics[key]) {
+		if (this.content && key && HelpTopics.topics[key]) {
 			// Dynamically create the component
 			const factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(
 				HelpTopics.topics[key]
@@ -56,7 +56,7 @@ export class HelpTopicComponent {
 		}
 	}
 
-	componentRef: ComponentRef<any>;
+	componentRef?: ComponentRef<any>;
 
 	constructor(private resolver: ComponentFactoryResolver) {}
 }

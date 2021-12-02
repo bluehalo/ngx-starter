@@ -13,11 +13,13 @@ import { ControlValueAccessor, NgModel, NG_VALUE_ACCESSOR } from '@angular/forms
 	]
 })
 export class MultiSelectInputComponent implements ControlValueAccessor {
-	@Input() placeholder: string;
-	@ViewChild(NgModel) model: NgModel;
+	@Input() placeholder = '';
+
+	@ViewChild(NgModel) model?: NgModel;
+
 	autocompleteOpen = false;
 
-	private innerValue: string[];
+	private innerValue: string[] = [];
 
 	onChange = (_: any) => {};
 	onTouched = () => {};

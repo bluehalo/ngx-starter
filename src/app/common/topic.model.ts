@@ -1,6 +1,6 @@
 import sortBy from 'lodash/sortBy';
 
-export class Topic {
+export interface Topic {
 	id: string;
 	ordinal?: number;
 	path: string;

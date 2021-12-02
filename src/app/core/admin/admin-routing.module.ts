@@ -15,7 +15,7 @@ import { CreateMessageComponent } from './messages/create-message.component';
 import { UpdateMessageComponent } from './messages/edit-message.component';
 import { ListMessagesComponent } from './messages/list-messages.component';
 import { AdminCreateUserComponent } from './user-management/admin-create-user.component';
-import { AdminUpdateUserComponent } from './user-management/admin-edit-user.component';
+import { AdminEditUserComponent } from './user-management/admin-edit-user.component';
 import { AdminListUsersComponent } from './user-management/admin-list-users.component';
 
 @NgModule({
@@ -49,7 +49,7 @@ import { AdminListUsersComponent } from './user-management/admin-list-users.comp
 					},
 					{
 						path: 'user/:id',
-						component: AdminUpdateUserComponent
+						component: AdminEditUserComponent
 					},
 
 					/**

@@ -7,9 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class LoadingOverlayComponent {
 	@Input() message = 'Loading...';
-	@Input() isLoading: boolean;
+	@Input() isLoading = false;
 	@Input() isError = false;
-	@Input() errorMessage: string;
+	@Input() errorMessage = '';
 
 	@Output() readonly retry = new EventEmitter();
 

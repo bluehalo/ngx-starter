@@ -14,7 +14,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AdminCreateUserComponent } from './admin-create-user.component';
-import { AdminUpdateUserComponent } from './admin-edit-user.component';
+import { AdminEditUserComponent } from './admin-edit-user.component';
 import { AdminListUsersComponent } from './admin-list-users.component';
 import { AdminUsersService } from './admin-users.service';
 
@@ -35,7 +35,7 @@ import { AdminUsersService } from './admin-users.service';
 		SearchInputModule
 	],
 	exports: [],
-	declarations: [AdminCreateUserComponent, AdminListUsersComponent, AdminUpdateUserComponent],
+	declarations: [AdminCreateUserComponent, AdminListUsersComponent, AdminEditUserComponent],
 	providers: [AdminUsersService]
 })
 export class AdminUserModule {}
