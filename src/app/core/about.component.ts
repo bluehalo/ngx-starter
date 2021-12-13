@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
-import { Config } from './config.model';
 import { ConfigService } from './config.service';
 
 @UntilDestroy()
@@ -16,8 +15,7 @@ import { ConfigService } from './config.service';
 				</div>
 			</div>
 		</div>
-	`,
-	styles: ['']
+	`
 })
 export class AboutComponent implements OnInit {
 	appTitle?: string;

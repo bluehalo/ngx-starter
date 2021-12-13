@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
 				</div>
 			</div>
 		</div>
-	`,
-	styles: ['']
+	`
 })
 export class AccessComponent {
 	status = '403';
