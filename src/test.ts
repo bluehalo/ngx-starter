@@ -2,7 +2,7 @@
 
 /* tslint:disable:ordered-imports */
 // we need to import this file first in order to use fakeAsync
-import 'zone.js/dist/zone-testing';
+import 'zone.js/testing';
 
 import { getTestBed } from '@angular/core/testing';
 import {
