@@ -32,7 +32,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
               "lodash",
@@ -53,10 +53,7 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "customWebpackConfig": {
-              "path": "./extra-webpack.config.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
