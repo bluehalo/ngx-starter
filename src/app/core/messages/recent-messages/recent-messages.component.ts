@@ -14,7 +14,7 @@ import { MessageService } from '../message.service';
 })
 export class RecentMessagesComponent implements OnInit {
 	@Input() container: any;
-	messages: Message[];
+	messages: Message[] = [];
 	loading = false;
 
 	messageType = MessageType;
@@ -22,8 +22,6 @@ export class RecentMessagesComponent implements OnInit {
 	constructor(private messageService: MessageService, private router: Router) {}
 
 	ngOnInit() {
-		this.messages = [];
-
 		this.messageService.messageReceived.pipe(untilDestroyed(this)).subscribe(() => {
 			// Redo search on a new message
 			this.load();

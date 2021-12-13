@@ -14,7 +14,7 @@ export class SessionService {
 	sessionSubject = new BehaviorSubject<Session | null>(null);
 
 	// Previous url to store in case we want to redirect there later
-	private previousUrl: string;
+	private previousUrl?: string;
 
 	private readonly mapUserModelToSession = pipe(
 		map((result: any): Session | null => {
@@ -93,7 +93,9 @@ export class SessionService {
 	}
 
 	goToPreviousRoute() {
-		this.goToRoute(this.previousUrl, { replaceUrl: true });
+		if (this.previousUrl) {
+			this.goToRoute(this.previousUrl, { replaceUrl: true });
+		}
 	}
 
 	private goToRoute(url: string, extras?: NavigationExtras) {

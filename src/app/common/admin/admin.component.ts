@@ -9,8 +9,6 @@ import { AdminTopic, AdminTopics } from './admin-topic.model';
 export class AdminComponent {
 	helpTopics: AdminTopic[] = [];
 
-	title: string;
-
 	constructor() {
 		this.helpTopics = AdminTopics.getTopics();
 	}

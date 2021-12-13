@@ -20,10 +20,6 @@ export class SocketService {
 		private authorizationService: AuthorizationService,
 		private sessionService: SessionService
 	) {
-		this.initialize();
-	}
-
-	public initialize(): void {
 		// Do not autoconnect when the socket is created.  We will wait to do that ourselves once the
 		// user has logged in.
 		this.socket = io.connect({

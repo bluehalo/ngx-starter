@@ -12,7 +12,12 @@
 	<div class="d-flex mb-3">
 		<h1>{{ team.name }} (Date Created: {{ team.created | utcDate: 'MM/DD/YYYY' }})</h1>
 
-		<button type="button" class="btn btn-link ml-auto" (click)="remove()" *ngIf="canManageTeam">
+		<button
+			type="button"
+			class="btn btn-link ml-auto"
+			(click)="remove(team)"
+			*ngIf="canManageTeam"
+		>
 			Delete Team
 		</button>
 	</div>

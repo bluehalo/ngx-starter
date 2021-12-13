@@ -99,9 +99,9 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 
 	possibleRoles: Role[] = Role.ROLES;
 
-	enableUserBypassAC: false;
+	enableUserBypassAC = false;
 
-	private requiredExternalRoles: string[];
+	private requiredExternalRoles: string[] = [];
 
 	constructor(
 		private router: Router,

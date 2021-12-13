@@ -7,9 +7,11 @@ import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 })
 export class NotificationComponent {
 	@Input() notificationType: 'info' | 'success' | 'warning' | 'danger' = 'info';
-	@Input() message: string;
+	@Input() message = '';
 	@Input() showActions = false;
 	@Input() small = false;
 
-	@ContentChild('notificationActions', { static: true }) actionTemplate: TemplateRef<any>;
+	@ContentChild('notificationActions', { static: true }) actionTemplate: TemplateRef<
+		any
+	> | null = null;
 }

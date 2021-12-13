@@ -10,7 +10,7 @@ export class TeamMember extends User {
 
 	public role = 'member';
 
-	public roleDisplay: string;
+	public roleDisplay = TeamRole.getDisplay(this.role);
 
 	constructor() {
 		super();

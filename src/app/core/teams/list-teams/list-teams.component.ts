@@ -25,7 +25,7 @@ import { TeamsService } from '../teams.service';
 export class ListTeamsComponent extends AbstractPageableDataComponent<Team>
 	implements OnChanges, OnInit {
 	@Input()
-	parent: Team;
+	parent?: Team;
 
 	@Input()
 	embedded = false;

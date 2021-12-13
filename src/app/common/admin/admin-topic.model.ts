@@ -1,6 +1,6 @@
 import { Topic, TopicRegistry } from '../topic.model';
 
-export class AdminTopic extends Topic {}
+export type AdminTopic = Topic;
 
 const adminTopics = new TopicRegistry<AdminTopic>();
 export { adminTopics as AdminTopics };

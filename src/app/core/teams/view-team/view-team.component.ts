@@ -21,7 +21,7 @@ import { TeamsService } from '../teams.service';
 	templateUrl: './view-team.component.html'
 })
 export class ViewTeamComponent implements OnInit {
-	team: Team;
+	team?: Team;
 	_team: any;
 
 	nestedTeamsEnabled = false;
@@ -88,8 +88,8 @@ export class ViewTeamComponent implements OnInit {
 			.subscribe();
 	}
 
-	updateTeam(team: any) {
-		if (null != team) {
+	updateTeam(team: Team) {
+		if (team) {
 			this.team = team;
 			this.canManageTeam =
 				this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(team);
@@ -98,17 +98,17 @@ export class ViewTeamComponent implements OnInit {
 		}
 	}
 
-	remove() {
+	remove(team: Team) {
 		this.modalService
 			.confirm(
 				'Delete team?',
-				`Are you sure you want to delete the team: <strong>"${this.team.name}"</strong>?<br/>This action cannot be undone.`,
+				`Are you sure you want to delete the team: <strong>"${team.name}"</strong>?<br/>This action cannot be undone.`,
 				'Delete'
 			)
 			.pipe(
 				first(),
 				filter(action => action === ModalAction.OK),
-				switchMap(() => this.teamsService.delete(this.team)),
+				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);

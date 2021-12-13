@@ -20,7 +20,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	newMessages = false;
 	messageType = MessageType;
 
-	@ViewChild(SearchInputComponent, { static: true }) searchInput: SearchInputComponent;
+	@ViewChild(SearchInputComponent, { static: true }) searchInput?: SearchInputComponent;
 
 	constructor(private messagesService: MessageService) {}
 
@@ -64,7 +64,7 @@ export class ViewAllMessagesComponent implements OnInit {
 	loadNewMessages() {
 		this.newMessages = false;
 		this.search = '';
-		this.searchInput.clearSearch();
+		this.searchInput?.clearSearch();
 		this.pageNumber = 0;
 		this.loadMessages(this.pageNumber);
 	}

@@ -5,5 +5,5 @@ import { Component, Input } from '@angular/core';
 	templateUrl: 'system-alert-icon.component.html'
 })
 export class SystemAlertIconComponent {
-	@Input() icon: string;
+	@Input() icon = 'info';
 }

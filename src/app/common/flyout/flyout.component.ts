@@ -6,11 +6,11 @@ import { Component, ContentChild, ElementRef, Input, OnInit, ViewChild } from '@
 	styleUrls: ['./flyout.component.scss']
 })
 export class FlyoutComponent implements OnInit {
-	@ViewChild('flyoutContentContainer') container: ElementRef;
-	@ContentChild('flyoutContent') content: ElementRef;
+	@ViewChild('flyoutContentContainer') container?: ElementRef;
+	@ContentChild('flyoutContent') content?: ElementRef;
 
 	@Input()
-	label: string;
+	label = '';
 
 	@Input()
 	placement: 'left' | 'right' | 'top' | 'bottom' = 'right';
@@ -22,22 +22,24 @@ export class FlyoutComponent implements OnInit {
 	ngOnInit() {}
 
 	toggle() {
-		if (this.placement === 'top' || this.placement === 'bottom') {
-			if (this.isOpen) {
-				this.container.nativeElement.style.height = '0';
+		if (this.content && this.container) {
+			if (this.placement === 'top' || this.placement === 'bottom') {
+				if (this.isOpen) {
+					this.container.nativeElement.style.height = '0';
+				} else {
+					this.container.nativeElement.style.height =
+						this.content.nativeElement.clientHeight + 'px';
+				}
 			} else {
-				this.container.nativeElement.style.height =
-					this.content.nativeElement.clientHeight + 'px';
+				if (this.isOpen) {
+					this.container.nativeElement.style.width = '0';
+				} else {
+					this.container.nativeElement.style.width =
+						this.content.nativeElement.clientWidth + 'px';
+				}
 			}
-		} else {
-			if (this.isOpen) {
-				this.container.nativeElement.style.width = '0';
-			} else {
-				this.container.nativeElement.style.width =
-					this.content.nativeElement.clientWidth + 'px';
-			}
-		}
 
-		this.isOpen = !this.isOpen;
+			this.isOpen = !this.isOpen;
+		}
 	}
 }

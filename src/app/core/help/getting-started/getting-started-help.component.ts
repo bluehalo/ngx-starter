@@ -14,9 +14,7 @@ import { HelpTopics } from '../help-topic.component';
 export class GettingStartedHelpComponent implements OnInit {
 	@Output() readonly backEvent = new EventEmitter();
 
-	config: any;
-
-	externalLinksEnabled: boolean;
+	externalLinks: any[] = [];
 
 	appName = 'Application';
 
@@ -27,13 +25,11 @@ export class GettingStartedHelpComponent implements OnInit {
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
-				this.config = config;
-				this.externalLinksEnabled =
-					config.welcomeLinks &&
-					config.welcomeLinks.enabled &&
-					Array.isArray(config.welcomeLinks.links) &&
-					!isEmpty(config.welcomeLinks.links);
-				this.appName = config.app.title;
+				if (config?.welcomeLinks?.enabled && Array.isArray(config?.welcomeLinks?.links)) {
+					this.externalLinks = config.welcomeLinks.links;
+				}
+
+				this.appName = config?.app?.title;
 			});
 	}
 

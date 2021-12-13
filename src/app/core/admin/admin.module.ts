@@ -24,7 +24,6 @@ import { AdminUserModule } from './user-management/admin-user.module';
 		AdminFeedbackModule,
 		CacheEntriesModule,
 		AdminMessagesModule,
-
 		AdminRoutingModule
 	],
 	exports: []

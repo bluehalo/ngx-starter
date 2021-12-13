@@ -99,7 +99,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 
 	feedbackStatusOptions = FeedbackStatusOption;
 
-	assigneeUsernames: string[];
+	assigneeUsernames: string[] = [];
 
 	constructor(
 		private feedbackService: FeedbackService,

@@ -35,15 +35,15 @@ import { TeamsService } from '../teams.service';
 export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
 	implements OnChanges, OnDestroy, OnInit {
 	@Input()
-	team: Team;
+	team!: Team;
 
-	isUserAdmin: boolean;
+	isUserAdmin = false;
 
 	canManageTeam = false;
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
-	user: User | null;
+	user: User | null = null;
 
 	headers: SortableTableHeader[] = [
 		{
@@ -85,6 +85,9 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	}
 
 	ngOnInit() {
+		if (!this.team) {
+			throw new TypeError(`'Team' is required`);
+		}
 		this.alertService.clearAllAlerts();
 
 		this.canManageTeam =
@@ -128,9 +131,11 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 	addMembers() {
 		this.modalRef = this.bsModalService.show(AddMembersModalComponent, {
 			ignoreBackdropClick: true,
-			class: 'modal-dialog-scrollable modal-lg'
+			class: 'modal-dialog-scrollable modal-lg',
+			initialState: {
+				teamId: this.team._id
+			}
 		});
-		this.modalRef.content.teamId = this.team._id;
 		this.modalRef.content.usersAdded
 			.pipe(untilDestroyed(this))
 			.subscribe((usersAdded: number) => {

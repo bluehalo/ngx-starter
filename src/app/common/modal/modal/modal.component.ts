@@ -11,7 +11,7 @@ export class ModalComponent {
 	 * Title to display in the modal header
 	 */
 	@Input()
-	title: string;
+	title = '';
 
 	/**
 	 * Text to display on the modal 'ok' button
@@ -26,10 +26,10 @@ export class ModalComponent {
 	cancelText = 'Cancel';
 
 	@Input()
-	disableOk: boolean;
+	disableOk = false;
 
 	@Input()
-	autoCaptureFocus: boolean;
+	autoCaptureFocus = false;
 
 	@Output()
 	readonly ok = new EventEmitter();

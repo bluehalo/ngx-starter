@@ -18,7 +18,7 @@ export class BreadcrumbComponent {
 		this._homeBreadcrumb = hb;
 		this.homeBreadcrumbChanged$.next(hb);
 	}
-	_homeBreadcrumb: Breadcrumb;
+	_homeBreadcrumb?: Breadcrumb;
 	homeBreadcrumbChanged$ = new BehaviorSubject<Breadcrumb | null>(null);
 
 	breadcrumbs: Breadcrumb[] = [];
@@ -30,7 +30,7 @@ export class BreadcrumbComponent {
 		merge(navEnd$, this.homeBreadcrumbChanged$)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				if (null != this._homeBreadcrumb) {
+				if (this._homeBreadcrumb) {
 					this.breadcrumbs = [this._homeBreadcrumb];
 					this.breadcrumbs = this.breadcrumbs.concat(
 						BreadcrumbService.getBreadcrumbs(

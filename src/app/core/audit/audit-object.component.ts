@@ -55,12 +55,10 @@ AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
 	template: '<div #content></div>'
 })
 export class AuditObjectComponent implements OnInit {
-	@ViewChild('content', { read: ViewContainerRef, static: true }) content: any;
+	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
 
 	@Input() auditObject: any = {};
 	@Input() auditType = '';
-
-	private componentRef: ComponentRef<any>;
 
 	constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -73,7 +71,11 @@ export class AuditObjectComponent implements OnInit {
 			AuditObjectTypes.objects[this.auditType]
 		);
 
-		this.componentRef = this.content.createComponent(factory);
-		this.componentRef.instance.auditObject = this.auditObject;
+		const componentRef = this.content?.createComponent(factory) as ComponentRef<
+			DefaultAuditObjectComponent
+		>;
+		if (componentRef) {
+			componentRef.instance.auditObject = this.auditObject;
+		}
 	}
 }

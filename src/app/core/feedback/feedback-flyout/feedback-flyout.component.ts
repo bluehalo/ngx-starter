@@ -18,15 +18,14 @@ import { FeedbackService } from '../feedback.service';
 	styleUrls: ['./feedback-flyout.component.scss']
 })
 export class FeedbackFlyoutComponent implements OnInit {
-	@ViewChild(FlyoutComponent) flyout: FlyoutComponent;
+	@ViewChild(FlyoutComponent) flyout?: FlyoutComponent;
 
 	baseUrl = '';
 	feedback: Feedback = new Feedback();
 
-	classificationOptions: any[];
+	classificationOptions: any[] = [];
 
 	status: 'ready' | 'submitting' | 'success' | 'failure' = 'ready';
-	errorMsg: string;
 
 	constructor(
 		private router: Router,
@@ -51,7 +50,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 	}
 
 	closeForm() {
-		this.flyout.toggle();
+		this.flyout?.toggle();
 		setTimeout(() => {
 			this.feedback = new Feedback();
 			this.status = 'ready';
@@ -75,7 +74,6 @@ export class FeedbackFlyoutComponent implements OnInit {
 				},
 				(error: HttpErrorResponse) => {
 					this.status = 'failure';
-					this.errorMsg = error.error.message;
 				}
 			);
 	}
