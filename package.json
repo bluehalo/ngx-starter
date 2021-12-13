@@ -13,8 +13,7 @@
     "test": "ng test --code-coverage",
     "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint && stylelint './src/**/*.scss'",
-    "lint:fix": "ng lint --fix && stylelint './src/**/*.scss' --fix",
-    "e2e": "ng e2e"
+    "lint:fix": "ng lint --fix && stylelint './src/**/*.scss' --fix"
   },
   "private": true,
   "dependencies": {
