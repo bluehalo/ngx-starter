@@ -2,9 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { PagingOptions } from '../../../common/paging.module';
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { concat, of, Observable, Subject } from 'rxjs';
 import {
@@ -16,6 +13,9 @@ import {
 	switchMap,
 	tap
 } from 'rxjs/operators';
+
+import { PagingOptions } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -66,7 +66,7 @@ export class CreateTeamComponent implements OnInit {
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
-			.subscribe(config => {
+			.subscribe((config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
 			});
@@ -74,7 +74,7 @@ export class CreateTeamComponent implements OnInit {
 		this.sessionService
 			.getSession()
 			.pipe(untilDestroyed(this))
-			.subscribe(session => {
+			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isAdmin = this.authorizationService.isAdmin();
 				if (!this.isAdmin) {
@@ -85,12 +85,12 @@ export class CreateTeamComponent implements OnInit {
 		this.route.queryParamMap
 			.pipe(
 				untilDestroyed(this),
-				filter(params => params.has('parent')),
-				map(params => params.get('parent')),
+				filter((params) => params.has('parent')),
+				map((params) => params.get('parent')),
 				filter((id: string | null): id is string => id !== null),
-				switchMap(id => this.teamsService.get(id))
+				switchMap((id) => this.teamsService.get(id))
 			)
-			.subscribe(parent => {
+			.subscribe((parent) => {
 				this.team.parent = parent ?? undefined;
 			});
 
@@ -101,10 +101,10 @@ export class CreateTeamComponent implements OnInit {
 					debounceTime(200),
 					distinctUntilChanged(),
 					tap(() => (this.usersLoading = true)),
-					switchMap(term =>
+					switchMap((term) =>
 						this.teamsService.searchUsers({}, term, this.pagingOptions, {}, true)
 					),
-					map(result =>
+					map((result) =>
 						result.elements.filter(
 							(user: any) => user?.userModel._id !== this.teamAdmin?.userModel._id
 						)

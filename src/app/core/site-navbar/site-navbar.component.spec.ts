@@ -8,6 +8,7 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
+
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthorizationDirective } from '../auth/authorization.directive';
 import { AuthorizationService } from '../auth/authorization.service';

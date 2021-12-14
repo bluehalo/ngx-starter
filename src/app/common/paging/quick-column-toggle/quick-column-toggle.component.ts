@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
+
 import { QuickFiltersComponent } from '../quick-filters/quick-filters.component';
 
 export type ColumnConfig = {
@@ -36,10 +37,10 @@ export class QuickColumnToggleComponent extends QuickFiltersComponent {
 	}
 
 	private checkColumnConfiguration() {
-		if (this.filterKeys.every(key => this.filters[key].show)) {
+		if (this.filterKeys.every((key) => this.filters[key].show)) {
 			this.columnMode = 'all';
 		} else if (
-			this.filterKeys.some(key => this.filters[key].show !== this.defaultFilters[key].show)
+			this.filterKeys.some((key) => this.filters[key].show !== this.defaultFilters[key].show)
 		) {
 			this.columnMode = 'custom';
 		} else {

@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -11,11 +16,6 @@ import {
 } from '../../../common/paging.module';
 import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import cloneDeep from 'lodash/cloneDeep';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { ExportConfigService } from '../../export-config.service';
 import { Feedback, FeedbackStatusOption } from '../../feedback/feedback.model';
 import { FeedbackService } from '../../feedback/feedback.service';
@@ -26,8 +26,10 @@ import { AdminUsersService } from '../user-management/admin-users.service';
 	templateUrl: 'admin-list-feedback.component.html',
 	styleUrls: ['admin-list-feedback.component.scss']
 })
-export class AdminListFeedbackComponent extends AbstractPageableDataComponent<any>
-	implements OnInit {
+export class AdminListFeedbackComponent
+	extends AbstractPageableDataComponent<any>
+	implements OnInit
+{
 	// Columns to show/hide in user table
 	columns: ColumnConfig = {
 		'creator.name': { show: true, display: 'Submitted By' },
@@ -112,7 +114,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.getAll({ 'roles.admin': true }, 'username')
 			.pipe(take(1), untilDestroyed(this))
 			.subscribe({
-				next: usernames => {
+				next: (usernames) => {
 					this.assigneeUsernames = usernames as string[];
 				}
 			});
@@ -183,7 +185,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.updateFeedbackAssignee(this.items[index].id, assignee)
 			.pipe(take(1), untilDestroyed(this))
 			.subscribe({
-				next: updatedFeedback => {
+				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
 				error: (err: HttpErrorResponse) => {
@@ -197,7 +199,7 @@ export class AdminListFeedbackComponent extends AbstractPageableDataComponent<an
 			.updateFeedbackStatus(this.items[index].id, status)
 			.pipe(take(1), untilDestroyed(this))
 			.subscribe({
-				next: updatedFeedback => {
+				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
 				error: (err: HttpErrorResponse) => {

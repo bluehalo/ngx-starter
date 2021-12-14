@@ -3,6 +3,7 @@ import { ControlValueAccessor, NgModel, NG_VALUE_ACCESSOR } from '@angular/forms
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
@@ -59,6 +60,6 @@ export class TeamSelectInputComponent implements ControlValueAccessor {
 	}
 
 	propagateChange() {
-		this.changed.forEach(f => f(this.innerValue));
+		this.changed.forEach((f) => f(this.innerValue));
 	}
 }

@@ -3,6 +3,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/paging.module';
 import { SearchInputComponent } from 'src/app/common/search-input.module';
+
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 
@@ -26,7 +27,7 @@ export class ViewAllMessagesComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadMessages(this.pageNumber);
-		this.messagesService.messageReceived.pipe(untilDestroyed(this)).subscribe(message => {
+		this.messagesService.messageReceived.pipe(untilDestroyed(this)).subscribe((message) => {
 			this.newMessages = true;
 		});
 	}

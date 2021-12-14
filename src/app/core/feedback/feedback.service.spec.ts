@@ -68,7 +68,7 @@ describe('FeedbackService', () => {
 			const assignee = 'testuser';
 			const expected = new Feedback();
 
-			service.updateFeedbackAssignee(feedbackId, assignee).subscribe(actual => {
+			service.updateFeedbackAssignee(feedbackId, assignee).subscribe((actual) => {
 				expect(actual).toBe(expected);
 			}, fail); // should not error
 
@@ -84,7 +84,7 @@ describe('FeedbackService', () => {
 			const status = FeedbackStatusOption.CLOSED;
 			const expected = new Feedback();
 
-			service.updateFeedbackStatus(feedbackId, status).subscribe(actual => {
+			service.updateFeedbackStatus(feedbackId, status).subscribe((actual) => {
 				expect(actual).toBe(expected);
 			}, fail); // should not error
 

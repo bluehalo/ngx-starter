@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertModule, SystemAlertService } from 'src/app/common/system-alert.module';
+
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
@@ -76,7 +76,7 @@ describe('Create Message Component', () => {
 		fixture.detectChanges();
 		const buttons = rootHTMLElement.querySelectorAll('button');
 		let foundPreviewButton = false;
-		buttons.forEach(button => {
+		buttons.forEach((button) => {
 			if (button.innerText === 'Preview') {
 				foundPreviewButton = true;
 			}

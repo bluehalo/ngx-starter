@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
@@ -46,12 +46,10 @@ export class AdminEditUserComponent extends ManageUserComponent implements OnDes
 				if (null == this.user.userModel.roles) {
 					this.user.userModel.roles = {};
 				}
-				this.user.userModel.externalRolesDisplay = this.user.userModel.externalRoles?.join(
-					'\n'
-				);
-				this.user.userModel.externalGroupsDisplay = this.user.userModel.externalGroups?.join(
-					'\n'
-				);
+				this.user.userModel.externalRolesDisplay =
+					this.user.userModel.externalRoles?.join('\n');
+				this.user.userModel.externalGroupsDisplay =
+					this.user.userModel.externalGroups?.join('\n');
 				this.user.userModel.providerData = {
 					dn:
 						null != this.user.userModel.providerData

@@ -11,7 +11,6 @@ export class NotificationComponent {
 	@Input() showActions = false;
 	@Input() small = false;
 
-	@ContentChild('notificationActions', { static: true }) actionTemplate: TemplateRef<
-		any
-	> | null = null;
+	@ContentChild('notificationActions', { static: true }) actionTemplate: TemplateRef<any> | null =
+		null;
 }

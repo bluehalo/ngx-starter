@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 
@@ -7,13 +7,9 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	selector: 'external-links',
 	templateUrl: 'external-links.component.html'
 })
-export class ExternalLinksComponent implements OnInit {
+export class ExternalLinksComponent {
 	@Input()
 	links: any[] = [];
-
-	constructor() {}
-
-	ngOnInit() {}
 
 	handleLinkClick(evt: any) {
 		evt.stopPropagation();

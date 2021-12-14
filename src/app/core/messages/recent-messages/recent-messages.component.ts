@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import orderBy from 'lodash/orderBy';
+
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 
@@ -34,7 +35,7 @@ export class RecentMessagesComponent implements OnInit {
 		this.messageService
 			.recent()
 			.pipe(untilDestroyed(this))
-			.subscribe(result => {
+			.subscribe((result) => {
 				const messages = orderBy(result, ['created'], ['desc']);
 				this.messages = messages as Message[];
 				this.messageService.numMessagesIndicator.next(this.messages.length);
@@ -46,14 +47,14 @@ export class RecentMessagesComponent implements OnInit {
 		this.messageService
 			.dismiss([message._id])
 			.pipe(untilDestroyed(this))
-			.subscribe(result => {
+			.subscribe((result) => {
 				this.load();
 			});
 	}
 
 	dismissAll() {
 		this.messageService
-			.dismiss(this.messages.map(m => m._id))
+			.dismiss(this.messages.map((m) => m._id))
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.load();

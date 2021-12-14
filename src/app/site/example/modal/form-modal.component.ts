@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { AbstractModalizableDirective } from '../../../common/modal/abstract-modalizable.directive';
-
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
+import { AbstractModalizableDirective } from '../../../common/modal/abstract-modalizable.directive';
 
 @UntilDestroy()
 @Component({

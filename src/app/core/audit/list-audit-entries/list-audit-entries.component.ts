@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import _isString from 'lodash/isString';
+import { DateTime } from 'luxon';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { forkJoin, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -8,13 +15,6 @@ import {
 	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import _isString from 'lodash/isString';
-import { DateTime } from 'luxon';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { forkJoin, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
 import { AuditOption } from '../audit.classes';
@@ -25,8 +25,10 @@ import { AuditService } from '../audit.service';
 	templateUrl: './list-audit-entries.component.html',
 	styleUrls: ['./list-audit-entries.component.scss']
 })
-export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any>
-	implements OnInit {
+export class ListAuditEntriesComponent
+	extends AbstractPageableDataComponent<any>
+	implements OnInit
+{
 	actionOptions: AuditOption[] = [];
 	actionsFormShown = true;
 	actorFormShown = true;
@@ -84,9 +86,7 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 
 	dateRangeFilter: any;
 
-	queryStartDate: Date = DateTime.utc()
-		.minus({ days: 1 })
-		.toJSDate();
+	queryStartDate: Date = DateTime.utc().minus({ days: 1 }).toJSDate();
 
 	queryEndDate: Date = DateTime.utc().toJSDate();
 
@@ -198,17 +198,17 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 			};
 		}
 
-		const selectedActions = this.actionOptions.filter(opt => opt.selected);
+		const selectedActions = this.actionOptions.filter((opt) => opt.selected);
 		if (selectedActions.length > 0) {
 			query['audit.action'] = {
-				$in: selectedActions.map(opt => opt.display)
+				$in: selectedActions.map((opt) => opt.display)
 			};
 		}
 
-		const selectedAuditTypes = this.auditTypeOptions.filter(opt => opt.selected);
+		const selectedAuditTypes = this.auditTypeOptions.filter((opt) => opt.selected);
 		if (selectedAuditTypes.length > 0) {
 			query['audit.auditType'] = {
-				$in: selectedAuditTypes.map(opt => opt.display)
+				$in: selectedAuditTypes.map((opt) => opt.display)
 			};
 		}
 
@@ -226,15 +226,11 @@ export class ListAuditEntriesComponent extends AbstractPageableDataComponent<any
 		if (this.dateRangeFilter.selected === 'choose') {
 			if (null != this.queryStartDate) {
 				timeQuery = null == timeQuery ? {} : timeQuery;
-				timeQuery.$gte = DateTime.fromJSDate(this.queryStartDate)
-					.startOf('day')
-					.toUTC();
+				timeQuery.$gte = DateTime.fromJSDate(this.queryStartDate).startOf('day').toUTC();
 			}
 			if (null != this.queryEndDate) {
 				timeQuery = null == timeQuery ? {} : timeQuery;
-				timeQuery.$lt = DateTime.fromJSDate(this.queryEndDate)
-					.endOf('day')
-					.toUTC();
+				timeQuery.$lt = DateTime.fromJSDate(this.queryEndDate).endOf('day').toUTC();
 			}
 		} else if (this.dateRangeFilter.selected !== 'everything') {
 			timeQuery = {

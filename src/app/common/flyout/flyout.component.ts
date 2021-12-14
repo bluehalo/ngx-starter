@@ -1,11 +1,11 @@
-import { Component, ContentChild, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-flyout',
 	templateUrl: './flyout.component.html',
 	styleUrls: ['./flyout.component.scss']
 })
-export class FlyoutComponent implements OnInit {
+export class FlyoutComponent {
 	@ViewChild('flyoutContentContainer') container?: ElementRef;
 	@ContentChild('flyoutContent') content?: ElementRef;
 
@@ -16,10 +16,6 @@ export class FlyoutComponent implements OnInit {
 	placement: 'left' | 'right' | 'top' | 'bottom' = 'right';
 
 	isOpen = false;
-
-	constructor() {}
-
-	ngOnInit() {}
 
 	toggle() {
 		if (this.content && this.container) {

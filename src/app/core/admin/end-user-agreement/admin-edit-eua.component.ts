@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { ModalService } from '../../../common/modal.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+
+import { ModalService } from '../../../common/modal.module';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
@@ -30,7 +30,7 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 
 		this.route.params.subscribe((params: Params) => {
 			this.id = params[`id`];
-			this.euaService.get(this.id).subscribe(eua => {
+			this.euaService.get(this.id).subscribe((eua) => {
 				this.eua = eua;
 			});
 		});

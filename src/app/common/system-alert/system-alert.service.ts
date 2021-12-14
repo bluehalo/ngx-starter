@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
+
 import { SystemAlert } from './system-alert.model';
 
 @Injectable({
@@ -26,7 +27,7 @@ export class SystemAlertService {
 	}
 
 	clearAlertById(id: number) {
-		const index = this.alerts.findIndex(value => value.id === id);
+		const index = this.alerts.findIndex((value) => value.id === id);
 		this.clear(index);
 	}
 

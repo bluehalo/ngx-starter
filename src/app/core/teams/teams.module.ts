@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { DirectivesModule } from '../../common/directives.module';
 import { ModalModule, ModalService } from '../../common/modal.module';
@@ -11,10 +14,6 @@ import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SearchInputModule } from '../../common/search-input.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
-
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AddMembersModalComponent } from './add-members-modal/add-members-modal.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamsHelpComponent } from './help/teams-help.component';

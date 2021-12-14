@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ModalService } from '../../../common/modal.module';
 import { ModalConfig } from '../../../common/modal/modal.model';
-
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
-
 import { FormModalComponent } from './form-modal.component';
 
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html'
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
 	constructor(public modalService: ModalService) {}
 
 	alertConfig: any = {
@@ -40,8 +38,6 @@ export class ModalComponent implements OnInit {
 	{ "type": "text", "label": "Field 1", "key": "field1", "required": true },
 	{ "type": "textarea", "label": "Field 2", "key": "field2", "required": true }
 ]`;
-
-	ngOnInit() {}
 
 	showAlert() {
 		this.modalService.alert(

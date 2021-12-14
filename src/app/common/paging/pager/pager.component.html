@@ -1,7 +1,9 @@
 <!-- Paging Controls -->
 <div
 	*ngIf="
-		totalSize > 0 || (totalSize == null && currentSize > 0) || pageNumber != 0;
+		totalSize > 0 ||
+			((totalSize ?? null === null) && currentSize > 0) ||
+			(pageNumber ?? 0 !== 0);
 		else invalidPage
 	"
 >

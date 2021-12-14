@@ -2,6 +2,7 @@ import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 
 import { AsyncSubject, Observable } from 'rxjs';
+
 import { Config } from './config.model';
 
 @Injectable()

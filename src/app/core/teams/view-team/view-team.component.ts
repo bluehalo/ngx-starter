@@ -2,12 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ModalAction, ModalService } from '../../../common/modal.module';
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
+
+import { ModalAction, ModalService } from '../../../common/modal.module';
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { ConfigService } from '../../config.service';
@@ -47,17 +47,17 @@ export class ViewTeamComponent implements OnInit {
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
-			.subscribe(config => {
+			.subscribe((config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
 			});
 
 		this.route.data
 			.pipe(
-				map(data => data.team),
+				map((data) => data.team),
 				untilDestroyed(this)
 			)
-			.subscribe(team => {
+			.subscribe((team) => {
 				this.updateTeam(team);
 			});
 	}
@@ -107,7 +107,7 @@ export class ViewTeamComponent implements OnInit {
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {

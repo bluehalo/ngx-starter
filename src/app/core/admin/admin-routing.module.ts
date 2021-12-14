@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from '../../common/admin/admin.component';
-
 import { AuthGuard } from '../auth/auth.guard';
 import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
 import {

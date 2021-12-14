@@ -15,7 +15,7 @@ describe('AdminTopics', () => {
 		});
 
 		afterAll(() => {
-			existingTopics.forEach(topic => {
+			existingTopics.forEach((topic) => {
 				AdminTopics.registerTopic(topic);
 			});
 		});

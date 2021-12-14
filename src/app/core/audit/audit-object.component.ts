@@ -67,13 +67,14 @@ export class AuditObjectComponent implements OnInit {
 			this.auditType = 'default';
 		}
 
-		const factory: ComponentFactory<Component> = this.componentFactoryResolver.resolveComponentFactory(
-			AuditObjectTypes.objects[this.auditType]
-		);
+		const factory: ComponentFactory<Component> =
+			this.componentFactoryResolver.resolveComponentFactory(
+				AuditObjectTypes.objects[this.auditType]
+			);
 
-		const componentRef = this.content?.createComponent(factory) as ComponentRef<
-			DefaultAuditObjectComponent
-		>;
+		const componentRef = this.content?.createComponent(
+			factory
+		) as ComponentRef<DefaultAuditObjectComponent>;
 		if (componentRef) {
 			componentRef.instance.auditObject = this.auditObject;
 		}

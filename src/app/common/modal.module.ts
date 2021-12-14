@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
+
 import { ConfigurableModalComponent } from './modal/configurable-modal/configurable-modal.component';
 import { ContainerModalComponent } from './modal/container-modal/container-modal.component';
 import { ModalComponent } from './modal/modal/modal.component';

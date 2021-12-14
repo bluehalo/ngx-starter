@@ -1,10 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 
-import { SystemAlertModule, SystemAlertService } from '../../common/system-alert.module';
-
 import _cloneDeep from 'lodash/cloneDeep';
 import { PagingOptions, PagingResults } from 'src/app/common/paging.module';
+
+import { SystemAlertModule, SystemAlertService } from '../../common/system-alert.module';
 import { User } from '../auth/user.model';
 import { AuditService } from './audit.service';
 
@@ -32,7 +32,7 @@ describe('Audit Service', () => {
 	describe('#getDistinctValues', () => {
 		it('should call once and return an Observable<string[]>', () => {
 			const values = ['value01', 'value 02'];
-			service.getDistinctAuditValues('test-field').subscribe(actual => {
+			service.getDistinctAuditValues('test-field').subscribe((actual) => {
 				expect(actual).toBe(values);
 			});
 
@@ -52,7 +52,7 @@ describe('Audit Service', () => {
 			} as PagingResults;
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);
-			service.search({ actor: 'test' }, 'some-search', paging).subscribe(actual => {
+			service.search({ actor: 'test' }, 'some-search', paging).subscribe((actual) => {
 				expect(actual).toBe(results);
 			});
 
@@ -75,7 +75,7 @@ describe('Audit Service', () => {
 				]
 			} as PagingResults;
 			const expectedResults = _cloneDeep(results);
-			expectedResults.elements = expectedResults.elements.map(element => {
+			expectedResults.elements = expectedResults.elements.map((element) => {
 				return new User().setFromUserModel(element);
 			});
 			const paging = new PagingOptions();
@@ -83,7 +83,7 @@ describe('Audit Service', () => {
 			const query = { actor: 'test' };
 			const search = 'some-search';
 			const options = { test: false };
-			service.matchUser(query, search, paging, options).subscribe(actual => {
+			service.matchUser(query, search, paging, options).subscribe((actual) => {
 				expect(actual).toEqual(expectedResults);
 			});
 

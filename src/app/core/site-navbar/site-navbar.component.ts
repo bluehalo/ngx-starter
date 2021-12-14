@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
+
+import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
@@ -75,14 +75,14 @@ export class SiteNavbarComponent implements OnInit {
 		this.sessionService
 			.getSession()
 			.pipe(untilDestroyed(this))
-			.subscribe(session => {
+			.subscribe((session) => {
 				this.session = session;
 			});
 
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
-			.subscribe(config => {
+			.subscribe((config) => {
 				this.showApiDocsLink = config?.apiDocs?.enabled ?? false;
 				this.apiDocsLink = config?.apiDocs?.path ?? '';
 				this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
@@ -90,7 +90,7 @@ export class SiteNavbarComponent implements OnInit {
 				this.userPreferencesLink = config?.userPreferences?.path ?? '';
 			});
 
-		this.messageService.numMessagesIndicator.pipe(untilDestroyed(this)).subscribe(count => {
+		this.messageService.numMessagesIndicator.pipe(untilDestroyed(this)).subscribe((count) => {
 			this.numNewMessages = count;
 		});
 	}

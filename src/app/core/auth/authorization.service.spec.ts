@@ -1,6 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 
 import { BehaviorSubject, Observable } from 'rxjs';
+
 import { AuthorizationService } from './authorization.service';
 import { Role } from './role.model';
 import { Session } from './session.model';

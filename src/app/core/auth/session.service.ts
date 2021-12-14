@@ -4,6 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import isEmpty from 'lodash/isEmpty';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
 import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
 import { User } from './user.model';
@@ -38,7 +39,7 @@ export class SessionService {
 				return of(null);
 			}),
 			this.mapUserModelToSession,
-			tap(session => {
+			tap((session) => {
 				this.sessionSubject.next(session);
 			})
 		);
@@ -47,7 +48,7 @@ export class SessionService {
 	signin(username: string, password: string): Observable<Session | null> {
 		return this.authService.signin(username, password).pipe(
 			this.mapUserModelToSession,
-			tap(session => {
+			tap((session) => {
 				this.sessionSubject.next(session);
 			})
 		);
@@ -74,7 +75,7 @@ export class SessionService {
 				return of(null);
 			}),
 			this.mapUserModelToSession,
-			tap(session => {
+			tap((session) => {
 				this.sessionSubject.next(session);
 			})
 		);

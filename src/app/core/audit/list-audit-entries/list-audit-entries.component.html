@@ -212,7 +212,7 @@
 
 				<ng-template #tableRow let-entry="item">
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							<asy-audit-component
 								[auditObject]="entry.audit.actor"
 								auditType="user"
@@ -220,35 +220,31 @@
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							{{ entry?.created | utcDate }}
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							{{ entry?.audit?.action }}
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							{{ entry?.audit?.auditType }}
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							<asy-audit-component
-								[auditObject]="
-									entry.audit.object?.after
-										? entry.audit.object.after
-										: entry.audit.object
-								"
+								[auditObject]="entry.audit.object?.after ?? entry.audit.object"
 								[auditType]="entry.audit.auditType"
 							></asy-audit-component>
 							<div>
 								<small *ngIf="entry.isViewDetailsAction">
 									<a
 										class="btn-icon no-href"
-										[hidden]="null == entry.audit.object"
+										[hidden]="entry.audit.object ?? null === null"
 										(click)="viewMore(entry, 'viewDetails')"
 									>
 										<span class="fa fa-eye"></span><span>View Details</span>
@@ -261,7 +257,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							<asy-audit-component
 								[auditObject]="entry.audit.object?.before"
 								[auditType]="entry.audit.auditType"
@@ -270,10 +266,7 @@
 								<small *ngIf="entry.isViewChangesAction">
 									<a
 										class="btn-icon no-href"
-										[hidden]="
-											null == entry.audit.object ||
-											null == entry.audit.object.before
-										"
+										[hidden]="entry.audit.object?.before ?? null === null"
 										tooltip="See details of the update"
 										placement="bottom"
 										container="body"
@@ -289,7 +282,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="hide-overflow" style="max-width:200px;">
+						<div class="hide-overflow" style="max-width: 200px">
 							{{ entry?.message }}
 						</div>
 					</td>

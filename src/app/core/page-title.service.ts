@@ -7,6 +7,7 @@ import capitalize from 'lodash/capitalize';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
+
 import { ConfigService } from './config.service';
 
 @UntilDestroy()
@@ -25,11 +26,11 @@ export class PageTitleService {
 		this.configService
 			.getConfig()
 			.pipe(
-				tap(config => {
+				tap((config) => {
 					this.appTitle = get(config, 'app.title', null);
 				}),
 				switchMap(() => this.router.events),
-				filter(event => event instanceof NavigationEnd),
+				filter((event) => event instanceof NavigationEnd),
 				map(() => {
 					let route = this.activatedRoute;
 					// Get to the leaf route
@@ -38,8 +39,8 @@ export class PageTitleService {
 					}
 					return route;
 				}),
-				switchMap(route => route.data),
-				map(data => {
+				switchMap((route) => route.data),
+				map((data) => {
 					const pathTitle = this.generatePathTitle(data);
 					if (isEmpty(this.appTitle) || isEmpty(pathTitle)) {
 						return `${this.appTitle}${pathTitle}`;
@@ -61,7 +62,7 @@ export class PageTitleService {
 					.split(';')[0]
 					.split('/')
 					.slice(1)
-					.map(frag => capitalize(frag))
+					.map((frag) => capitalize(frag))
 					.join(' > ');
 			} catch {
 				// no-op

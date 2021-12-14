@@ -15,6 +15,7 @@ import {
 	SortDirection
 } from 'src/app/common/paging.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
+
 import { Message } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
 
@@ -22,8 +23,10 @@ import { MessageService } from '../../messages/message.service';
 @Component({
 	templateUrl: './list-messages.component.html'
 })
-export class ListMessagesComponent extends AbstractPageableDataComponent<Message>
-	implements OnInit {
+export class ListMessagesComponent
+	extends AbstractPageableDataComponent<Message>
+	implements OnInit
+{
 	filters: any = {};
 	sort: any;
 
@@ -98,7 +101,7 @@ export class ListMessagesComponent extends AbstractPageableDataComponent<Message
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.messageService.remove(message)),
 				untilDestroyed(this)
 			)

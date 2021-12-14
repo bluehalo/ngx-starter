@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';

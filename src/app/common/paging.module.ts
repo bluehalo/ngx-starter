@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 import { DirectivesModule } from './directives.module';
 import { PageableTableComponent } from './paging/pageable-table/pageable-table.component';
 import { PagerComponent } from './paging/pager/pager.component';

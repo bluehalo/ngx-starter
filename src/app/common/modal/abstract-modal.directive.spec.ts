@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
 import { AbstractModalDirective } from './abstract-modal.directive';
 import { ModalAction } from './modal.model';
 

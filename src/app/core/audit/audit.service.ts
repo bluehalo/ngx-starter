@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-
 import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { User } from '../auth/user.model';
 import { AuditActionTypes } from './audit.classes';
 
@@ -23,7 +23,7 @@ export class AuditService {
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {
-						results.elements.forEach(entry => {
+						results.elements.forEach((entry) => {
 							entry.isViewDetailsAction = AuditActionTypes.isViewDetailsAction(
 								entry.audit.action
 							);
@@ -34,7 +34,7 @@ export class AuditService {
 					}
 					return results;
 				}),
-				catchError(error => {
+				catchError((error) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(NULL_PAGING_RESULTS);
 				})

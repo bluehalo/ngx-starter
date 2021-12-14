@@ -6,6 +6,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
+
 import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';

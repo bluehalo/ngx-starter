@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 import { ModalComponent } from '../modal/modal.component';
 import { ContainerModalComponent } from './container-modal.component';
@@ -11,9 +12,7 @@ import { ContainerModalComponent } from './container-modal.component';
 @UntilDestroy()
 @Component({
 	selector: 'test-modalized-component',
-	template: `
-		<button></button><button></button>
-	`
+	template: ` <button></button><button></button> `
 })
 class ConcreteModalizedComponent extends AbstractModalizableDirective {
 	onCancel() {}
@@ -47,7 +46,6 @@ describe('Container Modal Component', () => {
 		it('should define ok/cancel observables', () => {
 			spyOn(comp.modalizableComponentContainer, 'clear').and.callThrough();
 			spyOn(comp.modalizableComponentContainer, 'createComponent').and.callThrough();
-			// tslint:disable-next-line:no-lifecycle-call
 			comp.ngAfterViewInit();
 
 			expect(comp.modalizableComponentContainer.clear).toHaveBeenCalledTimes(1);

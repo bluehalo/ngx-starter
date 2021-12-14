@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 
 import { combineLatest, of, Observable } from 'rxjs';
 import { catchError, first, map, switchMap } from 'rxjs/operators';
+
 import { ConfigService } from '../config.service';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';

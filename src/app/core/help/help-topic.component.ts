@@ -47,9 +47,8 @@ export class HelpTopicComponent {
 
 		if (this.content && key && HelpTopics.topics[key]) {
 			// Dynamically create the component
-			const factory: ComponentFactory<HelpTopicComponent> = this.resolver.resolveComponentFactory(
-				HelpTopics.topics[key]
-			);
+			const factory: ComponentFactory<HelpTopicComponent> =
+				this.resolver.resolveComponentFactory(HelpTopics.topics[key]);
 			this.componentRef = this.content.createComponent(factory);
 		} else {
 			console.warn(`WARNING: No handler for help topic: ${key}.`);

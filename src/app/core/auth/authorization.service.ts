@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+
 import { Role } from './role.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
@@ -14,7 +15,7 @@ export class AuthorizationService {
 		this.sessionService
 			.getSession()
 			.pipe(untilDestroyed(this))
-			.subscribe(session => {
+			.subscribe((session) => {
 				this.session = session;
 			});
 	}
