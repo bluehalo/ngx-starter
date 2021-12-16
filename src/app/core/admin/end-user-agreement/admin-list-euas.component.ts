@@ -131,30 +131,30 @@ export class AdminListEuasComponent
 				switchMap(() => this.euaService.remove(id)),
 				untilDestroyed(this)
 			)
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(response);
 				}
-			);
+			});
 	}
 
 	publishEua(eua: EndUserAgreement) {
 		this.euaService
 			.publish(eua.euaModel._id)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(response);
 				}
-			);
+			});
 		this.load$.next(true);
 	}
 

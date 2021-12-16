@@ -58,12 +58,12 @@ export abstract class ManageUserComponent implements OnInit {
 		if (this.validatePassword()) {
 			this.submitUser(this.user)
 				.pipe(untilDestroyed(this))
-				.subscribe(
-					() => this.router.navigate([this.navigateOnSuccess]),
-					(response: HttpErrorResponse) => {
+				.subscribe({
+					next: () => this.router.navigate([this.navigateOnSuccess]),
+					error: (response: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(response);
 					}
-				);
+				});
 		}
 	}
 

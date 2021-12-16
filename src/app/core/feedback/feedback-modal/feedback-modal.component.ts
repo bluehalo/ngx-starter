@@ -60,14 +60,14 @@ export class FeedbackModalComponent implements OnInit {
 		this.feedbackService
 			.submit(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					setTimeout(() => this.modalRef.hide(), 1500);
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.submitting = false;
 					this.error = error.error.message;
 				}
-			);
+			});
 	}
 }

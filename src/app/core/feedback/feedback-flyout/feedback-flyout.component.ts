@@ -65,16 +65,16 @@ export class FeedbackFlyoutComponent implements OnInit {
 		this.feedbackService
 			.submit(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.status = 'success';
 					setTimeout(() => {
 						this.closeForm();
 					}, 2000);
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.status = 'failure';
 				}
-			);
+			});
 	}
 }

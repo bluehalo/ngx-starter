@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { firstValueFrom } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { AdminTopics } from '../common/admin/admin-topic.model';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
@@ -39,15 +41,15 @@ import { UnauthorizedComponent } from './unauthorized.component';
 
 export function getConfiguration(configService: ConfigService) {
 	return () =>
-		configService
-			.getConfig()
-			.toPromise()
-			.then((config) => {
-				if (config === null) {
-					throw new Error('Error loading application configuration.');
-				}
-				return config;
-			});
+		firstValueFrom(
+			configService.getConfig().pipe(
+				tap((config) => {
+					if (config === null) {
+						throw new Error('Error loading application configuration.');
+					}
+				})
+			)
+		);
 }
 
 @NgModule({

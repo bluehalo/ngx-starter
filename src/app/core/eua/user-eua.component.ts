@@ -33,13 +33,13 @@ export class UserEuaComponent implements OnInit {
 		this.sessionService
 			.acceptEua()
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.sessionService.goToPreviousRoute();
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.alertService.addAlert(error.error.message);
 				}
-			);
+			});
 	}
 }

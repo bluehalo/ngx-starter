@@ -56,7 +56,7 @@ export class StringUtils {
 		}
 
 		return s.replace(/\b\w\S*/g, (txt) => {
-			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+			return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
 		});
 	}
 

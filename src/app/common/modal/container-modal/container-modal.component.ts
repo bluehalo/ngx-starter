@@ -39,20 +39,16 @@ export class ContainerModalComponent
 
 	isCdkFocusInitial = false;
 
-	constructor(
-		public modalRef: BsModalRef,
-		private componentFactoryResolver: ComponentFactoryResolver
-	) {
+	constructor(public modalRef: BsModalRef) {
 		super(modalRef);
 	}
 
 	ngAfterViewInit(): void {
 		// Add the supplied modalized component to the content container
 		this.modalizableComponentContainer.clear();
-		const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+		const componentRef = this.modalizableComponentContainer.createComponent(
 			this.modalizableComponent
 		);
-		const componentRef = this.modalizableComponentContainer.createComponent(componentFactory);
 
 		// Set any supplied component properties
 		Object.entries(this.modalizableComponentProperties).forEach(([key, value]) => {

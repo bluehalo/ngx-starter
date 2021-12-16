@@ -105,15 +105,15 @@ export class ListMessagesComponent
 				switchMap(() => this.messageService.remove(message)),
 				untilDestroyed(this)
 			)
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Deleted message.`, 'success');
 					this.load$.next(true);
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.alertService.addAlert(error.message);
 				}
-			);
+			});
 	}
 
 	/**

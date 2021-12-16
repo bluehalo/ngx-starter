@@ -62,14 +62,14 @@ export abstract class ManageMessageComponent implements OnInit {
 	submit() {
 		this.submitMessage(this.message)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => this.router.navigate([this.navigateOnSuccess]),
-				(response: HttpErrorResponse) => {
+			.subscribe({
+				next: () => this.router.navigate([this.navigateOnSuccess]),
+				error: (response: HttpErrorResponse) => {
 					if (response.status >= 400 && response.status < 500) {
 						const errors = response.message.split('\n');
 						this.error = errors.join(', ');
 					}
 				}
-			);
+			});
 	}
 }

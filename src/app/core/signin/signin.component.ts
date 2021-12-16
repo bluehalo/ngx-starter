@@ -41,13 +41,13 @@ export class SigninComponent implements OnInit {
 		this.sessionService
 			.signin(this.username, this.password)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				(result) => {
+			.subscribe({
+				next: (result) => {
 					this.sessionService.goToPreviousRoute();
 				},
-				(error) => {
+				error: (error) => {
 					this.error = error?.error?.message ?? 'Unexpected error signing in.';
 				}
-			);
+			});
 	}
 }

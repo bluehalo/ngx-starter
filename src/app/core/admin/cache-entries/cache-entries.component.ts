@@ -86,15 +86,15 @@ export class CacheEntriesComponent
 				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key)),
 				untilDestroyed(this)
 			)
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addAlert(response.error.message);
 				}
-			);
+			});
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
@@ -114,8 +114,8 @@ export class CacheEntriesComponent
 		this.cacheEntriesService
 			.refresh(cacheEntry.key)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(
 						`Refreshed cache entry: ${cacheEntry.key}`,
 						'success'
@@ -123,10 +123,10 @@ export class CacheEntriesComponent
 					cacheEntry.isRefreshing = false;
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addAlert(response.error.message);
 					cacheEntry.isRefreshing = false;
 				}
-			);
+			});
 	}
 }
