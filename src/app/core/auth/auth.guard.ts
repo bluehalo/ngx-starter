@@ -58,8 +58,6 @@ export class AuthGuard implements CanActivate {
 	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
-			// Send them to signin with a redirect to the previous URL
-			this.sessionService.setPreviousUrl(state.url);
 			this.router.navigate(['/signin']);
 			return false;
 		}
@@ -73,7 +71,6 @@ export class AuthGuard implements CanActivate {
 			const requiresEua = route.data?.requiresEua ?? true;
 
 			if (requiresEua && !this.authorizationService.isEuaCurrent()) {
-				this.sessionService.setPreviousUrl(state.url);
 				this.router.navigate(['/eua']);
 				return false;
 			}
@@ -102,7 +99,6 @@ export class AuthGuard implements CanActivate {
 				state.url !== '/unauthorized'
 			) {
 				// The user doesn't have the needed roles to view the page
-				this.sessionService.setPreviousUrl(state.url);
 				this.router.navigate(['/unauthorized']);
 				return false;
 			}

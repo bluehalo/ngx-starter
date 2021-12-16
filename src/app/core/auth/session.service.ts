@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
+import { UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -9,13 +10,11 @@ import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
 import { User } from './user.model';
 
+@UntilDestroy()
 @Injectable()
 export class SessionService {
 	// The current session information
 	sessionSubject = new BehaviorSubject<Session | null>(null);
-
-	// Previous url to store in case we want to redirect there later
-	private previousUrl?: string;
 
 	private readonly mapUserModelToSession = pipe(
 		map((result: any): Session | null => {
@@ -87,55 +86,5 @@ export class SessionService {
 
 	getSession(): Observable<Session | null> {
 		return this.sessionSubject;
-	}
-
-	setPreviousUrl(url: string) {
-		this.previousUrl = url;
-	}
-
-	goToPreviousRoute() {
-		if (this.previousUrl) {
-			this.goToRoute(this.previousUrl, { replaceUrl: true });
-		}
-	}
-
-	private goToRoute(url: string, extras?: NavigationExtras) {
-		// Redirect the user to a URL
-		if (null == url) {
-			url = '/';
-		}
-
-		const queryParams = this.parseQueryParams(url);
-		if (!isEmpty(queryParams)) {
-			if (null == extras) {
-				extras = {};
-			}
-			extras = Object.assign(extras, { queryParams });
-		}
-
-		// strip the query parameters from the URL
-		url = url.split('?')[0];
-
-		// Redirect the user
-		this.router.navigate([url], extras).catch(() => {
-			this.router.navigate(['']);
-		});
-	}
-
-	private parseQueryParams(url: string): any {
-		const queryParams: Record<string, string> = {};
-
-		if (url && -1 !== url.indexOf('?')) {
-			const queryParamString = url.split('?')[1];
-			const paramSegments = !isEmpty(queryParamString) ? queryParamString.split('&') : [];
-			paramSegments.forEach((segment: string) => {
-				const keyValuePair = segment.split('=');
-				if (keyValuePair.length === 2) {
-					queryParams[keyValuePair[0]] = keyValuePair[1];
-				}
-			});
-		}
-
-		return queryParams;
 	}
 }

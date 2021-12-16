@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { SessionService } from '../auth/session.service';
-import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
+import { NavigationService } from '../navigation.service';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +20,11 @@ export class SigninComponent implements OnInit {
 	password: string;
 	error: string;
 
-	constructor(private configService: ConfigService, private sessionService: SessionService) {}
+	constructor(
+		private configService: ConfigService,
+		private sessionService: SessionService,
+		private navigationService: NavigationService
+	) {}
 
 	ngOnInit() {
 		this.configService
@@ -43,7 +47,7 @@ export class SigninComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe({
 				next: (result) => {
-					this.sessionService.goToPreviousRoute();
+					this.navigationService.navigateToPreviousRoute();
 				},
 				error: (error) => {
 					this.error = error?.error?.message ?? 'Unexpected error signing in.';

@@ -30,6 +30,7 @@ import { ExportConfigService } from './export-config.service';
 import { FeedbackModule } from './feedback/feedback.module';
 import { HelpModule } from './help/help.module';
 import { MessagesModule } from './messages/messages.module';
+import { NavigationService } from './navigation.service';
 import { PageTitleService } from './page-title.service';
 import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
@@ -106,8 +107,12 @@ export function getConfiguration(configService: ConfigService) {
 	]
 })
 export class CoreModule {
-	constructor(private pageTitleService: PageTitleService) {
+	constructor(
+		private pageTitleService: PageTitleService,
+		private navigationService: NavigationService
+	) {
 		this.pageTitleService.init();
+		this.navigationService.init();
 	}
 }
 
