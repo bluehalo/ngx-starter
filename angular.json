@@ -7,24 +7,10 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
-          "lintFix": true,
           "type": "model"
         },
         "@schematics/angular:component": {
-          "style": "scss",
-          "lintFix": true
-        },
-        "@schematics/angular:directive": {
-          "lintFix": true
-        },
-        "@schematics/angular:module": {
-          "lintFix": true
-        },
-        "@schematics/angular:pipe": {
-          "lintFix": true
-        },
-        "@schematics/angular:service": {
-          "lintFix": true
+          "style": "scss"
         }
       },
       "root": "",
