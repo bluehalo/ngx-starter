@@ -18,8 +18,11 @@ import { AccessComponent } from './access.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthenticationService } from './auth/authentication.service';
-import { AuthorizationDirective } from './auth/authorization.directive';
 import { AuthorizationService } from './auth/authorization.service';
+import { HasEveryRoleDirective } from './auth/directives/has-every-role.directive';
+import { HasRoleDirective } from './auth/directives/has-role.directive';
+import { HasSomeRolesDirective } from './auth/directives/has-some-roles.directive';
+import { IsAuthenticatedDirective } from './auth/directives/is-authenticated.directive';
 import { EuaInterceptor } from './auth/eua.interceptor';
 import { SessionService } from './auth/session.service';
 import { SigninInterceptor } from './auth/signin.interceptor';
@@ -72,7 +75,14 @@ export function getConfiguration(configService: ConfigService) {
 		SystemAlertModule,
 		MessagesModule
 	],
-	exports: [SiteContainerComponent, UserEuaComponent, AuthorizationDirective],
+	exports: [
+		SiteContainerComponent,
+		UserEuaComponent,
+		IsAuthenticatedDirective,
+		HasRoleDirective,
+		HasEveryRoleDirective,
+		HasSomeRolesDirective
+	],
 	declarations: [
 		AboutComponent,
 		AccessComponent,
@@ -83,7 +93,10 @@ export function getConfiguration(configService: ConfigService) {
 		SiteNavbarComponent,
 		UnauthorizedComponent,
 		UserEuaComponent,
-		AuthorizationDirective
+		IsAuthenticatedDirective,
+		HasRoleDirective,
+		HasEveryRoleDirective,
+		HasSomeRolesDirective
 	],
 	providers: [
 		AuthGuard,

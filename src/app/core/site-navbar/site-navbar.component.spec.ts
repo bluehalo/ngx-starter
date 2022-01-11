@@ -10,8 +10,10 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 
 import { AuthGuard } from '../auth/auth.guard';
-import { AuthorizationDirective } from '../auth/authorization.directive';
 import { AuthorizationService } from '../auth/authorization.service';
+import { HasRoleDirective } from '../auth/directives/has-role.directive';
+import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
+import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
@@ -73,7 +75,13 @@ describe('Site Navbar Component Spec', () => {
 		sessionServiceSpy.getSession.and.returnValue(of({}));
 
 		TestBed.configureTestingModule({
-			declarations: [SiteNavbarComponent, AuthorizationDirective, PopoverDirective],
+			declarations: [
+				SiteNavbarComponent,
+				IsAuthenticatedDirective,
+				HasRoleDirective,
+				HasSomeRolesDirective,
+				PopoverDirective
+			],
 			imports: [
 				BsDatepickerModule.forRoot(),
 				ModalModule.forRoot(),

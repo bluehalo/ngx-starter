@@ -224,13 +224,11 @@
 						</li>
 
 						<!-- Feedback -->
-						<ng-container *isAuthenticated>
-							<li *ngIf="showFeedbackOption">
-								<a class="link" (click)="showFeedbackModal(); helpNavPopover.hide()"
-									>Give Feedback</a
-								>
-							</li>
-						</ng-container>
+						<li *isAuthenticated="true; and: showFeedbackOption">
+							<a class="link" (click)="showFeedbackModal(); helpNavPopover.hide()"
+								>Give Feedback</a
+							>
+						</li>
 
 						<!-- API Docs -->
 						<li *ngIf="showApiDocsLink">
