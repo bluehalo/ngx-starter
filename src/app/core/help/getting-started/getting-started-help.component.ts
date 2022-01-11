@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { ConfigService } from '../../../core/config.service';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
+
+import { ConfigService } from '../../../core/config.service';
 import { HelpTopics } from '../help-topic.component';
 
 @UntilDestroy()

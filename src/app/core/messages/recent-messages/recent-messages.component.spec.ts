@@ -6,6 +6,7 @@ import { of, BehaviorSubject, Subject } from 'rxjs';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
+
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 import { RecentMessagesComponent } from './recent-messages.component';

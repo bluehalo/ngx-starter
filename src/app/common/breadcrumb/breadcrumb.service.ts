@@ -14,7 +14,7 @@ export class BreadcrumbService {
 		const ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
 		// Find the primary route
-		const child = route.children.find(c => c.outlet === PRIMARY_OUTLET);
+		const child = route.children.find((c) => c.outlet === PRIMARY_OUTLET);
 
 		// Return if there is no primary route
 		if (!child) {

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 
-import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { filter } from 'rxjs/operators';
+
+import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
 import { HelpTopics } from './help-topic.component';
 
 export interface HelpTopic {

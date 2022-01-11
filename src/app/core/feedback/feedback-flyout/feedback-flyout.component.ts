@@ -2,11 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FlyoutComponent } from '../../../common/flyout/flyout.component';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
+
+import { FlyoutComponent } from '../../../common/flyout/flyout.component';
 import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
@@ -65,16 +65,16 @@ export class FeedbackFlyoutComponent implements OnInit {
 		this.feedbackService
 			.submit(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.status = 'success';
 					setTimeout(() => {
 						this.closeForm();
 					}, 2000);
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.status = 'failure';
 				}
-			);
+			});
 	}
 }

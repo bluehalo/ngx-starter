@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 import { ConfigurableModalComponent } from './configurable-modal/configurable-modal.component';
 import { ContainerModalComponent } from './container-modal/container-modal.component';
@@ -27,7 +28,7 @@ export class ModalService {
 				okText
 			},
 			modalOptions
-		).pipe(map(event => event.action));
+		).pipe(map((event) => event.action));
 	}
 
 	confirm(
@@ -45,7 +46,7 @@ export class ModalService {
 				cancelText
 			},
 			modalOptions
-		).pipe(map(event => event.action));
+		).pipe(map((event) => event.action));
 	}
 
 	prompt(

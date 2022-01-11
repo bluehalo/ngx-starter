@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+
 import { ModalAction, ModalCloseEvent } from './modal.model';
 
 /**

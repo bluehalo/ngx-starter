@@ -2,6 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { of, Observable, Subject } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+
 import { ModalAction } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
 import {
@@ -14,11 +19,6 @@ import {
 } from '../../../common/paging.module';
 import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import cloneDeep from 'lodash/cloneDeep';
-import { of, Observable, Subject } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
@@ -169,7 +169,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
 				catchError((error: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(error);
@@ -192,7 +192,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		const rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
 
 		if (rolesIndex !== -1) {
-			const roleColumns = Role.ROLES.map(role => {
+			const roleColumns = Role.ROLES.map((role) => {
 				return { key: `roles.${role.role}`, title: `${role.label} Role` };
 			});
 			viewColumns.splice(rolesIndex, 1, ...roleColumns);
@@ -241,7 +241,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			roles.bypassAC = { show: false, display: 'Bypass AC' };
 		}
 
-		Role.ROLES.forEach(role => {
+		Role.ROLES.forEach((role) => {
 			if (role.role !== 'user') {
 				roles[`${role.role}Role`] = { show: false, display: role.label };
 			}
@@ -274,7 +274,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 			elements.push({ bypassAccessCheck: true });
 		}
 
-		Role.ROLES.forEach(role => {
+		Role.ROLES.forEach((role) => {
 			const roleFilter = this.filters[`${role.role}Role`];
 			if (roleFilter?.show) {
 				const element: Record<string, boolean> = {};

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
 import { CacheEntry } from './cache-entry.model';
 
 @Component({

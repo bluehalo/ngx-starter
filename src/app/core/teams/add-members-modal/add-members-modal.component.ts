@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { NgSelectComponent } from '@ng-select/ng-select';
-
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { concat, of, Observable, Subject } from 'rxjs';
@@ -16,6 +13,8 @@ import {
 	switchMap,
 	tap
 } from 'rxjs/operators';
+
+import { PagingOptions, PagingResults } from '../../../common/paging.module';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
@@ -65,7 +64,7 @@ export class AddMembersModalComponent implements OnInit {
 				debounceTime(200),
 				distinctUntilChanged(),
 				tap(() => (this.usersLoading = true)),
-				switchMap(term =>
+				switchMap((term) =>
 					this.teamsService.searchUsers(
 						{ 'teams._id': { $ne: this.teamId } },
 						term,
@@ -73,10 +72,10 @@ export class AddMembersModalComponent implements OnInit {
 						{}
 					)
 				),
-				map(result =>
+				map((result) =>
 					result.elements.filter(
 						(user: any) =>
-							!this.addedMembers.map(m => m._id).includes(user?.userModel._id)
+							!this.addedMembers.map((m) => m._id).includes(user?.userModel._id)
 					)
 				),
 				tap(() => {

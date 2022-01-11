@@ -2,6 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { of, Observable } from 'rxjs';
+import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -12,11 +17,6 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { of, Observable } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
@@ -32,8 +32,10 @@ import { TeamsService } from '../teams.service';
 	selector: 'list-team-members',
 	templateUrl: './list-team-members.component.html'
 })
-export class ListTeamMembersComponent extends AbstractPageableDataComponent<TeamMember>
-	implements OnChanges, OnDestroy, OnInit {
+export class ListTeamMembersComponent
+	extends AbstractPageableDataComponent<TeamMember>
+	implements OnChanges, OnDestroy, OnInit
+{
 	@Input()
 	team!: Team;
 
@@ -96,7 +98,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		this.sessionService
 			.getSession()
 			.pipe(untilDestroyed(this))
-			.subscribe(session => {
+			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isUserAdmin = this.authorizationService.isAdmin();
 			});
@@ -106,8 +108,8 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 		super.ngOnInit();
 
 		this.headersToShow = this.headers
-			.filter(header => this.canManageTeam || header.sortField !== 'remove')
-			.filter(header => this.team.implicitMembers || header.name !== 'Explicit');
+			.filter((header) => this.canManageTeam || header.sortField !== 'remove')
+			.filter((header) => this.team.implicitMembers || header.name !== 'Explicit');
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -154,7 +156,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.removeMember(this.team, member.userModel._id)),
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: HttpErrorResponse) => {
@@ -186,7 +188,7 @@ export class ListTeamMembersComponent extends AbstractPageableDataComponent<Team
 				)
 				.pipe(
 					first(),
-					filter(action => action === ModalAction.OK),
+					filter((action) => action === ModalAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
 					switchMap(() => this.sessionService.reloadSession()),
 					catchError((error: HttpErrorResponse) => {

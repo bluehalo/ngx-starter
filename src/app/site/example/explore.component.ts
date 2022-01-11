@@ -12,8 +12,7 @@ import { NavbarTopics } from '../../core/core.module';
 				</div>
 			</div>
 		</div>
-	`,
-	styles: ['']
+	`
 })
 export class ExploreComponent {}
 

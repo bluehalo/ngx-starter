@@ -36,7 +36,7 @@ export abstract class AbstractModalizableDirective {
 			next: () => {
 				this.onOk();
 			},
-			error: err => {
+			error: (err) => {
 				console.error(err);
 			}
 		});
@@ -45,7 +45,7 @@ export abstract class AbstractModalizableDirective {
 			next: () => {
 				this.onCancel();
 			},
-			error: err => {
+			error: (err) => {
 				console.error(err);
 			}
 		});

@@ -4,13 +4,15 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AdminTopics } from '../common/admin/admin-topic.model';
-import { LoadingSpinnerModule } from '../common/loading-spinner.module';
-import { SystemAlertModule } from '../common/system-alert.module';
-
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { firstValueFrom } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { AdminTopics } from '../common/admin/admin-topic.model';
+import { LoadingSpinnerModule } from '../common/loading-spinner.module';
+import { SystemAlertModule } from '../common/system-alert.module';
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -28,6 +30,7 @@ import { ExportConfigService } from './export-config.service';
 import { FeedbackModule } from './feedback/feedback.module';
 import { HelpModule } from './help/help.module';
 import { MessagesModule } from './messages/messages.module';
+import { NavigationService } from './navigation.service';
 import { PageTitleService } from './page-title.service';
 import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
@@ -39,15 +42,15 @@ import { UnauthorizedComponent } from './unauthorized.component';
 
 export function getConfiguration(configService: ConfigService) {
 	return () =>
-		configService
-			.getConfig()
-			.toPromise()
-			.then(config => {
-				if (config === null) {
-					throw new Error('Error loading application configuration.');
-				}
-				return config;
-			});
+		firstValueFrom(
+			configService.getConfig().pipe(
+				tap((config) => {
+					if (config === null) {
+						throw new Error('Error loading application configuration.');
+					}
+				})
+			)
+		);
 }
 
 @NgModule({
@@ -104,8 +107,12 @@ export function getConfiguration(configService: ConfigService) {
 	]
 })
 export class CoreModule {
-	constructor(private pageTitleService: PageTitleService) {
+	constructor(
+		private pageTitleService: PageTitleService,
+		private navigationService: NavigationService
+	) {
 		this.pageTitleService.init();
+		this.navigationService.init();
 	}
 }
 

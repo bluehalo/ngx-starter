@@ -7,6 +7,7 @@ import { PagingResults } from 'src/app/common/paging.module';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
+
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 import { ViewAllMessagesComponent } from './view-all-messages.component';

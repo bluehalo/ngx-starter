@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ModalService } from '../../../common/modal.module';
-
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
@@ -11,6 +9,8 @@ import { PagingModule, PagingResults } from 'src/app/common/paging.module';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
+
+import { ModalService } from '../../../common/modal.module';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
@@ -42,7 +42,7 @@ describe('Admin List Users Component Spec', () => {
 		);
 		// default to the first element, then actually find the checkbox
 		let columnButton = allColumnCheckboxes.item(0);
-		allColumnCheckboxes.forEach(e => {
+		allColumnCheckboxes.forEach((e) => {
 			if (e.textContent === checkboxLabel) {
 				columnButton = e;
 			}
@@ -132,11 +132,11 @@ describe('Admin List Users Component Spec', () => {
 		// Click the export button
 		await clickExportButton();
 
-		const expectedBaseColumns = ['name', 'username', 'email', 'lastLogin'].map(key => {
+		const expectedBaseColumns = ['name', 'username', 'email', 'lastLogin'].map((key) => {
 			return { key, title: component.columns[key].display };
 		});
 
-		const roleColumns = Role.ROLES.map(role => {
+		const roleColumns = Role.ROLES.map((role) => {
 			return { key: `roles.${role.role}`, title: `${role.label} Role` };
 		});
 
@@ -171,7 +171,7 @@ describe('Admin List Users Component Spec', () => {
 		// Click the export button
 		await clickExportButton();
 
-		const expectedBaseColumns = ['name', 'username', 'lastLogin'].map(key => {
+		const expectedBaseColumns = ['name', 'username', 'lastLogin'].map((key) => {
 			return { key, title: component.columns[key].display };
 		});
 

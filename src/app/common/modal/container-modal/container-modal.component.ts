@@ -11,6 +11,7 @@ import {
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+
 import { AbstractModalDirective } from '../abstract-modal.directive';
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 
@@ -19,8 +20,10 @@ import { AbstractModalizableDirective } from '../abstract-modalizable.directive'
 	templateUrl: 'container-modal.component.html',
 	styleUrls: ['container-modal.component.scss']
 })
-export class ContainerModalComponent extends AbstractModalDirective
-	implements AfterViewInit, AfterContentChecked {
+export class ContainerModalComponent
+	extends AbstractModalDirective
+	implements AfterViewInit, AfterContentChecked
+{
 	@ViewChild('modalizableComponentContainer', { read: ViewContainerRef })
 	modalizableComponentContainer: ViewContainerRef;
 
@@ -36,20 +39,16 @@ export class ContainerModalComponent extends AbstractModalDirective
 
 	isCdkFocusInitial = false;
 
-	constructor(
-		public modalRef: BsModalRef,
-		private componentFactoryResolver: ComponentFactoryResolver
-	) {
+	constructor(public modalRef: BsModalRef) {
 		super(modalRef);
 	}
 
 	ngAfterViewInit(): void {
 		// Add the supplied modalized component to the content container
 		this.modalizableComponentContainer.clear();
-		const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+		const componentRef = this.modalizableComponentContainer.createComponent(
 			this.modalizableComponent
 		);
-		const componentRef = this.modalizableComponentContainer.createComponent(componentFactory);
 
 		// Set any supplied component properties
 		Object.entries(this.modalizableComponentProperties).forEach(([key, value]) => {
@@ -68,10 +67,10 @@ export class ContainerModalComponent extends AbstractModalDirective
 
 		// Enable/Disable the OK button
 		componentRef.instance.disableOkSubject.pipe(untilDestroyed(this)).subscribe({
-			next: isOkDisabled => {
+			next: (isOkDisabled) => {
 				this.isOkDisabled = isOkDisabled;
 			},
-			error: err => {
+			error: (err) => {
 				console.error(err);
 			}
 		});

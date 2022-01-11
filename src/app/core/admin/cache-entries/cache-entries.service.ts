@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { CacheEntry } from './cache-entry.model';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class CacheEntriesService {
 				{ params: paging.toObj() }
 			)
 			.pipe(
-				catchError(error => {
+				catchError((error) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(NULL_PAGING_RESULTS);
 				})

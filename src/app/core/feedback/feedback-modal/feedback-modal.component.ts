@@ -6,6 +6,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
+
 import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
@@ -59,14 +60,14 @@ export class FeedbackModalComponent implements OnInit {
 		this.feedbackService
 			.submit(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					setTimeout(() => this.modalRef.hide(), 1500);
 				},
-				(error: HttpErrorResponse) => {
+				error: (error: HttpErrorResponse) => {
 					this.submitting = false;
 					this.error = error.error.message;
 				}
-			);
+			});
 	}
 }

@@ -38,7 +38,7 @@ describe('SystemAlertService', () => {
 	describe('clearAlertById', () => {
 		it('clears single alert by Id', () => {
 			const idToClear = 3;
-			const clearedAlertMsg = service.getAlerts().find(alert => alert.id === idToClear).msg;
+			const clearedAlertMsg = service.getAlerts().find((alert) => alert.id === idToClear).msg;
 			service.clearAlertById(idToClear);
 			const alerts = service.getAlerts();
 			expect(alerts.length).toBe(4);

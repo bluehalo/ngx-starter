@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
-import { SystemAlertService } from '../../common/system-alert.module';
-
 import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { SystemAlertService } from '../../common/system-alert.module';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';
@@ -156,16 +156,16 @@ export class TeamsService {
 
 	getTeams(): Observable<Team[]> {
 		return this.search(new PagingOptions(0, 1000)).pipe(
-			map(results => results.elements),
+			map((results) => results.elements),
 			catchError(() => of([]))
 		);
 	}
 
 	getTeamsCanManageResources(): Observable<Team[]> {
 		return this.getTeams().pipe(
-			map(teams =>
+			map((teams) =>
 				teams.filter(
-					team =>
+					(team) =>
 						this.authorizationService.isAdmin() ||
 						this.teamAuthorizationService.canManageResources(team)
 				)
@@ -191,7 +191,7 @@ export class TeamsService {
 						);
 					}
 				}),
-				catchError(error => {
+				catchError((error) => {
 					this.alertService.addClientErrorAlert(error);
 					return of(NULL_PAGING_RESULTS);
 				})

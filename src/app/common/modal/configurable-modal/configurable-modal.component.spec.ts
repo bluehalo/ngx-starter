@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
 import { ModalAction } from '../modal.model';
 import { ModalComponent } from '../modal/modal.component';
 import { ConfigurableModalComponent } from './configurable-modal.component';

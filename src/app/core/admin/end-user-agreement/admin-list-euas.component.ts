@@ -2,6 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { Observable } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
+
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -13,11 +18,6 @@ import {
 } from '../../../common/paging.module';
 import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import cloneDeep from 'lodash/cloneDeep';
-import { Observable } from 'rxjs';
-import { filter, first, switchMap } from 'rxjs/operators';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 
@@ -25,8 +25,10 @@ import { EuaService } from './eua.service';
 @Component({
 	templateUrl: './admin-list-euas.component.html'
 })
-export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUserAgreement>
-	implements OnInit {
+export class AdminListEuasComponent
+	extends AbstractPageableDataComponent<EndUserAgreement>
+	implements OnInit
+{
 	// Columns to show/hide in user table
 	columns: ColumnConfig = {
 		_id: { show: false, display: 'ID' },
@@ -125,34 +127,34 @@ export class AdminListEuasComponent extends AbstractPageableDataComponent<EndUse
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.euaService.remove(id)),
 				untilDestroyed(this)
 			)
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(response);
 				}
-			);
+			});
 	}
 
 	publishEua(eua: EndUserAgreement) {
 		this.euaService
 			.publish(eua.euaModel._id)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addClientErrorAlert(response);
 				}
-			);
+			});
 		this.load$.next(true);
 	}
 

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AlertModule } from 'ngx-bootstrap/alert';
+
 import { SystemAlertIconComponent } from './system-alert/system-alert-icon.component';
 import { SystemAlertComponent } from './system-alert/system-alert.component';
 

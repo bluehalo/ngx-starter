@@ -2,6 +2,7 @@ import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 
 import { AsyncSubject, Observable } from 'rxjs';
+
 import { Config } from './config.model';
 
 @Injectable()
@@ -29,8 +30,8 @@ export class ConfigService {
 	public reloadConfig() {
 		const request = new HttpRequest<Config>('GET', 'api/config', {});
 
-		this.http.handle(request).subscribe(
-			(httpEvent: HttpEvent<Config>) => {
+		this.http.handle(request).subscribe({
+			next: (httpEvent: HttpEvent<Config>) => {
 				if (httpEvent instanceof HttpResponse) {
 					let newConfig = null;
 					const response: HttpResponse<Config> = httpEvent;
@@ -43,10 +44,10 @@ export class ConfigService {
 					this.configSubject.complete();
 				}
 			},
-			() => {
+			error: () => {
 				this.configSubject.next(null);
 				this.configSubject.complete();
 			}
-		);
+		});
 	}
 }

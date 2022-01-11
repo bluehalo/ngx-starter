@@ -54,12 +54,12 @@
 				<ng-template #tableRow let-eua="item" let-i="index">
 					<td [hidden]="!columns._id.show">{{ eua.euaModel._id }}</td>
 					<td [hidden]="!columns.title.show">
-						<div class="hide-overflow" style="max-width:400px;">
+						<div class="hide-overflow" style="max-width: 400px">
 							{{ eua.euaModel.title }}
 						</div>
 					</td>
 					<td [hidden]="!columns.text.show">
-						<div class="hide-overflow" style="max-width:400px;">
+						<div class="hide-overflow" style="max-width: 400px">
 							{{ eua.euaModel.text }}
 						</div>
 					</td>
@@ -69,11 +69,11 @@
 						{{ eua.euaModel.published | utcDate }}
 					</td>
 
-					<td class="text-right" style="max-width: 50px;">
+					<td class="text-right" style="max-width: 50px">
 						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
 							<span
 								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
-								style="cursor: pointer;"
+								style="cursor: pointer"
 								dropdownToggle
 							>
 								<span class="fa fa-lg fa-ellipsis-v"></span>

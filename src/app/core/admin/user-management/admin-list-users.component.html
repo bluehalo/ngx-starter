@@ -73,9 +73,9 @@
 					<td [hidden]="!columns.name.show">{{ user.userModel.name }}</td>
 					<td
 						[hidden]="!columns.username.show"
-						style="min-width: 200px;max-width: 200px;"
+						style="min-width: 200px; max-width: 200px"
 					>
-						<div class="hide-overflow" style="max-width:400px;">
+						<div class="hide-overflow" style="max-width: 400px">
 							{{ user.userModel.username }}
 						</div>
 					</td>
@@ -102,18 +102,18 @@
 					<td
 						[hidden]="!columns.externalRoles.show"
 						class="hide-overflow"
-						style="max-width:200px;"
+						style="max-width: 200px"
 					>
 						{{ user.userModel.externalRoles }}
 					</td>
 					<td
 						[hidden]="!columns.externalGroups.show"
 						class="hide-overflow"
-						style="max-width:200px;"
+						style="max-width: 200px"
 					>
 						{{ user.userModel.externalGroups }}
 					</td>
-					<td [hidden]="!columns.roles.show" style="max-width:200px;">
+					<td [hidden]="!columns.roles.show" style="max-width: 200px">
 						<ng-container *ngFor="let role of possibleRoles">
 							<div
 								*ngIf="user.userModel.roles && user.userModel.roles[role.role]"
@@ -131,11 +131,11 @@
 					<td *ngIf="enableUserBypassAC" [hidden]="!columns.bypassAccessCheck.show">
 						{{ user.userModel.bypassAccessCheck ? 'Enabled' : '' }}
 					</td>
-					<td class="text-right" style="max-width: 50px;">
+					<td class="text-right" style="max-width: 50px">
 						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
 							<span
 								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
-								style="cursor: pointer;"
+								style="cursor: pointer"
 								dropdownToggle
 							>
 								<span class="fa fa-lg fa-ellipsis-v"></span>

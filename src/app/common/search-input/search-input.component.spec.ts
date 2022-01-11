@@ -170,8 +170,10 @@ describe('SearchInputComponent', () => {
 			fixture.detectChanges();
 
 			// click the clear-search option
-			(fixture.debugElement.query(By.css('span.icon.fa-times'))
-				.nativeElement as HTMLElement).click();
+			(
+				fixture.debugElement.query(By.css('span.icon.fa-times'))
+					.nativeElement as HTMLElement
+			).click();
 
 			fixture.detectChanges();
 

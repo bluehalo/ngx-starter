@@ -2,13 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { PagingModule } from '../../../common/paging.module';
-import { SearchInputModule } from '../../../common/search-input.module';
-
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertModule, SystemAlertService } from 'src/app/common/system-alert.module';
+
+import { PagingModule } from '../../../common/paging.module';
+import { SearchInputModule } from '../../../common/search-input.module';
 import { AdminListEuasComponent } from './admin-list-euas.component';
 import { EuaService } from './eua.service';
 

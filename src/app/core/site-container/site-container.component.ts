@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
+
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
 
@@ -20,7 +21,7 @@ export class SiteContainerComponent {
 		configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
-			.subscribe(config => {
+			.subscribe((config) => {
 				this.bannerHtml = config?.banner?.html;
 				this.copyrightHtml = config?.copyright?.html;
 				this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;

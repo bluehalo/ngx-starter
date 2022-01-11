@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
-
 import { of } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
+
+import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'app-forms',

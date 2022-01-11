@@ -1,5 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
+import { UntilDestroy } from '@ngneat/until-destroy';
+import cloneDeep from 'lodash/cloneDeep';
+import { Observable } from 'rxjs';
+
 import {
 	AbstractPageableDataComponent,
 	PagingOptions,
@@ -9,10 +13,6 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { UntilDestroy } from '@ngneat/until-destroy';
-import cloneDeep from 'lodash/cloneDeep';
-import { Observable } from 'rxjs';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -22,8 +22,10 @@ import { TeamsService } from '../teams.service';
 	selector: 'app-list-teams',
 	templateUrl: './list-teams.component.html'
 })
-export class ListTeamsComponent extends AbstractPageableDataComponent<Team>
-	implements OnChanges, OnInit {
+export class ListTeamsComponent
+	extends AbstractPageableDataComponent<Team>
+	implements OnChanges, OnInit
+{
 	@Input()
 	parent?: Team;
 

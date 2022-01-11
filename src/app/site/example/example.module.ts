@@ -8,9 +8,7 @@ import { AdminModule } from '../../common/admin.module';
 import { LoadingOverlayModule } from '../../common/loading-overlay.module';
 import { ModalModule, ModalService } from '../../common/modal.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
-
 import { AuthGuard } from '../../core/core.module';
-
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { ExampleRoutingModule } from './example-routing.module';

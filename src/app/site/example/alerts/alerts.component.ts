@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
-
 import { UntilDestroy } from '@ngneat/until-destroy';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
+import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @UntilDestroy()
 @Component({

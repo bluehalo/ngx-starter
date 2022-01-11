@@ -1,4 +1,5 @@
 import difference from 'lodash/difference';
+
 import { User } from '../auth/user.model';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';

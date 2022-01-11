@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Subject } from 'rxjs';
+
 import { DirectivesModule } from '../../directives.module';
 import { PipesModule } from '../../pipes.module';
 import { PagerComponent } from '../pager/pager.component';
@@ -116,7 +117,7 @@ describe('PageableTableComponent', () => {
 		testHost.items = items;
 		fixture.detectChanges();
 
-		items.forEach(item => {
+		items.forEach((item) => {
 			expect(rootHTMLElement.innerText).toContain(item);
 		});
 	});

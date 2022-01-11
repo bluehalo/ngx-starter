@@ -32,10 +32,10 @@ export class ModalComponent {
 	autoCaptureFocus = false;
 
 	@Output()
-	readonly ok = new EventEmitter();
+	readonly ok = new EventEmitter<void>();
 
 	@Output()
-	readonly cancel = new EventEmitter();
+	readonly cancel = new EventEmitter<void>();
 
 	constructor() {}
 }

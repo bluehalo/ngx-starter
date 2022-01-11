@@ -1,12 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
-import { SystemAlertService } from '../../common/system-alert.module';
-
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, first, map, tap } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
+
+import { SystemAlertService } from '../../common/system-alert.module';
 import { AuthorizationService } from '../auth/authorization.service';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
@@ -118,7 +118,7 @@ export class MessageService {
 				{ headers: this.headers, params: paging.toObj() }
 			)
 			.pipe(
-				tap(pagingResult => {
+				tap((pagingResult) => {
 					pagingResult.elements = pagingResult.elements.map(this.mapToType);
 				}),
 				catchError((error: HttpErrorResponse) => {
@@ -192,8 +192,8 @@ export class MessageService {
 
 	updateNewMessageIndicator() {
 		this.recent()
-			.pipe(filter(results => results !== null))
-			.subscribe(results => {
+			.pipe(filter((results) => results !== null))
+			.subscribe((results) => {
 				this.numMessagesIndicator.next(results.length);
 			});
 	}

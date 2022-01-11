@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
+
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
 	AbstractPageableDataComponent,
@@ -11,11 +16,6 @@ import {
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
-
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs';
-import { filter, first, switchMap } from 'rxjs/operators';
 import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 import { CacheEntry } from './cache-entry.model';
@@ -25,8 +25,10 @@ import { CacheEntry } from './cache-entry.model';
 	selector: 'cache-entries',
 	templateUrl: './cache-entries.component.html'
 })
-export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEntry>
-	implements OnInit {
+export class CacheEntriesComponent
+	extends AbstractPageableDataComponent<CacheEntry>
+	implements OnInit
+{
 	headers: SortableTableHeader[] = [
 		{
 			name: 'Key',
@@ -80,19 +82,19 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 			)
 			.pipe(
 				first(),
-				filter(action => action === ModalAction.OK),
+				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key)),
 				untilDestroyed(this)
 			)
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addAlert(response.error.message);
 				}
-			);
+			});
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
@@ -112,8 +114,8 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 		this.cacheEntriesService
 			.refresh(cacheEntry.key)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.alertService.addAlert(
 						`Refreshed cache entry: ${cacheEntry.key}`,
 						'success'
@@ -121,10 +123,10 @@ export class CacheEntriesComponent extends AbstractPageableDataComponent<CacheEn
 					cacheEntry.isRefreshing = false;
 					this.load$.next(true);
 				},
-				(response: HttpErrorResponse) => {
+				error: (response: HttpErrorResponse) => {
 					this.alertService.addAlert(response.error.message);
 					cacheEntry.isRefreshing = false;
 				}
-			);
+			});
 	}
 }

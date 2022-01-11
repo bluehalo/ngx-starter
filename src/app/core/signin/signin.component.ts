@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
+
 import { SessionService } from '../auth/session.service';
-import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
+import { NavigationService } from '../navigation.service';
 
 @UntilDestroy()
 @Component({
@@ -19,13 +20,17 @@ export class SigninComponent implements OnInit {
 	password: string;
 	error: string;
 
-	constructor(private configService: ConfigService, private sessionService: SessionService) {}
+	constructor(
+		private configService: ConfigService,
+		private sessionService: SessionService,
+		private navigationService: NavigationService
+	) {}
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
-			.subscribe(config => {
+			.subscribe((config) => {
 				this.pkiMode = config?.auth.startsWith('proxy-pki') ?? false;
 				this.loaded = true;
 
@@ -40,13 +45,13 @@ export class SigninComponent implements OnInit {
 		this.sessionService
 			.signin(this.username, this.password)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				result => {
-					this.sessionService.goToPreviousRoute();
+			.subscribe({
+				next: (result) => {
+					this.navigationService.navigateToPreviousRoute();
 				},
-				error => {
+				error: (error) => {
 					this.error = error?.error?.message ?? 'Unexpected error signing in.';
 				}
-			);
+			});
 	}
 }

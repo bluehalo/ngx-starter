@@ -68,9 +68,12 @@ describe('FeedbackService', () => {
 			const assignee = 'testuser';
 			const expected = new Feedback();
 
-			service.updateFeedbackAssignee(feedbackId, assignee).subscribe(actual => {
-				expect(actual).toBe(expected);
-			}, fail); // should not error
+			service.updateFeedbackAssignee(feedbackId, assignee).subscribe({
+				next: (actual) => {
+					expect(actual).toBe(expected);
+				},
+				error: fail
+			}); // should not error
 
 			const req = httpMock.expectOne(`api/admin/feedback/${feedbackId}/assignee`);
 			expect(req.request.method).toBe('PATCH');
@@ -84,9 +87,12 @@ describe('FeedbackService', () => {
 			const status = FeedbackStatusOption.CLOSED;
 			const expected = new Feedback();
 
-			service.updateFeedbackStatus(feedbackId, status).subscribe(actual => {
-				expect(actual).toBe(expected);
-			}, fail); // should not error
+			service.updateFeedbackStatus(feedbackId, status).subscribe({
+				next: (actual) => {
+					expect(actual).toBe(expected);
+				},
+				error: fail
+			}); // should not error
 
 			const req = httpMock.expectOne(`api/admin/feedback/${feedbackId}/status`);
 			expect(req.request.method).toBe('PATCH');

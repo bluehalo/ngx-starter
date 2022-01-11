@@ -2,11 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Directive, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
-
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+
+import { SystemAlertService } from '../../../common/system-alert.module';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
@@ -58,12 +58,12 @@ export abstract class ManageUserComponent implements OnInit {
 		if (this.validatePassword()) {
 			this.submitUser(this.user)
 				.pipe(untilDestroyed(this))
-				.subscribe(
-					() => this.router.navigate([this.navigateOnSuccess]),
-					(response: HttpErrorResponse) => {
+				.subscribe({
+					next: () => this.router.navigate([this.navigateOnSuccess]),
+					error: (response: HttpErrorResponse) => {
 						this.alertService.addClientErrorAlert(response);
 					}
-				);
+				});
 		}
 	}
 

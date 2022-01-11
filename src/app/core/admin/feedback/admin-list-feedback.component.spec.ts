@@ -3,13 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 import { PagingModule, PagingResults } from 'src/app/common/paging.module';
 import { PipesModule } from 'src/app/common/pipes.module';
 import { SearchInputModule } from 'src/app/common/search-input.module';
 import { SystemAlertModule } from 'src/app/common/system-alert.module';
+
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
@@ -42,7 +42,7 @@ describe('Admin List Feedback Component Spec', () => {
 		);
 		// default to the first element, then actually find the checkbox
 		let columnButton = allColumnCheckboxes.item(0);
-		allColumnCheckboxes.forEach(e => {
+		allColumnCheckboxes.forEach((e) => {
 			if (e.textContent === checkboxLabel) {
 				columnButton = e;
 			}
@@ -137,7 +137,7 @@ describe('Admin List Feedback Component Spec', () => {
 			'body',
 			'status',
 			'assignee'
-		].map(key => {
+		].map((key) => {
 			return { key, title: component.columns[key].display };
 		});
 
@@ -168,7 +168,7 @@ describe('Admin List Feedback Component Spec', () => {
 		// Click the export button
 		await clickExportButton();
 
-		const expectedColumns = ['created', 'body', 'status', 'assignee'].map(key => {
+		const expectedColumns = ['created', 'body', 'status', 'assignee'].map((key) => {
 			return { key, title: component.columns[key].display };
 		});
 

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import isNumber from 'lodash/isNumber';
+
 import { PageChange, PagingOptions } from '../paging.model';
 import { SortDir, SortDirection, SortDisplayOption } from '../sorting.model';
 

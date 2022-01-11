@@ -3,16 +3,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { DirectivesModule } from '../../common/directives.module';
 import { ModalModule } from '../../common/modal.module';
 import { PagingModule } from '../../common/paging.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SystemAlertModule } from '../../common/system-alert.module';
-
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule as BsModalModule } from 'ngx-bootstrap/modal';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import {
 	AuditObjectComponent,
 	DefaultAuditObjectComponent,
