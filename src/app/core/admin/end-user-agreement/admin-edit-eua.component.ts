@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { switchMap } from 'rxjs';
 
 import { ModalService } from '../../../common/modal.module';
 import { EndUserAgreement } from './eua.model';
@@ -24,11 +25,14 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 	}
 
 	ngOnInit() {
-		this.route.params.subscribe((params: Params) => {
-			this.euaService.get(params['id']).subscribe((eua) => {
+		this.route.params
+			.pipe(
+				untilDestroyed(this),
+				switchMap((params: Params) => this.euaService.get(params['id']))
+			)
+			.subscribe((eua) => {
 				this.eua = eua;
 			});
-		});
 	}
 
 	submitEua() {

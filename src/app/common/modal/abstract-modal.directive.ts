@@ -29,6 +29,7 @@ export abstract class AbstractModalDirective {
 	/**
 	 * ModalCloseEvent Subject that emits when the modal is closed for any reason
 	 */
+	/* eslint-disable-next-line rxjs/finnish */
 	onClose: Subject<ModalCloseEvent> = new Subject();
 
 	constructor(public modalRef: BsModalRef) {}

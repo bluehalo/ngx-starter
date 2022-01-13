@@ -72,7 +72,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 						this.closeForm();
 					}, 2000);
 				},
-				error: (error: HttpErrorResponse) => {
+				error: () => {
 					this.status = 'failure';
 				}
 			});

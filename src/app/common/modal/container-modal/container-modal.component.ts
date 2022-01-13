@@ -31,8 +31,10 @@ export class ContainerModalComponent
 
 	modalizableComponentProperties: { [key: string]: any } = {};
 
+	/* eslint-disable-next-line rxjs/finnish */
 	okSubject: Subject<void>;
 
+	/* eslint-disable-next-line rxjs/finnish */
 	cancelSubject: Subject<void>;
 
 	isOkDisabled = false;
@@ -70,7 +72,7 @@ export class ContainerModalComponent
 			next: (isOkDisabled) => {
 				this.isOkDisabled = isOkDisabled;
 			},
-			error: (err) => {
+			error: (err: unknown) => {
 				console.error(err);
 			}
 		});

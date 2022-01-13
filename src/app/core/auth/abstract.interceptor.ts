@@ -14,9 +14,9 @@ export abstract class AbstractHttpInterceptor implements HttpInterceptor {
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
-			catchError((err) => {
+			catchError((err: unknown) => {
 				this.handleError(err, req);
-				return throwError(err);
+				return throwError(() => err);
 			})
 		);
 	}
@@ -36,5 +36,5 @@ export abstract class AbstractHttpInterceptor implements HttpInterceptor {
 	/**
 	 * Implement this in any interceptors extending the AuthInterceptor class
 	 */
-	abstract handleError(err: any, req: HttpRequest<any>): void;
+	abstract handleError(err: unknown, req: HttpRequest<any>): void;
 }

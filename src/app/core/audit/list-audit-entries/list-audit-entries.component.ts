@@ -90,7 +90,7 @@ export class ListAuditEntriesComponent
 
 	queryEndDate: Date = DateTime.utc().toJSDate();
 
-	searchUsersRef: Observable<any>;
+	searchUsers$: Observable<any>;
 
 	private userPagingOpts = new PagingOptions(0, 20, 0, 0, 'username', SortDirection.asc);
 
@@ -107,7 +107,7 @@ export class ListAuditEntriesComponent
 		};
 
 		// Bind the search users typeahead to a function
-		this.searchUsersRef = new Observable<string>((observer: any) => {
+		this.searchUsers$ = new Observable<string>((observer: any) => {
 			observer.next(this.queryUserSearchTerm);
 		}).pipe(
 			mergeMap((token: string) =>

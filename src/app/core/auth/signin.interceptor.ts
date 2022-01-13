@@ -7,7 +7,7 @@ import { AbstractHttpInterceptor } from './abstract.interceptor';
  */
 @Injectable()
 export class SigninInterceptor extends AbstractHttpInterceptor {
-	handleError(err: any): void {
+	handleError(err: unknown): void {
 		const { status, url } = this.parseError(err);
 		if (status === 401 && !url.endsWith('auth/signin')) {
 			this.router.navigate(['/signin']);

@@ -170,8 +170,10 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 				first(),
 				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				}),
 				untilDestroyed(this)

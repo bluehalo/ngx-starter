@@ -110,7 +110,7 @@
 						class="form-control input-sm"
 						placeholder="Search..."
 						[(ngModel)]="queryUserSearchTerm"
-						[typeahead]="searchUsersRef"
+						[typeahead]="searchUsers$"
 						[typeaheadOptionField]="'displayName'"
 						[typeaheadMinLength]="1"
 						[typeaheadWaitMs]="300"

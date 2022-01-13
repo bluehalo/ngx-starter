@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { switchMap } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 
@@ -38,15 +40,17 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 	}
 
 	initialize() {
-		this.route.params.subscribe((params: Params) => {
-			this.okDisabled = false;
-			this.messageService
-				.get(params[`id`])
-				.pipe(untilDestroyed(this))
-				.subscribe((messageRaw: any) => {
-					this.message = new Message().setFromModel(messageRaw);
-				});
-		});
+		this.route.params
+			.pipe(
+				untilDestroyed(this),
+				tap(() => {
+					this.okDisabled = false;
+				}),
+				switchMap((params: Params) => this.messageService.get(params['id']))
+			)
+			.subscribe((messageRaw: any) => {
+				this.message = new Message().setFromModel(messageRaw);
+			});
 	}
 
 	submitMessage(message: Message) {

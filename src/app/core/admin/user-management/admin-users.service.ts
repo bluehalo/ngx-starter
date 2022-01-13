@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { of, Observable } from 'rxjs';
@@ -38,8 +38,10 @@ export class AdminUsersService {
 					}
 					return results;
 				}),
-				catchError((error) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(NULL_PAGING_RESULTS);
 				})
 			);

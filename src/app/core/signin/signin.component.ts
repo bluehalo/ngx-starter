@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -50,8 +51,10 @@ export class SigninComponent implements OnInit {
 					next: (result) => {
 						this.navigationService.navigateToPreviousRoute();
 					},
-					error: (error) => {
-						this.error = error?.error?.message ?? 'Unexpected error signing in.';
+					error: (error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.error = error.error?.message ?? 'Unexpected error signing in.';
+						}
 					}
 				});
 		}

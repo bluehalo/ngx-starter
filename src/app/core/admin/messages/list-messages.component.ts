@@ -109,8 +109,10 @@ export class ListMessagesComponent
 					this.alertService.addAlert(`Deleted message.`, 'success');
 					this.load$.next(true);
 				},
-				error: (error: HttpErrorResponse) => {
-					this.alertService.addAlert(error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.message);
+					}
 				}
 			});
 	}

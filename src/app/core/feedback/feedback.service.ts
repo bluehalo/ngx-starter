@@ -69,8 +69,10 @@ export class FeedbackService {
 				{ params: paging.toObj(), headers: this.headers }
 			)
 			.pipe(
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addAlert(error.error.message);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 					return of(NULL_PAGING_RESULTS);
 				})
 			);

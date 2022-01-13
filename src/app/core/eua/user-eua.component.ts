@@ -44,8 +44,10 @@ export class UserEuaComponent implements OnInit {
 				next: () => {
 					this.navigationService.navigateToPreviousRoute();
 				},
-				error: (error: HttpErrorResponse) => {
-					this.alertService.addAlert(error.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}

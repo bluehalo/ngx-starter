@@ -136,8 +136,10 @@ export class AdminListEuasComponent
 					this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
 					this.load$.next(true);
 				},
-				error: (response: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(response);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 				}
 			});
 	}
@@ -151,8 +153,10 @@ export class AdminListEuasComponent
 					this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
 					this.load$.next(true);
 				},
-				error: (response: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(response);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 				}
 			});
 		this.load$.next(true);

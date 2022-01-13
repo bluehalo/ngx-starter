@@ -188,8 +188,10 @@ export class AdminListFeedbackComponent
 				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
-				error: (err: HttpErrorResponse) => {
-					this.alertService.addAlert(err.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}
@@ -202,8 +204,10 @@ export class AdminListFeedbackComponent
 				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
-				error: (err: HttpErrorResponse) => {
-					this.alertService.addAlert(err.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}

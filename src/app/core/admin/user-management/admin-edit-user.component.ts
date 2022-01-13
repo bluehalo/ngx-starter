@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { User } from '../../auth/user.model';
@@ -37,26 +38,28 @@ export class AdminEditUserComponent extends ManageUserComponent {
 	}
 
 	initialize() {
-		this.route.params.subscribe((params) => {
-			this.okDisabled = false;
-			this.adminUsersService
-				.get(params['id'])
-				.pipe(untilDestroyed(this))
-				.subscribe((userRaw: any) => {
-					this.user = new User().setFromUserModel(userRaw);
-					if (null == this.user.userModel.roles) {
-						this.user.userModel.roles = {};
-					}
-					this.user.userModel.externalRolesDisplay =
-						this.user.userModel.externalRoles?.join('\n');
-					this.user.userModel.externalGroupsDisplay =
-						this.user.userModel.externalGroups?.join('\n');
-					this.user.userModel.providerData = {
-						dn: this.user.userModel.providerData?.dn
-					};
-					this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
-				});
-		});
+		this.route.params
+			.pipe(
+				untilDestroyed(this),
+				tap(() => {
+					this.okDisabled = false;
+				}),
+				switchMap((params: Params) => this.adminUsersService.get(params['id']))
+			)
+			.subscribe((userRaw: any) => {
+				this.user = new User().setFromUserModel(userRaw);
+				if (null == this.user.userModel.roles) {
+					this.user.userModel.roles = {};
+				}
+				this.user.userModel.externalRolesDisplay =
+					this.user.userModel.externalRoles?.join('\n');
+				this.user.userModel.externalGroupsDisplay =
+					this.user.userModel.externalGroups?.join('\n');
+				this.user.userModel.providerData = {
+					dn: this.user.userModel.providerData?.dn
+				};
+				this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
+			});
 	}
 
 	handleBypassAccessCheck() {

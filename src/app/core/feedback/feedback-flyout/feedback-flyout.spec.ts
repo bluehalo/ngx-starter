@@ -13,13 +13,13 @@ import { FeedbackService } from '../feedback.service';
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
 
 // mock configuration object
-const configSubject = new AsyncSubject();
+const configSubject$ = new AsyncSubject();
 const mockConfigObject = {
 	app: { clientUrl: 'mock-config-url' },
 	feedback: { classificationOpts: ['classification-1', 'classification-2'] }
 };
-configSubject.next(mockConfigObject);
-configSubject.complete();
+configSubject$.next(mockConfigObject);
+configSubject$.complete();
 const mockSubmitFunction = jasmine.createSpy();
 
 describe('FeedbackFlyoutComponent', () => {
@@ -34,7 +34,7 @@ describe('FeedbackFlyoutComponent', () => {
 				imports: [BrowserModule, FormsModule, NgSelectModule],
 				providers: [
 					{ provide: Router, useValue: { url: 'test-url' } },
-					{ provide: ConfigService, useValue: { getConfig: () => configSubject } },
+					{ provide: ConfigService, useValue: { getConfig: () => configSubject$ } },
 					{ provide: FeedbackService, useValue: { submit: mockSubmitFunction } }
 				]
 			})

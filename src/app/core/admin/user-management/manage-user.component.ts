@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { catchError, first } from 'rxjs/operators';
 
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { Role } from '../../auth/role.model';
@@ -56,8 +56,10 @@ export abstract class ManageUserComponent implements OnInit {
 				.pipe(untilDestroyed(this))
 				.subscribe({
 					next: () => this.router.navigate([this.navigateOnSuccess]),
-					error: (response: HttpErrorResponse) => {
-						this.alertService.addClientErrorAlert(response);
+					error: (error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.alertService.addClientErrorAlert(error);
+						}
 					}
 				});
 		}

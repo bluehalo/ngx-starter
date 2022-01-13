@@ -38,7 +38,7 @@ export class RecentMessagesComponent implements OnInit {
 			.subscribe((result) => {
 				const messages = orderBy(result, ['created'], ['desc']);
 				this.messages = messages as Message[];
-				this.messageService.numMessagesIndicator.next(this.messages.length);
+				this.messageService.numMessagesIndicator$.next(this.messages.length);
 				this.loading = false;
 			});
 	}

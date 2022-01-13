@@ -34,7 +34,7 @@ describe('Recent Messages Component Spec', () => {
 		// reset for each test
 		messageServiceSpy = jasmine.createSpyObj('MessageService', ['search', 'remove', 'recent']);
 		messageServiceSpy.messageReceived = new Subject<Message>();
-		messageServiceSpy.numMessagesIndicator = new BehaviorSubject<number>(0);
+		messageServiceSpy.numMessagesIndicator$ = new BehaviorSubject<number>(0);
 		messageServiceSpy.remove.and.returnValue(of({}));
 		messageServiceSpy.search.and.callFake(() => {
 			return of(messageResultsSpec);

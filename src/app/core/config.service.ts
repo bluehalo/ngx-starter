@@ -7,7 +7,7 @@ import { Config } from './config.model';
 
 @Injectable()
 export class ConfigService {
-	configSubject = new AsyncSubject<Config | null>();
+	configSubject$ = new AsyncSubject<Config | null>();
 
 	constructor(private http: HttpBackend) {
 		this.reloadConfig();
@@ -17,7 +17,7 @@ export class ConfigService {
 	 * Get the shared config observable
 	 */
 	public getConfig(): Observable<Config | null> {
-		return this.configSubject;
+		return this.configSubject$;
 	}
 
 	/**
@@ -40,13 +40,13 @@ export class ConfigService {
 						newConfig = response.body;
 					}
 
-					this.configSubject.next(newConfig);
-					this.configSubject.complete();
+					this.configSubject$.next(newConfig);
+					this.configSubject$.complete();
 				}
 			},
 			error: () => {
-				this.configSubject.next(null);
-				this.configSubject.complete();
+				this.configSubject$.next(null);
+				this.configSubject$.complete();
 			}
 		});
 	}

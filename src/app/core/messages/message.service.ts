@@ -20,7 +20,7 @@ import { Message } from './message.class';
 export class MessageService {
 	headers: any = { 'Content-Type': 'application/json' };
 
-	public numMessagesIndicator: BehaviorSubject<number> = new BehaviorSubject(0);
+	public numMessagesIndicator$: BehaviorSubject<number> = new BehaviorSubject(0);
 	cache: any = {};
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed = 0;
@@ -50,9 +50,11 @@ export class MessageService {
 
 	create(message: Message): Observable<Message | null> {
 		return this.http.post('api/admin/message', message, { headers: this.headers }).pipe(
-			map(this.mapToType),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			map((model) => this.mapToType(model)),
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of(null);
 			})
 		);
@@ -60,9 +62,11 @@ export class MessageService {
 
 	get(id: string): Observable<Message | null> {
 		return this.http.get(`api/admin/message/${id}`, { headers: this.headers }).pipe(
-			map(this.mapToType),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			map((model) => this.mapToType(model)),
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of(null);
 			})
 		);
@@ -75,8 +79,10 @@ export class MessageService {
 		return this.http
 			.post(`api/admin/message/getAll`, { query, field }, { headers: this.headers })
 			.pipe(
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				})
 			);
@@ -88,9 +94,11 @@ export class MessageService {
 				headers: this.headers
 			})
 			.pipe(
-				map(this.mapToType),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				map((model) => this.mapToType(model)),
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				})
 			);
@@ -98,9 +106,11 @@ export class MessageService {
 
 	remove(message: Pick<Message, '_id'>): Observable<Message | null> {
 		return this.http.delete(`api/admin/message/${message._id}`, { headers: this.headers }).pipe(
-			map(this.mapToType),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			map((model) => this.mapToType(model)),
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of(null);
 			})
 		);
@@ -119,10 +129,14 @@ export class MessageService {
 			)
 			.pipe(
 				tap((pagingResult) => {
-					pagingResult.elements = pagingResult.elements.map(this.mapToType);
+					pagingResult.elements = pagingResult.elements.map((model) =>
+						this.mapToType(model)
+					);
 				}),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(NULL_PAGING_RESULTS);
 				})
 			);
@@ -130,8 +144,10 @@ export class MessageService {
 
 	recent(): Observable<any[]> {
 		return this.http.post<any>('api/messages/recent', {}, { headers: this.headers }).pipe(
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of([]);
 			})
 		);
@@ -141,8 +157,10 @@ export class MessageService {
 		return this.http
 			.post('api/messages/dismiss', { messageIds: ids }, { headers: this.headers })
 			.pipe(
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				})
 			);
@@ -194,7 +212,7 @@ export class MessageService {
 		this.recent()
 			.pipe(filter((results) => results !== null))
 			.subscribe((results) => {
-				this.numMessagesIndicator.next(results.length);
+				this.numMessagesIndicator$.next(results.length);
 			});
 	}
 

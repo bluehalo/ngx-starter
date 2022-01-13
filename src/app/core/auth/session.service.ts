@@ -14,7 +14,7 @@ import { User } from './user.model';
 @Injectable()
 export class SessionService {
 	// The current session information
-	sessionSubject = new BehaviorSubject<Session | null>(null);
+	sessionSubject$ = new BehaviorSubject<Session | null>(null);
 
 	private readonly mapUserModelToSession = pipe(
 		map((result: any): Session | null => {
@@ -39,7 +39,7 @@ export class SessionService {
 			}),
 			this.mapUserModelToSession,
 			tap((session) => {
-				this.sessionSubject.next(session);
+				this.sessionSubject$.next(session);
 			})
 		);
 	}
@@ -48,22 +48,22 @@ export class SessionService {
 		return this.authService.signin(username, password).pipe(
 			this.mapUserModelToSession,
 			tap((session) => {
-				this.sessionSubject.next(session);
+				this.sessionSubject$.next(session);
 			})
 		);
 	}
 
 	getCurrentEua(): Observable<any> {
-		if (this.sessionSubject?.value?.user?.eua !== undefined) {
-			return of(this.sessionSubject.value.user.eua);
+		if (this.sessionSubject$?.value?.user?.eua !== undefined) {
+			return of(this.sessionSubject$.value.user.eua);
 		}
 		return this.authService.getCurrentEua().pipe(
 			catchError(() => {
 				return of(null);
 			}),
 			tap((eua: any) => {
-				this.sessionSubject.value?.user.setEua(eua);
-				this.sessionSubject.next(this.sessionSubject.value);
+				this.sessionSubject$.value?.user.setEua(eua);
+				this.sessionSubject$.next(this.sessionSubject$.value);
 			})
 		);
 	}
@@ -75,16 +75,16 @@ export class SessionService {
 			}),
 			this.mapUserModelToSession,
 			tap((session) => {
-				this.sessionSubject.next(session);
+				this.sessionSubject$.next(session);
 			})
 		);
 	}
 
 	clear() {
-		this.sessionSubject.next(null);
+		this.sessionSubject$.next(null);
 	}
 
 	getSession(): Observable<Session | null> {
-		return this.sessionSubject;
+		return this.sessionSubject$;
 	}
 }
