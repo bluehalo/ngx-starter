@@ -39,7 +39,7 @@ export class ContainerModalComponent
 
 	isCdkFocusInitial = false;
 
-	constructor(public modalRef: BsModalRef) {
+	constructor(modalRef: BsModalRef) {
 		super(modalRef);
 	}
 
@@ -76,12 +76,12 @@ export class ContainerModalComponent
 		});
 	}
 
-	ok() {
+	override ok() {
 		this.okSubject.next();
 		super.ok();
 	}
 
-	cancel() {
+	override cancel() {
 		this.cancelSubject.next();
 		super.cancel();
 	}

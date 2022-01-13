@@ -57,7 +57,7 @@ export class CacheEntriesComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);

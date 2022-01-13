@@ -17,30 +17,31 @@ import { ManageMessageComponent } from './manage-message.component';
 export class UpdateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-edit';
 
-	private id: string;
-
 	constructor(
-		protected modalService: ModalService,
+		modalService: ModalService,
 		router: Router,
-		protected route: ActivatedRoute,
 		configService: ConfigService,
 		alertService: SystemAlertService,
+		protected route: ActivatedRoute,
 		protected messageService: MessageService
 	) {
-		super(modalService, router, configService, alertService);
+		super(
+			modalService,
+			router,
+			configService,
+			alertService,
+			'Edit Message',
+			"Make changes to the message's information",
+			'Save',
+			'/admin/messages'
+		);
 	}
 
 	initialize() {
 		this.route.params.subscribe((params: Params) => {
-			this.id = params[`id`];
-
-			this.title = 'Edit Message';
-			this.subtitle = "Make changes to the message's information";
-			this.okButtonText = 'Save';
-			this.navigateOnSuccess = '/admin/messages';
 			this.okDisabled = false;
 			this.messageService
-				.get(this.id)
+				.get(params[`id`])
 				.pipe(untilDestroyed(this))
 				.subscribe((messageRaw: any) => {
 					this.message = new Message().setFromModel(messageRaw);

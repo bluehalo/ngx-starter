@@ -19,20 +19,23 @@ export class AdminCreateUserComponent extends ManageUserComponent {
 	mode = 'admin-create';
 
 	constructor(
-		protected router: Router,
-		protected configService: ConfigService,
-		protected alertService: SystemAlertService,
+		router: Router,
+		configService: ConfigService,
+		alertService: SystemAlertService,
 		private adminUsersService: AdminUsersService
 	) {
-		super(router, configService, alertService);
+		super(
+			router,
+			configService,
+			alertService,
+			'Create User',
+			'Provide the required information to create a new user',
+			'Create',
+			'/admin/users'
+		);
 	}
 
 	initialize() {
-		this.title = 'Create User';
-		this.subtitle = 'Provide the required information to create a new user';
-		this.okButtonText = 'Create';
-		this.navigateOnSuccess = '/admin/users';
-		this.user = new User();
 		this.user.userModel.roles = {};
 	}
 

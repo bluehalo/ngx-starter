@@ -86,7 +86,7 @@ export class ListTeamMembersComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		if (!this.team) {
 			throw new TypeError(`'Team' is required`);
 		}
@@ -113,7 +113,7 @@ export class ListTeamMembersComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.team) {
+		if (changes['team']) {
 			this.load$.next(true);
 		}
 	}

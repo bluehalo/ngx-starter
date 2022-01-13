@@ -13,14 +13,9 @@ import { Message } from '../../messages/message.class';
 
 @Directive()
 export abstract class ManageMessageComponent implements OnInit {
-	message: Message;
+	message = new Message();
 	error?: string;
-	okDisabled: boolean;
-
-	// Variables that will be set by implementing classes
-	title: string;
-	subtitle: string;
-	okButtonText: string;
+	okDisabled = true;
 
 	typeOptions: any[] = [
 		{ value: 'MOTD', display: 'MOTD' },
@@ -30,13 +25,16 @@ export abstract class ManageMessageComponent implements OnInit {
 	];
 
 	protected config: any;
-	protected navigateOnSuccess: string;
 
-	constructor(
+	protected constructor(
 		protected modalService: ModalService,
 		protected router: Router,
 		protected configService: ConfigService,
-		public alertService: SystemAlertService
+		public alertService: SystemAlertService,
+		public title: string,
+		public subtitle: string,
+		public okButtonText: string,
+		protected navigateOnSuccess: string
 	) {}
 
 	ngOnInit() {
@@ -45,7 +43,6 @@ export abstract class ManageMessageComponent implements OnInit {
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.config = config;
-
 				this.initialize();
 			});
 	}

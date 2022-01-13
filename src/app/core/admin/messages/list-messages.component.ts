@@ -27,7 +27,6 @@ export class ListMessagesComponent
 	extends AbstractPageableDataComponent<Message>
 	implements OnInit
 {
-	filters: any = {};
 	sort: any;
 
 	headers: SortableTableHeader[] = [
@@ -52,7 +51,7 @@ export class ListMessagesComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';

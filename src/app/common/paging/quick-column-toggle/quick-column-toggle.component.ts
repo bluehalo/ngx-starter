@@ -21,11 +21,13 @@ export type ColumnConfig = {
 	styleUrls: ['../quick-filters/quick-filters.component.scss']
 })
 export class QuickColumnToggleComponent extends QuickFiltersComponent {
-	title = 'Show Columns';
+	constructor() {
+		super();
+		this.title = 'Show Columns';
+		this.columnMode = 'default';
+	}
 
-	columnMode = 'default';
-
-	toggleQuickFilter(key: string) {
+	override toggleQuickFilter(key: string) {
 		if (key === 'all') {
 			this.filterKeys.forEach((k: string) => (this.filters[k].show = true));
 		} else if (key === 'default') {

@@ -16,11 +16,11 @@ export class ConfigurableModalComponent extends AbstractModalDirective {
 
 	formData: any = {};
 
-	constructor(public modalRef: BsModalRef) {
+	constructor(modalRef: BsModalRef) {
 		super(modalRef);
 	}
 
-	ok() {
+	override ok() {
 		this.modalRef.hide();
 		const event: ModalCloseEvent = { action: ModalAction.OK };
 		if (this.inputs) {

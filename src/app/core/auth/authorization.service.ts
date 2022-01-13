@@ -9,7 +9,7 @@ import { SessionService } from './session.service';
 @UntilDestroy()
 @Injectable()
 export class AuthorizationService {
-	private session: Session | null;
+	private session: Session | null = null;
 
 	constructor(private sessionService: SessionService) {
 		this.sessionService

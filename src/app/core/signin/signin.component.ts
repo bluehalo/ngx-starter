@@ -16,9 +16,9 @@ export class SigninComponent implements OnInit {
 	loaded = false;
 	pkiMode = false;
 
-	username: string;
-	password: string;
-	error: string;
+	username?: string;
+	password?: string;
+	error?: string;
 
 	constructor(
 		private configService: ConfigService,
@@ -42,16 +42,18 @@ export class SigninComponent implements OnInit {
 	}
 
 	signin() {
-		this.sessionService
-			.signin(this.username, this.password)
-			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: (result) => {
-					this.navigationService.navigateToPreviousRoute();
-				},
-				error: (error) => {
-					this.error = error?.error?.message ?? 'Unexpected error signing in.';
-				}
-			});
+		if (this.username && this.password) {
+			this.sessionService
+				.signin(this.username, this.password)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: (result) => {
+						this.navigationService.navigateToPreviousRoute();
+					},
+					error: (error) => {
+						this.error = error?.error?.message ?? 'Unexpected error signing in.';
+					}
+				});
+		}
 	}
 }

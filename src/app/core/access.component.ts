@@ -19,12 +19,10 @@ export class AccessComponent {
 	message = 'User is missing authorizations for access.';
 
 	constructor(private router: Router) {
-		const navigation = this.router.getCurrentNavigation();
-		const state = navigation?.extras?.state;
-
+		const state = this.router.getCurrentNavigation()?.extras?.state;
 		if (state) {
-			this.status = state.status;
-			this.message = state.message;
+			this.status = state['status'];
+			this.message = state['message'];
 		}
 	}
 }

@@ -120,7 +120,7 @@ export class AdminListFeedbackComponent
 			});
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 		this.columnsUpdated(this.columns);
@@ -161,7 +161,7 @@ export class AdminListFeedbackComponent
 		return { open: { show: false, display: 'New/Open Issues' } };
 	}
 
-	getQuery(): any {
+	override getQuery(): any {
 		let query: any;
 
 		if (this.filters.open.show) {

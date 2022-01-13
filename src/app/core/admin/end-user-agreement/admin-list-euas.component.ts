@@ -86,7 +86,7 @@ export class AdminListEuasComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';

@@ -15,23 +15,20 @@ import { ConfigService } from '../../config.service';
 export abstract class ManageUserComponent implements OnInit {
 	config: any;
 	error?: string;
-	proxyPki: boolean;
-	metadataLocked: boolean;
-	okDisabled: boolean;
-
-	// Variables that will be set by implementing classes
-	title: string;
-	subtitle: string;
-	okButtonText: string;
-	navigateOnSuccess: string;
-	user: User;
-
+	proxyPki = false;
+	metadataLocked = false;
+	okDisabled = true;
+	user: User = new User();
 	possibleRoles = Role.ROLES;
 
 	protected constructor(
 		protected router: Router,
 		protected configService: ConfigService,
-		protected alertService: SystemAlertService
+		protected alertService: SystemAlertService,
+		public title: string,
+		public subtitle: string,
+		public okButtonText: string,
+		protected navigateOnSuccess: string
 	) {}
 
 	ngOnInit() {
@@ -41,7 +38,6 @@ export abstract class ManageUserComponent implements OnInit {
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth.startsWith('proxy-pki');
-
 				this.metadataLocked = this.proxyPki;
 
 				this.initialize();

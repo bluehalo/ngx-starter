@@ -8,7 +8,7 @@ import { HelpComponent } from './help.component';
 @Injectable()
 export class HelpBreadcrumbResolver implements Resolve<string | null> {
 	resolve(route: ActivatedRouteSnapshot) {
-		return HelpTopics.getTopicTitle(route.params.topic);
+		return HelpTopics.getTopicTitle(route.params['topic']);
 	}
 }
 

@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { SystemAlertService } from '../../../common/system-alert.module';
@@ -15,54 +15,48 @@ import { ManageUserComponent } from './manage-user.component';
 	selector: 'admin-edit-user',
 	templateUrl: './manage-user.component.html'
 })
-export class AdminEditUserComponent extends ManageUserComponent implements OnDestroy {
-	private id: string;
-
-	private sub: any;
-
+export class AdminEditUserComponent extends ManageUserComponent {
 	mode = 'admin-edit';
 
 	constructor(
-		protected router: Router,
-		protected configService: ConfigService,
-		protected alertService: SystemAlertService,
+		router: Router,
+		configService: ConfigService,
+		alertService: SystemAlertService,
 		private route: ActivatedRoute,
 		private adminUsersService: AdminUsersService
 	) {
-		super(router, configService, alertService);
+		super(
+			router,
+			configService,
+			alertService,
+			'Edit User',
+			"Make changes to the user's information",
+			'Save',
+			'/admin/users'
+		);
 	}
 
 	initialize() {
-		this.sub = this.route.params.subscribe((params: any) => {
-			this.id = params.id;
-
-			this.title = 'Edit User';
-			this.subtitle = "Make changes to the user's information";
-			this.okButtonText = 'Save';
-			this.navigateOnSuccess = '/admin/users';
+		this.route.params.subscribe((params) => {
 			this.okDisabled = false;
-			this.adminUsersService.get(this.id).subscribe((userRaw: any) => {
-				this.user = new User().setFromUserModel(userRaw);
-				if (null == this.user.userModel.roles) {
-					this.user.userModel.roles = {};
-				}
-				this.user.userModel.externalRolesDisplay =
-					this.user.userModel.externalRoles?.join('\n');
-				this.user.userModel.externalGroupsDisplay =
-					this.user.userModel.externalGroups?.join('\n');
-				this.user.userModel.providerData = {
-					dn:
-						null != this.user.userModel.providerData
-							? this.user.userModel.providerData.dn
-							: undefined
-				};
-				this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
-			});
+			this.adminUsersService
+				.get(params['id'])
+				.pipe(untilDestroyed(this))
+				.subscribe((userRaw: any) => {
+					this.user = new User().setFromUserModel(userRaw);
+					if (null == this.user.userModel.roles) {
+						this.user.userModel.roles = {};
+					}
+					this.user.userModel.externalRolesDisplay =
+						this.user.userModel.externalRoles?.join('\n');
+					this.user.userModel.externalGroupsDisplay =
+						this.user.userModel.externalGroups?.join('\n');
+					this.user.userModel.providerData = {
+						dn: this.user.userModel.providerData?.dn
+					};
+					this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
+				});
 		});
-	}
-
-	ngOnDestroy() {
-		this.sub.unsubscribe();
 	}
 
 	handleBypassAccessCheck() {

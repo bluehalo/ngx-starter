@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -13,20 +13,15 @@ import { ManageEuaComponent } from './manage-eua.component';
 	selector: 'admin-create-eua',
 	templateUrl: './manage-eua.component.html'
 })
-export class AdminCreateEuaComponent extends ManageEuaComponent implements OnInit {
-	constructor(
-		router: Router,
-		public modalService: ModalService,
-		protected euaService: EuaService
-	) {
-		super(router, modalService);
-	}
-
-	ngOnInit() {
-		// Admin create mode
-		this.title = 'Create EUA';
-		this.subtitle = 'Provide the required information to create a new eua';
-		this.submitText = 'Create';
+export class AdminCreateEuaComponent extends ManageEuaComponent {
+	constructor(router: Router, modalService: ModalService, protected euaService: EuaService) {
+		super(
+			router,
+			modalService,
+			'Create EUA',
+			'Provide the required information to create a new eua',
+			'Create'
+		);
 	}
 
 	submitEua() {

@@ -122,7 +122,7 @@ export class ListAuditEntriesComponent
 		);
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		// Load action and audit type options from the server
 		forkJoin([
 			this.auditService.getDistinctAuditValues('audit.action'),
@@ -183,7 +183,7 @@ export class ListAuditEntriesComponent
 		}
 	}
 
-	getQuery(): any {
+	override getQuery(): any {
 		const query: any = {};
 
 		// If actor search bar is empty, clear the actor object, otherwise retain it

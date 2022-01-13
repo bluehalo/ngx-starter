@@ -54,7 +54,7 @@ export class ViewTeamComponent implements OnInit {
 
 		this.route.data
 			.pipe(
-				map((data) => data.team),
+				map((data) => data['team']),
 				untilDestroyed(this)
 			)
 			.subscribe((team) => {

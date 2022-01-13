@@ -14,7 +14,7 @@ export class HelpTopicWrapperComponent {
 
 	constructor(private route: ActivatedRoute) {
 		route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
-			this.key = params.topic;
+			this.key = params['topic'];
 		});
 	}
 }

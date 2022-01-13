@@ -18,21 +18,25 @@ export class CreateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-create';
 
 	constructor(
-		protected modalService: ModalService,
+		modalService: ModalService,
 		router: Router,
 		configService: ConfigService,
 		alertService: SystemAlertService,
 		private messageService: MessageService
 	) {
-		super(modalService, router, configService, alertService);
+		super(
+			modalService,
+			router,
+			configService,
+			alertService,
+			'Create Message',
+			'Provide the required information to create a new message',
+			'Create',
+			'/admin/messages'
+		);
 	}
 
 	initialize() {
-		this.title = 'Create Message';
-		this.subtitle = 'Provide the required information to create a new message';
-		this.okButtonText = 'Create';
-		this.navigateOnSuccess = '/admin/messages';
-		this.message = new Message();
 		this.message.type = MessageType.MOTD;
 	}
 
