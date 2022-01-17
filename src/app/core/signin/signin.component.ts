@@ -37,7 +37,23 @@ export class SigninComponent implements OnInit {
 
 				if (this.pkiMode) {
 					// Automatically sign in
-					this.signin();
+					this.pkiSignin();
+				}
+			});
+	}
+
+	pkiSignin() {
+		this.sessionService
+			.reloadSession()
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: () => {
+					this.navigationService.navigateToPreviousRoute();
+				},
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.error = error.error?.message ?? 'Unexpected error signing in.';
+					}
 				}
 			});
 	}
@@ -48,7 +64,7 @@ export class SigninComponent implements OnInit {
 				.signin(this.username, this.password)
 				.pipe(untilDestroyed(this))
 				.subscribe({
-					next: (result) => {
+					next: () => {
 						this.navigationService.navigateToPreviousRoute();
 					},
 					error: (error: unknown) => {
