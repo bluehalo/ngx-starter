@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-flyout',
@@ -17,21 +17,29 @@ export class FlyoutComponent {
 
 	isOpen = false;
 
+	constructor(private renderer: Renderer2) {}
+
 	toggle() {
 		if (this.content && this.container) {
 			if (this.placement === 'top' || this.placement === 'bottom') {
 				if (this.isOpen) {
-					this.container.nativeElement.style.height = '0';
+					this.renderer.setStyle(this.container.nativeElement, 'height', 0);
 				} else {
-					this.container.nativeElement.style.height =
-						this.content.nativeElement.clientHeight + 'px';
+					this.renderer.setStyle(
+						this.container.nativeElement,
+						'height',
+						`${this.content.nativeElement.clientHeight}px`
+					);
 				}
 			} else {
 				if (this.isOpen) {
-					this.container.nativeElement.style.width = '0';
+					this.renderer.setStyle(this.container.nativeElement, 'width', 0);
 				} else {
-					this.container.nativeElement.style.width =
-						this.content.nativeElement.clientWidth + 'px';
+					this.renderer.setStyle(
+						this.container.nativeElement,
+						'width',
+						`${this.content.nativeElement.clientWidth}px`
+					);
 				}
 			}
 
