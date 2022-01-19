@@ -57,7 +57,7 @@ export class CacheEntriesComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
@@ -91,8 +91,10 @@ export class CacheEntriesComponent
 					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
 					this.load$.next(true);
 				},
-				error: (response: HttpErrorResponse) => {
-					this.alertService.addAlert(response.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}
@@ -123,8 +125,10 @@ export class CacheEntriesComponent
 					cacheEntry.isRefreshing = false;
 					this.load$.next(true);
 				},
-				error: (response: HttpErrorResponse) => {
-					this.alertService.addAlert(response.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 					cacheEntry.isRefreshing = false;
 				}
 			});

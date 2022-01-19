@@ -43,8 +43,11 @@ export class TeamsService {
 				{ headers: this.headers }
 			)
 			.pipe(
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
+
 					return of(null);
 				})
 			);
@@ -53,8 +56,10 @@ export class TeamsService {
 	get(teamId: string): Observable<Team | null> {
 		return this.http.get(`api/team/${teamId}`).pipe(
 			map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of(null);
 			})
 		);
@@ -63,8 +68,10 @@ export class TeamsService {
 	update(team: Team): Observable<Team | null> {
 		return this.http.post(`api/team/${team._id}`, team, { headers: this.headers }).pipe(
 			map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
-			catchError((error: HttpErrorResponse) => {
-				this.alertService.addClientErrorAlert(error);
+			catchError((error: unknown) => {
+				if (error instanceof HttpErrorResponse) {
+					this.alertService.addClientErrorAlert(error);
+				}
 				return of(null);
 			})
 		);
@@ -191,8 +198,10 @@ export class TeamsService {
 						);
 					}
 				}),
-				catchError((error) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(NULL_PAGING_RESULTS);
 				})
 			);

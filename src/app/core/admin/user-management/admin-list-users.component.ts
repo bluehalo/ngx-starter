@@ -4,8 +4,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
-import { of, Observable, Subject } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
@@ -19,7 +19,6 @@ import {
 } from '../../../common/paging.module';
 import { ColumnConfig } from '../../../common/paging/quick-column-toggle/quick-column-toggle.component';
 import { SystemAlertService } from '../../../common/system-alert.module';
-import { AuthenticationService } from '../../auth/authentication.service';
 import { Role } from '../../auth/role.model';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
@@ -115,7 +114,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			// Clear any alerts
 			this.alertService.clearAllAlerts();
@@ -171,8 +170,10 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 				first(),
 				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				}),
 				untilDestroyed(this)
@@ -266,7 +267,7 @@ export class AdminListUsersComponent extends AbstractPageableDataComponent<User>
 		return this.adminUsersService.search(query, search, pagingOptions, {});
 	}
 
-	getQuery(): any {
+	override getQuery(): any {
 		let query: any;
 		const elements: any[] = [];
 

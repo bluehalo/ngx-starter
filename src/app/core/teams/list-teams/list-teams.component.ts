@@ -67,7 +67,7 @@ export class ListTeamsComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
@@ -78,7 +78,7 @@ export class ListTeamsComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.parent) {
+		if (changes['parent']) {
 			this.load$.next(true);
 		}
 	}

@@ -27,7 +27,6 @@ export class ListMessagesComponent
 	extends AbstractPageableDataComponent<Message>
 	implements OnInit
 {
-	filters: any = {};
 	sort: any;
 
 	headers: SortableTableHeader[] = [
@@ -52,7 +51,7 @@ export class ListMessagesComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.route.params.pipe(untilDestroyed(this)).subscribe((params: Params) => {
 			const clearCachedFilter = params?.[`clearCachedFilter`] ?? '';
@@ -110,8 +109,10 @@ export class ListMessagesComponent
 					this.alertService.addAlert(`Deleted message.`, 'success');
 					this.load$.next(true);
 				},
-				error: (error: HttpErrorResponse) => {
-					this.alertService.addAlert(error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.message);
+					}
 				}
 			});
 	}

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -16,9 +17,9 @@ export class SigninComponent implements OnInit {
 	loaded = false;
 	pkiMode = false;
 
-	username: string;
-	password: string;
-	error: string;
+	username?: string;
+	password?: string;
+	error?: string;
 
 	constructor(
 		private configService: ConfigService,
@@ -36,22 +37,42 @@ export class SigninComponent implements OnInit {
 
 				if (this.pkiMode) {
 					// Automatically sign in
-					this.signin();
+					this.pkiSignin();
+				}
+			});
+	}
+
+	pkiSignin() {
+		this.sessionService
+			.reloadSession()
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: () => {
+					this.navigationService.navigateToPreviousRoute();
+				},
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.error = error.error?.message ?? 'Unexpected error signing in.';
+					}
 				}
 			});
 	}
 
 	signin() {
-		this.sessionService
-			.signin(this.username, this.password)
-			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: (result) => {
-					this.navigationService.navigateToPreviousRoute();
-				},
-				error: (error) => {
-					this.error = error?.error?.message ?? 'Unexpected error signing in.';
-				}
-			});
+		if (this.username && this.password) {
+			this.sessionService
+				.signin(this.username, this.password)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this.navigationService.navigateToPreviousRoute();
+					},
+					error: (error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.error = error.error?.message ?? 'Unexpected error signing in.';
+						}
+					}
+				});
+		}
 	}
 }

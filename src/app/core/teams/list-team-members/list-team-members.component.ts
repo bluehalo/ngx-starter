@@ -86,7 +86,7 @@ export class ListTeamMembersComponent
 		super();
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		if (!this.team) {
 			throw new TypeError(`'Team' is required`);
 		}
@@ -113,7 +113,7 @@ export class ListTeamMembersComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.team) {
+		if (changes['team']) {
 			this.load$.next(true);
 		}
 	}
@@ -159,8 +159,10 @@ export class ListTeamMembersComponent
 				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.removeMember(this.team, member.userModel._id)),
 				switchMap(() => this.sessionService.reloadSession()),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				}),
 				untilDestroyed(this)
@@ -191,8 +193,10 @@ export class ListTeamMembersComponent
 					filter((action) => action === ModalAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
 					switchMap(() => this.sessionService.reloadSession()),
-					catchError((error: HttpErrorResponse) => {
-						this.alertService.addClientErrorAlert(error);
+					catchError((error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.alertService.addClientErrorAlert(error);
+						}
 						return of(null);
 					}),
 					untilDestroyed(this)
@@ -207,8 +211,10 @@ export class ListTeamMembersComponent
 		} else {
 			this.doUpdateRole(member, role)
 				.pipe(
-					catchError((error: HttpErrorResponse) => {
-						this.alertService.addClientErrorAlert(error);
+					catchError((error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.alertService.addClientErrorAlert(error);
+						}
 						return of(null);
 					}),
 					untilDestroyed(this)
@@ -227,8 +233,10 @@ export class ListTeamMembersComponent
 			.addMember(this.team, member.userModel._id, role)
 			.pipe(
 				switchMap(() => this.sessionService.reloadSession()),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				}),
 				untilDestroyed(this)

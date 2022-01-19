@@ -54,7 +54,7 @@ export class ViewTeamComponent implements OnInit {
 
 		this.route.data
 			.pipe(
-				map((data) => data.team),
+				map((data) => data['team']),
 				untilDestroyed(this)
 			)
 			.subscribe((team) => {
@@ -110,8 +110,10 @@ export class ViewTeamComponent implements OnInit {
 				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
-				catchError((error: HttpErrorResponse) => {
-					this.alertService.addClientErrorAlert(error);
+				catchError((error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addClientErrorAlert(error);
+					}
 					return of(null);
 				}),
 				untilDestroyed(this)

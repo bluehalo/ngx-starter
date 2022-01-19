@@ -18,25 +18,28 @@ export abstract class AbstractModalizableDirective {
 	/**
 	 * The ContainerModalComponent will call '.next()' on this subject when the modal's 'ok' button is pressed
 	 */
-	okSubject: Subject<void> = new Subject<void>();
+	/* eslint-disable-next-line rxjs/finnish */
+	okSubject = new Subject<void>();
 
 	/**
 	 * The ContainerModalComponent will call '.next()' on this subject when the modal's 'cancel' button is pressed
 	 */
-	cancelSubject: Subject<void> = new Subject<void>();
+	/* eslint-disable-next-line rxjs/finnish */
+	cancelSubject = new Subject<void>();
 
 	/**
 	 * If there is any kind of validation being performed in the modalized component, the component can call '.next()'
 	 * on this subject to indicate to the ContainerModalComponent whether or not the 'ok' button should be active.\
 	 */
-	disableOkSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	/* eslint-disable-next-line rxjs/finnish */
+	disableOkSubject = new BehaviorSubject<boolean>(false);
 
 	constructor() {
 		this.okSubject.pipe(untilDestroyed(this)).subscribe({
 			next: () => {
 				this.onOk();
 			},
-			error: (err) => {
+			error: (err: unknown) => {
 				console.error(err);
 			}
 		});
@@ -45,7 +48,7 @@ export abstract class AbstractModalizableDirective {
 			next: () => {
 				this.onCancel();
 			},
-			error: (err) => {
+			error: (err: unknown) => {
 				console.error(err);
 			}
 		});

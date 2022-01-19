@@ -19,7 +19,8 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:import/recommended",
         "plugin:import/typescript",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:rxjs/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -64,7 +65,11 @@
             "caseInsensitive": true
           }
         }],
-        "import/no-unresolved": ["off"]
+        "import/no-unresolved": ["off"],
+        "rxjs/prefer-observer": ["error"],
+        "rxjs/finnish": ["error", {
+          "methods": false
+        }]
       }
     },
     // NOTE: WE ARE NOT APPLYING PRETTIER IN THIS OVERRIDE, ONLY @ANGULAR-ESLINT/TEMPLATE

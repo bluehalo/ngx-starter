@@ -64,9 +64,11 @@ export class FeedbackModalComponent implements OnInit {
 				next: () => {
 					setTimeout(() => this.modalRef.hide(), 1500);
 				},
-				error: (error: HttpErrorResponse) => {
+				error: (error: unknown) => {
 					this.submitting = false;
-					this.error = error.error.message;
+					if (error instanceof HttpErrorResponse) {
+						this.error = error.error.message;
+					}
 				}
 			});
 	}

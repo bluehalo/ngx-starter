@@ -90,7 +90,7 @@ export class SiteNavbarComponent implements OnInit {
 				this.userPreferencesLink = config?.userPreferences?.path ?? '';
 			});
 
-		this.messageService.numMessagesIndicator.pipe(untilDestroyed(this)).subscribe((count) => {
+		this.messageService.numMessagesIndicator$.pipe(untilDestroyed(this)).subscribe((count) => {
 			this.numNewMessages = count;
 		});
 	}

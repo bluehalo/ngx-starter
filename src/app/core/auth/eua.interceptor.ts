@@ -7,7 +7,7 @@ import { AbstractHttpInterceptor } from './abstract.interceptor';
  */
 @Injectable()
 export class EuaInterceptor extends AbstractHttpInterceptor {
-	handleError(err: any): void {
+	handleError(err: unknown): void {
 		const { status, type } = this.parseError(err);
 		if (status === 403 && type === 'eua') {
 			this.router.navigate(['/eua']);

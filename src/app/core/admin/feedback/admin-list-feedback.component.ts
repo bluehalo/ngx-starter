@@ -120,7 +120,7 @@ export class AdminListFeedbackComponent
 			});
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
 		this.columnsUpdated(this.columns);
@@ -161,7 +161,7 @@ export class AdminListFeedbackComponent
 		return { open: { show: false, display: 'New/Open Issues' } };
 	}
 
-	getQuery(): any {
+	override getQuery(): any {
 		let query: any;
 
 		if (this.filters.open.show) {
@@ -188,8 +188,10 @@ export class AdminListFeedbackComponent
 				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
-				error: (err: HttpErrorResponse) => {
-					this.alertService.addAlert(err.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}
@@ -202,8 +204,10 @@ export class AdminListFeedbackComponent
 				next: (updatedFeedback) => {
 					this.items[index] = updatedFeedback;
 				},
-				error: (err: HttpErrorResponse) => {
-					this.alertService.addAlert(err.error.message);
+				error: (error: unknown) => {
+					if (error instanceof HttpErrorResponse) {
+						this.alertService.addAlert(error.error.message);
+					}
 				}
 			});
 	}

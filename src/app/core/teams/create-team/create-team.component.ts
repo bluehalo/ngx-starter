@@ -40,7 +40,7 @@ export class CreateTeamComponent implements OnInit {
 
 	usersLoading = false;
 	usersInput$ = new Subject<string>();
-	users$: Observable<User[]>;
+	users$: Observable<User[]> = of([]);
 
 	isSubmitting = false;
 

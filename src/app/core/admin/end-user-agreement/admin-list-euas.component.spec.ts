@@ -23,6 +23,7 @@ describe('Admin List End User Agreements Component', () => {
 
 	beforeEach(() => {
 		activatedRoute = {
+			/* eslint-disable-next-line rxjs/finnish */
 			params: of({})
 		};
 		endUserAgreementServiceSpy = jasmine.createSpyObj('EuaService', ['search']);

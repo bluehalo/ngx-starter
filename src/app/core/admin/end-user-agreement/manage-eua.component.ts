@@ -4,19 +4,16 @@ import { ModalService } from '../../../common/modal.module';
 import { EndUserAgreement } from './eua.model';
 
 export abstract class ManageEuaComponent {
-	error: any;
+	error?: string;
+	eua = new EndUserAgreement();
 
-	mode: string;
-	id: string;
-	eua: EndUserAgreement;
-	preview: boolean;
-	title: string;
-	subtitle: string;
-	submitText: string;
-
-	protected constructor(public router: Router, public modalService: ModalService) {
-		this.eua = new EndUserAgreement();
-	}
+	protected constructor(
+		protected router: Router,
+		protected modalService: ModalService,
+		public title: string,
+		public subtitle: string,
+		public submitText: string
+	) {}
 
 	abstract submitEua(): any;
 

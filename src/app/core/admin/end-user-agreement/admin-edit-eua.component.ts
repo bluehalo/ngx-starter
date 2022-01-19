@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { switchMap } from 'rxjs';
 
 import { ModalService } from '../../../common/modal.module';
 import { EndUserAgreement } from './eua.model';
@@ -16,24 +17,22 @@ import { ManageEuaComponent } from './manage-eua.component';
 export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
 	constructor(
 		router: Router,
-		public modalService: ModalService,
+		modalService: ModalService,
 		protected euaService: EuaService,
 		protected route: ActivatedRoute
 	) {
-		super(router, modalService);
+		super(router, modalService, 'Edit EUA', "Make changes to the EUA's information", 'Save');
 	}
 
 	ngOnInit() {
-		this.title = 'Edit EUA';
-		this.subtitle = "Make changes to the EUA's information";
-		this.submitText = 'Save';
-
-		this.route.params.subscribe((params: Params) => {
-			this.id = params[`id`];
-			this.euaService.get(this.id).subscribe((eua) => {
+		this.route.params
+			.pipe(
+				untilDestroyed(this),
+				switchMap((params: Params) => this.euaService.get(params['id']))
+			)
+			.subscribe((eua) => {
 				this.eua = eua;
 			});
-		});
 	}
 
 	submitEua() {

@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { SystemAlertService } from '../../common/system-alert.module';
 import { ConfigService } from '../../core/config.service';
@@ -22,32 +22,32 @@ export class SignupComponent extends ManageUserComponent implements OnInit {
 	inviteId?: string;
 
 	constructor(
-		protected router: Router,
-		protected configService: ConfigService,
-		protected alertService: SystemAlertService,
+		router: Router,
+		configService: ConfigService,
+		alertService: SystemAlertService,
 		private authService: AuthenticationService,
 		private route: ActivatedRoute
 	) {
-		super(router, configService, alertService);
+		super(
+			router,
+			configService,
+			alertService,
+			'New Account Request',
+			'Provide the required information to request an account',
+			'Submit',
+			'/signed-up'
+		);
 	}
 
-	ngOnInit() {
+	override ngOnInit() {
 		super.ngOnInit();
 		this.route.queryParams.pipe(untilDestroyed(this)).subscribe((params: Params) => {
-			this.inviteId = params.inviteId;
-			if (!isEmpty(params.email)) {
-				this.user.userModel.email = params.email;
-			}
+			this.inviteId = params['inviteId'];
+			this.user.userModel.email = params['email'];
 		});
 	}
 
-	initialize() {
-		this.title = 'New Account Request';
-		this.subtitle = 'Provide the required information to request an account';
-		this.okButtonText = 'Submit';
-		this.navigateOnSuccess = '/signed-up';
-		this.user = new User();
-	}
+	initialize() {}
 
 	handleBypassAccessCheck() {
 		// Don't need to do anything

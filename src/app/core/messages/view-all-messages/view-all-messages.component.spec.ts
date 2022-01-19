@@ -46,7 +46,7 @@ describe('View All Messages Component Spec', () => {
 		]);
 		messageServiceSpy.messageReceived = new Subject<Message>();
 		messageServiceSpy.remove.and.returnValue(of({}));
-		messageServiceSpy.numMessagesIndicator = of(0);
+		messageServiceSpy.numMessagesIndicator$ = of(0);
 		messageServiceSpy.search.and.callFake(() => {
 			return of(messageResultsSpec);
 		});

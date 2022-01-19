@@ -8,7 +8,7 @@ import { AbstractHttpInterceptor } from './abstract.interceptor';
  */
 @Injectable()
 export class AuthInterceptor extends AbstractHttpInterceptor {
-	handleError(err: any, req: HttpRequest<any>): void {
+	handleError(err: unknown, req: HttpRequest<any>): void {
 		if (!req.headers.has('bypass-auth-interceptor')) {
 			const { status, type, message, url } = this.parseError(err);
 			if (status === 403) {

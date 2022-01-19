@@ -31,15 +31,17 @@ export class ContainerModalComponent
 
 	modalizableComponentProperties: { [key: string]: any } = {};
 
+	/* eslint-disable-next-line rxjs/finnish */
 	okSubject: Subject<void>;
 
+	/* eslint-disable-next-line rxjs/finnish */
 	cancelSubject: Subject<void>;
 
 	isOkDisabled = false;
 
 	isCdkFocusInitial = false;
 
-	constructor(public modalRef: BsModalRef) {
+	constructor(modalRef: BsModalRef) {
 		super(modalRef);
 	}
 
@@ -70,18 +72,18 @@ export class ContainerModalComponent
 			next: (isOkDisabled) => {
 				this.isOkDisabled = isOkDisabled;
 			},
-			error: (err) => {
+			error: (err: unknown) => {
 				console.error(err);
 			}
 		});
 	}
 
-	ok() {
+	override ok() {
 		this.okSubject.next();
 		super.ok();
 	}
 
-	cancel() {
+	override cancel() {
 		this.cancelSubject.next();
 		super.cancel();
 	}
