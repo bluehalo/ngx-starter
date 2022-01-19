@@ -27,6 +27,4 @@
 	</div>
 </footer>
 
-<ng-container *isAuthenticated>
-	<app-feedback-flyout *ngIf="showFeedbackFlyout"></app-feedback-flyout>
-</ng-container>
+<app-feedback-flyout *isAuthenticated="true; and: showFeedbackFlyout"></app-feedback-flyout>
