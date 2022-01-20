@@ -10,7 +10,7 @@
 
 <ng-container *ngIf="team; else noTeam">
 	<div class="d-flex mb-3">
-		<h1>{{ team.name }} (Date Created: {{ team.created | utcDate: 'MM/DD/YYYY' }})</h1>
+		<h1>{{ team.name }}</h1>
 
 		<button
 			type="button"
@@ -37,7 +37,7 @@
 		<div class="col col-na-xl-5 col-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center">
-					<h2>Settings</h2>
+					<h2>Details</h2>
 					<button
 						class="btn btn-outline-secondary ml-3"
 						type="button"
@@ -67,7 +67,6 @@
 				</div>
 				<div class="card-body" [class.editing]="isEditing">
 					<form id="edit-team-form" #editTeamForm="ngForm">
-						<h3>Basic Information</h3>
 						<div class="form-inline-edit mb-3">
 							<div class="form-group">
 								<label class="col col-form-label">Name</label>
@@ -88,7 +87,7 @@
 							<div class="form-group">
 								<label class="col col-form-label">Description</label>
 								<div class="col col-form-readonly-value" *ngIf="!isEditing">
-									<div>{{ team.description || '' | titlecase }}</div>
+									<div style="white-space: pre-wrap">{{ team.description }}</div>
 								</div>
 								<div class="col" *ngIf="isEditing">
 									<textarea
@@ -98,6 +97,13 @@
 										[(ngModel)]="_team.description"
 									>
 									</textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col col-form-label">Date Created</label>
+								<div class="col col-form-readonly-value">
+									<div>{{ team.created | utcDate: 'yyyy-MM-dd' }}</div>
 								</div>
 							</div>
 

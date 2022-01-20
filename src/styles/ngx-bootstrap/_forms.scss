@@ -1,6 +1,7 @@
 @import 'shared';
 
 $form-label-font-color: $ux-color-primary-dark !default;
+$form-inline-edit-btns-bottom: -2rem !default;
 
 .form-control {
 	font-style: normal;
@@ -43,7 +44,7 @@ input[bsDatepicker] + span {
 .inline-edit-btns {
 	background: $ux-color-white;
 	border-top: 1px solid $border-color;
-	bottom: 2.5rem;
+	bottom: $form-inline-edit-btns-bottom;
 	margin-left: -1 * $card-spacer-x;
 	padding: $card-spacer-y $card-spacer-x;
 	position: sticky;

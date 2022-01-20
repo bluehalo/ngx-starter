@@ -162,7 +162,7 @@ export class TeamsService {
 	}
 
 	getTeams(): Observable<Team[]> {
-		return this.search(new PagingOptions(0, 1000)).pipe(
+		return this.search(new PagingOptions(0, 1000, 0, 0, 'name', 'ASC')).pipe(
 			map((results) => results.elements),
 			catchError(() => of([]))
 		);
