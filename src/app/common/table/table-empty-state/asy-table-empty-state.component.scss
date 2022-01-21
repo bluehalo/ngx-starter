@@ -1,0 +1,12 @@
+@import '../../../../styles/shared';
+@import '../../../../styles/ngx-bootstrap/shared';
+
+:host {
+	display: block;
+}
+
+.media img {
+	height: 90px;
+	width: 90px;
+	margin-right: map-get($spacers, 5);
+}

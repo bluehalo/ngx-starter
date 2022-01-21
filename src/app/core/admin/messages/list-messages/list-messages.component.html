@@ -1,0 +1,111 @@
+<section class="page-header mb-3">
+	<div class="row no-gutters">
+		<div class="media col">
+			<div class="media-body">
+				<h1 skipTo>Messages</h1>
+				View and manage messages.
+			</div>
+		</div>
+	</div>
+	<system-alert></system-alert>
+</section>
+
+<section class="page-body anchored-page-body">
+	<div class="table-header d-flex align-items-center">
+		<div class="table-actions d-flex flex-wrap flex-grow-1">
+			<div class="mb-3 mr-5">
+				<asy-search-input
+					placeholder="Search..."
+					(applySearch)="dataSource.search($event)"
+					[search]="dataSource.searchEvent$.value"
+				></asy-search-input>
+			</div>
+
+			<div class="mb-3 ml-auto">
+				<button
+					[routerLink]="['/admin/message/']"
+					type="button"
+					class="btn btn-primary ml-auto"
+				>
+					<span class="fa fa-plus"></span> Create Message
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-content">
+		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+			<ng-container cdkColumnDef="title">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Title</th>
+				<td cdk-cell *cdkCellDef="let message">
+					{{ message.title }}
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="type">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Type</th>
+				<td cdk-cell *cdkCellDef="let message">
+					{{ message.type }}
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="created">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
+				<td cdk-cell *cdkCellDef="let message">
+					{{ message.created | utcDate }}
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="updated">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
+				<td cdk-cell *cdkCellDef="let message">
+					{{ message.updated | utcDate }}
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="actionsMenu">
+				<th cdk-header-cell *cdkHeaderCellDef></th>
+				<td cdk-cell *cdkCellDef="let message">
+					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
+						<span
+							class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+							dropdownToggle
+						>
+							<span class="fa fa-lg fa-ellipsis-v"></span>
+						</span>
+						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
+							<li>
+								<a class="dropdown-item" (click)="previewMessage(message)"
+									>Preview</a
+								>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									[routerLink]="['/admin/message', message._id]"
+									>Edit</a
+								>
+							</li>
+							<li>
+								<a class="dropdown-item" (click)="confirmDeleteMessage(message)"
+									>Delete</a
+								>
+							</li>
+						</ul>
+					</span>
+				</td>
+			</ng-container>
+			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let team; columns: displayedColumns"></tr>
+		</table>
+
+		<asy-table-empty-state
+			emptyText="No messages are available."
+			filteredText="No messages matched your search."
+			[dataSource]="dataSource"
+			(clearFilters)="clearFilters()"
+		></asy-table-empty-state>
+	</div>
+
+	<div class="table-footer d-flex align-items-center">
+		<div class="table-footer-pager ml-auto">
+			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+		</div>
+	</div>
+</section>

@@ -1,316 +1,159 @@
-<section>
-	<h1 skipTo>
-		Audit Logs
-		<small>Browse and search audit logs</small>
-	</h1>
-
-	<!-- Alert Notifications -->
-	<system-alert></system-alert>
-
-	<div class="row pt-2">
-		<div class="col-md-2">
-			<div class="quick-select card">
-				<div>
-					<span class="collapsible" (click)="timestampFormShown = !timestampFormShown">
-						<span class="quick-select-title">
-							<span class="fa fa-clock-o"></span>
-							Timestamp
-							<span
-								class="fa fa-fw"
-								[ngClass]="{
-									'fa-caret-up': timestampFormShown,
-									'fa-caret-down': !timestampFormShown
-								}"
-							></span>
-						</span>
-					</span>
-				</div>
-				<div *ngIf="timestampFormShown" class="quick-select-header">
-					<ng-select
-						[items]="dateRangeOptions"
-						[clearable]="false"
-						bindLabel="display"
-						bindValue="value"
-						(change)="load$.next(true)"
-						[(ngModel)]="dateRangeFilter.selected"
-						name="timestamp"
-						dropdownPosition="bottom"
-					>
-					</ng-select>
-					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
-						<input
-							type="text"
-							class="form-control"
-							bsDatepicker
-							#qsDp="bsDatepicker"
-							name="dob"
-							autocomplete="off"
-							placeholder="Enter start date..."
-							placement="bottom"
-							[bsConfig]="{
-								dateInputFormat: 'YYYY-MM-DD',
-								showWeekNumbers: false,
-								containerClass: 'theme-default audit-list-filter'
-							}"
-							(bsValueChange)="load$.next(true)"
-							[maxDate]="queryEndDate"
-							[outsideClick]="true"
-							required
-							[(ngModel)]="queryStartDate"
-						/>
-						<span class="icon fa fa-calendar" (click)="qsDp.toggle()"></span>
-					</div>
-					<div class="d-flex mt-2" *ngIf="dateRangeFilter.selected === 'choose'">
-						<input
-							type="text"
-							class="form-control"
-							bsDatepicker
-							#qeDp="bsDatepicker"
-							name="dob"
-							autocomplete="off"
-							placeholder="Enter end date..."
-							placement="bottom"
-							[bsConfig]="{
-								dateInputFormat: 'YYYY-MM-DD',
-								showWeekNumbers: false,
-								containerClass: 'theme-default audit-list-filter'
-							}"
-							(bsValueChange)="load$.next(true)"
-							[minDate]="queryStartDate"
-							[outsideClick]="true"
-							required
-							[(ngModel)]="queryEndDate"
-						/>
-						<span class="icon fa fa-calendar" (click)="qeDp.toggle()"></span>
-					</div>
-				</div>
-			</div>
-
-			<div class="quick-select card">
-				<div>
-					<span class="collapsible" (click)="actorFormShown = !actorFormShown">
-						<span class="quick-select-title">
-							<span class="fa fa-user"></span>
-							Actor:
-							<span
-								class="fa fa-fw"
-								[ngClass]="{
-									'fa-caret-up': actorFormShown,
-									'fa-caret-down': !actorFormShown
-								}"
-							></span>
-						</span>
-					</span>
-				</div>
-
-				<div *ngIf="actorFormShown" class="quick-select-header">
-					<input
-						type="text"
-						name="actor"
-						class="form-control input-sm"
-						placeholder="Search..."
-						[(ngModel)]="queryUserSearchTerm"
-						[typeahead]="searchUsers$"
-						[typeaheadOptionField]="'displayName'"
-						[typeaheadMinLength]="1"
-						[typeaheadWaitMs]="300"
-						(typeaheadOnSelect)="typeaheadOnSelect($event)"
-						(keyup.enter)="load$.next(true)"
-					/>
-				</div>
-			</div>
-
-			<!-- Quick Filters -->
-			<div class="quick-select card">
-				<div>
-					<span class="collapsible" (click)="actionsFormShown = !actionsFormShown">
-						<span class="quick-select-title">
-							<span class="fa fa-mouse-pointer"></span>
-							Actions
-							<span
-								class="fa fa-fw"
-								[ngClass]="{
-									'fa-caret-up': actionsFormShown,
-									'fa-caret-down': !actionsFormShown
-								}"
-							></span>
-						</span>
-					</span>
-				</div>
-				<div *ngIf="actionsFormShown" class="quick-select-header">
-					<div
-						*ngFor="let option of actionOptions; let idx = index"
-						class="form-check hide-overflow m-n1 p-1"
-					>
-						<input
-							class="form-check-input"
-							type="checkbox"
-							[(ngModel)]="option.selected"
-							(ngModelChange)="load$.next(true)"
-							id="actionOption{{ idx }}"
-						/>
-						<label class="form-check-label" for="actionOption{{ idx }}">{{
-							option.display
-						}}</label>
-					</div>
-				</div>
-			</div>
-
-			<div class="quick-select card">
-				<div>
-					<span class="collapsible" (click)="typeFormShown = !typeFormShown">
-						<span class="quick-select-title">
-							<span class="fa fa-tag"></span>
-							Type
-							<span
-								class="fa fa-fw"
-								[ngClass]="{
-									'fa-caret-up': typeFormShown,
-									'fa-caret-down': !typeFormShown
-								}"
-							></span>
-						</span>
-					</span>
-				</div>
-				<div *ngIf="typeFormShown" class="quick-select-header">
-					<div
-						*ngFor="let option of auditTypeOptions; let idx = index"
-						class="form-check hide-overflow m-n1 p-1"
-					>
-						<input
-							class="form-check-input"
-							type="checkbox"
-							[(ngModel)]="option.selected"
-							(ngModelChange)="load$.next(true)"
-							id="auditTypeOption{{ idx }}"
-						/>
-						<label class="form-check-label" for="auditTypeOption{{ idx }}">{{
-							option.display
-						}}</label>
-					</div>
-				</div>
+<section class="page-header mb-3">
+	<div class="row no-gutters">
+		<div class="media col">
+			<div class="media-body">
+				<h1 skipTo>Audit Logs</h1>
+				Browse and search audit logs.
 			</div>
 		</div>
-		<div class="col-md-10">
-			<pageable-table
-				[items]="items"
-				[hasItems]="hasItems"
-				[pagingOptions]="pagingOptions"
-				[tableStriped]="true"
-				(pageChange)="pageEvent$.next($event)"
-			>
-				<ng-template #tableHeader>
-					<th scope="col" *ngFor="let header of headers">
-						<sortable-table-header
-							[header]="header"
-							[currentSortField]="pagingOptions.sortField"
-							[currentSortDir]="pagingOptions.sortDir"
-							(sortChange)="sortEvent$.next($event)"
-						></sortable-table-header>
-					</th>
-				</ng-template>
+	</div>
+	<system-alert></system-alert>
+</section>
 
-				<ng-template #tableRow let-entry="item">
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							<asy-audit-component
-								[auditObject]="entry.audit.actor"
-								auditType="user"
-							></asy-audit-component>
-						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							{{ entry?.created | utcDate }}
-						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							{{ entry?.audit?.action }}
-						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							{{ entry?.audit?.auditType }}
-						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							<asy-audit-component
-								[auditObject]="entry.audit.object?.after ?? entry.audit.object"
-								[auditType]="entry.audit.auditType"
-							></asy-audit-component>
-							<div>
-								<small *ngIf="entry.isViewDetailsAction">
-									<a
-										class="btn-icon no-href"
-										[hidden]="entry.audit.object ?? null === null"
-										(click)="viewMore(entry, 'viewDetails')"
-									>
-										<span class="fa fa-eye"></span><span>View Details</span>
-									</a>
-								</small>
-								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
-									><span>No Changes Detected</span></small
+<section class="page-body anchored-page-body">
+	<div class="table-content">
+		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+			<ng-container cdkColumnDef="actor">
+				<th cdk-header-cell asy-sort-header="audit.actor.name" *cdkHeaderCellDef>
+					<span class="fa fa-user"></span>
+					Actor
+					<asy-header-filter typeahead-filter audit-actor-filter></asy-header-filter>
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						<asy-audit-component
+							[auditObject]="entry.audit.actor"
+							auditType="user"
+						></asy-audit-component>
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="created">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+					<span class="fa fa-clock-o"></span>
+					Timestamp
+					<asy-header-filter date-filter></asy-header-filter>
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						{{ entry?.created | utcDate }}
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="audit.action">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+					<span class="fa fa-mouse-pointer"></span>
+					Action
+					<asy-header-filter
+						list-filter
+						audit-distinct-value-filter
+						[showSearch]="true"
+					></asy-header-filter>
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						{{ entry?.audit?.action }}
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="audit.auditType">
+				<th cdk-header-cell asy-sort-header="audit.auditType" *cdkHeaderCellDef>
+					<span class="fa fa-tag"></span>
+					Type
+					<asy-header-filter
+						list-filter
+						audit-distinct-value-filter
+						[showSearch]="true"
+					></asy-header-filter>
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						{{ entry?.audit?.auditType }}
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="object">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Object</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						<asy-audit-component
+							[auditObject]="entry.audit.object?.after ?? entry.audit.object"
+							[auditType]="entry.audit.auditType"
+						></asy-audit-component>
+						<div>
+							<small *ngIf="entry.isViewDetailsAction">
+								<a
+									class="btn-icon no-href"
+									[hidden]="(entry.audit.object ?? null) === null"
+									(click)="viewMore(entry, 'viewDetails')"
 								>
-							</div>
+									<span class="fa fa-eye"></span><span>View Details</span>
+								</a>
+							</small>
+							<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
+								><span>No Changes Detected</span></small
+							>
 						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							<asy-audit-component
-								[auditObject]="entry.audit.object?.before"
-								[auditType]="entry.audit.auditType"
-							></asy-audit-component>
-							<div>
-								<small *ngIf="entry.isViewChangesAction">
-									<a
-										class="btn-icon no-href"
-										[hidden]="entry.audit.object?.before ?? null === null"
-										tooltip="See details of the update"
-										placement="bottom"
-										container="body"
-										(click)="viewMore(entry, 'viewChanges')"
-									>
-										<span class="fa fa-eye"></span><span>View Changes</span>
-									</a>
-								</small>
-								<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
-									><span>No Changes Detected</span></small
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="before">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+					<span class="fa fa-history"></span>
+					Before
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						<asy-audit-component
+							[auditObject]="entry.audit.object?.before"
+							[auditType]="entry.audit.auditType"
+						></asy-audit-component>
+						<div>
+							<small *ngIf="entry.isViewChangesAction">
+								<a
+									class="btn-icon no-href"
+									[hidden]="(entry.audit.object?.before ?? null) === null"
+									tooltip="See details of the update"
+									placement="bottom"
+									container="body"
+									(click)="viewMore(entry, 'viewChanges')"
 								>
-							</div>
+									<span class="fa fa-eye"></span><span>View Changes</span>
+								</a>
+							</small>
+							<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
+								><span>No Changes Detected</span></small
+							>
 						</div>
-					</td>
-					<td>
-						<div class="hide-overflow" style="max-width: 200px">
-							{{ entry?.message }}
-						</div>
-					</td>
-				</ng-template>
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="message">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+					<span class="fa fa-file-text-o"></span>
+					Message
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						{{ entry?.message }}
+					</div>
+				</td>
+			</ng-container>
+			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns"></tr>
+		</table>
 
-				<ng-template #tableNoData>
-					<h3>
-						No Audit Logs<br />
-						<small>
-							You may not have access to Audit Logs.<br />
-							Read our <a data-ui-sref="help.overview">getting started page</a> for
-							more details.
-						</small>
-					</h3>
-				</ng-template>
+		<asy-table-empty-state
+			emptyText="No audit logs are available."
+			filteredText="No audit logs matched your search."
+			[dataSource]="dataSource"
+			(clearFilters)="clearFilters()"
+		></asy-table-empty-state>
+	</div>
 
-				<ng-template #tableNoResults>
-					<h3>
-						No Audit Logs?<br />
-						<small>
-							Either there were no Audit Logs that matched your search or you don't
-							have access to Audit Logs.<br />
-							Read our <a data-ui-sref="help.overview">getting started page</a> for
-							more details.
-						</small>
-					</h3>
-				</ng-template>
-			</pageable-table>
+	<div class="table-footer d-flex align-items-center">
+		<div class="table-footer-pager ml-auto">
+			<asy-paginator [dataSource]="dataSource"></asy-paginator>
 		</div>
 	</div>
 </section>

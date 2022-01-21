@@ -1,0 +1,15 @@
+<div class="sidebar-header" [class.card-header]="showInCard">
+	<h2>{{ headerText }}</h2>
+	<a
+		class="btn-icon no-href ml-auto"
+		(click)="open = false"
+		tooltip="Close"
+		placement="bottom"
+		container="body"
+	>
+		<span class="fa fa-lg fa-times"></span>
+	</a>
+</div>
+<div class="sidebar-body" [class.card-body]="showInCard">
+	<ng-content></ng-content>
+</div>

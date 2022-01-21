@@ -9,13 +9,13 @@ import {
 	AdminListEuasComponent,
 	AdminUpdateEuaComponent
 } from './end-user-agreement/admin-eua.module';
-import { AdminListFeedbackComponent } from './feedback/admin-list-feedback.component';
+import { AdminListFeedbackComponent } from './feedback/list-feedback/admin-list-feedback.component';
 import { CreateMessageComponent } from './messages/create-message.component';
 import { UpdateMessageComponent } from './messages/edit-message.component';
-import { ListMessagesComponent } from './messages/list-messages.component';
+import { ListMessagesComponent } from './messages/list-messages/list-messages.component';
 import { AdminCreateUserComponent } from './user-management/admin-create-user.component';
 import { AdminEditUserComponent } from './user-management/admin-edit-user.component';
-import { AdminListUsersComponent } from './user-management/admin-list-users.component';
+import { AdminListUsersComponent } from './user-management/list-users/admin-list-users.component';
 
 @NgModule({
 	imports: [

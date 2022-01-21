@@ -1,0 +1,40 @@
+@import '../../../../../styles/shared';
+
+$dropdown-min-width: 100px;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.cdk-column-body {
+	max-width: 300px;
+	white-space: pre-wrap;
+}
+
+.dropdown-menu {
+	min-width: $dropdown-min-width;
+}
+
+.feedback-status-button {
+	min-width: $dropdown-min-width;
+	border-radius: 15px;
+	border-width: 2px;
+	border-style: solid;
+}
+
+.feedback-status-new {
+	border-color: $ux-color-alert-error;
+	background-color: lighten($ux-color-alert-error, 50%);
+}
+
+.feedback-status-open {
+	border-color: $ux-color-alert-notification;
+	background-color: lighten($ux-color-alert-notification, 40%);
+}
+
+.feedback-status-closed {
+	border-color: $ux-color-alert-success;
+	background-color: lighten($ux-color-alert-success, 40%);
+}

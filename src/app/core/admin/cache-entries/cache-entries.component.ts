@@ -1,21 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
 import {
-	AbstractPageableDataComponent,
 	PagingOptions,
 	PagingResults,
 	SortableTableHeader,
-	SortChange,
 	SortDirection
 } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 import { CacheEntry } from './cache-entry.model';
@@ -25,10 +24,7 @@ import { CacheEntry } from './cache-entry.model';
 	selector: 'cache-entries',
 	templateUrl: './cache-entries.component.html'
 })
-export class CacheEntriesComponent
-	extends AbstractPageableDataComponent<CacheEntry>
-	implements OnInit
-{
+export class CacheEntriesComponent implements OnDestroy, OnInit {
 	headers: SortableTableHeader[] = [
 		{
 			name: 'Key',
@@ -48,21 +44,33 @@ export class CacheEntriesComponent
 		}
 	];
 
+	displayedColumns = ['key', 'value', 'timestamp', 'actionsMenu'];
+
+	dataSource = new AsyTableDataSource<CacheEntry>(
+		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
+		null,
+		{
+			sortField: 'key',
+			sortDir: SortDirection.asc
+		}
+	);
+
+	private modalRef: BsModalRef | null = null;
+
 	constructor(
 		private cacheEntriesService: CacheEntriesService,
 		private modalService: ModalService,
 		private bsModalService: BsModalService,
 		private alertService: SystemAlertService
-	) {
-		super();
+	) {}
+
+	ngOnInit() {
+		this.alertService.clearAllAlerts();
 	}
 
-	override ngOnInit() {
-		this.alertService.clearAllAlerts();
-
-		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
-		super.ngOnInit();
+	ngOnDestroy(): void {
+		this.modalRef?.hide();
+		this.dataSource.disconnect();
 	}
 
 	loadData(
@@ -71,6 +79,10 @@ export class CacheEntriesComponent
 		query: any
 	): Observable<PagingResults<CacheEntry>> {
 		return this.cacheEntriesService.match(query, search, pagingOptions);
+	}
+
+	clearFilters() {
+		this.dataSource.search('');
 	}
 
 	confirmDeleteEntry(cacheEntry: CacheEntry) {
@@ -89,7 +101,7 @@ export class CacheEntriesComponent
 			.subscribe({
 				next: () => {
 					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
-					this.load$.next(true);
+					this.dataSource.reload();
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
@@ -100,7 +112,7 @@ export class CacheEntriesComponent
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
-		this.bsModalService.show(CacheEntryModalComponent, {
+		this.modalRef = this.bsModalService.show(CacheEntryModalComponent, {
 			ignoreBackdropClick: true,
 			class: 'modal-dialog-scrollable modal-lg',
 			initialState: {
@@ -123,7 +135,7 @@ export class CacheEntriesComponent
 						'success'
 					);
 					cacheEntry.isRefreshing = false;
-					this.load$.next(true);
+					this.dataSource.reload();
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {

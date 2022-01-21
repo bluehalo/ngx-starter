@@ -1,0 +1,39 @@
+<span class="dropdown ml-2" container="body" [insideClick]="true" dropdown>
+	<span class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
+		<span
+			[hidden]="isFiltered"
+			class="filter fa fa-list"
+			tooltip="Apply Filters"
+			placement="bottom"
+			container="body"
+		></span>
+		<span
+			[hidden]="!isFiltered"
+			class="filter fa fa-filter"
+			tooltip="Edit Filters"
+			placement="bottom"
+			container="body"
+		></span>
+	</span>
+
+	<div
+		*dropdownMenu
+		class="dropdown-menu d-flex flex-column"
+		[ngClass]="{ 'dropdown-menu-right': dropdownMenuRight }"
+	>
+		<div class="my-3">
+			<ng-select
+				style="width: 200px"
+				name="teamAdmin"
+				bindLabel="userModel.name"
+				placeholder="Search..."
+				[items]="(values$ | async) || []"
+				[loading]="loading"
+				[typeahead]="input$"
+				[(ngModel)]="selectedValue"
+				(ngModelChange)="onFilterChange()"
+			>
+			</ng-select>
+		</div>
+	</div>
+</span>

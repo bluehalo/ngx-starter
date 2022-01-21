@@ -21,7 +21,6 @@ export class MessageService {
 	headers: any = { 'Content-Type': 'application/json' };
 
 	public numMessagesIndicator$: BehaviorSubject<number> = new BehaviorSubject(0);
-	cache: any = {};
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed = 0;
 

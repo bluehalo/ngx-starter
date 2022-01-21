@@ -1,0 +1,35 @@
+<div class="text-nowrap mb-1">
+	(
+	<button type="button" class="btn btn-sm btn-link" (click)="restoreDefault()">Default</button>
+	/
+	<button type="button" class="btn btn-sm btn-link" (click)="selectAll()">All</button>
+	)
+</div>
+
+<div
+	cdkDropList
+	[cdkDropListData]="_columns"
+	(cdkDropListDropped)="onDrop($event)"
+	class="overflow-auto ml-n1"
+>
+	<div
+		cdkDrag
+		[cdkDragData]="column"
+		[cdkDragDisabled]="sortingDisabled"
+		cdkDragBoundary="*"
+		class="form-check text-nowrap ml-1"
+		*ngFor="let column of _columns"
+	>
+		<span class="fa fa-lg fa-bars pr-1 mr-2" cdkDragHandle *ngIf="!sortingDisabled"></span>
+		<input
+			class="form-check-input"
+			type="checkbox"
+			id="column-chooser-{{ column.key }}-checkbox"
+			[(ngModel)]="column.selected"
+			(change)="onChange()"
+		/>
+		<label class="form-check-label" for="column-chooser-{{ column.key }}-checkbox">
+			{{ column.label || (column.key | titlecase) }}
+		</label>
+	</div>
+</div>

@@ -1,21 +1,12 @@
-@import '../../../common/paging/quick-filters/quick-filters.component';
+@import '../../../../styles/shared';
 
-.audit-filter {
-	label {
-		float: left;
-		line-height: 2;
-		padding-right: 5px;
-		text-align: right;
-		width: 115px;
-
-		&.column-option {
-			width: auto;
-		}
-	}
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
-//.quick-select-header
-
-::ng-deep .bs-datepicker.audit-list-filter {
-	left: 58px;
+.cdk-column-object,
+.cdk-column-before {
+	max-width: 200px;
 }

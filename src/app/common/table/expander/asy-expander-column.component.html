@@ -1,0 +1,15 @@
+<ng-container cdkColumnDef>
+	<th cdk-header-cell *cdkHeaderCellDef style="width: 42px"></th>
+	<td cdk-cell *cdkCellDef="let item; let index = index">
+		<div
+			style="cursor: pointer"
+			(click)="toggle(index, item)"
+			*ngIf="isExpandable(index, item)"
+		>
+			<span
+				class="fa fa-2x fa-angle-down"
+				[class.fa-flip-vertical]="isExpanded(index, item)"
+			></span>
+		</div>
+	</td>
+</ng-container>

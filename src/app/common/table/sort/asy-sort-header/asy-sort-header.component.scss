@@ -1,0 +1,22 @@
+@import '../../../../../styles/shared';
+
+.fa {
+	opacity: 0.3;
+}
+
+.fa.sorted {
+	color: $ux-color-primary;
+	opacity: 1;
+}
+
+.fa-stack {
+	font-size: 1rem;
+	height: 6px;
+	line-height: 6px;
+	width: 22px;
+}
+
+.asy-sort-header-sortable {
+	cursor: pointer;
+	padding-right: 5px;
+}

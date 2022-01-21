@@ -1,31 +1,21 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
 import cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 
-import {
-	AbstractPageableDataComponent,
-	PagingOptions,
-	PagingResults,
-	SortableTableHeader,
-	SortChange,
-	SortDirection
-} from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.module';
 import { SystemAlertService } from '../../../common/system-alert.module';
+import { AsyTableDataSource } from '../../../common/table.module';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-list-teams',
-	templateUrl: './list-teams.component.html'
+	templateUrl: './list-teams.component.html',
+	styleUrls: ['./list-teams.component.scss']
 })
-export class ListTeamsComponent
-	extends AbstractPageableDataComponent<Team>
-	implements OnChanges, OnInit
-{
+export class ListTeamsComponent implements OnChanges, OnDestroy, OnInit {
 	@Input()
 	parent?: Team;
 
@@ -34,52 +24,36 @@ export class ListTeamsComponent
 
 	canCreateTeam = false;
 
-	headers: SortableTableHeader[] = [
+	displayedColumns = ['name', 'created', 'description'];
+
+	dataSource = new AsyTableDataSource<Team>(
+		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
+		'list-teams-component',
 		{
-			name: 'Name',
-			sortable: true,
 			sortField: 'name',
-			sortDir: SortDirection.asc,
-			tooltip: 'Sort by Team Name',
-			default: true
-		},
-		{
-			name: 'Created',
-			sortable: true,
-			sortField: 'created',
-			sortDir: SortDirection.desc,
-			tooltip: 'Sort by Created'
-		},
-		{
-			name: 'Description',
-			sortable: true,
-			sortField: 'description',
-			sortDir: SortDirection.desc,
-			tooltip: 'Sort by Description'
+			sortDir: 'ASC'
 		}
-	];
+	);
 
 	constructor(
 		private teamsService: TeamsService,
 		private alertService: SystemAlertService,
 		private authorizationService: AuthorizationService
-	) {
-		super();
-	}
+	) {}
 
-	override ngOnInit() {
+	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
-		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
 		this.canCreateTeam = this.authorizationService.hasSomeRoles(['editor', 'admin']);
+	}
 
-		super.ngOnInit();
+	ngOnDestroy() {
+		this.dataSource.disconnect();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['parent']) {
-			this.load$.next(true);
+			this.dataSource.reload();
 		}
 	}
 
@@ -97,5 +71,9 @@ export class ListTeamsComponent
 		}
 
 		return this.teamsService.search(pagingOptions, query, search, {});
+	}
+
+	clearFilters() {
+		this.dataSource.search('');
 	}
 }

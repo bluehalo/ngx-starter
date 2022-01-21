@@ -1,0 +1,10 @@
+@import '../../../../styles/shared';
+
+$paginator-controls-padding-x: 2px !default;
+$paginator-controls-padding-y: 0 !default;
+$paginator-controls-margin-top: -1px !default;
+
+.pager-controls .btn-link {
+	margin-top: $paginator-controls-margin-top;
+	padding: $paginator-controls-padding-y $paginator-controls-padding-x;
+}

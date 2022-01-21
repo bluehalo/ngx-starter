@@ -3,7 +3,12 @@
 $admin-section-padding-y: $site-content-padding-y;
 
 .admin-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
 	.admin-section-container {
+		height: 100%;
 		padding: $admin-section-padding-y / 2 0;
 	}
 }

@@ -1,92 +1,103 @@
-<section>
-	<h1 skipTo>
-		Cache Entries
-		<small>Administer Cache Entries</small>
-	</h1>
-
-	<!-- Alert Notifications -->
+<section class="page-header mb-3">
+	<div class="row no-gutters">
+		<div class="media col">
+			<div class="media-body">
+				<h1 skipTo>Cache Entries</h1>
+				View and manage user cache entries.
+			</div>
+		</div>
+	</div>
 	<system-alert></system-alert>
+</section>
 
-	<!-- Search Input -->
-	<div class="pt-2">
-		<pageable-table
-			[items]="items"
-			[hasItems]="hasItems"
-			[pagingOptions]="pagingOptions"
-			[showActions]="true"
-			[tableStriped]="true"
-			(pageChange)="pageEvent$.next($event)"
-		>
-			<ng-template #tableActions>
+<section class="page-body anchored-page-body">
+	<div class="table-header d-flex align-items-center">
+		<div class="table-actions d-flex flex-wrap flex-grow-1">
+			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search key and value..."
-					(applySearch)="searchEvent$.next($event)"
+					(applySearch)="dataSource.search($event)"
+					[search]="dataSource.searchEvent$.value"
 				></asy-search-input>
-			</ng-template>
+			</div>
+		</div>
+	</div>
 
-			<ng-template #tableHeader>
-				<th scope="col" *ngFor="let header of headers">
-					<sortable-table-header
-						[header]="header"
-						[currentSortField]="pagingOptions.sortField"
-						[currentSortDir]="pagingOptions.sortDir"
-						(sortChange)="sortEvent$.next($event)"
-					></sortable-table-header>
-				</th>
-				<th scope="col">&nbsp;</th>
-			</ng-template>
-
-			<ng-template #tableRow let-cacheEntry="item">
-				<td>{{ cacheEntry.key }}</td>
-				<td class="hide-overflow" style="max-width: 300px">
-					{{ cacheEntry.value | json }}
+	<div class="table-content">
+		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+			<ng-container cdkColumnDef="key">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Key</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					{{ entry.key }}
 				</td>
-				<td>
-					<span [attr.title]="cacheEntry.ts | utcDate">{{
-						cacheEntry.ts | agoDate: false
-					}}</span>
+			</ng-container>
+			<ng-container cdkColumnDef="value">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Value</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					{{ entry.value | json }}
 				</td>
-				<td class="text-right" style="max-width: 50px">
+			</ng-container>
+			<ng-container cdkColumnDef="timestamp">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow" tooltip="{{ entry.ts | utcDate }}" container="body">
+						{{ entry.ts | agoDate: false }}
+					</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="actionsMenu">
+				<th cdk-header-cell *cdkHeaderCellDef></th>
+				<td cdk-cell *cdkCellDef="let entry">
 					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
 						<span
 							class="dropdown-toggle dropdown-toggle-hide-caret px-2"
-							style="cursor: pointer"
 							dropdownToggle
 						>
 							<span class="fa fa-lg fa-ellipsis-v"></span>
 						</span>
 						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 							<li>
-								<a class="dropdown-item" (click)="viewCacheEntry(cacheEntry)"
-									>View</a
-								>
+								<a class="dropdown-item" (click)="viewCacheEntry(entry)">View</a>
 							</li>
 							<li>
-								<a class="dropdown-item" (click)="refreshCacheEntry(cacheEntry)"
+								<a class="dropdown-item" (click)="refreshCacheEntry(entry)"
 									>Refresh</a
 								>
 							</li>
 							<li>
-								<a class="dropdown-item" (click)="confirmDeleteEntry(cacheEntry)"
+								<a class="dropdown-item" (click)="confirmDeleteEntry(entry)"
 									>Delete</a
 								>
 							</li>
 						</ul>
 					</span>
 				</td>
-			</ng-template>
+			</ng-container>
+			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let team; columns: displayedColumns"></tr>
+		</table>
 
-			<ng-template #tableNoResults>
-				<h2 class="text-center">
-					<small>No Cache Entries matched your search</small>
-				</h2>
-			</ng-template>
+		<asy-table-empty-state
+			emptyText="No cache entries are available."
+			filteredText="No cache entries matched your search."
+			[dataSource]="dataSource"
+			(clearFilters)="clearFilters()"
+		></asy-table-empty-state>
+	</div>
 
-			<ng-template #tableNoData>
-				<h2 class="text-center">
-					<small>No Cache Entries are available</small>
-				</h2>
-			</ng-template>
-		</pageable-table>
+	<div class="table-footer d-flex align-items-center">
+		<div class="table-footer-pager ml-auto">
+			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+		</div>
 	</div>
 </section>
+
+<ng-template #tableRow let-cacheEntry="item">
+	<td>{{ cacheEntry.key }}</td>
+	<td class="hide-overflow" style="max-width: 300px">
+		{{ cacheEntry.value | json }}
+	</td>
+	<td>
+		<span [attr.title]="cacheEntry.ts | utcDate">{{ cacheEntry.ts | agoDate: false }}</span>
+	</td>
+</ng-template>

@@ -1,0 +1,30 @@
+<ng-container cdkColumnDef>
+	<th cdk-header-cell *cdkHeaderCellDef>
+		<div class="form-check" *ngIf="enableSelectAll && multi">
+			<input
+				class="form-check-input"
+				type="checkbox"
+				id="table-select-all"
+				[checked]="_isAllSelected$ | async"
+				(change)="_toggleAll()"
+			/>
+			<label class="form-check-label" for="table-select-all"></label>
+		</div>
+	</th>
+	<td cdk-cell *cdkCellDef="let result; let index = index; let dataIndex = dataIndex">
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="{{ multi ? 'checkbox' : 'radio' }}"
+				id="table-selected-{{ _isMultiTemplateDataRows ? dataIndex : index }}"
+				[disabled]="!isSelectable(_isMultiTemplateDataRows ? dataIndex : index, result)"
+				[checked]="isSelected(_isMultiTemplateDataRows ? dataIndex : index, result)"
+				(change)="toggle(_isMultiTemplateDataRows ? dataIndex : index, result)"
+			/>
+			<label
+				class="form-check-label"
+				for="table-selected-{{ _isMultiTemplateDataRows ? dataIndex : index }}"
+			></label>
+		</div>
+	</td>
+</ng-container>

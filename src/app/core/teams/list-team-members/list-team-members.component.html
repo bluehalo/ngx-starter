@@ -1,68 +1,66 @@
 <section>
-	<!-- Search Input -->
-	<div class="d-flex mb-3 align-items-center">
-		<asy-search-input
-			placeholder="Search..."
-			(applySearch)="searchEvent$.next($event)"
-		></asy-search-input>
-		<button
-			*ngIf="canManageTeam"
-			(click)="addMembers()"
-			type="button"
-			class="btn btn-primary ml-auto"
-		>
-			<span class="fa fa-plus"></span> Add New
-		</button>
+	<div class="table-header d-flex align-items-center">
+		<div class="table-actions d-flex flex-wrap flex-grow-1">
+			<div class="mb-3 mr-5">
+				<asy-search-input
+					placeholder="Search team members..."
+					(applySearch)="dataSource.search($event)"
+					[search]="dataSource.searchEvent$.value"
+				></asy-search-input>
+			</div>
+
+			<div class="mb-3 ml-auto">
+				<button
+					*ngIf="canManageTeam"
+					(click)="addMembers()"
+					type="button"
+					class="btn btn-primary ml-auto"
+				>
+					<span class="fa fa-plus"></span> Add New
+				</button>
+			</div>
+		</div>
 	</div>
 
-	<pageable-table
-		[items]="items"
-		[hasItems]="hasItems"
-		[pagingOptions]="pagingOptions"
-		[tableStriped]="true"
-		(pageChange)="pageEvent$.next($event)"
-	>
-		<ng-template #tableHeader>
-			<th scope="col" *ngFor="let header of headersToShow">
-				<sortable-table-header
-					[header]="header"
-					[currentSortField]="pagingOptions.sortField"
-					[currentSortDir]="pagingOptions.sortDir"
-					(sortChange)="sortEvent$.next($event)"
-				></sortable-table-header>
-			</th>
-		</ng-template>
-
-		<ng-template #tableRow let-member="item">
-			<!-- Name -->
-			<td>
-				<div>{{ member.userModel.name }}</div>
-			</td>
-
-			<!-- Username -->
-			<td>
-				<div>{{ member.userModel.username }}</div>
-			</td>
-
-			<!-- Active -->
-			<td>
-				<div>{{ member.active ? 'Active' : 'Not Active' }}</div>
-			</td>
-
-			<!-- Explicit -->
-			<td *ngIf="team.implicitMembers">
-				<div>{{ member.explicit }}</div>
-			</td>
-
-			<!-- Role -->
-			<td>
-				<div *ngIf="!canManageTeam || !member.explicit">{{ member.roleDisplay }}</div>
-				<ng-container *ngIf="canManageTeam && member.explicit">
-					<div class="dropdown dropdown-table-inline" dropdown container="body">
+	<div class="table-content">
+		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+			<ng-container cdkColumnDef="name">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Name</th>
+				<td cdk-cell *cdkCellDef="let member">
+					<div>{{ member.userModel.name }}</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="username">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Username</th>
+				<td cdk-cell *cdkCellDef="let member">
+					<div>{{ member.userModel.username }}</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="status">
+				<th cdk-header-cell *cdkHeaderCellDef>Account Status</th>
+				<td cdk-cell *cdkCellDef="let member">
+					<div>{{ member.active ? 'Active' : 'Not Active' }}</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="explicit">
+				<th cdk-header-cell *cdkHeaderCellDef>Explicit</th>
+				<td cdk-cell *cdkCellDef="let member">
+					<div>{{ member.explicit }}</div>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="role">
+				<th cdk-header-cell *cdkHeaderCellDef>Role</th>
+				<td cdk-cell *cdkCellDef="let member">
+					<div *ngIf="!canManageTeam || !member.explicit">{{ member.roleDisplay }}</div>
+					<div
+						class="dropdown dropdown-table-inline"
+						dropdown
+						container="body"
+						*ngIf="canManageTeam && member.explicit"
+					>
 						<span class="dropdown-toggle" dropdownToggle>
 							<span class="mr-1">{{ member.roleDisplay }}</span>
 						</span>
-
 						<ul *dropdownMenu class="dropdown-menu" role="menu">
 							<li
 								*ngFor="let role of teamRoleOptions"
@@ -73,37 +71,38 @@
 							</li>
 						</ul>
 					</div>
-				</ng-container>
-			</td>
+				</td>
+			</ng-container>
+			<ng-container cdkColumnDef="actions">
+				<th cdk-header-cell *cdkHeaderCellDef></th>
+				<td cdk-cell *cdkCellDef="let member">
+					<a
+						*ngIf="member.explicit"
+						class="btn-icon"
+						tooltip="Remove Member"
+						container="body"
+						placement="bottom"
+						(click)="removeMember(member)"
+					>
+						<span class="fa fa-lg fa-trash"></span>
+					</a>
+				</td>
+			</ng-container>
+			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns"></tr>
+		</table>
 
-			<!-- Delete -->
-			<td *ngIf="canManageTeam">
-				<a
-					*ngIf="member.explicit"
-					class="btn-icon"
-					tooltip="Remove Member"
-					container="body"
-					placement="bottom"
-					(click)="removeMember(member)"
-				>
-					<span class="fa fa-lg fa-trash"></span>
-				</a>
-			</td>
-		</ng-template>
+		<asy-table-empty-state
+			emptyText="There are no members on this team."
+			filteredText="No team members matched your search."
+			[dataSource]="dataSource"
+			(clearFilters)="clearFilters()"
+		></asy-table-empty-state>
+	</div>
 
-		<ng-template #tableNoResults>
-			<h2 class="text-center">
-				<small>No team members matched your search</small>
-			</h2>
-		</ng-template>
-
-		<ng-template #tableNoData>
-			<h2 class="text-center">
-				<small
-					>There are no members on this team. Read our
-					<a [routerLink]="['/help/teams']">help page</a> for more details.</small
-				>
-			</h2>
-		</ng-template>
-	</pageable-table>
+	<div class="table-footer d-flex align-items-center">
+		<div class="table-footer-pager ml-auto">
+			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+		</div>
+	</div>
 </section>

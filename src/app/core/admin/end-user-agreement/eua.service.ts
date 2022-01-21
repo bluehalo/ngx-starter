@@ -13,8 +13,6 @@ import { EndUserAgreement } from './eua.model';
  * Admin management of users
  */
 export class EuaService {
-	public cache: any = {};
-
 	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 
 	/**
@@ -40,7 +38,7 @@ export class EuaService {
 		query: any,
 		search: string,
 		paging: PagingOptions,
-		options: any
+		options: any = {}
 	): Observable<PagingResults<EndUserAgreement>> {
 		return this.http
 			.post<PagingResults>(
