@@ -28,7 +28,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 				path: 'team/:id',
 				component: ViewTeamComponent,
 				canActivate: [AuthGuard],
-				data: { roles: ['user'] },
+				data: { roles: ['editor', 'admin'], requireAllRoles: false },
 				resolve: {
 					team: TeamsResolve
 				}

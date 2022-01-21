@@ -115,6 +115,7 @@ export class CreateTeamComponent implements OnInit {
 				)
 			);
 		}
+		this.team.implicitMembers = false;
 	}
 
 	setCurrentUserAsAdmin() {
