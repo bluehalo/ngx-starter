@@ -10,13 +10,13 @@
 	cdkDropList
 	[cdkDropListData]="_columns"
 	(cdkDropListDropped)="onDrop($event)"
-	class="overflow-auto ml-n1"
+	class="overflow-auto ml-n1 column-drag-boundary"
 >
 	<div
 		cdkDrag
 		[cdkDragData]="column"
 		[cdkDragDisabled]="sortingDisabled"
-		cdkDragBoundary="*"
+		cdkDragBoundary=".column-drag-boundary"
 		class="form-check text-nowrap ml-1"
 		*ngFor="let column of _columns"
 	>
