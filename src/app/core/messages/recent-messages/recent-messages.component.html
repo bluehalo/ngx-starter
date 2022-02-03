@@ -3,15 +3,15 @@
 	<div class="card card-message mb-3" *ngFor="let message of messages">
 		<div class="row no-gutters">
 			<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
-				<span
-					class="fa alert-icon {{ messageType[message.type] | lowercase }}"
-					[ngClass]="{
-						'fa-check': message.type === messageType.MOTD,
-						'fa-info': message.type === messageType.INFO,
-						'fa-exclamation': message.type === messageType.WARN,
-						'fa-exclamation-triangle': message.type === messageType.ERROR
-					}"
-				></span>
+			<span
+				class="fa alert-icon {{ messageType[message.type] | lowercase }}"
+				[ngClass]="{
+					'fa-check': message.type === messageType.MOTD,
+					'fa-info': message.type === messageType.INFO,
+					'fa-exclamation': message.type === messageType.WARN,
+					'fa-exclamation-triangle': message.type === messageType.ERROR
+				}"
+			></span>
 			</div>
 			<div class="col-alert-body">
 				<div class="card-body">
@@ -23,7 +23,7 @@
 							(click)="dismissMessage(message)"
 						></span>
 					</div>
-					<p class="card-text text-truncate" [innerHTML]="message.body"></p>
+					<p class="card-text line-clamp" [innerHTML]="message.body"></p>
 				</div>
 			</div>
 		</div>

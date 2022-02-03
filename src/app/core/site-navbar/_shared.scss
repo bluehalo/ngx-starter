@@ -32,7 +32,8 @@ $nav-z-index: 10000 !default;
 $nav-popover-z-index: $nav-z-index + 1 !default;
 
 $nav-popover-width: 192px !default;
-$nav-messages-popover-width: 298px !default;
+$nav-messages-popover-width: 894px !default;
+$nav-messages-popover-height: 298px !default;
 
 // Calculated
 $nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2;

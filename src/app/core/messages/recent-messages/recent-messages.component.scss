@@ -1,21 +1,28 @@
 @import '../../../../styles/shared';
 @import '../shared';
 
-$card-width: 258px;
+$card-width: 516px;
+$card-max-width: 95%;
 $card-icon-width: 31px;
 
 .card-message {
 	@include card-message();
 
 	width: $card-width;
+	max-width: $card-max-width;
 
 	.card-body {
-		padding: 0.75rem;
-
 		.card-text ::ng-deep a {
-			display: inline;
+			display: block;
 			padding: 0;
 			text-decoration: underline;
 		}
+	}
+
+	.line-clamp {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 }
