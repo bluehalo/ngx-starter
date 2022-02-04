@@ -82,7 +82,7 @@ export class ModalService {
 		} as ModalOptions;
 
 		this.modalRef = this.modalService.show(ConfigurableModalComponent, config);
-		return this.modalRef.content.onClose$;
+		return this.modalRef.content.onClose;
 	}
 
 	/**
@@ -101,6 +101,6 @@ export class ModalService {
 		} as ModalOptions;
 
 		this.modalRef = this.modalService.show(ContainerModalComponent, config);
-		return this.modalRef.content.onClose$;
+		return this.modalRef.content.onClose;
 	}
 }

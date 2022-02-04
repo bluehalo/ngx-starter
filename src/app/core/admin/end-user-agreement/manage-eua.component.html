@@ -8,6 +8,7 @@
 	<system-alert></system-alert>
 
 	<form
+		#form="ngForm"
 		name="euaForm"
 		autocomplete="off"
 		class="pt-3"
@@ -57,7 +58,9 @@
 				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewEua()">
 					Preview
 				</button>
-				<button type="submit" class="btn btn-primary">{{ submitText }}</button>
+				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
+					{{ submitText }}
+				</button>
 			</div>
 		</div>
 
