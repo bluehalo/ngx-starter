@@ -1,19 +1,33 @@
+@import '../../../../styles/ngx-bootstrap/shared';
 @import '../../../../styles/shared';
+@import '../../site-navbar/shared';
 @import '../shared';
 
-$card-width: 516px;
-$card-max-width: 95%;
-$card-icon-width: 31px;
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: map-get($spacers, 3);
+	padding: map-get($spacers, 3);
+}
+
+.cards {
+	display: flex;
+	flex-direction: column;
+	gap: map-get($spacers, 3);
+	padding: 2px;
+	overflow: auto;
+	min-height: 120px;
+	max-height: min(calc(100vh - 280px), #{$nav-messages-popover-max-height});
+}
 
 .card-message {
 	@include card-message();
 
-	width: $card-width;
-	max-width: $card-max-width;
-
 	.card-body {
+		padding: 0.75rem;
+
 		.card-text ::ng-deep a {
-			display: block;
+			display: inline;
 			padding: 0;
 			text-decoration: underline;
 		}

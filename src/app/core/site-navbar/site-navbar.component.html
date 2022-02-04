@@ -171,7 +171,7 @@
 					tooltip="Notifications"
 					[isDisabled]="navbarOpen"
 					#messagesNavPopover="bs-popover"
-					placement="left"
+					placement="left bottom"
 					[outsideClick]="true"
 					(onShown)="messagesNavOpen = true"
 					(onHidden)="messagesNavOpen = false"
@@ -184,16 +184,14 @@
 					<span [hidden]="!navbarOpen">Notifications</span>
 				</a>
 				<ng-template #messagesNav>
-					<ul class="popover-menu" role="menu">
-						<!-- List Messages -->
-						<li>
-							<a>
-								<app-recent-messages
-									[container]="messagesNavPopover"
-								></app-recent-messages>
-							</a>
-						</li>
-					</ul>
+					<!--					<div class="popover-menu" role="menu">-->
+					<!-- List Messages -->
+					<!--						<li>-->
+					<!--							<a>-->
+					<app-recent-messages [container]="messagesNavPopover"></app-recent-messages>
+					<!--							</a>-->
+					<!--						</li>-->
+					<!--					</div>-->
 				</ng-template>
 			</li>
 

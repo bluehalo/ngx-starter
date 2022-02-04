@@ -1,8 +1,6 @@
 @import '../../../styles/shared';
 
-$card-icon-width: 31px;
-
-@mixin card-message($card-icon-width: 31px) {
+@mixin card-message($card-icon-width: 2rem) {
 	border: none;
 	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
