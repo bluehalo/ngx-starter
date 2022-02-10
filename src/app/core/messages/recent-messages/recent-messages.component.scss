@@ -3,6 +3,8 @@
 @import '../../site-navbar/shared';
 @import '../shared';
 
+$recent-message-preview-lint-count: 3 !default;
+
 :host {
 	display: flex;
 	flex-direction: column;
@@ -35,7 +37,7 @@
 
 	.line-clamp {
 		display: -webkit-box;
-		-webkit-line-clamp: 3;
+		-webkit-line-clamp: $recent-message-preview-lint-count;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
