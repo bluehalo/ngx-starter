@@ -1,0 +1,26 @@
+@import '../../../../styles/overrides';
+@import '../../../../styles/shared';
+
+$filter-dropdown-font-size: 0.75rem;
+
+.dropdown-menu {
+	font-size: $filter-dropdown-font-size;
+	margin-top: 0.5rem;
+	max-height: 205px;
+
+	.search {
+		width: 250px;
+
+		::ng-deep .search-input-container {
+			width: 100%;
+
+			input {
+				font-size: $filter-dropdown-font-size;
+			}
+		}
+	}
+	& > div {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}

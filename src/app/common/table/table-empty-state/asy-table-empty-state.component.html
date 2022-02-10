@@ -1,0 +1,26 @@
+<asy-skeleton-rows [rows]="dataSource.pageSize" *ngIf="dataSource.loading"></asy-skeleton-rows>
+<div
+	class="media justify-content-center py-5"
+	*ngIf="!dataSource.loading && dataSource.pagingResults$.value.elements.length === 0"
+>
+	<ng-container *ngIf="dataSource.isFiltered">
+		<img src="/assets/images/empty-state/no-results.png" *ngIf="showIcons" />
+		<div class="d-flex flex-column align-items-start">
+			<h1>{{ filteredText }}</h1>
+			<button
+				class="btn btn-primary px-4 mt-2"
+				type="button"
+				(click)="clearFilters.emit()"
+				*ngIf="showClearFilters"
+			>
+				Reset Filters
+			</button>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="!dataSource.isFiltered">
+		<img src="/assets/images/empty-state/no-data.png" *ngIf="showIcons" />
+		<div class="d-flex flex-column align-items-start">
+			<h1>{{ emptyText }}</h1>
+		</div>
+	</ng-container>
+</div>

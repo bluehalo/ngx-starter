@@ -1,0 +1,20 @@
+th {
+	input[type='checkbox'] + label,
+	input[type='checkbox'].form-check-input + label {
+		padding-left: 20px;
+		top: -10px;
+	}
+}
+
+td {
+	// Need to set a minumum width for td.  This ensures the column will only expand far enough to hold is contents.
+	width: 1px;
+
+	input[type='checkbox'] + label,
+	input[type='checkbox'].form-check-input + label,
+	input[type='radio'] + label,
+	input[type='radio'].form-check-input + label {
+		padding-left: 20px;
+		top: -8px;
+	}
+}

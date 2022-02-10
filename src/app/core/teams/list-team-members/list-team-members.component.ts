@@ -5,18 +5,13 @@ import { Router } from '@angular/router';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { of, Observable } from 'rxjs';
-import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction, ModalService } from '../../../common/modal.module';
-import {
-	AbstractPageableDataComponent,
-	PagingOptions,
-	PagingResults,
-	SortableTableHeader,
-	SortChange,
-	SortDirection
-} from '../../../common/paging.module';
+import { PagingOptions, PagingResults, SortDirection } from '../../../common/paging.module';
+import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SystemAlertService } from '../../../common/system-alert.module';
+import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
@@ -32,10 +27,7 @@ import { TeamsService } from '../teams.service';
 	selector: 'list-team-members',
 	templateUrl: './list-team-members.component.html'
 })
-export class ListTeamMembersComponent
-	extends AbstractPageableDataComponent<TeamMember>
-	implements OnChanges, OnDestroy, OnInit
-{
+export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	@Input()
 	team!: Team;
 
@@ -47,29 +39,17 @@ export class ListTeamMembersComponent
 
 	user: User | null = null;
 
-	headers: SortableTableHeader[] = [
-		{
-			name: 'Name',
-			sortable: true,
-			sortField: 'name',
-			sortDir: SortDirection.asc,
-			tooltip: 'Sort by Name',
-			default: true
-		},
-		{
-			name: 'Username',
-			sortable: true,
-			sortField: 'username',
-			sortDir: SortDirection.asc,
-			tooltip: 'Sort by Username'
-		},
-		{ name: 'Account Status', sortable: false },
-		{ name: 'Explicit', sortable: false },
-		{ name: 'Role', sortable: false },
-		{ name: '', sortField: 'remove', sortable: false }
-	];
+	columns = ['name', 'username', 'status', 'explicit', 'role', 'actions'];
+	displayedColumns: string[] = [];
 
-	headersToShow: SortableTableHeader[] = [];
+	dataSource = new AsyTableDataSource<TeamMember>(
+		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
+		null,
+		{
+			sortField: 'name',
+			sortDir: SortDirection.asc
+		}
+	);
 
 	private modalRef: BsModalRef | null = null;
 
@@ -82,11 +62,9 @@ export class ListTeamMembersComponent
 		private teamAuthorizationService: TeamAuthorizationService,
 		private sessionService: SessionService,
 		private alertService: SystemAlertService
-	) {
-		super();
-	}
+	) {}
 
-	override ngOnInit() {
+	ngOnInit() {
 		if (!this.team) {
 			throw new TypeError(`'Team' is required`);
 		}
@@ -97,29 +75,26 @@ export class ListTeamMembersComponent
 
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(untilDestroyed(this), isNotNullOrUndefined())
 			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isUserAdmin = this.authorizationService.isAdmin();
 			});
 
-		this.sortEvent$.next(this.headers.find((header: any) => header.default) as SortChange);
-
-		super.ngOnInit();
-
-		this.headersToShow = this.headers
-			.filter((header) => this.canManageTeam || header.sortField !== 'remove')
-			.filter((header) => this.team.implicitMembers || header.name !== 'Explicit');
+		this.displayedColumns = this.columns
+			.filter((column) => this.canManageTeam || column !== 'actions')
+			.filter((column) => this.team.implicitMembers || column !== 'explicit');
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes['team']) {
-			this.load$.next(true);
+			this.dataSource.reload();
 		}
 	}
 
 	ngOnDestroy(): void {
 		this.modalRef?.hide();
+		this.dataSource.disconnect();
 	}
 
 	loadData(
@@ -128,6 +103,10 @@ export class ListTeamMembersComponent
 		query: any
 	): Observable<PagingResults<TeamMember>> {
 		return this.teamsService.searchMembers(this.team, query, search, pagingOptions, {});
+	}
+
+	clearFilters() {
+		this.dataSource.search('');
 	}
 
 	addMembers() {
@@ -259,6 +238,6 @@ export class ListTeamMembersComponent
 	}
 
 	private reloadTeamMembers() {
-		this.pageEvent$.next({ pageNumber: 0, pageSize: this.pageSize });
+		this.dataSource.page({ pageNumber: 0, pageSize: this.dataSource.pageSize });
 	}
 }

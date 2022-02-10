@@ -1,0 +1,242 @@
+<section class="page-header mb-3">
+	<div class="row no-gutters">
+		<div class="media col">
+			<div class="media-body">
+				<h1 skipTo>System Feedback</h1>
+				View and manage system feedback.
+			</div>
+		</div>
+	</div>
+	<system-alert></system-alert>
+</section>
+
+<section class="page-body anchored-page-body">
+	<div class="table-header d-flex align-items-center">
+		<div class="table-actions d-flex flex-wrap flex-grow-1">
+			<div class="mb-3 mr-5">
+				<asy-search-input
+					placeholder="Search..."
+					(applySearch)="dataSource.search($event)"
+					[search]="dataSource.searchEvent$.value"
+				></asy-search-input>
+			</div>
+
+			<div class="mb-3 ml-auto">
+				<button
+					type="button"
+					class="btn btn-outline-secondary ml-auto"
+					(click)="exportCurrentView()"
+				>
+					<span class="fa fa-download"></span> Export
+				</button>
+
+				<button
+					type="button"
+					class="btn btn-outline-secondary font-weight-bold ml-3"
+					tooltip="Set Columns"
+					(click)="sidebar.toggle()"
+				>
+					<span class="fa fa-columns"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex overflow-hidden">
+		<div class="table-content">
+			<table
+				cdk-table
+				[dataSource]="dataSource"
+				asySort
+				asyFilter
+				class="table table-striped"
+			>
+				<ng-container cdkColumnDef="creator.name">
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<div class="hide-overflow">Submitted By</div>
+					</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="creator.username">
+					<th cdk-header-cell *cdkHeaderCellDef>Username</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.creator?.username }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="creator.email">
+					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="creator.organization">
+					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.creator?.organization }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="created">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Submitted Date</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">
+							{{ feedback?.created | agoDate }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="updated">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow" tooltip="{{ feedback?.updated | utcDate }}">
+							{{ feedback?.updated | agoDate }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="type">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Type</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="body">
+					<th cdk-header-cell *cdkHeaderCellDef>Feedback</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						{{ feedback?.body }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="browser">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Browser</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.browser }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="os">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>OS</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.os }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="url">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Submitted From</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="hide-overflow">{{ feedback?.url }}</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="status">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+						Status
+						<asy-header-filter
+							list-filter
+							[options]="['New', 'Open', 'Closed']"
+						></asy-header-filter>
+					</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="btn-group" dropdown container="body" placement="bottom left">
+							<button
+								dropdownToggle
+								class="dropdown-toggle feedback-status-button"
+								type="button"
+								[class.feedback-status-new]="
+									feedback.status === feedbackStatusOptions.NEW
+								"
+								[class.feedback-status-open]="
+									feedback.status === feedbackStatusOptions.OPEN
+								"
+								[class.feedback-status-closed]="
+									feedback.status === feedbackStatusOptions.CLOSED
+								"
+							>
+								{{ feedback.status }}
+							</button>
+							<ul role="menu" *dropdownMenu class="dropdown-menu">
+								<li
+									role="menuitem"
+									*ngIf="feedback.status !== feedbackStatusOptions.OPEN"
+								>
+									<button
+										class="dropdown-item"
+										(click)="
+											updateFeedbackStatus(
+												feedback,
+												feedbackStatusOptions.OPEN
+											)
+										"
+									>
+										Open
+									</button>
+								</li>
+								<li
+									role="menuitem"
+									*ngIf="feedback.status !== feedbackStatusOptions.CLOSED"
+								>
+									<button
+										class="dropdown-item"
+										(click)="
+											updateFeedbackStatus(
+												feedback,
+												feedbackStatusOptions.CLOSED
+											)
+										"
+									>
+										Close
+									</button>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="assignee">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Assignee</th>
+					<td cdk-cell *cdkCellDef="let feedback">
+						<div class="btn-group" dropdown container="body" placement="bottom left">
+							<button
+								dropdownToggle
+								class="dropdown-toggle feedback-status-button"
+								type="button"
+								[class.feedback-status-open]="!!feedback.assignee"
+							>
+								{{ feedback.assignee ?? 'None' }}
+							</button>
+							<ul role="menu" *dropdownMenu class="dropdown-menu">
+								<li role="menuitem">
+									<button
+										class="dropdown-item"
+										(click)="updateFeedbackAssignee(feedback)"
+									>
+										None
+									</button>
+								</li>
+								<li role="menuitem" *ngFor="let username of assigneeUsernames">
+									<button
+										class="dropdown-item"
+										(click)="updateFeedbackAssignee(feedback, username)"
+									>
+										{{ username }}
+									</button>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</ng-container>
+				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+				<tr cdk-row *cdkRowDef="let team; columns: displayedColumns"></tr>
+			</table>
+
+			<asy-table-empty-state
+				emptyText="No feedback is available."
+				filteredText="No feedback matched your search."
+				[dataSource]="dataSource"
+				(clearFilters)="clearFilters()"
+			></asy-table-empty-state>
+		</div>
+
+		<asy-sidebar headerText="Columns" #sidebar>
+			<asy-column-chooser
+				[columns]="columns"
+				[storageKey]="dataSource.storageKey"
+				(columnsChange)="columnsChanged($event)"
+			></asy-column-chooser>
+		</asy-sidebar>
+	</div>
+</section>

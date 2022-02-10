@@ -79,3 +79,11 @@ h6 {
 .user-role-external::after {
 	content: '(external)';
 }
+
+.page-body {
+	display: flex;
+	flex-direction: column;
+	&.anchored-page-body {
+		min-height: $anchored-table-min-height;
+	}
+}

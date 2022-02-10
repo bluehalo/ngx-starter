@@ -17,6 +17,7 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 	right: 0;
 	top: $flyout-right-top;
 	transition: left 0.15s ease-in-out, right 0.15s ease-in-out;
+	z-index: $zindex-popover;
 
 	&[placement='left'] {
 		right: auto;

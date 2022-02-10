@@ -13,15 +13,13 @@ import { User } from '../../auth/user.model';
  * Admin management of users
  */
 export class AdminUsersService {
-	cache: any = {};
-
 	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 
 	search(
 		query: any,
 		search: string,
 		paging: PagingOptions,
-		options: any
+		options: any = {}
 	): Observable<PagingResults<User>> {
 		return this.http
 			.post<PagingResults>(

@@ -1,0 +1,223 @@
+<section class="page-header mb-3">
+	<div class="row no-gutters">
+		<div class="media col">
+			<div class="media-body">
+				<h1 skipTo>Users</h1>
+				View and manage user accounts.
+			</div>
+		</div>
+	</div>
+	<system-alert></system-alert>
+</section>
+
+<section class="page-body anchored-page-body">
+	<div class="table-header d-flex align-items-center">
+		<div class="table-actions d-flex flex-wrap flex-grow-1">
+			<div class="mb-3 mr-5">
+				<asy-search-input
+					placeholder="Search..."
+					(applySearch)="dataSource.search($event)"
+					[search]="dataSource.searchEvent$.value"
+				></asy-search-input>
+			</div>
+
+			<div class="mb-3 ml-auto">
+				<button
+					type="button"
+					class="btn btn-outline-secondary"
+					(click)="exportCurrentView()"
+				>
+					<span class="fa fa-download"></span> Export
+				</button>
+
+				<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
+					<span class="fa fa-user-plus"></span> Create User
+				</button>
+
+				<button
+					type="button"
+					class="btn btn-outline-secondary font-weight-bold ml-3"
+					tooltip="Set Columns"
+					(click)="sidebar.toggle()"
+				>
+					<span class="fa fa-columns"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex overflow-hidden">
+		<div class="table-content">
+			<table
+				cdk-table
+				[dataSource]="dataSource"
+				asySort
+				asyFilter
+				class="table table-striped"
+			>
+				<ng-container cdkColumnDef="id">
+					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel._id }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="name">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Name</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.name }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="username">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Username</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div class="hide-overflow">
+							{{ user.userModel.username }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="organization">
+					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.organization }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="email">
+					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.email }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="phone">
+					<th cdk-header-cell *cdkHeaderCellDef>Phone</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.phone }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="acceptedEua">
+					<th cdk-header-cell *cdkHeaderCellDef>EUA</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div
+							class="hide-overflow"
+							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
+							container="body"
+						>
+							{{ user.userModel.acceptedEua | agoDate: false }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="lastLogin">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Last Login</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div
+							class="hide-overflow"
+							tooltip="{{ user.userModel.lastLogin | utcDate }}"
+							container="body"
+						>
+							{{ user.userModel.lastLogin | agoDate: false }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="created">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.created | utcDate }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="updated">
+					<th cdk-header-cell *cdkHeaderCellDef>Updated</th>
+					<td cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.updated | utcDate }}
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="externalRoles">
+					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div class="hide-overflow">
+							{{ user.userModel.externalRoles }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="externalGroups">
+					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div class="hide-overflow">
+							{{ user.userModel.externalGroups }}
+						</div>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="roles">
+					<th cdk-header-cell *cdkHeaderCellDef>
+						Roles
+						<asy-header-filter list-filter user-role-filter></asy-header-filter>
+					</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<ng-container *ngFor="let role of possibleRoles">
+							<div
+								*ngIf="user.userModel.roles && user.userModel.roles[role.role]"
+								class="user-role"
+								[ngClass]="{
+									'user-role-external':
+										user.userModel.localRoles &&
+										!user.userModel.localRoles[role.role]
+								}"
+							>
+								{{ role.label }}
+							</div>
+						</ng-container>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="actionsMenu">
+					<th cdk-header-cell *cdkHeaderCellDef></th>
+					<td cdk-cell *cdkCellDef="let user">
+						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
+							<span
+								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+								style="cursor: pointer"
+								dropdownToggle
+							>
+								<span class="fa fa-lg fa-ellipsis-v"></span>
+							</span>
+							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
+								<li>
+									<a
+										class="dropdown-item"
+										[routerLink]="['/admin/user', user.userModel._id]"
+										>Edit</a
+									>
+								</li>
+								<li>
+									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
+										>Delete</a
+									>
+								</li>
+							</ul>
+						</span>
+					</td>
+				</ng-container>
+				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
+				<tr cdk-row *cdkRowDef="let team; columns: displayedColumns"></tr>
+			</table>
+
+			<asy-table-empty-state
+				emptyText="No users are available."
+				filteredText="No users matched your search."
+				[dataSource]="dataSource"
+				(clearFilters)="clearFilters()"
+			></asy-table-empty-state>
+		</div>
+
+		<asy-sidebar headerText="Columns" #sidebar>
+			<asy-column-chooser
+				[columns]="columns"
+				[storageKey]="dataSource.storageKey"
+				(columnsChange)="columnsChanged($event)"
+			></asy-column-chooser>
+		</asy-sidebar>
+	</div>
+
+	<div class="table-footer d-flex align-items-center">
+		<div class="table-footer-pager ml-auto">
+			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+		</div>
+	</div>
+</section>

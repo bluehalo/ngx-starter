@@ -1,0 +1,111 @@
+<span class="dropdown ml-2" container="body" [insideClick]="true" dropdown>
+	<span class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
+		<span
+			[hidden]="isFiltered"
+			class="filter fa fa-list"
+			tooltip="Apply Filters"
+			placement="bottom"
+			container="body"
+		></span>
+		<span
+			[hidden]="!isFiltered"
+			class="filter fa fa-filter"
+			tooltip="Edit Filters"
+			placement="bottom"
+			container="body"
+		></span>
+	</span>
+
+	<div *dropdownMenu class="dropdown-menu" [class.dropdown-menu-right]="dropdownMenuRight">
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="checkbox"
+				id="date-filter-enabled"
+				[(ngModel)]="enabled"
+				(ngModelChange)="onFilterChange()"
+			/>
+			<label class="form-check-label" for="date-filter-enabled">Enabled</label>
+		</div>
+
+		<div class="form-check form-check-inline pr-0">
+			<input
+				class="form-check-input"
+				type="radio"
+				id="dir-radio-past"
+				value="past"
+				[disabled]="isCustom"
+				[(ngModel)]="direction"
+				(ngModelChange)="onDateFilterChange()"
+			/>
+			<label class="form-check-label" for="dir-radio-past">Past</label>
+		</div>
+		<div class="form-check form-check-inline pl-0">
+			<input
+				class="form-check-input"
+				type="radio"
+				id="dir-radio-next"
+				value="next"
+				[disabled]="isCustom"
+				[(ngModel)]="direction"
+				(ngModelChange)="onDateFilterChange()"
+			/>
+			<label class="form-check-label" for="dir-radio-next">Next</label>
+		</div>
+
+		<div class="input-group">
+			<input
+				id="dateCountInput"
+				class="form-control"
+				type="number"
+				min="1"
+				[(ngModel)]="count"
+				(ngModelChange)="onDateFilterChange()"
+				[disabled]="isCustom"
+			/>
+			<div class="input-group-append">
+				<ng-select
+					id="dateDurationInput"
+					[items]="['hour', 'day', 'week', 'month', 'year']"
+					[disabled]="isCustom"
+					[(ngModel)]="duration"
+					(ngModelChange)="onDateFilterChange()"
+					[clearable]="false"
+					[searchable]="false"
+					(click)="$event.stopPropagation()"
+				>
+					<ng-template ng-option-tmp ng-label-tmp let-item="item">
+						{{ item | titlecase }}{{ count > 1 ? 's' : '' }}
+					</ng-template>
+				</ng-select>
+			</div>
+		</div>
+
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="checkbox"
+				id="custom-date-filter-enabled"
+				[(ngModel)]="isCustom"
+				(ngModelChange)="onDateFilterChange()"
+			/>
+			<label class="form-check-label" for="custom-date-filter-enabled">Custom Range</label>
+		</div>
+		<div class="form-group mb-0">
+			<input
+				type="text"
+				placeholder="Custom range..."
+				class="form-control"
+				bsDaterangepicker
+				[bsConfig]="{
+					isAnimated: true,
+					adaptivePosition: true,
+					containerClass: 'theme-default'
+				}"
+				[(ngModel)]="customRange"
+				(ngModelChange)="onDateFilterChange()"
+				[disabled]="!isCustom"
+			/>
+		</div>
+	</div>
+</span>
