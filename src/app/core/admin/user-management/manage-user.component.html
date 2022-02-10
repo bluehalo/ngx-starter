@@ -233,11 +233,7 @@
 				>
 					Cancel
 				</button>
-				<button
-					type="submit"
-					class="btn btn-primary"
-					[disabled]="okDisabled || !form.form.valid"
-				>
+				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
 					{{ okButtonText }}
 				</button>
 				<button

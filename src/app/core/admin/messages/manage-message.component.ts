@@ -15,7 +15,6 @@ import { Message } from '../../messages/message.class';
 export abstract class ManageMessageComponent implements OnInit {
 	message = new Message();
 	error?: string;
-	okDisabled = true;
 
 	typeOptions: any[] = [
 		{ value: 'MOTD', display: 'MOTD' },

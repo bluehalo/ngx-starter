@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ModalService } from 'src/app/common/modal.module';
 import { SystemAlertService } from 'src/app/common/system-alert.module';
 
@@ -43,13 +43,11 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 		this.route.params
 			.pipe(
 				untilDestroyed(this),
-				tap(() => {
-					this.okDisabled = false;
-				}),
-				switchMap((params: Params) => this.messageService.get(params['id']))
+				switchMap((params: Params) => this.messageService.get(params['id'])),
+				map((messageRaw: any) => new Message().setFromModel(messageRaw))
 			)
-			.subscribe((messageRaw: any) => {
-				this.message = new Message().setFromModel(messageRaw);
+			.subscribe((message) => {
+				this.message = message;
 			});
 	}
 
