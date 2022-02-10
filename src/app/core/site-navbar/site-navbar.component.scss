@@ -162,22 +162,8 @@
 }
 
 ::ng-deep .popover.site-nav-popover-container-messages {
-	width: $nav-messages-popover-width;
-	max-width: $nav-messages-popover-width;
+	max-width: min(calc(100vw - #{$nav-open-width} - 1rem), #{$nav-messages-popover-max-width});
 	z-index: $nav-popover-z-index;
-
-	.popover-menu {
-		li {
-			a {
-				&:hover {
-					background-color: unset;
-				}
-				padding: 12px 18px;
-				max-height: 550px;
-				overflow: auto;
-			}
-		}
-	}
 }
 
 // new messages number badge

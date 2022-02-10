@@ -1,34 +1,35 @@
-<div *ngIf="messages.length > 0">
-	<h4 class="mb-3">Notifications</h4>
-	<div class="card card-message mb-3" *ngFor="let message of messages">
-		<div class="row no-gutters">
-			<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
-				<span
-					class="fa alert-icon {{ messageType[message.type] | lowercase }}"
-					[ngClass]="{
-						'fa-check': message.type === messageType.MOTD,
-						'fa-info': message.type === messageType.INFO,
-						'fa-exclamation': message.type === messageType.WARN,
-						'fa-exclamation-triangle': message.type === messageType.ERROR
-					}"
-				></span>
-			</div>
-			<div class="col-alert-body">
-				<div class="card-body">
-					<div class="d-flex">
-						<h4 class="card-title text-truncate mr-3">{{ message.title }}</h4>
-						<span
-							class="fa fa-lg fa-close ml-auto"
-							style="cursor: pointer"
-							(click)="dismissMessage(message)"
-						></span>
+<ng-container *ngIf="messages.length > 0">
+	<h4 class="mb-0">Notifications</h4>
+	<div class="cards">
+		<div class="card card-message" *ngFor="let message of messages">
+			<div class="row no-gutters">
+				<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
+					<span
+						class="fa alert-icon {{ messageType[message.type] | lowercase }}"
+						[ngClass]="{
+							'fa-check': message.type === messageType.MOTD,
+							'fa-info': message.type === messageType.INFO,
+							'fa-exclamation': message.type === messageType.WARN,
+							'fa-exclamation-triangle': message.type === messageType.ERROR
+						}"
+					></span>
+				</div>
+				<div class="col-alert-body">
+					<div class="card-body">
+						<div class="d-flex">
+							<h4 class="card-title text-truncate mr-3">{{ message.title }}</h4>
+							<span
+								class="fa fa-lg fa-close ml-auto"
+								style="cursor: pointer"
+								(click)="dismissMessage(message)"
+							></span>
+						</div>
+						<p class="card-text line-clamp" [innerHTML]="message.body"></p>
 					</div>
-					<p class="card-text text-truncate" [innerHTML]="message.body"></p>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<div class="row m-0">
 		<button type="button" class="btn btn-sm btn-link pl-0" (click)="dismissAll()">
 			Dismiss all
@@ -41,7 +42,7 @@
 			View All
 		</button>
 	</div>
-</div>
+</ng-container>
 
 <div *ngIf="messages.length === 0 && !loading" class="text-center">
 	<h2 class="mt-4">You're all caught up!</h2>
