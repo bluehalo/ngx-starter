@@ -1,13 +1,4 @@
-import {
-	Component,
-	ComponentFactory,
-	ComponentFactoryResolver,
-	ComponentRef,
-	Input,
-	OnInit,
-	ViewChild,
-	ViewContainerRef
-} from '@angular/core';
+import { Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AuditObjectTypes } from './audit.classes';
 
@@ -60,20 +51,15 @@ export class AuditObjectComponent implements OnInit {
 	@Input() auditObject: any = {};
 	@Input() auditType = '';
 
-	constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+	constructor() {}
 
 	ngOnInit() {
 		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType)) {
 			this.auditType = 'default';
 		}
 
-		const factory: ComponentFactory<Component> =
-			this.componentFactoryResolver.resolveComponentFactory(
-				AuditObjectTypes.objects[this.auditType]
-			);
-
 		const componentRef = this.content?.createComponent(
-			factory
+			AuditObjectTypes.objects[this.auditType]
 		) as ComponentRef<DefaultAuditObjectComponent>;
 		if (componentRef) {
 			componentRef.instance.auditObject = this.auditObject;
