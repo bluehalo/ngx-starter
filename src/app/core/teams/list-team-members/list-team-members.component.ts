@@ -39,7 +39,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 	user: User | null = null;
 
-	columns = ['name', 'username', 'status', 'explicit', 'role', 'actions'];
+	columns = ['name', 'username', 'lastLogin', 'explicit', 'role', 'actions'];
 	displayedColumns: string[] = [];
 
 	dataSource = new AsyTableDataSource<TeamMember>(
