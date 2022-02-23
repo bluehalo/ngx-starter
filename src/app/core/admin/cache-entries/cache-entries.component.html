@@ -33,7 +33,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="value">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Value</th>
-				<td cdk-cell *cdkCellDef="let entry">
+				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow" style="max-width: 300px">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
