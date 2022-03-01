@@ -19,6 +19,7 @@ import { AddMembersModalComponent } from './add-members-modal/add-members-modal.
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamsHelpComponent } from './help/teams-help.component';
 import { ListTeamMembersComponent } from './list-team-members/list-team-members.component';
+import { TeamRoleFilterDirective } from './list-team-members/team-role-filter.directive';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamSelectInputComponent } from './team-select-input/team-select-input.component';
@@ -55,7 +56,8 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ListTeamsComponent,
 		ViewTeamComponent,
 		TeamsHelpComponent,
-		TeamSelectInputComponent
+		TeamSelectInputComponent,
+		TeamRoleFilterDirective
 	],
 	providers: [
 		TeamAuthorizationService,
