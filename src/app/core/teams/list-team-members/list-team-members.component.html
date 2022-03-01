@@ -49,20 +49,26 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="explicit">
-				<th cdk-header-cell *cdkHeaderCellDef>Explicit</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					Type
+				</th>
+
 				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.explicit }}</div>
+					<div *ngIf="member.explicit">Explicit</div>
+					<div *ngIf="!member.explicit">Implicit</div>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="role">
-				<th cdk-header-cell *cdkHeaderCellDef>Role</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					Role
+					<asy-header-filter list-filter team-role-filter> </asy-header-filter>
+				</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<div *ngIf="!canManageTeam || !member.explicit">{{ member.roleDisplay }}</div>
 					<div
 						class="dropdown dropdown-table-inline"
 						dropdown
 						container="body"
-						*ngIf="canManageTeam && member.explicit"
+						*ngIf="canManageTeam"
 					>
 						<span class="dropdown-toggle" dropdownToggle>
 							<span class="mr-1">{{ member.roleDisplay }}</span>
