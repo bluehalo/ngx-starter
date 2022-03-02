@@ -51,6 +51,8 @@
 			<ng-container cdkColumnDef="explicit">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Type
+					<asy-header-filter list-filter [options]="typeFilterOptions">
+					</asy-header-filter>
 				</th>
 
 				<td cdk-cell *cdkCellDef="let member">

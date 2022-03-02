@@ -12,6 +12,7 @@ import { PagingOptions, PagingResults, SortDirection } from '../../../common/pag
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
+import { ListFilterOption } from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
@@ -36,6 +37,11 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	canManageTeam = false;
 
 	teamRoleOptions: any[] = TeamRole.ROLES;
+
+	typeFilterOptions: ListFilterOption[] = [
+		{ display: 'Explicit', value: 'true', active: false, hide: false },
+		{ display: 'Implicit', value: 'false', active: false, hide: false }
+	];
 
 	user: User | null = null;
 
