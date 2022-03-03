@@ -32,6 +32,7 @@ import { UserEuaComponent } from './eua/user-eua.component';
 import { ExportConfigService } from './export-config.service';
 import { FeedbackModule } from './feedback/feedback.module';
 import { HelpModule } from './help/help.module';
+import { MasqueradeModule } from './masquerade/masquerade.module';
 import { MessagesModule } from './messages/messages.module';
 import { NavigationService } from './navigation.service';
 import { PageTitleService } from './page-title.service';
@@ -73,7 +74,8 @@ export function getConfiguration(configService: ConfigService) {
 		CoreRoutingModule,
 		LoadingSpinnerModule,
 		SystemAlertModule,
-		MessagesModule
+		MessagesModule,
+		MasqueradeModule
 	],
 	exports: [
 		SiteContainerComponent,
