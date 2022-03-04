@@ -36,27 +36,42 @@
 					<div>{{ member.userModel.username }}</div>
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="status">
-				<th cdk-header-cell *cdkHeaderCellDef>Account Status</th>
-				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.active ? 'Active' : 'Not Active' }}</div>
+			<ng-container cdkColumnDef="lastLogin">
+				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Last Login</th>
+				<td cdk-cell *cdkCellDef="let user">
+					<div
+						class="hide-overflow"
+						tooltip="{{ user.userModel.lastLogin | utcDate }}"
+						container="body"
+					>
+						{{ user.userModel.lastLogin | agoDate: false }}
+					</div>
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="explicit">
-				<th cdk-header-cell *cdkHeaderCellDef>Explicit</th>
+			<ng-container cdkColumnDef="type">
+				<th cdk-header-cell *cdkHeaderCellDef>
+					Type
+					<asy-header-filter list-filter [options]="typeFilterOptions">
+					</asy-header-filter>
+				</th>
+
 				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.explicit }}</div>
+					<div *ngIf="member.explicit">Explicit</div>
+					<div *ngIf="!member.explicit">Implicit</div>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="role">
-				<th cdk-header-cell *cdkHeaderCellDef>Role</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					Role
+					<asy-header-filter list-filter [options]="roleFilterOptions">
+					</asy-header-filter>
+				</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<div *ngIf="!canManageTeam || !member.explicit">{{ member.roleDisplay }}</div>
 					<div
 						class="dropdown dropdown-table-inline"
 						dropdown
 						container="body"
-						*ngIf="canManageTeam && member.explicit"
+						*ngIf="canManageTeam"
 					>
 						<span class="dropdown-toggle" dropdownToggle>
 							<span class="mr-1">{{ member.roleDisplay }}</span>
