@@ -14,11 +14,16 @@ export class TeamRole {
 		'This user has editor privileges and can also manage team membership',
 		'admin'
 	);
+	public static BLOCKED: TeamRole = new TeamRole(
+		'Blocked',
+		'This user has been blocked from accessing resources within this team',
+		'blocked'
+	);
 
 	constructor(public label: string, public description: string, public role: string) {}
 
 	public static get ROLES(): TeamRole[] {
-		return [this.VIEW_ONLY, this.EDITOR, this.ADMIN];
+		return [this.VIEW_ONLY, this.EDITOR, this.ADMIN, this.BLOCKED];
 	}
 
 	static getDisplay(role: string): string {
