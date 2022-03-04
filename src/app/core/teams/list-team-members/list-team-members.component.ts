@@ -1,5 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+	ViewChild
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
@@ -12,6 +20,7 @@ import { PagingOptions, PagingResults, SortDirection } from '../../../common/pag
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SystemAlertService } from '../../../common/system-alert.module';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
+import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import { ListFilterOption } from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -29,6 +38,9 @@ import { TeamsService } from '../teams.service';
 	templateUrl: './list-team-members.component.html'
 })
 export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
+	@ViewChild(AsyFilterDirective)
+	filter: AsyFilterDirective;
+
 	@Input()
 	team!: Team;
 
@@ -39,13 +51,20 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
 	typeFilterOptions: ListFilterOption[] = [
-		{ display: 'Explicit', value: 'true', active: false, hide: false },
-		{ display: 'Implicit', value: 'false', active: false, hide: false }
+		{ display: 'Explicit', value: 'explicit', active: false, hide: false },
+		{ display: 'Implicit', value: 'implicit', active: false, hide: false }
 	];
+	roleFilterOptions = TeamRole.ROLES.map(
+		(role) =>
+			({
+				display: role.label,
+				value: role.role
+			} as ListFilterOption)
+	);
 
 	user: User | null = null;
 
-	columns = ['name', 'username', 'lastLogin', 'explicit', 'role', 'actions'];
+	columns = ['name', 'username', 'lastLogin', 'type', 'role', 'actions'];
 	displayedColumns: string[] = [];
 
 	dataSource = new AsyTableDataSource<TeamMember>(
@@ -113,6 +132,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 	clearFilters() {
 		this.dataSource.search('');
+		this.filter.clearFilter();
 	}
 
 	addMembers() {

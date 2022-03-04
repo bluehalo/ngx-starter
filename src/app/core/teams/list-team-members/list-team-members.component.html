@@ -48,7 +48,7 @@
 					</div>
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="explicit">
+			<ng-container cdkColumnDef="type">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Type
 					<asy-header-filter list-filter [options]="typeFilterOptions">
@@ -63,7 +63,8 @@
 			<ng-container cdkColumnDef="role">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Role
-					<asy-header-filter list-filter team-role-filter> </asy-header-filter>
+					<asy-header-filter list-filter [options]="roleFilterOptions">
+					</asy-header-filter>
 				</th>
 				<td cdk-cell *cdkCellDef="let member">
 					<div
