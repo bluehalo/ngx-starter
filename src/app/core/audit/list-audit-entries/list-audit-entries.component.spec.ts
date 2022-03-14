@@ -16,6 +16,7 @@ import { PagingResults } from '../../../common/paging/paging.model';
 import { PipesModule } from '../../../common/pipes.module';
 import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
 import { TableModule } from '../../../common/table.module';
+import { ConfigService } from '../../core.module';
 import {
 	AuditObjectComponent,
 	DefaultAuditObjectComponent,
@@ -29,6 +30,7 @@ import { ListAuditEntriesComponent } from './list-audit-entries.component';
 
 describe('Audit Component Spec', () => {
 	let auditServiceSpy: any;
+	let configServiceSpy: any;
 
 	let fixture: ComponentFixture<ListAuditEntriesComponent>;
 	let component: ListAuditEntriesComponent;
@@ -105,6 +107,9 @@ describe('Audit Component Spec', () => {
 		auditServiceSpy.search.and.returnValue(of(searchResults));
 		auditServiceSpy.matchUser.and.returnValue(of(matchedUsers));
 
+		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
+		configServiceSpy.getConfig.and.returnValue(of({}));
+
 		TestBed.configureTestingModule({
 			declarations: [
 				ListAuditEntriesComponent,
@@ -131,6 +136,7 @@ describe('Audit Component Spec', () => {
 			],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
+				{ provide: ConfigService, useValue: configServiceSpy },
 				BsModalService,
 				SystemAlertService
 			]
