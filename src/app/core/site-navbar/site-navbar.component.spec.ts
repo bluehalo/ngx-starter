@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.di
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
+import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { SiteNavbarComponent } from './site-navbar.component';
 
@@ -25,6 +27,7 @@ describe('Site Navbar Component Spec', () => {
 	let configServiceSpy: any;
 	let messageServiceSpy: any;
 	let sessionServiceSpy: any;
+	let masqServiceSpy: any;
 
 	const defaultMockConfig: Config = {
 		auth: 'local',
@@ -40,7 +43,8 @@ describe('Site Navbar Component Spec', () => {
 		},
 		contactEmail: 'test@test.com',
 		teams: { implicitMembers: { strategy: 'local' } },
-		version: 'test'
+		version: 'test',
+		masqueradeEnabled: false
 	};
 
 	let mockConfig: Config;
@@ -74,6 +78,9 @@ describe('Site Navbar Component Spec', () => {
 		sessionServiceSpy = jasmine.createSpyObj('SessionService', ['getSession']);
 		sessionServiceSpy.getSession.and.returnValue(of({}));
 
+		masqServiceSpy = jasmine.createSpyObj('MasqueradeService', ['getMasqueradeDn']);
+		masqServiceSpy.getMasqueradeDn.and.returnValue(undefined);
+
 		TestBed.configureTestingModule({
 			declarations: [
 				SiteNavbarComponent,
@@ -83,6 +90,7 @@ describe('Site Navbar Component Spec', () => {
 				PopoverDirective
 			],
 			imports: [
+				HttpClientTestingModule,
 				BsDatepickerModule.forRoot(),
 				ModalModule.forRoot(),
 				TooltipModule.forRoot(),
@@ -96,7 +104,8 @@ describe('Site Navbar Component Spec', () => {
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: MessageService, useValue: messageServiceSpy },
-				{ provide: SessionService, useValue: sessionServiceSpy }
+				{ provide: SessionService, useValue: sessionServiceSpy },
+				{ provide: MasqueradeService, useValue: masqServiceSpy }
 			]
 		});
 	});

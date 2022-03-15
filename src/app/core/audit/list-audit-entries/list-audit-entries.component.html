@@ -139,6 +139,17 @@
 					</div>
 				</td>
 			</ng-container>
+			<ng-container cdkColumnDef="masqueradingUser">
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<span class="fa fa-user-secret"></span>
+					Masquerading User
+				</th>
+				<td cdk-cell *cdkCellDef="let entry">
+					<div class="hide-overflow">
+						{{ entry?.audit.masqueradingUser }}
+					</div>
+				</td>
+			</ng-container>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
 			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns"></tr>
 		</table>

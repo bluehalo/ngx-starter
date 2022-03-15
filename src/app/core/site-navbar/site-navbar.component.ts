@@ -9,6 +9,7 @@ import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
 import { FeedbackModalComponent } from '../feedback/feedback.module';
+import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 
@@ -42,6 +43,10 @@ export class SiteNavbarComponent implements OnInit {
 
 	navbarItems: NavbarTopic[];
 
+	masqueradeEnabled = false;
+	canMasquerade = false;
+	isMasquerade = false;
+
 	numNewMessages = 0;
 
 	@Output()
@@ -65,7 +70,8 @@ export class SiteNavbarComponent implements OnInit {
 		private modalService: BsModalService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
-		private messageService: MessageService
+		private messageService: MessageService,
+		private masqueradeService: MasqueradeService
 	) {
 		this.adminMenuItems = AdminTopics.getTopics();
 		this.navbarItems = NavbarTopics.getTopics();
@@ -77,12 +83,14 @@ export class SiteNavbarComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((session) => {
 				this.session = session;
+				this.canMasquerade = session?.user?.userModel?.canMasquerade ?? false;
 			});
 
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config) => {
+				this.masqueradeEnabled = config?.masqueradeEnabled ?? false;
 				this.showApiDocsLink = config?.apiDocs?.enabled ?? false;
 				this.apiDocsLink = config?.apiDocs?.path ?? '';
 				this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
@@ -93,6 +101,8 @@ export class SiteNavbarComponent implements OnInit {
 		this.messageService.numMessagesIndicator$.pipe(untilDestroyed(this)).subscribe((count) => {
 			this.numNewMessages = count;
 		});
+
+		this.isMasquerade = this.masqueradeService.getMasqueradeDn() !== undefined;
 	}
 
 	toggleNavbar() {

@@ -31,6 +31,8 @@ interface UserPreferencesConfig {
 
 export interface Config {
 	auth: string;
+	masqueradeEnabled?: boolean;
+	masqueradeHeader?: string;
 
 	app: AppConfig;
 	version: string;
