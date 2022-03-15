@@ -52,35 +52,33 @@
 				class="table table-striped"
 			>
 				<ng-container cdkColumnDef="creator.name">
-					<th cdk-header-cell *cdkHeaderCellDef>
-						<div class="hide-overflow">Submitted By</div>
-					</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.creator?.name }}</div>
+					<th cdk-header-cell *cdkHeaderCellDef>Submitted By</th>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.creator?.name }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.username">
 					<th cdk-header-cell *cdkHeaderCellDef>Username</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.creator?.username }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.creator?.username }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.email">
 					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.creator?.email }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.creator?.email }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.organization">
 					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.creator?.organization }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.creator?.organization }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Submitted Date</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow" tooltip="{{ feedback?.created | utcDate }}">
+						<div class="text-nowrap" tooltip="{{ feedback?.created | utcDate }}">
 							{{ feedback?.created | agoDate }}
 						</div>
 					</td>
@@ -88,15 +86,15 @@
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow" tooltip="{{ feedback?.updated | utcDate }}">
+						<div class="text-nowrap" tooltip="{{ feedback?.updated | utcDate }}">
 							{{ feedback?.updated | agoDate }}
 						</div>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="type">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Type</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.type | titlecase }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="text-nowrap">
+						{{ feedback?.type | titlecase }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="body">
@@ -107,20 +105,20 @@
 				</ng-container>
 				<ng-container cdkColumnDef="browser">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Browser</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.browser }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.browser }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="os">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>OS</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.os }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.os }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="url">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Submitted From</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="hide-overflow">{{ feedback?.url }}</div>
+					<td cdk-cell *cdkCellDef="let feedback" class="hide-overflow">
+						{{ feedback?.url }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="status">

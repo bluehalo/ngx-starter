@@ -39,10 +39,8 @@
 
 			<tbody>
 				<tr *ngFor="let invited of addedMembers; let i = index" class="table-row">
-					<td>
-						<div class="hide-overflow" [attr.title]="invited.username">
-							{{ invited.username }}
-						</div>
+					<td class="text-nowrap">
+						{{ invited.username }}
 					</td>
 					<td>
 						<div class="dropdown dropdown-table-inline" dropdown>

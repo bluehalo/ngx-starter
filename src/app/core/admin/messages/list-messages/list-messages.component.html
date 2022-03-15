@@ -49,13 +49,13 @@
 			</ng-container>
 			<ng-container cdkColumnDef="created">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-				<td cdk-cell *cdkCellDef="let message">
+				<td cdk-cell *cdkCellDef="let message" class="text-nowrap">
 					{{ message.created | utcDate }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="updated">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
-				<td cdk-cell *cdkCellDef="let message">
+				<td cdk-cell *cdkCellDef="let message" class="text-nowrap">
 					{{ message.updated | utcDate }}
 				</td>
 			</ng-container>

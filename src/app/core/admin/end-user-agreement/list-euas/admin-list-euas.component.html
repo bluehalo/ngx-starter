@@ -55,35 +55,31 @@
 				</ng-container>
 				<ng-container cdkColumnDef="title">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Title</th>
-					<td cdk-cell *cdkCellDef="let eua">
-						<div class="hide-overflow">
-							{{ eua.euaModel.title }}
-						</div>
+					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
+						{{ eua.euaModel.title }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Text</th>
-					<td cdk-cell *cdkCellDef="let eua">
-						<div class="hide-overflow" style="max-width: 400px">
-							{{ eua.euaModel.text }}
-						</div>
+					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
+						{{ eua.euaModel.text }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-					<td cdk-cell *cdkCellDef="let eua">
+					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
 						{{ eua.euaModel.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="published">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>published</th>
-					<td cdk-cell *cdkCellDef="let eua">
+					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Published</th>
+					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
 						{{ eua.euaModel.published | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
-					<td cdk-cell *cdkCellDef="let eua">
+					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
 						{{ eua.euaModel.updated | utcDate }}
 					</td>
 				</ng-container>
