@@ -20,9 +20,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 				path: 'team/create',
 				component: CreateTeamComponent,
 				canActivate: [AuthGuard],
-				data: {
-					roles: ['editor']
-				}
+				data: { roles: ['editor', 'admin'], requireAllRoles: false }
 			},
 			{
 				path: 'team/:id',
