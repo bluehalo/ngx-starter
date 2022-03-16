@@ -5,3 +5,12 @@
 	flex-direction: column;
 	height: 100%;
 }
+
+.cdk-column-externalRoles,
+.cdk-column-externalGroups {
+	max-width: 200px;
+}
+
+.user-role-external::after {
+	content: '(external)';
+}

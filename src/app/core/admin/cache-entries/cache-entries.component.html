@@ -40,7 +40,7 @@
 			<ng-container cdkColumnDef="timestamp">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
 				<td cdk-cell *cdkCellDef="let entry">
-					<div class="hide-overflow" tooltip="{{ entry.ts | utcDate }}" container="body">
+					<div class="text-nowrap" tooltip="{{ entry.ts | utcDate }}" container="body">
 						{{ entry.ts | agoDate: false }}
 					</div>
 				</td>

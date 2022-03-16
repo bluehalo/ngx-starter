@@ -69,10 +69,8 @@
 				</ng-container>
 				<ng-container cdkColumnDef="username">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Username</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div class="hide-overflow">
-							{{ user.userModel.username }}
-						</div>
+					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
+						{{ user.userModel.username }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="organization">
@@ -97,7 +95,7 @@
 					<th cdk-header-cell *cdkHeaderCellDef>EUA</th>
 					<td cdk-cell *cdkCellDef="let user">
 						<div
-							class="hide-overflow"
+							class="text-nowrap"
 							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
 							container="body"
 						>
@@ -109,7 +107,7 @@
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Last Login</th>
 					<td cdk-cell *cdkCellDef="let user">
 						<div
-							class="hide-overflow"
+							class="text-nowrap"
 							tooltip="{{ user.userModel.lastLogin | utcDate }}"
 							container="body"
 						>
@@ -119,30 +117,26 @@
 				</ng-container>
 				<ng-container cdkColumnDef="created">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-					<td cdk-cell *cdkCellDef="let user">
+					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
 						{{ user.userModel.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell *cdkHeaderCellDef>Updated</th>
-					<td cdk-cell *cdkCellDef="let user">
+					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
 						{{ user.userModel.updated | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalRoles">
 					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div class="hide-overflow">
-							{{ user.userModel.externalRoles }}
-						</div>
+					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
+						{{ user.userModel.externalRoles | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalGroups">
 					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div class="hide-overflow">
-							{{ user.userModel.externalGroups }}
-						</div>
+					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
+						{{ user.userModel.externalGroups | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="roles">
@@ -153,8 +147,8 @@
 					<td cdk-cell *cdkCellDef="let user">
 						<ng-container *ngFor="let role of possibleRoles">
 							<div
-								*ngIf="user.userModel.roles && user.userModel.roles[role.role]"
-								class="user-role"
+								*ngIf="user.userModel.roles?.[role.role]"
+								class="user-role text-nowrap"
 								[ngClass]="{
 									'user-role-external':
 										user.userModel.localRoles &&

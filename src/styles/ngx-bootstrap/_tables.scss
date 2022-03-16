@@ -9,6 +9,10 @@ $anchored-table-min-height: 375px !default;
 	.table {
 		margin-bottom: 0;
 	}
+
+	th {
+		white-space: nowrap;
+	}
 }
 
 .table {
