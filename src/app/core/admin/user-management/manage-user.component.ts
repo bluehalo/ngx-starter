@@ -36,7 +36,7 @@ export abstract class ManageUserComponent implements OnInit {
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config: any) => {
 				this.config = config;
-				this.proxyPki = config.auth.startsWith('proxy-pki');
+				this.proxyPki = config.auth === 'proxy-pki';
 				this.metadataLocked = this.proxyPki;
 
 				this.initialize();

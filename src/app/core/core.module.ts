@@ -134,6 +134,7 @@ export class CoreModule {
 export { AuthGuard } from './auth/auth.guard';
 export { User } from './auth/user.model';
 export { Role } from './auth/role.model';
+export { AuthorizationService } from './auth/authorization.service';
 export { ConfigService } from './config.service';
 export { NavbarTopics } from './site-navbar/navbar-topic.model';
 export { AuditObjectTypes, AuditActionTypes } from './audit/audit.classes';
