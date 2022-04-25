@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 
 import isEmpty from 'lodash/isEmpty';
 import { combineLatest, BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 
 import {
 	NULL_PAGING_RESULTS,
@@ -20,6 +20,7 @@ type LoadPageFunction<T> = (options: {
 }) => Observable<PagingResults<T>>;
 
 type State = {
+	pageSize: number;
 	search: string;
 	sort: SortChange;
 };
@@ -28,11 +29,11 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 	readonly sortEvent$: BehaviorSubject<SortChange>;
 	readonly filterEvent$: BehaviorSubject<any>;
 	readonly searchEvent$: BehaviorSubject<string>;
+	readonly pageChangeEvent$: BehaviorSubject<PageChange>;
 	readonly pagingResults$: BehaviorSubject<PagingResults<T>>;
 
 	private storage = new SessionStorageService();
 
-	private readonly pageChangeEvent$ = new Subject<PageChange>();
 	private readonly reloadEvent$ = new BehaviorSubject<boolean>(true);
 	private readonly loading$ = new BehaviorSubject(false);
 	private subscription: Subscription;
@@ -43,7 +44,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		initialSort: SortChange = {} as SortChange,
 		initialSearch: string = '',
 		initialFilter: any = {},
-		public pageSize = 20,
+		initialPageSize = 20,
 		private debounceTimeMs = 100
 	) {
 		super();
@@ -53,12 +54,16 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		this.sortEvent$ = new BehaviorSubject(state.sort ?? initialSort);
 		this.searchEvent$ = new BehaviorSubject(state.search ?? initialSearch);
 		this.filterEvent$ = new BehaviorSubject(initialFilter);
+		this.pageChangeEvent$ = new BehaviorSubject({
+			pageNumber: 0,
+			pageSize: state.pageSize ?? initialPageSize
+		});
 		this.pagingResults$ = new BehaviorSubject<PagingResults<T>>(NULL_PAGING_RESULTS);
 
 		const param$ = combineLatest([this.searchEvent$, this.filterEvent$]);
 
 		const pagingOptions$ = combineLatest([
-			this.pageChangeEvent$.pipe(startWith({ pageNumber: 0, pageSize } as PageChange)),
+			this.pageChangeEvent$,
 			this.sortEvent$,
 			this.reloadEvent$
 		]).pipe(
@@ -80,7 +85,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 				switchMap(([search, filter]) =>
 					pagingOptions$.pipe(map((pagingOptions) => [pagingOptions, search, filter]))
 				),
-				tap(() => {
+				tap(([pagingOptions]) => {
 					this.loading$.next(true);
 					this.pagingResults$.next(NULL_PAGING_RESULTS);
 				}),
@@ -118,7 +123,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		if (typeof pageChange === 'number') {
 			this.pageChangeEvent$.next({
 				pageNumber: pageChange,
-				pageSize: this.pageSize
+				pageSize: this.pageChangeEvent$.value.pageSize
 			});
 		} else {
 			this.pageChangeEvent$.next(pageChange);
@@ -151,7 +156,8 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		if (this.storageKey) {
 			return {
 				search: this.storage.getValue(`${this.storageKey}-search`),
-				sort: this.storage.getValue(`${this.storageKey}-sort`)
+				sort: this.storage.getValue(`${this.storageKey}-sort`),
+				pageSize: this.storage.getValue(`${this.storageKey}-pageSize`)
 			};
 		}
 		return {};
@@ -161,6 +167,10 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		if (this.storageKey) {
 			this.storage.setValue(`${this.storageKey}-search`, this.searchEvent$.value);
 			this.storage.setValue(`${this.storageKey}-sort`, this.sortEvent$.value);
+			this.storage.setValue(
+				`${this.storageKey}-pageSize`,
+				this.pagingResults$.value.pageSize
+			);
 		}
 	}
 }

@@ -1,4 +1,7 @@
-<asy-skeleton-rows [rows]="dataSource.pageSize" *ngIf="dataSource.loading"></asy-skeleton-rows>
+<asy-skeleton-rows
+	[rows]="dataSource.pageChangeEvent$.value.pageSize"
+	*ngIf="dataSource.loading"
+></asy-skeleton-rows>
 <div
 	class="media justify-content-center py-5"
 	*ngIf="!dataSource.loading && dataSource.pagingResults$.value.elements.length === 0"

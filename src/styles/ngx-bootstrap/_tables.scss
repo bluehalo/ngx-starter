@@ -3,9 +3,11 @@
 $anchored-table-min-height: 375px !default;
 
 .table-content {
+	border-bottom: 2px solid $border-color;
 	flex-grow: 1;
 	margin-bottom: map-get($spacers, 3);
 	overflow: auto;
+
 	.table {
 		margin-bottom: 0;
 	}
@@ -19,24 +21,46 @@ $anchored-table-min-height: 375px !default;
 	border-collapse: separate;
 	border-spacing: 0;
 
-	tr:last-child {
-		td {
-			border-bottom: 1px solid $border-color;
-		}
+	tr:first-child td {
+		border-top: 0;
+	}
+	tr:last-child td {
+		border-bottom: 0;
 	}
 
-	th.cdk-table-sticky {
+	th {
 		background: $ux-color-background;
+		border-top-width: 2px;
+	}
+}
+
+.table-striped {
+	tbody tr {
+		background: $ux-color-background;
+	}
+}
+
+.card {
+	.table {
+		th,
+		&.table-striped tbody tr {
+			background-color: $card-bg;
+		}
+	}
+}
+
+.modal-body {
+	.table {
+		th,
+		&.table-striped tbody tr {
+			background-color: $modal-content-bg;
+		}
 	}
 }
 
 .card,
 .modal-body {
 	.table {
-		th {
-			border-top: none;
-		}
-
 		&.table-striped tbody tr:nth-of-type(#{$table-striped-order}) {
 			background-color: $ux-color-background;
 		}
@@ -57,4 +81,8 @@ td.cdk-column-actionsMenu {
 	.dropdown-toggle {
 		cursor: pointer;
 	}
+}
+
+td.cdk-table-sticky {
+	background: inherit;
 }
