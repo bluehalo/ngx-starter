@@ -16,6 +16,12 @@ export class PaginatorComponent<T> implements OnInit {
 	maxPageSize = 100;
 
 	@Input()
+	hidePageSize = false;
+
+	@Input()
+	pageSizeOptions = [10, 20, 50, 100];
+
+	@Input()
 	disableGoToEnd = false;
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
@@ -46,7 +52,7 @@ export class PaginatorComponent<T> implements OnInit {
 	}
 
 	setPageSize(pageSize: number) {
-		this.pageChange.emit({
+		this.dataSource.page({
 			// Since the size changed, go back to the first page
 			pageNumber: 0,
 			// Page size can never exceed the max

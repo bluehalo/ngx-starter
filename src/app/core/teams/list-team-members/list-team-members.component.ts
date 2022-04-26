@@ -264,6 +264,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	}
 
 	private reloadTeamMembers() {
-		this.dataSource.page({ pageNumber: 0, pageSize: this.dataSource.pageSize });
+		this.dataSource.page(0);
 	}
 }
