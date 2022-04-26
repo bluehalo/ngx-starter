@@ -92,7 +92,8 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 
 		if (this.enabled) {
 			if (!this.isCustom) {
-				const now = DateTime.now();
+				const now = DateTime.utc();
+
 				if (this.direction === 'past') {
 					$gte = now.minus({ [this.duration]: this.count });
 					$lte = now;
@@ -100,17 +101,16 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 					$gte = now;
 					$lte = now.plus({ [this.duration]: this.count });
 				}
-				$gte = $gte.startOf(this.duration);
-				$lte = $lte.endOf(this.duration);
 			} else if (this.customRange?.length === 2) {
-				$gte = DateTime.fromJSDate(this.customRange[0]);
-				$lte = DateTime.fromJSDate(this.customRange[1]);
+				$gte = DateTime.fromJSDate(this.customRange[0]).toUTC(0, { keepLocalTime: true });
+				$lte = DateTime.fromJSDate(this.customRange[1]).toUTC(0, { keepLocalTime: true });
 			}
-		}
-		// Normalize to start/end of day
-		if (this.isCustom || this.duration !== 'hour') {
-			$gte = $gte.startOf('day');
-			$lte = $lte.endOf('day');
+
+			// Normalize to start/end of day
+			if (this.isCustom || this.duration !== 'hour') {
+				$gte = $gte.startOf('day');
+				$lte = $lte.endOf('day');
+			}
 		}
 
 		return { ...($gte.isValid && $lte.isValid && { [this.id]: { $gte, $lte } }) };
