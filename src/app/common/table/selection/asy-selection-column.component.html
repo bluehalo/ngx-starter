@@ -1,4 +1,4 @@
-<ng-container cdkColumnDef>
+<ng-container cdkColumnDef [sticky]="_sticky" [stickyEnd]="_stickyEnd">
 	<th cdk-header-cell *cdkHeaderCellDef>
 		<div class="form-check" *ngIf="enableSelectAll && multi">
 			<input
