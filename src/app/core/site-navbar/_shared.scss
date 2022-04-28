@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../../styles/shared';
 @import '../site-container/shared';
 
@@ -37,4 +38,4 @@ $nav-messages-popover-max-width: 800px !default;
 $nav-messages-popover-max-height: 392px !default;
 
 // Calculated
-$nav-element-icon-margin-left: ($nav-closed-width - $nav-element-icon-width) / 2;
+$nav-element-icon-margin-left: math.div($nav-closed-width - $nav-element-icon-width, 2);

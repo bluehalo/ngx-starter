@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'shared';
 
 // Buttons
@@ -131,7 +132,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 		&:before {
 			opacity: 0;
 			display: inline-block;
-			margin-right: $spacer / 2;
+			margin-right: math.div($spacer, 2);
 			font-family: $btn-submit-spinner-font-family;
 			content: $btn-submit-spinner-content;
 			-webkit-animation: $btn-submit-spinner-animation;
