@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'shared';
 
 $radio-checkbox-label-color: $ux-color-primary-dark !default;
@@ -121,7 +122,7 @@ input {
 			}
 
 			&:after {
-				font: normal normal normal $checkbox-inner-size/1 FontAwesome; /* stylelint-disable-line */
+				font: normal normal normal math.div($checkbox-inner-size, 1) FontAwesome; /* stylelint-disable-line */
 				color: $ux-color-white;
 				content: '\f00c';
 				top: $checkbox-inner-margin;

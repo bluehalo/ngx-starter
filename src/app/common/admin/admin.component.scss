@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../core/site-container/shared';
 
 $admin-section-padding-y: $site-content-padding-y;
@@ -9,6 +10,6 @@ $admin-section-padding-y: $site-content-padding-y;
 
 	.admin-section-container {
 		height: 100%;
-		padding: $admin-section-padding-y / 2 0;
+		padding: math.div($admin-section-padding-y, 2) 0;
 	}
 }

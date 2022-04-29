@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'shared';
 
 $form-label-font-color: $ux-color-primary-dark !default;
@@ -62,7 +63,7 @@ $form-inline-edit-label-col-width: 30% !default;
 	}
 
 	.form-check-inline .form-check-label {
-		margin-top: $spacer / 2;
+		margin-top: math.div($spacer, 2);
 		margin-bottom: 0;
 	}
 
@@ -100,7 +101,8 @@ $form-inline-edit-label-col-width: 30% !default;
 
 		.col-form-label {
 			padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
-				calc(#{$grid-gutter-width / 2} + #{$input-border-width}) calc(#{$input-padding-y});
+				calc(#{math.div($grid-gutter-width, 2)} + #{$input-border-width})
+				calc(#{$input-padding-y});
 		}
 	}
 }

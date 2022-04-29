@@ -30,13 +30,11 @@
     "@angular/router": "~13.1.0",
     "@ng-select/ng-select": "~8.1.1",
     "@ngneat/until-destroy": "~9.0.0",
-    "bootstrap": "4.3.1",
+    "bootstrap": "4.6.1",
     "font-awesome": "4.7",
-    "jquery": "3.5",
     "lodash": "~4.17.21",
     "luxon": "~2.2.0",
-    "ngx-bootstrap": "~7.1.2",
-    "popper.js": "1.16",
+    "ngx-bootstrap": "~8.0.0",
     "roboto-fontface": "0.10",
     "rxjs": "^7.4.0",
     "socket.io-client": "^2.2.0",
@@ -44,7 +42,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.1.1",
+    "@angular-devkit/build-angular": "^13.3.4",
     "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
     "@angular-eslint/eslint-plugin-template": "13.0.1",
@@ -76,7 +74,6 @@
     "karma-junit-reporter": "1.2",
     "lint-staged": "~12.1.2",
     "prettier": "~2.5.1",
-    "protractor": "~7.0.0",
     "stylelint": "13.8",
     "stylelint-config-prettier": "~9.0.3",
     "stylelint-config-recommended-scss": "4.2",
@@ -84,7 +81,7 @@
     "stylelint-scss": "3.18",
     "ts-node": "~8.3.0",
     "typescript": "~4.5.4",
-    "webpack-bundle-analyzer": "3.3.2"
+    "webpack-bundle-analyzer": "4.5.0"
   },
   "lint-staged": {
     "*.{scss, css}": "stylelint --fix",
