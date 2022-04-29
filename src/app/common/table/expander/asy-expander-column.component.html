@@ -1,4 +1,4 @@
-<ng-container cdkColumnDef>
+<ng-container cdkColumnDef [sticky]="_sticky" [stickyEnd]="_stickyEnd">
 	<th cdk-header-cell *cdkHeaderCellDef style="width: 42px"></th>
 	<td cdk-cell *cdkCellDef="let item; let index = index">
 		<div
