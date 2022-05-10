@@ -1,172 +1,182 @@
 <app-flyout label="Feedback">
-	<div #flyoutContent class="feedback-form feedback-{{ status }}">
-		<form #form="ngForm" [ngClass]="{ 'd-none': status !== 'ready' }">
-			<h2 class="pb-2">What's on your mind?</h2>
-
-			<div class="form-check pl-0">
-				<input
-					class="form-check-input"
-					type="radio"
-					name="type-option-radio"
-					id="fo-type-option-1"
-					value="General Feedback"
-					[(ngModel)]="feedback.type"
-					required
-				/>
-				<label for="fo-type-option-1" class="form-check-label mb-2"
-					>Ask a question or make a comment</label
-				>
-			</div>
-
-			<ng-container *ngIf="feedback.type === 'General Feedback'">
-				<ng-container *ngTemplateOutlet="textInput"></ng-container>
-			</ng-container>
-
-			<div class="form-check pl-0">
-				<input
-					class="form-check-input"
-					type="radio"
-					name="type-option-radio"
-					id="fo-type-option-2"
-					value="Feature Request"
-					[(ngModel)]="feedback.type"
-					required
-				/>
-				<label for="fo-type-option-2" class="form-check-label mb-2"
-					>Suggest a new feature</label
-				>
-			</div>
-
-			<ng-container *ngIf="feedback.type === 'Feature Request'">
-				<ng-container *ngTemplateOutlet="textInput"></ng-container>
-			</ng-container>
-
-			<div class="form-check pl-0">
-				<input
-					class="form-check-input"
-					type="radio"
-					name="type-option-radio"
-					id="fo-type-option-3"
-					value="Bug Report"
-					[(ngModel)]="feedback.type"
-					required
-				/>
-				<label for="fo-type-option-3" class="form-check-label mb-2"
-					>Report a bug/error</label
-				>
-			</div>
-
-			<ng-container *ngIf="feedback.type === 'Bug Report'">
-				<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
+	<div
+		#flyoutContent
+		class="feedback-form feedback-{{ status }} d-flex flex-column flex-grow-1 h-100"
+	>
+		<ng-container *ngIf="status === 'ready'">
+			<form #form="ngForm">
+				<h2 class="pb-2">What's on your mind?</h2>
 
 				<div class="form-check pl-0">
 					<input
 						class="form-check-input"
 						type="radio"
-						name="subtype-option-radio"
-						id="fo-subtype-option-1"
-						value="Content or data"
-						[(ngModel)]="feedback.subType"
+						name="type-option-radio"
+						id="fo-type-option-1"
+						value="General Feedback"
+						[(ngModel)]="feedback.type"
 						required
 					/>
-					<label for="fo-subtype-option-1" class="form-check-label mb-2"
-						>Content or data</label
+					<label for="fo-type-option-1" class="form-check-label mb-2"
+						>Ask a question or make a comment</label
 					>
 				</div>
 
-				<div class="form-check pl-0">
-					<input
-						class="form-check-input"
-						type="radio"
-						name="subtype-option-radio"
-						id="fo-subtype-option-2"
-						value="Styling"
-						[(ngModel)]="feedback.subType"
-						required
-					/>
-					<label for="fo-subtype-option-2" class="form-check-label mb-2">Styling</label>
-				</div>
+				<ng-container *ngIf="feedback.type === 'General Feedback'">
+					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+				</ng-container>
 
 				<div class="form-check pl-0">
 					<input
 						class="form-check-input"
 						type="radio"
-						name="subtype-option-radio"
-						id="fo-subtype-option-3"
-						value="Technical"
-						[(ngModel)]="feedback.subType"
+						name="type-option-radio"
+						id="fo-type-option-2"
+						value="Feature Request"
+						[(ngModel)]="feedback.type"
 						required
 					/>
-					<label for="fo-subtype-option-3" class="form-check-label mb-2">Technical</label>
-				</div>
-
-				<div class="form-check pl-0">
-					<input
-						class="form-check-input"
-						type="radio"
-						name="subtype-option-radio"
-						id="fo-subtype-option-4"
-						value="Other"
-						[(ngModel)]="feedback.subType"
-						required
-					/>
-					<label for="fo-subtype-option-4" class="form-check-label mb-2">Other</label>
-				</div>
-				<div class="mb-2" *ngIf="feedback.subType === 'Other'">
-					<input
-						class="form-control"
-						name="other-description"
-						[(ngModel)]="feedback.otherText"
-						required
-					/>
-				</div>
-
-				<div class="form-check pl-0">
-					<input
-						class="form-check-input"
-						type="radio"
-						name="subtype-option-radio"
-						id="fo-subtype-option-5"
-						value="Unsure"
-						[(ngModel)]="feedback.subType"
-						required
-					/>
-					<label for="fo-subtype-option-5" class="form-check-label mb-2">Unsure</label>
-				</div>
-
-				<h3 class="pt-2">What happened?</h3>
-				<ng-container *ngTemplateOutlet="textInput"></ng-container>
-			</ng-container>
-
-			<ng-template #textInput>
-				<div *ngIf="classificationOptions" class="form-group pt-2">
-					<ng-select
-						[items]="classificationOptions"
-						[clearable]="false"
-						bindLabel="level"
-						[(ngModel)]="feedback.classification"
-						name="classification"
-						required
-						placeholder="Select Classification"
-						dropdownPosition="bottom"
+					<label for="fo-type-option-2" class="form-check-label mb-2"
+						>Suggest a new feature</label
 					>
-					</ng-select>
 				</div>
 
-				<div class="form-group">
-					<textarea
-						name="text"
-						class="form-control"
-						style="height: 8rem"
-						[(ngModel)]="feedback.text"
+				<ng-container *ngIf="feedback.type === 'Feature Request'">
+					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+				</ng-container>
+
+				<div class="form-check pl-0">
+					<input
+						class="form-check-input"
+						type="radio"
+						name="type-option-radio"
+						id="fo-type-option-3"
+						value="Bug Report"
+						[(ngModel)]="feedback.type"
 						required
-						placeholder="Enter Feedback"
+					/>
+					<label for="fo-type-option-3" class="form-check-label mb-2"
+						>Report a bug/error</label
 					>
-					</textarea>
 				</div>
-			</ng-template>
 
-			<div class="d-flex justify-content-center mt-4">
+				<ng-container *ngIf="feedback.type === 'Bug Report'">
+					<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
+
+					<div class="form-check pl-0">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="subtype-option-radio"
+							id="fo-subtype-option-1"
+							value="Content or data"
+							[(ngModel)]="feedback.subType"
+							required
+						/>
+						<label for="fo-subtype-option-1" class="form-check-label mb-2"
+							>Content or data</label
+						>
+					</div>
+
+					<div class="form-check pl-0">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="subtype-option-radio"
+							id="fo-subtype-option-2"
+							value="Styling"
+							[(ngModel)]="feedback.subType"
+							required
+						/>
+						<label for="fo-subtype-option-2" class="form-check-label mb-2"
+							>Styling</label
+						>
+					</div>
+
+					<div class="form-check pl-0">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="subtype-option-radio"
+							id="fo-subtype-option-3"
+							value="Technical"
+							[(ngModel)]="feedback.subType"
+							required
+						/>
+						<label for="fo-subtype-option-3" class="form-check-label mb-2"
+							>Technical</label
+						>
+					</div>
+
+					<div class="form-check pl-0">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="subtype-option-radio"
+							id="fo-subtype-option-4"
+							value="Other"
+							[(ngModel)]="feedback.subType"
+							required
+						/>
+						<label for="fo-subtype-option-4" class="form-check-label mb-2">Other</label>
+					</div>
+					<div class="mb-2" *ngIf="feedback.subType === 'Other'">
+						<input
+							class="form-control"
+							name="other-description"
+							[(ngModel)]="feedback.otherText"
+							required
+						/>
+					</div>
+
+					<div class="form-check pl-0">
+						<input
+							class="form-check-input"
+							type="radio"
+							name="subtype-option-radio"
+							id="fo-subtype-option-5"
+							value="Unsure"
+							[(ngModel)]="feedback.subType"
+							required
+						/>
+						<label for="fo-subtype-option-5" class="form-check-label mb-2"
+							>Unsure</label
+						>
+					</div>
+
+					<h3 class="pt-2">What happened?</h3>
+					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+				</ng-container>
+
+				<ng-template #textInput>
+					<div *ngIf="classificationOptions" class="form-group pt-2">
+						<ng-select
+							[items]="classificationOptions"
+							[clearable]="false"
+							bindLabel="level"
+							[(ngModel)]="feedback.classification"
+							name="classification"
+							required
+							placeholder="Select Classification"
+							dropdownPosition="bottom"
+						>
+						</ng-select>
+					</div>
+
+					<div class="form-group" [class.mb-0]="feedback.type === 'Bug Report'">
+						<textarea
+							name="text"
+							class="form-control"
+							style="height: 8rem"
+							[(ngModel)]="feedback.text"
+							required
+							placeholder="Enter Feedback"
+						>
+						</textarea>
+					</div>
+				</ng-template>
+			</form>
+			<div class="d-flex justify-content-center p-3 border-top">
 				<button type="button" class="btn btn-link mr-2" (click)="closeForm()">
 					Cancel
 				</button>
@@ -180,7 +190,7 @@
 					Send Feedback
 				</button>
 			</div>
-		</form>
+		</ng-container>
 
 		<div class="media p-5" *ngIf="status === 'submitting'">
 			<span class="fa fa-spinner fa-pulse fa-3x fa-fw mr-3"></span>
