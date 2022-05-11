@@ -1,15 +1,21 @@
 @use 'sass:math';
 @import 'shared';
 
-$radio-checkbox-label-color: $ux-color-primary-dark !default;
+$radio-checkbox-label-color: $ux-color-dark-gray !default;
 $radio-checkbox-checked-color: $ux-color-primary-medium !default;
-$radio-checkbox-unchecked-color: $ux-color-black !default;
+$radio-checkbox-unchecked-color: $ux-color-dark-gray !default;
 $radio-checkbox-disabled-color: $ux-color-light-gray !default;
 $radio-checkbox-hover-color: $ux-color-highlight !default;
 $radio-checkbox-size: 20px !default;
 $radio-checkbox-border-width: 2px !default;
 $radio-checkbox-label-padding: 10px !default;
 $radio-checkbox-margin-y: 0.25rem !default;
+
+$slide-toggle-ring-color: $radio-checkbox-unchecked-color !default;
+$slide-toggle-checked-color: $ux-color-primary !default;
+$slide-toggle-unchecked-color: $ux-color-primary-medium !default;
+$slide-toggle-height: $radio-checkbox-size * 0.75 !default;
+$slide-toggle-width: $radio-checkbox-size * 1.5 !default;
 
 // Calculated
 $radio-inner-margin: ($radio-checkbox-border-width * 2) + 1;
@@ -90,7 +96,7 @@ input {
 	}
 
 	&[type='radio'] {
-		+ label {
+		& + label {
 			&:before {
 				border-radius: 100%;
 			}
@@ -106,6 +112,17 @@ input {
 			}
 		}
 
+		&:hover:checked {
+			& + label {
+				&:before {
+					border-color: $radio-checkbox-hover-color;
+				}
+				&:after {
+					background: $radio-checkbox-hover-color;
+				}
+			}
+		}
+
 		&:disabled:checked {
 			& + label {
 				&:after {
@@ -115,7 +132,7 @@ input {
 		}
 	}
 
-	&[type='checkbox'] {
+	&[type='checkbox']:not(.slide-toggle) {
 		& + label {
 			&:before {
 				border-radius: $border-radius;
@@ -138,10 +155,89 @@ input {
 			}
 		}
 
+		&:hover:checked {
+			& + label {
+				&:before {
+					border-color: $radio-checkbox-hover-color;
+					background-color: $radio-checkbox-hover-color;
+				}
+			}
+		}
+
 		&:disabled:checked {
 			& + label {
 				&:before {
+					border-color: $radio-checkbox-disabled-color;
 					background-color: $radio-checkbox-disabled-color;
+				}
+			}
+		}
+	}
+
+	&[type='checkbox'].slide-toggle {
+		& + label {
+			padding-left: $slide-toggle-width + $radio-checkbox-label-padding;
+
+			&:before {
+				width: $slide-toggle-width;
+				height: $slide-toggle-height;
+				border: $radio-checkbox-border-width solid $slide-toggle-unchecked-color;
+				background: $slide-toggle-unchecked-color;
+				margin-top: ($radio-checkbox-size - $slide-toggle-height) * 0.5;
+				border-radius: $slide-toggle-height * 0.5;
+			}
+
+			&:after {
+				@include transition(transform);
+				position: absolute;
+				opacity: 1;
+				transform: translate(-1px);
+				content: '';
+				top: 0;
+				left: 0;
+				width: $radio-checkbox-size;
+				height: $radio-checkbox-size;
+				background: $ux-color-white;
+				border: $radio-checkbox-border-width solid $slide-toggle-ring-color;
+				border-radius: 100%;
+			}
+		}
+
+		&:hover {
+			& + label {
+				&:before {
+					border-color: $slide-toggle-unchecked-color;
+				}
+				&:after {
+					border-color: $radio-checkbox-hover-color;
+				}
+			}
+		}
+
+		&:checked {
+			& + label {
+				&:before {
+					border-color: $slide-toggle-checked-color;
+					background-color: $slide-toggle-checked-color;
+				}
+
+				&:after {
+					-webkit-transform: translate($slide-toggle-width - $radio-checkbox-size);
+					transform: translate($slide-toggle-width - $radio-checkbox-size);
+				}
+			}
+		}
+
+		&:disabled {
+			& + label {
+				&:before {
+					border-color: $radio-checkbox-disabled-color;
+					background-color: $radio-checkbox-disabled-color;
+				}
+
+				&:after {
+					border-color: $radio-checkbox-disabled-color;
+					background-color: $ux-color-white;
 				}
 			}
 		}
