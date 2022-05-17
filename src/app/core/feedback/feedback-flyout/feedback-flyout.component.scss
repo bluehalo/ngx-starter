@@ -9,12 +9,17 @@
 .feedback-form {
 	background: $ux-color-white;
 	width: 550px;
+
+	form {
+		height: 100%;
+		overflow: auto;
+		padding: 2rem;
+	}
 }
 
 .feedback-ready {
 	background: $ux-color-white url(/assets/images/feedback-bg.png) no-repeat right 1rem;
 	background-size: 219px 129px;
-	padding: 2rem;
 }
 
 .form-check-label {
