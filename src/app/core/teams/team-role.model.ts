@@ -1,6 +1,6 @@
 export class TeamRole {
-	public static VIEW_ONLY: TeamRole = new TeamRole(
-		'View Only',
+	public static MEMBER: TeamRole = new TeamRole(
+		'Member',
 		'This user can view resources within this team.',
 		'member'
 	);
@@ -23,7 +23,7 @@ export class TeamRole {
 	constructor(public label: string, public description: string, public role: string) {}
 
 	public static get ROLES(): TeamRole[] {
-		return [this.VIEW_ONLY, this.EDITOR, this.ADMIN, this.BLOCKED];
+		return [this.MEMBER, this.EDITOR, this.ADMIN, this.BLOCKED];
 	}
 
 	static getDisplay(role: string): string {

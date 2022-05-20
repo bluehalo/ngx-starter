@@ -47,7 +47,7 @@ export class TeamMember extends User {
 			this.explicit = (userModel.teams?.length ?? 0) > 0;
 
 			if (null != team) {
-				this.role = this.getRoleInTeam(team) ?? TeamRole.VIEW_ONLY.role;
+				this.role = this.getRoleInTeam(team) ?? TeamRole.MEMBER.role;
 				this.roleDisplay = TeamRole.getDisplay(this.role);
 
 				this.explicit = userModel.teams.map((t: any) => t._id).includes(team._id);

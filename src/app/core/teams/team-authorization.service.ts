@@ -51,7 +51,7 @@ export class TeamAuthorizationService {
 	}
 
 	public isMember(team: Pick<Team, '_id'>): boolean {
-		return this.hasRole(team, TeamRole.VIEW_ONLY.role);
+		return this.hasRole(team, TeamRole.MEMBER.role);
 	}
 
 	public isEditor(team: Pick<Team, '_id'>): boolean {
