@@ -18,6 +18,14 @@ $card-selected-check-size: 2rem !default;
 			margin-bottom: 0;
 		}
 	}
+
+	&.flex-row {
+		.card-header {
+			height: auto;
+			border-bottom: 0;
+			border-right: $border-width solid $border-color;
+		}
+	}
 }
 
 .card-selectable {

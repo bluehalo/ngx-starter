@@ -5,6 +5,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamsResolve } from './teams.resolver';
+import { GeneralDetailsComponent } from './view-team/general-details/general-details.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 
 @NgModule({
@@ -29,7 +30,21 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 				data: { roles: ['user'] },
 				resolve: {
 					team: TeamsResolve
-				}
+				},
+				children: [
+					/**
+					 * Default Route
+					 */
+					{
+						path: '',
+						redirectTo: 'general',
+						pathMatch: 'full'
+					},
+					{
+						path: 'general',
+						component: GeneralDetailsComponent
+					}
+				]
 			}
 		])
 	],

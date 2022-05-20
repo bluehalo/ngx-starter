@@ -12,15 +12,18 @@ import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { ConfigService } from '../../config.service';
 import { TeamAuthorizationService } from '../team-authorization.service';
+import { TeamTopic, TeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-view-team',
-	templateUrl: './view-team.component.html'
+	templateUrl: './view-team.component.html',
+	styleUrls: ['./view-team.component.scss']
 })
 export class ViewTeamComponent implements OnInit {
+	topics: TeamTopic[] = [];
 	team?: Team;
 	_team: any;
 
@@ -41,7 +44,9 @@ export class ViewTeamComponent implements OnInit {
 		private authorizationService: AuthorizationService,
 		private sessionService: SessionService,
 		private teamAuthorizationService: TeamAuthorizationService
-	) {}
+	) {
+		this.topics = TeamTopics.getTopics();
+	}
 
 	ngOnInit() {
 		this.configService

@@ -12,4 +12,29 @@ $nav-tabs-border-highlight-width: 3px !default;
 		font-size: $font-size-base;
 		margin: 0 1rem;
 	}
+
+	&.flex-column {
+		border-bottom: 0;
+
+		.card.flex-row & {
+			margin: -1 * $card-spacer-y -1 * $card-spacer-x;
+		}
+
+		.nav-link {
+			border-width: 0 0 0 $nav-tabs-border-highlight-width;
+			margin: 0;
+			padding: $nav-link-padding-y;
+
+			@include hover-focus {
+				border-color: transparent transparent transparent $ux-color-highlight;
+			}
+		}
+
+		.nav-link.active,
+		.nav-item.show .nav-link {
+			color: $nav-tabs-link-active-color;
+			background-color: $nav-tabs-link-active-bg;
+			border-color: transparent transparent transparent $ux-color-primary-medium;
+		}
+	}
 }
