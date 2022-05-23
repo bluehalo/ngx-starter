@@ -1,0 +1,15 @@
+@use 'sass:math';
+@import '../../site-container/shared';
+
+$view-team-section-padding-y: $site-content-padding-y;
+
+.view-team-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.view-team-section-container {
+		height: 100%;
+		padding: math.div($view-team-section-padding-y, 2) 0;
+	}
+}

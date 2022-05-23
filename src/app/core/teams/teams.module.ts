@@ -22,9 +22,11 @@ import { ListTeamMembersComponent } from './list-team-members/list-team-members.
 import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamSelectInputComponent } from './team-select-input/team-select-input.component';
+import { TeamTopics } from './team-topic.model';
 import { TeamsRoutingModule } from './teams-routing.module';
 import { TeamsResolve } from './teams.resolver';
 import { TeamsService } from './teams.service';
+import { GeneralDetailsComponent } from './view-team/general-details/general-details.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 
 @NgModule({
@@ -55,7 +57,8 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ListTeamsComponent,
 		ViewTeamComponent,
 		TeamsHelpComponent,
-		TeamSelectInputComponent
+		TeamSelectInputComponent,
+		GeneralDetailsComponent
 	],
 	providers: [
 		TeamAuthorizationService,
@@ -66,3 +69,10 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 	]
 })
 export class TeamsModule {}
+
+TeamTopics.registerTopic({
+	id: 'general',
+	title: 'General',
+	ordinal: 0,
+	path: 'general'
+});
