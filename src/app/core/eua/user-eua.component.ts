@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 
 import { SystemAlertService } from '../../common/system-alert.module';
 import { SessionService } from '../auth/session.service';
@@ -14,9 +15,7 @@ import { NavigationService } from '../navigation.service';
 export class UserEuaComponent implements OnInit {
 	agree = false;
 
-	eua: any;
-
-	showAlerts = false;
+	eua$: Observable<any>;
 
 	constructor(
 		private sessionService: SessionService,
@@ -26,15 +25,11 @@ export class UserEuaComponent implements OnInit {
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.sessionService
-			.getCurrentEua()
-			.pipe(untilDestroyed(this))
-			.subscribe((eua: any) => (this.eua = eua));
+		this.eua$ = this.sessionService.getCurrentEua();
 	}
 
 	accept() {
 		this.alertService.clearAllAlerts();
-		this.showAlerts = true;
 		this.sessionService
 			.acceptEua()
 			.pipe(untilDestroyed(this))

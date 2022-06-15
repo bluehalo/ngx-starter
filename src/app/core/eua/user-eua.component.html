@@ -1,17 +1,19 @@
 <section>
-	<div class="row padding-top-20">
-		<div *ngIf="eua" class="col-md-8 offset-2">
-			<h5>
+	<div class="row no-gutters">
+		<div *ngIf="eua$ | async as eua" class="col-xl-8 offset-xl-2">
+			<h1>
 				End User Agreement (EUA)<br />
 				<small>Please review and acknowledge the end user agreement</small>
-			</h5>
+			</h1>
 
 			<!-- Alert Notifications -->
-			<system-alert *ngIf="showAlerts"></system-alert>
+			<system-alert></system-alert>
 
 			<form name="userForm" autocomplete="off" role="form">
-				<div class="card word-wrap">
-					<h6 class="card-header">{{ eua.title }}</h6>
+				<div class="card mt-3">
+					<div class="card-header">
+						<h2>{{ eua.title }}</h2>
+					</div>
 
 					<!-- Contents of EUA -->
 					<div class="card-body" [innerHtml]="eua.text"></div>
@@ -32,7 +34,7 @@
 					</div>
 				</div>
 
-				<div class="padding-top-20">
+				<div class="pt-4">
 					<button
 						type="submit"
 						class="btn btn-primary"

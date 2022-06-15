@@ -18,7 +18,12 @@ export class NavigationService {
 			.pipe(
 				filter((event): event is NavigationStart => event instanceof NavigationStart),
 				map((event) => event.url),
-				filter((url) => !url.includes('/signin')),
+				filter(
+					(url) =>
+						!url.includes('/signin') &&
+						!url.includes('/access') &&
+						!url.includes('/eua')
+				),
 				untilDestroyed(this)
 			)
 			.subscribe((url) => {
