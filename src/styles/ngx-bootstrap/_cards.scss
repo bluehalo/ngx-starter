@@ -3,6 +3,7 @@
 
 $card-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3) !default;
 $card-selected-check-size: 2rem !default;
+$card-header-height: 4rem !default;
 
 .cards.row > .col:not(:last-child) {
 	margin-bottom: $spacer * 2;
@@ -12,7 +13,9 @@ $card-selected-check-size: 2rem !default;
 	box-shadow: $card-box-shadow;
 
 	.card-header {
-		height: 4rem;
+		display: flex;
+		align-items: center;
+		height: $card-header-height;
 
 		h2 {
 			margin-bottom: 0;
