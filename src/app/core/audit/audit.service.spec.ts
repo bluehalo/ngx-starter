@@ -2,9 +2,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { getTestBed, TestBed } from '@angular/core/testing';
 
 import _cloneDeep from 'lodash/cloneDeep';
-import { PagingOptions, PagingResults } from 'src/app/common/paging.module';
 
-import { SystemAlertModule, SystemAlertService } from '../../common/system-alert.module';
+import { PagingOptions, PagingResults } from '../../common/paging.module';
+import { SystemAlertModule } from '../../common/system-alert.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { User } from '../auth/user.model';
 import { AuditService } from './audit.service';
 

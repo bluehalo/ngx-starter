@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
-import { SystemAlertService } from '../../common/system-alert.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { SessionService } from '../auth/session.service';
 import { NavigationService } from '../navigation.service';
 

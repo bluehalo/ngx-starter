@@ -8,7 +8,7 @@ import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
-import { FeedbackModalComponent } from '../feedback/feedback.module';
+import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';

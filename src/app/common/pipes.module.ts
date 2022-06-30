@@ -13,9 +13,3 @@ import { UtcDatePipe } from './pipes/utc-date-pipe/utc-date.pipe';
 	providers: []
 })
 export class PipesModule {}
-
-export { AgoDatePipe } from './pipes/ago-date.pipe';
-export { JoinPipe } from './pipes/join.pipe';
-export { KeysPipe } from './pipes/keys.pipe';
-export { SortObjectKeysPipe } from './pipes/sort-object-keys.pipe';
-export { UtcDatePipe } from './pipes/utc-date-pipe/utc-date.pipe';

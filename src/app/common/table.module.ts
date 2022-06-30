@@ -9,17 +9,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { SearchInputModule } from './search-input.module';
-import { AsyAbstractColumnComponent } from './table/asy-abstract-column.component';
-import { AsyTableDataSource } from './table/asy-table-data-source';
 import { ColumnChooserComponent } from './table/column-chooser/column-chooser.component';
 import { AsyExpanderColumnComponent } from './table/expander/asy-expander-column.component';
-import { AsyAbstractHeaderFilterComponent } from './table/filter/asy-abstract-header-filter.component';
 import { AsyFilterDirective } from './table/filter/asy-filter.directive';
 import { AsyHeaderDateFilterComponent } from './table/filter/asy-header-date-filter/asy-header-date-filter.component';
-import {
-	AsyHeaderListFilterComponent,
-	ListFilterOption
-} from './table/filter/asy-header-list-filter/asy-header-list-filter.component';
+import { AsyHeaderListFilterComponent } from './table/filter/asy-header-list-filter/asy-header-list-filter.component';
 import { AsyHeaderTextFilterComponent } from './table/filter/asy-header-text-filter/asy-header-text-filter.component';
 import { AsyHeaderTypeaheadFilterComponent } from './table/filter/asy-header-typeahead-filter/asy-header-typeahead-filter.component';
 import { PaginatorComponent } from './table/paginator/paginator.component';
@@ -76,17 +70,3 @@ import { AsyTableEmptyStateComponent } from './table/table-empty-state/asy-table
 	providers: [TitleCasePipe]
 })
 export class TableModule {}
-
-export {
-	AsyFilterDirective,
-	AsySortDirective,
-	AsySortHeaderComponent,
-	AsyHeaderDateFilterComponent,
-	AsyHeaderListFilterComponent,
-	AsyHeaderTextFilterComponent,
-	AsySelectionColumnComponent,
-	AsyTableDataSource,
-	ListFilterOption,
-	AsyAbstractColumnComponent,
-	AsyAbstractHeaderFilterComponent
-};

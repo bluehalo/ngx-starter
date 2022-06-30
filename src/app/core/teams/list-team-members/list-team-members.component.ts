@@ -15,10 +15,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { of, Observable } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
-import { ModalAction, ModalService } from '../../../common/modal.module';
+import { ModalAction } from '../../../common/modal/modal.model';
+import { ModalService } from '../../../common/modal/modal.service';
 import { PagingOptions, PagingResults, SortDirection } from '../../../common/paging.module';
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import { ListFilterOption } from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';

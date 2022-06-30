@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ModalService } from 'src/app/common/modal.module';
-import { SystemAlertService } from 'src/app/common/system-alert.module';
 
+import { ModalService } from '../../../common/modal/modal.service';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';

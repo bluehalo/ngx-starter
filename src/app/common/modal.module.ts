@@ -16,7 +16,3 @@ import { ModalComponent } from './modal/modal/modal.component';
 	providers: []
 })
 export class ModalModule {}
-
-export { ConfigurableModalComponent } from './modal/configurable-modal/configurable-modal.component';
-export { ModalAction } from './modal/modal.model';
-export { ModalService } from './modal/modal.service';

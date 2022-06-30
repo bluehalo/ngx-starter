@@ -5,7 +5,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { Observable } from 'rxjs';
 
-import { SystemAlertService } from '../../common/system-alert.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../core/config.service';
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
 import { AuthenticationService } from '../auth/authentication.service';

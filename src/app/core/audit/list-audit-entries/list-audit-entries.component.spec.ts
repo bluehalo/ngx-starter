@@ -14,7 +14,8 @@ import { of } from 'rxjs';
 import { DirectivesModule } from '../../../common/directives.module';
 import { PagingResults } from '../../../common/paging/paging.model';
 import { PipesModule } from '../../../common/pipes.module';
-import { SystemAlertModule, SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { TableModule } from '../../../common/table.module';
 import { ConfigService } from '../../core.module';
 import {

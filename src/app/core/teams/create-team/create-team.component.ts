@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators';
 
 import { PagingOptions } from '../../../common/paging.module';
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';

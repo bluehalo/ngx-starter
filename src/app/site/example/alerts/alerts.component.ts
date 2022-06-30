@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @UntilDestroy()

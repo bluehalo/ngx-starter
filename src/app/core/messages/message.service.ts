@@ -4,11 +4,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, first, map, tap } from 'rxjs/operators';
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from 'src/app/common/paging.module';
 
-import { SystemAlertService } from '../../common/system-alert.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
-import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
 import { Message } from './message.class';

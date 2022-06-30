@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
-import { SystemAlertService } from '../../../../common/system-alert.module';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
 import { ExportConfigService } from '../../../export-config.service';
 import { Feedback, FeedbackStatusOption } from '../../../feedback/feedback.model';

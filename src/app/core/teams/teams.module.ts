@@ -9,7 +9,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { DirectivesModule } from '../../common/directives.module';
-import { ModalModule, ModalService } from '../../common/modal.module';
+import { ModalModule } from '../../common/modal.module';
+import { ModalService } from '../../common/modal/modal.service';
 import { MultiSelectInputModule } from '../../common/multi-select-input.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SearchInputModule } from '../../common/search-input.module';

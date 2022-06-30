@@ -4,10 +4,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
-import { ModalAction, ModalService } from 'src/app/common/modal.module';
-import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/paging.module';
-import { SystemAlertService } from 'src/app/common/system-alert.module';
 
+import { ModalAction } from '../../../../common/modal/modal.model';
+import { ModalService } from '../../../../common/modal/modal.service';
+import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
 import { Message } from '../../../messages/message.class';
 import { MessageService } from '../../../messages/message.service';

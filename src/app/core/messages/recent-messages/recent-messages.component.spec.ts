@@ -3,10 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { of, BehaviorSubject, Subject } from 'rxjs';
-import { PipesModule } from 'src/app/common/pipes.module';
-import { SearchInputModule } from 'src/app/common/search-input.module';
-import { SystemAlertModule } from 'src/app/common/system-alert.module';
 
+import { PipesModule } from '../../../common/pipes.module';
+import { SearchInputModule } from '../../../common/search-input.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 import { RecentMessagesComponent } from './recent-messages.component';

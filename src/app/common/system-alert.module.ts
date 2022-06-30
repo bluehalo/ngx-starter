@@ -13,4 +13,3 @@ import { SystemAlertComponent } from './system-alert/system-alert.component';
 	declarations: [SystemAlertComponent, SystemAlertIconComponent]
 })
 export class SystemAlertModule {}
-export { SystemAlertService } from './system-alert/system-alert.service';

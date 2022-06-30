@@ -5,9 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { ModalService } from 'src/app/common/modal.module';
-import { SystemAlertModule, SystemAlertService } from 'src/app/common/system-alert.module';
 
+import { ModalService } from '../../../common/modal/modal.service';
+import { SystemAlertModule } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';

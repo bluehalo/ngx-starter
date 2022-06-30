@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AdminComponent } from '../../common/admin.module';
+import { AdminComponent } from '../../common/admin/admin.component';
 import { AuthGuard } from '../../core/auth/auth.guard';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';

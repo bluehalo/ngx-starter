@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 
-import { ModalService } from '../../../common/modal.module';
+import { ModalService } from '../../../common/modal/modal.service';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
