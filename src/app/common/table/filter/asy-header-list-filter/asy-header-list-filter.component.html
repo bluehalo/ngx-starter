@@ -59,5 +59,28 @@
 				</div>
 			</ng-container>
 		</div>
+		<ng-container *ngIf="showMatch">
+			<div class="divider dropdown-divider my-0 mx-3"></div>
+			<div class="my-1">
+				<label class="mb-0 mr-3">Match:</label>
+				<div
+					class="form-check form-check-inline"
+					*ngFor="let operatorOption of [false, true]; index as i"
+				>
+					<input
+						class="form-check-input"
+						type="radio"
+						name="operator-option-radio"
+						id="operator-option-{{ i }}"
+						[value]="operatorOption"
+						[(ngModel)]="matchAll"
+						(ngModelChange)="onFilterChange()"
+					/>
+					<label class="form-check-label" for="operator-option-{{ i }}">{{
+						operatorOption ? 'All' : 'Any'
+					}}</label>
+				</div>
+			</div>
+		</ng-container>
 	</div>
 </span>
