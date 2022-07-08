@@ -14,7 +14,7 @@ import {
 } from '../asy-abstract-header-filter.component';
 import { AsyFilterDirective } from '../asy-filter.directive';
 
-type BuildFilterFunction = (options: ListFilterOption[]) => any;
+type BuildFilterFunction = (options: ListFilterOption[], matchAll?: boolean) => any;
 
 export type ListFilterOption = {
 	display: string;
@@ -34,7 +34,11 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	search = '';
 
+	matchAll = false;
+
 	@Input() showSearch = false;
+
+	@Input() showMatch = false;
 
 	@Input()
 	buildFilterFunc?: BuildFilterFunction;
@@ -54,11 +58,14 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	_buildFilter() {
 		if (this.buildFilterFunc) {
-			return this.buildFilterFunc(this._options);
+			return this.buildFilterFunc(this._options, this.matchAll);
 		}
 
 		const active = this._options.filter((o) => o.active).map((o) => o.value);
 		if (active.length > 0) {
+			if (this.showMatch && this.matchAll) {
+				return { $and: active.map((a) => ({ [this.id]: a })) };
+			}
 			return { [this.id]: { $in: active } };
 		}
 
@@ -73,7 +80,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 				value: option.value
 			}));
 		if (active.length > 0) {
-			return { options: active };
+			return { options: active, matchAll: this.matchAll };
 		}
 		return undefined;
 	}
@@ -90,6 +97,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	_restoreState(state: any) {
 		if (state) {
+			this.matchAll = this.showMatch && (state.matchAll ?? false);
 			this._setActiveOptions(state.options as ListFilterOption[]);
 			this.onFilterChange();
 		}

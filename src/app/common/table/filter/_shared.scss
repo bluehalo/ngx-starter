@@ -1,12 +1,17 @@
 @import '../../../../styles/overrides';
 @import '../../../../styles/shared';
 
-$filter-dropdown-font-size: 0.75rem;
+$filter-dropdown-font-size: 0.75rem !default;
+$filter-dropdown-max-height: 250px !default;
 
 .dropdown-menu {
 	font-size: $filter-dropdown-font-size;
 	margin-top: 0.5rem;
-	max-height: 205px;
+	max-height: $filter-dropdown-max-height;
+
+	input {
+		font-size: $filter-dropdown-font-size;
+	}
 
 	.search {
 		width: 250px;
