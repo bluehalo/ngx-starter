@@ -13,5 +13,3 @@ import { MultiSelectInputComponent } from './multi-select-input/multi-select-inp
 	providers: []
 })
 export class MultiSelectInputModule {}
-
-export { MultiSelectInputComponent } from './multi-select-input/multi-select-input.component';

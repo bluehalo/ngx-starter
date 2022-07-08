@@ -5,10 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
-import { ModalService } from 'src/app/common/modal.module';
-import { SystemAlertModule, SystemAlertService } from 'src/app/common/system-alert.module';
 
+import { ModalService } from '../../../../common/modal/modal.service';
 import { SearchInputModule } from '../../../../common/search-input.module';
+import { SystemAlertModule } from '../../../../common/system-alert.module';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { TableModule } from '../../../../common/table.module';
 import { EuaService } from '../eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';

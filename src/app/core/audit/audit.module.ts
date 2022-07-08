@@ -66,5 +66,3 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 	providers: [AuditService]
 })
 export class AuditModule {}
-
-export { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';

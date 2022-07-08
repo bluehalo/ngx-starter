@@ -6,8 +6,9 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 
-import { ModalAction, ModalService } from '../../../common/modal.module';
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { ModalAction } from '../../../common/modal/modal.model';
+import { ModalService } from '../../../common/modal/modal.service';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { ConfigService } from '../../config.service';

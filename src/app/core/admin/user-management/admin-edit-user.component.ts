@@ -5,7 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';

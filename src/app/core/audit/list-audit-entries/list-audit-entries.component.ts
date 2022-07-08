@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.module';
-import { AsyFilterDirective } from '../../../common/table.module';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
+import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import { ConfigService } from '../../config.service';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';

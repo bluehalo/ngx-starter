@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { of, Subject } from 'rxjs';
-import { PagingResults } from 'src/app/common/paging.module';
-import { PipesModule } from 'src/app/common/pipes.module';
-import { SearchInputModule } from 'src/app/common/search-input.module';
-import { SystemAlertModule } from 'src/app/common/system-alert.module';
 
+import { PagingResults } from '../../../common/paging/paging.model';
+import { PipesModule } from '../../../common/pipes.module';
+import { SearchInputModule } from '../../../common/search-input.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 import { ViewAllMessagesComponent } from './view-all-messages.component';
@@ -84,15 +84,15 @@ describe('View All Messages Component Spec', () => {
 		};
 		expect(component.messages).toEqual([new Message().setFromModel(expectedMessage)]);
 
-		expect(rootHTMLElement.querySelector('.card-title').textContent).toEqual(
+		expect(rootHTMLElement.querySelector('.card-title')?.textContent).toEqual(
 			'THIS is a Test Message'
 		);
 		// should render as HTML, so text content would not include the bold tag
-		expect(rootHTMLElement.querySelector('.card-body > p').textContent).toEqual(
+		expect(rootHTMLElement.querySelector('.card-body > p')?.textContent).toEqual(
 			'Here is some body contents with HTML'
 		);
 		// should render as HTML, so HTML content would include the bold tag
-		expect(rootHTMLElement.querySelector('.card-body > p').innerHTML).toEqual(
+		expect(rootHTMLElement.querySelector('.card-body > p')?.innerHTML).toEqual(
 			expectedMessage.body
 		);
 	});

@@ -3,7 +3,10 @@ import { Directive, OnInit } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 
-import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../common/table.module';
+import {
+	AsyHeaderListFilterComponent,
+	ListFilterOption
+} from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
 import { AuditService } from '../audit.service';
 
 @UntilDestroy()

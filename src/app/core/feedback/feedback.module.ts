@@ -23,5 +23,3 @@ import { FeedbackModalComponent } from './feedback-modal/feedback-modal.componen
 	declarations: [FeedbackModalComponent, FeedbackFlyoutComponent]
 })
 export class FeedbackModule {}
-export { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
-export { FeedbackService } from './feedback.service';

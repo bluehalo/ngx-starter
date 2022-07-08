@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ModalService } from '../../../common/modal.module';
 import { ModalConfig } from '../../../common/modal/modal.model';
+import { ModalService } from '../../../common/modal/modal.service';
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 import { FormModalComponent } from './form-modal.component';
 

@@ -5,7 +5,7 @@ import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
-import { SystemAlertService } from '../../common/system-alert.module';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';

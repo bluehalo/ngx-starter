@@ -7,11 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
-import { PagingResults } from 'src/app/common/paging/paging.model';
-import { PipesModule } from 'src/app/common/pipes.module';
-import { SearchInputModule } from 'src/app/common/search-input.module';
-import { SystemAlertModule } from 'src/app/common/system-alert.module';
 
+import { PagingResults } from '../../../../common/paging/paging.model';
+import { PipesModule } from '../../../../common/pipes.module';
+import { SearchInputModule } from '../../../../common/search-input.module';
+import { SystemAlertModule } from '../../../../common/system-alert.module';
 import { TableModule } from '../../../../common/table.module';
 import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
@@ -40,9 +40,10 @@ describe('Admin List Feedback Component Spec', () => {
 	let rootHTMLElement: HTMLElement;
 
 	const clickExportButton = async () => {
-		const exportButtonElement = rootHTMLElement.querySelector('span.fa-download').parentElement;
-		expect(exportButtonElement.textContent.trim()).toEqual('Export');
-		exportButtonElement.click();
+		const exportButtonElement =
+			rootHTMLElement.querySelector('span.fa-download')?.parentElement;
+		expect(exportButtonElement?.textContent?.trim()).toEqual('Export');
+		exportButtonElement?.click();
 		fixture.detectChanges();
 		await fixture.whenStable();
 	};

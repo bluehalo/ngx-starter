@@ -7,7 +7,8 @@ import { RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { DirectivesModule } from '../../../common/directives.module';
-import { ModalModule, ModalService } from '../../../common/modal.module';
+import { ModalModule } from '../../../common/modal.module';
+import { ModalService } from '../../../common/modal/modal.service';
 import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
@@ -37,7 +38,3 @@ import { AdminListEuasComponent } from './list-euas/admin-list-euas.component';
 	providers: [AdminUsersService, EuaService, ModalService]
 })
 export class AdminEuaModule {}
-
-export { AdminListEuasComponent } from './list-euas/admin-list-euas.component';
-export { AdminCreateEuaComponent } from './admin-create-eua.component';
-export { AdminUpdateEuaComponent } from './admin-edit-eua.component';

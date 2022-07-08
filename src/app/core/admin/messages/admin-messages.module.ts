@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { DirectivesModule } from 'src/app/common/directives.module';
-import { PipesModule } from 'src/app/common/pipes.module';
-import { SearchInputModule } from 'src/app/common/search-input.module';
-import { SystemAlertModule } from 'src/app/common/system-alert.module';
 
+import { DirectivesModule } from '../../../common/directives.module';
+import { PipesModule } from '../../../common/pipes.module';
+import { SearchInputModule } from '../../../common/search-input.module';
+import { SystemAlertModule } from '../../../common/system-alert.module';
 import { TableModule } from '../../../common/table.module';
 import { CreateMessageComponent } from './create-message.component';
 import { UpdateMessageComponent } from './edit-message.component';

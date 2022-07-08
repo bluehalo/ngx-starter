@@ -6,7 +6,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AdminModule } from '../../common/admin.module';
 import { LoadingOverlayModule } from '../../common/loading-overlay.module';
-import { ModalModule, ModalService } from '../../common/modal.module';
+import { ModalModule } from '../../common/modal.module';
+import { ModalService } from '../../common/modal/modal.service';
 import { SystemAlertModule } from '../../common/system-alert.module';
 import { AuthGuard } from '../../core/core.module';
 import { AdminExampleComponent } from './admin/admin-example.component';

@@ -1,9 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { PagingOptions, PagingResults, SortDirection } from 'src/app/common/paging.module';
-import { SearchInputComponent } from 'src/app/common/search-input.module';
 
+import { PagingOptions, PagingResults, SortDirection } from '../../../common/paging.module';
+import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { Message, MessageType } from '../message.class';
 import { MessageService } from '../message.service';
 

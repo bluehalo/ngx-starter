@@ -9,5 +9,3 @@ import { SkipToDirective } from './directives/skip-to.directive';
 	providers: []
 })
 export class DirectivesModule {}
-
-export { SkipToDirective } from './directives/skip-to.directive';

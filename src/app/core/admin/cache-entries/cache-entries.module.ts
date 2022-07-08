@@ -37,5 +37,3 @@ import { CacheEntryModalComponent } from './cache-entry-modal.component';
 	providers: [CacheEntriesService]
 })
 export class CacheEntriesModule {}
-
-export { CacheEntriesComponent } from './cache-entries.component';

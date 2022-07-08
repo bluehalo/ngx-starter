@@ -3,12 +3,10 @@ import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from '../../common/admin/admin.component';
 import { AuthGuard } from '../auth/auth.guard';
-import { CacheEntriesComponent } from './cache-entries/cache-entries.module';
-import {
-	AdminCreateEuaComponent,
-	AdminListEuasComponent,
-	AdminUpdateEuaComponent
-} from './end-user-agreement/admin-eua.module';
+import { CacheEntriesComponent } from './cache-entries/cache-entries.component';
+import { AdminCreateEuaComponent } from './end-user-agreement/admin-create-eua.component';
+import { AdminUpdateEuaComponent } from './end-user-agreement/admin-edit-eua.component';
+import { AdminListEuasComponent } from './end-user-agreement/list-euas/admin-list-euas.component';
 import { AdminListFeedbackComponent } from './feedback/list-feedback/admin-list-feedback.component';
 import { CreateMessageComponent } from './messages/create-message.component';
 import { UpdateMessageComponent } from './messages/edit-message.component';

@@ -13,5 +13,3 @@ import { SearchInputComponent } from './search-input/search-input.component';
 	providers: []
 })
 export class SearchInputModule {}
-
-export { SearchInputComponent } from './search-input/search-input.component';

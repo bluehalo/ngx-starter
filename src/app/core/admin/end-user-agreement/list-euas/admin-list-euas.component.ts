@@ -6,10 +6,11 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
-import { ModalAction, ModalService } from '../../../../common/modal.module';
+import { ModalAction } from '../../../../common/modal/modal.model';
+import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
-import { SystemAlertService } from '../../../../common/system-alert.module';
-import { AsyTableDataSource } from '../../../../common/table.module';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
 

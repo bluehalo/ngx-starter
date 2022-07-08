@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
-import { SystemAlertService } from '../../../common/system-alert.module';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';

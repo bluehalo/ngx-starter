@@ -4,9 +4,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModalService } from 'src/app/common/modal.module';
-import { SystemAlertService } from 'src/app/common/system-alert.module';
 
+import { ModalService } from '../../../common/modal/modal.service';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.class';
 import { MessageService } from '../../messages/message.service';
