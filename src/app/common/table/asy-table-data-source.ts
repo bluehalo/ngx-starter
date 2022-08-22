@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 
 import isEmpty from 'lodash/isEmpty';
-import { combineLatest, BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { combineLatest, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 
 import {
@@ -82,6 +82,12 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 
 		this.subscription = param$
 			.pipe(
+				tap(() => {
+					this.pageChangeEvent$.next({
+						pageNumber: 0,
+						pageSize: this.pageChangeEvent$.value.pageSize
+					});
+				}),
 				switchMap(([search, filter]) =>
 					pagingOptions$.pipe(map((pagingOptions) => [pagingOptions, search, filter]))
 				),
