@@ -10,7 +10,7 @@ import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
-import { Message } from '../../../messages/message.class';
+import { Message } from '../../../messages/message.model';
 import { MessageService } from '../../../messages/message.service';
 
 @UntilDestroy()
@@ -53,7 +53,7 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<Message>> {
-		return this.messageService.search(query, search, pagingOptions);
+		return this.messageService.search(pagingOptions, query, search);
 	}
 
 	confirmDeleteMessage(message: Message) {
@@ -66,19 +66,12 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 			.pipe(
 				first(),
 				filter((action) => action === ModalAction.OK),
-				switchMap(() => this.messageService.remove(message)),
+				switchMap(() => this.messageService.delete(message)),
 				untilDestroyed(this)
 			)
-			.subscribe({
-				next: () => {
-					this.alertService.addAlert(`Deleted message.`, 'success');
-					this.dataSource.reload();
-				},
-				error: (error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.message);
-					}
-				}
+			.subscribe(() => {
+				this.alertService.addAlert(`Deleted message.`, 'success');
+				this.dataSource.reload();
 			});
 	}
 

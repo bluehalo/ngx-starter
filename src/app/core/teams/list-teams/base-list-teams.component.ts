@@ -66,7 +66,7 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, On
 			query.$and.push({ parent: this.parent._id });
 		}
 
-		return this.teamsService.search(pagingOptions, query, search, {});
+		return this.teamsService.search(pagingOptions, query, search);
 	}
 
 	clearFilters() {

@@ -15,7 +15,7 @@
 				type="radio"
 				name="type-option-radio"
 				id="type-option-1"
-				value="General Feedback"
+				value="general feedback"
 				[(ngModel)]="feedback.type"
 				required
 				cdkFocusInitial
@@ -25,7 +25,7 @@
 			>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'General Feedback'">
+		<ng-container *ngIf="feedback.type === 'general feedback'">
 			<ng-container *ngTemplateOutlet="textInput"></ng-container>
 		</ng-container>
 
@@ -35,14 +35,14 @@
 				type="radio"
 				name="type-option-radio"
 				id="type-option-2"
-				value="Feature Request"
+				value="feature request"
 				[(ngModel)]="feedback.type"
 				required
 			/>
 			<label for="type-option-2" class="form-check-label mb-2">Suggest a new feature</label>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'Feature Request'">
+		<ng-container *ngIf="feedback.type === 'feature request'">
 			<ng-container *ngTemplateOutlet="textInput"></ng-container>
 		</ng-container>
 
@@ -52,14 +52,14 @@
 				type="radio"
 				name="type-option-radio"
 				id="type-option-3"
-				value="Bug Report"
+				value="bug report"
 				[(ngModel)]="feedback.type"
 				required
 			/>
 			<label for="type-option-3" class="form-check-label mb-2">Report a bug/error</label>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'Bug Report'">
+		<ng-container *ngIf="feedback.type === 'bug report'">
 			<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
 
 			<div class="form-check pl-0">
@@ -158,7 +158,7 @@
 				<textarea
 					name="feedbackText"
 					class="form-control"
-					[(ngModel)]="feedback.text"
+					[(ngModel)]="feedback.body"
 					required
 					placeholder="Enter Feedback"
 				>

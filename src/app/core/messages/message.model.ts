@@ -15,13 +15,11 @@ export class Message {
 	public creator: any;
 
 	public setFromModel(model: any): Message {
-		this._id = model._id;
-		this.title = model.title;
-		this.type = model.type;
-		this.body = model.body;
-		this.updated = model.updated;
-		this.created = model.created;
-		this.creator = model.creator;
+		if (model == null) {
+			return this;
+		}
+
+		Object.assign(this, model);
 
 		return this;
 	}

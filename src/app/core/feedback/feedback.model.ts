@@ -10,9 +10,9 @@ export class Classification {
 }
 
 export class Feedback {
-	id: string;
+	_id: string;
 
-	text: string;
+	body: string;
 
 	type: string;
 
@@ -22,11 +22,17 @@ export class Feedback {
 
 	classification?: Classification;
 
-	currentRoute: string;
+	url: string;
+
+	os: string;
+
+	browser: string;
 
 	status: FeedbackStatusOption;
 
 	assignee?: string;
+
+	created: Date;
 
 	updated: Date;
 
@@ -38,4 +44,14 @@ export class Feedback {
 	};
 
 	constructor() {}
+
+	public setFromModel(model: any): Feedback {
+		if (null == model) {
+			return this;
+		}
+
+		Object.assign(this, model);
+
+		return this;
+	}
 }

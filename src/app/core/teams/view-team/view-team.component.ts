@@ -116,12 +116,6 @@ export class ViewTeamComponent implements OnInit {
 				filter((action) => action === ModalAction.OK),
 				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(null);
-				}),
 				untilDestroyed(this)
 			)
 			.subscribe(() => this.router.navigate(['/teams', { clearCachedFilter: true }]));

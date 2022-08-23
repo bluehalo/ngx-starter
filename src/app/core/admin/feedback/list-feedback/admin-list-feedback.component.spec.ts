@@ -52,8 +52,8 @@ describe('Admin List Feedback Component Spec', () => {
 		exportResponseId = `${Math.random()}`;
 
 		// reset for each test
-		feedbackServiceSpy = jasmine.createSpyObj('FeedbackService', ['getFeedback']);
-		feedbackServiceSpy.getFeedback.and.returnValue(of(mockFeedback));
+		feedbackServiceSpy = jasmine.createSpyObj('FeedbackService', ['search']);
+		feedbackServiceSpy.search.and.returnValue(of(mockFeedback));
 
 		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
 		configServiceSpy.getConfig.and.returnValue(of({}));
@@ -96,21 +96,21 @@ describe('Admin List Feedback Component Spec', () => {
 	});
 
 	it('should initialize the feedback listing', async () => {
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(0);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(0);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 		fixture.detectChanges();
 		await fixture.whenStable();
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(1);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 	});
 
 	it('should enable the email column and export the current view', async () => {
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(0);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(0);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 		fixture.detectChanges();
 		await fixture.whenStable();
 
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(1);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// Toggle the email filter on
@@ -146,12 +146,12 @@ describe('Admin List Feedback Component Spec', () => {
 	});
 
 	it('should disable the Submitted By column and export the current view', async () => {
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(0);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(0);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 		fixture.detectChanges();
 		await fixture.whenStable();
 
-		expect(feedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(1);
+		expect(feedbackServiceSpy.search).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// Toggle the Submitted By filter off

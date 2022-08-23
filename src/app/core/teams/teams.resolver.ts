@@ -13,6 +13,6 @@ export class TeamsResolve implements Resolve<Team | null> {
 		if (id == null) {
 			return null;
 		}
-		return this.teamsService.get(id);
+		return this.teamsService.read(id);
 	}
 }

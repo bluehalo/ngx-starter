@@ -50,37 +50,37 @@
 				<ng-container cdkColumnDef="id">
 					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
 					<td cdk-cell *cdkCellDef="let eua">
-						{{ eua.euaModel._id }}
+						{{ eua._id }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="title">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Title</th>
 					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
-						{{ eua.euaModel.title }}
+						{{ eua.title }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Text</th>
 					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
-						{{ eua.euaModel.text }}
+						{{ eua.text }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
 					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
-						{{ eua.euaModel.created | utcDate }}
+						{{ eua.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="published">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Published</th>
 					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
-						{{ eua.euaModel.published | utcDate }}
+						{{ eua.published | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
 					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
-						{{ eua.euaModel.updated | utcDate }}
+						{{ eua.updated | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
@@ -95,16 +95,12 @@
 							</span>
 							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
 								<li>
-									<a
-										class="dropdown-item"
-										(click)="previewEndUserAgreement(eua.euaModel)"
+									<a class="dropdown-item" (click)="previewEndUserAgreement(eua)"
 										>Preview</a
 									>
 								</li>
 								<li>
-									<a
-										class="dropdown-item"
-										[routerLink]="['/admin/eua', eua.euaModel._id]"
+									<a class="dropdown-item" [routerLink]="['/admin/eua', eua._id]"
 										>Edit</a
 									>
 								</li>

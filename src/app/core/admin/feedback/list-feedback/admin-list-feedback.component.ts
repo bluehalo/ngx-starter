@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
@@ -147,12 +146,12 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<Feedback>> {
-		return this.feedbackService.getFeedback(pagingOptions, query, search, {});
+		return this.feedbackService.search(pagingOptions, query, search);
 	}
 
 	updateFeedbackAssignee(feedback: Feedback, assignee: string | null = null) {
 		this.feedbackService
-			.updateFeedbackAssignee(feedback.id, assignee)
+			.updateFeedbackAssignee(feedback._id, assignee)
 			.pipe(untilDestroyed(this))
 			.subscribe({
 				next: (updatedFeedback) => {
@@ -168,7 +167,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 
 	updateFeedbackStatus(feedback: Feedback, status: FeedbackStatusOption) {
 		this.feedbackService
-			.updateFeedbackStatus(feedback.id, status)
+			.updateFeedbackStatus(feedback._id, status)
 			.pipe(untilDestroyed(this))
 			.subscribe({
 				next: (updatedFeedback) => {

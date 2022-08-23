@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
@@ -21,93 +22,45 @@ export interface AddedMember {
 }
 
 @Injectable()
-export class TeamsService {
-	headers: any = { 'Content-Type': 'application/json' };
-
+export class TeamsService extends AbstractEntityService<Team> {
 	constructor(
-		private http: HttpClient,
+		http: HttpClient,
+		alertService: SystemAlertService,
 		private sessionService: SessionService,
-		private alertService: SystemAlertService,
 		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService
-	) {}
+	) {
+		super(
+			{
+				[ServiceMethod.create]: 'api/team',
+				[ServiceMethod.read]: 'api/team',
+				[ServiceMethod.update]: 'api/team',
+				[ServiceMethod.delete]: 'api/team',
+				[ServiceMethod.search]: 'api/teams'
+			},
+			http,
+			alertService
+		);
+	}
 
-	create(team: Team, firstAdmin?: string): Observable<any> {
+	mapToType(model: any): Team {
+		return new Team().setFromModel(model);
+	}
+
+	override create(team: Team, firstAdmin?: string): Observable<any> {
 		return this.http
 			.put(
-				`api/team`,
+				this.getMethodUrl(ServiceMethod.create),
 				{
 					team,
-					firstAdmin: firstAdmin ? firstAdmin : null
+					firstAdmin: firstAdmin ?? null
 				},
 				{ headers: this.headers }
 			)
 			.pipe(
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-
-					return of(null);
-				})
+				map((model) => this.mapToType(model)),
+				catchError((error: unknown) => this.handleError(error, null))
 			);
-	}
-
-	get(teamId: string): Observable<Team | null> {
-		return this.http.get(`api/team/${teamId}`).pipe(
-			map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of(null);
-			})
-		);
-	}
-
-	update(team: Team): Observable<Team | null> {
-		return this.http.post(`api/team/${team._id}`, team, { headers: this.headers }).pipe(
-			map((result: any) => (null != result ? new Team().setFromModel(result) : null)),
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of(null);
-			})
-		);
-	}
-
-	search(
-		paging: PagingOptions,
-		query: any = {},
-		search: string = '',
-		options: any = {}
-	): Observable<PagingResults<Team>> {
-		return this.http
-			.post<PagingResults>(
-				'api/teams',
-				{ s: search, q: query, options },
-				{
-					params: paging.toObj(),
-					headers: this.headers
-				}
-			)
-			.pipe(
-				tap((result: PagingResults) => {
-					if (null != result && Array.isArray(result.elements)) {
-						result.elements = result.elements.map((element: any) =>
-							new Team().setFromModel(element)
-						);
-					}
-				}),
-				catchError(() => {
-					return of(NULL_PAGING_RESULTS);
-				})
-			);
-	}
-
-	delete(team: Pick<Team, '_id'>): Observable<any> {
-		return this.http.delete(`api/team/${team._id}`);
 	}
 
 	addMember(team: Pick<Team, '_id'>, memberId: string, role?: string): Observable<any> {

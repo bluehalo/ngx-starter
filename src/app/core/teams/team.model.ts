@@ -3,21 +3,17 @@ import isEmpty from 'lodash/isEmpty';
 export class Team {
 	numResources: any = {};
 
-	constructor(
-		public _id?: string,
-		public name?: string,
-		public description?: string,
-		public created?: number,
-		public implicitMembers?: boolean,
-		public requiresExternalRoles?: string[],
-		public requiresExternalTeams?: string[],
-		public parent?: Team,
-		public ancestors?: Team[]
-	) {
-		this.requiresExternalRoles = requiresExternalRoles || [];
-		this.requiresExternalTeams = requiresExternalTeams || [];
-		this.ancestors = ancestors || [];
-	}
+	_id: string;
+	name: string;
+	description: string;
+	created: number;
+	implicitMembers: boolean;
+	requiresExternalRoles: string[] = [];
+	requiresExternalTeams: string[] = [];
+	parent?: Team;
+	ancestors: Team[] = [];
+
+	constructor() {}
 
 	setFromModel(model: any): Team {
 		if (null != model) {

@@ -13,7 +13,7 @@
 						type="radio"
 						name="type-option-radio"
 						id="fo-type-option-1"
-						value="General Feedback"
+						value="general feedback"
 						[(ngModel)]="feedback.type"
 						required
 					/>
@@ -22,7 +22,7 @@
 					>
 				</div>
 
-				<ng-container *ngIf="feedback.type === 'General Feedback'">
+				<ng-container *ngIf="feedback.type === 'general feedback'">
 					<ng-container *ngTemplateOutlet="textInput"></ng-container>
 				</ng-container>
 
@@ -32,7 +32,7 @@
 						type="radio"
 						name="type-option-radio"
 						id="fo-type-option-2"
-						value="Feature Request"
+						value="feature request"
 						[(ngModel)]="feedback.type"
 						required
 					/>
@@ -41,7 +41,7 @@
 					>
 				</div>
 
-				<ng-container *ngIf="feedback.type === 'Feature Request'">
+				<ng-container *ngIf="feedback.type === 'feature request'">
 					<ng-container *ngTemplateOutlet="textInput"></ng-container>
 				</ng-container>
 
@@ -51,7 +51,7 @@
 						type="radio"
 						name="type-option-radio"
 						id="fo-type-option-3"
-						value="Bug Report"
+						value="bug report"
 						[(ngModel)]="feedback.type"
 						required
 					/>
@@ -60,7 +60,7 @@
 					>
 				</div>
 
-				<ng-container *ngIf="feedback.type === 'Bug Report'">
+				<ng-container *ngIf="feedback.type === 'bug report'">
 					<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
 
 					<div class="form-check pl-0">
@@ -163,12 +163,12 @@
 						</ng-select>
 					</div>
 
-					<div class="form-group" [class.mb-0]="feedback.type === 'Bug Report'">
+					<div class="form-group" [class.mb-0]="feedback.type === 'bug report'">
 						<textarea
 							name="text"
 							class="form-control"
 							style="height: 8rem"
-							[(ngModel)]="feedback.text"
+							[(ngModel)]="feedback.body"
 							required
 							placeholder="Enter Feedback"
 						>
