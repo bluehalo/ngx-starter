@@ -49,7 +49,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 
 	override create(team: Team, firstAdmin?: string): Observable<any> {
 		return this.http
-			.put(
+			.post(
 				this.getMethodUrl(ServiceMethod.create),
 				{
 					team,
