@@ -4,7 +4,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 
 import { PagingOptions, PagingResults, SortDirection } from '../../../common/paging.module';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';
-import { Message, MessageType } from '../message.class';
+import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 
 @UntilDestroy()
@@ -45,9 +45,9 @@ export class ViewAllMessagesComponent implements OnInit {
 	loadMessages(page: number) {
 		this.messagesService
 			.search(
+				new PagingOptions(page, 20, 0, 0, 'created', SortDirection.desc),
 				{},
-				this.search,
-				new PagingOptions(page, 20, 0, 0, 'created', SortDirection.desc)
+				this.search
 			)
 			.pipe(untilDestroyed(this))
 			.subscribe((messages: PagingResults) => {

@@ -10,7 +10,7 @@ import { ModalService } from '../../../common/modal/modal.service';
 import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
-import { Message, MessageType } from '../../messages/message.class';
+import { Message, MessageType } from '../../messages/message.model';
 import { MessageService } from '../../messages/message.service';
 import { UpdateMessageComponent } from './edit-message.component';
 

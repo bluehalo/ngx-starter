@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 
 import { ModalService } from '../../../common/modal/modal.service';
-import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
 
@@ -25,14 +24,13 @@ export class AdminCreateEuaComponent extends ManageEuaComponent {
 	}
 
 	submitEua() {
-		const _eua = new EndUserAgreement();
-		_eua.euaModel = {
-			title: this.eua.euaModel.title,
-			text: this.eua.euaModel.text
-		};
 		this.euaService
-			.create(_eua)
+			.create(this.eua)
 			.pipe(untilDestroyed(this))
-			.subscribe(() => this.router.navigate(['/admin/euas', { clearCachedFilter: true }]));
+			.subscribe((eua) => {
+				if (eua) {
+					this.router.navigate(['/admin/euas', { clearCachedFilter: true }]);
+				}
+			});
 	}
 }

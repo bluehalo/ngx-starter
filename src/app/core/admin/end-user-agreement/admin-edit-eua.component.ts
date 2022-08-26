@@ -5,6 +5,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
 
 import { ModalService } from '../../../common/modal/modal.service';
+import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
@@ -28,7 +29,8 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 		this.route.params
 			.pipe(
 				untilDestroyed(this),
-				switchMap((params: Params) => this.euaService.get(params['id']))
+				switchMap((params: Params) => this.euaService.read(params['id'])),
+				isNotNullOrUndefined()
 			)
 			.subscribe((eua) => {
 				this.eua = eua;
@@ -36,13 +38,7 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 	}
 
 	submitEua() {
-		const _eua = new EndUserAgreement();
-		_eua.euaModel = {
-			_id: this.eua.euaModel._id,
-			title: this.eua.euaModel.title,
-			text: this.eua.euaModel.text,
-			published: this.eua.euaModel.published
-		};
+		const _eua = new EndUserAgreement().setFromModel(this.eua);
 		this.euaService
 			.update(_eua)
 			.pipe(untilDestroyed(this))

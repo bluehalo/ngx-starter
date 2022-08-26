@@ -88,7 +88,7 @@ export class CreateTeamComponent implements OnInit {
 				filter((params) => params.has('parent')),
 				map((params) => params.get('parent')),
 				filter((id: string | null): id is string => id !== null),
-				switchMap((id) => this.teamsService.get(id))
+				switchMap((id) => this.teamsService.read(id))
 			)
 			.subscribe((parent) => {
 				this.team.parent = parent ?? undefined;

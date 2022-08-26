@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import orderBy from 'lodash/orderBy';
 
-import { Message, MessageType } from '../message.class';
+import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 
 @UntilDestroy()

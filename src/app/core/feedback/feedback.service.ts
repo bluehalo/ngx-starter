@@ -1,22 +1,21 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { of, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { Feedback, FeedbackStatusOption } from './feedback.model';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class FeedbackService {
+export class FeedbackService extends AbstractEntityService<Feedback> {
 	static feedbackTypes: any[] = [
-		{ name: 'General Feedback', prompt: 'Ask a question or make a comment' },
-		{ name: 'Feature Request', prompt: 'Suggest a new feature' },
+		{ name: 'general feedback', prompt: 'Ask a question or make a comment' },
+		{ name: 'feature request', prompt: 'Suggest a new feature' },
 		{
-			name: 'Bug Report',
+			name: 'bug report',
 			prompt: 'Report a bug/error',
 			subType: {
 				label: "What's the bug/error type?",
@@ -25,11 +24,22 @@ export class FeedbackService {
 		}
 	];
 
-	headers: any = { 'Content-Type': 'application/json' };
+	constructor(http: HttpClient, alertService: SystemAlertService) {
+		super(
+			{
+				[ServiceMethod.create]: 'api/feedback',
+				[ServiceMethod.search]: 'api/admin/feedback'
+			},
+			http,
+			alertService
+		);
+	}
 
-	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
+	mapToType(model: any): Feedback {
+		return new Feedback().setFromModel(model);
+	}
 
-	getFormattedText(feedback: Feedback): string {
+	getFormattedBody(feedback: Feedback): string {
 		let text = '';
 		const prefix = `${feedback.classification ? feedback.classification.prefix + ' ' : ''}`;
 		if (feedback.subType !== undefined) {
@@ -39,43 +49,18 @@ export class FeedbackService {
 			}
 			text += '\n';
 		}
-		text += `${prefix}${feedback.text}`;
+		text += `${prefix}${feedback.body}`;
 		return text;
 	}
 
-	submit(feedback: Feedback): Observable<any> {
-		return this.http.post(
-			'api/feedback',
-			JSON.stringify({
-				body: this.getFormattedText(feedback),
-				type: feedback.type.toLowerCase(),
-				classification: feedback.classification ? feedback.classification.level : '',
-				url: feedback.currentRoute
-			}),
-			{ headers: this.headers }
-		);
-	}
-
-	getFeedback(
-		paging: PagingOptions,
-		query: any,
-		search: string,
-		options: any
-	): Observable<PagingResults<Feedback>> {
-		return this.http
-			.post<PagingResults<Feedback>>(
-				'api/admin/feedback',
-				JSON.stringify({ s: search, q: query, options }),
-				{ params: paging.toObj(), headers: this.headers }
-			)
-			.pipe(
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.error.message);
-					}
-					return of(NULL_PAGING_RESULTS);
-				})
-			);
+	override create(feedback: Feedback): Observable<Feedback | null> {
+		const f = new Feedback().setFromModel({
+			body: this.getFormattedBody(feedback),
+			type: feedback.type,
+			classification: feedback.classification?.level ?? '',
+			url: feedback.url
+		});
+		return super.create(f);
 	}
 
 	updateFeedbackAssignee(feedbackId: string, assignee: string | null): Observable<Feedback> {

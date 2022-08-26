@@ -1,86 +1,33 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { of, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
+import { AbstractEntityService, ServiceMethod } from '../../../common/abstract-entity.service';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { EndUserAgreement } from './eua.model';
 
 @Injectable()
-/**
- * Admin management of users
- */
-export class EuaService {
-	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
-
-	/**
-	 * Public methods to be exposed through the service
-	 */
-
-	// Create
-	create(eua: EndUserAgreement): Observable<EndUserAgreement> {
-		return this.http
-			.post('api/eua', eua.euaModel)
-			.pipe(map((result) => new EndUserAgreement().setFromEuaModel(result)));
+export class EuaService extends AbstractEntityService<EndUserAgreement> {
+	constructor(http: HttpClient, alertService: SystemAlertService) {
+		super(
+			{
+				[ServiceMethod.create]: 'api/eua',
+				[ServiceMethod.read]: 'api/eua',
+				[ServiceMethod.update]: 'api/eua',
+				[ServiceMethod.delete]: 'api/eua',
+				[ServiceMethod.search]: 'api/euas'
+			},
+			http,
+			alertService
+		);
 	}
 
-	// Retrieve
-	get(id: string): Observable<EndUserAgreement> {
-		return this.http
-			.get(`api/eua/${id}`)
-			.pipe(map((result) => new EndUserAgreement().setFromEuaModel(result)));
+	mapToType(model: any): EndUserAgreement {
+		return new EndUserAgreement().setFromModel(model);
 	}
 
-	// Search Euas
-	search(
-		query: any,
-		search: string,
-		paging: PagingOptions,
-		options: any = {}
-	): Observable<PagingResults<EndUserAgreement>> {
-		return this.http
-			.post<PagingResults>(
-				'api/euas',
-				{ q: query, s: search, options },
-				{ params: paging.toObj() }
-			)
-			.pipe(
-				map((results: PagingResults) => {
-					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map((element: any) =>
-							new EndUserAgreement().setFromEuaModel(element)
-						);
-					}
-					return results;
-				}),
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(NULL_PAGING_RESULTS);
-				})
-			);
-	}
-
-	// Update
-	update(eua: EndUserAgreement): Observable<EndUserAgreement> {
-		return this.http
-			.post(`api/eua/${eua.euaModel._id}`, eua.euaModel)
-			.pipe(map((result) => new EndUserAgreement().setFromEuaModel(result)));
-	}
-
-	// Delete
-	remove(id: string): Observable<EndUserAgreement> {
-		return this.http
-			.delete(`api/eua/${id}`)
-			.pipe(map((result) => new EndUserAgreement().setFromEuaModel(result)));
-	}
-
-	publish(id: string): Observable<EndUserAgreement> {
-		return this.http
-			.post(`api/eua/${id}/publish`, {})
-			.pipe(map((result) => new EndUserAgreement().setFromEuaModel(result)));
+	publish(eua: EndUserAgreement): Observable<EndUserAgreement | null> {
+		return this.updateAction('publish', eua);
 	}
 }

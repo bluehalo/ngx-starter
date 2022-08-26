@@ -88,48 +88,31 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteEua(eua: EndUserAgreement) {
-		const id = eua.euaModel._id;
-		const title = eua.euaModel.title;
-
 		this.modalService
 			.confirm(
 				'Delete End User Agreement?',
-				`Are you sure you want to delete eua: "${eua.euaModel.title}" ?`,
+				`Are you sure you want to delete eua: "${eua.title}" ?`,
 				'Delete'
 			)
 			.pipe(
 				first(),
 				filter((action) => action === ModalAction.OK),
-				switchMap(() => this.euaService.remove(id)),
+				switchMap(() => this.euaService.delete(eua)),
 				untilDestroyed(this)
 			)
-			.subscribe({
-				next: () => {
-					this.alertService.addAlert(`Deleted EUA entitled: ${title}`, 'success');
-					this.dataSource.reload();
-				},
-				error: (error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-				}
+			.subscribe(() => {
+				this.alertService.addAlert(`Deleted EUA entitled: ${eua.title}`, 'success');
+				this.dataSource.reload();
 			});
 	}
 
 	publishEua(eua: EndUserAgreement) {
 		this.euaService
-			.publish(eua.euaModel._id)
+			.publish(eua)
 			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: () => {
-					this.alertService.addAlert(`Published ${eua.euaModel.title}`, 'success');
-					this.dataSource.reload();
-				},
-				error: (error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-				}
+			.subscribe(() => {
+				this.alertService.addAlert(`Published ${eua.title}`, 'success');
+				this.dataSource.reload();
 			});
 	}
 
@@ -138,7 +121,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<EndUserAgreement>> {
-		return this.euaService.search(query, search, pagingOptions);
+		return this.euaService.search(pagingOptions, query, search);
 	}
 
 	/**

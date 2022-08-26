@@ -55,20 +55,14 @@ export class FeedbackModalComponent implements OnInit {
 		this.submitting = true;
 
 		// Get the current URL from the router at the time of submission.
-		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
+		this.feedback.url = `${this.baseUrl}${this.router.url}`;
 
 		this.feedbackService
-			.submit(this.feedback)
+			.create(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: () => {
+			.subscribe((feedback) => {
+				if (feedback) {
 					setTimeout(() => this.modalRef.hide(), 1500);
-				},
-				error: (error: unknown) => {
-					this.submitting = false;
-					if (error instanceof HttpErrorResponse) {
-						this.error = error.error.message;
-					}
 				}
 			});
 	}

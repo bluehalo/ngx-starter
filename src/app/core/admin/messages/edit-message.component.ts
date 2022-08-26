@@ -3,12 +3,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { ModalService } from '../../../common/modal/modal.service';
+import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
-import { Message } from '../../messages/message.class';
+import { Message } from '../../messages/message.model';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
 
@@ -43,8 +44,8 @@ export class UpdateMessageComponent extends ManageMessageComponent {
 		this.route.params
 			.pipe(
 				untilDestroyed(this),
-				switchMap((params: Params) => this.messageService.get(params['id'])),
-				map((messageRaw: any) => new Message().setFromModel(messageRaw))
+				switchMap((params: Params) => this.messageService.read(params['id'])),
+				isNotNullOrUndefined()
 			)
 			.subscribe((message) => {
 				this.message = message;

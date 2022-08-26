@@ -1,17 +1,18 @@
 export class EndUserAgreement {
-	constructor(
-		public euaModel: any = {
-			title: '',
-			text: ''
-		}
-	) {}
+	_id: string;
+	title: string = '';
+	text: string = '';
+	published: number;
+	created: number;
+	updated: number;
 
-	public setFromEuaModel(euaModel: any): EndUserAgreement {
-		if (null == euaModel || null == euaModel.title) {
-			euaModel = null;
+	public setFromModel(model: any): EndUserAgreement {
+		if (null == model) {
+			return this;
 		}
 
-		this.euaModel = euaModel;
+		Object.assign(this, model);
+
 		return this;
 	}
 }

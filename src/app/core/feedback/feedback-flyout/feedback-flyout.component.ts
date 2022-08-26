@@ -61,18 +61,15 @@ export class FeedbackFlyoutComponent implements OnInit {
 		this.status = 'submitting';
 
 		// Get the current URL from the router at the time of submission.
-		this.feedback.currentRoute = `${this.baseUrl}${this.router.url}`;
+		this.feedback.url = `${this.baseUrl}${this.router.url}`;
 		this.feedbackService
-			.submit(this.feedback)
+			.create(this.feedback)
 			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: () => {
+			.subscribe((feedback) => {
+				if (feedback) {
 					this.status = 'success';
-					setTimeout(() => {
-						this.closeForm();
-					}, 2000);
-				},
-				error: () => {
+					setTimeout(() => this.closeForm(), 2000);
+				} else {
 					this.status = 'failure';
 				}
 			});

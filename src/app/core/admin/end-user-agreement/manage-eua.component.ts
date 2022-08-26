@@ -18,6 +18,6 @@ export abstract class ManageEuaComponent {
 	abstract submitEua(): any;
 
 	previewEua() {
-		this.modalService.alert(this.eua.euaModel.title, this.eua.euaModel.text);
+		this.modalService.alert(this.eua.title, this.eua.text);
 	}
 }

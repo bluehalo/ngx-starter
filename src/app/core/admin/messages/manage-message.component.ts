@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
 import { ModalService } from '../../../common/modal/modal.service';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
-import { Message } from '../../messages/message.class';
+import { Message } from '../../messages/message.model';
 
 @Directive()
 export abstract class ManageMessageComponent implements OnInit {
@@ -37,6 +37,8 @@ export abstract class ManageMessageComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.alertService.clearAllAlerts();
+
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
@@ -58,17 +60,9 @@ export abstract class ManageMessageComponent implements OnInit {
 	submit() {
 		this.submitMessage(this.message)
 			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: () => this.router.navigate([this.navigateOnSuccess]),
-				error: (response: unknown) => {
-					if (
-						response instanceof HttpErrorResponse &&
-						response.status >= 400 &&
-						response.status < 500
-					) {
-						const errors = response.message.split('\n');
-						this.error = errors.join(', ');
-					}
+			.subscribe((message) => {
+				if (message) {
+					this.router.navigate([this.navigateOnSuccess]);
 				}
 			});
 	}

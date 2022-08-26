@@ -3,22 +3,20 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { of, BehaviorSubject, Observable } from 'rxjs';
-import { catchError, filter, first, map, tap } from 'rxjs/operators';
+import { catchError, filter, first, map } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
-import { Message } from './message.class';
+import { Message } from './message.model';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
-export class MessageService {
-	headers: any = { 'Content-Type': 'application/json' };
-
+export class MessageService extends AbstractEntityService<Message> {
 	public numMessagesIndicator$: BehaviorSubject<number> = new BehaviorSubject(0);
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed = 0;
@@ -26,10 +24,22 @@ export class MessageService {
 	constructor(
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService,
-		private alertService: SystemAlertService,
-		private http: HttpClient,
+		alertService: SystemAlertService,
+		http: HttpClient,
 		private socketService: SocketService
 	) {
+		super(
+			{
+				[ServiceMethod.create]: 'api/admin/message',
+				[ServiceMethod.read]: 'api/admin/message',
+				[ServiceMethod.update]: 'api/admin/message',
+				[ServiceMethod.delete]: 'api/admin/message',
+				[ServiceMethod.search]: 'api/messages'
+			},
+			http,
+			alertService
+		);
+
 		this.sessionService
 			.getSession()
 			.pipe(
@@ -46,122 +56,16 @@ export class MessageService {
 		return new Message().setFromModel(model);
 	}
 
-	create(message: Message): Observable<Message | null> {
-		return this.http.post('api/admin/message', message, { headers: this.headers }).pipe(
-			map((model) => this.mapToType(model)),
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of(null);
-			})
-		);
-	}
-
-	get(id: string): Observable<Message | null> {
-		return this.http.get(`api/admin/message/${id}`, { headers: this.headers }).pipe(
-			map((model) => this.mapToType(model)),
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of(null);
-			})
-		);
-	}
-
-	/**
-	 * Retrieves an array of a field's value for all messages in the system
-	 */
-	getAll(query: any, field: any) {
-		return this.http
-			.post(`api/admin/message/getAll`, { query, field }, { headers: this.headers })
-			.pipe(
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(null);
-				})
-			);
-	}
-
-	update(message: Message): Observable<Message | null> {
-		return this.http
-			.post(`api/admin/message/${message._id}`, message, {
-				headers: this.headers
-			})
-			.pipe(
-				map((model) => this.mapToType(model)),
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(null);
-				})
-			);
-	}
-
-	remove(message: Pick<Message, '_id'>): Observable<Message | null> {
-		return this.http.delete(`api/admin/message/${message._id}`, { headers: this.headers }).pipe(
-			map((model) => this.mapToType(model)),
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of(null);
-			})
-		);
-	}
-
-	search(
-		query: any,
-		search: any,
-		paging: PagingOptions = new PagingOptions()
-	): Observable<PagingResults<Message>> {
-		return this.http
-			.post<PagingResults>(
-				'api/messages',
-				{ q: query, s: search },
-				{ headers: this.headers, params: paging.toObj() }
-			)
-			.pipe(
-				tap((pagingResult) => {
-					pagingResult.elements = pagingResult.elements.map((model) =>
-						this.mapToType(model)
-					);
-				}),
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(NULL_PAGING_RESULTS);
-				})
-			);
-	}
-
 	recent(): Observable<any[]> {
-		return this.http.post<any>('api/messages/recent', {}, { headers: this.headers }).pipe(
-			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.alertService.addClientErrorAlert(error);
-				}
-				return of([]);
-			})
-		);
+		return this.http
+			.post<any>('api/messages/recent', {}, { headers: this.headers })
+			.pipe(catchError((error: unknown) => this.handleError(error, [])));
 	}
 
 	dismiss(ids: string[]) {
 		return this.http
 			.post('api/messages/dismiss', { messageIds: ids }, { headers: this.headers })
-			.pipe(
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
-					}
-					return of(null);
-				})
-			);
+			.pipe(catchError((error: unknown) => this.handleError(error, null)));
 	}
 
 	/**

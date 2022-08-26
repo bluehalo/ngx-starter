@@ -7,7 +7,7 @@ import { of, BehaviorSubject, Subject } from 'rxjs';
 import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
-import { Message, MessageType } from '../message.class';
+import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 import { RecentMessagesComponent } from './recent-messages.component';
 
