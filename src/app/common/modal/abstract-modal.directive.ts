@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -26,13 +26,15 @@ export abstract class AbstractModalDirective {
 	 */
 	cancelText: string;
 
+	modalRef = inject(BsModalRef);
+
 	/**
 	 * ModalCloseEvent Subject that emits when the modal is closed for any reason
 	 */
 	/* eslint-disable-next-line rxjs/finnish */
 	onClose: Subject<ModalCloseEvent> = new Subject();
 
-	constructor(public modalRef: BsModalRef) {}
+	constructor() {}
 
 	ok() {
 		this.modalRef.hide();

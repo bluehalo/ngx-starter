@@ -1,18 +1,13 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { concat, Observable, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
-import { AuditService } from '../../../../core/audit/audit.service';
-import { User } from '../../../../core/auth/user.model';
-import { PagingOptions } from '../../../paging/paging.model';
 import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
-import { AsyFilterDirective } from '../asy-filter.directive';
-import { ListFilterOption } from '../asy-header-list-filter/asy-header-list-filter.component';
 
 type TypeaheadFunction = (search: string) => Observable<any[]>;
 type BuildFilterFunction = (selectedValue: any | null) => any;
@@ -40,16 +35,11 @@ export class AsyHeaderTypeaheadFilterComponent
 	buildFilterFunc?: BuildFilterFunction;
 
 	constructor(
-		private auditService: AuditService,
-		// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-		@Optional()
-		_filter: AsyFilterDirective,
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
-		_columnDef: AsyFilterHeaderColumnDef,
-		changeDetectorRef: ChangeDetectorRef
+		_columnDef: AsyFilterHeaderColumnDef
 	) {
-		super(_filter, _columnDef, changeDetectorRef);
+		super(_columnDef);
 	}
 
 	override ngOnInit(): void {

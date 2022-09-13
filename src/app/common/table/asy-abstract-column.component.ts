@@ -1,6 +1,6 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CdkCellDef, CdkColumnDef, CdkHeaderCellDef, CdkTable } from '@angular/cdk/table';
-import { Directive, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Directive, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 @Directive()
 export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit {
@@ -63,11 +63,13 @@ export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit
 	 */
 	@ViewChild(CdkHeaderCellDef, { static: true }) headerCell: CdkHeaderCellDef;
 
-	protected constructor(protected _table: CdkTable<T>) {}
+	// `AsyAbstractColumn` is always requiring a table, but we just assert it manually
+	// for better error reporting.
+	protected _table: CdkTable<T> = inject(CdkTable, { optional: true }) as CdkTable<T>;
 
 	ngOnInit(): void {
 		if (!this._table) {
-			throw Error('Selection column could not find a parent table for registration.');
+			throw Error('column could not find a parent table for registration.');
 		}
 		this._syncColumnDefName();
 

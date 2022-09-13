@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Inject,
-	Optional
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
 
 import escapeRegExp from 'lodash/escapeRegExp';
 
@@ -12,7 +6,6 @@ import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
-import { AsyFilterDirective } from '../asy-filter.directive';
 
 type StringFilterOption = 'Equals' | 'Contains' | 'Starts with' | 'Ends with';
 
@@ -28,15 +21,11 @@ export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterCompone
 	search = '';
 
 	constructor(
-		// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-		@Optional()
-		_filter: AsyFilterDirective,
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
-		_columnDef: AsyFilterHeaderColumnDef,
-		changeDetectorRef: ChangeDetectorRef
+		_columnDef: AsyFilterHeaderColumnDef
 	) {
-		super(_filter, _columnDef, changeDetectorRef);
+		super(_columnDef);
 	}
 
 	onSearchTypeChange() {

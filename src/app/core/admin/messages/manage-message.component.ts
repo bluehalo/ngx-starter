@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Directive, OnInit } from '@angular/core';
+import { Directive, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed } from '@ngneat/until-destroy';
@@ -25,11 +25,12 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	protected config: any;
 
+	protected modalService = inject(ModalService);
+	protected router = inject(Router);
+	protected configService = inject(ConfigService);
+	protected alertService = inject(SystemAlertService);
+
 	protected constructor(
-		protected modalService: ModalService,
-		protected router: Router,
-		protected configService: ConfigService,
-		public alertService: SystemAlertService,
 		public title: string,
 		public subtitle: string,
 		public okButtonText: string,

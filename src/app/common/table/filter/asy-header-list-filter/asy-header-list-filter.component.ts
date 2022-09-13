@@ -1,18 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Inject,
-	Input,
-	Optional
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject, Input, Optional } from '@angular/core';
 
 import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
-import { AsyFilterDirective } from '../asy-filter.directive';
 
 type BuildFilterFunction = (options: ListFilterOption[], matchAll?: boolean) => any;
 
@@ -43,17 +35,14 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 	@Input()
 	buildFilterFunc?: BuildFilterFunction;
 
+	private titleCasePipe = inject(TitleCasePipe);
+
 	constructor(
-		// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-		@Optional()
-		_filter: AsyFilterDirective,
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
-		_columnDef: AsyFilterHeaderColumnDef,
-		changeDetectorRef: ChangeDetectorRef,
-		private titleCasePipe: TitleCasePipe
+		_columnDef: AsyFilterHeaderColumnDef
 	) {
-		super(_filter, _columnDef, changeDetectorRef);
+		super(_columnDef);
 	}
 
 	_buildFilter() {

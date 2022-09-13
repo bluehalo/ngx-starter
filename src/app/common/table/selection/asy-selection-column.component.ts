@@ -1,13 +1,5 @@
 import { DataSource, SelectionModel } from '@angular/cdk/collections';
-import { CdkTable } from '@angular/cdk/table';
-import {
-	AfterViewInit,
-	ChangeDetectionStrategy,
-	Component,
-	Input,
-	OnInit,
-	Optional
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
@@ -50,12 +42,8 @@ export class AsySelectionColumnComponent<T, TB = T>
 	@Input()
 	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
 
-	constructor(
-		// `SelectionColumn` is always requiring a table, but we just assert it manually
-		// for better error reporting.
-		@Optional() _table: CdkTable<T>
-	) {
-		super(_table);
+	constructor() {
+		super();
 		this.name = 'selection';
 	}
 

@@ -19,22 +19,8 @@ import { ManageUserComponent } from './manage-user.component';
 export class AdminEditUserComponent extends ManageUserComponent {
 	mode = 'admin-edit';
 
-	constructor(
-		router: Router,
-		configService: ConfigService,
-		alertService: SystemAlertService,
-		private route: ActivatedRoute,
-		private adminUsersService: AdminUsersService
-	) {
-		super(
-			router,
-			configService,
-			alertService,
-			'Edit User',
-			"Make changes to the user's information",
-			'Save',
-			'/admin/users'
-		);
+	constructor(private route: ActivatedRoute, private adminUsersService: AdminUsersService) {
+		super('Edit User', "Make changes to the user's information", 'Save', '/admin/users');
 	}
 
 	initialize() {

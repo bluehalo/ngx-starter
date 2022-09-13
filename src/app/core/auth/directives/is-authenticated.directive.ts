@@ -15,12 +15,11 @@ export class IsAuthenticatedDirective extends AbstractIfThenElseDirective implem
 	private _isAuthenticated = true;
 
 	constructor(
-		viewContainer: ViewContainerRef,
 		templateRef: TemplateRef<any>,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
 	) {
-		super(viewContainer, templateRef);
+		super(templateRef);
 	}
 
 	@Input()

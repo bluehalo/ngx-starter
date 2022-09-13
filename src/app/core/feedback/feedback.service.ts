@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { Feedback, FeedbackStatusOption } from './feedback.model';
 
 @Injectable({
@@ -24,15 +22,11 @@ export class FeedbackService extends AbstractEntityService<Feedback> {
 		}
 	];
 
-	constructor(http: HttpClient, alertService: SystemAlertService) {
-		super(
-			{
-				[ServiceMethod.create]: 'api/feedback',
-				[ServiceMethod.search]: 'api/admin/feedback'
-			},
-			http,
-			alertService
-		);
+	constructor() {
+		super({
+			[ServiceMethod.create]: 'api/feedback',
+			[ServiceMethod.search]: 'api/admin/feedback'
+		});
 	}
 
 	mapToType(model: any): Feedback {

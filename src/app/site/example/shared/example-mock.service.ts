@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
@@ -8,14 +7,9 @@ import { ExampleService } from './example.service';
 
 @Injectable()
 export class ExampleMockService extends ExampleService {
-	constructor(private http: HttpClient) {
-		super();
-	}
-
 	/*
 	 * API Methods
 	 */
-
 	public getExamples(): Observable<Example[]> {
 		return of([
 			{

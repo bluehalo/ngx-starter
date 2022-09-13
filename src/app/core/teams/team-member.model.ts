@@ -11,10 +11,6 @@ export class TeamMember extends User {
 
 	public roleDisplay = TeamRole.getDisplay(this.role);
 
-	constructor() {
-		super();
-	}
-
 	hasTeams(): boolean {
 		return this.userModel.teams.length > 0;
 	}

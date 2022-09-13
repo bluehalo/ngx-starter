@@ -18,16 +18,8 @@ import { ManageUserComponent } from './manage-user.component';
 export class AdminCreateUserComponent extends ManageUserComponent {
 	mode = 'admin-create';
 
-	constructor(
-		router: Router,
-		configService: ConfigService,
-		alertService: SystemAlertService,
-		private adminUsersService: AdminUsersService
-	) {
+	constructor(private adminUsersService: AdminUsersService) {
 		super(
-			router,
-			configService,
-			alertService,
 			'Create User',
 			'Provide the required information to create a new user',
 			'Create',

@@ -14,12 +14,11 @@ import { SessionService } from '../session.service';
 export class HasSomeRolesDirective extends AbstractIfThenElseDirective implements OnInit {
 	roles: Array<string | Role>;
 	constructor(
-		viewContainer: ViewContainerRef,
 		templateRef: TemplateRef<any>,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
 	) {
-		super(viewContainer, templateRef);
+		super(templateRef);
 	}
 
 	@Input()
