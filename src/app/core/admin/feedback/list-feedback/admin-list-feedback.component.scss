@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import '../../../../../styles/shared';
 
 $dropdown-min-width: 100px;
@@ -26,15 +27,15 @@ $dropdown-min-width: 100px;
 
 .feedback-status-new {
 	border-color: $ux-color-alert-error;
-	background-color: lighten($ux-color-alert-error, 50%);
+	background-color: color.adjust($ux-color-alert-error, $lightness: 50%);
 }
 
 .feedback-status-open {
 	border-color: $ux-color-alert-notification;
-	background-color: lighten($ux-color-alert-notification, 40%);
+	background-color: color.adjust($ux-color-alert-notification, $lightness: 40%);
 }
 
 .feedback-status-closed {
 	border-color: $ux-color-alert-success;
-	background-color: lighten($ux-color-alert-success, 40%);
+	background-color: color.adjust($ux-color-alert-success, $lightness: 40%);
 }

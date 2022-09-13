@@ -1,7 +1,8 @@
+@use 'sass:map';
 @import '../../../styles/shared';
 
 $loading-spinner-border: 5px !default;
-$loading-spinner-color: map-get($color-primary, 'darker') !default;
+$loading-spinner-color: map.get($color-primary, 'darker') !default;
 $loading-spinner-size: 42px !default;
 $loading-spinner-message-font-size: 24px !default;
 

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'shared';
 
 $anchored-table-min-height: 375px !default;
@@ -5,7 +6,7 @@ $anchored-table-min-height: 375px !default;
 .table-content {
 	border-bottom: 2px solid $border-color;
 	flex-grow: 1;
-	margin-bottom: map-get($spacers, 3);
+	margin-bottom: map.get($spacers, 3);
 	overflow: auto;
 
 	.table {

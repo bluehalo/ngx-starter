@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import './palettes';
 
 //==================================
@@ -18,24 +19,24 @@ $color-error: mat-palette($palette-red) !default;
 //==================================
 // UX Colors
 //==================================
-$ux-color-highlight: map-get($color-accent, 'lighter') !default;
+$ux-color-highlight: map.get($color-accent, 'lighter') !default;
 $ux-color-black: $color-black !default;
-$ux-color-dark-gray: map-get($color-background, 'darker') !default;
+$ux-color-dark-gray: map.get($color-background, 'darker') !default;
 $ux-color-background: $color-white !default;
 $ux-color-white: $color-white !default;
-$ux-color-brand-background: map-get($color-accent, 'default') !default;
-$ux-color-primary-highlight: map-get($color-primary, 'lightest') !default;
-$ux-color-primary-medium: map-get($color-primary, 'lighter') !default;
-$ux-color-primary: map-get($color-primary, 'default') !default;
-$ux-color-primary-dark: map-get($color-primary, 'darker') !default;
+$ux-color-brand-background: map.get($color-accent, 'default') !default;
+$ux-color-primary-highlight: map.get($color-primary, 'lightest') !default;
+$ux-color-primary-medium: map.get($color-primary, 'lighter') !default;
+$ux-color-primary: map.get($color-primary, 'default') !default;
+$ux-color-primary-dark: map.get($color-primary, 'darker') !default;
 
-$ux-color-alert-success: map-get($color-success, 'default') !default;
-$ux-color-alert-error: map-get($color-error, 'default') !default;
-$ux-color-alert-warning: map-get($color-warning, 'default') !default;
-$ux-color-alert-notification: map-get($color-info, 'default') !default;
+$ux-color-alert-success: map.get($color-success, 'default') !default;
+$ux-color-alert-error: map.get($color-error, 'default') !default;
+$ux-color-alert-warning: map.get($color-warning, 'default') !default;
+$ux-color-alert-notification: map.get($color-info, 'default') !default;
 
-$ux-color-light-gray: map-get($color-background, 'lightest') !default;
-$ux-color-medium-gray: map-get($color-background, 'lighter') !default;
+$ux-color-light-gray: map.get($color-background, 'lightest') !default;
+$ux-color-medium-gray: map.get($color-background, 'lighter') !default;
 
 $ux-color-body-text: $ux-color-dark-gray !default;
 $ux-color-heading: $ux-color-black !default;

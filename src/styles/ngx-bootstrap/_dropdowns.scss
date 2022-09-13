@@ -1,6 +1,7 @@
+@use 'sass:map';
 @import 'shared';
 
-$dropdown-element-font-color: map-get($color-background, 'lightest-contrast') !default;
+$dropdown-element-font-color: map.get($color-background, 'lightest-contrast') !default;
 
 .dropdown {
 	&.dropdown-table-inline .dropdown-toggle {

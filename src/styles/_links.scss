@@ -1,7 +1,8 @@
+@use 'sass:map';
 @import 'shared';
 
-$link-color-light: map-get($color-accent, 'lightest') !default;
-$link-color-dark: map-get($color-primary, 'default') !default;
+$link-color-light: map.get($color-accent, 'lightest') !default;
+$link-color-dark: map.get($color-primary, 'default') !default;
 
 .link {
 	&.link-light {

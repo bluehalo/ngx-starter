@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../../../../styles/shared';
 @import '../../../../styles/ngx-bootstrap/shared';
 
@@ -7,7 +8,7 @@ $sidebar-transition-duration: 0.15s !default;
 :host {
 	margin-left: 0;
 	margin-right: 0;
-	margin-bottom: map-get($spacers, 3);
+	margin-bottom: map.get($spacers, 3);
 	opacity: 0;
 	width: 0;
 	min-width: 0;
@@ -18,7 +19,7 @@ $sidebar-transition-duration: 0.15s !default;
 		opacity 0s ease-in-out $sidebar-transition-duration;
 
 	&.sidebar-open {
-		margin-left: map-get($spacers, 3);
+		margin-left: map.get($spacers, 3);
 		opacity: 1;
 		width: $sidebar-width;
 		min-width: $sidebar-width;
@@ -28,7 +29,7 @@ $sidebar-transition-duration: 0.15s !default;
 
 		&.sidebar-left {
 			margin-left: 0;
-			margin-right: map-get($spacers, 3);
+			margin-right: map.get($spacers, 3);
 		}
 	}
 }

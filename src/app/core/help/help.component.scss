@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../../../styles/shared';
 @import '../../../styles/ngx-bootstrap/shared';
 
@@ -53,11 +54,11 @@ $help-nav-link-padding: 1rem !default;
 	border: 1px solid $callout-border-color;
 	border-left-width: 5px;
 	border-radius: 3px;
-	margin: map-get($spacers, 3) 0;
-	padding: map-get($spacers, 4);
+	margin: map.get($spacers, 3) 0;
+	padding: map.get($spacers, 4);
 
 	h4 {
-		margin-bottom: map-get($spacers, 1);
+		margin-bottom: map.get($spacers, 1);
 		margin-top: 0;
 	}
 

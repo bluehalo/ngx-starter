@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../shared';
 
 // Options
@@ -40,9 +41,9 @@ $input-font-size: 0.875rem !default;
 $input-font-size-lg: 1rem !default;
 $input-font-size-sm: 0.75rem !default;
 
-$input-color: map-get($color-primary, 'darker') !default;
-$input-border-color: map-get($color-background, 'darker') !default;
-$input-placeholder-color: map-get($color-primary, 'lighter') !default;
+$input-color: map.get($color-primary, 'darker') !default;
+$input-border-color: map.get($color-background, 'darker') !default;
+$input-placeholder-color: map.get($color-primary, 'lighter') !default;
 
 $form-check-input-gutter: 0 !default;
 
@@ -61,7 +62,7 @@ $modal-dialog-margin-y-sm-up: 3rem !default;
 
 // Popovers
 $popover-bg: #fff !default;
-$popover-border-color: map-get($color-background, 'default') !default;
+$popover-border-color: map.get($color-background, 'default') !default;
 $popover-border-radius: $border-radius !default;
 $popover-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
 $popover-body-padding-y: 0 !default;
@@ -69,8 +70,8 @@ $popover-body-padding-x: 0 !default;
 
 // Tooltips
 $tooltip-font-size: 14px !default;
-$tooltip-color: map-get($color-background, 'darkest-contrast') !default;
-$tooltip-bg: fade-out(map-get($color-background, 'darkest'), 0.4) !default;
+$tooltip-color: map.get($color-background, 'darkest-contrast') !default;
+$tooltip-bg: fade-out(map.get($color-background, 'darkest'), 0.4) !default;
 $tooltip-padding-y: 8px !default;
 $tooltip-padding-x: 16px !default;
 

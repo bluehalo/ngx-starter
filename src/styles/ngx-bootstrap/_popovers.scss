@@ -1,7 +1,8 @@
+@use 'sass:map';
 @import 'shared';
 
-$popover-menu-item-font-color: map-get($color-background, 'lightest-contrast') !default;
-$popover-menu-item-hover-bg-color: map-get($color-background, 'default') !default;
+$popover-menu-item-font-color: map.get($color-background, 'lightest-contrast') !default;
+$popover-menu-item-hover-bg-color: map.get($color-background, 'default') !default;
 
 .nav-popover {
 	.popover {
