@@ -16,7 +16,7 @@ import { CacheEntry } from './cache-entry.model';
 })
 export class CacheEntryModalComponent implements OnInit {
 	@Input()
-	cacheEntry!: CacheEntry;
+	cacheEntry: CacheEntry;
 
 	constructor(public modalRef: BsModalRef) {}
 
