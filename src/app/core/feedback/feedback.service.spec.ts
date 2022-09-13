@@ -26,7 +26,7 @@ describe('FeedbackService', () => {
 	});
 
 	it('should exist', () => {
-		expect(new FeedbackService({} as any, {} as any)).toBeDefined();
+		expect(service).toBeDefined();
 	});
 
 	describe('feedback formatting', () => {
