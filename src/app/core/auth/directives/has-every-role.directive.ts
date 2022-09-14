@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -14,11 +14,10 @@ import { SessionService } from '../session.service';
 export class HasEveryRoleDirective extends AbstractIfThenElseDirective implements OnInit {
 	roles: Array<string | Role>;
 	constructor(
-		templateRef: TemplateRef<any>,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService
 	) {
-		super(templateRef);
+		super();
 	}
 
 	@Input()

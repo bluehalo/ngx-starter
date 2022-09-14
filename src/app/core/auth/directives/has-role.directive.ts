@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, inject, Input, OnInit, TemplateRef } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -13,13 +13,9 @@ import { SessionService } from '../session.service';
 })
 export class HasRoleDirective extends AbstractIfThenElseDirective implements OnInit {
 	role: string | Role;
-	constructor(
-		templateRef: TemplateRef<any>,
-		private sessionService: SessionService,
-		private authorizationService: AuthorizationService
-	) {
-		super(templateRef);
-	}
+
+	private sessionService = inject(SessionService);
+	private authorizationService = inject(AuthorizationService);
 
 	@Input()
 	set hasRole(role: string | Role) {
