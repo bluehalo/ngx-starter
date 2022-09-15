@@ -12,7 +12,7 @@ import { MessageService } from '../message.service';
 import { RecentMessagesComponent } from './recent-messages.component';
 
 describe('Recent Messages Component Spec', () => {
-	const now = new Date().getTime();
+	const now = new Date().toISOString();
 	let messageServiceSpy: any;
 	const messageResultsSpec: Message[] = [
 		new Message().setFromModel({

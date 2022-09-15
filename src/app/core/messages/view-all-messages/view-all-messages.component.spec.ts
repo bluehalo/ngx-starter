@@ -13,7 +13,7 @@ import { MessageService } from '../message.service';
 import { ViewAllMessagesComponent } from './view-all-messages.component';
 
 describe('View All Messages Component Spec', () => {
-	const now = new Date().getTime();
+	const now = new Date().toISOString();
 	let messageServiceSpy: any;
 	const messageResultsSpec: PagingResults<Message> = {
 		elements: [

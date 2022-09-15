@@ -6,7 +6,7 @@ export class Team {
 	_id: string;
 	name: string;
 	description: string;
-	created: number;
+	created: string;
 	implicitMembers: boolean;
 	requiresExternalRoles: string[] = [];
 	requiresExternalTeams: string[] = [];
