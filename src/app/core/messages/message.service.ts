@@ -1,12 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { of, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, first, map } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
@@ -24,21 +22,15 @@ export class MessageService extends AbstractEntityService<Message> {
 	constructor(
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService,
-		alertService: SystemAlertService,
-		http: HttpClient,
 		private socketService: SocketService
 	) {
-		super(
-			{
-				[ServiceMethod.create]: 'api/admin/message',
-				[ServiceMethod.read]: 'api/admin/message',
-				[ServiceMethod.update]: 'api/admin/message',
-				[ServiceMethod.delete]: 'api/admin/message',
-				[ServiceMethod.search]: 'api/messages'
-			},
-			http,
-			alertService
-		);
+		super({
+			[ServiceMethod.create]: 'api/admin/message',
+			[ServiceMethod.read]: 'api/admin/message',
+			[ServiceMethod.update]: 'api/admin/message',
+			[ServiceMethod.delete]: 'api/admin/message',
+			[ServiceMethod.search]: 'api/messages'
+		});
 
 		this.sessionService
 			.getSession()

@@ -1,3 +1,4 @@
+@use 'sass:list';
 @import 'colors';
 
 @mixin border($border-color, $border-width: 1px, $border-radius: 2px) {
@@ -15,7 +16,7 @@
 @mixin transition($properties...) {
 	$transition-list: ();
 	@each $prop in $properties {
-		$transition-list: append($transition-list, $prop 300ms, $separator: comma);
+		$transition-list: list.append($transition-list, $prop 300ms, $separator: comma);
 	}
 
 	transition: $transition-list;

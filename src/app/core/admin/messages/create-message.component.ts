@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 
-import { ModalService } from '../../../common/modal/modal.service';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.model';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
@@ -17,18 +13,8 @@ import { ManageMessageComponent } from './manage-message.component';
 export class CreateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-create';
 
-	constructor(
-		modalService: ModalService,
-		router: Router,
-		configService: ConfigService,
-		alertService: SystemAlertService,
-		private messageService: MessageService
-	) {
+	constructor(private messageService: MessageService) {
 		super(
-			modalService,
-			router,
-			configService,
-			alertService,
 			'Create Message',
 			'Provide the required information to create a new message',
 			'Create',

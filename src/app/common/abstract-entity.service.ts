@@ -1,4 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
 
 import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -17,11 +18,10 @@ export enum ServiceMethod {
 export abstract class AbstractEntityService<T extends { _id: string }> {
 	headers: any = { 'Content-Type': 'application/json' };
 
-	protected constructor(
-		protected urls: Record<ServiceMethod | string, string>,
-		protected http: HttpClient,
-		protected alertService: SystemAlertService
-	) {}
+	protected http = inject(HttpClient);
+	protected alertService = inject(SystemAlertService);
+
+	protected constructor(protected urls: Record<ServiceMethod | string, string>) {}
 
 	abstract mapToType(model: any): T;
 

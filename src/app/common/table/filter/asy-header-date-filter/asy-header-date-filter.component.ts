@@ -29,15 +29,11 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 	customRange: Date[] = [];
 
 	constructor(
-		// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-		@Optional()
-		_filter: AsyFilterDirective,
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
-		_columnDef: AsyFilterHeaderColumnDef,
-		changeDetectorRef: ChangeDetectorRef
+		_columnDef: AsyFilterHeaderColumnDef
 	) {
-		super(_filter, _columnDef, changeDetectorRef);
+		super(_columnDef);
 	}
 
 	onDateFilterChange() {

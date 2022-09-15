@@ -1,13 +1,14 @@
+@use 'sass:map';
 @import '../../../styles/shared';
 
-$header-banner-bg: map-get($color-background, 'darkest') !default;
-$header-banner-color: map-get($color-background, 'darkest-contrast') !default;
+$header-banner-bg: map.get($color-background, 'darkest') !default;
+$header-banner-color: map.get($color-background, 'darkest-contrast') !default;
 
-$footer-banner-bg: map-get($color-background, 'darkest') !default;
-$footer-banner-color: map-get($color-background, 'darkest-contrast') !default;
+$footer-banner-bg: map.get($color-background, 'darkest') !default;
+$footer-banner-color: map.get($color-background, 'darkest-contrast') !default;
 
-$copyright-banner-bg: map-get($color-background, 'default') !default;
-$copyright-banner-color: map-get($color-background, 'default-contrast') !default;
+$copyright-banner-bg: map.get($color-background, 'default') !default;
+$copyright-banner-color: map.get($color-background, 'default-contrast') !default;
 
 $site-content-padding-y: 2rem !default;
 $site-content-padding-x: 2rem !default;

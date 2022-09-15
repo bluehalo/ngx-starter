@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
-import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 
@@ -19,22 +17,11 @@ import { ManageUserComponent } from './manage-user.component';
 export class AdminEditUserComponent extends ManageUserComponent {
 	mode = 'admin-edit';
 
-	constructor(
-		router: Router,
-		configService: ConfigService,
-		alertService: SystemAlertService,
-		private route: ActivatedRoute,
-		private adminUsersService: AdminUsersService
-	) {
-		super(
-			router,
-			configService,
-			alertService,
-			'Edit User',
-			"Make changes to the user's information",
-			'Save',
-			'/admin/users'
-		);
+	private route = inject(ActivatedRoute);
+	private adminUsersService = inject(AdminUsersService);
+
+	constructor() {
+		super('Edit User', "Make changes to the user's information", 'Save', '/admin/users');
 	}
 
 	initialize() {

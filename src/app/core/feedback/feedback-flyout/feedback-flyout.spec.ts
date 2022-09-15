@@ -27,101 +27,84 @@ describe('FeedbackFlyoutComponent', () => {
 	let instance: FeedbackFlyoutComponent;
 	let element: DebugElement;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.configureTestingModule({
-				declarations: [FeedbackFlyoutComponent, FlyoutComponent],
-				imports: [BrowserModule, FormsModule, NgSelectModule],
-				providers: [
-					{ provide: Router, useValue: { url: 'test-url' } },
-					{ provide: ConfigService, useValue: { getConfig: () => configSubject$ } },
-					{ provide: FeedbackService, useValue: { submit: mockSubmitFunction } }
-				]
-			})
-				.compileComponents()
-				.then(() => {
-					fixture = TestBed.createComponent(FeedbackFlyoutComponent);
-					instance = fixture.componentInstance;
-					element = fixture.debugElement;
-
-					fixture.autoDetectChanges();
-				});
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [FeedbackFlyoutComponent, FlyoutComponent],
+			imports: [BrowserModule, FormsModule, NgSelectModule],
+			providers: [
+				{ provide: Router, useValue: { url: 'test-url' } },
+				{ provide: ConfigService, useValue: { getConfig: () => configSubject$ } },
+				{ provide: FeedbackService, useValue: { submit: mockSubmitFunction } }
+			]
 		})
-	);
+			.compileComponents()
+			.then(() => {
+				fixture = TestBed.createComponent(FeedbackFlyoutComponent);
+				instance = fixture.componentInstance;
+				element = fixture.debugElement;
 
-	it(
-		'should set the correct properties after loading config',
-		waitForAsync(() => {
-			// test that baseUrl is set
-			expect(instance.baseUrl).toEqual(mockConfigObject.app.clientUrl);
+				fixture.autoDetectChanges();
+			});
+	}));
 
-			// test that classification options are set
-			expect(instance.classificationOptions).toEqual(
-				mockConfigObject.feedback.classificationOpts
-			);
-		})
-	);
+	it('should set the correct properties after loading config', waitForAsync(() => {
+		// test that baseUrl is set
+		expect(instance.baseUrl).toEqual(mockConfigObject.app.clientUrl);
 
-	it(
-		'should set the appropriate feedback type when clicking top-level radio buttons',
-		waitForAsync(() => {
-			const radioButtons = element.queryAll(By.css('[name="type-option-radio"]'));
+		// test that classification options are set
+		expect(instance.classificationOptions).toEqual(
+			mockConfigObject.feedback.classificationOpts
+		);
+	}));
 
-			// ensure that we found all three options
-			expect(radioButtons.length).toBe(3);
+	it('should set the appropriate feedback type when clicking top-level radio buttons', waitForAsync(() => {
+		const radioButtons = element.queryAll(By.css('[name="type-option-radio"]'));
 
-			for (const btn of radioButtons) {
-				const expectedValue = btn.attributes['value'];
-				btn.triggerEventHandler('change', {});
-				expect(instance.feedback.type).toEqual(expectedValue);
-			}
-		})
-	);
+		// ensure that we found all three options
+		expect(radioButtons.length).toBe(3);
 
-	it(
-		'should set the appropriate feedback subType when clicking radio buttons under Bug Report',
-		waitForAsync(() => {
-			const bugReportRadioButton = element.query(By.css('#fo-type-option-3'));
-			expect(bugReportRadioButton).toBeDefined();
+		for (const btn of radioButtons) {
+			const expectedValue = btn.attributes['value'];
+			btn.triggerEventHandler('change', {});
+			expect(instance.feedback.type).toEqual(expectedValue);
+		}
+	}));
 
-			bugReportRadioButton.triggerEventHandler('change', {});
-			expect(instance.feedback.type).toEqual(bugReportRadioButton.attributes['value']);
+	it('should set the appropriate feedback subType when clicking radio buttons under Bug Report', waitForAsync(() => {
+		const bugReportRadioButton = element.query(By.css('#fo-type-option-3'));
+		expect(bugReportRadioButton).toBeDefined();
 
-			const bugReportTypeOptions = element.queryAll(By.css('[name="subtype-option-radio"]'));
+		bugReportRadioButton.triggerEventHandler('change', {});
+		expect(instance.feedback.type).toEqual(bugReportRadioButton.attributes['value']);
 
-			for (const btn of bugReportTypeOptions) {
-				btn.triggerEventHandler('change', {});
-				expect(instance.feedback.subType).toEqual(btn.attributes['value']);
-			}
-		})
-	);
+		const bugReportTypeOptions = element.queryAll(By.css('[name="subtype-option-radio"]'));
 
-	it(
-		'should show submit button as disabled when form is invalid',
-		waitForAsync(() => {
-			// locate the submit button and validate that it is disabled
-			const submitButton = element.query(By.css('button#submit'));
+		for (const btn of bugReportTypeOptions) {
+			btn.triggerEventHandler('change', {});
+			expect(instance.feedback.subType).toEqual(btn.attributes['value']);
+		}
+	}));
 
-			expect((submitButton.nativeNode as HTMLButtonElement).disabled).toBeTruthy();
-		})
-	);
+	it('should show submit button as disabled when form is invalid', waitForAsync(() => {
+		// locate the submit button and validate that it is disabled
+		const submitButton = element.query(By.css('button#submit'));
 
-	it(
-		'should allow submission when form is valid',
-		waitForAsync(() => {
-			const typeOption = element.query(By.css('#fo-type-option-1'));
-			expect(typeOption).toBeDefined();
-			typeOption.triggerEventHandler('change', {});
+		expect((submitButton.nativeNode as HTMLButtonElement).disabled).toBeTruthy();
+	}));
 
-			fixture.detectChanges();
+	it('should allow submission when form is valid', waitForAsync(() => {
+		const typeOption = element.query(By.css('#fo-type-option-1'));
+		expect(typeOption).toBeDefined();
+		typeOption.triggerEventHandler('change', {});
 
-			const textBox = element.query(By.css('textarea'));
-			expect(textBox).toBeDefined();
-			textBox.nativeElement.value = 'Nice app!';
+		fixture.detectChanges();
 
-			// locate the submit button and validate that it is disabled
-			const submitButton = element.query(By.css('button#submit'));
-			expect((submitButton.nativeNode as HTMLButtonElement).disabled).toBeFalsy();
-		})
-	);
+		const textBox = element.query(By.css('textarea'));
+		expect(textBox).toBeDefined();
+		textBox.nativeElement.value = 'Nice app!';
+
+		// locate the submit button and validate that it is disabled
+		const submitButton = element.query(By.css('button#submit'));
+		expect((submitButton.nativeNode as HTMLButtonElement).disabled).toBeFalsy();
+	}));
 });

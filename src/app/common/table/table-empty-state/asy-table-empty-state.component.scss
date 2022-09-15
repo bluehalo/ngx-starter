@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../../../../styles/shared';
 @import '../../../../styles/ngx-bootstrap/shared';
 
@@ -8,5 +9,5 @@
 .media img {
 	height: 90px;
 	width: 90px;
-	margin-right: map-get($spacers, 5);
+	margin-right: map.get($spacers, 5);
 }

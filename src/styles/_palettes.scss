@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 $color-black: #000 !default;
 $color-white: #fff !default;
 
@@ -247,7 +249,7 @@ $palette-blue: (
 // @param $color-map
 // @param $hue
 @function mat-contrast($palette, $hue) {
-	@return map-get(map-get($palette, contrast), $hue);
+	@return map.get(map.get($palette, contrast), $hue);
 }
 
 // Creates a map of hues to colors for a theme. This is used to define a theme palette in terms
@@ -266,11 +268,11 @@ $palette-blue: (
 	$result: map_merge(
 		$base-palette,
 		(
-			default: map-get($base-palette, $default),
-			lighter: map-get($base-palette, $lighter),
-			lightest: map-get($base-palette, $lightest),
-			darker: map-get($base-palette, $darker),
-			darkest: map-get($base-palette, $darkest),
+			default: map.get($base-palette, $default),
+			lighter: map.get($base-palette, $lighter),
+			lightest: map.get($base-palette, $lightest),
+			darker: map.get($base-palette, $darker),
+			darkest: map.get($base-palette, $darkest),
 			default-contrast: mat-contrast($base-palette, $default),
 			lighter-contrast: mat-contrast($base-palette, $lighter),
 			lightest-contrast: mat-contrast($base-palette, $lightest),

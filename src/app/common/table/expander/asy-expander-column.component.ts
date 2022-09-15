@@ -1,6 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { CdkTable } from '@angular/cdk/table';
-import { ChangeDetectionStrategy, Component, Input, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 
@@ -25,12 +24,8 @@ export class AsyExpanderColumnComponent<T, TB>
 	@Input()
 	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
 
-	constructor(
-		// `AsyExpanderColumn` is always requiring a table, but we just assert it manually
-		// for better error reporting.
-		@Optional() _table: CdkTable<T>
-	) {
-		super(_table);
+	constructor() {
+		super();
 		this.name = 'expander';
 	}
 

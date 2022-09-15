@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -10,9 +10,7 @@ import { AbstractModalizableDirective } from '../../../common/modal/abstract-mod
 	templateUrl: 'form-modal.component.html'
 })
 export class FormModalComponent extends AbstractModalizableDirective {
-	constructor(public modalRef: BsModalRef) {
-		super();
-	}
+	modalRef = inject(BsModalRef);
 
 	onOk() {
 		this.modalRef.hide();

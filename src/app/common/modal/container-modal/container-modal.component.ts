@@ -2,14 +2,12 @@ import {
 	AfterContentChecked,
 	AfterViewInit,
 	Component,
-	ComponentFactoryResolver,
 	Type,
 	ViewChild,
 	ViewContainerRef
 } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
 import { AbstractModalDirective } from '../abstract-modal.directive';
@@ -40,10 +38,6 @@ export class ContainerModalComponent
 	isOkDisabled = false;
 
 	isCdkFocusInitial = false;
-
-	constructor(modalRef: BsModalRef) {
-		super(modalRef);
-	}
 
 	ngAfterViewInit(): void {
 		// Add the supplied modalized component to the content container

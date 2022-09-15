@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'sass:math';
 @import 'shared';
 
@@ -85,7 +86,7 @@
 		@if $value == 0 {
 			$bp: 0;
 		}
-		$nav-opened-grid-breakpoints: map-merge(
+		$nav-opened-grid-breakpoints: map.merge(
 			$nav-opened-grid-breakpoints,
 			(
 				$key: $bp

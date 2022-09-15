@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Directive,
 	HostListener,
+	inject,
 	Input,
 	OnDestroy,
 	OnInit
@@ -36,17 +37,17 @@ export abstract class AsyAbstractHeaderFilterComponent
 	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input('filter-field') id: string;
 
-	protected constructor(
-		// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-		public _filter: AsyFilterDirective,
-		public _columnDef: AsyFilterHeaderColumnDef,
-		protected changeDetectorRef: ChangeDetectorRef
-	) {}
+	// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
+	protected _filter = inject(AsyFilterDirective, { optional: true }) as AsyFilterDirective;
+
+	protected changeDetectorRef = inject(ChangeDetectorRef);
 
 	abstract _buildFilter(): any;
 	abstract _buildState(): any;
 	abstract _clearState(): void;
 	abstract _restoreState(state: any): void;
+
+	protected constructor(public _columnDef: AsyFilterHeaderColumnDef) {}
 
 	ngOnInit(): void {
 		if (!this._filter) {

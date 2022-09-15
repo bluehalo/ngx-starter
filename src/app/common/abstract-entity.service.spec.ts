@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -11,18 +11,14 @@ import { SystemAlertService } from './system-alert/system-alert.service';
 	providedIn: 'root'
 })
 class TestEntityService extends AbstractEntityService<any> {
-	constructor(http: HttpClient, alertService: SystemAlertService) {
-		super(
-			{
-				[ServiceMethod.create]: 'api/test',
-				[ServiceMethod.read]: 'api/test',
-				[ServiceMethod.update]: 'api/test',
-				[ServiceMethod.delete]: 'api/test',
-				[ServiceMethod.search]: 'api/tests'
-			},
-			http,
-			alertService
-		);
+	constructor() {
+		super({
+			[ServiceMethod.create]: 'api/test',
+			[ServiceMethod.read]: 'api/test',
+			[ServiceMethod.update]: 'api/test',
+			[ServiceMethod.delete]: 'api/test',
+			[ServiceMethod.search]: 'api/tests'
+		});
 	}
 
 	mapToType(model: any): any {

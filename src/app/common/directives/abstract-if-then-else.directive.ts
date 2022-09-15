@@ -1,5 +1,6 @@
 import {
 	EmbeddedViewRef,
+	inject,
 	TemplateRef,
 	ViewContainerRef,
 	ɵstringify as stringify
@@ -8,14 +9,11 @@ import {
 export abstract class AbstractIfThenElseDirective {
 	protected _andCondition = true;
 	protected _orCondition = false;
-	private _thenTemplateRef: TemplateRef<any> | null = null;
+	private _thenTemplateRef: TemplateRef<any> | null = inject(TemplateRef<any>);
 	private _elseTemplateRef: TemplateRef<any> | null = null;
 	private _thenViewRef: EmbeddedViewRef<any> | null = null;
 	private _elseViewRef: EmbeddedViewRef<any> | null = null;
-
-	protected constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>) {
-		this._thenTemplateRef = templateRef;
-	}
+	private _viewContainer = inject(ViewContainerRef);
 
 	protected setThenTemplate(property: string, templateRef: TemplateRef<any> | null) {
 		assertTemplate(property, templateRef);

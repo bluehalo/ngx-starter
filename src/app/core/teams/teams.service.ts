@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { of, Observable } from 'rxjs';
@@ -6,7 +6,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';
@@ -24,23 +23,17 @@ export interface AddedMember {
 @Injectable()
 export class TeamsService extends AbstractEntityService<Team> {
 	constructor(
-		http: HttpClient,
-		alertService: SystemAlertService,
 		private sessionService: SessionService,
 		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService
 	) {
-		super(
-			{
-				[ServiceMethod.create]: 'api/team',
-				[ServiceMethod.read]: 'api/team',
-				[ServiceMethod.update]: 'api/team',
-				[ServiceMethod.delete]: 'api/team',
-				[ServiceMethod.search]: 'api/teams'
-			},
-			http,
-			alertService
-		);
+		super({
+			[ServiceMethod.create]: 'api/team',
+			[ServiceMethod.read]: 'api/team',
+			[ServiceMethod.update]: 'api/team',
+			[ServiceMethod.delete]: 'api/team',
+			[ServiceMethod.search]: 'api/teams'
+		});
 	}
 
 	mapToType(model: any): Team {

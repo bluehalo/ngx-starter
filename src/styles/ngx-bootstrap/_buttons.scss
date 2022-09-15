@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'sass:math';
 @import 'shared';
 
@@ -122,9 +123,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 	}
 }
 
-//
 // Submit button with progress indicator
-//
 @if $btn-submit-style == spinner {
 	.btn-submit {
 		padding-right: $btn-padding-x + 1.75rem;
@@ -161,7 +160,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 	@if $btn-submit-linear-animation-name == btn-disabled-gradient {
 		@-webkit-keyframes btn-disabled-gradient {
 			@for $i from 0 through $btn-submit-linear-steps {
-				#{$i * (100%/$btn-submit-linear-steps)} {
+				#{$i * (100% / $btn-submit-linear-steps)} {
 					mask-image: linear-gradient(
 						$btn-submit-linear-direction,
 						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
@@ -174,7 +173,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 
 		@keyframes btn-disabled-gradient {
 			@for $i from 0 through $btn-submit-linear-steps {
-				#{$i * (100%/$btn-submit-linear-steps)} {
+				#{$i * (100% / $btn-submit-linear-steps)} {
 					mask-image: linear-gradient(
 						$btn-submit-linear-direction,
 						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
@@ -187,10 +186,9 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 	}
 }
 
-// File
-//
-// Custom file input.
+// File Button
 
+// Custom file input.
 .custom-file-btn {
 	display: flex;
 	align-items: center;
@@ -274,13 +272,13 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 							0
 							0
 							$btn-focus-width
-							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+							rgba(color.mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				} @else {
 					box-shadow: 0
 						0
 						0
 						$btn-focus-width
-						rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+						rgba(color.mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 				}
 			}
 
@@ -314,13 +312,16 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 								0
 								0
 								$btn-focus-width
-								rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+								rgba(
+									color.mix(color-yiq($ux-button-bg), $ux-button-border, 15%),
+									0.5
+								);
 					} @else {
 						box-shadow: 0
 							0
 							0
 							$btn-focus-width
-							rgba(mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
+							rgba(color.mix(color-yiq($ux-button-bg), $ux-button-border, 15%), 0.5);
 					}
 				}
 			}

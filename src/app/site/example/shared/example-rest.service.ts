@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -8,9 +8,7 @@ import { ExampleService } from './example.service';
 
 @Injectable()
 export class ExampleRestService extends ExampleService {
-	constructor(private http: HttpClient) {
-		super();
-	}
+	private http = inject(HttpClient);
 
 	/*
 	 * API Methods

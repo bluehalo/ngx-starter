@@ -1,5 +1,6 @@
 import {
 	Directive,
+	inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -30,16 +31,14 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, On
 
 	displayedColumns = ['name', 'created', 'description'];
 
-	protected constructor(
-		private teamsService: TeamsService,
-		private alertService: SystemAlertService,
-		private authorizationService: AuthorizationService,
-		public dataSource: AsyTableDataSource<Team>
-	) {}
+	teamsService = inject(TeamsService);
+	alertService = inject(SystemAlertService);
+	authorizationService = inject(AuthorizationService);
+
+	protected constructor(public dataSource: AsyTableDataSource<Team>) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-
 		this.canCreateTeam = this.authorizationService.hasSomeRoles(['editor', 'admin']);
 	}
 

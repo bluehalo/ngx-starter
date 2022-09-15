@@ -1,12 +1,9 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
-import { ConfigService } from '../../config.service';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 
@@ -18,16 +15,10 @@ import { ManageUserComponent } from './manage-user.component';
 export class AdminCreateUserComponent extends ManageUserComponent {
 	mode = 'admin-create';
 
-	constructor(
-		router: Router,
-		configService: ConfigService,
-		alertService: SystemAlertService,
-		private adminUsersService: AdminUsersService
-	) {
+	private adminUsersService = inject(AdminUsersService);
+
+	constructor() {
 		super(
-			router,
-			configService,
-			alertService,
 			'Create User',
 			'Provide the required information to create a new user',
 			'Create',

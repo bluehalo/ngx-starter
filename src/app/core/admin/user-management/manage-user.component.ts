@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Directive, OnInit } from '@angular/core';
+import { Directive, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed } from '@ngneat/until-destroy';
@@ -20,10 +20,11 @@ export abstract class ManageUserComponent implements OnInit {
 	user: User = new User();
 	possibleRoles = Role.ROLES;
 
+	protected router = inject(Router);
+	protected configService = inject(ConfigService);
+	protected alertService = inject(SystemAlertService);
+
 	protected constructor(
-		protected router: Router,
-		protected configService: ConfigService,
-		protected alertService: SystemAlertService,
 		public title: string,
 		public subtitle: string,
 		public okButtonText: string,

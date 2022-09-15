@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import '../../../../styles/ngx-bootstrap/shared';
 @import '../../../../styles/shared';
 @import '../../site-navbar/shared';
@@ -8,14 +9,14 @@ $recent-message-preview-lint-count: 3 !default;
 :host {
 	display: flex;
 	flex-direction: column;
-	gap: map-get($spacers, 3);
-	padding: map-get($spacers, 3);
+	gap: map.get($spacers, 3);
+	padding: map.get($spacers, 3);
 }
 
 .cards {
 	display: flex;
 	flex-direction: column;
-	gap: map-get($spacers, 3);
+	gap: map.get($spacers, 3);
 	padding: 2px;
 	overflow: auto;
 	min-height: 120px;
