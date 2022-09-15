@@ -10,8 +10,8 @@ export class Message {
 	public title: string;
 	public type: MessageType;
 	public body: string;
-	public updated: number;
-	public created: number;
+	public updated: string;
+	public created: string;
 	public creator: any;
 
 	public setFromModel(model: any): Message {

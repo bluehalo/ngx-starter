@@ -21,8 +21,12 @@ export class AuthorizationService {
 	}
 
 	public isEuaCurrent() {
-		const euaPublished: number = this.session?.user?.eua?.published ?? 0;
-		const euaAccepted: number = this.session?.user?.userModel?.acceptedEua ?? 0;
+		const euaPublished: number = this.session?.user?.eua?.published
+			? new Date(this.session?.user?.eua?.published).getTime()
+			: 0;
+		const euaAccepted: number = this.session?.user?.userModel?.acceptedEua
+			? new Date(this.session?.user?.userModel?.acceptedEua).getTime()
+			: 0;
 
 		return euaAccepted >= euaPublished;
 	}

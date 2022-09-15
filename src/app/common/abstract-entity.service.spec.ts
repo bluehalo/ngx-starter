@@ -87,7 +87,7 @@ describe('AbstractEntityService', () => {
 			const req = httpTestingController.expectOne('api/test');
 			expect(req.request.method).toEqual('POST');
 
-			req.flush({ ...testData, created: Date.now() });
+			req.flush({ ...testData, created: new Date().toISOString() });
 
 			httpTestingController.verify();
 		});
@@ -124,7 +124,7 @@ describe('AbstractEntityService', () => {
 			const req = httpTestingController.expectOne('api/test/12345');
 			expect(req.request.method).toEqual('GET');
 
-			req.flush({ ...testData, created: Date.now() });
+			req.flush({ ...testData, created: new Date().toISOString() });
 
 			httpTestingController.verify();
 		});
@@ -161,7 +161,7 @@ describe('AbstractEntityService', () => {
 			const req = httpTestingController.expectOne('api/test/12345');
 			expect(req.request.method).toEqual('POST');
 
-			req.flush({ ...testData, created: Date.now() });
+			req.flush({ ...testData, created: new Date().toISOString() });
 
 			httpTestingController.verify();
 		});
@@ -198,7 +198,7 @@ describe('AbstractEntityService', () => {
 			const req = httpTestingController.expectOne('api/test/12345');
 			expect(req.request.method).toEqual('DELETE');
 
-			req.flush({ ...testData, created: Date.now() });
+			req.flush({ ...testData, created: new Date().toISOString() });
 
 			httpTestingController.verify();
 		});
@@ -312,7 +312,7 @@ describe('AbstractEntityService', () => {
 			const req = httpTestingController.expectOne('api/test/12345/action');
 			expect(req.request.method).toEqual('POST');
 
-			req.flush({ ...testData, created: Date.now() });
+			req.flush({ ...testData, created: new Date().toISOString() });
 
 			httpTestingController.verify();
 		});

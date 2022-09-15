@@ -23,7 +23,7 @@ describe('Create Message Component', () => {
 	let rootHTMLElement: HTMLElement;
 	let component: CreateMessageComponent;
 
-	const dateTime = new Date().getTime();
+	const dateTime = new Date().toISOString();
 	const message: Message[] = [
 		new Message().setFromModel({
 			_id: '1234567890',
