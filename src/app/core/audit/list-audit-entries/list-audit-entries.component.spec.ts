@@ -65,7 +65,7 @@ describe('Audit Component Spec', () => {
 		totalSize: 1,
 		elements: [
 			{
-				created: 1567973747442,
+				created: '2019-09-08T20:15:47.442Z',
 				id: '5d75617309e3e93d36b1c948',
 				message: 'admin user updated',
 				audit: {
