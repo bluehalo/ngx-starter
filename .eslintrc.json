@@ -19,6 +19,7 @@
         ],
         "createDefaultProgram": true
       },
+      "plugins": ["deprecation"],
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
@@ -48,6 +49,7 @@
           "warn",
           { "vars": "all", "args": "none" }
         ],
+        "deprecation/deprecation": "warn", // or "error" to have stricter rule
         "no-restricted-imports": ["error", {
           "paths": [
             "lodash",
