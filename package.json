@@ -31,6 +31,7 @@
     "@ng-select/ng-select": "~9.0.2",
     "@ngneat/until-destroy": "~9.0.0",
     "bootstrap": "4.6.1",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "font-awesome": "4.7",
     "lodash": "~4.17.21",
     "luxon": "~3.0.0",

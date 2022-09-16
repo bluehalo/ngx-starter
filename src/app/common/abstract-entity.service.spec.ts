@@ -218,8 +218,6 @@ describe('AbstractEntityService', () => {
 	});
 
 	describe('search', () => {
-		const testData: any = { _id: '12345', field: 'value' };
-
 		const paging = new PagingOptions();
 
 		it('should return results', () => {

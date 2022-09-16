@@ -5,7 +5,6 @@ import {
 	OnChanges,
 	OnDestroy,
 	OnInit,
-	Optional,
 	SimpleChanges
 } from '@angular/core';
 

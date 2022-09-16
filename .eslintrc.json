@@ -3,6 +3,11 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {} // this loads <rootdir>/tsconfig.js to eslint
+    }
+  },
   "overrides": [
     {
       "files": [
@@ -39,6 +44,10 @@
             "style": "kebab-case"
           }
         ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          { "vars": "all", "args": "none" }
+        ],
         "no-restricted-imports": ["error", {
           "paths": [
             "lodash",
@@ -65,7 +74,7 @@
             "caseInsensitive": true
           }
         }],
-        "import/no-unresolved": ["off"],
+        "import/no-unresolved": ["error"],
         "rxjs/prefer-observer": ["error"],
         "rxjs/finnish": ["error", {
           "methods": false

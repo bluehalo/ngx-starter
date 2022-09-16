@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
 import { combineLatest, of, Observable } from 'rxjs';
-import { catchError, first, map, switchMap } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { AuthorizationService } from './authorization.service';

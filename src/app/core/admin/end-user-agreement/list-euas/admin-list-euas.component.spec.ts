@@ -20,7 +20,6 @@ describe('Admin List End User Agreements Component', () => {
 	let modalServiceSpy: any;
 
 	let fixture: ComponentFixture<AdminListEuasComponent>;
-	let rootHTMLElement: HTMLElement;
 	let component: AdminListEuasComponent;
 
 	beforeEach(() => {
@@ -30,12 +29,12 @@ describe('Admin List End User Agreements Component', () => {
 		};
 		endUserAgreementServiceSpy = jasmine.createSpyObj('EuaService', ['search']);
 		endUserAgreementServiceSpy.search.and.callFake(() => {
-			return of();
+			return of(void 0);
 		});
 		endUserAgreementServiceSpy.cache = {};
 		modalServiceSpy = jasmine.createSpyObj('ModalService', ['alert']);
 		modalServiceSpy.alert.and.callFake(() => {
-			return of();
+			return of(void 0);
 		});
 		const testBed = TestBed.configureTestingModule({
 			declarations: [AdminListEuasComponent],
@@ -56,7 +55,6 @@ describe('Admin List End User Agreements Component', () => {
 		});
 		fixture = testBed.createComponent(AdminListEuasComponent);
 		component = fixture.componentInstance;
-		rootHTMLElement = fixture.debugElement.nativeElement;
 	});
 
 	it('Should Exist', () => {

@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import isEmpty from 'lodash/isEmpty';
 import { Observable } from 'rxjs';
 
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-import { ConfigService } from '../../core/config.service';
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
