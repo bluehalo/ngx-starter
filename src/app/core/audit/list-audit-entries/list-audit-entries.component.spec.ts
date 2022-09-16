@@ -12,7 +12,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { of } from 'rxjs';
 
 import { DirectivesModule } from '../../../common/directives.module';
-import { PagingResults } from '../../../common/paging/paging.model';
+import { PagingResults } from '../../../common/paging.model';
 import { PipesModule } from '../../../common/pipes.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';

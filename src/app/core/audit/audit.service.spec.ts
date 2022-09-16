@@ -3,7 +3,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
-import { PagingOptions, PagingResults } from '../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../common/paging.model';
 import { SystemAlertModule } from '../../common/system-alert.module';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { User } from '../auth/user.model';

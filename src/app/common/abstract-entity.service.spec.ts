@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { AbstractEntityService, ServiceMethod } from './abstract-entity.service';
-import { PagingOptions } from './paging/paging.model';
+import { PagingOptions } from './paging.model';
 import { SystemAlertService } from './system-alert/system-alert.service';
 
 @Injectable({

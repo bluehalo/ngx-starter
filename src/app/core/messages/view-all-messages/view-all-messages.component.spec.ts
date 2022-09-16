@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { of, Subject } from 'rxjs';
 
-import { PagingResults } from '../../../common/paging/paging.model';
+import { PagingResults } from '../../../common/paging.model';
 import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
