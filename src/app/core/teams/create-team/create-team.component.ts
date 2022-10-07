@@ -14,7 +14,7 @@ import {
 	tap
 } from 'rxjs/operators';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { PagingOptions } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';

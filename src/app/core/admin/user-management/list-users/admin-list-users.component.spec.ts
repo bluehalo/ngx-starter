@@ -10,7 +10,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 
 import { ModalService } from '../../../../common/modal/modal.service';
-import { PagingResults } from '../../../../common/paging/paging.model';
+import { PagingResults } from '../../../../common/paging.model';
 import { PipesModule } from '../../../../common/pipes.module';
 import { SearchInputModule } from '../../../../common/search-input.module';
 import { SystemAlertModule } from '../../../../common/system-alert.module';

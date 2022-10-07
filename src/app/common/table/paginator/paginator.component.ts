@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { PageChange } from '../../paging/paging.model';
+import { PageChange } from '../../paging.model';
 import { AsyTableDataSource } from '../asy-table-data-source';
 
 @Component({

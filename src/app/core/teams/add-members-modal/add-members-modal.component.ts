@@ -14,7 +14,7 @@ import {
 	tap
 } from 'rxjs/operators';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';

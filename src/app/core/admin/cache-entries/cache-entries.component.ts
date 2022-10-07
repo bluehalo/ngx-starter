@@ -8,12 +8,8 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
-import {
-	PagingOptions,
-	PagingResults,
-	SortableTableHeader,
-	SortDirection
-} from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.model';
+import { SortDirection } from '../../../common/sorting.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { CacheEntriesService } from './cache-entries.service';
@@ -26,25 +22,6 @@ import { CacheEntry } from './cache-entry.model';
 	templateUrl: './cache-entries.component.html'
 })
 export class CacheEntriesComponent implements OnDestroy, OnInit {
-	headers: SortableTableHeader[] = [
-		{
-			name: 'Key',
-			sortable: true,
-			sortField: 'key',
-			sortDir: SortDirection.asc,
-			tooltip: 'Sort by Key',
-			default: true
-		},
-		{ name: 'Value', sortable: false },
-		{
-			name: 'Timestamp',
-			sortable: true,
-			sortField: 'ts',
-			sortDir: SortDirection.desc,
-			tooltip: 'Sort by Timestamp'
-		}
-	];
-
 	displayedColumns = ['key', 'value', 'timestamp', 'actionsMenu'];
 
 	dataSource = new AsyTableDataSource<CacheEntry>(

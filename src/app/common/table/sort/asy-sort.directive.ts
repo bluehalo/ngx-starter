@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
 
-import { SortChange } from '../../paging/sorting.model';
+import { SortChange } from '../../sorting.model';
 import { AsyTableDataSource } from '../asy-table-data-source';
 
 /** Interface for a directive that holds sorting state consumed by `AsySortHeader`. */

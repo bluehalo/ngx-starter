@@ -12,7 +12,7 @@ import {
 import cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AuthorizationService } from '../../auth/authorization.service';

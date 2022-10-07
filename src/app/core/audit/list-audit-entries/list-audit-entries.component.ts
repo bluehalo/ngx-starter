@@ -5,7 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import { ConfigService } from '../../config.service';

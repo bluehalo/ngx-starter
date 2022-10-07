@@ -4,7 +4,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
-import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../../common/paging.model';
+import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
 import { ExportConfigService } from '../../../export-config.service';

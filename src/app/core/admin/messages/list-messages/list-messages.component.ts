@@ -7,7 +7,8 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../../common/modal/modal.model';
 import { ModalService } from '../../../../common/modal/modal.service';
-import { PagingOptions, PagingResults, SortDirection } from '../../../../common/paging.module';
+import { PagingOptions, PagingResults } from '../../../../common/paging.model';
+import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
 import { Message } from '../../../messages/message.model';
