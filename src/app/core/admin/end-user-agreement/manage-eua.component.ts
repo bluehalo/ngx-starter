@@ -2,8 +2,6 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ModalService } from '../../../common/modal/modal.service';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { ConfigService } from '../../config.service';
 import { EndUserAgreement } from './eua.model';
 
 export abstract class ManageEuaComponent {

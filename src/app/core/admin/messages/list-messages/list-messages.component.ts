@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';

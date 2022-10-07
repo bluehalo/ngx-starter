@@ -1,7 +1,5 @@
 import {
 	Component,
-	ComponentFactory,
-	ComponentFactoryResolver,
 	ComponentRef,
 	Injectable,
 	Input,
@@ -54,6 +52,4 @@ export class HelpTopicComponent {
 	}
 
 	componentRef?: ComponentRef<any>;
-
-	constructor(private resolver: ComponentFactoryResolver) {}
 }

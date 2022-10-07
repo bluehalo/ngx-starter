@@ -16,7 +16,6 @@ import { SystemAlertModule } from '../../../common/system-alert.module';
 import { TableModule } from '../../../common/table.module';
 import { AdminCreateUserComponent } from './admin-create-user.component';
 import { AdminEditUserComponent } from './admin-edit-user.component';
-import { AdminUsersService } from './admin-users.service';
 import { AdminListUsersComponent } from './list-users/admin-list-users.component';
 import { UserRoleFilterDirective } from './list-users/user-role-filter.directive';
 

@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, filter, first, map } from 'rxjs/operators';
+import { catchError, filter, first } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { AuthorizationService } from '../auth/authorization.service';

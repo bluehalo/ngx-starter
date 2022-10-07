@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { BsModalRef } from 'ngx-bootstrap/modal';
-
 import { AbstractModalDirective } from '../abstract-modal.directive';
 import { ModalAction, ModalCloseEvent, ModalInput } from '../modal.model';
 

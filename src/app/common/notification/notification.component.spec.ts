@@ -27,7 +27,6 @@ describe('NotificationComponent', () => {
 	let defaultRootHTMLElement: HTMLElement;
 
 	let providedFixture: ComponentFixture<NotificationProvidedTestHostComponent>;
-	let providedTestHost: NotificationProvidedTestHostComponent;
 	let providedRootHTMLElement: HTMLElement;
 
 	beforeEach(() => {
@@ -45,7 +44,6 @@ describe('NotificationComponent', () => {
 		defaultFixture.detectChanges();
 
 		providedFixture = testbed.createComponent(NotificationProvidedTestHostComponent);
-		providedTestHost = providedFixture.componentInstance;
 		providedRootHTMLElement = providedFixture.debugElement.nativeElement;
 		providedFixture.detectChanges();
 	});

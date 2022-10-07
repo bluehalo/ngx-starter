@@ -49,6 +49,7 @@ describe('Container Modal Component', () => {
 			comp.ngAfterViewInit();
 
 			expect(comp.modalizableComponentContainer.clear).toHaveBeenCalledTimes(1);
+			// eslint-disable-next-line deprecation/deprecation
 			expect(comp.modalizableComponentContainer.createComponent).toHaveBeenCalledTimes(1);
 
 			expect(comp.okSubject).toBeDefined();

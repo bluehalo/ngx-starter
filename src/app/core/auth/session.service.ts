@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
-import isEmpty from 'lodash/isEmpty';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 

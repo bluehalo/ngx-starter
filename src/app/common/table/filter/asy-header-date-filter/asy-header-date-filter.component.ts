@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Inject,
-	Optional
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
 
 import { DateTime } from 'luxon';
 
@@ -12,7 +6,6 @@ import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
-import { AsyFilterDirective } from '../asy-filter.directive';
 
 @Component({
 	selector: 'asy-header-filter[date-filter]',
