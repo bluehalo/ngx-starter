@@ -6,7 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 
-import { PagingOptions } from '../../../common/paging.module';
+import { PagingOptions } from '../../../common/paging.model';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';

@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from './paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from './paging.model';
 import { SystemAlertService } from './system-alert/system-alert.service';
 
 export enum ServiceMethod {

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { CacheEntry } from './cache-entry.model';
 

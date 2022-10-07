@@ -5,7 +5,7 @@ import { of, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.module';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';

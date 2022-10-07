@@ -4,13 +4,8 @@ import isEmpty from 'lodash/isEmpty';
 import { combineLatest, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 
-import {
-	NULL_PAGING_RESULTS,
-	PageChange,
-	PagingOptions,
-	PagingResults
-} from '../paging/paging.model';
-import { SortChange } from '../paging/sorting.model';
+import { NULL_PAGING_RESULTS, PageChange, PagingOptions, PagingResults } from '../paging.model';
+import { SortChange } from '../sorting.model';
 import { SessionStorageService } from '../storage/session-storage.service';
 
 type LoadPageFunction<T> = (options: {

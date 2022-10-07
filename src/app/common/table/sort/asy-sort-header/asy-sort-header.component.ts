@@ -11,7 +11,7 @@ import {
 
 import { Subscription } from 'rxjs';
 
-import { SortDir, SortDirection } from '../../../paging/sorting.model';
+import { SortDir, SortDirection } from '../../../sorting.model';
 import { AsySortable, AsySortDirective } from '../asy-sort.directive';
 
 /** Column definition associated with a `AsySortHeader` */
