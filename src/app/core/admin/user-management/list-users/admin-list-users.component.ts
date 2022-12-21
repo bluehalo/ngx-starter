@@ -15,6 +15,7 @@ import { AsyTableDataSource } from '../../../../common/table/asy-table-data-sour
 import { AsyFilterDirective } from '../../../../common/table/filter/asy-filter.directive';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
+import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { AdminUsersService } from '../admin-users.service';
 
@@ -98,6 +99,8 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	];
 	displayedColumns: string[] = [];
 
+	allowDelete = true;
+
 	dataSource = new AsyTableDataSource<User>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'admin-list-users-component',
@@ -113,12 +116,21 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService,
-		private modalService: ModalService
+		private modalService: ModalService,
+		private configService: ConfigService
 	) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
+		this.configService
+			.getConfig()
+			.pipe(first())
+			.subscribe((config) => {
+				if (config) {
+					this.allowDelete = config.allowDelete;
+				}
+			});
 	}
 
 	ngOnDestroy() {

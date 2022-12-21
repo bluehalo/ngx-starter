@@ -180,7 +180,10 @@
 									>
 								</li>
 								<li>
-									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
+									<a
+										class="dropdown-item"
+										*ngIf="allowDelete"
+										(click)="confirmDeleteUser(user)"
 										>Delete</a
 									>
 								</li>

@@ -38,6 +38,8 @@ export interface Config {
 	version: string;
 	contactEmail: string;
 
+	allowDelete: boolean;
+
 	apiDocs: ApiDocsConfig;
 
 	banner: BannerConfig;
