@@ -38,7 +38,7 @@ export interface Config {
 	version: string;
 	contactEmail: string;
 
-	allowUserDelete: boolean;
+	allowDeleteUser: boolean;
 
 	apiDocs: ApiDocsConfig;
 
