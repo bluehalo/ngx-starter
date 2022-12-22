@@ -99,7 +99,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	];
 	displayedColumns: string[] = [];
 
-	allowDelete = true;
+	allowUserDelete = true;
 
 	dataSource = new AsyTableDataSource<User>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
@@ -128,7 +128,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			.pipe(first())
 			.subscribe((config) => {
 				if (config) {
-					this.allowDelete = config.allowDelete;
+					this.allowUserDelete = config.allowUserDelete;
 				}
 			});
 	}

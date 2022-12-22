@@ -45,7 +45,7 @@ describe('Site Navbar Component Spec', () => {
 		teams: { implicitMembers: { strategy: 'local' } },
 		version: 'test',
 		masqueradeEnabled: false,
-		allowDelete: true
+		allowUserDelete: true
 	};
 
 	let mockConfig: Config;
