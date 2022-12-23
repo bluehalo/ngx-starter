@@ -44,7 +44,8 @@ describe('Site Navbar Component Spec', () => {
 		contactEmail: 'test@test.com',
 		teams: { implicitMembers: { strategy: 'local' } },
 		version: 'test',
-		masqueradeEnabled: false
+		masqueradeEnabled: false,
+		allowDeleteUser: true
 	};
 
 	let mockConfig: Config;

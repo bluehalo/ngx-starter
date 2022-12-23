@@ -179,7 +179,7 @@
 										>Edit</a
 									>
 								</li>
-								<li>
+								<li *ngIf="allowDeleteUser">
 									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
 										>Delete</a
 									>
