@@ -5,6 +5,7 @@ import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
+import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { NavigationService } from '../navigation.service';
 
@@ -17,15 +18,19 @@ export class UserEuaComponent implements OnInit {
 
 	eua$: Observable<any>;
 
+	alreadyAccepted: boolean;
+
 	constructor(
 		private sessionService: SessionService,
 		private navigationService: NavigationService,
-		private alertService: SystemAlertService
+		private alertService: SystemAlertService,
+		private authorizationService: AuthorizationService
 	) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.eua$ = this.sessionService.getCurrentEua();
+		this.alreadyAccepted = this.authorizationService.isEuaCurrent();
 	}
 
 	accept() {
