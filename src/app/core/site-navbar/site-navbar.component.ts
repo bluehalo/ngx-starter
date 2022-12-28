@@ -49,7 +49,7 @@ export class SiteNavbarComponent implements OnInit {
 
 	numNewMessages = 0;
 
-	euaExists = false;
+	eua: any;
 
 	@Output()
 	readonly navbarOpenChange = new EventEmitter<boolean>();
@@ -88,6 +88,13 @@ export class SiteNavbarComponent implements OnInit {
 				this.canMasquerade = session?.user?.userModel?.canMasquerade ?? false;
 			});
 
+		this.sessionService
+			.getCurrentEua()
+			.pipe(untilDestroyed(this))
+			.subscribe((eua) => {
+				this.eua = eua;
+			});
+
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))
@@ -105,13 +112,6 @@ export class SiteNavbarComponent implements OnInit {
 		});
 
 		this.isMasquerade = this.masqueradeService.getMasqueradeDn() !== undefined;
-
-		this.sessionService
-			.getCurrentEua()
-			.pipe(untilDestroyed(this))
-			.subscribe((eua) => {
-				this.euaExists = eua ? true : false;
-			});
 	}
 
 	toggleNavbar() {
