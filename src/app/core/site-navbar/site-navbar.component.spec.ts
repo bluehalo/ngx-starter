@@ -76,8 +76,9 @@ describe('Site Navbar Component Spec', () => {
 		messageServiceSpy.remove.and.returnValue(of({}));
 		messageServiceSpy.numMessagesIndicator$ = of(0);
 
-		sessionServiceSpy = jasmine.createSpyObj('SessionService', ['getSession']);
+		sessionServiceSpy = jasmine.createSpyObj('SessionService', ['getSession', 'getCurrentEua']);
 		sessionServiceSpy.getSession.and.returnValue(of({}));
+		sessionServiceSpy.getCurrentEua.and.returnValue(of({}));
 
 		masqServiceSpy = jasmine.createSpyObj('MasqueradeService', ['getMasqueradeDn']);
 		masqServiceSpy.getMasqueradeDn.and.returnValue(undefined);
