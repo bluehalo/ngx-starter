@@ -49,6 +49,8 @@ export class SiteNavbarComponent implements OnInit {
 
 	numNewMessages = 0;
 
+	euaExists = false;
+
 	@Output()
 	readonly navbarOpenChange = new EventEmitter<boolean>();
 
@@ -103,6 +105,13 @@ export class SiteNavbarComponent implements OnInit {
 		});
 
 		this.isMasquerade = this.masqueradeService.getMasqueradeDn() !== undefined;
+
+		this.sessionService
+			.getCurrentEua()
+			.pipe(untilDestroyed(this))
+			.subscribe((eua) => {
+				this.euaExists = eua ? true : false;
+			});
 	}
 
 	toggleNavbar() {
