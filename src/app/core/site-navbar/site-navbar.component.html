@@ -130,7 +130,7 @@
 					<ul class="popover-menu" role="menu">
 						<!-- User Signout -->
 						<li><a href="/api/auth/signout">Sign out</a></li>
-						<li *ngIf="eua"><a [routerLink]="['/eua']">EUA</a></li>
+						<li *ngIf="session?.user?.eua"><a [routerLink]="['/eua']">View EUA</a></li>
 
 						<!-- User Preferences -->
 						<li *ngIf="showUserPreferencesLink">

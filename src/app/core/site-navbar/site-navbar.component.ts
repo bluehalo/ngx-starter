@@ -49,8 +49,6 @@ export class SiteNavbarComponent implements OnInit {
 
 	numNewMessages = 0;
 
-	eua: any;
-
 	@Output()
 	readonly navbarOpenChange = new EventEmitter<boolean>();
 
@@ -86,13 +84,6 @@ export class SiteNavbarComponent implements OnInit {
 			.subscribe((session) => {
 				this.session = session;
 				this.canMasquerade = session?.user?.userModel?.canMasquerade ?? false;
-			});
-
-		this.sessionService
-			.getCurrentEua()
-			.pipe(untilDestroyed(this))
-			.subscribe((eua) => {
-				this.eua = eua;
 			});
 
 		this.configService
