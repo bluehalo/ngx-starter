@@ -35,6 +35,6 @@ NavbarTopics.registerTopic({
 	title: 'Forms',
 	ordinal: 3,
 	path: 'forms',
-	iconClass: 'fa-check-square-o',
+	iconClass: 'fa-check-square',
 	hasSomeRoles: ['user']
 });

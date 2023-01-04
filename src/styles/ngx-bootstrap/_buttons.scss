@@ -19,7 +19,7 @@ $btn-submit-style: spinner !default;
 $btn-submit-animation-iteration-count: infinite !default;
 
 // Submit Button - spinner
-$btn-submit-spinner-font-family: 'FontAwesome' !default;
+$btn-submit-spinner-font-family: var(--fa-font-solid) !default;
 $btn-submit-spinner-content: '\f110' !default;
 $btn-submit-spinner-animation-name: fa-spin !default;
 $btn-submit-spinner-animation-duration: 1s !default;
