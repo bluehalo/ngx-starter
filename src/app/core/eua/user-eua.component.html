@@ -3,7 +3,9 @@
 		<div *ngIf="eua$ | async as eua" class="col-xl-8 offset-xl-2">
 			<h1>
 				End User Agreement (EUA)<br />
-				<small>Please review and acknowledge the end user agreement</small>
+				<small *ngIf="!alreadyAccepted"
+					>Please review and acknowledge the end user agreement</small
+				>
 			</h1>
 
 			<!-- Alert Notifications -->
@@ -18,7 +20,7 @@
 					<!-- Contents of EUA -->
 					<div class="card-body" [innerHtml]="eua.text"></div>
 
-					<div class="card-footer">
+					<div *ngIf="!alreadyAccepted" class="card-footer">
 						<div class="form-check">
 							<input
 								type="checkbox"
@@ -34,7 +36,7 @@
 					</div>
 				</div>
 
-				<div class="pt-4">
+				<div *ngIf="!alreadyAccepted" class="pt-4">
 					<button
 						type="submit"
 						class="btn btn-primary"
