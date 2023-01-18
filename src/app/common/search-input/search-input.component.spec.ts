@@ -149,7 +149,7 @@ describe('SearchInputComponent', () => {
 		inputElement.nativeElement.dispatchEvent(new Event('input'));
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.queryAll(By.css('.icon.fa.fa-times')).length).toBe(1);
+		expect(fixture.debugElement.queryAll(By.css('.icon.fa-times')).length).toBe(1);
 	});
 
 	it('should not show clear-search options if search input length === 0', () => {
