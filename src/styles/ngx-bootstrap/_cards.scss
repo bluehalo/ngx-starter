@@ -41,7 +41,8 @@ $card-header-height: 4rem !default;
 
 	&.selected {
 		&:before {
-			font: var(--fa-font-solid);; /* stylelint-disable-line */
+			font: var(--fa-font-solid);
+			font-size: math.div($card-selected-check-size, 2);
 			color: $ux-color-white;
 			content: '\f00c';
 			position: absolute;

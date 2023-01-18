@@ -140,6 +140,7 @@ input {
 
 			&:after {
 				font: var(--fa-font-solid);
+				font-size: math.div($checkbox-inner-size, 1);
 				color: $ux-color-white;
 				content: '\f00c';
 				top: $checkbox-inner-margin;
