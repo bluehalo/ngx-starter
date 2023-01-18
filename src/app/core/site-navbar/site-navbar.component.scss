@@ -54,7 +54,8 @@
 				text-decoration: none;
 			}
 
-			> span.fa {
+			> span.fa-solid,
+			> span.fa-brands {
 				font-size: $nav-element-icon-size;
 				margin-left: $nav-element-icon-margin-left;
 			}
@@ -70,7 +71,8 @@
 					$nav-element-active-border-color;
 				color: $nav-element-active-color;
 
-				> span.fa {
+				> span.fa-solid,
+				> span.fa-brands {
 					margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
 				}
 			}

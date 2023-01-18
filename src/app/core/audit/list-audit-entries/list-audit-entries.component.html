@@ -15,7 +15,7 @@
 		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
 			<ng-container cdkColumnDef="actor">
 				<th cdk-header-cell asy-sort-header="audit.actor.name" *cdkHeaderCellDef>
-					<span class="fa fa-user"></span>
+					<span class="fa-solid fa-user"></span>
 					Actor
 					<asy-header-filter typeahead-filter audit-actor-filter></asy-header-filter>
 				</th>
@@ -28,7 +28,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="created">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
-					<span class="fa fa-clock"></span>
+					<span class="fa-solid fa-clock"></span>
 					Timestamp
 					<asy-header-filter date-filter></asy-header-filter>
 				</th>
@@ -38,7 +38,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="audit.action">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
-					<span class="fa fa-mouse-pointer"></span>
+					<span class="fa-solid fa-mouse-pointer"></span>
 					Action
 					<asy-header-filter
 						list-filter
@@ -52,7 +52,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="audit.auditType">
 				<th cdk-header-cell asy-sort-header="audit.auditType" *cdkHeaderCellDef>
-					<span class="fa fa-tag"></span>
+					<span class="fa-solid fa-tag"></span>
 					Type
 					<asy-header-filter
 						list-filter
@@ -78,7 +78,7 @@
 								[hidden]="(entry.audit.object ?? null) === null"
 								(click)="viewMore(entry, 'viewDetails')"
 							>
-								<span class="fa fa-eye"></span><span>View Details</span>
+								<span class="fa-solid fa-eye"></span><span>View Details</span>
 							</a>
 						</small>
 						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
@@ -89,7 +89,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="before">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
-					<span class="fa fa-history"></span>
+					<span class="fa-solid fa-history"></span>
 					Before
 				</th>
 				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow">
@@ -107,7 +107,7 @@
 								container="body"
 								(click)="viewMore(entry, 'viewChanges')"
 							>
-								<span class="fa fa-eye"></span><span>View Changes</span>
+								<span class="fa-solid fa-eye"></span><span>View Changes</span>
 							</a>
 						</small>
 						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
@@ -118,7 +118,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="message">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
-					<span class="fa fa-file-text"></span>
+					<span class="fa-solid fa-file-text"></span>
 					Message
 				</th>
 				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
@@ -127,7 +127,7 @@
 			</ng-container>
 			<ng-container cdkColumnDef="masqueradingUser">
 				<th cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa fa-user-secret"></span>
+					<span class="fa-solid fa-user-secret"></span>
 					Masquerading User
 				</th>
 				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">

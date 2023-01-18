@@ -193,14 +193,14 @@
 		</ng-container>
 
 		<div class="media p-5" *ngIf="status === 'submitting'">
-			<span class="fa fa-spinner fa-pulse fa-3x fa-fw mr-3"></span>
+			<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw mr-3"></span>
 			<div class="media-body">
 				<h1 class="mt-0">Submitting</h1>
 			</div>
 		</div>
 
 		<div class="media p-5" *ngIf="status === 'success'">
-			<span class="fa fa-check-circle text-highlight fa-3x fa-fw mr-3"></span>
+			<span class="fa-solid fa-check-circle text-highlight fa-3x fa-fw mr-3"></span>
 			<div class="media-body">
 				<h1 class="mt-0">Thanks!</h1>
 				We got your feedback.
@@ -209,7 +209,7 @@
 
 		<div class="p-5" *ngIf="status === 'failure'">
 			<div class="media">
-				<span class="fa fa-exclamation-triangle text-danger fa-3x fa-fw mr-3"></span>
+				<span class="fa-solid fa-exclamation-triangle text-danger fa-3x fa-fw mr-3"></span>
 				<div class="media-body">
 					<h1 class="mt-0">Unable To send feedback</h1>
 					Something went wrong and we didn't get your feedback.

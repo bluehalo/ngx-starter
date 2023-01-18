@@ -35,7 +35,7 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 @Component({
 	selector: 'export-audit',
 	template: `
-		<span *ngIf="auditObject"> <span class="fa fa-download"></span> Export config </span>
+		<span *ngIf="auditObject"> <span class="fa-solid fa-download"></span> Export config </span>
 	`
 })
 export class ExportAuditObjectComponent extends DefaultAuditObjectComponent {}

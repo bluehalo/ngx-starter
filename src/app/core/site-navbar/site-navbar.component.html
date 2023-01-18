@@ -25,7 +25,7 @@
 						routerLinkActive="active-link"
 						[routerLink]="navbarItem.path"
 					>
-						<span class="fa fa-fw {{ navbarItem.iconClass }}"></span>
+						<span class="fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
 						<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
 					</a>
 				</li>
@@ -49,7 +49,7 @@
 					(onShown)="adminNavOpen = true"
 					(onHidden)="adminNavOpen = false"
 				>
-					<span class="fa fa-fw fa-cog"></span>
+					<span class="fa-solid fa-fw fa-cog"></span>
 					<span [hidden]="!navbarOpen">Admin</span>
 				</a>
 
@@ -80,7 +80,7 @@
 					routerLinkActive="active-link"
 					routerLink="/audit"
 				>
-					<span class="fa fa-fw fa-file-text"></span>
+					<span class="fa-solid fa-fw fa-file-text"></span>
 					<span [hidden]="!navbarOpen">Audit Logs</span>
 				</a>
 			</li>
@@ -95,7 +95,7 @@
 					routerLinkActive="active-link"
 					routerLink="/teams"
 				>
-					<span class="fa fa-fw fa-users"></span>
+					<span class="fa-solid fa-fw fa-users"></span>
 					<span [hidden]="!navbarOpen">Teams</span>
 				</a>
 			</li>
@@ -115,11 +115,11 @@
 					(onShown)="userNavOpen = true"
 					(onHidden)="userNavOpen = false"
 				>
-					<span class="fa fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
+					<span class="fa-solid fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
 					<span class="fa-stack" *ngIf="isMasquerade">
-						<span class="fa fa-circle fa-stack-2x"></span>
+						<span class="fa-solid fa-circle fa-stack-2x"></span>
 						<span
-							class="fa fa-lg fa-user-secret fa-stack-1x text-primary"
+							class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
 							style="margin-left: 1px"
 						></span>
 					</span>
@@ -169,12 +169,12 @@
 					routerLink="masquerade"
 				>
 					<span class="fa-stack">
-						<span class="fa fa-circle fa-stack-2x"></span>
+						<span class="fa-solid fa-circle fa-stack-2x"></span>
 						<span
-							class="fa fa-lg fa-user-secret fa-stack-1x text-primary"
+							class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
 							style="margin-left: 1px"
 						></span>
-						<span class="fa fa-ban fa-stack-2x text-danger"></span>
+						<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
 					</span>
 					<span [hidden]="!navbarOpen">Clear Masquerade</span>{{ this.session?.name }}
 				</a>
@@ -196,7 +196,7 @@
 					(onHidden)="messagesNavOpen = false"
 				>
 					<span
-						class="fa fa-fw fa-bell"
+						class="fa-solid fa-fw fa-bell"
 						attr.newMessagesCount="{{ numNewMessages }}"
 						[class.messages-icon-new-messages-badge]="numNewMessages > 0"
 					></span>
@@ -222,7 +222,7 @@
 					(onShown)="helpNavOpen = true"
 					(onHidden)="helpNavOpen = false"
 				>
-					<span class="fa fa-fw fa-question-circle"></span>
+					<span class="fa-solid fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
 				</a>
 
@@ -265,7 +265,7 @@
 		<li class="element" (click)="toggleNavbar()">
 			<a tooltip="Expand" placement="left" container="body" [isDisabled]="navbarOpen">
 				<span
-					class="fa fa-fw fa-angle-double-right"
+					class="fa-solid fa-fw fa-angle-double-right"
 					[class.fa-flip-horizontal]="navbarOpen"
 				></span>
 				<span [hidden]="!navbarOpen">Collapse</span>

@@ -25,7 +25,7 @@
 		[disabled]="page.totalPages <= 1 || page.pageNumber - 1 < 0"
 		(click)="goToPage(0)"
 	>
-		<span class="fa fa-lg fa-angle-double-left"></span>
+		<span class="fa-solid fa-lg fa-angle-double-left"></span>
 	</button>
 
 	<button
@@ -34,7 +34,7 @@
 		[disabled]="page.totalPages <= 1 || page.pageNumber - 1 < 0"
 		(click)="goToPage(page.pageNumber - 1)"
 	>
-		<span class="fa fa-lg fa-angle-left"></span>
+		<span class="fa-solid fa-lg fa-angle-left"></span>
 	</button>
 
 	<button
@@ -47,7 +47,7 @@
 		"
 		(click)="goToPage(page.pageNumber + 1)"
 	>
-		<span class="fa fa-lg fa-angle-right"></span>
+		<span class="fa-solid fa-lg fa-angle-right"></span>
 	</button>
 
 	<button
@@ -61,7 +61,7 @@
 		(click)="goToPage(page.totalPages - 1)"
 		*ngIf="!disableGoToEnd"
 	>
-		<span class="fa fa-lg fa-angle-double-right"></span>
+		<span class="fa-solid fa-lg fa-angle-double-right"></span>
 	</button>
 </span>
 
