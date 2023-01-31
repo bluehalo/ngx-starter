@@ -71,7 +71,7 @@
 						class="dropdown dropdown-table-inline"
 						dropdown
 						container="body"
-						*ngIf="canManageTeam"
+						*ngIf="canManageTeam; else readOnlyRole"
 					>
 						<span class="dropdown-toggle" dropdownToggle>
 							<span class="mr-1">{{ member.roleDisplay }}</span>
@@ -86,6 +86,9 @@
 							</li>
 						</ul>
 					</div>
+					<ng-template #readOnlyRole>
+						{{ member.roleDisplay }}
+					</ng-template>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="actions">
