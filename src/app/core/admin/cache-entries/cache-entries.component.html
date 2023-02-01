@@ -47,30 +47,47 @@
 			</ng-container>
 			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 				<th cdk-header-cell *cdkHeaderCellDef></th>
-				<td cdk-cell *cdkCellDef="let entry">
-					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-						<span
-							class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+				<td
+					cdk-cell
+					*cdkCellDef="let entry; let i = index"
+					dropdown
+					container="body"
+					placement="bottom right"
+				>
+					<div class="dropdown border-left pl-2">
+						<button
+							id="cache-entry-{{ entry._id }}-action-menu-btn"
 							dropdownToggle
+							type="button"
+							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+							attr.aria-controls="cache-entry-{{ entry._id }}-action-menu"
 						>
 							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-						</span>
-						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
-							<li>
-								<a class="dropdown-item" (click)="viewCacheEntry(entry)">View</a>
+						</button>
+						<ul
+							id="cache-entry-{{ entry._id }}-action-menu"
+							*dropdownMenu
+							class="dropdown-menu dropdown-menu-right"
+							role="menu"
+							attr.aria-labelledby="cache-entry-{{ entry._id }}-action-menu-btn"
+						>
+							<li role="menuitem">
+								<button class="dropdown-item" (click)="viewCacheEntry(entry)">
+									View
+								</button>
 							</li>
-							<li>
-								<a class="dropdown-item" (click)="refreshCacheEntry(entry)"
-									>Refresh</a
-								>
+							<li role="menuitem">
+								<button class="dropdown-item" (click)="refreshCacheEntry(entry)">
+									Refresh
+								</button>
 							</li>
-							<li>
-								<a class="dropdown-item" (click)="confirmDeleteEntry(entry)"
-									>Delete</a
-								>
+							<li role="menuitem">
+								<button class="dropdown-item" (click)="confirmDeleteEntry(entry)">
+									Delete
+								</button>
 							</li>
 						</ul>
-					</span>
+					</div>
 				</td>
 			</ng-container>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>

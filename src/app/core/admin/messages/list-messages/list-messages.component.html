@@ -61,34 +61,49 @@
 			</ng-container>
 			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 				<th cdk-header-cell *cdkHeaderCellDef></th>
-				<td cdk-cell *cdkCellDef="let message">
-					<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-						<span
-							class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+				<td
+					cdk-cell
+					*cdkCellDef="let message"
+					dropdown
+					container="body"
+					placement="bottom right"
+				>
+					<div class="dropdown border-left pl-2">
+						<button
+							id="message-{{ message._id }}-action-menu-btn"
 							dropdownToggle
+							type="button"
+							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+							attr.aria-controls="message-{{ message._id }}-action-menu"
 						>
 							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-						</span>
-						<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
-							<li>
+						</button>
+						<ul
+							id="message-{{ message._id }}-action-menu"
+							*dropdownMenu
+							class="dropdown-menu dropdown-menu-right"
+							role="menu"
+							attr.aria-labelledby="message-{{ message._id }}-action-menu-btn"
+						>
+							<li role="menuitem">
 								<a class="dropdown-item" (click)="previewMessage(message)"
 									>Preview</a
 								>
 							</li>
-							<li>
+							<li role="menuitem">
 								<a
 									class="dropdown-item"
 									[routerLink]="['/admin/message', message._id]"
 									>Edit</a
 								>
 							</li>
-							<li>
+							<li role="menuitem">
 								<a class="dropdown-item" (click)="confirmDeleteMessage(message)"
 									>Delete</a
 								>
 							</li>
 						</ul>
-					</span>
+					</div>
 				</td>
 			</ng-container>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>

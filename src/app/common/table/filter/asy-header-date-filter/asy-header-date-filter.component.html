@@ -1,5 +1,5 @@
-<span class="dropdown ml-2" container="body" [insideClick]="true" dropdown>
-	<span class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
+<span class="dropdown" container="body" [insideClick]="true" dropdown>
+	<button class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
 		<span
 			[hidden]="isFiltered"
 			class="filter fa-solid fa-list"
@@ -14,7 +14,7 @@
 			placement="bottom"
 			container="body"
 		></span>
-	</span>
+	</button>
 
 	<div *dropdownMenu class="dropdown-menu" [class.dropdown-menu-right]="dropdownMenuRight">
 		<div class="form-check">

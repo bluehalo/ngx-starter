@@ -4,6 +4,15 @@
 $filter-dropdown-font-size: 0.75rem !default;
 $filter-dropdown-max-height: 250px !default;
 
+button {
+	background: inherit;
+	border: none;
+	font: inherit;
+	padding-top: 0;
+	padding-bottom: 0;
+	transform: translateY(1px);
+}
+
 .dropdown-menu {
 	font-size: $filter-dropdown-font-size;
 	margin-top: 0.5rem;

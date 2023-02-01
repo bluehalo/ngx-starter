@@ -75,15 +75,18 @@ tr.cdk-row-expanded-details {
 	}
 }
 
-td.cdk-column-actionsMenu {
+.cdk-column-actionsMenu {
 	width: 50px;
 	text-align: right;
 
-	.dropdown-toggle {
-		cursor: pointer;
+	button.dropdown-toggle {
+		display: block;
+		padding-top: 0;
+		padding-bottom: 0;
+		border: 0;
 	}
 }
 
-td.cdk-table-sticky {
+.cdk-table-sticky {
 	background: inherit;
 }
