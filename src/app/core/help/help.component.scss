@@ -91,6 +91,10 @@ $help-nav-link-padding: 1rem !default;
 		h4 {
 			color: $callout-color-info-dark;
 		}
+
+		span.ml-3 {
+			font-family: 'Times New Roman', Times, serif;
+		}
 	}
 
 	&.callout-default {

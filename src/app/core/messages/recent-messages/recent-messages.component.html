@@ -5,7 +5,7 @@
 			<div class="row no-gutters">
 				<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
 					<span
-						class="fa alert-icon {{ messageType[message.type] | lowercase }}"
+						class="fa-solid alert-icon {{ messageType[message.type] | lowercase }}"
 						[ngClass]="{
 							'fa-check': message.type === messageType.MOTD,
 							'fa-info': message.type === messageType.INFO,
@@ -19,7 +19,7 @@
 						<div class="d-flex">
 							<h4 class="card-title text-truncate mr-3">{{ message.title }}</h4>
 							<span
-								class="fa fa-lg fa-close ml-auto"
+								class="fa-solid fa-lg fa-close ml-auto"
 								style="cursor: pointer"
 								(click)="dismissMessage(message)"
 							></span>
