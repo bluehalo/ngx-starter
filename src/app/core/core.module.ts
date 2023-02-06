@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AdminTopics } from '../common/admin/admin-topic.model';
+import { DirectivesModule } from '../common/directives.module';
 import { LoadingSpinnerModule } from '../common/loading-spinner.module';
 import { SystemAlertModule } from '../common/system-alert.module';
 import { AboutComponent } from './about.component';
@@ -75,7 +76,8 @@ export function getConfiguration(configService: ConfigService) {
 		LoadingSpinnerModule,
 		SystemAlertModule,
 		MessagesModule,
-		MasqueradeModule
+		MasqueradeModule,
+		DirectivesModule
 	],
 	exports: [
 		SiteContainerComponent,
