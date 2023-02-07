@@ -16,6 +16,7 @@ export class LinkAccessibilityDirective {
 	}
 
 	@HostListener('keydown.enter', ['$event'])
+	@HostListener('keydown.space', ['$event'])
 	onEnter(event: Event) {
 		let targetEl = event.target;
 		targetEl?.dispatchEvent(new Event('click'));
