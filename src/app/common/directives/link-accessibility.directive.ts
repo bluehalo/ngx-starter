@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 
 /**
  * Used to enable link for keyboard accessibility.
@@ -10,7 +11,7 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 	selector: '[linkAccessibility]'
 })
 export class LinkAccessibilityDirective {
-	constructor(private elRef: ElementRef, private renderer: Renderer2) {
+	constructor(private elRef: ElementRef, private renderer: Renderer2, private router: Router) {
 		const el = elRef.nativeElement;
 		renderer.setAttribute(el, 'tabIndex', '0');
 	}
@@ -18,7 +19,13 @@ export class LinkAccessibilityDirective {
 	@HostListener('keydown.enter', ['$event'])
 	@HostListener('keydown.space', ['$event'])
 	onEnter(event: Event) {
-		let targetEl = event.target;
+		let targetEl: any = event.target;
 		targetEl?.dispatchEvent(new Event('click'));
+
+		if (targetEl?.attributes.href) {
+			const hrefVal = targetEl?.attributes.href.value;
+			const path = hrefVal[0] === '#' ? hrefVal.substring(1) : hrefVal;
+			this.router.navigate([path]);
+		}
 	}
 }
