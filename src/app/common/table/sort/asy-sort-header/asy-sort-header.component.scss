@@ -3,11 +3,11 @@
 .fa-solid,
 .fa-brands {
 	opacity: 0.3;
-}
 
-.fa.sorted {
-	color: $ux-color-primary;
-	opacity: 1;
+	&.sorted {
+		color: $ux-color-primary;
+		opacity: 1;
+	}
 }
 
 .fa-stack {
