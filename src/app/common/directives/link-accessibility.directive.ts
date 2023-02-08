@@ -23,9 +23,7 @@ export class LinkAccessibilityDirective {
 		targetEl?.dispatchEvent(new Event('click'));
 
 		if (targetEl?.attributes.href) {
-			const hrefVal = targetEl?.attributes.href.value;
-			const path = hrefVal[0] === '#' ? hrefVal.substring(1) : hrefVal;
-			this.router.navigate([path]);
+			window.location.href = targetEl?.attributes.href.value;
 		}
 	}
 }
