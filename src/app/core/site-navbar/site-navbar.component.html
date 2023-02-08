@@ -3,10 +3,10 @@
 	<ul class="nav nav-logo">
 		<!-- Logo -->
 		<li class="element element-logo">
-			<a href="/#/" [hidden]="navbarOpen" linkAccessibility>
+			<a href="/#/" [hidden]="navbarOpen">
 				<img class="logo" src="/assets/images/nav-logo-icon.png" alt="Logo" />
 			</a>
-			<a href="/#/" [hidden]="!navbarOpen" linkAccessibility>
+			<a href="/#/" [hidden]="!navbarOpen">
 				<img class="logo" src="/assets/images/nav-logo.png" alt="Logo" />
 			</a>
 		</li>
@@ -24,7 +24,6 @@
 						[isDisabled]="navbarOpen"
 						routerLinkActive="active-link"
 						[routerLink]="navbarItem.path"
-						linkAccessibility
 					>
 						<span class="fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
 						<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
@@ -64,7 +63,6 @@
 									{ clearCachedFilter: true }
 								]"
 								(click)="adminNavPopover.hide()"
-								linkAccessibility
 							>
 								{{ adminItem.title }}
 							</a>
@@ -82,7 +80,6 @@
 					[isDisabled]="navbarOpen"
 					routerLinkActive="active-link"
 					routerLink="/audit"
-					linkAccessibility
 				>
 					<span class="fa-solid fa-fw fa-file-text"></span>
 					<span [hidden]="!navbarOpen">Audit Logs</span>
@@ -98,7 +95,6 @@
 					[isDisabled]="navbarOpen"
 					routerLinkActive="active-link"
 					routerLink="/teams"
-					linkAccessibility
 				>
 					<span class="fa-solid fa-fw fa-users"></span>
 					<span [hidden]="!navbarOpen">Teams</span>
@@ -135,18 +131,14 @@
 				<ng-template #userNav>
 					<ul class="popover-menu" role="menu">
 						<!-- User Signout -->
-						<li><a href="/api/auth/signout" linkAccessibility>Sign out</a></li>
+						<li><a href="/api/auth/signout">Sign out</a></li>
 						<li *ngIf="session?.user?.eua">
-							<a [routerLink]="['/eua']" linkAccessibility>View EUA</a>
+							<a [routerLink]="['/eua']">View EUA</a>
 						</li>
 
 						<!-- User Preferences -->
 						<li *ngIf="showUserPreferencesLink">
-							<a
-								[routerLink]="userPreferencesLink"
-								(click)="userNavPopover.hide()"
-								linkAccessibility
-							>
+							<a [routerLink]="userPreferencesLink" (click)="userNavPopover.hide()">
 								User Preferences
 							</a>
 						</li>
@@ -157,11 +149,10 @@
 									routerLink="/masquerade"
 									(click)="userNavPopover.hide()"
 									*ngIf="!isMasquerade && canMasquerade"
-									linkAccessibility
 								>
 									Masquerade
 								</a>
-								<a routerLink="/masquerade" *ngIf="isMasquerade" linkAccessibility>
+								<a routerLink="/masquerade" *ngIf="isMasquerade">
 									Clear Masquerade
 								</a>
 							</li>
@@ -181,7 +172,6 @@
 					[isDisabled]="navbarOpen"
 					routerLinkActive="active-link"
 					routerLink="masquerade"
-					linkAccessibility
 				>
 					<span class="fa-stack">
 						<span class="fa-solid fa-circle fa-stack-2x"></span>
@@ -247,9 +237,7 @@
 					<ul class="popover-menu" role="menu">
 						<!-- Help -->
 						<li>
-							<a routerLink="/help" (click)="helpNavPopover.hide()" linkAccessibility>
-								Help Docs
-							</a>
+							<a routerLink="/help" (click)="helpNavPopover.hide()"> Help Docs </a>
 						</li>
 
 						<!-- Feedback -->
@@ -265,25 +253,14 @@
 
 						<!-- API Docs -->
 						<li *ngIf="showApiDocsLink">
-							<a
-								[href]="apiDocsLink"
-								target="_blank"
-								(click)="helpNavPopover.hide()"
-								linkAccessibility
-							>
+							<a [href]="apiDocsLink" target="_blank" (click)="helpNavPopover.hide()">
 								API Docs
 							</a>
 						</li>
 
 						<!-- About -->
 						<li>
-							<a
-								routerLink="/about"
-								(click)="helpNavPopover.hide()"
-								linkAccessibility
-							>
-								About
-							</a>
+							<a routerLink="/about" (click)="helpNavPopover.hide()"> About </a>
 						</li>
 					</ul>
 				</ng-template>
