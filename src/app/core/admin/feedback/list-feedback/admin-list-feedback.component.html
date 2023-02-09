@@ -130,11 +130,12 @@
 						></asy-header-filter>
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="btn-group" dropdown container="body" placement="bottom left">
+						<div class="btn-group" dropdown container="body" placement="bottom right">
 							<button
+								id="feedback-{{ feedback._id }}-status-menu-btn"
 								dropdownToggle
-								class="dropdown-toggle feedback-status-button"
 								type="button"
+								class="dropdown-toggle feedback-status-button"
 								[class.feedback-status-new]="
 									feedback.status === feedbackStatusOptions.NEW
 								"
@@ -144,10 +145,17 @@
 								[class.feedback-status-closed]="
 									feedback.status === feedbackStatusOptions.CLOSED
 								"
+								attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
 							>
 								{{ feedback.status }}
 							</button>
-							<ul role="menu" *dropdownMenu class="dropdown-menu">
+							<ul
+								id="feedback-{{ feedback._id }}-status-menu"
+								*dropdownMenu
+								role="menu"
+								class="dropdown-menu dropdown-menu-right"
+								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
+							>
 								<li
 									role="menuitem"
 									*ngIf="feedback.status !== feedbackStatusOptions.OPEN"
@@ -187,16 +195,24 @@
 				<ng-container cdkColumnDef="assignee">
 					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Assignee</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="btn-group" dropdown container="body" placement="bottom left">
+						<div class="btn-group" dropdown container="body" placement="bottom right">
 							<button
+								id="feedback-{{ feedback._id }}-assignee-menu-btn"
 								dropdownToggle
-								class="dropdown-toggle feedback-status-button"
 								type="button"
+								class="dropdown-toggle feedback-status-button"
 								[class.feedback-status-open]="!!feedback.assignee"
+								attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
 							>
 								{{ feedback.assignee ?? 'None' }}
 							</button>
-							<ul role="menu" *dropdownMenu class="dropdown-menu">
+							<ul
+								id="feedback-{{ feedback._id }}-assignee-menu"
+								*dropdownMenu
+								class="dropdown-menu dropdown-menu-right"
+								role="menu"
+								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
+							>
 								<li role="menuitem">
 									<button
 										class="dropdown-item"

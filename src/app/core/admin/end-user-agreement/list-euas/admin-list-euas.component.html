@@ -85,35 +85,58 @@
 				</ng-container>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
-					<td cdk-cell *cdkCellDef="let eua">
-						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-							<span
-								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
+					<td
+						cdk-cell
+						*cdkCellDef="let eua"
+						dropdown
+						container="body"
+						placement="bottom right"
+					>
+						<div class="dropdown border-left pl-2">
+							<button
+								id="eua-{{ eua._id }}-action-menu-btn"
 								dropdownToggle
+								type="button"
+								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+								attr.aria-controls="eua-{{ eua._id }}-action-menu"
 							>
 								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-							</span>
-							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
-								<li>
-									<a class="dropdown-item" (click)="previewEndUserAgreement(eua)"
-										>Preview</a
+							</button>
+							<ul
+								id="eua-{{ eua._id }}-action-menu"
+								*dropdownMenu
+								class="dropdown-menu dropdown-menu-right"
+								role="menu"
+								attr.aria-labelledby="eua-{{ eua._id }}-action-menu-btn"
+							>
+								<li role="menuitem">
+									<button
+										class="dropdown-item"
+										(click)="previewEndUserAgreement(eua)"
 									>
+										Preview
+									</button>
 								</li>
-								<li>
-									<a class="dropdown-item" [routerLink]="['/admin/eua', eua._id]"
-										>Edit</a
+								<li role="menuitem">
+									<button
+										class="dropdown-item"
+										[routerLink]="['/admin/eua', eua._id]"
 									>
+										Edit
+									</button>
 								</li>
-								<li>
-									<a class="dropdown-item" (click)="publishEua(eua)">Publish</a>
+								<li role="menuitem">
+									<button class="dropdown-item" (click)="publishEua(eua)">
+										Publish
+									</button>
 								</li>
-								<li>
-									<a class="dropdown-item" (click)="confirmDeleteEua(eua)"
-										>Delete</a
-									>
+								<li role="menuitem">
+									<button class="dropdown-item" (click)="confirmDeleteEua(eua)">
+										Delete
+									</button>
 								</li>
 							</ul>
-						</span>
+						</div>
 					</td>
 				</ng-container>
 

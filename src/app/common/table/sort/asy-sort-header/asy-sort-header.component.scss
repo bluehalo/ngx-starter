@@ -1,7 +1,14 @@
 @import '../../../../../styles/shared';
 
-.fa-solid,
-.fa-brands {
+button {
+	background: inherit;
+	border: none;
+	font: inherit;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.fa-solid {
 	opacity: 0.3;
 
 	&.sorted {

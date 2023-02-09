@@ -174,30 +174,45 @@
 				</ng-container>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
-					<td cdk-cell *cdkCellDef="let user">
-						<span class="dropdown border-left pl-2 py-1" container="body" dropdown>
-							<span
-								class="dropdown-toggle dropdown-toggle-hide-caret px-2"
-								style="cursor: pointer"
+					<td
+						cdk-cell
+						*cdkCellDef="let user"
+						dropdown
+						container="body"
+						placement="bottom right"
+					>
+						<div class="dropdown border-left pl-2">
+							<button
+								id="user-{{ user._id }}-action-menu-btn"
 								dropdownToggle
+								type="button"
+								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+								attr.aria-controls="user-{{ user._id }}-action-menu"
 							>
 								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-							</span>
-							<ul *dropdownMenu class="dropdown-menu dropdown-menu-right mt-2">
-								<li>
-									<a
+							</button>
+							<ul
+								id="user-{{ user._id }}-action-menu"
+								*dropdownMenu
+								class="dropdown-menu dropdown-menu-right"
+								role="menu"
+								attr.aria-labelledby="user-{{ user._id }}-action-menu-btn"
+							>
+								<li role="menuitem">
+									<button
 										class="dropdown-item"
 										[routerLink]="['/admin/user', user.userModel._id]"
-										>Edit</a
 									>
+										Edit
+									</button>
 								</li>
-								<li *ngIf="allowDeleteUser">
-									<a class="dropdown-item" (click)="confirmDeleteUser(user)"
-										>Delete</a
-									>
+								<li role="menuitem" *ngIf="allowDeleteUser">
+									<button class="dropdown-item" (click)="confirmDeleteUser(user)">
+										Delete
+									</button>
 								</li>
 							</ul>
-						</span>
+						</div>
 					</td>
 				</ng-container>
 				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
