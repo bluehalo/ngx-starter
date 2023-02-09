@@ -8,7 +8,9 @@ import { ConfigService } from '../config.service';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class AuthGuard implements CanActivate {
 	constructor(
 		private router: Router,

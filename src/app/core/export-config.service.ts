@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-@Injectable()
 /**
  * Admin management of users
  */
+@Injectable({
+	providedIn: 'root'
+})
 export class ExportConfigService {
 	constructor(private http: HttpClient) {}
 

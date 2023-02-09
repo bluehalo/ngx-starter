@@ -7,7 +7,7 @@ import { Session } from './session.model';
 import { SessionService } from './session.service';
 
 @UntilDestroy()
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthorizationService {
 	private session: Session | null = null;
 

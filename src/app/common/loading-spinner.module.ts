@@ -5,7 +5,6 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 @NgModule({
 	imports: [],
 	exports: [LoadingSpinnerComponent],
-	declarations: [LoadingSpinnerComponent],
-	providers: []
+	declarations: [LoadingSpinnerComponent]
 })
 export class LoadingSpinnerModule {}

@@ -9,7 +9,6 @@ import { MultiSelectInputComponent } from './multi-select-input/multi-select-inp
 @NgModule({
 	imports: [CommonModule, FormsModule, NgSelectModule],
 	exports: [MultiSelectInputComponent],
-	declarations: [MultiSelectInputComponent],
-	providers: []
+	declarations: [MultiSelectInputComponent]
 })
 export class MultiSelectInputModule {}

@@ -5,7 +5,9 @@ import { AsyncSubject, Observable } from 'rxjs';
 
 import { Config } from './config.model';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class ConfigService {
 	configSubject$ = new AsyncSubject<Config | null>();
 

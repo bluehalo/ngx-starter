@@ -42,7 +42,6 @@ import { UserRoleFilterDirective } from './list-users/user-role-filter.directive
 		AdminListUsersComponent,
 		AdminEditUserComponent,
 		UserRoleFilterDirective
-	],
-	providers: []
+	]
 })
 export class AdminUserModule {}

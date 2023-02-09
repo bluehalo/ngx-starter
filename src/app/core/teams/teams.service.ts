@@ -20,7 +20,9 @@ export interface AddedMember {
 	roleDisplay: string;
 }
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class TeamsService extends AbstractEntityService<Team> {
 	constructor(
 		private sessionService: SessionService,

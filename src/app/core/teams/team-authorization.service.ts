@@ -9,7 +9,9 @@ import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
 
 @UntilDestroy()
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class TeamAuthorizationService {
 	private member!: TeamMember;
 

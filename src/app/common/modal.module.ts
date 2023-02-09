@@ -12,7 +12,6 @@ import { ModalComponent } from './modal/modal/modal.component';
 @NgModule({
 	imports: [BsModalModule.forRoot(), CommonModule, FormsModule, A11yModule],
 	exports: [ConfigurableModalComponent, ModalComponent],
-	declarations: [ConfigurableModalComponent, ContainerModalComponent, ModalComponent],
-	providers: []
+	declarations: [ConfigurableModalComponent, ContainerModalComponent, ModalComponent]
 })
 export class ModalModule {}

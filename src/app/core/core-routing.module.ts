@@ -60,7 +60,6 @@ import { UnauthorizedComponent } from './unauthorized.component';
 			}
 		])
 	],
-	exports: [RouterModule],
-	providers: []
+	exports: [RouterModule]
 })
 export class CoreRoutingModule {}

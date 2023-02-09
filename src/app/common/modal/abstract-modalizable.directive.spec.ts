@@ -22,8 +22,7 @@ describe('Abstract Modalized Directive', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [],
-			declarations: [ConcreteModalizedComponent],
-			providers: []
+			declarations: [ConcreteModalizedComponent]
 		});
 
 		fixture = TestBed.createComponent(ConcreteModalizedComponent);

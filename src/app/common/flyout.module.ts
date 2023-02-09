@@ -6,7 +6,6 @@ import { FlyoutComponent } from './flyout/flyout.component';
 @NgModule({
 	imports: [CommonModule],
 	exports: [FlyoutComponent],
-	declarations: [FlyoutComponent],
-	providers: []
+	declarations: [FlyoutComponent]
 })
 export class FlyoutModule {}
