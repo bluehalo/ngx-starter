@@ -7,9 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AdminModule } from '../../common/admin.module';
 import { LoadingOverlayModule } from '../../common/loading-overlay.module';
 import { ModalModule } from '../../common/modal.module';
-import { ModalService } from '../../common/modal/modal.service';
 import { SystemAlertModule } from '../../common/system-alert.module';
-import { AuthGuard } from '../../core/core.module';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { ExampleRoutingModule } from './example-routing.module';
@@ -48,6 +46,6 @@ import { WelcomeComponent } from './welcome.component';
 		ExampleLoadingOverlayComponent,
 		AlertsComponent
 	],
-	providers: [AuthGuard, ModalService, ExampleHelpComponent]
+	providers: [ExampleHelpComponent]
 })
 export class ExampleModule {}

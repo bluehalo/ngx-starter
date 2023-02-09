@@ -10,7 +10,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { DirectivesModule } from '../../common/directives.module';
 import { ModalModule } from '../../common/modal.module';
-import { ModalService } from '../../common/modal/modal.service';
 import { MultiSelectInputModule } from '../../common/multi-select-input.module';
 import { PipesModule } from '../../common/pipes.module';
 import { SearchInputModule } from '../../common/search-input.module';
@@ -22,12 +21,10 @@ import { TeamsHelpComponent } from './help/teams-help.component';
 import { ListTeamMembersComponent } from './list-team-members/list-team-members.component';
 import { ListSubTeamsComponent } from './list-teams/list-sub-teams.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
-import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamSelectInputComponent } from './team-select-input/team-select-input.component';
 import { TeamTopics } from './team-topic.model';
 import { TeamsRoutingModule } from './teams-routing.module';
 import { TeamsResolve } from './teams.resolver';
-import { TeamsService } from './teams.service';
 import { GeneralDetailsComponent } from './view-team/general-details/general-details.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 
@@ -63,13 +60,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		TeamSelectInputComponent,
 		GeneralDetailsComponent
 	],
-	providers: [
-		TeamAuthorizationService,
-		TeamsService,
-		TeamsResolve,
-		ModalService,
-		TeamsHelpComponent
-	]
+	providers: [TeamsResolve, TeamsHelpComponent]
 })
 export class TeamsModule {}
 

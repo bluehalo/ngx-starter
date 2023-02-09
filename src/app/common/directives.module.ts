@@ -6,7 +6,6 @@ import { SkipToDirective } from './directives/skip-to.directive';
 @NgModule({
 	imports: [],
 	exports: [SkipToDirective, LinkAccessibilityDirective],
-	declarations: [SkipToDirective, LinkAccessibilityDirective],
-	providers: []
+	declarations: [SkipToDirective, LinkAccessibilityDirective]
 })
 export class DirectivesModule {}

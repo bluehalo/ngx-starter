@@ -9,7 +9,9 @@ import { ConfigurableModalComponent } from './configurable-modal/configurable-mo
 import { ContainerModalComponent } from './container-modal/container-modal.component';
 import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from './modal.model';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class ModalService {
 	private modalRef: BsModalRef | null = null;
 

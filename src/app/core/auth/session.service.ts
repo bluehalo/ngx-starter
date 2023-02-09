@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -9,8 +8,9 @@ import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
 import { User } from './user.model';
 
-@UntilDestroy()
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class SessionService {
 	// The current session information
 	sessionSubject$ = new BehaviorSubject<Session | null>(null);

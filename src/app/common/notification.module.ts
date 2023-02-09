@@ -6,7 +6,6 @@ import { NotificationComponent } from './notification/notification.component';
 @NgModule({
 	imports: [CommonModule],
 	exports: [NotificationComponent],
-	declarations: [NotificationComponent],
-	providers: []
+	declarations: [NotificationComponent]
 })
 export class NotificationModule {}

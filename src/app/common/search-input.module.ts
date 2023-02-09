@@ -9,7 +9,6 @@ import { SearchInputComponent } from './search-input/search-input.component';
 @NgModule({
 	imports: [CommonModule, FormsModule, NgSelectModule],
 	exports: [SearchInputComponent],
-	declarations: [SearchInputComponent],
-	providers: []
+	declarations: [SearchInputComponent]
 })
 export class SearchInputModule {}

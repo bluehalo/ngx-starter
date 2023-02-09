@@ -31,7 +31,6 @@ import { ListMessagesComponent } from './list-messages/list-messages.component';
 		TableModule
 	],
 	exports: [],
-	declarations: [UpdateMessageComponent, CreateMessageComponent, ListMessagesComponent],
-	providers: []
+	declarations: [UpdateMessageComponent, CreateMessageComponent, ListMessagesComponent]
 })
 export class AdminMessagesModule {}

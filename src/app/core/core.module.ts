@@ -18,19 +18,16 @@ import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { AuthenticationService } from './auth/authentication.service';
 import { AuthorizationService } from './auth/authorization.service';
 import { HasEveryRoleDirective } from './auth/directives/has-every-role.directive';
 import { HasRoleDirective } from './auth/directives/has-role.directive';
 import { HasSomeRolesDirective } from './auth/directives/has-some-roles.directive';
 import { IsAuthenticatedDirective } from './auth/directives/is-authenticated.directive';
 import { EuaInterceptor } from './auth/eua.interceptor';
-import { SessionService } from './auth/session.service';
 import { SigninInterceptor } from './auth/signin.interceptor';
 import { ConfigService } from './config.service';
 import { CoreRoutingModule } from './core-routing.module';
 import { UserEuaComponent } from './eua/user-eua.component';
-import { ExportConfigService } from './export-config.service';
 import { FeedbackModule } from './feedback/feedback.module';
 import { HelpModule } from './help/help.module';
 import { MasqueradeModule } from './masquerade/masquerade.module';
@@ -103,13 +100,6 @@ export function getConfiguration(configService: ConfigService) {
 		HasSomeRolesDirective
 	],
 	providers: [
-		AuthGuard,
-		AuthenticationService,
-		AuthorizationService,
-		ConfigService,
-		ExportConfigService,
-		PageTitleService,
-		SessionService,
 		{
 			provide: APP_INITIALIZER,
 			useFactory: getConfiguration,

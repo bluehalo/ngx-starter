@@ -8,7 +8,6 @@ import { NotificationModule } from './notification.module';
 @NgModule({
 	imports: [NotificationModule, LoadingSpinnerModule, CommonModule],
 	exports: [LoadingOverlayComponent],
-	declarations: [LoadingOverlayComponent],
-	providers: []
+	declarations: [LoadingOverlayComponent]
 })
 export class LoadingOverlayModule {}

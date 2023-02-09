@@ -8,7 +8,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SessionService } from './core/auth/session.service';
 import { CoreModule } from './core/core.module';
 import { SiteModule } from './site/site.module';
 
@@ -26,7 +25,6 @@ import { SiteModule } from './site/site.module';
 		CoreModule,
 		SiteModule
 	],
-	providers: [SessionService],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

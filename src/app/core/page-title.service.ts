@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import capitalize from 'lodash/capitalize';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
@@ -10,8 +9,7 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { ConfigService } from './config.service';
 
-@UntilDestroy()
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PageTitleService {
 	appTitle: string | null = null;
 
@@ -46,8 +44,7 @@ export class PageTitleService {
 						return `${this.appTitle}${pathTitle}`;
 					}
 					return `${this.appTitle} - ${pathTitle}`;
-				}),
-				untilDestroyed(this)
+				})
 			)
 			.subscribe((title: string) => {
 				this.titleService.setTitle(title);

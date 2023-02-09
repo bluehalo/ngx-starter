@@ -8,7 +8,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { DirectivesModule } from '../../../common/directives.module';
 import { ModalModule } from '../../../common/modal.module';
-import { ModalService } from '../../../common/modal/modal.service';
 import { PipesModule } from '../../../common/pipes.module';
 import { SearchInputModule } from '../../../common/search-input.module';
 import { SystemAlertModule } from '../../../common/system-alert.module';
@@ -35,6 +34,6 @@ import { AdminListEuasComponent } from './list-euas/admin-list-euas.component';
 	],
 	exports: [],
 	declarations: [AdminListEuasComponent, AdminCreateEuaComponent, AdminUpdateEuaComponent],
-	providers: [AdminUsersService, EuaService, ModalService]
+	providers: [AdminUsersService, EuaService]
 })
 export class AdminEuaModule {}
