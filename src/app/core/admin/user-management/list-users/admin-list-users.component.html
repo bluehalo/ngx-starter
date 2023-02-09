@@ -160,6 +160,18 @@
 						</ng-container>
 					</td>
 				</ng-container>
+				<ng-container cdkColumnDef="teams">
+					<th cdk-header-cell *cdkHeaderCellDef>Teams</th>
+					<td cdk-cell *cdkCellDef="let user">
+						<div class="text-nowrap" *ngFor="let team of user.userModel.teams">
+							<a
+								class="text-decoration-underline"
+								[routerLink]="['/team', team._id]"
+								>{{ team.team.name }}</a
+							>
+						</div>
+					</td>
+				</ng-container>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td cdk-cell *cdkCellDef="let user">

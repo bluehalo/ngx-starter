@@ -95,6 +95,10 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			key: 'roles',
 			label: 'Roles',
 			selected: true
+		},
+		{
+			key: 'teams',
+			label: 'Teams'
 		}
 	];
 	displayedColumns: string[] = [];
