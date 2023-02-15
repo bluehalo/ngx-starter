@@ -34,16 +34,11 @@
 		</ng-container>
 		<ng-container *ngIf="isFiltered">
 			<div class="clear mt-2">
-				<a style="cursor: pointer" (click)="clearFilter(); $event.stopPropagation()"
-					><u>Clear Filters</u></a
-				>
-			</div>
-			<div class="clear mt-2">
 				<button
-					class="btn btn-sm btn-link"
+					class="btn btn-sm btn-link px-0 text-decoration-underline"
 					(click)="clearFilter(); $event.stopPropagation()"
 				>
-					<u>Clear Filters</u>
+					Clear Filters
 				</button>
 			</div>
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
