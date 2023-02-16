@@ -60,6 +60,15 @@
 				margin-left: $nav-element-icon-margin-left;
 			}
 
+			> span.fa-stack {
+				font-size: $nav-element-icon-size * 0.5;
+				margin-left: $nav-element-icon-margin-left;
+				> span.fa-solid,
+				> span.fa-brands {
+					vertical-align: middle;
+				}
+			}
+
 			> span {
 				font-size: $nav-element-font-size;
 				margin-left: 10px;
