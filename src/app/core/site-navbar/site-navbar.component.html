@@ -120,10 +120,7 @@
 					<span class="fa-solid fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
 					<span class="fa-stack" *ngIf="isMasquerade">
 						<span class="fa-solid fa-circle fa-stack-2x"></span>
-						<span
-							class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
-							style="margin-left: 1px"
-						></span>
+						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"></span>
 					</span>
 					<span [hidden]="!navbarOpen">{{ session?.name }}</span>
 				</a>
@@ -175,13 +172,10 @@
 				>
 					<span class="fa-stack">
 						<span class="fa-solid fa-circle fa-stack-2x"></span>
-						<span
-							class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
-							style="margin-left: 1px"
-						></span>
+						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"></span>
 						<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
 					</span>
-					<span [hidden]="!navbarOpen">Clear Masquerade</span>{{ this.session?.name }}
+					<span [hidden]="!navbarOpen">Clear Masquerade</span>
 				</a>
 			</li>
 
