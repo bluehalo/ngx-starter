@@ -17,7 +17,7 @@ export class AuditActorFilterDirective implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.typeaheadFilter.typeaheadFunc = this.typeaheadSearch;
+		this.typeaheadFilter.typeaheadFunc = this.typeaheadSearch.bind(this);
 		this.typeaheadFilter.buildFilterFunc = this.buildFilter;
 	}
 
