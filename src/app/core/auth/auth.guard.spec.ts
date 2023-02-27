@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -15,9 +15,9 @@ import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuard', () => {
 	let guard: AuthGuard;
+	let router: Router;
 	let sessionService: SessionService;
 
-	let routerSpy: SpyObj<Router>;
 	let configServiceSpy: SpyObj<ConfigService>;
 	let authServiceSpy: SpyObj<AuthenticationService>;
 
@@ -26,8 +26,6 @@ describe('AuthGuard', () => {
 	};
 
 	beforeEach(() => {
-		routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
 		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
 		configServiceSpy.getConfig.and.returnValue(of(defaultConfig as Config));
 
@@ -40,7 +38,6 @@ describe('AuthGuard', () => {
 
 		TestBed.configureTestingModule({
 			providers: [
-				{ provide: Router, useValue: routerSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: AuthenticationService, useValue: authServiceSpy },
 				{ provide: SessionService },
@@ -49,6 +46,7 @@ describe('AuthGuard', () => {
 			]
 		});
 		guard = TestBed.inject(AuthGuard);
+		router = TestBed.inject(Router);
 		sessionService = TestBed.inject(SessionService);
 	});
 
@@ -74,8 +72,8 @@ describe('AuthGuard', () => {
 			spyOn(sessionService, 'getSession').and.returnValue(of({} as Session));
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(false);
-				expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/signin']);
+				expect(result instanceof UrlTree).toBe(true);
+				expect(result.toString()).toBe('/signin');
 				done();
 			});
 		});
@@ -91,8 +89,8 @@ describe('AuthGuard', () => {
 			const route = {} as unknown as ActivatedRouteSnapshot;
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(false);
-				expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/unauthorized']);
+				expect(result instanceof UrlTree).toBe(true);
+				expect(result.toString()).toBe('/unauthorized');
 				done();
 			});
 		});
@@ -110,7 +108,6 @@ describe('AuthGuard', () => {
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
 				expect(result).toBe(true);
-				expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
 				done();
 			});
 		});
@@ -129,8 +126,8 @@ describe('AuthGuard', () => {
 			} as unknown as ActivatedRouteSnapshot;
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(false);
-				expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/unauthorized']);
+				expect(result instanceof UrlTree).toBe(true);
+				expect(result.toString()).toBe('/unauthorized');
 				done();
 			});
 		});
@@ -149,8 +146,8 @@ describe('AuthGuard', () => {
 			} as unknown as ActivatedRouteSnapshot;
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(false);
-				expect(routerSpy.navigate).toHaveBeenCalledWith(['/unauthorized']);
+				expect(result instanceof UrlTree).toBe(true);
+				expect(result.toString()).toBe('/unauthorized');
 				done();
 			});
 		});
@@ -170,7 +167,6 @@ describe('AuthGuard', () => {
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
 				expect(result).toBe(true);
-				expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
 				done();
 			});
 		});
@@ -190,30 +186,9 @@ describe('AuthGuard', () => {
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
 				expect(result).toBe(true);
-				expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
 				done();
 			});
 		});
-
-		// it('should redirect to homepage if authenticated user was previously on auauthorized page', done => {
-		// 	authServiceSpy.reloadCurrentUser.and.returnValue(
-		// 		of({
-		// 			name: 'test',
-		// 			username: 'test',
-		// 			roles: { user: true }
-		// 		})
-		// 	);
-		//
-		// 	const route = ({} as unknown) as ActivatedRouteSnapshot;
-		//
-		// 	guard
-		// 		.canActivate(route, { url: '/unauthorized' } as RouterStateSnapshot)
-		// 		.subscribe(result => {
-		// 			expect(result).toBe(true);
-		// 			expect(routerSpy.navigate).toHaveBeenCalledWith(['']);
-		// 			done();
-		// 		});
-		// });
 
 		it('should redirect to eua page for authenticated user who has not accepted latest eua', (done) => {
 			authServiceSpy.reloadCurrentUser.and.returnValue(
@@ -228,8 +203,8 @@ describe('AuthGuard', () => {
 			const route = { data: { requiresEua: true } } as unknown as ActivatedRouteSnapshot;
 
 			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(false);
-				expect(routerSpy.navigate).toHaveBeenCalledWith(['/eua']);
+				expect(result instanceof UrlTree).toBe(true);
+				expect(result.toString()).toBe('/eua');
 				done();
 			});
 		});

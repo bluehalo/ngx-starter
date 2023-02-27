@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import {
+	ActivatedRouteSnapshot,
+	CanActivate,
+	Router,
+	RouterStateSnapshot,
+	UrlTree
+} from '@angular/router';
 
 import { combineLatest, of, Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
@@ -19,7 +25,10 @@ export class AuthGuard implements CanActivate {
 		private authorizationService: AuthorizationService
 	) {}
 
-	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+	canActivate(
+		route: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	): Observable<boolean | UrlTree> {
 		// Default to requiring authentication if guard is present
 		const requiresAuthentication = route.data?.['requiresAuthentication'] ?? true;
 
@@ -57,11 +66,10 @@ export class AuthGuard implements CanActivate {
 		);
 	}
 
-	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
-			this.router.navigate(['/signin']);
-			return false;
+			return this.router.parseUrl('/signin');
 		}
 
 		if (!this.authorizationService.isAdmin()) {
@@ -73,8 +81,7 @@ export class AuthGuard implements CanActivate {
 			const requiresEua = route.data?.['requiresEua'] ?? true;
 
 			if (requiresEua && !this.authorizationService.isEuaCurrent()) {
-				this.router.navigate(['/eua']);
-				return false;
+				return this.router.parseUrl('/eua');
 			}
 
 			// -----------------------------------------------------------
@@ -101,14 +108,8 @@ export class AuthGuard implements CanActivate {
 				state.url !== '/unauthorized'
 			) {
 				// The user doesn't have the needed roles to view the page
-				this.router.navigate(['/unauthorized']);
-				return false;
+				return this.router.parseUrl('/unauthorized');
 			}
-
-			// redirect a user to the homepage if they are authorized
-			// if (missingRoles.length === 0 && state.url === '/unauthorized') {
-			// 	this.router.navigate(['']);
-			// }
 		}
 
 		return true;
