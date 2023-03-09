@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, Optional } from '@angular/core';
 
 import escapeRegExp from 'lodash/escapeRegExp';
 
@@ -7,7 +7,9 @@ import {
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
 
-type StringFilterOption = 'Equals' | 'Contains' | 'Starts with' | 'Ends with';
+export type TextFilterOption = 'Equals' | 'Contains' | 'Starts with' | 'Ends with';
+
+type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 
 @Component({
 	selector: 'asy-header-filter[text-filter]',
@@ -16,7 +18,10 @@ type StringFilterOption = 'Equals' | 'Contains' | 'Starts with' | 'Ends with';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {
-	option: StringFilterOption = 'Contains';
+	@Input()
+	buildFilterFunc?: BuildFilterFunction;
+
+	option: TextFilterOption = 'Contains';
 
 	search = '';
 
@@ -61,14 +66,18 @@ export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	_buildFilter() {
 		if (this.search) {
+			if (this.buildFilterFunc) {
+				return this.buildFilterFunc(this.search, this.option);
+			}
+
 			return {
-				[this.id]: { $regex: this._buildRegex(this.search, this.option), $options: 'i' }
+				[this.id]: { $regex: this.buildRegex(this.search, this.option), $options: 'i' }
 			};
 		}
 		return {};
 	}
 
-	_buildRegex(search: string, option: StringFilterOption) {
+	public buildRegex(search: string, option: TextFilterOption) {
 		if (option === 'Equals') {
 			return `^${escapeRegExp(search)}$`;
 		}
