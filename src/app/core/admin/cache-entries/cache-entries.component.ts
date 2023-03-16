@@ -22,14 +22,14 @@ import { CacheEntry } from './cache-entry.model';
 	templateUrl: './cache-entries.component.html'
 })
 export class CacheEntriesComponent implements OnDestroy, OnInit {
-	displayedColumns = ['key', 'value', 'timestamp', 'actionsMenu'];
+	displayedColumns = ['key', 'value', 'ts', 'actionsMenu'];
 
 	dataSource = new AsyTableDataSource<CacheEntry>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		null,
 		{
-			sortField: 'key',
-			sortDir: SortDirection.asc
+			sortField: 'ts',
+			sortDir: SortDirection.desc
 		}
 	);
 
