@@ -32,12 +32,12 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="value">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Value</th>
+				<th cdk-header-cell *cdkHeaderCellDef>Value</th>
 				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow" style="max-width: 300px">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="timestamp">
+			<ng-container cdkColumnDef="ts">
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
 				<td cdk-cell *cdkCellDef="let entry">
 					<div class="text-nowrap" tooltip="{{ entry.ts | utcDate }}" container="body">
