@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { concat, of, Observable, Subject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable, Subject, concat, of } from 'rxjs';
 import {
 	catchError,
 	debounceTime,
@@ -47,7 +47,7 @@ export class MasqueradeComponent implements OnInit {
 		} else {
 			this.sessionService
 				.getSession()
-				.pipe(untilDestroyed(this), isNotNullOrUndefined())
+				.pipe(isNotNullOrUndefined(), untilDestroyed(this))
 				.subscribe((session) => {
 					if (session.user.userModel.canMasquerade) {
 						this.loadUsers();

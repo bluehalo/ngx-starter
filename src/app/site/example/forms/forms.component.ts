@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-forms',
 	templateUrl: './forms.component.html'
@@ -22,7 +24,7 @@ export class FormsComponent {
 
 		// Simulate component submitting w/ delay
 		of(true)
-			.pipe(delay(4000), first())
+			.pipe(delay(4000), first(), untilDestroyed(this))
 			.subscribe(() => {
 				btn.disabled = false;
 				btn.classList.remove('btn-submitting');

@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 
 import isEmpty from 'lodash/isEmpty';
-import { combineLatest, BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatest } from 'rxjs';
 import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 
 import { NULL_PAGING_RESULTS, PageChange, PagingOptions, PagingResults } from '../paging.model';

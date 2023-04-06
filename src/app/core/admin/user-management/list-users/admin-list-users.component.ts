@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { of, Observable } from 'rxjs';
-import { catchError, filter, first, switchMap } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable, of } from 'rxjs';
+import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../../common/modal/modal.model';
 import { ModalService } from '../../../../common/modal/modal.service';
@@ -103,7 +103,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	];
 	displayedColumns: string[] = [];
 
-	allowDeleteUser = true;
+	allowDeleteUser$: Observable<boolean>;
 
 	dataSource = new AsyTableDataSource<User>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
@@ -127,14 +127,10 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
-		this.configService
-			.getConfig()
-			.pipe(first())
-			.subscribe((config) => {
-				if (config) {
-					this.allowDeleteUser = config.allowDeleteUser;
-				}
-			});
+		this.allowDeleteUser$ = this.configService.getConfig().pipe(
+			map((config) => config?.allowDeleteUser ?? true),
+			untilDestroyed(this)
+		);
 	}
 
 	ngOnDestroy() {
@@ -204,6 +200,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
+			.pipe(untilDestroyed(this))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/users/csv/${response._id}`);
 			});

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { of, Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 import { PagingResults } from '../../../common/paging.model';
 import { PipesModule } from '../../../common/pipes.module';

@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, inject, Input, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, Optional, inject } from '@angular/core';
 
 import {
 	AsyAbstractHeaderFilterComponent,

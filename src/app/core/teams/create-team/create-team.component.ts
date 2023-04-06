@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { concat, of, Observable, Subject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable, Subject, concat, of } from 'rxjs';
 import {
 	debounceTime,
 	distinctUntilChanged,
@@ -84,11 +84,11 @@ export class CreateTeamComponent implements OnInit {
 
 		this.route.queryParamMap
 			.pipe(
-				untilDestroyed(this),
 				filter((params) => params.has('parent')),
 				map((params) => params.get('parent')),
 				filter((id: string | null): id is string => id !== null),
-				switchMap((id) => this.teamsService.read(id))
+				switchMap((id) => this.teamsService.read(id)),
+				untilDestroyed(this)
 			)
 			.subscribe((parent) => {
 				this.team.parent = parent ?? undefined;

@@ -27,9 +27,9 @@ export class AdminEditUserComponent extends ManageUserComponent {
 	initialize() {
 		this.route.params
 			.pipe(
-				untilDestroyed(this),
 				switchMap((params: Params) => this.adminUsersService.get(params['id'])),
-				map((userRaw: any) => new User().setFromUserModel(userRaw))
+				map((userRaw: any) => new User().setFromUserModel(userRaw)),
+				untilDestroyed(this)
 			)
 			.subscribe((user) => {
 				this.user = user;

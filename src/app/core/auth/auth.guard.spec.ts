@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -15,7 +15,6 @@ import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuard', () => {
 	let guard: AuthGuard;
-	let router: Router;
 	let sessionService: SessionService;
 
 	let configServiceSpy: SpyObj<ConfigService>;
@@ -46,7 +45,6 @@ describe('AuthGuard', () => {
 			]
 		});
 		guard = TestBed.inject(AuthGuard);
-		router = TestBed.inject(Router);
 		sessionService = TestBed.inject(SessionService);
 	});
 

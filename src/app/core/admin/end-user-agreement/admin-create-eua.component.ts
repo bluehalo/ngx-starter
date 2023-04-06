@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';

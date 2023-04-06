@@ -1,11 +1,11 @@
 import {
 	Directive,
-	inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
-	SimpleChanges
+	SimpleChanges,
+	inject
 } from '@angular/core';
 
 import cloneDeep from 'lodash/cloneDeep';

@@ -1,5 +1,5 @@
 import { A11yModule } from '@angular/cdk/a11y';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ModalComponent } from './modal.component';
 

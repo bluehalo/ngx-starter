@@ -1,4 +1,4 @@
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { LocalStorageService } from '../../storage/local-storage.service';

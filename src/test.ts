@@ -4,8 +4,8 @@ import 'zone.js/testing';
 
 import { getTestBed } from '@angular/core/testing';
 import {
-	platformBrowserDynamicTesting,
-	BrowserDynamicTestingModule
+	BrowserDynamicTestingModule,
+	platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
 declare const require: {

@@ -7,7 +7,7 @@ import {
 	ViewContainerRef
 } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
 
 import { AbstractModalDirective } from '../abstract-modal.directive';

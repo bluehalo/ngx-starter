@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';

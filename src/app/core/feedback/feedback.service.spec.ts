@@ -1,5 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { TestBed, getTestBed } from '@angular/core/testing';
 
 import { Feedback, FeedbackStatusOption } from './feedback.model';
 import { FeedbackService } from './feedback.service';
