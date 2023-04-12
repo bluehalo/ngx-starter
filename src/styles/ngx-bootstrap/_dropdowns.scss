@@ -15,6 +15,10 @@ $dropdown-element-font-color: map.get($color-background, 'lightest-contrast') !d
 	&.open .dropdown-toggle::after {
 		transform: rotate(180deg);
 	}
+
+	.dropdown-item {
+		@include font-size($input-font-size);
+	}
 }
 
 .dropdown-toggle.dropdown-toggle-hide-caret {

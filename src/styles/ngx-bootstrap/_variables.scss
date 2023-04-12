@@ -53,9 +53,11 @@ $dropdown-spacer: 0 !default;
 $dropdown-border-color: $ux-color-dark-gray !default;
 $dropdown-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
 $dropdown-link-hover-bg: $ux-color-light-gray !default;
+$dropdown-link-active-color: $input-color !default;
+$dropdown-link-active-bg: $ux-color-light-gray !default;
 
-$dropdown-item-padding-y: 10px !default;
-$dropdown-item-padding-x: 24px !default;
+$dropdown-item-padding-y: 8px !default;
+$dropdown-item-padding-x: 10px !default;
 
 // Modals
 $modal-dialog-margin-y-sm-up: 3rem !default;
