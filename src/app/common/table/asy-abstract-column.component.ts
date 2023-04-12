@@ -1,6 +1,6 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CdkCellDef, CdkColumnDef, CdkHeaderCellDef, CdkTable } from '@angular/cdk/table';
-import { Directive, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Directive, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 @Directive()
 export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit {

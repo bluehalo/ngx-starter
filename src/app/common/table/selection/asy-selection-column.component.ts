@@ -1,7 +1,7 @@
 import { DataSource, SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -70,8 +70,8 @@ export class AsySelectionColumnComponent<T, TB = T>
 		}
 
 		this._isAllSelected$ = this.selectionModel.changed.pipe(
-			untilDestroyed(this),
-			map(() => this._isAllSelected())
+			map(() => this._isAllSelected()),
+			untilDestroyed(this)
 		);
 	}
 

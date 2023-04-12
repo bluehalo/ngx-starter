@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../common/modal/modal.model';
@@ -102,7 +102,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this), isNotNullOrUndefined())
+			.pipe(isNotNullOrUndefined(), untilDestroyed(this))
 			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isUserAdmin = this.authorizationService.isAdmin();

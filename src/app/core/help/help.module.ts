@@ -8,7 +8,7 @@ import { ExternalLinksComponent } from './getting-started/external-links.compone
 import { GettingStartedHelpComponent } from './getting-started/getting-started-help.component';
 import { HelpRoutingModule } from './help-routing.module';
 import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
-import { HelpTopics, HelpTopicComponent } from './help-topic.component';
+import { HelpTopicComponent, HelpTopics } from './help-topic.component';
 import { HelpComponent } from './help.component';
 
 @NgModule({

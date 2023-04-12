@@ -7,7 +7,7 @@ import {
 	UrlTree
 } from '@angular/router';
 
-import { combineLatest, of, Observable } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';

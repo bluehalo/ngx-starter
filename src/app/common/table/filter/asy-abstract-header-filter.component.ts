@@ -3,16 +3,16 @@ import {
 	ChangeDetectorRef,
 	Directive,
 	HostListener,
-	inject,
 	Input,
 	OnDestroy,
-	OnInit
+	OnInit,
+	inject
 } from '@angular/core';
 
 import isEmpty from 'lodash/isEmpty';
 
 import { SessionStorageService } from '../../storage/session-storage.service';
-import { AsyFilterable, AsyFilterDirective } from './asy-filter.directive';
+import { AsyFilterDirective, AsyFilterable } from './asy-filter.directive';
 
 /** Column definition associated with a `AsySortHeader` */
 export interface AsyFilterHeaderColumnDef {

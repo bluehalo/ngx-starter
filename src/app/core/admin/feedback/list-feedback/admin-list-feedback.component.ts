@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
@@ -137,6 +137,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
+			.pipe(untilDestroyed(this))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});

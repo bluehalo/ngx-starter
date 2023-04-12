@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { concat, Observable, of, Subject } from 'rxjs';
+import { Observable, Subject, concat, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
 import {
@@ -48,7 +48,6 @@ export class AsyHeaderTypeaheadFilterComponent
 		this.values$ = concat(
 			of([] as any[]), // default items
 			this.input$.pipe(
-				untilDestroyed(this),
 				debounceTime(200),
 				distinctUntilChanged(),
 				tap(() => (this.loading = true)),
@@ -60,7 +59,8 @@ export class AsyHeaderTypeaheadFilterComponent
 				}),
 				tap(() => {
 					this.loading = false;
-				})
+				}),
+				untilDestroyed(this)
 			)
 		);
 	}

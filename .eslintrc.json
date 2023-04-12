@@ -19,7 +19,7 @@
         ],
         "createDefaultProgram": true
       },
-      "plugins": ["deprecation"],
+      "plugins": ["deprecation", "rxjs-angular"],
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
@@ -57,6 +57,7 @@
             "rxjs/Rx"
           ]
         }],
+        "sort-imports": ["error", { "ignoreDeclarationSort":  true }],
         "import/order": ["error", {
           "groups": [
             ["builtin"],
@@ -80,6 +81,15 @@
         "rxjs/prefer-observer": ["error"],
         "rxjs/finnish": ["error", {
           "methods": false
+        }],
+        "rxjs/no-unsafe-takeuntil": [
+          "error",
+          {
+            "alias": ["untilDestroyed"]
+          }
+        ],
+        "rxjs-angular/prefer-takeuntil": ["error", {
+          "alias":  ["untilDestroyed"]
         }]
       }
     },

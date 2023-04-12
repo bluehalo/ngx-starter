@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { merge, BehaviorSubject, Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';

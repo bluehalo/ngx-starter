@@ -9,16 +9,17 @@ import {
 	Optional
 } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { SortDir, SortDirection } from '../../../sorting.model';
-import { AsySortable, AsySortDirective } from '../asy-sort.directive';
+import { AsySortDirective, AsySortable } from '../asy-sort.directive';
 
 /** Column definition associated with a `AsySortHeader` */
 interface AsySortHeaderColumnDef {
 	name: string;
 }
 
+@UntilDestroy()
 @Component({
 	selector: '[asy-sort-header]',
 	templateUrl: './asy-sort-header.component.html',
@@ -37,8 +38,6 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	sortDir: SortDir = SortDirection.asc;
 
 	isSorted = false;
-
-	private _rerenderSubscription: Subscription;
 
 	/**
 	 * ID of this sort header. If used within the context of a CdkColumnDef, this will default to
@@ -73,7 +72,7 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 		}
 		this._sort.register(this);
 
-		this._rerenderSubscription = this._sort.dataSource.sortEvent$.subscribe((sortChange) => {
+		this._sort.dataSource.sortEvent$.pipe(untilDestroyed(this)).subscribe((sortChange) => {
 			this.isSorted = sortChange.sortField === this.id;
 			if (this.isSorted) {
 				this.sortDir = sortChange.sortDir;
@@ -84,7 +83,6 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 
 	ngOnDestroy() {
 		this._sort.deregister(this);
-		this._rerenderSubscription?.unsubscribe();
 	}
 
 	_handleClick() {

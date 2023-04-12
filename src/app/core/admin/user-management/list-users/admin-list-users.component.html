@@ -206,7 +206,7 @@
 										Edit
 									</button>
 								</li>
-								<li role="menuitem" *ngIf="allowDeleteUser">
+								<li role="menuitem" *ngIf="allowDeleteUser$ | async">
 									<button class="dropdown-item" (click)="confirmDeleteUser(user)">
 										Delete
 									</button>

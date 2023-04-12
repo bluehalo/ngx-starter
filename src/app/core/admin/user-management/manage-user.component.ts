@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Directive, inject, OnInit } from '@angular/core';
+import { Directive, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { untilDestroyed } from '@ngneat/until-destroy';

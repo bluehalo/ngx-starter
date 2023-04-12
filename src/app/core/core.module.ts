@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,9 +16,7 @@ import { LoadingSpinnerModule } from '../common/loading-spinner.module';
 import { SystemAlertModule } from '../common/system-alert.module';
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
-import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { AuthorizationService } from './auth/authorization.service';
 import { HasEveryRoleDirective } from './auth/directives/has-every-role.directive';
 import { HasRoleDirective } from './auth/directives/has-role.directive';
 import { HasSomeRolesDirective } from './auth/directives/has-some-roles.directive';

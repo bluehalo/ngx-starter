@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { Role } from './role.model';
 import { Session } from './session.model';

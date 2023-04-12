@@ -1,8 +1,8 @@
 import {
 	EmbeddedViewRef,
-	inject,
 	TemplateRef,
 	ViewContainerRef,
+	inject,
 	ɵstringify as stringify
 } from '@angular/core';
 

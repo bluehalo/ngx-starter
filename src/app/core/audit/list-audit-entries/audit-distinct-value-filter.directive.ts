@@ -1,6 +1,6 @@
 import { Directive, OnInit } from '@angular/core';
 
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 
 import {
@@ -24,7 +24,6 @@ export class AuditDistinctValueFilterDirective implements OnInit {
 		this.auditService
 			.getDistinctAuditValues(this.listFilter.id)
 			.pipe(
-				untilDestroyed(this),
 				map((options: string[]) =>
 					options.map(
 						(o) =>
@@ -33,7 +32,8 @@ export class AuditDistinctValueFilterDirective implements OnInit {
 								value: o
 							} as ListFilterOption)
 					)
-				)
+				),
+				untilDestroyed(this)
 			)
 			.subscribe((types) => {
 				this.listFilter.options = types;

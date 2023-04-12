@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { of, pipe, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, pipe } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
