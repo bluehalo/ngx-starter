@@ -1,0 +1,78 @@
+image: node:18.16
+
+stages:
+  - test
+  - build
+  - deploy
+  - package
+  - release
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - node_modules/
+
+test:
+  image: trion/ng-cli-karma
+  stage: test
+  script:
+    - npm install
+    - npm run test:ci
+  coverage: '/^Statements\s*:\s*([^%]+)/'
+  artifacts:
+    paths:
+      - coverage/
+      - test-report/*.xml
+    reports:
+      junit: test-report/*.xml
+  except:
+    variables:
+      - $TEST_DISABLED
+
+build:
+  stage: build
+  script:
+    - npm install -g @angular/cli
+    - npm install
+    - npm run build:prod
+  artifacts:
+    paths:
+      - dist/
+
+package:
+  stage: package
+  dependencies:
+    - build
+  script:
+    - ./package.sh
+  artifacts:
+    name: "$CI_PROJECT_NAME-$CI_COMMIT_TAG"
+    paths:
+      - "*.tar.gz"
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: on_success
+      allow_failure: false
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - when: manual
+      allow_failure: true
+
+# store and publish code coverage HTML report folder
+pages:
+  stage: deploy
+  needs:
+    - test
+  script:
+    # delete everything in the current public folder
+    # and replace with code coverage HTML report
+    - rm -rf public/coverage
+    - mkdir -p public/coverage
+    - cp -R coverage/lcov-report/* public/coverage
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - test
+
