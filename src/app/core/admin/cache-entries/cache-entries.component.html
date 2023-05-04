@@ -41,7 +41,7 @@
 				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
 				<td cdk-cell *cdkCellDef="let entry">
 					<div class="text-nowrap" tooltip="{{ entry.ts | utcDate }}" container="body">
-						{{ entry.ts | agoDate: false }}
+						{{ entry.ts | agoDate : false }}
 					</div>
 				</td>
 			</ng-container>
@@ -115,6 +115,6 @@
 		{{ cacheEntry.value | json }}
 	</td>
 	<td>
-		<span [attr.title]="cacheEntry.ts | utcDate">{{ cacheEntry.ts | agoDate: false }}</span>
+		<span [attr.title]="cacheEntry.ts | utcDate">{{ cacheEntry.ts | agoDate : false }}</span>
 	</td>
 </ng-template>

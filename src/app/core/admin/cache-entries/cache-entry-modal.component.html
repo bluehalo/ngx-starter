@@ -11,7 +11,7 @@
 			<div>{{ cacheEntry.key }}</div>
 
 			<label>Last Updated</label>
-			<div>{{ cacheEntry.date | utcDate }} ({{ cacheEntry.date | agoDate: false }})</div>
+			<div>{{ cacheEntry.date | utcDate }} ({{ cacheEntry.date | agoDate : false }})</div>
 
 			<label>Value</label>
 			<pre>{{ cacheEntry.value | json }}</pre>

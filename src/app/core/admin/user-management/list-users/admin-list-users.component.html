@@ -99,7 +99,7 @@
 							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
 							container="body"
 						>
-							{{ user.userModel.acceptedEua | agoDate: false }}
+							{{ user.userModel.acceptedEua | agoDate : false }}
 						</div>
 					</td>
 				</ng-container>
@@ -111,7 +111,7 @@
 							tooltip="{{ user.userModel.lastLogin | utcDate }}"
 							container="body"
 						>
-							{{ user.userModel.lastLogin | agoDate: false }}
+							{{ user.userModel.lastLogin | agoDate : false }}
 						</div>
 					</td>
 				</ng-container>
@@ -130,13 +130,13 @@
 				<ng-container cdkColumnDef="externalRoles">
 					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
 					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
-						{{ user.userModel.externalRoles | join: ', ' }}
+						{{ user.userModel.externalRoles | join : ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalGroups">
 					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
 					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
-						{{ user.userModel.externalGroups | join: ', ' }}
+						{{ user.userModel.externalGroups | join : ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="roles">
