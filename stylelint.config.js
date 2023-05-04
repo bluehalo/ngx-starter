@@ -3,14 +3,11 @@
 module.exports = {
 	'extends': [
 		'stylelint-config-recommended-scss',
-		'stylelint-config-prettier'
 	],
 	'plugins': [
-		'stylelint-prettier',
 		'stylelint-scss'
 	],
 	'rules': {
-		'prettier/prettier': true,
 		'at-rule-empty-line-before': null,
 		'no-descending-specificity': null,
 		'no-empty-source': null,
