@@ -1,48 +1,47 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Directive, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Directive, Input, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AbstractIfThenElseDirective } from '../../../common/directives/abstract-if-then-else.directive';
 import { AuthorizationService } from '../authorization.service';
 import { SessionService } from '../session.service';
 
 @UntilDestroy()
 @Directive({
-	selector: '[isAuthenticated]'
+	selector: '[isAuthenticated]',
+	hostDirectives: [
+		{
+			directive: NgIf,
+			inputs: ['ngIfElse: isAuthenticatedElse', 'ngIfThen: isAuthenticatedThen']
+		}
+	]
 })
-export class IsAuthenticatedDirective extends AbstractIfThenElseDirective implements OnInit {
+export class IsAuthenticatedDirective implements OnInit {
 	private _isAuthenticated = true;
+	andCondition = true;
+	orCondition = false;
 
+	private ngIfDirective = inject(NgIf);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 
 	@Input()
 	set isAuthenticated(isAuthenticated: BooleanInput) {
 		this._isAuthenticated = coerceBooleanProperty(isAuthenticated);
-		this._updateView();
-	}
-
-	@Input()
-	set isAuthenticatedThen(templateRef: TemplateRef<any> | null) {
-		this.setThenTemplate('isAuthenticatedThen', templateRef);
-	}
-
-	@Input()
-	set isAuthenticatedElse(templateRef: TemplateRef<any> | null) {
-		this.setElseTemplate('isAuthenticatedElse', templateRef);
+		this.updateNgIf();
 	}
 
 	@Input()
 	set isAuthenticatedAnd(condition: boolean) {
-		this._andCondition = condition;
-		this._updateView();
+		this.andCondition = condition;
+		this.updateNgIf();
 	}
 
 	@Input()
 	set isAuthenticatedOr(condition: boolean) {
-		this._orCondition = condition;
-		this._updateView();
+		this.orCondition = condition;
+		this.updateNgIf();
 	}
 
 	ngOnInit() {
@@ -50,11 +49,12 @@ export class IsAuthenticatedDirective extends AbstractIfThenElseDirective implem
 			.getSession()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this._updateView();
+				this.updateNgIf();
 			});
 	}
 
-	protected checkPermission(): boolean {
-		return this.authorizationService.isAuthenticated() === this._isAuthenticated;
+	private updateNgIf() {
+		this.ngIfDirective.ngIf =
+			this.orCondition || (this.andCondition && this.authorizationService.isAuthenticated());
 	}
 }

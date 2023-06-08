@@ -1,47 +1,47 @@
-import { Directive, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Directive, Input, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AbstractIfThenElseDirective } from '../../../common/directives/abstract-if-then-else.directive';
 import { AuthorizationService } from '../authorization.service';
 import { Role } from '../role.model';
 import { SessionService } from '../session.service';
 
 @UntilDestroy()
 @Directive({
-	selector: '[hasSomeRoles]'
+	selector: '[hasSomeRoles]',
+	hostDirectives: [
+		{
+			directive: NgIf,
+			inputs: ['ngIfElse: hasSomeRolesElse', 'ngIfThen: hasSomeRolesThen']
+		}
+	]
 })
-export class HasSomeRolesDirective extends AbstractIfThenElseDirective implements OnInit {
+export class HasSomeRolesDirective implements OnInit {
 	roles: Array<string | Role>;
+	andCondition = true;
+	orCondition = false;
 
+	private ngIfDirective = inject(NgIf);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 
 	@Input()
 	set hasSomeRoles(roles: Array<string | Role>) {
 		this.roles = roles;
-		this._updateView();
+		this.updateNgIf();
 	}
 
-	@Input()
-	set hasSomeRolesThen(templateRef: TemplateRef<any> | null) {
-		this.setThenTemplate('hasSomeRolesThen', templateRef);
-	}
-
-	@Input()
-	set hasSomeRolesElse(templateRef: TemplateRef<any> | null) {
-		this.setElseTemplate('hasSomeRolesElse', templateRef);
-	}
 	@Input()
 	set hasSomeRolesAnd(condition: boolean) {
-		this._andCondition = condition;
-		this._updateView();
+		this.andCondition = condition;
+		this.updateNgIf();
 	}
 
 	@Input()
 	set hasSomeRolesOr(condition: boolean) {
-		this._orCondition = condition;
-		this._updateView();
+		this.orCondition = condition;
+		this.updateNgIf();
 	}
 
 	ngOnInit() {
@@ -49,11 +49,13 @@ export class HasSomeRolesDirective extends AbstractIfThenElseDirective implement
 			.getSession()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this._updateView();
+				this.updateNgIf();
 			});
 	}
 
-	protected checkPermission(): boolean {
-		return this.authorizationService.hasSomeRoles(this.roles);
+	private updateNgIf() {
+		this.ngIfDirective.ngIf =
+			this.orCondition ||
+			(this.andCondition && this.authorizationService.hasSomeRoles(this.roles));
 	}
 }

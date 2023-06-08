@@ -1,48 +1,47 @@
-import { Directive, Input, OnInit, TemplateRef, inject } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Directive, Input, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AbstractIfThenElseDirective } from '../../../common/directives/abstract-if-then-else.directive';
 import { AuthorizationService } from '../authorization.service';
 import { Role } from '../role.model';
 import { SessionService } from '../session.service';
 
 @UntilDestroy()
 @Directive({
-	selector: '[hasRole]'
+	selector: '[hasRole]',
+	hostDirectives: [
+		{
+			directive: NgIf,
+			inputs: ['ngIfElse: hasRoleElse', 'ngIfThen: hasRoleThen']
+		}
+	]
 })
-export class HasRoleDirective extends AbstractIfThenElseDirective implements OnInit {
+export class HasRoleDirective implements OnInit {
 	role: string | Role;
+	andCondition = true;
+	orCondition = false;
 
+	private ngIfDirective = inject(NgIf);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 
 	@Input()
 	set hasRole(role: string | Role) {
 		this.role = role;
-		this._updateView();
-	}
-
-	@Input()
-	set hasRoleThen(templateRef: TemplateRef<any> | null) {
-		this.setThenTemplate('hasRoleThen', templateRef);
-	}
-
-	@Input()
-	set hasRoleElse(templateRef: TemplateRef<any> | null) {
-		this.setElseTemplate('hasRoleElse', templateRef);
+		this.updateNgIf();
 	}
 
 	@Input()
 	set hasRoleAnd(condition: boolean) {
-		this._andCondition = condition;
-		this._updateView();
+		this.andCondition = condition;
+		this.updateNgIf();
 	}
 
 	@Input()
 	set hasRoleOr(condition: boolean) {
-		this._orCondition = condition;
-		this._updateView();
+		this.orCondition = condition;
+		this.updateNgIf();
 	}
 
 	ngOnInit() {
@@ -50,11 +49,12 @@ export class HasRoleDirective extends AbstractIfThenElseDirective implements OnI
 			.getSession()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this._updateView();
+				this.updateNgIf();
 			});
 	}
 
-	protected checkPermission(): boolean {
-		return this.authorizationService.hasRole(this.role);
+	private updateNgIf() {
+		this.ngIfDirective.ngIf =
+			this.orCondition || (this.andCondition && this.authorizationService.hasRole(this.role));
 	}
 }
