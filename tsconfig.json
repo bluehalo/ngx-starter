@@ -26,8 +26,7 @@
       "node_modules/@types"
     ],
     "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true,
-    "useDefineForClassFields": false
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
