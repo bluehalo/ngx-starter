@@ -1,51 +1,47 @@
-import { Directive, Input, OnInit, TemplateRef } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Directive, Input, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AbstractIfThenElseDirective } from '../../../common/directives/abstract-if-then-else.directive';
 import { AuthorizationService } from '../authorization.service';
 import { Role } from '../role.model';
 import { SessionService } from '../session.service';
 
 @UntilDestroy()
 @Directive({
-	selector: '[hasEveryRole]'
+	selector: '[hasEveryRole]',
+	hostDirectives: [
+		{
+			directive: NgIf,
+			inputs: ['ngIfElse: hasEveryRoleElse', 'ngIfThen: hasEveryRoleThen']
+		}
+	]
 })
-export class HasEveryRoleDirective extends AbstractIfThenElseDirective implements OnInit {
+export class HasEveryRoleDirective implements OnInit {
 	roles: Array<string | Role>;
-	constructor(
-		private sessionService: SessionService,
-		private authorizationService: AuthorizationService
-	) {
-		super();
-	}
+	andCondition = true;
+	orCondition = false;
+
+	private ngIfDirective = inject(NgIf);
+	private sessionService = inject(SessionService);
+	private authorizationService = inject(AuthorizationService);
 
 	@Input()
 	set hasEveryRole(roles: Array<string | Role>) {
 		this.roles = roles;
-		this._updateView();
-	}
-
-	@Input()
-	set hasEveryRoleThen(templateRef: TemplateRef<any> | null) {
-		this.setThenTemplate('hasEveryRoleThen', templateRef);
-	}
-
-	@Input()
-	set hasEveryRoleElse(templateRef: TemplateRef<any> | null) {
-		this.setElseTemplate('hasEveryRoleElse', templateRef);
+		this.updateNgIf();
 	}
 
 	@Input()
 	set hasEveryRoleAnd(condition: boolean) {
-		this._andCondition = condition;
-		this._updateView();
+		this.andCondition = condition;
+		this.updateNgIf();
 	}
 
 	@Input()
 	set hasEveryRoleOr(condition: boolean) {
-		this._orCondition = condition;
-		this._updateView();
+		this.orCondition = condition;
+		this.updateNgIf();
 	}
 
 	ngOnInit() {
@@ -53,11 +49,13 @@ export class HasEveryRoleDirective extends AbstractIfThenElseDirective implement
 			.getSession()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this._updateView();
+				this.updateNgIf();
 			});
 	}
 
-	protected checkPermission(): boolean {
-		return this.authorizationService.hasEveryRole(this.roles);
+	private updateNgIf() {
+		this.ngIfDirective.ngIf =
+			this.orCondition ||
+			(this.andCondition && this.authorizationService.hasEveryRole(this.roles));
 	}
 }

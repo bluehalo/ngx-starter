@@ -6,6 +6,9 @@ import {
 	ɵstringify as stringify
 } from '@angular/core';
 
+/**
+ * @deprecated With upgrade to Angular 15, directive composition should be used.
+ */
 export abstract class AbstractIfThenElseDirective {
 	protected _andCondition = true;
 	protected _orCondition = false;
