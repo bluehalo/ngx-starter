@@ -24,7 +24,6 @@ import { ListTeamsComponent } from './list-teams/list-teams.component';
 import { TeamSelectInputComponent } from './team-select-input/team-select-input.component';
 import { TeamTopics } from './team-topic.model';
 import { TeamsRoutingModule } from './teams-routing.module';
-import { TeamsResolve } from './teams.resolver';
 import { GeneralDetailsComponent } from './view-team/general-details/general-details.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 
@@ -60,7 +59,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		TeamSelectInputComponent,
 		GeneralDetailsComponent
 	],
-	providers: [TeamsResolve, TeamsHelpComponent]
+	providers: [TeamsHelpComponent]
 })
 export class TeamsModule {}
 

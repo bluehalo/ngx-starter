@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from '../../common/admin/admin.component';
-import { AuthGuard } from '../../core/auth/auth.guard';
+import { authGuard } from '../../core/auth/auth.guard';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { ExploreComponent } from './explore.component';
@@ -24,47 +24,47 @@ import { WelcomeComponent } from './welcome.component';
 			{
 				path: 'welcome',
 				component: WelcomeComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'explore',
 				component: ExploreComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'search',
 				component: SearchComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'forms',
 				component: FormsComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'grid',
 				component: GridComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'modal',
 				component: ModalComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'loading-overlay',
 				component: ExampleLoadingOverlayComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'alerts',
 				component: AlertsComponent,
-				canActivate: [AuthGuard]
+				canActivate: [authGuard]
 			},
 			{
 				path: 'admin',
 				component: AdminComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['admin'] },
 				children: [
 					{

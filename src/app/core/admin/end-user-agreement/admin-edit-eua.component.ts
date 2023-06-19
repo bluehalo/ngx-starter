@@ -27,7 +27,9 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 				untilDestroyed(this)
 			)
 			.subscribe((eua) => {
-				this.eua = eua;
+				setTimeout(() => {
+					this.eua = eua;
+				}, 3000);
 			});
 	}
 

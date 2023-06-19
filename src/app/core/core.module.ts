@@ -121,7 +121,6 @@ export class CoreModule {
 	}
 }
 
-export { AuthGuard } from './auth/auth.guard';
 export { User } from './auth/user.model';
 export { Role } from './auth/role.model';
 export { AuthorizationService } from './auth/authorization.service';

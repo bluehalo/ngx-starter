@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminComponent } from '../../common/admin/admin.component';
-import { AuthGuard } from '../auth/auth.guard';
+import { authGuard } from '../auth/auth.guard';
 import { CacheEntriesComponent } from './cache-entries/cache-entries.component';
 import { AdminCreateEuaComponent } from './end-user-agreement/admin-create-eua.component';
 import { AdminUpdateEuaComponent } from './end-user-agreement/admin-edit-eua.component';
@@ -21,7 +21,7 @@ import { AdminListUsersComponent } from './user-management/list-users/admin-list
 			{
 				path: '',
 				component: AdminComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['admin'] },
 				children: [
 					/**
