@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about.component';
 import { AccessComponent } from './access.component';
-import { AuthGuard } from './auth/auth.guard';
+import { authGuard } from './auth/auth.guard';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
@@ -24,7 +24,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 			{
 				path: 'eua',
 				component: UserEuaComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: {
 					requiresEua: false
 				}
@@ -44,7 +44,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 			{
 				path: 'unauthorized',
 				component: UnauthorizedComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: {
 					roles: [], // no roles are needed to get to the "unauthorized" page
 					requiresEua: false

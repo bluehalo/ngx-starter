@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../auth/auth.guard';
+import { authGuard } from '../auth/auth.guard';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';
-import { TeamsResolve } from './teams.resolver';
+import { teamResolver } from './teams.service';
 import { GeneralDetailsComponent } from './view-team/general-details/general-details.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 
@@ -14,22 +14,22 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 			{
 				path: 'teams',
 				component: ListTeamsComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['user'] }
 			},
 			{
 				path: 'team/create',
 				component: CreateTeamComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['editor', 'admin'], requireAllRoles: false }
 			},
 			{
 				path: 'team/:id',
 				component: ViewTeamComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['user'] },
 				resolve: {
-					team: TeamsResolve
+					team: teamResolver
 				},
 				children: [
 					/**

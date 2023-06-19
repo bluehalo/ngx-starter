@@ -14,6 +14,7 @@ import { SessionService } from './session.service';
 import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuard', () => {
+	// eslint-disable-next-line deprecation/deprecation
 	let guard: AuthGuard;
 	let sessionService: SessionService;
 
@@ -41,9 +42,11 @@ describe('AuthGuard', () => {
 				{ provide: AuthenticationService, useValue: authServiceSpy },
 				{ provide: SessionService },
 				{ provide: AuthorizationService },
+				// eslint-disable-next-line deprecation/deprecation
 				{ provide: AuthGuard }
 			]
 		});
+		// eslint-disable-next-line deprecation/deprecation
 		guard = TestBed.inject(AuthGuard);
 		sessionService = TestBed.inject(SessionService);
 	});

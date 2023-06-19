@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -19,6 +20,18 @@ export interface AddedMember {
 	role: string;
 	roleDisplay: string;
 }
+
+export const teamResolver: ResolveFn<Team | null> = (
+	route: ActivatedRouteSnapshot,
+	state: RouterStateSnapshot,
+	service = inject(TeamsService)
+) => {
+	const id = route.paramMap.get('id');
+	if (id == null) {
+		return null;
+	}
+	return service.read(id);
+};
 
 @Injectable({
 	providedIn: 'root'

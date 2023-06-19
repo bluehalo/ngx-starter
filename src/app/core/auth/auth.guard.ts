@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	ActivatedRouteSnapshot,
-	CanActivate,
+	CanActivateFn,
 	Router,
 	RouterStateSnapshot,
 	UrlTree
@@ -14,10 +14,20 @@ import { ConfigService } from '../config.service';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';
 
+export const authGuard: CanActivateFn = (
+	route: ActivatedRouteSnapshot,
+	state: RouterStateSnapshot,
+	// eslint-disable-next-line deprecation/deprecation
+	service = inject(AuthGuard)
+) => service.canActivate(route, state);
+
+/**
+ * @deprecated AuthGuard class will be removed in favor of functional guard.
+ */
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
 	constructor(
 		private router: Router,
 		private configService: ConfigService,

@@ -10,7 +10,6 @@ import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 
-import { AuthGuard } from '../auth/auth.guard';
 import { AuthorizationService } from '../auth/authorization.service';
 import { HasRoleDirective } from '../auth/directives/has-role.directive';
 import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
@@ -100,7 +99,6 @@ describe('Site Navbar Component Spec', () => {
 				RouterTestingModule
 			],
 			providers: [
-				AuthGuard,
 				BsModalService,
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../auth/auth.guard';
+import { authGuard } from '../auth/auth.guard';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 			{
 				path: '',
 				component: ListAuditEntriesComponent,
-				canActivate: [AuthGuard],
+				canActivate: [authGuard],
 				data: { roles: ['auditor'] }
 			}
 		])

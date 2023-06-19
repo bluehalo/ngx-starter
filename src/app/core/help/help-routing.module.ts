@@ -1,16 +1,12 @@
-import { Injectable, NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, RouterModule } from '@angular/router';
 
 import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
 import { HelpTopics } from './help-topic.component';
 import { HelpComponent } from './help.component';
 
-@Injectable()
-export class HelpBreadcrumbResolver implements Resolve<string | null> {
-	resolve(route: ActivatedRouteSnapshot) {
-		return HelpTopics.getTopicTitle(route.params['topic']);
-	}
-}
+const breadcrumbResolver: ResolveFn<string | null> = (route: ActivatedRouteSnapshot) =>
+	HelpTopics.getTopicTitle(route.params['topic']);
 
 @NgModule({
 	imports: [
@@ -31,14 +27,13 @@ export class HelpBreadcrumbResolver implements Resolve<string | null> {
 						path: ':topic',
 						component: HelpTopicWrapperComponent,
 						resolve: {
-							breadcrumb: HelpBreadcrumbResolver
+							breadcrumb: breadcrumbResolver
 						}
 					}
 				]
 			}
 		])
 	],
-	exports: [],
-	providers: [HelpBreadcrumbResolver]
+	exports: []
 })
 export class HelpRoutingModule {}
