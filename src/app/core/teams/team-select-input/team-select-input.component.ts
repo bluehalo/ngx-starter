@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -15,7 +15,7 @@ import { TeamsService } from '../teams.service';
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: TeamSelectInputComponent,
+			useExisting: forwardRef(() => TeamSelectInputComponent),
 			multi: true
 		}
 	]
