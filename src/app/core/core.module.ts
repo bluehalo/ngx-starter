@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, TitleStrategy } from '@angular/router';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -31,7 +31,7 @@ import { HelpModule } from './help/help.module';
 import { MasqueradeModule } from './masquerade/masquerade.module';
 import { MessagesModule } from './messages/messages.module';
 import { NavigationService } from './navigation.service';
-import { PageTitleService } from './page-title.service';
+import { PageTitleStrategy } from './page-title.strategy';
 import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
 import { SignupComponent } from './signup/signup.component';
@@ -108,15 +108,15 @@ export function getConfiguration(configService: ConfigService) {
 			{ provide: HTTP_INTERCEPTORS, useClass: SigninInterceptor, multi: true },
 			{ provide: HTTP_INTERCEPTORS, useClass: EuaInterceptor, multi: true },
 			{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-		]
+		],
+		{
+			provide: TitleStrategy,
+			useClass: PageTitleStrategy
+		}
 	]
 })
 export class CoreModule {
-	constructor(
-		private pageTitleService: PageTitleService,
-		private navigationService: NavigationService
-	) {
-		this.pageTitleService.init();
+	constructor(private navigationService: NavigationService) {
 		this.navigationService.init();
 	}
 }
