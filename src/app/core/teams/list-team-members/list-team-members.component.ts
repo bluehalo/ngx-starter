@@ -48,8 +48,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 	isUserAdmin = false;
 
-	canManageTeam = false;
-
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
 	typeFilterOptions: ListFilterOption[] = [
@@ -97,9 +95,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 		this.alertService.clearAllAlerts();
 
-		this.canManageTeam =
-			this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(this.team);
-
 		this.sessionService
 			.getSession()
 			.pipe(isNotNullOrUndefined(), untilDestroyed(this))
@@ -108,9 +103,9 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				this.isUserAdmin = this.authorizationService.isAdmin();
 			});
 
-		this.displayedColumns = this.columns
-			.filter((column) => this.canManageTeam || column !== 'actions')
-			.filter((column) => this.team.implicitMembers || column !== 'explicit');
+		this.displayedColumns = this.columns.filter(
+			(column) => this.team.implicitMembers || column !== 'explicit'
+		);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -210,7 +205,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				)
 				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
-					this.router.navigate(['/teams', { clearCachedFilter: true }]);
+					this.router.navigate(['/teams']);
 				});
 		} else if (!member.explicit) {
 			// Member is implicitly in team, should explicitly add this member with the desired role

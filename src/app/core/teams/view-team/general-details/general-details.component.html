@@ -18,8 +18,8 @@
 					class="btn btn-outline-secondary ml-3"
 					type="button"
 					[disabled]="isEditing"
-					*ngIf="canManageTeam"
 					(click)="edit()"
+					*hasTeamRole="team; role: 'admin'"
 				>
 					<span class="fa-solid fa-lg fa-pencil"></span>
 				</button>
