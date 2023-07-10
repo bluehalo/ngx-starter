@@ -15,7 +15,7 @@
 			type="button"
 			class="btn btn-link ml-auto"
 			(click)="remove(team)"
-			*ngIf="canManageTeam"
+			*hasTeamRole="team; role: 'admin'"
 		>
 			Delete Team
 		</button>

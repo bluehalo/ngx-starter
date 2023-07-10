@@ -17,6 +17,8 @@ import { SystemAlertModule } from '../../common/system-alert.module';
 import { TableModule } from '../../common/table.module';
 import { AddMembersModalComponent } from './add-members-modal/add-members-modal.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
+import { HasSomeTeamRolesDirective } from './directives/has-some-team-roles.directive';
+import { HasTeamRoleDirective } from './directives/has-team-role.directive';
 import { TeamsHelpComponent } from './help/teams-help.component';
 import { ListTeamMembersComponent } from './list-team-members/list-team-members.component';
 import { ListSubTeamsComponent } from './list-teams/list-sub-teams.component';
@@ -57,7 +59,9 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 		ViewTeamComponent,
 		TeamsHelpComponent,
 		TeamSelectInputComponent,
-		GeneralDetailsComponent
+		GeneralDetailsComponent,
+		HasTeamRoleDirective,
+		HasSomeTeamRolesDirective
 	],
 	providers: [TeamsHelpComponent]
 })

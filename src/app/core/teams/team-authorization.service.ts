@@ -69,7 +69,7 @@ export class TeamAuthorizationService {
 
 	private roleToString(role: string | TeamRole) {
 		if (typeof role !== 'string') {
-			return role.role;
+			return role?.role;
 		}
 		return role;
 	}

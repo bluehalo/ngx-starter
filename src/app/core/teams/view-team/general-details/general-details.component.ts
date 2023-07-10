@@ -5,10 +5,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { AuthorizationService } from '../../../auth/authorization.service';
 import { SessionService } from '../../../auth/session.service';
 import { ConfigService } from '../../../config.service';
-import { TeamAuthorizationService } from '../../team-authorization.service';
 import { Team } from '../../team.model';
 import { TeamsService } from '../../teams.service';
 
@@ -25,8 +23,6 @@ export class GeneralDetailsComponent implements OnInit {
 	nestedTeamsEnabled = false;
 	implicitMembersStrategy?: string;
 
-	canManageTeam = false;
-
 	isEditing = false;
 
 	constructor(
@@ -35,9 +31,7 @@ export class GeneralDetailsComponent implements OnInit {
 		private alertService: SystemAlertService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
-		private teamsService: TeamsService,
-		private authorizationService: AuthorizationService,
-		private teamAuthorizationService: TeamAuthorizationService
+		private teamsService: TeamsService
 	) {}
 
 	ngOnInit(): void {
@@ -62,8 +56,6 @@ export class GeneralDetailsComponent implements OnInit {
 	updateTeam(team: Team) {
 		if (team) {
 			this.team = team;
-			this.canManageTeam =
-				this.authorizationService.isAdmin() || this.teamAuthorizationService.isAdmin(team);
 		} else {
 			this.router.navigate(['resource/invalid', { type: 'team' }]);
 		}
@@ -86,7 +78,7 @@ export class GeneralDetailsComponent implements OnInit {
 					this.isEditing = false;
 					if (team) {
 						this.team = team;
-						this.alertService.addAlert('Updated team metadata', 'success', 5000);
+						this.alertService.addAlert('Team updated', 'success', 5000);
 					}
 				}),
 				switchMap(() => this.sessionService.reloadSession()),
