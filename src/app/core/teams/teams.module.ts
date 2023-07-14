@@ -31,9 +31,9 @@ import { ViewTeamComponent } from './view-team/view-team.component';
 
 @NgModule({
 	imports: [
-		BsDropdownModule.forRoot(),
-		TabsModule.forRoot(),
-		TooltipModule.forRoot(),
+		BsDropdownModule,
+		TabsModule,
+		TooltipModule,
 
 		NgSelectModule,
 

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
@@ -21,10 +20,9 @@ import { UserRoleFilterDirective } from './list-users/user-role-filter.directive
 
 @NgModule({
 	imports: [
-		AlertModule.forRoot(),
-		ButtonsModule.forRoot(),
-		BsDropdownModule.forRoot(),
-		TooltipModule.forRoot(),
+		AlertModule,
+		BsDropdownModule,
+		TooltipModule,
 
 		CommonModule,
 		DirectivesModule,

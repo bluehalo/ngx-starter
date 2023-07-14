@@ -77,7 +77,7 @@ describe('Admin List Feedback Component Spec', () => {
 				SearchInputModule,
 				SystemAlertModule,
 				NgSelectModule,
-				TooltipModule.forRoot(),
+				TooltipModule,
 				CdkTableModule,
 				TableModule,
 				BrowserAnimationsModule

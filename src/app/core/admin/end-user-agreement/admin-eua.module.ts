@@ -20,7 +20,7 @@ import { AdminListEuasComponent } from './list-euas/admin-list-euas.component';
 
 @NgModule({
 	imports: [
-		BsDropdownModule.forRoot(),
+		BsDropdownModule,
 		CommonModule,
 		DirectivesModule,
 		FormsModule,

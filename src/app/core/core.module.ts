@@ -60,7 +60,7 @@ export function getConfiguration(configService: ConfigService) {
 		HttpClientModule,
 		RouterModule,
 
-		ModalModule.forRoot(),
+		ModalModule,
 		PopoverModule,
 		TooltipModule,
 

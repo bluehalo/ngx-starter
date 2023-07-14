@@ -31,7 +31,7 @@ import { AsyTableEmptyStateComponent } from './table/table-empty-state/asy-table
 		FormsModule,
 		SearchInputModule,
 		NgSelectModule,
-		BsDropdownModule.forRoot(),
+		BsDropdownModule,
 		BsDatepickerModule,
 		DragDropModule
 	],

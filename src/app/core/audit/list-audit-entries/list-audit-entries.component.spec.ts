@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { of } from 'rxjs';
@@ -122,10 +122,10 @@ describe('Audit Component Spec', () => {
 				UserAuthenticationObjectComponent
 			],
 			imports: [
-				BsDatepickerModule.forRoot(),
+				BsDatepickerModule,
 				ModalModule.forRoot(),
-				TypeaheadModule.forRoot(),
-				TooltipModule.forRoot(),
+				TypeaheadModule,
+				TooltipModule,
 				NgSelectModule,
 				DirectivesModule,
 				FormsModule,
@@ -133,12 +133,12 @@ describe('Audit Component Spec', () => {
 				SystemAlertModule,
 				CdkTableModule,
 				TableModule,
-				BrowserAnimationsModule
+				BrowserAnimationsModule,
+				ModalModule
 			],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
-				BsModalService,
 				SystemAlertService
 			]
 		}).overrideModule(BrowserDynamicTestingModule, {

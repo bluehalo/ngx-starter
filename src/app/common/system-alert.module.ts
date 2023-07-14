@@ -8,7 +8,7 @@ import { SystemAlertIconComponent } from './system-alert/system-alert-icon.compo
 import { SystemAlertComponent } from './system-alert/system-alert.component';
 
 @NgModule({
-	imports: [CommonModule, FormsModule, AlertModule.forRoot()],
+	imports: [CommonModule, FormsModule, AlertModule],
 	exports: [SystemAlertComponent],
 	declarations: [SystemAlertComponent, SystemAlertIconComponent]
 })

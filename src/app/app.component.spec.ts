@@ -1,5 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { of } from 'rxjs';
 
@@ -17,7 +18,13 @@ describe('AppComponent', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [AppComponent],
-			imports: [AppRoutingModule, CoreModule, SiteModule, PopoverModule.forRoot()],
+			imports: [
+				AppRoutingModule,
+				CoreModule,
+				SiteModule,
+				PopoverModule,
+				ModalModule.forRoot()
+			],
 			providers: [{ provide: ConfigService, useValue: configServiceSpy }]
 		}).compileComponents();
 	}));

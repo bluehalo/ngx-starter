@@ -19,8 +19,8 @@ import { CacheEntryModalComponent } from './cache-entry-modal.component';
 
 @NgModule({
 	imports: [
-		BsDropdownModule.forRoot(),
-		BsModalModule.forRoot(),
+		BsDropdownModule,
+		BsModalModule,
 		CommonModule,
 		DirectivesModule,
 		FormsModule,

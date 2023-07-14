@@ -15,7 +15,7 @@ import { AdminListFeedbackComponent } from './list-feedback/admin-list-feedback.
 	imports: [
 		CommonModule,
 
-		TooltipModule.forRoot(),
+		TooltipModule,
 
 		PipesModule,
 		SearchInputModule,

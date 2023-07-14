@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 
@@ -75,16 +75,16 @@ describe('Admin List Users Component Spec', () => {
 				PipesModule,
 				SearchInputModule,
 				SystemAlertModule,
-				TooltipModule.forRoot(),
+				TooltipModule,
 				CdkTableModule,
 				TableModule,
-				BrowserAnimationsModule
+				BrowserAnimationsModule,
+				ModalModule.forRoot()
 			],
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
-				BsModalService,
 				ModalService
 			]
 		});

@@ -32,10 +32,10 @@ import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entri
 
 @NgModule({
 	imports: [
-		BsDatepickerModule.forRoot(),
-		BsModalModule.forRoot(),
-		TypeaheadModule.forRoot(),
-		TooltipModule.forRoot(),
+		BsDatepickerModule,
+		BsModalModule,
+		TypeaheadModule,
+		TooltipModule,
 		NgSelectModule,
 
 		AuditRoutingModule,

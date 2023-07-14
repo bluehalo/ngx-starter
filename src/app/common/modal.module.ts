@@ -10,7 +10,7 @@ import { ContainerModalComponent } from './modal/container-modal/container-modal
 import { ModalComponent } from './modal/modal/modal.component';
 
 @NgModule({
-	imports: [BsModalModule.forRoot(), CommonModule, FormsModule, A11yModule],
+	imports: [BsModalModule, CommonModule, FormsModule, A11yModule],
 	exports: [ConfigurableModalComponent, ModalComponent],
 	declarations: [ConfigurableModalComponent, ContainerModalComponent, ModalComponent]
 })

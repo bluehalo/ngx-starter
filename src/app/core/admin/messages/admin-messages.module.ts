@@ -18,7 +18,7 @@ import { ListMessagesComponent } from './list-messages/list-messages.component';
 
 @NgModule({
 	imports: [
-		BsDropdownModule.forRoot(),
+		BsDropdownModule,
 		CommonModule,
 		FormsModule,
 		RouterModule,

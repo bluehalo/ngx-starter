@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
@@ -91,15 +91,14 @@ describe('Site Navbar Component Spec', () => {
 			],
 			imports: [
 				HttpClientTestingModule,
-				BsDatepickerModule.forRoot(),
+				BsDatepickerModule,
 				ModalModule.forRoot(),
-				TooltipModule.forRoot(),
-				PopoverModule.forRoot(),
+				TooltipModule,
+				PopoverModule,
 				FormsModule,
 				RouterTestingModule
 			],
 			providers: [
-				BsModalService,
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: MessageService, useValue: messageServiceSpy },
