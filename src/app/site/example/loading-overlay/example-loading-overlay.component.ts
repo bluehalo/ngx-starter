@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { LoadingOverlayComponent } from '../../../common/loading-overlay/loading-overlay.component';
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'example-loading-overlay',
@@ -27,11 +26,3 @@ export class ExampleLoadingOverlayComponent {
 		this.isError = !this.isError;
 	}
 }
-NavbarTopics.registerTopic({
-	id: 'loading-overlay',
-	title: 'Loading Overlay',
-	ordinal: 6,
-	path: 'loading-overlay',
-	iconClass: 'fa-spinner',
-	hasSomeRoles: ['user']
-});

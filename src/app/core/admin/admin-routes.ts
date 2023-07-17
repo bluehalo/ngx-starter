@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { AdminComponent } from '../../common/admin/admin.component';
 import { authGuard } from '../auth/auth.guard';
+import { AdminComponent } from './admin.component';
 import { ADMIN_CACHE_ENTRIES_ROUTES } from './cache-entries/admin-cache-entries-routes';
 import { ADMIN_EUA_ROUTES } from './end-user-agreement/admin-eua-routes';
 import { ADMIN_FEEDBACK_ROUTES } from './feedback/admin-feedback-routes';

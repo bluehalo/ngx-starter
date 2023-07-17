@@ -17,7 +17,7 @@ import { SystemAlertComponent } from '../../../common/system-alert/system-alert.
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { SessionService } from '../../auth/session.service';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
-import { TeamTopic, TeamTopics } from '../team-topic.model';
+import { getTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
@@ -38,7 +38,7 @@ import { TeamsService } from '../teams.service';
 	]
 })
 export class ViewTeamComponent implements OnInit {
-	topics: TeamTopic[] = [];
+	topics = getTeamTopics();
 	team?: Team;
 
 	constructor(
@@ -48,9 +48,7 @@ export class ViewTeamComponent implements OnInit {
 		private teamsService: TeamsService,
 		private alertService: SystemAlertService,
 		private sessionService: SessionService
-	) {
-		this.topics = TeamTopics.getTopics();
-	}
+	) {}
 
 	ngOnInit() {
 		this.route.data

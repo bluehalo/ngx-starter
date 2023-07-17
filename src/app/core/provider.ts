@@ -4,55 +4,78 @@ import { ROUTES } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { AdminTopics } from '../common/admin/admin-topic.model';
+import { ADMIN_TOPICS } from './admin/admin-topic.model';
 import { ConfigService } from './config.service';
 import { CORE_ROUTES } from './core-routes';
 import { GettingStartedHelpComponent } from './help/getting-started/getting-started-help.component';
-import { HelpTopics } from './help/help-topic.component';
+import { HELP_TOPICS } from './help/help-topic.component';
 import { NavigationService } from './navigation.service';
 import { TeamsHelpComponent } from './teams/help/teams-help.component';
+import { TEAM_TOPICS } from './teams/team-topic.model';
 
 export function provideCoreRoutes() {
 	// Registering Topics here.  Need to find better alternative for this.
-	HelpTopics.registerTopic('getting-started', GettingStartedHelpComponent, 0);
-	HelpTopics.registerTopic('teams', TeamsHelpComponent, 9);
-
-	AdminTopics.registerTopic({
-		id: 'users',
-		title: 'User',
-		ordinal: 0,
-		path: 'users'
-	});
-
-	AdminTopics.registerTopic({
-		id: 'cache-entries',
-		title: 'Cache Entries',
-		ordinal: 1,
-		path: 'cacheEntries'
-	});
-
-	AdminTopics.registerTopic({
-		id: 'end-user-agreements',
-		title: 'EUAs',
-		ordinal: 2,
-		path: 'euas'
-	});
-
-	AdminTopics.registerTopic({
-		id: 'messages',
-		title: 'Messages',
-		ordinal: 3,
-		path: 'messages'
-	});
-
-	AdminTopics.registerTopic({
-		id: 'feedback',
-		title: 'Feedback',
-		ordinal: 4,
-		path: 'feedback'
-	});
-
 	return makeEnvironmentProviders([
+		{
+			provide: ADMIN_TOPICS,
+			multi: true,
+			useValue: [
+				{
+					id: 'users',
+					title: 'User',
+					ordinal: 0,
+					path: 'users'
+				},
+
+				{
+					id: 'cache-entries',
+					title: 'Cache Entries',
+					ordinal: 1,
+					path: 'cacheEntries'
+				},
+				{
+					id: 'end-user-agreements',
+					title: 'EUAs',
+					ordinal: 2,
+					path: 'euas'
+				},
+				{
+					id: 'messages',
+					title: 'Messages',
+					ordinal: 3,
+					path: 'messages'
+				},
+				{
+					id: 'feedback',
+					title: 'Feedback',
+					ordinal: 4,
+					path: 'feedback'
+				}
+			]
+		},
+		{
+			provide: TEAM_TOPICS,
+			multi: true,
+			useValue: {
+				id: 'general',
+				title: 'General',
+				ordinal: 0,
+				path: 'general'
+			}
+		},
+		{
+			provide: HELP_TOPICS,
+			multi: true,
+			useValue: [
+				{
+					id: 'getting-started',
+					title: 'Getting Started',
+					ordinal: 0,
+					component: GettingStartedHelpComponent
+				},
+				{ id: 'teams', title: 'Teams', ordinal: 9, component: TeamsHelpComponent }
+			]
+		},
 		{
 			provide: ROUTES,
 			multi: true,

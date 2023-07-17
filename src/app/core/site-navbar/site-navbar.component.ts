@@ -8,8 +8,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { first } from 'rxjs/operators';
 
-import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
 import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
+import { getAdminTopics } from '../admin/admin-topic.model';
 import { HasRoleDirective } from '../auth/directives/has-role.directive';
 import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
 import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
@@ -20,7 +20,7 @@ import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-moda
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
-import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
+import { getNavbarTopics } from './navbar-topic.model';
 
 @UntilDestroy()
 @Component({
@@ -47,10 +47,8 @@ export class SiteNavbarComponent implements OnInit {
 	navbarOpenValue = false;
 
 	adminNavOpen = false;
-	auditorNavOpen = false;
 	helpNavOpen = false;
 	userNavOpen = false;
-	teamNavOpen = false;
 	messagesNavOpen = false;
 
 	apiDocsLink = '';
@@ -63,9 +61,9 @@ export class SiteNavbarComponent implements OnInit {
 
 	session: Session | null = null;
 
-	adminMenuItems: AdminTopic[];
+	adminTopics = getAdminTopics();
 
-	navbarItems: NavbarTopic[];
+	navbarItems = getNavbarTopics();
 
 	masqueradeEnabled = false;
 	canMasquerade = false;
@@ -96,10 +94,7 @@ export class SiteNavbarComponent implements OnInit {
 		private sessionService: SessionService,
 		private messageService: MessageService,
 		private masqueradeService: MasqueradeService
-	) {
-		this.adminMenuItems = AdminTopics.getTopics();
-		this.navbarItems = NavbarTopics.getTopics();
-	}
+	) {}
 
 	ngOnInit() {
 		this.sessionService

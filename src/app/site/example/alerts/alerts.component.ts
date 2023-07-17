@@ -4,7 +4,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @UntilDestroy()
 @Component({
@@ -26,12 +25,3 @@ export class AlertsComponent implements OnInit {
 		this.alertService.addAlert(msg, type);
 	}
 }
-
-NavbarTopics.registerTopic({
-	id: 'alerts',
-	title: 'Alerts',
-	ordinal: 8,
-	path: 'alerts',
-	iconClass: 'fa-exclamation-circle',
-	hasSomeRoles: ['user']
-});
