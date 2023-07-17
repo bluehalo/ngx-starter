@@ -1,13 +1,12 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 import { of } from 'rxjs';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConfigService, CoreModule } from './core/core.module';
-import { SiteModule } from './site/site.module';
+import { ConfigService } from './core/config.service';
 
 describe('AppComponent', () => {
 	let configServiceSpy: any;
@@ -17,15 +16,12 @@ describe('AppComponent', () => {
 		configServiceSpy.getConfig.and.returnValue(of({}));
 
 		TestBed.configureTestingModule({
-			declarations: [AppComponent],
-			imports: [
-				AppRoutingModule,
-				CoreModule,
-				SiteModule,
-				PopoverModule,
-				ModalModule.forRoot()
-			],
-			providers: [{ provide: ConfigService, useValue: configServiceSpy }]
+			imports: [ModalModule.forRoot(), AppComponent],
+			providers: [
+				{ provide: ConfigService, useValue: configServiceSpy },
+				provideHttpClient(),
+				provideHttpClientTesting()
+			]
 		}).compileComponents();
 	}));
 	it('should create the app', waitForAsync(() => {

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NavbarTopics } from '../../../core/core.module';
+import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'app-grid',
 	templateUrl: './grid.component.html',
-	styleUrls: ['./grid.component.scss']
+	styleUrls: ['./grid.component.scss'],
+	standalone: true
 })
 export class GridComponent {}
 

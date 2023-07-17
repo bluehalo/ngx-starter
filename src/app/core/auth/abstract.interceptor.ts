@@ -7,6 +7,8 @@ import { catchError } from 'rxjs/operators';
 
 /**
  * Abstract HTTP Interceptor
+ *
+ * @deprecated Moving towards functional interceptors.  Migrate to using errorInterceptor.
  */
 @Injectable()
 export abstract class AbstractHttpInterceptor implements HttpInterceptor {

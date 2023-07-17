@@ -1,17 +1,31 @@
+import { CdkTableModule } from '@angular/cdk/table';
+import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { SkipToDirective } from '../../../common/directives/skip-to.directive';
 import { ModalAction } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
+import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
+import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../common/sorting.model';
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
+import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
+import { PaginatorComponent } from '../../../common/table/paginator/paginator.component';
+import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-header/asy-sort-header.component';
+import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
+import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent } from './cache-entry-modal.component';
 import { CacheEntry } from './cache-entry.model';
@@ -19,7 +33,24 @@ import { CacheEntry } from './cache-entry.model';
 @UntilDestroy()
 @Component({
 	selector: 'cache-entries',
-	templateUrl: './cache-entries.component.html'
+	templateUrl: './cache-entries.component.html',
+	standalone: true,
+	imports: [
+		SkipToDirective,
+		SystemAlertComponent,
+		SearchInputComponent,
+		CdkTableModule,
+		AsySortDirective,
+		AsyFilterDirective,
+		AsySortHeaderComponent,
+		TooltipModule,
+		BsDropdownModule,
+		AsyTableEmptyStateComponent,
+		PaginatorComponent,
+		JsonPipe,
+		AgoDatePipe,
+		UtcDatePipe
+	]
 })
 export class CacheEntriesComponent implements OnDestroy, OnInit {
 	displayedColumns = ['key', 'value', 'ts', 'actionsMenu'];

@@ -8,7 +8,7 @@ import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../comm
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { CacheEntry } from './cache-entry.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CacheEntriesService {
 	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 

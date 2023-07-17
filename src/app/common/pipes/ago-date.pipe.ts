@@ -2,7 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { DateTime } from 'luxon';
 
-@Pipe({ name: 'agoDate' })
+@Pipe({
+	name: 'agoDate',
+	standalone: true
+})
 export class AgoDatePipe implements PipeTransform {
 	transform(date: Date | string | number | null | undefined, hideAgo?: boolean): string {
 		if (null != date) {

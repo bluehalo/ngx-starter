@@ -1,6 +1,9 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, Subject, concat, of } from 'rxjs';
 import {
@@ -12,6 +15,7 @@ import {
 	tap
 } from 'rxjs/operators';
 
+import { LoadingSpinnerComponent } from '../../../common/loading-spinner/loading-spinner.component';
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
@@ -19,7 +23,9 @@ import { MasqueradeService } from '../masquerade.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './masquerade.component.html'
+	templateUrl: './masquerade.component.html',
+	standalone: true,
+	imports: [NgIf, LoadingSpinnerComponent, FormsModule, NgSelectModule, AsyncPipe]
 })
 export class MasqueradeComponent implements OnInit {
 	usersLoading = false;

@@ -1,5 +1,6 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
@@ -11,7 +12,9 @@ import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 @Component({
 	selector: 'breadcrumb',
 	templateUrl: 'breadcrumb.component.html',
-	styleUrls: ['breadcrumb.component.scss']
+	styleUrls: ['breadcrumb.component.scss'],
+	standalone: true,
+	imports: [NgFor, NgIf, RouterLink]
 })
 export class BreadcrumbComponent {
 	@Input()

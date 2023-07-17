@@ -12,7 +12,8 @@ import { ConfigService } from '../../../config.service';
 
 @UntilDestroy()
 @Directive({
-	selector: 'asy-header-filter[list-filter][user-role-filter]'
+	selector: 'asy-header-filter[list-filter][user-role-filter]',
+	standalone: true
 })
 export class UserRoleFilterDirective implements OnInit {
 	private requiredExternalRoles: string[] = [];

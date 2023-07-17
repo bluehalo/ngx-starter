@@ -8,7 +8,8 @@ import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 @UntilDestroy()
 @Component({
 	selector: 'test-modalized-component',
-	template: ``
+	template: ``,
+	standalone: true
 })
 class ConcreteModalizedComponent extends AbstractModalizableDirective {
 	onCancel() {}
@@ -21,8 +22,7 @@ describe('Abstract Modalized Directive', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [],
-			declarations: [ConcreteModalizedComponent]
+			imports: [ConcreteModalizedComponent]
 		});
 
 		fixture = TestBed.createComponent(ConcreteModalizedComponent);

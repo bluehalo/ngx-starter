@@ -13,8 +13,7 @@ describe('SearchInputComponent', () => {
 
 	beforeEach(() => {
 		fixture = TestBed.configureTestingModule({
-			declarations: [SearchInputComponent],
-			imports: [FormsModule, NoopAnimationsModule]
+			imports: [FormsModule, NoopAnimationsModule, SearchInputComponent]
 		}).createComponent(SearchInputComponent);
 
 		componentInstance = fixture.componentInstance;

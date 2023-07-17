@@ -1,19 +1,24 @@
-import { HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { AbstractHttpInterceptor } from './abstract.interceptor';
+import { Observable } from 'rxjs';
+
+import { errorInterceptor } from './error.interceptor';
 
 /**
  * HTTP Interceptor that will interpret authentication related HTTP calls
  */
-@Injectable()
-export class AuthInterceptor extends AbstractHttpInterceptor {
-	handleError(err: unknown, req: HttpRequest<any>): void {
-		if (!req.headers.has('bypass-auth-interceptor')) {
-			const { status, type, message, url } = this.parseError(err);
-			if (status === 403) {
-				this.router.navigate(['/access'], { state: { status, type, message, url } });
-			}
+// eslint-disable-next-line rxjs/finnish
+export function authInterceptor(
+	req: HttpRequest<unknown>,
+	next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> {
+	const router = inject(Router);
+
+	return errorInterceptor(req, next, (error, req) => {
+		if (!req.headers.has('bypass-auth-interceptor') && error.status === 403) {
+			router.navigate(['/access'], { state: error });
 		}
-	}
+	});
 }

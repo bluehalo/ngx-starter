@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
@@ -31,7 +32,9 @@ interface AsySortHeaderColumnDef {
 		'[class.asy-sort-header-sorted]': 'isSorted',
 		'[attr.aria-sort]': '_getAriaSortAttribute()'
 	},
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [NgIf]
 })
 export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	/** The direction the arrow should be facing according to the current state. */

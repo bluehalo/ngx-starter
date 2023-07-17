@@ -1,23 +1,47 @@
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { first } from 'rxjs/operators';
 
 import { AdminTopic, AdminTopics } from '../../common/admin/admin-topic.model';
+import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
+import { HasRoleDirective } from '../auth/directives/has-role.directive';
+import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
+import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
 import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
+import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
 import { NavbarTopic, NavbarTopics } from './navbar-topic.model';
 
 @UntilDestroy()
 @Component({
 	selector: 'site-navbar',
 	templateUrl: 'site-navbar.component.html',
-	styleUrls: ['site-navbar.component.scss']
+	styleUrls: ['site-navbar.component.scss'],
+	standalone: true,
+	imports: [
+		NgClass,
+		NgFor,
+		NgIf,
+		HasSomeRolesDirective,
+		RouterLinkActive,
+		TooltipModule,
+		RouterLink,
+		HasRoleDirective,
+		LinkAccessibilityDirective,
+		PopoverModule,
+		IsAuthenticatedDirective,
+		RecentMessagesComponent
+	]
 })
 export class SiteNavbarComponent implements OnInit {
 	navbarOpenValue = false;

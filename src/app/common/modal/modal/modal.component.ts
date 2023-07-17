@@ -1,10 +1,14 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'asy-modal',
 	templateUrl: './modal.component.html',
 	styleUrls: ['./modal.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [A11yModule, NgIf]
 })
 export class ModalComponent {
 	/**

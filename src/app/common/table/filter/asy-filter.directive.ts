@@ -15,7 +15,8 @@ export interface AsyFilterable {
 	selector: '[asyFilter]',
 	exportAs: 'asyFilter',
 	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
-	host: { class: 'asy-filter' }
+	host: { class: 'asy-filter' },
+	standalone: true
 })
 export class AsyFilterDirective {
 	/** Collection of all registered filterables that this directive manages. */

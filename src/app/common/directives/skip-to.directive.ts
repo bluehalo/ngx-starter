@@ -6,7 +6,8 @@ import { Directive, ElementRef, Renderer2 } from '@angular/core';
  * the h1 element. This directive should only be used once per page
  */
 @Directive({
-	selector: '[skipTo]'
+	selector: '[skipTo]',
+	standalone: true
 })
 export class SkipToDirective {
 	constructor(private elRef: ElementRef, private renderer: Renderer2) {

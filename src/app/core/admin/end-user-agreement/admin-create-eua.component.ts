@@ -1,14 +1,20 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
 
 @UntilDestroy()
 @Component({
 	selector: 'admin-create-eua',
-	templateUrl: './manage-eua.component.html'
+	templateUrl: './manage-eua.component.html',
+	standalone: true,
+	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf]
 })
 export class AdminCreateEuaComponent extends ManageEuaComponent {
 	constructor(protected euaService: EuaService) {

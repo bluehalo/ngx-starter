@@ -1,7 +1,12 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, Optional } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import escapeRegExp from 'lodash/escapeRegExp';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
+import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
@@ -15,7 +20,9 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 	selector: 'asy-header-filter[text-filter]',
 	templateUrl: './asy-header-text-filter.component.html',
 	styleUrls: ['./asy-header-text-filter.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [BsDropdownModule, NgClass, NgSelectModule, FormsModule, SearchInputComponent]
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {
 	@Input()

@@ -1,6 +1,9 @@
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
@@ -14,7 +17,9 @@ import { FeedbackService } from '../feedback.service';
 @Component({
 	selector: 'app-feedback-flyout',
 	templateUrl: './feedback-flyout.component.html',
-	styleUrls: ['./feedback-flyout.component.scss']
+	styleUrls: ['./feedback-flyout.component.scss'],
+	standalone: true,
+	imports: [FlyoutComponent, NgIf, FormsModule, NgTemplateOutlet, NgSelectModule]
 })
 export class FeedbackFlyoutComponent implements OnInit {
 	@ViewChild(FlyoutComponent) flyout?: FlyoutComponent;

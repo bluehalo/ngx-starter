@@ -1,10 +1,14 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { User } from '../../auth/user.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
@@ -12,7 +16,9 @@ import { ManageUserComponent } from './manage-user.component';
 @UntilDestroy()
 @Component({
 	selector: 'admin-edit-user',
-	templateUrl: './manage-user.component.html'
+	templateUrl: './manage-user.component.html',
+	standalone: true,
+	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgFor, TooltipModule]
 })
 export class AdminEditUserComponent extends ManageUserComponent {
 	mode = 'admin-edit';

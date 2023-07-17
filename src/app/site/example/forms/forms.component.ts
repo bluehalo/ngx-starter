@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
@@ -9,7 +11,9 @@ import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 @UntilDestroy()
 @Component({
 	selector: 'app-forms',
-	templateUrl: './forms.component.html'
+	templateUrl: './forms.component.html',
+	standalone: true,
+	imports: [FormsModule, NgSelectModule]
 })
 export class FormsComponent {
 	fileSelected($event: Event) {

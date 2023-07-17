@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class WelcomeComponent {}

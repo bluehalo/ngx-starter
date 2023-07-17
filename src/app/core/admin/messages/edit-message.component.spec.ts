@@ -1,13 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { NgSelectModule } from '@ng-select/ng-select';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { ModalService } from '../../../common/modal/modal.service';
-import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
 import { Message, MessageType } from '../../messages/message.model';
@@ -51,14 +47,7 @@ describe('Update Message Component', () => {
 			return of();
 		});
 		const testBed = TestBed.configureTestingModule({
-			declarations: [UpdateMessageComponent],
-			imports: [
-				ModalModule.forRoot(),
-				NgSelectModule,
-				FormsModule,
-				RouterTestingModule,
-				SystemAlertModule
-			],
+			imports: [RouterTestingModule, UpdateMessageComponent],
 			providers: [
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: MessageService, useValue: messageServiceSpy },

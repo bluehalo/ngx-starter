@@ -1,3 +1,5 @@
+import { CdkTableModule } from '@angular/cdk/table';
+import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
 	Component,
@@ -11,23 +13,36 @@ import {
 import { Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import { ModalAction } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
+import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
+import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
+import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../common/sorting.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
-import { ListFilterOption } from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
+import {
+	AsyHeaderListFilterComponent,
+	ListFilterOption
+} from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
+import { PaginatorComponent } from '../../../common/table/paginator/paginator.component';
+import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-header/asy-sort-header.component';
+import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
+import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { AddMembersModalComponent } from '../add-members-modal/add-members-modal.component';
+import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { TeamAuthorizationService } from '../team-authorization.service';
 import { TeamMember } from '../team-member.model';
 import { TeamRole } from '../team-role.model';
@@ -37,7 +52,25 @@ import { TeamsService } from '../teams.service';
 @UntilDestroy()
 @Component({
 	selector: 'list-team-members',
-	templateUrl: './list-team-members.component.html'
+	templateUrl: './list-team-members.component.html',
+	standalone: true,
+	imports: [
+		SearchInputComponent,
+		NgIf,
+		HasTeamRoleDirective,
+		CdkTableModule,
+		AsySortDirective,
+		AsyFilterDirective,
+		AsySortHeaderComponent,
+		TooltipModule,
+		AsyHeaderListFilterComponent,
+		BsDropdownModule,
+		NgFor,
+		AsyTableEmptyStateComponent,
+		PaginatorComponent,
+		AgoDatePipe,
+		UtcDatePipe
+	]
 })
 export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	@ViewChild(AsyFilterDirective)
@@ -205,7 +238,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				)
 				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
-					this.router.navigate(['/teams']);
+					this.router.navigate(['/team']);
 				});
 		} else if (!member.explicit) {
 			// Member is implicitly in team, should explicitly add this member with the desired role

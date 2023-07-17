@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { UntilDestroy } from '@ngneat/until-destroy';
 
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './alerts.component.html'
+	templateUrl: './alerts.component.html',
+	standalone: true,
+	imports: [SystemAlertComponent]
 })
 export class AlertsComponent implements OnInit {
 	constructor(public alertService: SystemAlertService) {}

@@ -6,7 +6,9 @@ import { NotificationComponent } from './notification.component';
 @Component({
 	template:
 		'<notification [message]="message">' +
-		'<ng-template #notificationActions id="tableActions"><button>bar</button></ng-template></notification>'
+		'<ng-template #notificationActions id="tableActions"><button>bar</button></ng-template></notification>',
+	standalone: true,
+	imports: [NotificationComponent]
 })
 export class NotificationDefaultTestHostComponent {
 	message = 'foo';
@@ -16,7 +18,9 @@ export class NotificationDefaultTestHostComponent {
 	template:
 		'<notification [message]="message" [showActions]="true">' +
 		'<ng-template #notificationActions id="tableActions"><button>bar</button></ng-template>' +
-		'</notification>'
+		'</notification>',
+	standalone: true,
+	imports: [NotificationComponent]
 })
 export class NotificationProvidedTestHostComponent {
 	message = 'foo';
@@ -31,8 +35,7 @@ describe('NotificationComponent', () => {
 
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
-			imports: [],
-			declarations: [
+			imports: [
 				NotificationDefaultTestHostComponent,
 				NotificationProvidedTestHostComponent,
 				NotificationComponent

@@ -16,7 +16,8 @@ import { ConfigService } from './config.service';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class AboutComponent implements OnInit {
 	appTitle?: string;

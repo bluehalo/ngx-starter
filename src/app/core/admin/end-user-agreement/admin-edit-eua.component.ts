@@ -1,10 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
 
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
@@ -12,7 +15,9 @@ import { ManageEuaComponent } from './manage-eua.component';
 @UntilDestroy()
 @Component({
 	selector: 'admin-update-eua',
-	templateUrl: './manage-eua.component.html'
+	templateUrl: './manage-eua.component.html',
+	standalone: true,
+	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf]
 })
 export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
 	constructor(protected euaService: EuaService, protected route: ActivatedRoute) {

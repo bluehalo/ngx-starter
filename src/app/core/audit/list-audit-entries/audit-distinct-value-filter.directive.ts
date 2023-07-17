@@ -11,7 +11,8 @@ import { AuditService } from '../audit.service';
 
 @UntilDestroy()
 @Directive({
-	selector: 'asy-header-filter[list-filter][audit-distinct-value-filter]'
+	selector: 'asy-header-filter[list-filter][audit-distinct-value-filter]',
+	standalone: true
 })
 export class AuditDistinctValueFilterDirective implements OnInit {
 	constructor(

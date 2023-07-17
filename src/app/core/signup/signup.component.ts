@@ -1,9 +1,13 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
+import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
 import { ManageUserComponent } from '../admin/user-management/manage-user.component';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
@@ -11,7 +15,9 @@ import { User } from '../auth/user.model';
 @UntilDestroy()
 @Component({
 	selector: 'user-signup',
-	templateUrl: '../admin/user-management/manage-user.component.html'
+	templateUrl: '../admin/user-management/manage-user.component.html',
+	standalone: true,
+	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgFor, TooltipModule]
 })
 export class SignupComponent extends ManageUserComponent implements OnInit {
 	mode = 'signup';

@@ -1,5 +1,13 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+	CdkDrag,
+	CdkDragDrop,
+	CdkDragHandle,
+	CdkDropList,
+	moveItemInArray
+} from '@angular/cdk/drag-drop';
+import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { LocalStorageService } from '../../storage/local-storage.service';
 
@@ -12,7 +20,9 @@ export type ColumnDefinition = {
 @Component({
 	selector: 'asy-column-chooser',
 	templateUrl: './column-chooser.component.html',
-	styleUrls: ['./column-chooser.component.scss']
+	styleUrls: ['./column-chooser.component.scss'],
+	standalone: true,
+	imports: [CdkDropList, NgFor, CdkDrag, NgIf, CdkDragHandle, FormsModule, TitleCasePipe]
 })
 export class ColumnChooserComponent implements OnInit {
 	@Input()

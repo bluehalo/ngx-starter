@@ -8,10 +8,10 @@ import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../comm
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
 
-@Injectable()
 /**
  * Admin management of users
  */
+@Injectable({ providedIn: 'root' })
 export class AdminUsersService {
 	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
 

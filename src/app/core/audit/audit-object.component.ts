@@ -1,10 +1,13 @@
+import { JsonPipe, NgIf } from '@angular/common';
 import { Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AuditObjectTypes } from './audit.classes';
 
 @Component({
 	selector: 'default',
-	template: '<span>{{ auditObject | json }}</span>'
+	template: '<span>{{ auditObject | json }}</span>',
+	standalone: true,
+	imports: [JsonPipe]
 })
 export class DefaultAuditObjectComponent {
 	@Input() auditObject: any = {};
@@ -13,21 +16,24 @@ AuditObjectTypes.registerType('default', DefaultAuditObjectComponent);
 
 @Component({
 	selector: 'url',
-	template: '<span>{{ auditObject.url }}</span>'
+	template: '<span>{{ auditObject.url }}</span>',
+	standalone: true
 })
 export class UrlAuditObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('url', UrlAuditObjectComponent);
 
 @Component({
 	selector: 'user',
-	template: '<span>{{ auditObject?.username }}</span>'
+	template: '<span>{{ auditObject?.username }}</span>',
+	standalone: true
 })
 export class UserAuditObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('user', UserAuditObjectComponent);
 
 @Component({
 	selector: 'user-authentication',
-	template: ''
+	template: '',
+	standalone: true
 })
 export class UserAuthenticationObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectComponent);
@@ -36,14 +42,17 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 	selector: 'export-audit',
 	template: `
 		<span *ngIf="auditObject"> <span class="fa-solid fa-download"></span> Export config </span>
-	`
+	`,
+	standalone: true,
+	imports: [NgIf]
 })
 export class ExportAuditObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
 
 @Component({
 	selector: 'asy-audit-component',
-	template: '<div #content></div>'
+	template: '<div #content></div>',
+	standalone: true
 })
 export class AuditObjectComponent implements OnInit {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;

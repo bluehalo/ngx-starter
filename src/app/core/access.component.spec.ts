@@ -13,8 +13,7 @@ describe('AccessComponent', () => {
 		} as Navigation;
 
 		await TestBed.configureTestingModule({
-			declarations: [AccessComponent],
-			imports: [BrowserModule],
+			imports: [BrowserModule, AccessComponent],
 			providers: [
 				{
 					provide: Router,

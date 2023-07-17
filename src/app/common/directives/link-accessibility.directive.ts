@@ -7,7 +7,8 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
  * the tabbing structure.
  */
 @Directive({
-	selector: '[linkAccessibility]'
+	selector: '[linkAccessibility]',
+	standalone: true
 })
 export class LinkAccessibilityDirective {
 	constructor(private elRef: ElementRef, private renderer: Renderer2) {

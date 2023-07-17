@@ -8,9 +8,9 @@ import { Session } from './session.model';
 import { SessionService } from './session.service';
 
 class MockSessionService {
-	sessionSubject$ = new BehaviorSubject<Session>(null);
+	sessionSubject$ = new BehaviorSubject<Session | null>(null);
 
-	getSession(): Observable<Session> {
+	getSession(): Observable<Session | null> {
 		return this.sessionSubject$;
 	}
 }

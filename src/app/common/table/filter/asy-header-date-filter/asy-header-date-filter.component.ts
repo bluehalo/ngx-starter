@@ -1,6 +1,11 @@
+import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { DateTime } from 'luxon';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import {
 	AsyAbstractHeaderFilterComponent,
@@ -11,7 +16,9 @@ import {
 	selector: 'asy-header-filter[date-filter]',
 	templateUrl: './asy-header-date-filter.component.html',
 	styleUrls: ['./asy-header-date-filter.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [BsDropdownModule, FormsModule, NgSelectModule, BsDatepickerModule, TitleCasePipe]
 })
 export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterComponent {
 	enabled = false;

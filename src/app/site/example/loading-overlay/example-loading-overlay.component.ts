@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 
+import { LoadingOverlayComponent } from '../../../common/loading-overlay/loading-overlay.component';
 import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	selector: 'example-loading-overlay',
-	templateUrl: './example-loading-overlay.component.html'
+	templateUrl: './example-loading-overlay.component.html',
+	standalone: true,
+	imports: [LoadingOverlayComponent]
 })
 export class ExampleLoadingOverlayComponent {
 	isLoading = true;

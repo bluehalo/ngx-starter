@@ -11,7 +11,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class UnauthorizedComponent {
 	title = `&#x0CA0;_&#x0CA0;<br/><br/>Not Authorized`;

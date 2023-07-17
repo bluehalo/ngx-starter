@@ -1,10 +1,13 @@
+import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
+import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../common/sorting.model';
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 
@@ -12,7 +15,17 @@ import { MessageService } from '../message.service';
 @Component({
 	selector: 'app-view-all-messages',
 	templateUrl: './view-all-messages.component.html',
-	styleUrls: ['./view-all-messages.component.scss']
+	styleUrls: ['./view-all-messages.component.scss'],
+	standalone: true,
+	imports: [
+		SystemAlertComponent,
+		SearchInputComponent,
+		NgIf,
+		NgFor,
+		NgClass,
+		LowerCasePipe,
+		AgoDatePipe
+	]
 })
 export class ViewAllMessagesComponent implements OnInit {
 	pageNumber = 0;

@@ -15,7 +15,8 @@ import { SessionService } from '../session.service';
 			directive: NgIf,
 			inputs: ['ngIfElse: hasRoleElse', 'ngIfThen: hasRoleThen']
 		}
-	]
+	],
+	standalone: true
 })
 export class HasRoleDirective implements OnInit {
 	role: string | Role;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavbarTopics } from '../../core/core.module';
+import { NavbarTopics } from '../../core/site-navbar/navbar-topic.model';
 
 @Component({
 	template: `
@@ -12,7 +12,8 @@ import { NavbarTopics } from '../../core/core.module';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class ExploreComponent {}
 

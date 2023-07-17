@@ -1,23 +1,13 @@
-import { CdkTableModule } from '@angular/cdk/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgSelectModule } from '@ng-select/ng-select';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { of } from 'rxjs';
 
-import { DirectivesModule } from '../../../common/directives.module';
 import { PagingResults } from '../../../common/paging.model';
-import { PipesModule } from '../../../common/pipes.module';
-import { SystemAlertModule } from '../../../common/system-alert.module';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { TableModule } from '../../../common/table.module';
-import { ConfigService } from '../../core.module';
+import { ConfigService } from '../../config.service';
 import {
 	AuditObjectComponent,
 	DefaultAuditObjectComponent,
@@ -112,7 +102,9 @@ describe('Audit Component Spec', () => {
 		configServiceSpy.getConfig.and.returnValue(of({}));
 
 		TestBed.configureTestingModule({
-			declarations: [
+			imports: [
+				ModalModule.forRoot(),
+				BrowserAnimationsModule,
 				ListAuditEntriesComponent,
 				AuditObjectComponent,
 				UrlAuditObjectComponent,
@@ -120,21 +112,6 @@ describe('Audit Component Spec', () => {
 				ExportAuditObjectComponent,
 				UserAuditObjectComponent,
 				UserAuthenticationObjectComponent
-			],
-			imports: [
-				BsDatepickerModule,
-				ModalModule.forRoot(),
-				TypeaheadModule,
-				TooltipModule,
-				NgSelectModule,
-				DirectivesModule,
-				FormsModule,
-				PipesModule,
-				SystemAlertModule,
-				CdkTableModule,
-				TableModule,
-				BrowserAnimationsModule,
-				ModalModule
 			],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },

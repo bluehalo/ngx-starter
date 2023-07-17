@@ -1,5 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
 	selector: 'asy-multi-select-input',
@@ -10,7 +12,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms
 			useExisting: MultiSelectInputComponent,
 			multi: true
 		}
-	]
+	],
+	standalone: true,
+	imports: [NgSelectModule, FormsModule]
 })
 export class MultiSelectInputComponent implements ControlValueAccessor {
 	@Input() placeholder = '';

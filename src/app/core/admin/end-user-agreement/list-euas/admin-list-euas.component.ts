@@ -1,23 +1,53 @@
+import { CdkTableModule } from '@angular/cdk/table';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { ModalAction } from '../../../../common/modal/modal.model';
 import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
+import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
+import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
+import { ColumnChooserComponent } from '../../../../common/table/column-chooser/column-chooser.component';
+import { AsyFilterDirective } from '../../../../common/table/filter/asy-filter.directive';
+import { PaginatorComponent } from '../../../../common/table/paginator/paginator.component';
+import { SidebarComponent } from '../../../../common/table/sidebar/sidebar.component';
+import { AsySortHeaderComponent } from '../../../../common/table/sort/asy-sort-header/asy-sort-header.component';
+import { AsySortDirective } from '../../../../common/table/sort/asy-sort.directive';
+import { AsyTableEmptyStateComponent } from '../../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
 
 @UntilDestroy()
 @Component({
 	templateUrl: './admin-list-euas.component.html',
-	styleUrls: ['./admin-list-euas.component.scss']
+	styleUrls: ['./admin-list-euas.component.scss'],
+	standalone: true,
+	imports: [
+		SkipToDirective,
+		SystemAlertComponent,
+		SearchInputComponent,
+		RouterLink,
+		CdkTableModule,
+		AsySortDirective,
+		AsyFilterDirective,
+		AsySortHeaderComponent,
+		BsDropdownModule,
+		AsyTableEmptyStateComponent,
+		SidebarComponent,
+		ColumnChooserComponent,
+		PaginatorComponent,
+		UtcDatePipe
+	]
 })
 export class AdminListEuasComponent implements OnDestroy, OnInit {
 	columns = [

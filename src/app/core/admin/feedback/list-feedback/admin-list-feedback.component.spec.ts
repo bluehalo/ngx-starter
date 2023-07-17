@@ -1,18 +1,9 @@
-import { CdkTableModule } from '@angular/cdk/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 
-import { NgSelectModule } from '@ng-select/ng-select';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
-import { PipesModule } from '../../../../common/pipes.module';
-import { SearchInputModule } from '../../../../common/search-input.module';
-import { SystemAlertModule } from '../../../../common/system-alert.module';
-import { TableModule } from '../../../../common/table.module';
 import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
@@ -69,19 +60,7 @@ describe('Admin List Feedback Component Spec', () => {
 		adminUsersServiceSpy.getAll.and.returnValue(of(['mockUser']));
 
 		TestBed.configureTestingModule({
-			declarations: [AdminListFeedbackComponent],
-			imports: [
-				FormsModule,
-				RouterTestingModule,
-				PipesModule,
-				SearchInputModule,
-				SystemAlertModule,
-				NgSelectModule,
-				TooltipModule,
-				CdkTableModule,
-				TableModule,
-				BrowserAnimationsModule
-			],
+			imports: [BrowserAnimationsModule, AdminListFeedbackComponent],
 			providers: [
 				{ provide: FeedbackService, useValue: feedbackServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },

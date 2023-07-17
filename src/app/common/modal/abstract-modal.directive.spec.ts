@@ -11,7 +11,9 @@ import { ModalAction } from './modal.model';
 @UntilDestroy()
 @Component({
 	selector: 'test-modal-component',
-	template: ``
+	template: ``,
+	standalone: true,
+	imports: [A11yModule]
 })
 class ConcreteModalComponent extends AbstractModalDirective {}
 
@@ -21,8 +23,7 @@ describe('Abstract Modal Directive', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [A11yModule],
-			declarations: [ConcreteModalComponent],
+			imports: [A11yModule, ConcreteModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 

@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class AccessComponent {
 	status = '403';

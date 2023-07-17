@@ -32,7 +32,8 @@ export class HelpTopics {
 
 @Component({
 	selector: 'help-topic',
-	template: '<div #content></div>'
+	template: '<div #content></div>',
+	standalone: true
 })
 export class HelpTopicComponent {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;

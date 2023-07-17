@@ -8,7 +8,7 @@ import { NULL_PAGING_RESULTS, PagingResults } from '../../common/paging.model';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
 import { User } from '../auth/user.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MasqueradeService {
 	LOCAL_STORAGE_KEY = 'MASQ_DN';
 

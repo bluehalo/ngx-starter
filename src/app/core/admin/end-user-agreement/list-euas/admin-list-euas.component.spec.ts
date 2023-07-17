@@ -1,16 +1,10 @@
-import { CdkTableModule } from '@angular/cdk/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { ModalService } from '../../../../common/modal/modal.service';
-import { SearchInputModule } from '../../../../common/search-input.module';
-import { SystemAlertModule } from '../../../../common/system-alert.module';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { TableModule } from '../../../../common/table.module';
 import { EuaService } from '../eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';
 
@@ -37,15 +31,7 @@ describe('Admin List End User Agreements Component', () => {
 			return of(void 0);
 		});
 		const testBed = TestBed.configureTestingModule({
-			declarations: [AdminListEuasComponent],
-			imports: [
-				ModalModule.forRoot(),
-				RouterTestingModule,
-				SystemAlertModule,
-				SearchInputModule,
-				CdkTableModule,
-				TableModule
-			],
+			imports: [AdminListEuasComponent],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
 				{ provide: EuaService, useValue: endUserAgreementServiceSpy },

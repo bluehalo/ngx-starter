@@ -1,19 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { of } from 'rxjs';
 
 import { AuthorizationService } from '../auth/authorization.service';
-import { HasRoleDirective } from '../auth/directives/has-role.directive';
-import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
-import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
@@ -82,22 +76,8 @@ describe('Site Navbar Component Spec', () => {
 		masqServiceSpy.getMasqueradeDn.and.returnValue(undefined);
 
 		TestBed.configureTestingModule({
-			declarations: [
-				SiteNavbarComponent,
-				IsAuthenticatedDirective,
-				HasRoleDirective,
-				HasSomeRolesDirective,
-				PopoverDirective
-			],
-			imports: [
-				HttpClientTestingModule,
-				BsDatepickerModule,
-				ModalModule.forRoot(),
-				TooltipModule,
-				PopoverModule,
-				FormsModule,
-				RouterTestingModule
-			],
+			declarations: [PopoverDirective],
+			imports: [HttpClientTestingModule, ModalModule.forRoot(), RouterTestingModule],
 			providers: [
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },

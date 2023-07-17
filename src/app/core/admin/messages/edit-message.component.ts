@@ -1,17 +1,23 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
 
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { Message } from '../../messages/message.model';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './manage-message.component.html'
+	templateUrl: './manage-message.component.html',
+	standalone: true,
+	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgSelectModule]
 })
 export class UpdateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-edit';
