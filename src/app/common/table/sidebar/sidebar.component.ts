@@ -8,7 +8,8 @@ import { Component, HostBinding, Input } from '@angular/core';
 	host: {
 		class: 'sidebar',
 		'[class.sidebar-left]': 'placement === "left"'
-	}
+	},
+	standalone: true
 })
 export class SidebarComponent {
 	@Input()

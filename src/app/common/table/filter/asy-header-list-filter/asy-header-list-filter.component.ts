@@ -1,6 +1,10 @@
-import { TitleCasePipe } from '@angular/common';
+import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, Optional, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
+import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
@@ -19,7 +23,18 @@ export type ListFilterOption = {
 	selector: 'asy-header-filter[list-filter]',
 	templateUrl: './asy-header-list-filter.component.html',
 	styleUrls: ['./asy-header-list-filter.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [
+		BsDropdownModule,
+		NgClass,
+		NgIf,
+		SearchInputComponent,
+		NgFor,
+		FormsModule,
+		TitleCasePipe
+	],
+	providers: [TitleCasePipe]
 })
 export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterComponent {
 	_options: ListFilterOption[];

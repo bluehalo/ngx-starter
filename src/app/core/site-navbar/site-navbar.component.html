@@ -56,7 +56,7 @@
 
 				<ng-template #adminNav>
 					<ul class="popover-menu" role="menu">
-						<li *ngFor="let adminItem of adminMenuItems">
+						<li *ngFor="let adminItem of adminTopics">
 							<a
 								[routerLink]="[
 									'admin/' + adminItem.path,
@@ -94,7 +94,7 @@
 					container="body"
 					[isDisabled]="navbarOpen"
 					routerLinkActive="active-link"
-					routerLink="/teams"
+					routerLink="/team"
 				>
 					<span class="fa-solid fa-fw fa-users"></span>
 					<span [hidden]="!navbarOpen">Teams</span>

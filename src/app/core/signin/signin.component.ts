@@ -1,9 +1,13 @@
+import { NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
+import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
 import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
 import { NavigationService } from '../navigation.service';
@@ -11,7 +15,9 @@ import { NavigationService } from '../navigation.service';
 @UntilDestroy()
 @Component({
 	templateUrl: 'signin.component.html',
-	styleUrls: ['signin.component.scss']
+	styleUrls: ['signin.component.scss'],
+	standalone: true,
+	imports: [NgIf, LoadingSpinnerComponent, FormsModule, RouterLink]
 })
 export class SigninComponent implements OnInit {
 	loaded = false;

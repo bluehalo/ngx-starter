@@ -15,7 +15,8 @@ import { SessionService } from '../session.service';
 			directive: NgIf,
 			inputs: ['ngIfElse: hasEveryRoleElse', 'ngIfThen: hasEveryRoleThen']
 		}
-	]
+	],
+	standalone: true
 })
 export class HasEveryRoleDirective implements OnInit {
 	roles: Array<string | Role>;

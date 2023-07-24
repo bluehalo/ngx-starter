@@ -1,11 +1,15 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { NgSelectComponent } from '@ng-select/ng-select';
+import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 
+import { ModalComponent } from '../../../common/modal/modal/modal.component';
 import { PagingOptions } from '../../../common/paging.model';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
@@ -21,6 +25,16 @@ import { AddedMember, TeamsService } from '../teams.service';
 				display: contents;
 			}
 		`
+	],
+	standalone: true,
+	imports: [
+		ModalComponent,
+		NgSelectModule,
+		NgIf,
+		NgFor,
+		BsDropdownModule,
+		TooltipModule,
+		AsyncPipe
 	]
 })
 export class AddMembersModalComponent implements OnInit {

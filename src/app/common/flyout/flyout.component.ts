@@ -1,9 +1,12 @@
+import { NgClass } from '@angular/common';
 import { Component, ContentChild, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-flyout',
 	templateUrl: './flyout.component.html',
-	styleUrls: ['./flyout.component.scss']
+	styleUrls: ['./flyout.component.scss'],
+	standalone: true,
+	imports: [NgClass]
 })
 export class FlyoutComponent {
 	@ViewChild('flyoutContentContainer') container?: ElementRef;

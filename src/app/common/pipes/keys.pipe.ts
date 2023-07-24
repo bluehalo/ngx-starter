@@ -2,7 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import forOwn from 'lodash/forOwn';
 
-@Pipe({ name: 'keys' })
+@Pipe({
+	name: 'keys',
+	standalone: true
+})
 export class KeysPipe implements PipeTransform {
 	transform(obj: any): any {
 		const values: any[] = [];

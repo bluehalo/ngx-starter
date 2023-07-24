@@ -1,12 +1,20 @@
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 
+import { MultiSelectInputComponent } from '../../../../common/multi-select-input/multi-select-input.component';
+import { JoinPipe } from '../../../../common/pipes/join.pipe';
+import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { SessionService } from '../../../auth/session.service';
 import { ConfigService } from '../../../config.service';
+import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';
+import { ListTeamMembersComponent } from '../../list-team-members/list-team-members.component';
+import { ListSubTeamsComponent } from '../../list-teams/list-sub-teams.component';
 import { Team } from '../../team.model';
 import { TeamsService } from '../../teams.service';
 
@@ -14,7 +22,20 @@ import { TeamsService } from '../../teams.service';
 @Component({
 	selector: 'app-general-details',
 	templateUrl: './general-details.component.html',
-	styleUrls: ['./general-details.component.scss']
+	styleUrls: ['./general-details.component.scss'],
+	standalone: true,
+	imports: [
+		NgIf,
+		ListTeamMembersComponent,
+		HasTeamRoleDirective,
+		FormsModule,
+		RouterLink,
+		MultiSelectInputComponent,
+		ListSubTeamsComponent,
+		TitleCasePipe,
+		JoinPipe,
+		UtcDatePipe
+	]
 })
 export class GeneralDetailsComponent implements OnInit {
 	team?: Team;

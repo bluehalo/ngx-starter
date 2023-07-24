@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { NavbarTopics } from '../../core/core.module';
-
 @Component({
 	template: `
 		<div class="container">
@@ -12,15 +10,7 @@ import { NavbarTopics } from '../../core/core.module';
 				</div>
 			</div>
 		</div>
-	`
+	`,
+	standalone: true
 })
 export class ExploreComponent {}
-
-NavbarTopics.registerTopic({
-	id: 'explore',
-	title: 'Explore',
-	ordinal: 1,
-	path: 'explore',
-	iconClass: 'fa-compass',
-	hasSomeRoles: ['user']
-});

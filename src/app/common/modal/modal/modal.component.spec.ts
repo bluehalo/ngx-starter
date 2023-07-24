@@ -9,8 +9,7 @@ describe('ModalComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			imports: [A11yModule],
-			declarations: [ModalComponent]
+			imports: [A11yModule, ModalComponent]
 		}).compileComponents();
 	}));
 

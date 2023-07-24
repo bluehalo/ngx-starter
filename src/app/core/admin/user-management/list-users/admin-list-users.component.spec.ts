@@ -1,20 +1,12 @@
-import { CdkTableModule } from '@angular/cdk/table';
-import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingResults } from '../../../../common/paging.model';
-import { PipesModule } from '../../../../common/pipes.module';
-import { SearchInputModule } from '../../../../common/search-input.module';
-import { SystemAlertModule } from '../../../../common/system-alert.module';
-import { TableModule } from '../../../../common/table.module';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
@@ -67,24 +59,16 @@ describe('Admin List Users Component Spec', () => {
 		);
 
 		TestBed.configureTestingModule({
-			declarations: [AdminListUsersComponent],
 			imports: [
-				CommonModule,
-				FormsModule,
 				RouterTestingModule,
-				PipesModule,
-				SearchInputModule,
-				SystemAlertModule,
-				TooltipModule.forRoot(),
-				CdkTableModule,
-				TableModule,
-				BrowserAnimationsModule
+				BrowserAnimationsModule,
+				ModalModule.forRoot(),
+				AdminListUsersComponent
 			],
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
-				BsModalService,
 				ModalService
 			]
 		});

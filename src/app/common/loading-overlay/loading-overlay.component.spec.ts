@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoadingOverlayModule } from '../loading-overlay.module';
 import { LoadingOverlayComponent } from './loading-overlay.component';
 
 describe('LoadingOverlayComponent', () => {
@@ -10,8 +9,7 @@ describe('LoadingOverlayComponent', () => {
 
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
-			imports: [LoadingOverlayModule],
-			declarations: [LoadingOverlayComponent]
+			imports: [LoadingOverlayComponent]
 		});
 
 		fixture = testbed.createComponent(LoadingOverlayComponent);

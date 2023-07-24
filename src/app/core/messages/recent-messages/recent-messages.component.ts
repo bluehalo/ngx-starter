@@ -1,3 +1,4 @@
+import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,7 +12,9 @@ import { MessageService } from '../message.service';
 @Component({
 	selector: 'app-recent-messages',
 	templateUrl: './recent-messages.component.html',
-	styleUrls: ['./recent-messages.component.scss']
+	styleUrls: ['./recent-messages.component.scss'],
+	standalone: true,
+	imports: [NgIf, NgFor, NgClass, LowerCasePipe]
 })
 export class RecentMessagesComponent implements OnInit {
 	@Input() container: any;

@@ -25,8 +25,7 @@ describe('Container Modal Component', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [A11yModule],
-			declarations: [ContainerModalComponent, ModalComponent],
+			imports: [A11yModule, ContainerModalComponent, ModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 

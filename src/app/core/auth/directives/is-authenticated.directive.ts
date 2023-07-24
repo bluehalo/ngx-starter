@@ -15,7 +15,8 @@ import { SessionService } from '../session.service';
 			directive: NgIf,
 			inputs: ['ngIfElse: isAuthenticatedElse', 'ngIfThen: isAuthenticatedThen']
 		}
-	]
+	],
+	standalone: true
 })
 export class IsAuthenticatedDirective implements OnInit {
 	private _isAuthenticated = true;

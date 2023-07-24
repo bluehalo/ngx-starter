@@ -1,12 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 
 import { BehaviorSubject, Subject, of } from 'rxjs';
 
-import { PipesModule } from '../../../common/pipes.module';
-import { SearchInputModule } from '../../../common/search-input.module';
-import { SystemAlertModule } from '../../../common/system-alert.module';
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 import { RecentMessagesComponent } from './recent-messages.component';
@@ -44,14 +39,7 @@ describe('Recent Messages Component Spec', () => {
 		});
 
 		TestBed.configureTestingModule({
-			declarations: [RecentMessagesComponent],
-			imports: [
-				FormsModule,
-				RouterTestingModule,
-				PipesModule,
-				SearchInputModule,
-				SystemAlertModule
-			],
+			imports: [RecentMessagesComponent],
 			providers: [{ provide: MessageService, useValue: messageServiceSpy }]
 		});
 

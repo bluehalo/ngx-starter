@@ -1,28 +1,72 @@
+import { CdkTableModule } from '@angular/cdk/table';
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
 
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { ModalAction } from '../../../../common/modal/modal.model';
 import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
+import { AgoDatePipe } from '../../../../common/pipes/ago-date.pipe';
+import { JoinPipe } from '../../../../common/pipes/join.pipe';
+import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
+import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
+import { ColumnChooserComponent } from '../../../../common/table/column-chooser/column-chooser.component';
 import { AsyFilterDirective } from '../../../../common/table/filter/asy-filter.directive';
+import { AsyHeaderListFilterComponent } from '../../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
+import { PaginatorComponent } from '../../../../common/table/paginator/paginator.component';
+import { SidebarComponent } from '../../../../common/table/sidebar/sidebar.component';
+import { AsySortHeaderComponent } from '../../../../common/table/sort/asy-sort-header/asy-sort-header.component';
+import { AsySortDirective } from '../../../../common/table/sort/asy-sort.directive';
+import { AsyTableEmptyStateComponent } from '../../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { AdminUsersService } from '../admin-users.service';
+import { UserRoleFilterDirective } from './user-role-filter.directive';
 
 @UntilDestroy()
 @Component({
 	templateUrl: './admin-list-users.component.html',
-	styleUrls: ['./admin-list-users.component.scss']
+	styleUrls: ['./admin-list-users.component.scss'],
+	standalone: true,
+	imports: [
+		SkipToDirective,
+		SystemAlertComponent,
+		SearchInputComponent,
+		RouterLink,
+		TooltipModule,
+		CdkTableModule,
+		AsySortDirective,
+		AsyFilterDirective,
+		AsySortHeaderComponent,
+		AsyHeaderListFilterComponent,
+		UserRoleFilterDirective,
+		NgFor,
+		NgIf,
+		NgClass,
+		BsDropdownModule,
+		AsyTableEmptyStateComponent,
+		SidebarComponent,
+		ColumnChooserComponent,
+		PaginatorComponent,
+		AsyncPipe,
+		AgoDatePipe,
+		JoinPipe,
+		UtcDatePipe
+	]
 })
 export class AdminListUsersComponent implements OnDestroy, OnInit {
 	@ViewChild(AsyFilterDirective)

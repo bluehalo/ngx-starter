@@ -3,11 +3,15 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+import { HelpTopicComponent } from './help-topic.component';
+
 const defaultKey = 'getting-started';
 
 @UntilDestroy()
 @Component({
-	template: '<help-topic [key]="key"></help-topic>'
+	template: '<help-topic [key]="key"></help-topic>',
+	standalone: true,
+	imports: [HelpTopicComponent]
 })
 export class HelpTopicWrapperComponent {
 	key: string = defaultKey;

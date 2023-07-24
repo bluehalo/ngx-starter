@@ -1,9 +1,12 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
+import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
@@ -11,7 +14,9 @@ import { NavigationService } from '../navigation.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: 'user-eua.component.html'
+	templateUrl: 'user-eua.component.html',
+	standalone: true,
+	imports: [NgIf, SystemAlertComponent, FormsModule, AsyncPipe]
 })
 export class UserEuaComponent implements OnInit {
 	agree = false;

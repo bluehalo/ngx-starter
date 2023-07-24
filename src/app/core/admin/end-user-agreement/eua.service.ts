@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AbstractEntityService, ServiceMethod } from '../../../common/abstract-entity.service';
 import { EndUserAgreement } from './eua.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EuaService extends AbstractEntityService<EndUserAgreement> {
 	constructor() {
 		super({

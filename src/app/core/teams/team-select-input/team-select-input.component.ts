@@ -1,6 +1,8 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, Input, ViewChild, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
@@ -18,7 +20,9 @@ import { TeamsService } from '../teams.service';
 			useExisting: forwardRef(() => TeamSelectInputComponent),
 			multi: true
 		}
-	]
+	],
+	standalone: true,
+	imports: [NgSelectModule, FormsModule, AsyncPipe]
 })
 export class TeamSelectInputComponent implements ControlValueAccessor {
 	@ViewChild(NgModel, { static: true })

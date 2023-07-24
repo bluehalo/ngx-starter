@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { ModalConfig } from '../../../common/modal/modal.model';
 import { ModalService } from '../../../common/modal/modal.service';
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
 import { FormModalComponent } from './form-modal.component';
 
 @Component({
 	selector: 'app-modal',
-	templateUrl: './modal.component.html'
+	templateUrl: './modal.component.html',
+	standalone: true,
+	imports: [FormsModule]
 })
 export class ModalComponent {
 	constructor(public modalService: ModalService) {}
@@ -80,12 +82,3 @@ export class ModalComponent {
 		});
 	}
 }
-
-NavbarTopics.registerTopic({
-	id: 'modals',
-	title: 'Modals',
-	ordinal: 3,
-	path: 'modal',
-	iconClass: 'fa-window-restore',
-	hasSomeRoles: ['user']
-});

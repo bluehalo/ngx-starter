@@ -1,5 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
@@ -21,7 +23,9 @@ import { debounceTime } from 'rxjs/operators';
 				animate('200ms ease', style({ opacity: 0, height: 0 }))
 			])
 		])
-	]
+	],
+	standalone: true,
+	imports: [FormsModule, NgIf]
 })
 export class SearchInputComponent {
 	@Input() placeholder = 'Search...';

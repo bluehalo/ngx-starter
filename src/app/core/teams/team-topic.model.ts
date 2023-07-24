@@ -1,6 +1,14 @@
-import { Topic, TopicRegistry } from '../../common/topic.model';
+import { InjectionToken, inject } from '@angular/core';
 
-export type TeamTopic = Topic;
+import sortBy from 'lodash/sortBy';
 
-const teamTopics = new TopicRegistry<TeamTopic>();
-export { teamTopics as TeamTopics };
+import { Topic } from '../../common/topic.model';
+
+export const TEAM_TOPICS = new InjectionToken<Topic[][]>('TEAM_TOPIC');
+
+export const getTeamTopics = () =>
+	sortBy((inject(TEAM_TOPICS, { optional: true }) ?? []).flat(), [
+		(t) => t.ordinal ?? 1,
+		'title',
+		'path'
+	]);

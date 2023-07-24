@@ -1,7 +1,9 @@
-import { Location } from '@angular/common';
+import { AsyncPipe, Location, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, Subject, concat, of } from 'rxjs';
 import {
@@ -14,19 +16,33 @@ import {
 	tap
 } from 'rxjs/operators';
 
+import { MultiSelectInputComponent } from '../../../common/multi-select-input/multi-select-input.component';
 import { PagingOptions } from '../../../common/paging.model';
+import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
+import { TeamSelectInputComponent } from '../team-select-input/team-select-input.component';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
 @UntilDestroy()
 @Component({
-	templateUrl: './create-team.component.html'
+	templateUrl: './create-team.component.html',
+	standalone: true,
+	imports: [
+		RouterLink,
+		SystemAlertComponent,
+		FormsModule,
+		NgIf,
+		NgSelectModule,
+		TeamSelectInputComponent,
+		MultiSelectInputComponent,
+		AsyncPipe
+	]
 })
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();
@@ -131,7 +147,7 @@ export class CreateTeamComponent implements OnInit {
 				untilDestroyed(this)
 			)
 			.subscribe(() => {
-				return this.router.navigate(['/teams', { clearCachedFilter: true }]);
+				return this.router.navigate(['/team']);
 			});
 	}
 }

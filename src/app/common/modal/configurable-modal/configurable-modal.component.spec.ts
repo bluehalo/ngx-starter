@@ -13,8 +13,7 @@ describe('Modal Component', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [FormsModule],
-			declarations: [ConfigurableModalComponent, ModalComponent],
+			imports: [FormsModule, ConfigurableModalComponent, ModalComponent],
 			providers: [{ provide: BsModalRef, useValue: {} }]
 		});
 

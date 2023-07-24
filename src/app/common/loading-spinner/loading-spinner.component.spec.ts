@@ -4,12 +4,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 
 @Component({
-	template: '<loading-spinner></loading-spinner>'
+	template: '<loading-spinner></loading-spinner>',
+	standalone: true,
+	imports: [LoadingSpinnerComponent]
 })
 export class LoadingSpinnerDefaultTestHostComponent {}
 
 @Component({
-	template: '<loading-spinner [message]="message"></loading-spinner>'
+	template: '<loading-spinner [message]="message"></loading-spinner>',
+	standalone: true,
+	imports: [LoadingSpinnerComponent]
 })
 export class LoadingSpinnerProvidedTestHostComponent {
 	message = 'Bootstrapping...';
@@ -25,8 +29,7 @@ describe('LoadingSpinnerComponent', () => {
 
 	beforeEach(() => {
 		const testbed = TestBed.configureTestingModule({
-			imports: [],
-			declarations: [
+			imports: [
 				LoadingSpinnerDefaultTestHostComponent,
 				LoadingSpinnerProvidedTestHostComponent,
 				LoadingSpinnerComponent

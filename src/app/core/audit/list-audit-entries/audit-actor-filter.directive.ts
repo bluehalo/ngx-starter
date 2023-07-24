@@ -8,7 +8,8 @@ import { AsyHeaderTypeaheadFilterComponent } from '../../../common/table/filter/
 import { AuditService } from '../audit.service';
 
 @Directive({
-	selector: 'asy-header-filter[typeahead-filter][audit-actor-filter]'
+	selector: 'asy-header-filter[typeahead-filter][audit-actor-filter]',
+	standalone: true
 })
 export class AuditActorFilterDirective implements OnInit {
 	constructor(

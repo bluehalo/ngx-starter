@@ -1,4 +1,8 @@
+import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { PageChange } from '../../paging.model';
 import { AsyTableDataSource } from '../asy-table-data-source';
@@ -6,7 +10,9 @@ import { AsyTableDataSource } from '../asy-table-data-source';
 @Component({
 	selector: 'asy-paginator',
 	templateUrl: './paginator.component.html',
-	styleUrls: ['./paginator.component.scss']
+	styleUrls: ['./paginator.component.scss'],
+	standalone: true,
+	imports: [NgIf, NgSelectModule, FormsModule, AsyncPipe, DecimalPipe]
 })
 export class PaginatorComponent<T> implements OnInit {
 	@Input()

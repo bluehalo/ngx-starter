@@ -17,7 +17,8 @@ import { Team } from '../team.model';
 			directive: NgIf,
 			inputs: ['ngIfElse: hasTeamRoleElse', 'ngIfThen: hasTeamRoleThen']
 		}
-	]
+	],
+	standalone: true
 })
 export class HasTeamRoleDirective implements OnInit {
 	private team: Pick<Team, '_id'>;

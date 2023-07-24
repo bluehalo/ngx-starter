@@ -1,44 +1,37 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Observable, switchMap } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
 import { ConfigService } from '../config.service';
 import { MasqueradeService } from './masquerade.service';
 
+const DEFAULT_HEADER: string = 'x-masquerade-user-dn';
+
 /**
- * HTTP Interceptor that will add Masquerade related
+ * HTTP Interceptor that will add Masquerade related headers
  */
-@Injectable()
-export class MasqueradeInterceptor implements HttpInterceptor {
-	private masqueradeHeader = 'x-masquerade-user-dn';
-
-	constructor(
-		private router: Router,
-		private masqueradeService: MasqueradeService,
-		private configService: ConfigService
-	) {
-		this.configService
+// eslint-disable-next-line rxjs/finnish
+export function masqueradeInterceptor(
+	req: HttpRequest<unknown>,
+	next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> {
+	const masqDn = inject(MasqueradeService).getMasqueradeDn();
+	if (masqDn) {
+		return inject(ConfigService)
 			.getConfig()
-			.pipe(first())
-			.subscribe((config) => {
-				if (config?.masqueradeHeader) {
-					this.masqueradeHeader = config.masqueradeHeader;
-				}
-			});
+			.pipe(
+				first(),
+				map((config) =>
+					req.clone({
+						setHeaders: {
+							[config?.masqueradeHeader ?? DEFAULT_HEADER]: masqDn ?? ''
+						}
+					})
+				),
+				switchMap((masReq) => next(masReq))
+			);
 	}
-
-	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		const masqDn = this.masqueradeService.getMasqueradeDn();
-		if (masqDn) {
-			req = req.clone({
-				setHeaders: {
-					[this.masqueradeHeader]: masqDn
-				}
-			});
-		}
-		return next.handle(req);
-	}
+	return next(req);
 }

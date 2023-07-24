@@ -12,11 +12,14 @@ import { Subject } from 'rxjs';
 
 import { AbstractModalDirective } from '../abstract-modal.directive';
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
+import { ModalComponent } from '../modal/modal.component';
 
 @UntilDestroy()
 @Component({
 	templateUrl: 'container-modal.component.html',
-	styleUrls: ['container-modal.component.scss']
+	styleUrls: ['container-modal.component.scss'],
+	standalone: true,
+	imports: [ModalComponent]
 })
 export class ContainerModalComponent
 	extends AbstractModalDirective

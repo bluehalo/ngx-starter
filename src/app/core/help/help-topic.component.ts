@@ -1,41 +1,42 @@
 import {
 	Component,
 	ComponentRef,
-	Injectable,
+	InjectionToken,
 	Input,
 	ViewChild,
-	ViewContainerRef
+	ViewContainerRef,
+	inject
 } from '@angular/core';
+
+import sortBy from 'lodash/sortBy';
 
 import { StringUtils } from '../../common/string-utils.service';
 
-@Injectable()
-export class HelpTopics {
-	static topics: any = {};
-	private static topicOrder: any = {};
+type HelpTopic = { id: string; component: any; title?: string; ordinal?: number };
 
-	static registerTopic(key: string, topicComponent: any, ordinal?: number) {
-		HelpTopics.topics[key] = topicComponent;
-		this.topicOrder[key] = { key, ordinal };
-	}
+export const HELP_TOPICS = new InjectionToken<HelpTopic[][]>('HELP_TOPIC');
 
-	static getTopicList(): string[] {
-		return Object.values(this.topicOrder)
-			.sort((a: any, b: any) => a.ordinal - b.ordinal)
-			.map((v: any) => v.key);
-	}
+export const getHelpTopics = () =>
+	sortBy(
+		(inject(HELP_TOPICS, { optional: true }) ?? [])
+			.flat()
+			.map((topic) => ({ title: StringUtils.hyphenToHuman(topic.id), ...topic })),
+		[(t) => t.ordinal ?? 1, 'key']
+	);
 
-	static getTopicTitle(title: string, short: boolean = false) {
-		return StringUtils.hyphenToHuman(title);
-	}
-}
+export const getHelpTopicsMap = () => new Map(getHelpTopics().map((topic) => [topic.id, topic]));
 
 @Component({
 	selector: 'help-topic',
-	template: '<div #content></div>'
+	template: '<div #content></div>',
+	standalone: true
 })
 export class HelpTopicComponent {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
+
+	componentRef?: ComponentRef<any>;
+
+	helpTopics = getHelpTopicsMap();
 
 	@Input()
 	set key(key: string) {
@@ -43,13 +44,11 @@ export class HelpTopicComponent {
 			this.componentRef.destroy();
 		}
 
-		if (this.content && key && HelpTopics.topics[key]) {
+		if (this.content && key && this.helpTopics.has(key)) {
 			// Dynamically create the component
-			this.componentRef = this.content.createComponent(HelpTopics.topics[key]);
+			this.componentRef = this.content.createComponent(this.helpTopics.get(key)?.component);
 		} else {
 			console.warn(`WARNING: No handler for help topic: ${key}.`);
 		}
 	}
-
-	componentRef?: ComponentRef<any>;
 }

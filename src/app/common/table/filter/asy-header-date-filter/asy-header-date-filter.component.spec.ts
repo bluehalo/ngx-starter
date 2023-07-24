@@ -36,8 +36,7 @@ describe('AsyHeaderDateFilter', () => {
 		filterSpy.deregister.and.callFake(() => {});
 
 		await TestBed.configureTestingModule({
-			declarations: [AsyHeaderDateFilterComponent],
-			imports: [BrowserAnimationsModule, BsDropdownModule],
+			imports: [BrowserAnimationsModule, BsDropdownModule, AsyHeaderDateFilterComponent],
 			providers: [{ provide: AsyFilterDirective, useValue: filterSpy as AsyFilterDirective }]
 		}).compileComponents();
 

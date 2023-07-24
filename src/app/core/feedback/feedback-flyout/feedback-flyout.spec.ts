@@ -1,13 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule, By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { NgSelectModule } from '@ng-select/ng-select';
 import { AsyncSubject } from 'rxjs';
 
-import { FlyoutComponent } from '../../../common/flyout/flyout.component';
 import { ConfigService } from '../../config.service';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
@@ -29,8 +26,7 @@ describe('FeedbackFlyoutComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [FeedbackFlyoutComponent, FlyoutComponent],
-			imports: [BrowserModule, FormsModule, NgSelectModule],
+			imports: [FeedbackFlyoutComponent],
 			providers: [
 				{ provide: Router, useValue: { url: 'test-url' } },
 				{ provide: ConfigService, useValue: { getConfig: () => configSubject$ } },

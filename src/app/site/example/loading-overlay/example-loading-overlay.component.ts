@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
-import { NavbarTopics } from '../../../core/site-navbar/navbar-topic.model';
+import { LoadingOverlayComponent } from '../../../common/loading-overlay/loading-overlay.component';
 
 @Component({
 	selector: 'example-loading-overlay',
-	templateUrl: './example-loading-overlay.component.html'
+	templateUrl: './example-loading-overlay.component.html',
+	standalone: true,
+	imports: [LoadingOverlayComponent]
 })
 export class ExampleLoadingOverlayComponent {
 	isLoading = true;
@@ -24,11 +26,3 @@ export class ExampleLoadingOverlayComponent {
 		this.isError = !this.isError;
 	}
 }
-NavbarTopics.registerTopic({
-	id: 'loading-overlay',
-	title: 'Loading Overlay',
-	ordinal: 6,
-	path: 'loading-overlay',
-	iconClass: 'fa-spinner',
-	hasSomeRoles: ['user']
-});

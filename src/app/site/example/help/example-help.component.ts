@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 
-import { HelpTopics } from '../../../core/help/help-topic.component';
-
 @Component({
-	template: '<p>Example help content.</p>'
+	template: '<p>Example help content.</p>',
+	standalone: true
 })
 export class ExampleHelpComponent {}
-HelpTopics.registerTopic('example', ExampleHelpComponent, 7);

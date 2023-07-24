@@ -1,9 +1,12 @@
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 
 @Component({
 	selector: 'notification',
 	templateUrl: 'notification.component.html',
-	styleUrls: ['notification.component.scss']
+	styleUrls: ['notification.component.scss'],
+	standalone: true,
+	imports: [NgIf, NgTemplateOutlet]
 })
 export class NotificationComponent {
 	@Input() notificationType: 'info' | 'success' | 'warning' | 'danger' = 'info';
