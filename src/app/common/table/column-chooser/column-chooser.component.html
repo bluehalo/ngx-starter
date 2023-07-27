@@ -1,24 +1,24 @@
 <div class="text-nowrap mb-1">
 	(
-	<button type="button" class="btn btn-sm btn-link" (click)="restoreDefault()">Default</button>
+	<button class="btn btn-sm btn-link" type="button" (click)="restoreDefault()">Default</button>
 	/
-	<button type="button" class="btn btn-sm btn-link" (click)="selectAll()">All</button>
+	<button class="btn btn-sm btn-link" type="button" (click)="selectAll()">All</button>
 	)
 </div>
 
 <div
+	class="overflow-auto ml-n1 column-drag-boundary"
 	cdkDropList
 	[cdkDropListData]="_columns"
 	(cdkDropListDropped)="onDrop($event)"
-	class="overflow-auto ml-n1 column-drag-boundary"
 >
 	<div
+		class="form-check text-nowrap ml-1"
 		cdkDrag
+		cdkDragBoundary=".column-drag-boundary"
+		*ngFor="let column of _columns"
 		[cdkDragData]="column"
 		[cdkDragDisabled]="sortingDisabled"
-		cdkDragBoundary=".column-drag-boundary"
-		class="form-check text-nowrap ml-1"
-		*ngFor="let column of _columns"
 	>
 		<span
 			class="fa-solid fa-lg fa-bars pr-1 mr-2"
@@ -27,8 +27,8 @@
 		></span>
 		<input
 			class="form-check-input"
-			type="checkbox"
 			id="column-chooser-{{ column.key }}-checkbox"
+			type="checkbox"
 			[(ngModel)]="column.selected"
 			(change)="onChange()"
 		/>

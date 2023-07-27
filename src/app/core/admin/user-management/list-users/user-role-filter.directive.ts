@@ -30,7 +30,7 @@ export class UserRoleFilterDirective implements OnInit {
 					({
 						display: role.label,
 						value: role.role
-					} as ListFilterOption)
+					}) as ListFilterOption
 			),
 			'pending'
 		];

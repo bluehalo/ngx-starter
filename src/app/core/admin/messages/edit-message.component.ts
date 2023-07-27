@@ -22,7 +22,10 @@ import { ManageMessageComponent } from './manage-message.component';
 export class UpdateMessageComponent extends ManageMessageComponent {
 	mode = 'admin-edit';
 
-	constructor(protected route: ActivatedRoute, protected messageService: MessageService) {
+	constructor(
+		protected route: ActivatedRoute,
+		protected messageService: MessageService
+	) {
 		super(
 			'Edit Message',
 			"Make changes to the message's information",

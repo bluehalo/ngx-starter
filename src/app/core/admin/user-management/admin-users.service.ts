@@ -13,7 +13,10 @@ import { User } from '../../auth/user.model';
  */
 @Injectable({ providedIn: 'root' })
 export class AdminUsersService {
-	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
 	search(
 		query: any,

@@ -12,61 +12,61 @@
 
 <section class="page-body anchored-page-body">
 	<div class="table-content">
-		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="actor">
-				<th cdk-header-cell asy-sort-header="audit.actor.name" *cdkHeaderCellDef>
+				<th asy-sort-header="audit.actor.name" cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-user"></span>
 					Actor
-					<asy-header-filter typeahead-filter audit-actor-filter></asy-header-filter>
+					<asy-header-filter audit-actor-filter typeahead-filter></asy-header-filter>
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					<asy-audit-component
-						[auditObject]="entry.audit.actor"
 						auditType="user"
+						[auditObject]="entry.audit.actor"
 					></asy-audit-component>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-clock"></span>
 					Timestamp
 					<asy-header-filter date-filter></asy-header-filter>
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.created | utcDate }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.action">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-mouse-pointer"></span>
 					Action
 					<asy-header-filter
-						list-filter
 						audit-distinct-value-filter
+						list-filter
 						[showSearch]="true"
 					></asy-header-filter>
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.audit?.action }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.auditType">
-				<th cdk-header-cell asy-sort-header="audit.auditType" *cdkHeaderCellDef>
+				<th asy-sort-header="audit.auditType" cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-tag"></span>
 					Type
 					<asy-header-filter
-						list-filter
 						audit-distinct-value-filter
+						list-filter
 						[showSearch]="true"
 					></asy-header-filter>
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.audit?.auditType }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="object">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Object</th>
-				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow">
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Object</th>
+				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
 					<asy-audit-component
 						[auditObject]="entry.audit.object?.after ?? entry.audit.object"
 						[auditType]="entry.audit.auditType"
@@ -88,11 +88,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="before">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-history"></span>
 					Before
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow">
+				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
 					<asy-audit-component
 						[auditObject]="entry.audit.object?.before"
 						[auditType]="entry.audit.auditType"
@@ -101,10 +101,10 @@
 						<small *ngIf="entry.isViewChangesAction">
 							<a
 								class="btn-icon no-href"
-								[hidden]="(entry.audit.object?.before ?? null) === null"
-								tooltip="See details of the update"
-								placement="bottom"
 								container="body"
+								placement="bottom"
+								tooltip="See details of the update"
+								[hidden]="(entry.audit.object?.before ?? null) === null"
 								(click)="viewMore(entry, 'viewChanges')"
 							>
 								<span class="fa-solid fa-eye"></span><span>View Changes</span>
@@ -117,11 +117,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="message">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-file-text"></span>
 					Message
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.message }}
 				</td>
 			</ng-container>
@@ -130,7 +130,7 @@
 					<span class="fa-solid fa-user-secret"></span>
 					Masquerading User
 				</th>
-				<td cdk-cell *cdkCellDef="let entry" class="text-nowrap">
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.audit.masqueradingUser }}
 				</td>
 			</ng-container>

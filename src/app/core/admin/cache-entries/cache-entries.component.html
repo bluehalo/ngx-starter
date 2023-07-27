@@ -16,32 +16,32 @@
 			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search key and value..."
-					(applySearch)="dataSource.search($event)"
 					[search]="dataSource.searchEvent$.value"
+					(applySearch)="dataSource.search($event)"
 				></asy-search-input>
 			</div>
 		</div>
 	</div>
 
 	<div class="table-content">
-		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="key">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Key</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Key</th>
 				<td cdk-cell *cdkCellDef="let entry">
 					{{ entry.key }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="value">
 				<th cdk-header-cell *cdkHeaderCellDef>Value</th>
-				<td cdk-cell *cdkCellDef="let entry" class="hide-overflow" style="max-width: 300px">
+				<td class="hide-overflow" cdk-cell style="max-width: 300px" *cdkCellDef="let entry">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="ts">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
 				<td cdk-cell *cdkCellDef="let entry">
-					<div class="text-nowrap" tooltip="{{ entry.ts | utcDate }}" container="body">
-						{{ entry.ts | agoDate : false }}
+					<div class="text-nowrap" container="body" tooltip="{{ entry.ts | utcDate }}">
+						{{ entry.ts | agoDate: false }}
 					</div>
 				</td>
 			</ng-container>
@@ -49,27 +49,27 @@
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td
 					cdk-cell
-					*cdkCellDef="let entry; let i = index"
-					dropdown
 					container="body"
+					dropdown
 					placement="bottom right"
+					*cdkCellDef="let entry; let i = index"
 				>
 					<div class="dropdown border-left pl-2">
 						<button
-							id="cache-entry-{{ entry._id }}-action-menu-btn"
-							dropdownToggle
-							type="button"
 							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+							id="cache-entry-{{ entry._id }}-action-menu-btn"
+							type="button"
 							attr.aria-controls="cache-entry-{{ entry._id }}-action-menu"
+							dropdownToggle
 						>
 							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
 						</button>
 						<ul
-							id="cache-entry-{{ entry._id }}-action-menu"
-							*dropdownMenu
 							class="dropdown-menu dropdown-menu-right"
+							id="cache-entry-{{ entry._id }}-action-menu"
 							role="menu"
 							attr.aria-labelledby="cache-entry-{{ entry._id }}-action-menu-btn"
+							*dropdownMenu
 						>
 							<li role="menuitem">
 								<button class="dropdown-item" (click)="viewCacheEntry(entry)">
@@ -109,12 +109,12 @@
 	</div>
 </section>
 
-<ng-template #tableRow let-cacheEntry="item">
+<ng-template let-cacheEntry="item" #tableRow>
 	<td>{{ cacheEntry.key }}</td>
 	<td class="hide-overflow" style="max-width: 300px">
 		{{ cacheEntry.value | json }}
 	</td>
 	<td>
-		<span [attr.title]="cacheEntry.ts | utcDate">{{ cacheEntry.ts | agoDate : false }}</span>
+		<span [attr.title]="cacheEntry.ts | utcDate">{{ cacheEntry.ts | agoDate: false }}</span>
 	</td>
 </ng-template>

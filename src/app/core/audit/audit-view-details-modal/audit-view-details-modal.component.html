@@ -2,10 +2,10 @@
 	title="{{ auditEntry?.audit?.auditType | titlecase }} {{
 		auditEntry?.audit?.action + 'd'
 	}} by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}"
-	okText="Close"
 	cancelText=""
-	(ok)="modalRef.hide()"
+	okText="Close"
 	(cancel)="modalRef.hide()"
+	(ok)="modalRef.hide()"
 >
 	<div class="row">
 		<div class="col-md-12">

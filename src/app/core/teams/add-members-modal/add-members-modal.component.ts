@@ -58,7 +58,10 @@ export class AddMembersModalComponent implements OnInit {
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 
-	constructor(private teamsService: TeamsService, public modalRef: BsModalRef) {}
+	constructor(
+		private teamsService: TeamsService,
+		public modalRef: BsModalRef
+	) {}
 
 	ngOnInit() {
 		if (!this.teamId) {

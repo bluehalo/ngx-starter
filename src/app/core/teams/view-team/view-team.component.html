@@ -12,21 +12,21 @@
 	<div class="d-flex mb-3">
 		<h1>{{ team.name }}</h1>
 		<button
-			type="button"
 			class="btn btn-link ml-auto"
-			(click)="remove(team)"
+			type="button"
 			*hasTeamRole="team; role: 'admin'"
+			(click)="remove(team)"
 		>
 			Delete Team
 		</button>
 	</div>
 
 	<ul class="nav nav-tabs">
-		<li *ngFor="let topic of topics" class="nav-item" role="presentation">
+		<li class="nav-item" role="presentation" *ngFor="let topic of topics">
 			<a
 				class="nav-link"
-				[routerLink]="['/team/', team._id, topic.path]"
 				routerLinkActive="active"
+				[routerLink]="['/team/', team._id, topic.path]"
 			>
 				{{ topic.title }}
 			</a>

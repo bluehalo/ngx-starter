@@ -16,19 +16,19 @@
 			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search..."
-					(applySearch)="dataSource.search($event)"
 					[search]="dataSource.searchEvent$.value"
+					(applySearch)="dataSource.search($event)"
 				></asy-search-input>
 			</div>
 
 			<div class="mb-3 ml-auto">
-				<button routerLink="/admin/eua" type="button" class="btn btn-primary ml-auto">
+				<button class="btn btn-primary ml-auto" type="button" routerLink="/admin/eua">
 					<span class="fa-solid fa-plus"></span> Create EUA
 				</button>
 
 				<button
-					type="button"
 					class="btn btn-outline-secondary font-weight-bold ml-3"
+					type="button"
 					tooltip="Set Columns"
 					(click)="sidebar.toggle()"
 				>
@@ -41,11 +41,11 @@
 	<div class="d-flex overflow-hidden">
 		<div class="table-content">
 			<table
+				class="table table-striped"
+				asyFilter
+				asySort
 				cdk-table
 				[dataSource]="dataSource"
-				asySort
-				asyFilter
-				class="table table-striped"
 			>
 				<ng-container cdkColumnDef="id">
 					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
@@ -54,32 +54,32 @@
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="title">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Title</th>
-					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
+					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
 						{{ eua.title }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Text</th>
-					<td cdk-cell *cdkCellDef="let eua" class="hide-overflow">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Text</th>
+					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
 						{{ eua.text }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
 						{{ eua.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="published">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Published</th>
-					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Published</th>
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
 						{{ eua.published | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
-					<td cdk-cell *cdkCellDef="let eua" class="text-nowrap">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Updated</th>
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
 						{{ eua.updated | utcDate }}
 					</td>
 				</ng-container>
@@ -87,27 +87,27 @@
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td
 						cdk-cell
-						*cdkCellDef="let eua"
-						dropdown
 						container="body"
+						dropdown
 						placement="bottom right"
+						*cdkCellDef="let eua"
 					>
 						<div class="dropdown border-left pl-2">
 							<button
-								id="eua-{{ eua._id }}-action-menu-btn"
-								dropdownToggle
-								type="button"
 								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+								id="eua-{{ eua._id }}-action-menu-btn"
+								type="button"
 								attr.aria-controls="eua-{{ eua._id }}-action-menu"
+								dropdownToggle
 							>
 								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
 							</button>
 							<ul
-								id="eua-{{ eua._id }}-action-menu"
-								*dropdownMenu
 								class="dropdown-menu dropdown-menu-right"
+								id="eua-{{ eua._id }}-action-menu"
 								role="menu"
 								attr.aria-labelledby="eua-{{ eua._id }}-action-menu-btn"
+								*dropdownMenu
 							>
 								<li role="menuitem">
 									<button

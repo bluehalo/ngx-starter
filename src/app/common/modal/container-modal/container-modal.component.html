@@ -1,11 +1,11 @@
 <asy-modal
 	[title]="title"
-	[okText]="okText"
-	[cancelText]="cancelText"
-	(ok)="ok()"
-	(cancel)="cancel()"
-	[disableOk]="isOkDisabled"
 	[autoCaptureFocus]="isCdkFocusInitial"
+	[cancelText]="cancelText"
+	[disableOk]="isOkDisabled"
+	[okText]="okText"
+	(cancel)="cancel()"
+	(ok)="ok()"
 >
 	<ng-container #modalizableComponentContainer></ng-container>
 </asy-modal>

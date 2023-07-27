@@ -10,24 +10,24 @@
 	<system-alert></system-alert>
 </section>
 
-<section [class.page-body]="!embedded" [class.anchored-page-body]="!embedded">
+<section [class.anchored-page-body]="!embedded" [class.page-body]="!embedded">
 	<div class="table-header d-flex align-items-center">
 		<div class="table-actions d-flex flex-wrap flex-grow-1">
 			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search teams..."
-					(applySearch)="dataSource.search($event)"
 					[search]="dataSource.searchEvent$.value"
+					(applySearch)="dataSource.search($event)"
 				></asy-search-input>
 			</div>
 
 			<div class="mb-3 ml-auto">
 				<button
-					[routerLink]="['/team/create']"
-					[queryParams]="{ parent: parent?._id }"
-					type="button"
 					class="btn btn-primary ml-auto"
+					type="button"
 					*ngIf="canCreateTeam"
+					[queryParams]="{ parent: parent?._id }"
+					[routerLink]="['/team/create']"
 				>
 					<span class="fa-solid fa-plus"></span> Create Team
 				</button>
@@ -36,29 +36,29 @@
 	</div>
 
 	<div class="table-content">
-		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="name">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Name</th>
-				<td cdk-cell *cdkCellDef="let team" class="text-nowrap">
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let team">
 					<a class="text-decoration-underline" [routerLink]="['/team', team._id]">{{
 						team.name
 					}}</a>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
 				<td cdk-cell *cdkCellDef="let team">
 					<div
 						class="text-nowrap"
-						tooltip="{{ team.created | utcDate }}"
 						container="body"
+						tooltip="{{ team.created | utcDate }}"
 					>
 						{{ team.created | agoDate }}
 					</div>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="description">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Description</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Description</th>
 				<td cdk-cell *cdkCellDef="let team">
 					{{ team.description }}
 				</td>

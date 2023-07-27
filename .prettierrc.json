@@ -1,5 +1,41 @@
 {
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-organize-attributes"],
   "printWidth": 100,
   "singleQuote": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "importOrder": [
+    "^@angular/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderParserPlugins": ["decorators-legacy", "typescript"],
+  "attributeGroups": [
+    "$CLASS",
+    "^\\[class\\.",
+    "^\\[ngClass]",
+    "$ID",
+    "$NAME",
+    "^\\[name]$",
+    "$DATA",
+    "^\\[data-",
+    "$SRC",
+    "$FOR",
+    "$TYPE",
+    "^\\[type]$",
+    "$HREF",
+    "^\\[href]$",
+    "$VALUE",
+    "^\\[value]$",
+    "$TITLE",
+    "^\\[title]$",
+    "$ALT",
+    "$ROLE",
+    "$ARIA",
+    "^\\[attr.aria",
+    "$DEFAULT",
+    "$ANGULAR"
+  ],
+  "attributeSort": "ASC"
 }

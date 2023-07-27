@@ -17,9 +17,9 @@
 				<button
 					class="btn btn-outline-secondary ml-3"
 					type="button"
+					*hasTeamRole="team; role: 'admin'"
 					[disabled]="isEditing"
 					(click)="edit()"
-					*hasTeamRole="team; role: 'admin'"
 				>
 					<span class="fa-solid fa-lg fa-pencil"></span>
 				</button>
@@ -48,10 +48,10 @@
 							<div class="col" *ngIf="isEditing">
 								<input
 									class="form-control"
-									placeholder="Enter name"
 									name="name"
-									[(ngModel)]="_team.name"
+									placeholder="Enter name"
 									required
+									[(ngModel)]="_team.name"
 								/>
 							</div>
 						</div>
@@ -64,8 +64,8 @@
 							<div class="col" *ngIf="isEditing">
 								<textarea
 									class="form-control"
-									placeholder="Enter description"
 									name="description"
+									placeholder="Enter description"
 									[(ngModel)]="_team.description"
 								>
 								</textarea>
@@ -75,7 +75,7 @@
 						<div class="form-group">
 							<label class="col col-form-label">Date Created</label>
 							<div class="col col-form-readonly-value">
-								<div>{{ team.created | utcDate : 'yyyy-MM-dd' }}</div>
+								<div>{{ team.created | utcDate: 'yyyy-MM-dd' }}</div>
 							</div>
 						</div>
 
@@ -103,12 +103,12 @@
 						>
 							<label class="col col-form-label">External Roles</label>
 							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div>{{ team.requiresExternalRoles | join : ', ' }}</div>
+								<div>{{ team.requiresExternalRoles | join: ', ' }}</div>
 							</div>
 							<div class="col" *ngIf="isEditing">
 								<asy-multi-select-input
-									placeholder="Start typing a role..."
 									name="externalRoles"
+									placeholder="Start typing a role..."
 									[(ngModel)]="_team.requiresExternalRoles"
 								></asy-multi-select-input>
 							</div>
@@ -124,12 +124,12 @@
 						>
 							<label class="col col-form-label">External Teams</label>
 							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div>{{ team.requiresExternalTeams | join : ', ' }}</div>
+								<div>{{ team.requiresExternalTeams | join: ', ' }}</div>
 							</div>
 							<div class="col" *ngIf="isEditing">
 								<asy-multi-select-input
-									placeholder="Start typing a team..."
 									name="externalTeams"
+									placeholder="Start typing a team..."
 									[(ngModel)]="_team.requiresExternalTeams"
 								></asy-multi-select-input>
 							</div>
@@ -160,7 +160,7 @@
 				<h2>Sub-Teams</h2>
 			</div>
 			<div class="card-body">
-				<app-list-sub-teams [parent]="team" [embedded]="true"></app-list-sub-teams>
+				<app-list-sub-teams [embedded]="true" [parent]="team"></app-list-sub-teams>
 			</div>
 		</div>
 	</div>

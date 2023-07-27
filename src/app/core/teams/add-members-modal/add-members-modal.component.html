@@ -1,27 +1,27 @@
 <asy-modal
 	title="Add Team Members"
 	okText="Add Users"
-	(ok)="submit()"
-	(cancel)="modalRef.hide()"
-	[disableOk]="submitting || addedMembers.length === 0"
 	[autoCaptureFocus]="true"
+	[disableOk]="submitting || addedMembers.length === 0"
+	(cancel)="modalRef.hide()"
+	(ok)="submit()"
 >
 	<h3>Add users</h3>
 	<div class="form-group">
 		<ng-select
 			name="teamAdmin"
+			appendTo="body"
 			bindLabel="userModel.name"
+			cdkFocusInitial
 			placeholder="Search for user..."
-			[tabIndex]="-1"
+			#selectDropdown
 			[items]="(users$ | async) || []"
 			[loading]="usersLoading"
+			[tabIndex]="-1"
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"
-			appendTo="body"
-			#selectDropdown
-			cdkFocusInitial
 		>
-			<ng-template ng-label-tmp let-item="item"> </ng-template>
+			<ng-template let-item="item" ng-label-tmp> </ng-template>
 		</ng-select>
 	</div>
 
@@ -38,7 +38,7 @@
 			</thead>
 
 			<tbody>
-				<tr *ngFor="let invited of addedMembers; let i = index" class="table-row">
+				<tr class="table-row" *ngFor="let invited of addedMembers; let i = index">
 					<td class="text-nowrap">
 						{{ invited.username }}
 					</td>
@@ -48,10 +48,10 @@
 								<span class="mr-1">{{ invited.roleDisplay }}</span>
 							</span>
 
-							<ul *dropdownMenu class="dropdown-menu" role="menu">
+							<ul class="dropdown-menu" role="menu" *dropdownMenu>
 								<li
-									*ngFor="let role of teamRoleOptions"
 									[value]="role.role"
+									*ngFor="let role of teamRoleOptions"
 									(click)="updateRoleSelection(invited, role.role)"
 								>
 									<a class="dropdown-item">{{ role.label }}</a>
@@ -62,9 +62,9 @@
 					<td>
 						<a
 							class="btn-icon"
-							tooltip="Remove User"
 							container="body"
 							placement="bottom"
+							tooltip="Remove User"
 							(click)="remove(i)"
 						>
 							<span class="fa-solid fa-lg fa-trash"></span>

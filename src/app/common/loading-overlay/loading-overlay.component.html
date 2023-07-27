@@ -1,8 +1,8 @@
-<div *ngIf="isLoading" class="overlay">
+<div class="overlay" *ngIf="isLoading">
 	<notification
 		*ngIf="isError"
-		[notificationType]="'danger'"
 		[message]="errorMessage"
+		[notificationType]="'danger'"
 		[showActions]="true"
 	>
 		<ng-template #notificationActions>

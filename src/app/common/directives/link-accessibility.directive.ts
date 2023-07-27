@@ -11,7 +11,10 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 	standalone: true
 })
 export class LinkAccessibilityDirective {
-	constructor(private elRef: ElementRef, private renderer: Renderer2) {
+	constructor(
+		private elRef: ElementRef,
+		private renderer: Renderer2
+	) {
 		const el = elRef.nativeElement;
 		renderer.setAttribute(el, 'tabIndex', '0');
 	}

@@ -31,12 +31,12 @@
 		</div>
 	</div>
 	<div class="row m-0">
-		<button type="button" class="btn btn-sm btn-link pl-0" (click)="dismissAll()">
+		<button class="btn btn-sm btn-link pl-0" type="button" (click)="dismissAll()">
 			Dismiss all
 		</button>
 		<button
-			type="button"
 			class="btn btn-sm btn-outline-secondary px-3 ml-auto"
+			type="button"
 			(click)="viewAll()"
 		>
 			View All
@@ -44,10 +44,10 @@
 	</div>
 </ng-container>
 
-<div *ngIf="messages.length === 0 && !loading" class="text-center">
+<div class="text-center" *ngIf="messages.length === 0 && !loading">
 	<h2 class="mt-4">You're all caught up!</h2>
 	<p class="mb-4">You don't have any new notifications.</p>
-	<button type="button" class="btn btn-sm btn-outline-secondary px-3 mb-2" (click)="viewAll()">
+	<button class="btn btn-sm btn-outline-secondary px-3 mb-2" type="button" (click)="viewAll()">
 		View All
 	</button>
 </div>

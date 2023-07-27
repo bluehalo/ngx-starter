@@ -24,7 +24,10 @@ export class SignupComponent extends ManageUserComponent implements OnInit {
 
 	inviteId?: string;
 
-	constructor(private authService: AuthenticationService, private route: ActivatedRoute) {
+	constructor(
+		private authService: AuthenticationService,
+		private route: ActivatedRoute
+	) {
 		super(
 			'New Account Request',
 			'Provide the required information to request an account',

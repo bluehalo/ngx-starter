@@ -4,7 +4,7 @@
 			{{ title }}
 		</h2>
 
-		<button type="button" class="close" aria-label="Cancel" (click)="cancel.emit()">
+		<button class="close" type="button" aria-label="Cancel" (click)="cancel.emit()">
 			<span class="fa-solid fa-remove" aria-hidden="true"></span>
 		</button>
 	</section>
@@ -14,10 +14,10 @@
 	</section>
 
 	<section class="modal-footer">
-		<button *ngIf="cancelText" class="btn btn-outline-secondary mr-2" (click)="cancel.emit()">
+		<button class="btn btn-outline-secondary mr-2" *ngIf="cancelText" (click)="cancel.emit()">
 			{{ cancelText }}
 		</button>
-		<button class="btn btn-primary" (click)="ok.emit()" [disabled]="disableOk">
+		<button class="btn btn-primary" [disabled]="disableOk" (click)="ok.emit()">
 			{{ okText }}
 		</button>
 	</section>

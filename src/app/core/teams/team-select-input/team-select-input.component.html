@@ -1,7 +1,7 @@
 <ng-select
-	[items]="(options$ | async) || []"
-	[(ngModel)]="value"
-	[placeholder]="placeholder"
 	bindLabel="name"
+	[(ngModel)]="value"
+	[items]="(options$ | async) || []"
+	[placeholder]="placeholder"
 >
 </ng-select>

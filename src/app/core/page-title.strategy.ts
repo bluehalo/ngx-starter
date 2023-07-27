@@ -10,7 +10,10 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {
-	constructor(private readonly title: Title, private readonly configService: ConfigService) {
+	constructor(
+		private readonly title: Title,
+		private readonly configService: ConfigService
+	) {
 		super();
 	}
 

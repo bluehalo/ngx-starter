@@ -20,7 +20,11 @@ export class TeamRole {
 		'blocked'
 	);
 
-	constructor(public label: string, public description: string, public role: string) {}
+	constructor(
+		public label: string,
+		public description: string,
+		public role: string
+	) {}
 
 	public static get ROLES(): TeamRole[] {
 		return [this.MEMBER, this.EDITOR, this.ADMIN, this.BLOCKED];

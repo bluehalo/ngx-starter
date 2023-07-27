@@ -57,26 +57,6 @@
             "rxjs/Rx"
           ]
         }],
-        "sort-imports": ["error", { "ignoreDeclarationSort":  true }],
-        "import/order": ["error", {
-          "groups": [
-            ["builtin"],
-            ["external"],
-            ["internal", "parent", "sibling"]
-          ],
-          "pathGroups": [
-          {
-            "pattern": "@angular/**",
-            "group": "builtin"
-           }
-          ],
-          "pathGroupsExcludedImportTypes": ["@angular/**"],
-          "newlines-between": "always",
-          "alphabetize": {
-            "order": "asc",
-            "caseInsensitive": true
-          }
-        }],
         "import/no-unresolved": ["error"],
         "rxjs/prefer-observer": ["error"],
         "rxjs/finnish": ["error", {

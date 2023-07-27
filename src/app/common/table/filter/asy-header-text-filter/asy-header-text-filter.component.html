@@ -1,42 +1,42 @@
-<span class="dropdown" container="body" [insideClick]="true" dropdown>
+<span class="dropdown" container="body" dropdown [insideClick]="true">
 	<button class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
 		<span
-			[hidden]="isFiltered"
 			class="filter fa-solid fa-list"
-			tooltip="Apply Filters"
-			placement="bottom"
 			container="body"
+			placement="bottom"
+			tooltip="Apply Filters"
+			[hidden]="isFiltered"
 		></span>
 		<span
-			[hidden]="!isFiltered"
 			class="filter fa-solid fa-filter"
-			tooltip="Edit Filters"
-			placement="bottom"
 			container="body"
+			placement="bottom"
+			tooltip="Edit Filters"
+			[hidden]="!isFiltered"
 		></span>
 	</button>
 
 	<div
-		*dropdownMenu
 		class="dropdown-menu d-flex flex-column"
 		[ngClass]="{ 'dropdown-menu-right': dropdownMenuRight }"
+		*dropdownMenu
 	>
 		<div class="mt-3">
 			<ng-select
-				[items]="['Equals', 'Contains', 'Starts with', 'Ends with']"
 				[(ngModel)]="option"
-				(ngModelChange)="onSearchTypeChange()"
 				[clearable]="false"
+				[items]="['Equals', 'Contains', 'Starts with', 'Ends with']"
 				[searchable]="false"
 				(click)="$event.stopPropagation()"
+				(ngModelChange)="onSearchTypeChange()"
 			>
 			</ng-select>
 		</div>
 		<div class="search mt-2 mb-3">
 			<asy-search-input
 				placeholder="Search..."
-				(applySearch)="onSearchText($event)"
 				[search]="search"
+				(applySearch)="onSearchText($event)"
 			>
 			</asy-search-input>
 		</div>

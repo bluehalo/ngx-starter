@@ -3,8 +3,8 @@
 		<div class="form-check" *ngIf="enableSelectAll && multi">
 			<input
 				class="form-check-input"
-				type="checkbox"
 				id="table-select-all"
+				type="checkbox"
 				[checked]="_isAllSelected$ | async"
 				(change)="_toggleAll()"
 			/>
@@ -15,10 +15,10 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="{{ multi ? 'checkbox' : 'radio' }}"
 				id="table-selected-{{ _isMultiTemplateDataRows ? dataIndex : index }}"
-				[disabled]="!isSelectable(_isMultiTemplateDataRows ? dataIndex : index, result)"
+				type="{{ multi ? 'checkbox' : 'radio' }}"
 				[checked]="isSelected(_isMultiTemplateDataRows ? dataIndex : index, result)"
+				[disabled]="!isSelectable(_isMultiTemplateDataRows ? dataIndex : index, result)"
 				(change)="toggle(_isMultiTemplateDataRows ? dataIndex : index, result)"
 			/>
 			<label

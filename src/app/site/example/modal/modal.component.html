@@ -4,12 +4,12 @@
 	<h2>Alert</h2>
 	<div class="row">
 		<div class="form-group col-6">
-			<label for="alertTitle" class="form-required">Title</label>
+			<label class="form-required" for="alertTitle">Title</label>
 			<input
-				type="text"
 				class="form-control"
-				name="alertTitle"
 				id="alertTitle"
+				name="alertTitle"
+				type="text"
 				placeholder="Enter title..."
 				[(ngModel)]="alertConfig.title"
 			/>
@@ -17,200 +17,200 @@
 		<div class="form-group col-6">
 			<label for="alertOK">OK Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="alertOK"
 				id="alertOK"
+				name="alertOK"
+				type="text"
 				placeholder="Enter OK text..."
 				[(ngModel)]="alertConfig.okText"
 			/>
 		</div>
 		<div class="form-group col-12">
-			<label for="alertMessage" class="form-required">Message</label>
+			<label class="form-required" for="alertMessage">Message</label>
 			<input
-				type="text"
 				class="form-control"
-				name="alertMessage"
 				id="alertMessage"
+				name="alertMessage"
+				type="text"
 				placeholder="Enter message..."
 				[(ngModel)]="alertConfig.message"
 			/>
 		</div>
 	</div>
-	<button type="button" class="mr-3 btn btn-primary" (click)="showAlert()">Show Alert</button>
+	<button class="mr-3 btn btn-primary" type="button" (click)="showAlert()">Show Alert</button>
 
 	<h2 class="pt-5">Confirm</h2>
 	<div class="row">
 		<div class="form-group col-4">
-			<label for="confirmTitle" class="form-required">Title</label>
+			<label class="form-required" for="confirmTitle">Title</label>
 			<input
-				type="text"
 				class="form-control"
-				name="confirmTitle"
 				id="confirmTitle"
+				name="confirmTitle"
+				type="text"
 				placeholder="Enter title..."
 				[(ngModel)]="confirmConfig.title"
 			/>
 		</div>
 		<div class="form-group col-4">
-			<label for="confirmOK" class="form-required">OK Text</label>
+			<label class="form-required" for="confirmOK">OK Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="confirmOK"
 				id="confirmOK"
+				name="confirmOK"
+				type="text"
 				placeholder="Enter OK text..."
 				[(ngModel)]="confirmConfig.okText"
 			/>
 		</div>
 		<div class="form-group col-4">
-			<label for="confirmCancel" class="form-required">Cancel Text</label>
+			<label class="form-required" for="confirmCancel">Cancel Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="confirmCancel"
 				id="confirmCancel"
+				name="confirmCancel"
+				type="text"
 				placeholder="Enter Cancel text..."
 				[(ngModel)]="confirmConfig.cancelText"
 			/>
 		</div>
 		<div class="form-group col-12">
-			<label for="confirmMessage" class="form-required">Message</label>
+			<label class="form-required" for="confirmMessage">Message</label>
 			<input
-				type="text"
 				class="form-control"
-				name="confirmMessage"
 				id="confirmMessage"
+				name="confirmMessage"
+				type="text"
 				placeholder="Enter message..."
 				[(ngModel)]="confirmConfig.message"
 			/>
 		</div>
 	</div>
-	<button type="button" class="mr-3 btn btn-primary" (click)="showConfirm()">Show Confirm</button>
+	<button class="mr-3 btn btn-primary" type="button" (click)="showConfirm()">Show Confirm</button>
 
 	<h2 class="pt-5">Prompt</h2>
 	<div class="row">
 		<div class="form-group col-6">
-			<label for="promptTitle" class="form-required">Title</label>
+			<label class="form-required" for="promptTitle">Title</label>
 			<input
-				type="text"
 				class="form-control"
-				name="promptTitle"
 				id="promptTitle"
+				name="promptTitle"
+				type="text"
 				placeholder="Enter title..."
 				[(ngModel)]="promptConfig.title"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label for="promptLabel" class="form-required">Input Label</label>
+			<label class="form-required" for="promptLabel">Input Label</label>
 			<input
-				type="text"
 				class="form-control"
-				name="promptLabel"
 				id="promptLabel"
+				name="promptLabel"
+				type="text"
 				placeholder="Enter input label..."
 				[(ngModel)]="promptConfig.inputLabel"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label for="promptOK" class="form-required">OK Text</label>
+			<label class="form-required" for="promptOK">OK Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="promptOK"
 				id="promptOK"
+				name="promptOK"
+				type="text"
 				placeholder="Enter OK text..."
 				[(ngModel)]="promptConfig.okText"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label for="promptCancel" class="form-required">Cancel Text</label>
+			<label class="form-required" for="promptCancel">Cancel Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="promptCancel"
 				id="promptCancel"
+				name="promptCancel"
+				type="text"
 				placeholder="Enter Cancel text..."
 				[(ngModel)]="promptConfig.cancelText"
 			/>
 		</div>
 		<div class="form-group col-12">
-			<label for="promptMessage" class="form-required">Message</label>
+			<label class="form-required" for="promptMessage">Message</label>
 			<input
-				type="text"
 				class="form-control"
-				name="promptMessage"
 				id="promptMessage"
+				name="promptMessage"
+				type="text"
 				placeholder="Enter message..."
 				[(ngModel)]="promptConfig.message"
 			/>
 		</div>
 	</div>
-	<button type="button" class="mr-3 btn btn-primary" (click)="showPrompt()">Show Prompt</button>
+	<button class="mr-3 btn btn-primary" type="button" (click)="showPrompt()">Show Prompt</button>
 
 	<h2 class="pt-5">Show</h2>
 	<div class="row">
 		<div class="form-group col-6">
-			<label for="showTitle" class="form-required">Title</label>
+			<label class="form-required" for="showTitle">Title</label>
 			<input
-				type="text"
 				class="form-control"
-				name="showTitle"
 				id="showTitle"
+				name="showTitle"
+				type="text"
 				placeholder="Enter title..."
 				[(ngModel)]="showConfig.title"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label for="showOK" class="form-required">OK Text</label>
+			<label class="form-required" for="showOK">OK Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="showOK"
 				id="showOK"
+				name="showOK"
+				type="text"
 				placeholder="Enter OK text..."
 				[(ngModel)]="showConfig.okText"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label for="showCancel" class="form-required">Cancel Text</label>
+			<label class="form-required" for="showCancel">Cancel Text</label>
 			<input
-				type="text"
 				class="form-control"
-				name="showCancel"
 				id="showCancel"
+				name="showCancel"
+				type="text"
 				placeholder="Enter Cancel text..."
 				[(ngModel)]="showConfig.cancelText"
 			/>
 		</div>
 		<div class="form-group col-12">
-			<label for="showMessage" class="form-required">Message</label>
+			<label class="form-required" for="showMessage">Message</label>
 			<input
-				type="text"
 				class="form-control"
-				name="showMessage"
 				id="showMessage"
+				name="showMessage"
+				type="text"
 				placeholder="Enter message..."
 				[(ngModel)]="showConfig.message"
 			/>
 		</div>
 		<div class="form-group col-12">
-			<label for="showInput" class="form-required">Inputs Config</label>
+			<label class="form-required" for="showInput">Inputs Config</label>
 			<textarea
-				type="text"
 				class="form-control"
-				name="showInput"
 				id="showInput"
-				style="height: 6.5rem"
+				name="showInput"
+				type="text"
 				placeholder="Enter input config..."
+				style="height: 6.5rem"
 				[(ngModel)]="showInputConfig"
 			></textarea>
 		</div>
 	</div>
-	<button type="button" class="mr-3 btn btn-primary" (click)="showModal()">Show Modal</button>
+	<button class="mr-3 btn btn-primary" type="button" (click)="showModal()">Show Modal</button>
 
 	<h2 class="pt-5">Show Modal with Component</h2>
-	<button type="button" class="mr-3 btn btn-primary" (click)="showComponentModal()">
+	<button class="mr-3 btn btn-primary" type="button" (click)="showComponentModal()">
 		Show Component Modal
 	</button>
 </form>
