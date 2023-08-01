@@ -21,48 +21,47 @@ export const EXAMPLE_ROUTES: Routes = [
 	{
 		path: 'welcome',
 		component: WelcomeComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'explore',
 		component: ExploreComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'search',
 		component: SearchComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'forms',
 		component: FormsComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'grid',
 		component: GridComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'modal',
 		component: ModalComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'loading-overlay',
 		component: ExampleLoadingOverlayComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'alerts',
 		component: AlertsComponent,
-		canActivate: [authGuard]
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'admin',
 		component: AdminComponent,
-		canActivate: [authGuard],
-		data: { roles: ['admin'] },
+		canActivate: [authGuard('admin')],
 		children: [
 			{
 				path: 'example',

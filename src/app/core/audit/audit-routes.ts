@@ -6,8 +6,7 @@ export const AUDIT_ROUTES = [
 	{
 		path: '',
 		component: ListAuditEntriesComponent,
-		canActivate: [authGuard],
-		data: { roles: ['auditor'] },
+		canActivate: [authGuard('auditor')],
 		providers: [AuditService]
 	}
 ];

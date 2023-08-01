@@ -11,20 +11,17 @@ export const TEAMS_ROUTES: Routes = [
 	{
 		path: '',
 		component: ListTeamsComponent,
-		canActivate: [authGuard],
-		data: { roles: ['user'] }
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'create',
 		component: CreateTeamComponent,
-		canActivate: [authGuard],
-		data: { roles: ['editor', 'admin'], requireAllRoles: false }
+		canActivate: [authGuard({ roles: ['editor', 'admin'], requireAllRoles: false })]
 	},
 	{
 		path: ':id',
 		component: ViewTeamComponent,
-		canActivate: [authGuard],
-		data: { roles: ['user'] },
+		canActivate: [authGuard()],
 		resolve: {
 			team: teamResolver
 		},
