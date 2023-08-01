@@ -10,7 +10,10 @@ import { CacheEntry } from './cache-entry.model';
 
 @Injectable({ providedIn: 'root' })
 export class CacheEntriesService {
-	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
 	public match(
 		query: any,

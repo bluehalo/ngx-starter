@@ -23,7 +23,10 @@ export class RecentMessagesComponent implements OnInit {
 
 	messageType = MessageType;
 
-	constructor(private messageService: MessageService, private router: Router) {}
+	constructor(
+		private messageService: MessageService,
+		private router: Router
+	) {}
 
 	ngOnInit() {
 		this.messageService.messageReceived.pipe(untilDestroyed(this)).subscribe(() => {

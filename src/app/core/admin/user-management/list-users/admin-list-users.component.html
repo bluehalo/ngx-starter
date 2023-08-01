@@ -16,27 +16,27 @@
 			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search..."
-					(applySearch)="dataSource.search($event)"
 					[search]="dataSource.searchEvent$.value"
+					(applySearch)="dataSource.search($event)"
 				></asy-search-input>
 			</div>
 
 			<div class="mb-3 ml-auto">
 				<button
-					type="button"
 					class="btn btn-outline-secondary"
+					type="button"
 					(click)="exportCurrentView()"
 				>
 					<span class="fa-solid fa-download"></span> Export
 				</button>
 
-				<button routerLink="/admin/user" type="button" class="btn btn-primary ml-3">
+				<button class="btn btn-primary ml-3" type="button" routerLink="/admin/user">
 					<span class="fa-solid fa-user-plus"></span> Create User
 				</button>
 
 				<button
-					type="button"
 					class="btn btn-outline-secondary font-weight-bold ml-3"
+					type="button"
 					tooltip="Set Columns"
 					(click)="sidebar.toggle()"
 				>
@@ -49,11 +49,11 @@
 	<div class="d-flex overflow-hidden">
 		<div class="table-content">
 			<table
+				class="table table-striped"
+				asyFilter
+				asySort
 				cdk-table
 				[dataSource]="dataSource"
-				asySort
-				asyFilter
-				class="table table-striped"
 			>
 				<ng-container cdkColumnDef="id">
 					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
@@ -62,14 +62,14 @@
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="name">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Name</th>
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 					<td cdk-cell *cdkCellDef="let user">
 						{{ user.userModel.name }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="username">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Username</th>
-					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Username</th>
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						{{ user.userModel.username }}
 					</td>
 				</ng-container>
@@ -96,47 +96,47 @@
 					<td cdk-cell *cdkCellDef="let user">
 						<div
 							class="text-nowrap"
-							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
 							container="body"
+							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
 						>
-							{{ user.userModel.acceptedEua | agoDate : false }}
+							{{ user.userModel.acceptedEua | agoDate: false }}
 						</div>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="lastLogin">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Last Login</th>
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Last Login</th>
 					<td cdk-cell *cdkCellDef="let user">
 						<div
 							class="text-nowrap"
-							tooltip="{{ user.userModel.lastLogin | utcDate }}"
 							container="body"
+							tooltip="{{ user.userModel.lastLogin | utcDate }}"
 						>
-							{{ user.userModel.lastLogin | agoDate : false }}
+							{{ user.userModel.lastLogin | agoDate: false }}
 						</div>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
-					<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
+					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						{{ user.userModel.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell *cdkHeaderCellDef>Updated</th>
-					<td cdk-cell *cdkCellDef="let user" class="text-nowrap">
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						{{ user.userModel.updated | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalRoles">
 					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
-					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
-						{{ user.userModel.externalRoles | join : ', ' }}
+					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.externalRoles | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalGroups">
 					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
-					<td cdk-cell *cdkCellDef="let user" class="hide-overflow">
-						{{ user.userModel.externalGroups | join : ', ' }}
+					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
+						{{ user.userModel.externalGroups | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="roles">
@@ -147,13 +147,13 @@
 					<td cdk-cell *cdkCellDef="let user">
 						<ng-container *ngFor="let role of possibleRoles">
 							<div
-								*ngIf="user.userModel.roles?.[role.role]"
 								class="user-role text-nowrap"
 								[ngClass]="{
 									'user-role-external':
 										user.userModel.localRoles &&
 										!user.userModel.localRoles[role.role]
 								}"
+								*ngIf="user.userModel.roles?.[role.role]"
 							>
 								{{ role.label }}
 							</div>
@@ -176,27 +176,27 @@
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td
 						cdk-cell
-						*cdkCellDef="let user"
-						dropdown
 						container="body"
+						dropdown
 						placement="bottom right"
+						*cdkCellDef="let user"
 					>
 						<div class="dropdown border-left pl-2">
 							<button
-								id="user-{{ user._id }}-action-menu-btn"
-								dropdownToggle
-								type="button"
 								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+								id="user-{{ user._id }}-action-menu-btn"
+								type="button"
 								attr.aria-controls="user-{{ user._id }}-action-menu"
+								dropdownToggle
 							>
 								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
 							</button>
 							<ul
-								id="user-{{ user._id }}-action-menu"
-								*dropdownMenu
 								class="dropdown-menu dropdown-menu-right"
+								id="user-{{ user._id }}-action-menu"
 								role="menu"
 								attr.aria-labelledby="user-{{ user._id }}-action-menu-btn"
+								*dropdownMenu
 							>
 								<li role="menuitem">
 									<button

@@ -8,13 +8,13 @@
 	<system-alert></system-alert>
 
 	<form
-		#form="ngForm"
-		name="euaForm"
-		autocomplete="off"
 		class="pt-3"
+		name="euaForm"
 		role="form"
-		(ngSubmit)="submitEua()"
+		autocomplete="off"
 		novalidate
+		#form="ngForm"
+		(ngSubmit)="submitEua()"
 	>
 		<h1>
 			{{ title }}
@@ -26,12 +26,12 @@
 			<label class="form-required" for="title">Title of the Agreement</label>
 			<div>
 				<input
-					type="text"
 					class="form-control"
 					id="title"
 					name="title"
-					[(ngModel)]="eua.title"
+					type="text"
 					required
+					[(ngModel)]="eua.title"
 				/>
 			</div>
 		</div>
@@ -40,25 +40,25 @@
 			<label class="form-required" for="text">Text Content of the Agreement</label>
 			<div>
 				<textarea
-					rows="15"
 					class="form-control"
 					id="text"
 					name="text"
-					[(ngModel)]="eua.text"
 					required
+					rows="15"
+					[(ngModel)]="eua.text"
 				></textarea>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="text-right">
-				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/euas']">
+				<button class="btn btn-link mr-2" type="button" [routerLink]="['/admin/euas']">
 					Cancel
 				</button>
-				<button type="button" class="btn btn-outline-secondary mr-2" (click)="previewEua()">
+				<button class="btn btn-outline-secondary mr-2" type="button" (click)="previewEua()">
 					Preview
 				</button>
-				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
+				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
 					{{ submitText }}
 				</button>
 			</div>

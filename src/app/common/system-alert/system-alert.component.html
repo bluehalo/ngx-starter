@@ -1,13 +1,13 @@
 <alert
-	*ngFor="let alert of alertService.alerts$ | async; let i = index"
 	[type]="alert.type"
-	(close)="alertService.clear(i)"
+	*ngFor="let alert of alertService.alerts$ | async; let i = index"
 	[dismissible]="true"
+	(close)="alertService.clear(i)"
 >
 	<table aria-describedby="System alerts">
 		<tbody>
 			<tr>
-				<th scope="row" class="align-middle">
+				<th class="align-middle" scope="row">
 					<system-alert-icon [icon]="alert.type"></system-alert-icon>
 				</th>
 				<td class="align-middle">

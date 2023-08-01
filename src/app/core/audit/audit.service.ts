@@ -11,7 +11,10 @@ import { AuditActionTypes } from './audit.classes';
 
 @Injectable()
 export class AuditService {
-	constructor(private http: HttpClient, private alertService: SystemAlertService) {}
+	constructor(
+		private http: HttpClient,
+		private alertService: SystemAlertService
+	) {}
 
 	public getDistinctAuditValues(field: string): Observable<string[]> {
 		return this.http.get<string[]>('api/audit/distinctValues', { params: { field } });

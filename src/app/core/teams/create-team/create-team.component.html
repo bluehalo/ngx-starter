@@ -7,7 +7,7 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form #form="ngForm" autocomplete="off" class="pt-3" role="form" (ngSubmit)="save()" novalidate>
+	<form class="pt-3" role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="save()">
 		<h1>
 			Create Team
 			<small>Provide some basic metadata to create a new team</small>
@@ -24,13 +24,13 @@
 		<div class="form-group pt-4">
 			<label class="form-required" for="name">Team Name</label>
 			<input
-				type="text"
 				class="form-control"
 				id="name"
 				name="name"
+				type="text"
 				placeholder="Enter team name..."
-				[(ngModel)]="team.name"
 				required
+				[(ngModel)]="team.name"
 			/>
 		</div>
 
@@ -38,19 +38,19 @@
 		<div class="form-group" *ngIf="isAdmin">
 			<label class="form-required">Team Admin</label>
 			<ng-select
-				style="width: 400px"
 				name="teamAdmin"
 				bindLabel="userModel.name"
 				placeholder="Search for user..."
+				style="width: 400px"
+				[(ngModel)]="teamAdmin"
 				[items]="(users$ | async) || []"
 				[loading]="usersLoading"
 				[typeahead]="usersInput$"
-				[(ngModel)]="teamAdmin"
 			>
 			</ng-select>
 			<button
-				type="button"
 				class="btn btn-sm btn-link px-0 pb-0"
+				type="button"
 				(click)="setCurrentUserAsAdmin()"
 			>
 				I am the Team Admin
@@ -61,11 +61,11 @@
 		<div class="form-group">
 			<label for="description">Description</label>
 			<textarea
-				rows="3"
 				class="form-control"
 				id="description"
 				name="description"
 				placeholder="Enter description..."
+				rows="3"
 				[(ngModel)]="team.description"
 			></textarea>
 		</div>
@@ -74,10 +74,10 @@
 		<div class="form-group" *ngIf="nestedTeamsEnabled">
 			<label for="parent">Parent Team</label>
 			<app-team-select-input
+				class="d-block"
 				id="parent"
 				name="parent"
 				placeholder="Select parent..."
-				class="d-block"
 				style="width: 400px"
 				[(ngModel)]="team.parent"
 			>
@@ -94,24 +94,24 @@
 			<div class="form-check">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="name-type-option-radio"
 					id="implicit-members-option-yes"
+					name="name-type-option-radio"
+					type="radio"
 					[value]="true"
-					[(ngModel)]="team.implicitMembers"
 					required
+					[(ngModel)]="team.implicitMembers"
 				/>
 				<label class="form-check-label mb-2" for="implicit-members-option-yes">Yes</label>
 			</div>
 			<div class="form-check">
 				<input
 					class="form-check-label"
-					type="radio"
-					name="name-type-option-radio"
 					id="implicit-members-option-no"
+					name="name-type-option-radio"
+					type="radio"
 					[value]="false"
-					[(ngModel)]="team.implicitMembers"
 					required
+					[(ngModel)]="team.implicitMembers"
 				/>
 				<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
 			</div>
@@ -125,8 +125,8 @@
 		>
 			<label>External Roles</label>
 			<asy-multi-select-input
-				placeholder="Start typing a role..."
 				name="externalRoles"
+				placeholder="Start typing a role..."
 				[(ngModel)]="team.requiresExternalRoles"
 			></asy-multi-select-input>
 		</div>
@@ -139,19 +139,19 @@
 		>
 			<label>External Teams</label>
 			<asy-multi-select-input
-				placeholder="Start typing a team..."
 				name="externalTeams"
+				placeholder="Start typing a team..."
 				[(ngModel)]="team.requiresExternalTeams"
 			></asy-multi-select-input>
 		</div>
 
 		<div class="form-group">
 			<div class="text-right">
-				<button type="button" class="btn btn-link" routerLink="/team">Cancel</button>
+				<button class="btn btn-link" type="button" routerLink="/team">Cancel</button>
 				<button
-					type="submit"
 					class="btn btn-primary btn-submit ml-2"
 					[class.btn-submitting]="isSubmitting"
+					type="submit"
 					[disabled]="!form.form.valid || isSubmitting"
 				>
 					Add

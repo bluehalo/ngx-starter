@@ -1,10 +1,10 @@
 <asy-modal
 	title="Give Feedback"
 	okText="Submit"
-	(ok)="submit()"
-	(cancel)="modalRef.hide()"
-	[disableOk]="submitting || !submitFeedbackForm.form.valid"
 	[autoCaptureFocus]="true"
+	[disableOk]="submitting || !submitFeedbackForm.form.valid"
+	(cancel)="modalRef.hide()"
+	(ok)="submit()"
 >
 	<form #submitFeedbackForm="ngForm">
 		<h2 class="pb-2">What's on your mind?</h2>
@@ -12,15 +12,15 @@
 		<div class="form-check pl-0">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="type-option-radio"
 				id="type-option-1"
+				name="type-option-radio"
+				type="radio"
 				value="general feedback"
-				[(ngModel)]="feedback.type"
-				required
 				cdkFocusInitial
+				required
+				[(ngModel)]="feedback.type"
 			/>
-			<label for="type-option-1" class="form-check-label mb-2"
+			<label class="form-check-label mb-2" for="type-option-1"
 				>Ask a question or make a comment</label
 			>
 		</div>
@@ -32,14 +32,14 @@
 		<div class="form-check pl-0">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="type-option-radio"
 				id="type-option-2"
+				name="type-option-radio"
+				type="radio"
 				value="feature request"
-				[(ngModel)]="feedback.type"
 				required
+				[(ngModel)]="feedback.type"
 			/>
-			<label for="type-option-2" class="form-check-label mb-2">Suggest a new feature</label>
+			<label class="form-check-label mb-2" for="type-option-2">Suggest a new feature</label>
 		</div>
 
 		<ng-container *ngIf="feedback.type === 'feature request'">
@@ -49,14 +49,14 @@
 		<div class="form-check pl-0">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="type-option-radio"
 				id="type-option-3"
+				name="type-option-radio"
+				type="radio"
 				value="bug report"
-				[(ngModel)]="feedback.type"
 				required
+				[(ngModel)]="feedback.type"
 			/>
-			<label for="type-option-3" class="form-check-label mb-2">Report a bug/error</label>
+			<label class="form-check-label mb-2" for="type-option-3">Report a bug/error</label>
 		</div>
 
 		<ng-container *ngIf="feedback.type === 'bug report'">
@@ -65,74 +65,74 @@
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="subtype-option-radio"
 					id="subtype-option-1"
+					name="subtype-option-radio"
+					type="radio"
 					value="Content or data"
-					[(ngModel)]="feedback.subType"
 					required
+					[(ngModel)]="feedback.subType"
 				/>
-				<label for="subtype-option-1" class="form-check-label mb-2">Content or data</label>
+				<label class="form-check-label mb-2" for="subtype-option-1">Content or data</label>
 			</div>
 
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="subtype-option-radio"
 					id="subtype-option-2"
+					name="subtype-option-radio"
+					type="radio"
 					value="Styling"
-					[(ngModel)]="feedback.subType"
 					required
+					[(ngModel)]="feedback.subType"
 				/>
-				<label for="subtype-option-2" class="form-check-label mb-2">Styling</label>
+				<label class="form-check-label mb-2" for="subtype-option-2">Styling</label>
 			</div>
 
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="subtype-option-radio"
 					id="subtype-option-3"
+					name="subtype-option-radio"
+					type="radio"
 					value="Technical"
-					[(ngModel)]="feedback.subType"
 					required
+					[(ngModel)]="feedback.subType"
 				/>
-				<label for="subtype-option-3" class="form-check-label mb-2">Technical</label>
+				<label class="form-check-label mb-2" for="subtype-option-3">Technical</label>
 			</div>
 
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="subtype-option-radio"
 					id="subtype-option-4"
+					name="subtype-option-radio"
+					type="radio"
 					value="Other"
-					[(ngModel)]="feedback.subType"
 					required
+					[(ngModel)]="feedback.subType"
 				/>
-				<label for="subtype-option-4" class="form-check-label mb-2">Other</label>
+				<label class="form-check-label mb-2" for="subtype-option-4">Other</label>
 			</div>
 			<div class="mb-2" *ngIf="feedback.subType === 'Other'">
 				<input
 					class="form-control"
 					name="other-description"
-					[(ngModel)]="feedback.otherText"
 					required
+					[(ngModel)]="feedback.otherText"
 				/>
 			</div>
 
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
-					type="radio"
-					name="subtype-option-radio"
 					id="subtype-option-5"
+					name="subtype-option-radio"
+					type="radio"
 					value="Unsure"
-					[(ngModel)]="feedback.subType"
 					required
+					[(ngModel)]="feedback.subType"
 				/>
-				<label for="subtype-option-5" class="form-check-label mb-2">Unsure</label>
+				<label class="form-check-label mb-2" for="subtype-option-5">Unsure</label>
 			</div>
 
 			<h3 class="pt-2">What happened?</h3>
@@ -140,27 +140,27 @@
 		</ng-container>
 
 		<ng-template #textInput>
-			<div *ngIf="classificationOptions" class="form-group pt-2">
+			<div class="form-group pt-2" *ngIf="classificationOptions">
 				<ng-select
-					[items]="classificationOptions"
-					[clearable]="false"
-					bindLabel="level"
-					[(ngModel)]="feedback.classification"
 					name="classification"
-					required
-					placeholder="Select Classification"
+					bindLabel="level"
 					dropdownPosition="bottom"
+					placeholder="Select Classification"
+					required
+					[(ngModel)]="feedback.classification"
+					[clearable]="false"
+					[items]="classificationOptions"
 				>
 				</ng-select>
 			</div>
 
 			<div class="form-group">
 				<textarea
-					name="feedbackText"
 					class="form-control"
-					[(ngModel)]="feedback.body"
-					required
+					name="feedbackText"
 					placeholder="Enter Feedback"
+					required
+					[(ngModel)]="feedback.body"
 				>
 				</textarea>
 			</div>

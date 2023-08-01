@@ -1,36 +1,36 @@
-<span class="dropdown" container="body" [insideClick]="true" dropdown>
+<span class="dropdown" container="body" dropdown [insideClick]="true">
 	<button class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
 		<span
-			[hidden]="isFiltered"
 			class="filter fa-solid fa-list"
-			tooltip="Apply Filters"
-			placement="bottom"
 			container="body"
+			placement="bottom"
+			tooltip="Apply Filters"
+			[hidden]="isFiltered"
 		></span>
 		<span
-			[hidden]="!isFiltered"
 			class="filter fa-solid fa-filter"
-			tooltip="Edit Filters"
-			placement="bottom"
 			container="body"
+			placement="bottom"
+			tooltip="Edit Filters"
+			[hidden]="!isFiltered"
 		></span>
 	</button>
 
 	<div
-		*dropdownMenu
 		class="dropdown-menu d-flex flex-column"
 		[ngClass]="{ 'dropdown-menu-right': dropdownMenuRight }"
+		*dropdownMenu
 	>
 		<div class="my-3">
 			<ng-select
-				style="width: 200px"
 				name="teamAdmin"
 				bindLabel="userModel.name"
 				placeholder="Search..."
+				style="width: 200px"
+				[(ngModel)]="selectedValue"
 				[items]="(values$ | async) || []"
 				[loading]="loading"
 				[typeahead]="input$"
-				[(ngModel)]="selectedValue"
 				(ngModelChange)="onFilterChange()"
 			>
 			</ng-select>

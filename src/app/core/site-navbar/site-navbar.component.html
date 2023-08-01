@@ -18,11 +18,11 @@
 			<ng-container *ngFor="let navbarItem of navbarItems">
 				<li class="element" *hasSomeRoles="navbarItem.hasSomeRoles">
 					<a
-						tooltip="{{ navbarItem.title }}"
-						placement="left"
 						container="body"
-						[isDisabled]="navbarOpen"
+						placement="left"
 						routerLinkActive="active-link"
+						tooltip="{{ navbarItem.title }}"
+						[isDisabled]="navbarOpen"
 						[routerLink]="navbarItem.path"
 					>
 						<span class="fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
@@ -38,17 +38,17 @@
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'admin'">
 				<a
 					[class.highlight-link]="adminNavOpen"
-					[popover]="adminNav"
 					container="body"
 					containerClass="site-nav-popover-container"
-					tooltip="Admin"
-					[isDisabled]="navbarOpen"
-					#adminNavPopover="bs-popover"
-					placement="left"
-					[outsideClick]="true"
-					(onShown)="adminNavOpen = true"
-					(onHidden)="adminNavOpen = false"
 					linkAccessibility
+					placement="left"
+					tooltip="Admin"
+					#adminNavPopover="bs-popover"
+					[isDisabled]="navbarOpen"
+					[outsideClick]="true"
+					[popover]="adminNav"
+					(onHidden)="adminNavOpen = false"
+					(onShown)="adminNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-cog"></span>
 					<span [hidden]="!navbarOpen">Admin</span>
@@ -74,12 +74,12 @@
 			<!-- Auditor Nav	-->
 			<li class="element" *hasRole="'auditor'">
 				<a
-					tooltip="Audit Logs"
-					placement="left"
 					container="body"
-					[isDisabled]="navbarOpen"
-					routerLinkActive="active-link"
+					placement="left"
 					routerLink="/audit"
+					routerLinkActive="active-link"
+					tooltip="Audit Logs"
+					[isDisabled]="navbarOpen"
 				>
 					<span class="fa-solid fa-fw fa-file-text"></span>
 					<span [hidden]="!navbarOpen">Audit Logs</span>
@@ -89,12 +89,12 @@
 			<!-- Team Nav   -->
 			<li class="element" *hasRole="'user'">
 				<a
-					tooltip="Teams"
-					placement="left"
 					container="body"
-					[isDisabled]="navbarOpen"
-					routerLinkActive="active-link"
+					placement="left"
 					routerLink="/team"
+					routerLinkActive="active-link"
+					tooltip="Teams"
+					[isDisabled]="navbarOpen"
 				>
 					<span class="fa-solid fa-fw fa-users"></span>
 					<span [hidden]="!navbarOpen">Teams</span>
@@ -105,17 +105,17 @@
 			<li class="element nav-popover nav-popover-bottom" *isAuthenticated>
 				<a
 					[class.highlight-link]="userNavOpen"
-					[popover]="userNav"
 					container="body"
 					containerClass="site-nav-popover-container"
-					tooltip="User Profile"
-					[isDisabled]="navbarOpen"
-					#userNavPopover="bs-popover"
-					placement="left"
-					[outsideClick]="true"
-					(onShown)="userNavOpen = true"
-					(onHidden)="userNavOpen = false"
 					linkAccessibility
+					placement="left"
+					tooltip="User Profile"
+					#userNavPopover="bs-popover"
+					[isDisabled]="navbarOpen"
+					[outsideClick]="true"
+					[popover]="userNav"
+					(onHidden)="userNavOpen = false"
+					(onShown)="userNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
 					<span class="fa-stack" *ngIf="isMasquerade">
@@ -144,8 +144,8 @@
 							<li>
 								<a
 									routerLink="/masquerade"
-									(click)="userNavPopover.hide()"
 									*ngIf="!isMasquerade && canMasquerade"
+									(click)="userNavPopover.hide()"
 								>
 									Masquerade
 								</a>
@@ -163,12 +163,12 @@
 				*ngIf="masqueradeEnabled && isMasquerade && (this.session?.name ?? null) === null"
 			>
 				<a
-					tooltip="Clear Masquerade"
-					placement="left"
 					container="body"
-					[isDisabled]="navbarOpen"
-					routerLinkActive="active-link"
+					placement="left"
 					routerLink="masquerade"
+					routerLinkActive="active-link"
+					tooltip="Clear Masquerade"
+					[isDisabled]="navbarOpen"
 				>
 					<span class="fa-stack">
 						<span class="fa-solid fa-circle fa-stack-2x"></span>
@@ -183,22 +183,22 @@
 			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
 				<a
 					[class.highlight-link]="messagesNavOpen"
-					[popover]="messagesNav"
 					container="body"
 					containerClass="site-nav-popover-container-messages"
-					tooltip="Notifications"
-					[isDisabled]="navbarOpen"
-					#messagesNavPopover="bs-popover"
-					placement="left bottom"
-					[outsideClick]="true"
-					(onShown)="messagesNavOpen = true"
-					(onHidden)="messagesNavOpen = false"
 					linkAccessibility
+					placement="left bottom"
+					tooltip="Notifications"
+					#messagesNavPopover="bs-popover"
+					[isDisabled]="navbarOpen"
+					[outsideClick]="true"
+					[popover]="messagesNav"
+					(onHidden)="messagesNavOpen = false"
+					(onShown)="messagesNavOpen = true"
 				>
 					<span
 						class="fa-solid fa-fw fa-bell"
-						attr.newMessagesCount="{{ numNewMessages }}"
 						[class.messages-icon-new-messages-badge]="numNewMessages > 0"
+						attr.newMessagesCount="{{ numNewMessages }}"
 					></span>
 					<span [hidden]="!navbarOpen">Notifications</span>
 				</a>
@@ -211,17 +211,17 @@
 			<li class="element nav-popover nav-popover-bottom">
 				<a
 					[class.highlight-link]="helpNavOpen"
-					[popover]="helpNav"
 					container="body"
 					containerClass="site-nav-popover-container"
-					tooltip="Help"
-					[isDisabled]="navbarOpen"
-					#helpNavPopover="bs-popover"
-					placement="left"
-					[outsideClick]="true"
-					(onShown)="helpNavOpen = true"
-					(onHidden)="helpNavOpen = false"
 					linkAccessibility
+					placement="left"
+					tooltip="Help"
+					#helpNavPopover="bs-popover"
+					[isDisabled]="navbarOpen"
+					[outsideClick]="true"
+					[popover]="helpNav"
+					(onHidden)="helpNavOpen = false"
+					(onShown)="helpNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
@@ -238,8 +238,8 @@
 						<li *isAuthenticated="true; and: showFeedbackOption">
 							<a
 								class="link"
-								(click)="showFeedbackModal(); helpNavPopover.hide()"
 								linkAccessibility
+								(click)="showFeedbackModal(); helpNavPopover.hide()"
 							>
 								Give Feedback
 							</a>
@@ -267,8 +267,8 @@
 		<li class="element element-divider element-divider-collapse"></li>
 
 		<!-- Collapse/Expand -->
-		<li class="element" (click)="toggleNavbar()" linkAccessibility>
-			<a tooltip="Expand" placement="left" container="body" [isDisabled]="navbarOpen">
+		<li class="element" linkAccessibility (click)="toggleNavbar()">
+			<a container="body" placement="left" tooltip="Expand" [isDisabled]="navbarOpen">
 				<span
 					class="fa-solid fa-fw fa-angle-double-right"
 					[class.fa-flip-horizontal]="navbarOpen"

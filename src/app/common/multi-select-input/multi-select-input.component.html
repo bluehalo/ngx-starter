@@ -1,15 +1,15 @@
 <ng-select
 	class="ng-hide-arrow-wrapper"
-	[items]="[]"
-	[addTag]="true"
-	[multiple]="true"
-	[hideSelected]="true"
-	[isOpen]="autocompleteOpen"
-	(add)="onAdd()"
-	(search)="onSearch($event)"
-	(focus)="onTouched()"
 	placeholder="{{ placeholder }}"
 	[(ngModel)]="value"
+	[addTag]="true"
+	[hideSelected]="true"
+	[isOpen]="autocompleteOpen"
+	[items]="[]"
+	[multiple]="true"
 	[readonly]="readonly"
+	(add)="onAdd()"
+	(focus)="onTouched()"
+	(search)="onSearch($event)"
 >
 </ng-select>

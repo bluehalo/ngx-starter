@@ -16,16 +16,16 @@
 			<div class="mb-3 mr-5">
 				<asy-search-input
 					placeholder="Search..."
-					(applySearch)="dataSource.search($event)"
 					[search]="dataSource.searchEvent$.value"
+					(applySearch)="dataSource.search($event)"
 				></asy-search-input>
 			</div>
 
 			<div class="mb-3 ml-auto">
 				<button
-					[routerLink]="['/admin/message/']"
-					type="button"
 					class="btn btn-primary ml-auto"
+					type="button"
+					[routerLink]="['/admin/message/']"
 				>
 					<span class="fa-solid fa-plus"></span> Create Message
 				</button>
@@ -34,28 +34,28 @@
 	</div>
 
 	<div class="table-content">
-		<table cdk-table [dataSource]="dataSource" asySort asyFilter class="table table-striped">
+		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="title">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Title</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 				<td cdk-cell *cdkCellDef="let message">
 					{{ message.title }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="type">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Type</th>
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Type</th>
 				<td cdk-cell *cdkCellDef="let message">
 					{{ message.type }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Created</th>
-				<td cdk-cell *cdkCellDef="let message" class="text-nowrap">
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let message">
 					{{ message.created | utcDate }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="updated">
-				<th cdk-header-cell asy-sort-header *cdkHeaderCellDef>Updated</th>
-				<td cdk-cell *cdkCellDef="let message" class="text-nowrap">
+				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Updated</th>
+				<td class="text-nowrap" cdk-cell *cdkCellDef="let message">
 					{{ message.updated | utcDate }}
 				</td>
 			</ng-container>
@@ -63,27 +63,27 @@
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td
 					cdk-cell
-					*cdkCellDef="let message"
-					dropdown
 					container="body"
+					dropdown
 					placement="bottom right"
+					*cdkCellDef="let message"
 				>
 					<div class="dropdown border-left pl-2">
 						<button
-							id="message-{{ message._id }}-action-menu-btn"
-							dropdownToggle
-							type="button"
 							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+							id="message-{{ message._id }}-action-menu-btn"
+							type="button"
 							attr.aria-controls="message-{{ message._id }}-action-menu"
+							dropdownToggle
 						>
 							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
 						</button>
 						<ul
-							id="message-{{ message._id }}-action-menu"
-							*dropdownMenu
 							class="dropdown-menu dropdown-menu-right"
+							id="message-{{ message._id }}-action-menu"
 							role="menu"
 							attr.aria-labelledby="message-{{ message._id }}-action-menu-btn"
+							*dropdownMenu
 						>
 							<li role="menuitem">
 								<a class="dropdown-item" (click)="previewMessage(message)"

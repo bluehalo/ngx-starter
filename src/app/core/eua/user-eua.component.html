@@ -1,17 +1,17 @@
 <section>
 	<div class="row no-gutters">
-		<div *ngIf="eua$ | async as eua" class="col-xl-8 offset-xl-2">
+		<div class="col-xl-8 offset-xl-2" *ngIf="eua$ | async as eua">
 			<h1>
 				End User Agreement (EUA)<br />
-				<small *ngIf="!alreadyAccepted"
-					>Please review and acknowledge the end user agreement</small
-				>
+				<small *ngIf="!alreadyAccepted">
+					Please review and acknowledge the end user agreement
+				</small>
 			</h1>
 
 			<!-- Alert Notifications -->
 			<system-alert></system-alert>
 
-			<form name="userForm" autocomplete="off" role="form">
+			<form name="userForm" role="form" autocomplete="off">
 				<div class="card mt-3">
 					<div class="card-header">
 						<h2>{{ eua.title }}</h2>
@@ -20,13 +20,13 @@
 					<!-- Contents of EUA -->
 					<div class="card-body" [innerHtml]="eua.text"></div>
 
-					<div *ngIf="!alreadyAccepted" class="card-footer">
+					<div class="card-footer" *ngIf="!alreadyAccepted">
 						<div class="form-check">
 							<input
-								type="checkbox"
 								class="form-check-input"
-								name="acknowledge"
 								id="acknowledge"
+								name="acknowledge"
+								type="checkbox"
 								[(ngModel)]="agree"
 							/>
 							<label class="form-check-label" for="acknowledge"
@@ -36,10 +36,10 @@
 					</div>
 				</div>
 
-				<div *ngIf="!alreadyAccepted" class="pt-4">
+				<div class="pt-4" *ngIf="!alreadyAccepted">
 					<button
-						type="submit"
 						class="btn btn-primary"
+						type="submit"
 						[disabled]="!agree"
 						(click)="accept()"
 					>

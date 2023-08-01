@@ -3,10 +3,10 @@
 		<span>Items per page:</span>
 		<ng-select
 			class="d-inline-block ml-2"
-			[items]="pageSizeOptions"
 			[clearable]="false"
-			[searchable]="false"
+			[items]="pageSizeOptions"
 			[ngModel]="page.pageSize"
+			[searchable]="false"
 			(change)="setPageSize($event)"
 		>
 		</ng-select>
@@ -14,14 +14,14 @@
 
 	<!-- Count message -->
 	<span class="pager-status">
-		{{ start | number : '1.0-0' }} - {{ end | number : '1.0-0' }} of
-		{{ page.totalSize | number : '1.0-0' }}
+		{{ start | number: '1.0-0' }} - {{ end | number: '1.0-0' }} of
+		{{ page.totalSize | number: '1.0-0' }}
 	</span>
 
 	<!-- Paging controls -->
 	<button
-		type="button"
 		class="btn btn-link"
+		type="button"
 		[disabled]="page.totalPages <= 1 || page.pageNumber - 1 < 0"
 		(click)="goToPage(0)"
 	>
@@ -29,8 +29,8 @@
 	</button>
 
 	<button
-		type="button"
 		class="btn btn-link"
+		type="button"
 		[disabled]="page.totalPages <= 1 || page.pageNumber - 1 < 0"
 		(click)="goToPage(page.pageNumber - 1)"
 	>
@@ -38,8 +38,8 @@
 	</button>
 
 	<button
-		type="button"
 		class="btn btn-link"
+		type="button"
 		[disabled]="
 			page.totalPages <= 1 ||
 			page.pageNumber + 1 >= page.totalPages ||
@@ -51,15 +51,15 @@
 	</button>
 
 	<button
-		type="button"
 		class="btn btn-link"
+		type="button"
+		*ngIf="!disableGoToEnd"
 		[disabled]="
 			page.totalPages <= 1 ||
 			page.pageNumber + 1 >= page.totalPages ||
 			page.elements.length !== page.pageSize
 		"
 		(click)="goToPage(page.totalPages - 1)"
-		*ngIf="!disableGoToEnd"
 	>
 		<span class="fa-solid fa-lg fa-angle-double-right"></span>
 	</button>

@@ -29,7 +29,10 @@ export class SessionService {
 		})
 	);
 
-	constructor(private authService: AuthenticationService, private router: Router) {}
+	constructor(
+		private authService: AuthenticationService,
+		private router: Router
+	) {}
 
 	reloadSession(): Observable<Session | null> {
 		return this.authService.reloadCurrentUser().pipe(

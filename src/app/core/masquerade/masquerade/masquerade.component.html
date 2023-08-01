@@ -8,9 +8,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="searchType-option-radio"
 				id="searchType-option-user"
+				name="searchType-option-radio"
+				type="radio"
 				[value]="false"
 				[(ngModel)]="searchByDn"
 			/>
@@ -20,9 +20,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="searchType-option-radio"
 				id="searchType-option-dn"
+				name="searchType-option-radio"
+				type="radio"
 				[value]="true"
 				[(ngModel)]="searchByDn"
 			/>
@@ -32,15 +32,15 @@
 
 	<div class="form-group" *ngIf="!searchByDn">
 		<ng-select
-			style="width: 300px"
-			[items]="users$ | async"
 			bindValue="userModel.providerData.dn"
 			placeholder="Search for user..."
+			style="width: 300px"
+			[(ngModel)]="selectedUserDn"
+			[items]="users$ | async"
 			[loading]="usersLoading"
 			[typeahead]="usersInput$"
-			[(ngModel)]="selectedUserDn"
 		>
-			<ng-template ng-option-tmp ng-label-tmp let-item="item">
+			<ng-template let-item="item" ng-label-tmp ng-option-tmp>
 				{{ item.userModel.name }} [{{ item.userModel.username }}]
 			</ng-template>
 		</ng-select>
@@ -48,14 +48,14 @@
 
 	<div class="form-group" *ngIf="searchByDn">
 		<input
-			style="width: 300px"
 			class="form-control"
 			placeholder="User DN..."
+			style="width: 300px"
 			[(ngModel)]="selectedUserDn"
 		/>
 	</div>
 
-	<button [disabled]="!selectedUserDn" class="btn btn-primary" (click)="submit()">
+	<button class="btn btn-primary" [disabled]="!selectedUserDn" (click)="submit()">
 		Masquerade
 	</button>
 </ng-container>

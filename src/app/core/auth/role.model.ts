@@ -20,7 +20,11 @@ export class Role {
 		'admin'
 	);
 
-	constructor(public label: string, public description: string, public role: string) {}
+	constructor(
+		public label: string,
+		public description: string,
+		public role: string
+	) {}
 
 	public static get ROLES(): Role[] {
 		return [this.USER, this.EDITOR, this.AUDITOR, this.ADMIN];

@@ -1,9 +1,9 @@
 <section *ngIf="user?.userModel">
 	<!-- Show a breadcrumb to the list users page -->
 	<a
-		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
 		class="back-link"
 		routerLink="/admin/users"
+		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
 	>
 		<span class="fa-solid fa-angle-double-left"></span> Back to Users
 	</a>
@@ -12,14 +12,14 @@
 	<system-alert></system-alert>
 
 	<form
-		*ngIf="user"
-		#form="ngForm"
-		autocomplete="off"
 		class="pt-3"
-		style="max-width: 1000px"
 		role="form"
-		(ngSubmit)="submit()"
+		autocomplete="off"
 		novalidate
+		style="max-width: 1000px"
+		#form="ngForm"
+		*ngIf="user"
+		(ngSubmit)="submit()"
 	>
 		<div class="d-flex">
 			<h1>
@@ -30,56 +30,56 @@
 
 		<!-- Name -->
 		<div class="form-group pt-3">
-			<label for="name" class="form-required">Name</label>
+			<label class="form-required" for="name">Name</label>
 			<input
-				type="text"
 				class="form-control"
 				id="name"
 				name="name"
-				[(ngModel)]="user.userModel.name"
+				type="text"
 				required
+				[(ngModel)]="user.userModel.name"
 				[disabled]="metadataLocked"
 			/>
 		</div>
 
 		<!-- Username -->
 		<div class="form-group">
-			<label for="username" class="form-required">Username</label>
+			<label class="form-required" for="username">Username</label>
 			<input
-				type="text"
+				class="form-control"
 				id="username"
 				name="username"
-				class="form-control"
-				[(ngModel)]="user.userModel.username"
+				type="text"
 				required
+				[(ngModel)]="user.userModel.username"
 				[disabled]="metadataLocked"
 			/>
 		</div>
 
 		<!-- Organization -->
 		<div class="form-group">
-			<label for="organization" class="form-required">Organization</label>
+			<label class="form-required" for="organization">Organization</label>
 			<input
-				type="text"
 				class="form-control"
 				id="organization"
 				name="organization"
-				[(ngModel)]="user.userModel.organization"
+				type="text"
 				required
+				[(ngModel)]="user.userModel.organization"
 				[disabled]="metadataLocked"
 			/>
 		</div>
 
 		<!-- Email -->
 		<div class="form-group">
-			<label for="email" class="form-required">Email</label>
+			<label class="form-required" for="email">Email</label>
 			<input
-				type="email"
 				class="form-control"
 				id="email"
 				name="email"
-				[(ngModel)]="user.userModel.email"
+				type="email"
 				required
+				[(ngModel)]="user.userModel.email"
 				[disabled]="metadataLocked"
 			/>
 		</div>
@@ -97,27 +97,27 @@
 			</h2>
 
 			<!-- Current password is needed if you aren't an admin and you're editing -->
-			<div class="form-group" class="pt-3" *ngIf="mode === 'edit'">
+			<div class="form-group pt-3" *ngIf="mode === 'edit'">
 				<label for="currentPassword">Current Password</label>
 				<input
-					type="password"
-					name="password"
 					class="form-control"
 					id="currentPassword"
-					[(ngModel)]="user.userModel.currentPassword"
+					name="password"
+					type="password"
 					autocomplete="off"
+					[(ngModel)]="user.userModel.currentPassword"
 				/>
 			</div>
 
 			<div class="form-group">
 				<label for="password"><label *ngIf="mode === 'edit'">New</label> Password</label>
 				<input
-					type="password"
-					name="password"
 					class="form-control"
 					id="password"
-					[(ngModel)]="user.userModel.password"
+					name="password"
+					type="password"
 					autocomplete="off"
+					[(ngModel)]="user.userModel.password"
 				/>
 			</div>
 
@@ -126,12 +126,12 @@
 					>Re-enter <label *ngIf="mode === 'edit'">New</label> Password</label
 				>
 				<input
-					type="password"
+					class="form-control"
 					id="password2"
 					name="password2"
-					class="form-control"
-					[(ngModel)]="user.userModel.verifyPassword"
+					type="password"
 					autocomplete="off"
+					[(ngModel)]="user.userModel.verifyPassword"
 				/>
 			</div>
 		</ng-container>
@@ -146,9 +146,9 @@
 					<div class="form-check m-n1 p-1">
 						<input
 							class="form-check-input"
-							type="checkbox"
 							id="bypassAC"
 							name="bypassAccessCheck"
+							type="checkbox"
 							[(ngModel)]="user.userModel.bypassAccessCheck"
 							(ngModelChange)="bypassAccessCheck()"
 						/>
@@ -163,24 +163,24 @@
 				<div class="form-group">
 					<label for="dn">DN</label>
 					<input
-						type="text"
-						id="dn"
 						class="form-control"
+						id="dn"
 						name="dn"
-						[(ngModel)]="user.userModel.providerData.dn"
+						type="text"
 						disabled
+						[(ngModel)]="user.userModel.providerData.dn"
 					/>
 				</div>
 
 				<div class="form-group">
 					<label for="externalRoles">External Roles</label>
 					<textarea
-						type="text"
 						class="form-control"
 						id="externalRoles"
 						name="externalRoles"
-						rows="4"
+						type="text"
 						disabled
+						rows="4"
 						>{{ user.userModel.externalRolesDisplay }}</textarea
 					>
 				</div>
@@ -188,12 +188,12 @@
 				<div class="form-group">
 					<label for="externalGroups">External Groups</label>
 					<textarea
-						type="text"
 						class="form-control"
 						id="externalGroups"
 						name="externalGroups"
-						rows="4"
+						type="text"
 						disabled
+						rows="4"
 						>{{ user.userModel.externalGroupsDisplay }}</textarea
 					>
 				</div>
@@ -205,15 +205,15 @@
 			<label>Roles</label>
 			<div>
 				<div
-					*ngFor="let role of possibleRoles"
 					class="form-check form-check-inline"
 					tooltip="{{ role.description }}"
+					*ngFor="let role of possibleRoles"
 				>
 					<input
 						class="form-check-input"
-						type="checkbox"
 						id="role{{ role.role }}Cb"
 						name="role{{ role.role }}Cb"
+						type="checkbox"
 						[(ngModel)]="user.userModel.roles[role.role]"
 					/>
 					<label class="form-check-label" for="role{{ role.role }}Cb">{{
@@ -226,21 +226,21 @@
 		<div class="form-group">
 			<div class="text-right">
 				<button
-					type="button"
 					class="btn btn-link mr-2"
-					*ngIf="mode === 'admin-create' || mode === 'admin-edit'"
+					type="button"
 					routerLink="/admin/users"
+					*ngIf="mode === 'admin-create' || mode === 'admin-edit'"
 				>
 					Cancel
 				</button>
-				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
+				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
 					{{ okButtonText }}
 				</button>
 				<button
-					type="button"
 					class="btn btn-link ml-2"
-					*ngIf="mode === 'signup'"
+					type="button"
 					routerLink="/signin"
+					*ngIf="mode === 'signup'"
 				>
 					or Sign In
 				</button>

@@ -3,12 +3,12 @@
 
 	<h2>Form Controls</h2>
 	<div class="form-group">
-		<label for="exampleFormControlText" class="form-required">Example text</label>
+		<label class="form-required" for="exampleFormControlText">Example text</label>
 		<input
-			cdkFocusInitial
-			type="text"
 			class="form-control"
 			id="exampleFormControlText"
+			type="text"
+			cdkFocusInitial
 			placeholder="Default input"
 		/>
 		<small class="form-text text-muted">Extra explanation provided if necessary.</small>
@@ -19,8 +19,8 @@
 		<textarea
 			class="form-control"
 			id="exampleFormControlTextarea1"
-			rows="4"
 			placeholder="Default input"
+			rows="4"
 		></textarea>
 	</div>
 
@@ -39,16 +39,16 @@
 
 	<h2 class="pt-4">ng-select</h2>
 	<div class="form-group">
-		<input type="text" class="form-control" placeholder="text input for comparison" />
+		<input class="form-control" type="text" placeholder="text input for comparison" />
 	</div>
 
 	<div class="form-group">
 		<ng-select
-			[items]="[{ value: 'item1' }, { value: 'item2', disabled: true }, { value: 'item3' }]"
+			id="ngSelectBS"
 			bindLabel="value"
 			bindValue="value"
 			placeholder="Select a value..."
-			id="ngSelectBS"
+			[items]="[{ value: 'item1' }, { value: 'item2', disabled: true }, { value: 'item3' }]"
 		>
 		</ng-select>
 	</div>
@@ -58,23 +58,23 @@
 	<h3 class="pt-3">Default (stacked)</h3>
 	<div class="form-group">
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+			<input class="form-check-input" id="defaultCheck1" type="checkbox" value="" />
 			<label class="form-check-label" for="defaultCheck1"> Default checkbox </label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" checked id="defaultCheck2" />
+			<input class="form-check-input" id="defaultCheck2" type="checkbox" value="" checked />
 			<label class="form-check-label" for="defaultCheck2"> Default Checked checkbox </label>
 		</div>
 		<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="disabledCheck1" disabled />
+			<input class="form-check-input" id="disabledCheck1" type="checkbox" value="" disabled />
 			<label class="form-check-label" for="disabledCheck1"> Disabled checkbox </label>
 		</div>
 		<div class="form-check">
 			<input
 				class="form-check-input"
+				id="disabledCheck2"
 				type="checkbox"
 				value=""
-				id="disabledCheck2"
 				checked
 				disabled
 			/>
@@ -88,9 +88,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="exampleRadios"
 				id="exampleRadios1"
+				name="exampleRadios"
+				type="radio"
 				value="option1"
 				checked
 			/>
@@ -99,9 +99,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="exampleRadios"
 				id="exampleRadios2"
+				name="exampleRadios"
+				type="radio"
 				value="option2"
 			/>
 			<label class="form-check-label" for="exampleRadios2"> Second default radio </label>
@@ -109,9 +109,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="exampleRadios"
 				id="exampleRadios3"
+				name="exampleRadios"
+				type="radio"
 				value="option3"
 				disabled
 			/>
@@ -120,9 +120,9 @@
 		<div class="form-check">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="exampleRadios2"
 				id="exampleRadios4"
+				name="exampleRadios2"
+				type="radio"
 				value="option4"
 				checked
 				disabled
@@ -136,18 +136,18 @@
 	<h3 class="pt-3">Inline</h3>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+			<input class="form-check-input" id="inlineCheckbox1" type="checkbox" value="option1" />
 			<label class="form-check-label" for="inlineCheckbox1">1</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+			<input class="form-check-input" id="inlineCheckbox2" type="checkbox" value="option2" />
 			<label class="form-check-label" for="inlineCheckbox2">2</label>
 		</div>
 		<div class="form-check form-check-inline">
 			<input
 				class="form-check-input"
-				type="checkbox"
 				id="inlineCheckbox3"
+				type="checkbox"
 				value="option3"
 				disabled
 			/>
@@ -159,9 +159,9 @@
 		<div class="form-check form-check-inline">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="inlineRadioOptions"
 				id="inlineRadio1"
+				name="inlineRadioOptions"
+				type="radio"
 				value="option1"
 			/>
 			<label class="form-check-label" for="inlineRadio1">1</label>
@@ -169,9 +169,9 @@
 		<div class="form-check form-check-inline">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="inlineRadioOptions"
 				id="inlineRadio2"
+				name="inlineRadioOptions"
+				type="radio"
 				value="option2"
 			/>
 			<label class="form-check-label" for="inlineRadio2">2</label>
@@ -179,9 +179,9 @@
 		<div class="form-check form-check-inline">
 			<input
 				class="form-check-input"
-				type="radio"
-				name="inlineRadioOptions"
 				id="inlineRadio3"
+				name="inlineRadioOptions"
+				type="radio"
 				value="option3"
 				disabled
 			/>
@@ -193,8 +193,8 @@
 	<div class="form-check">
 		<input
 			class="form-check-input position-static"
-			type="checkbox"
 			id="blankCheckbox"
+			type="checkbox"
 			value="option1"
 			aria-label="..."
 		/>
@@ -202,9 +202,9 @@
 	<div class="form-check">
 		<input
 			class="form-check-input position-static"
-			type="radio"
-			name="blankRadio"
 			id="blankRadio1"
+			name="blankRadio"
+			type="radio"
 			value="option1"
 			aria-label="..."
 		/>
@@ -212,36 +212,36 @@
 
 	<h3 class="pt-3">Slide Toggle Checkboxes</h3>
 	<div class="form-check">
-		<input type="checkbox" class="form-check-input slide-toggle" id="slideToggle1" />
+		<input class="form-check-input slide-toggle" id="slideToggle1" type="checkbox" />
 		<label class="form-check-label" for="slideToggle1">Toggle this switch element</label>
 	</div>
 	<div class="form-check">
-		<input type="checkbox" class="form-check-input slide-toggle" disabled id="slideToggle2" />
+		<input class="form-check-input slide-toggle" id="slideToggle2" type="checkbox" disabled />
 		<label class="form-check-label" for="slideToggle2">Disabled switch element</label>
 	</div>
 
 	<h2 class="pt-3">Buttons</h2>
 
 	<h3 class="pt-3">Standard</h3>
-	<button type="button" class="mr-3 btn btn-primary">Primary</button>
-	<button type="button" class="mr-3 btn btn-secondary">Secondary</button>
-	<button type="button" class="mr-3 btn btn-success">Success</button>
-	<button type="button" class="mr-3 btn btn-danger">Danger</button>
-	<button type="button" class="mr-3 btn btn-warning">Warning</button>
-	<button type="button" class="mr-3 btn btn-info">Info</button>
-	<button type="button" class="mr-3 btn btn-light">Light</button>
-	<button type="button" class="mr-3 btn btn-dark">Dark</button>
-	<button type="button" class="mr-3 btn btn-link">Link</button>
+	<button class="mr-3 btn btn-primary" type="button">Primary</button>
+	<button class="mr-3 btn btn-secondary" type="button">Secondary</button>
+	<button class="mr-3 btn btn-success" type="button">Success</button>
+	<button class="mr-3 btn btn-danger" type="button">Danger</button>
+	<button class="mr-3 btn btn-warning" type="button">Warning</button>
+	<button class="mr-3 btn btn-info" type="button">Info</button>
+	<button class="mr-3 btn btn-light" type="button">Light</button>
+	<button class="mr-3 btn btn-dark" type="button">Dark</button>
+	<button class="mr-3 btn btn-link" type="button">Link</button>
 
 	<h3 class="pt-3">Outline Buttons</h3>
-	<button type="button" class="mr-3 btn btn-outline-primary">Primary</button>
-	<button type="button" class="mr-3 btn btn-outline-secondary">Secondary</button>
-	<button type="button" class="mr-3 btn btn-outline-success">Success</button>
-	<button type="button" class="mr-3 btn btn-outline-danger">Danger</button>
-	<button type="button" class="mr-3 btn btn-outline-warning">Warning</button>
-	<button type="button" class="mr-3 btn btn-outline-info">Info</button>
-	<button type="button" class="mr-3 btn btn-outline-light">Light</button>
-	<button type="button" class="mr-3 btn btn-outline-dark">Dark</button>
+	<button class="mr-3 btn btn-outline-primary" type="button">Primary</button>
+	<button class="mr-3 btn btn-outline-secondary" type="button">Secondary</button>
+	<button class="mr-3 btn btn-outline-success" type="button">Success</button>
+	<button class="mr-3 btn btn-outline-danger" type="button">Danger</button>
+	<button class="mr-3 btn btn-outline-warning" type="button">Warning</button>
+	<button class="mr-3 btn btn-outline-info" type="button">Info</button>
+	<button class="mr-3 btn btn-outline-light" type="button">Light</button>
+	<button class="mr-3 btn btn-outline-dark" type="button">Dark</button>
 
 	<h3 class="pt-3">Button Tags</h3>
 	<a class="mr-3 btn btn-primary" href="#" role="button">Link</a>
@@ -251,38 +251,38 @@
 	<input class="mr-3 btn btn-primary" type="reset" value="Reset" />
 
 	<h3 class="pt-3">Large Buttons</h3>
-	<button type="button" class="mr-3 btn btn-primary btn-lg">Large button</button>
-	<button type="button" class="mr-3 btn btn-secondary btn-lg">Large button</button>
+	<button class="mr-3 btn btn-primary btn-lg" type="button">Large button</button>
+	<button class="mr-3 btn btn-secondary btn-lg" type="button">Large button</button>
 
 	<h3 class="pt-3">Small Buttons</h3>
-	<button type="button" class="mr-3 btn btn-primary btn-sm">Small button</button>
-	<button type="button" class="mr-3 btn btn-secondary btn-sm">Small button</button>
+	<button class="mr-3 btn btn-primary btn-sm" type="button">Small button</button>
+	<button class="mr-3 btn btn-secondary btn-sm" type="button">Small button</button>
 
 	<h3 class="pt-3">Active State</h3>
-	<a href="#" class="mr-3 btn btn-primary active" role="button" aria-pressed="true"
+	<a class="mr-3 btn btn-primary active" href="#" role="button" aria-pressed="true"
 		>Primary Button</a
 	>
-	<a href="#" class="mr-3 btn btn-secondary active" role="button" aria-pressed="true"
+	<a class="mr-3 btn btn-secondary active" href="#" role="button" aria-pressed="true"
 		>Secondary Button</a
 	>
 
 	<h3 class="pt-3">Disabled State</h3>
-	<button type="button" class="mr-3 btn btn-primary" disabled>Primary button</button>
-	<button type="button" class="mr-3 btn btn-secondary" disabled>Secondary Button</button>
+	<button class="mr-3 btn btn-primary" type="button" disabled>Primary button</button>
+	<button class="mr-3 btn btn-secondary" type="button" disabled>Secondary Button</button>
 
 	<h2 class="pt-4">Submit Button w/ progress indicator</h2>
-	<button type="button" class="mr-3 btn btn-primary btn-submit" (click)="submit($event)">
+	<button class="mr-3 btn btn-primary btn-submit" type="button" (click)="submit($event)">
 		Submit
 	</button>
 
 	<h3 class="pt-3">Square Buttons <small>(for use with fa-fw icons)</small></h3>
-	<button type="button" class="mr-3 btn btn-primary btn-square btn-sm">
+	<button class="mr-3 btn btn-primary btn-square btn-sm" type="button">
 		<span class="fa-solid fa-fw fa-upload"></span>
 	</button>
-	<button type="button" class="mr-3 btn btn-primary btn-square">
+	<button class="mr-3 btn btn-primary btn-square" type="button">
 		<span class="fa-solid fa-fw fa-upload"></span>
 	</button>
-	<button type="button" class="mr-3 btn btn-primary btn-square btn-lg">
+	<button class="mr-3 btn btn-primary btn-square btn-lg" type="button">
 		<span class="fa-solid fa-fw fa-upload"></span>
 	</button>
 
@@ -294,8 +294,8 @@
 	<h3 class="pt-3">Bootstrap Custom File Input Component</h3>
 
 	<div class="custom-file">
-		<input type="file" class="custom-file-input" id="customFile" />
-		<label class="custom-file-label" for="customFile" data-browse="Choose File"
+		<input class="custom-file-input" id="customFile" type="file" />
+		<label class="custom-file-label" data-browse="Choose File" for="customFile"
 			>Choose file</label
 		>
 	</div>
@@ -303,7 +303,7 @@
 	<h3 class="pt-3">Bootstrap Standard Button Style File Input Component</h3>
 
 	<div class="custom-file-btn custom-file-btn-primary">
-		<input type="file" class="custom-file-btn-input" id="customFile2" />
+		<input class="custom-file-btn-input" id="customFile2" type="file" />
 		<label class="btn custom-file-btn-label" for="customFile2"
 			><span class="fa-solid fa-upload mr-2"></span>Choose File</label
 		>
@@ -313,9 +313,9 @@
 
 	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
 		<input
-			type="file"
 			class="custom-file-btn-input"
 			id="customFile3"
+			type="file"
 			(change)="fileSelected($event)"
 		/>
 		<label class="btn custom-file-btn-label" for="customFile3"

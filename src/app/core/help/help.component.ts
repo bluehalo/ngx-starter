@@ -31,7 +31,10 @@ export class HelpComponent {
 
 	title = '';
 
-	constructor(private route: ActivatedRoute, private router: Router) {
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) {
 		router.events
 			.pipe(
 				filter((event: Event) => event instanceof NavigationEnd),

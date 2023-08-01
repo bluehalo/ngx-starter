@@ -1,8 +1,8 @@
 <section>
 	<!-- Show a breadcrumb to the list messages page -->
 	<a
-		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
 		class="back-link"
+		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
 		[routerLink]="['/admin/messages']"
 	>
 		<span class="fa-solid fa-angle-double-left"></span> Back to Messages
@@ -12,13 +12,13 @@
 	<system-alert></system-alert>
 
 	<form
-		*ngIf="message"
-		#form="ngForm"
-		autocomplete="off"
 		class="pt-3"
 		role="form"
-		(ngSubmit)="submit()"
+		autocomplete="off"
 		novalidate
+		#form="ngForm"
+		*ngIf="message"
+		(ngSubmit)="submit()"
 	>
 		<h1>
 			{{ title }}
@@ -31,11 +31,11 @@
 			<ng-select
 				id="messageType"
 				name="type"
-				[items]="typeOptions"
-				[(ngModel)]="message.type"
-				bindValue="value"
 				bindLabel="display"
+				bindValue="value"
 				style="width: 350px"
+				[(ngModel)]="message.type"
+				[items]="typeOptions"
 			></ng-select>
 		</div>
 
@@ -43,12 +43,12 @@
 		<div class="form-group">
 			<label class="form-required" for="title">Title</label>
 			<input
-				type="text"
 				class="form-control"
 				id="title"
 				name="title"
-				[(ngModel)]="message.title"
+				type="text"
 				required
+				[(ngModel)]="message.title"
 			/>
 		</div>
 
@@ -56,29 +56,29 @@
 		<div class="form-group">
 			<label class="form-required" for="text">Message Body</label>
 			<textarea
-				rows="6"
 				class="form-control"
 				id="text"
 				name="text"
-				[(ngModel)]="message.body"
 				required
+				rows="6"
+				[(ngModel)]="message.body"
 			></textarea>
 		</div>
 
 		<!-- Buttons -->
 		<div class="form-group">
 			<div class="text-right">
-				<button type="button" class="btn btn-link mr-2" [routerLink]="['/admin/messages']">
+				<button class="btn btn-link mr-2" type="button" [routerLink]="['/admin/messages']">
 					Cancel
 				</button>
 				<button
-					type="button"
 					class="btn btn-outline-secondary mr-2"
+					type="button"
 					(click)="previewMessage()"
 				>
 					Preview
 				</button>
-				<button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
+				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
 					{{ okButtonText }}
 				</button>
 			</div>

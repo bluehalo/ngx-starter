@@ -27,7 +27,10 @@ export class BreadcrumbComponent {
 
 	breadcrumbs: Breadcrumb[] = [];
 
-	constructor(private route: ActivatedRoute, private router: Router) {
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) {
 		const navEnd$: Observable<Event> = router.events.pipe(
 			filter((event: Event) => event instanceof NavigationEnd)
 		);

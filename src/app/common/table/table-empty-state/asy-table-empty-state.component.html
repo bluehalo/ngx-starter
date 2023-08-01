@@ -1,6 +1,6 @@
 <asy-skeleton-rows
-	[rows]="dataSource.pageChangeEvent$.value.pageSize"
 	*ngIf="dataSource.loading"
+	[rows]="dataSource.pageChangeEvent$.value.pageSize"
 ></asy-skeleton-rows>
 <div
 	class="media justify-content-center py-5"
@@ -13,8 +13,8 @@
 			<button
 				class="btn btn-primary px-4 mt-2"
 				type="button"
-				(click)="clearFilters.emit()"
 				*ngIf="showClearFilters"
+				(click)="clearFilters.emit()"
 			>
 				Reset Filters
 			</button>

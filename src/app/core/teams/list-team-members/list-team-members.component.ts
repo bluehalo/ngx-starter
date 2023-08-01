@@ -92,7 +92,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			({
 				display: role.label,
 				value: role.role
-			} as ListFilterOption)
+			}) as ListFilterOption
 	);
 
 	user: User | null = null;

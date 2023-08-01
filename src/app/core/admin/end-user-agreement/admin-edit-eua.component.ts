@@ -20,7 +20,10 @@ import { ManageEuaComponent } from './manage-eua.component';
 	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf]
 })
 export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
-	constructor(protected euaService: EuaService, protected route: ActivatedRoute) {
+	constructor(
+		protected euaService: EuaService,
+		protected route: ActivatedRoute
+	) {
 		super('Edit EUA', "Make changes to the EUA's information", 'Save');
 	}
 

@@ -1,9 +1,9 @@
 <div class="header">
-	<ng-container *ngFor="let b of breadcrumbs; let last = last" class="header-breadcrumb">
+	<ng-container class="header-breadcrumb" *ngFor="let b of breadcrumbs; let last = last">
 		<span class="header-breadcrumb">
 			<a *ngIf="!last" [routerLink]="[b.url]">{{ b?.label }}</a>
 			<ng-container *ngIf="last">{{ b?.label }}</ng-container>
 		</span>
-		<span *ngIf="!last" class="header-breadcrumb-separator"> > </span>
+		<span class="header-breadcrumb-separator" *ngIf="!last"> > </span>
 	</ng-container>
 </div>

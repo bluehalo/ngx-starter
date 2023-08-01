@@ -2,8 +2,8 @@
 	<section class="row" *ngIf="loaded">
 		<!-- PKI Authentication Strategy -->
 		<div class="signin-loading-container mx-auto mt-5" *ngIf="pkiMode">
-			<loading-spinner [hidden]="error" message="Signing In..."> </loading-spinner>
-			<div [hidden]="!error" class="text-center text-danger">
+			<loading-spinner message="Signing In..." [hidden]="error"> </loading-spinner>
+			<div class="text-center text-danger" [hidden]="!error">
 				<p>Unable to authenticate:</p>
 				<strong>{{ error }}</strong>
 			</div>
@@ -19,37 +19,37 @@
 					<div class="form-group">
 						<label for="username">Username</label>
 						<input
-							autofocus
-							type="text"
+							class="form-control"
 							id="username"
 							name="username"
-							class="form-control"
+							type="text"
+							autofocus
+							placeholder="Username"
 							[(ngModel)]="username"
 							(keyup.enter)="signin()"
-							placeholder="Username"
 						/>
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
 						<input
-							type="password"
+							class="form-control"
 							id="password"
 							name="password"
-							class="form-control"
+							type="password"
+							placeholder="Password"
 							[(ngModel)]="password"
 							(keyup.enter)="signin()"
-							placeholder="Password"
 						/>
 					</div>
 					<div class="form-group text-center">
-						<button type="submit" class="btn btn-primary mr-2" (click)="signin()">
+						<button class="btn btn-primary mr-2" type="submit" (click)="signin()">
 							Sign In
 						</button>
-						<button type="button" class="btn btn-link" routerLink="/signup">
+						<button class="btn btn-link" type="button" routerLink="/signup">
 							or Sign Up
 						</button>
 					</div>
-					<div [hidden]="!error" class="text-center text-danger">
+					<div class="text-center text-danger" [hidden]="!error">
 						<strong>{{ error }}</strong>
 					</div>
 				</fieldset>

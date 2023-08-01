@@ -31,7 +31,7 @@ export class AuditDistinctValueFilterDirective implements OnInit {
 							({
 								display: o,
 								value: o
-							} as ListFilterOption)
+							}) as ListFilterOption
 					)
 				),
 				untilDestroyed(this)
