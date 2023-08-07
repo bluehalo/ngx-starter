@@ -1,11 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-	ActivatedRouteSnapshot,
-	CanActivateFn,
-	Router,
-	RouterStateSnapshot,
-	UrlTree
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { Observable, combineLatest, of } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
@@ -14,12 +8,44 @@ import { ConfigService } from '../config.service';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';
 
-export const authGuard: CanActivateFn = (
-	route: ActivatedRouteSnapshot,
-	state: RouterStateSnapshot,
-	// eslint-disable-next-line deprecation/deprecation
-	service = inject(AuthGuard)
-) => service.canActivate(route, state);
+type AuthGuardConfig = {
+	requiresAuthentication: boolean;
+	requiresEua: boolean;
+	requireAllRoles: boolean;
+	roles: string[];
+};
+
+const DEFAULT_CONFIG: AuthGuardConfig = {
+	requiresAuthentication: true,
+	requiresEua: true,
+	requireAllRoles: true,
+	roles: ['user']
+};
+
+export function authGuard(configOrRoles?: string | string[] | Partial<AuthGuardConfig>) {
+	let config: Partial<AuthGuardConfig> = {};
+	if (typeof configOrRoles === 'string') {
+		config.roles = [configOrRoles];
+	} else if (Array.isArray(configOrRoles)) {
+		config.roles = configOrRoles;
+	} else if (configOrRoles) {
+		config = configOrRoles;
+	}
+
+	return (
+		route: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot, // eslint-disable-next-line deprecation/deprecation
+		service = inject(AuthGuard)
+	) => {
+		const mergedConfig = {
+			...DEFAULT_CONFIG,
+			...config,
+			...(route.data as Partial<AuthGuardConfig>)
+		};
+
+		return service.canActivate(route, state, mergedConfig);
+	};
+}
 
 /**
  * @deprecated AuthGuard class will be removed in favor of functional guard.
@@ -37,17 +63,15 @@ export class AuthGuard {
 
 	canActivate(
 		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
+		state: RouterStateSnapshot,
+		config: AuthGuardConfig = DEFAULT_CONFIG
 	): Observable<boolean | UrlTree> {
-		// Default to requiring authentication if guard is present
-		const requiresAuthentication = route.data?.['requiresAuthentication'] ?? true;
-
 		// -----------------------------------------------------------
 		// Does the user need to be authenticated?
 		// -----------------------------------------------------------
 
 		// If the route doesn't require authentication, let them through
-		if (!requiresAuthentication) {
+		if (!config.requiresAuthentication) {
 			return of(true);
 		}
 
@@ -65,18 +89,16 @@ export class AuthGuard {
 				}
 				return of(session);
 			}),
-			switchMap(() => {
-				return this.authorizationService.isAuthenticated()
+			switchMap(() =>
+				this.authorizationService.isAuthenticated()
 					? this.sessionService.getCurrentEua()
-					: of(null);
-			}),
-			map(() => {
-				return this.checkAccess(route, state);
-			})
+					: of(null)
+			),
+			map(() => this.checkAccess(state, config))
 		);
 	}
 
-	checkAccess(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+	checkAccess(state: RouterStateSnapshot, config: AuthGuardConfig): boolean | UrlTree {
 		// The user still isn't authenticated
 		if (!this.authorizationService.isAuthenticated()) {
 			return this.router.parseUrl('/signin');
@@ -88,9 +110,7 @@ export class AuthGuard {
 			// -----------------------------------------------------------
 			// Check to see if the user needs to agree to the end user agreement
 			// Default to requiring authentication if guard is present
-			const requiresEua = route.data?.['requiresEua'] ?? true;
-
-			if (requiresEua && !this.authorizationService.isEuaCurrent()) {
+			if (config.requiresEua && !this.authorizationService.isEuaCurrent()) {
 				return this.router.parseUrl('/eua');
 			}
 
@@ -99,11 +119,9 @@ export class AuthGuard {
 			// -----------------------------------------------------------
 
 			// compile a list of roles that are missing
-			const requiredRoles = route.data?.['roles'] ?? ['user'];
-			const requireAllRoles = route.data?.['requireAllRoles'] ?? true;
 			const missingRoles: any[] = [];
 			const userRoles: any[] = [];
-			requiredRoles.forEach((role: any) => {
+			config.roles.forEach((role: any) => {
 				if (!this.authorizationService.hasRole(role)) {
 					missingRoles.push(role);
 				} else {
@@ -113,8 +131,8 @@ export class AuthGuard {
 
 			// If there are roles missing then we need to do something
 			if (
-				((missingRoles.length > 0 && requireAllRoles) ||
-					(userRoles.length === 0 && requiredRoles.length > 0)) &&
+				((missingRoles.length > 0 && config.requireAllRoles) ||
+					(userRoles.length === 0 && config.roles.length > 0)) &&
 				state.url !== '/unauthorized'
 			) {
 				// The user doesn't have the needed roles to view the page

@@ -12,8 +12,7 @@ export const ADMIN_ROUTES: Routes = [
 	{
 		path: '',
 		component: AdminComponent,
-		canActivate: [authGuard],
-		data: { roles: ['admin'] },
+		canActivate: [authGuard('admin')],
 		children: [
 			/**
 			 * Default Route

@@ -23,10 +23,7 @@ export const CORE_ROUTES: Routes = [
 	{
 		path: 'eua',
 		component: UserEuaComponent,
-		canActivate: [authGuard],
-		data: {
-			requiresEua: false
-		}
+		canActivate: [authGuard({ requiresEua: false })]
 	},
 	{
 		path: 'signin',
@@ -42,18 +39,12 @@ export const CORE_ROUTES: Routes = [
 	},
 	{
 		path: 'unauthorized',
-		component: UnauthorizedComponent,
-		canActivate: [authGuard],
-		data: {
-			roles: [], // no roles are needed to get to the "unauthorized" page
-			requiresEua: false
-		}
+		component: UnauthorizedComponent
 	},
 	{
 		path: 'messages',
 		component: ViewAllMessagesComponent,
-		canActivate: [authGuard],
-		data: { roles: ['user'] }
+		canActivate: [authGuard()]
 	},
 	{
 		path: 'masquerade',

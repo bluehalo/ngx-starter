@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { Config } from '../config.model';
 import { ConfigService } from '../config.service';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard, authGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
 import { AuthorizationService } from './authorization.service';
 import { Session } from './session.model';
@@ -14,10 +14,6 @@ import { SessionService } from './session.service';
 import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuard', () => {
-	// eslint-disable-next-line deprecation/deprecation
-	let guard: AuthGuard;
-	let sessionService: SessionService;
-
 	let configServiceSpy: SpyObj<ConfigService>;
 	let authServiceSpy: SpyObj<AuthenticationService>;
 
@@ -46,12 +42,11 @@ describe('AuthGuard', () => {
 				{ provide: AuthGuard }
 			]
 		});
-		// eslint-disable-next-line deprecation/deprecation
-		guard = TestBed.inject(AuthGuard);
-		sessionService = TestBed.inject(SessionService);
 	});
 
 	it('should be created', () => {
+		// eslint-disable-next-line deprecation/deprecation
+		const guard = TestBed.inject(AuthGuard);
 		expect(guard).toBeTruthy();
 	});
 
@@ -61,21 +56,26 @@ describe('AuthGuard', () => {
 				data: { requiresAuthentication: false }
 			} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(true);
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result).toBe(true);
+					done();
+				});
 			});
 		});
 
 		it('should redirect to login for unauthenticated user', (done) => {
 			const route = {} as unknown as ActivatedRouteSnapshot;
 
+			const sessionService: SessionService = TestBed.inject(SessionService);
 			spyOn(sessionService, 'getSession').and.returnValue(of({} as Session));
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result instanceof UrlTree).toBe(true);
-				expect(result.toString()).toBe('/signin');
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result instanceof UrlTree).toBe(true);
+					expect(result.toString()).toBe('/signin');
+					done();
+				});
 			});
 		});
 
@@ -89,10 +89,12 @@ describe('AuthGuard', () => {
 
 			const route = {} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result instanceof UrlTree).toBe(true);
-				expect(result.toString()).toBe('/unauthorized');
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result instanceof UrlTree).toBe(true);
+					expect(result.toString()).toBe('/unauthorized');
+					done();
+				});
 			});
 		});
 
@@ -107,9 +109,11 @@ describe('AuthGuard', () => {
 
 			const route = {} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(true);
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result).toBe(true);
+					done();
+				});
 			});
 		});
 
@@ -126,10 +130,12 @@ describe('AuthGuard', () => {
 				data: { roles: ['admin'] }
 			} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result instanceof UrlTree).toBe(true);
-				expect(result.toString()).toBe('/unauthorized');
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result instanceof UrlTree).toBe(true);
+					expect(result.toString()).toBe('/unauthorized');
+					done();
+				});
 			});
 		});
 
@@ -146,10 +152,12 @@ describe('AuthGuard', () => {
 				data: { roles: ['test', 'admin'], requireAllRoles: false }
 			} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result instanceof UrlTree).toBe(true);
-				expect(result.toString()).toBe('/unauthorized');
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result instanceof UrlTree).toBe(true);
+					expect(result.toString()).toBe('/unauthorized');
+					done();
+				});
 			});
 		});
 
@@ -166,9 +174,11 @@ describe('AuthGuard', () => {
 				data: { roles: ['user', 'admin'], requireAllRoles: false }
 			} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(true);
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result).toBe(true);
+					done();
+				});
 			});
 		});
 
@@ -185,9 +195,11 @@ describe('AuthGuard', () => {
 				data: { roles: ['user', 'admin'], requireAllRoles: true }
 			} as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result).toBe(true);
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result).toBe(true);
+					done();
+				});
 			});
 		});
 
@@ -203,10 +215,12 @@ describe('AuthGuard', () => {
 
 			const route = { data: { requiresEua: true } } as unknown as ActivatedRouteSnapshot;
 
-			guard.canActivate(route, {} as RouterStateSnapshot).subscribe((result) => {
-				expect(result instanceof UrlTree).toBe(true);
-				expect(result.toString()).toBe('/eua');
-				done();
+			TestBed.runInInjectionContext(() => {
+				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
+					expect(result instanceof UrlTree).toBe(true);
+					expect(result.toString()).toBe('/eua');
+					done();
+				});
 			});
 		});
 	});
