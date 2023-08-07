@@ -6,6 +6,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DateTime } from 'luxon';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import {
 	AsyAbstractHeaderFilterComponent,
@@ -18,7 +19,14 @@ import {
 	styleUrls: ['./asy-header-date-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
-	imports: [BsDropdownModule, FormsModule, NgSelectModule, BsDatepickerModule, TitleCasePipe]
+	imports: [
+		BsDropdownModule,
+		FormsModule,
+		NgSelectModule,
+		BsDatepickerModule,
+		TitleCasePipe,
+		TooltipModule
+	]
 })
 export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterComponent {
 	enabled = false;

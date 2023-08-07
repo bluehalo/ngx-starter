@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, Input, Optional, inject } f
 import { FormsModule } from '@angular/forms';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
@@ -32,7 +33,8 @@ export type ListFilterOption = {
 		SearchInputComponent,
 		NgFor,
 		FormsModule,
-		TitleCasePipe
+		TitleCasePipe,
+		TooltipModule
 	],
 	providers: [TitleCasePipe]
 })

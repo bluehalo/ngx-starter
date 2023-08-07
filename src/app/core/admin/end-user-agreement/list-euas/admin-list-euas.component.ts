@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
@@ -46,7 +47,8 @@ import { EuaService } from '../eua.service';
 		SidebarComponent,
 		ColumnChooserComponent,
 		PaginatorComponent,
-		UtcDatePipe
+		UtcDatePipe,
+		TooltipModule
 	]
 })
 export class AdminListEuasComponent implements OnDestroy, OnInit {

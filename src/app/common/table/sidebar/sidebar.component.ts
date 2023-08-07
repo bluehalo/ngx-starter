@@ -1,5 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 @Component({
 	selector: 'asy-sidebar',
 	templateUrl: './sidebar.component.html',
@@ -9,6 +11,7 @@ import { Component, HostBinding, Input } from '@angular/core';
 		class: 'sidebar',
 		'[class.sidebar-left]': 'placement === "left"'
 	},
+	imports: [TooltipModule],
 	standalone: true
 })
 export class SidebarComponent {
