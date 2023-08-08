@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import escapeRegExp from 'lodash/escapeRegExp';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
@@ -22,7 +23,14 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 	styleUrls: ['./asy-header-text-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
-	imports: [BsDropdownModule, NgClass, NgSelectModule, FormsModule, SearchInputComponent]
+	imports: [
+		BsDropdownModule,
+		NgClass,
+		NgSelectModule,
+		FormsModule,
+		SearchInputComponent,
+		TooltipModule
+	]
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {
 	@Input()

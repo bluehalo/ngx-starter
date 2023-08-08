@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject, concat, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
@@ -22,7 +23,7 @@ type BuildFilterFunction = (selectedValue: any | null) => any;
 	templateUrl: './asy-header-typeahead-filter.component.html',
 	styleUrls: ['./asy-header-typeahead-filter.component.scss'],
 	standalone: true,
-	imports: [BsDropdownModule, NgClass, NgSelectModule, FormsModule, AsyncPipe]
+	imports: [BsDropdownModule, NgClass, NgSelectModule, FormsModule, AsyncPipe, TooltipModule]
 })
 export class AsyHeaderTypeaheadFilterComponent
 	extends AsyAbstractHeaderFilterComponent
