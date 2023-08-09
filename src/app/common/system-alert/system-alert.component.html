@@ -1,22 +1,15 @@
-<alert
-	[type]="alert.type"
+<div
+	class="alert alert-{{ alert.type }} d-flex"
+	role="alert"
 	*ngFor="let alert of alertService.alerts$ | async; let i = index"
-	[dismissible]="true"
-	(close)="alertService.clear(i)"
+	@animateAddRemove
 >
-	<table aria-describedby="System alerts">
-		<tbody>
-			<tr>
-				<th class="align-middle" scope="row">
-					<system-alert-icon [icon]="alert.type"></system-alert-icon>
-				</th>
-				<td class="align-middle">
-					<div class="system-alert-message">{{ alert.msg }}</div>
-					<div class="system-alert-subtext" *ngIf="alert.subtext">
-						{{ alert.subtext }}
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</alert>
+	<span class="fa-solid fa-fw system-alert-icon system-alert-icon-{{ alert.type }}"></span>
+	<div class="system-alert-content">
+		<div class="system-alert-message">{{ alert.msg }}</div>
+		<small *ngIf="alert.subtext">{{ alert.subtext }}</small>
+	</div>
+	<button class="close" type="button" aria-label="Close" (click)="clearAlert(i)">
+		<span aria-hidden="true">×</span>
+	</button>
+</div>
