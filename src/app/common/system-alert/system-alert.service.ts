@@ -37,7 +37,7 @@ export class SystemAlertService {
 		this.alerts.push(alert);
 
 		// If they passed in a ttl parameter, age off the alert after said timeout
-		if (null != ttl) {
+		if (ttl && ttl > 0) {
 			setTimeout(() => this.clearAlertById(alert.id), ttl);
 		}
 		this.alerts$.next(this.alerts);

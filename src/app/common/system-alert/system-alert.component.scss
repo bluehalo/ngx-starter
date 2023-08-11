@@ -1,74 +1,67 @@
+@use 'sass:map';
 @import '../../../styles/shared';
+@import '../../../styles/ngx-bootstrap/shared';
 
-:host ::ng-deep .alert {
-	.alert-icon {
-		margin-left: -5px;
-		margin-right: 5px;
+$system-alert-colors: () !default;
+$system-alert-colors: map.merge(
+	(
+		'success': $ux-color-alert-success,
+		'info': $ux-color-alert-notification,
+		'warning': $ux-color-alert-warning,
+		'danger': $ux-color-alert-error
+	),
+	$system-alert-colors
+);
 
-		.fa-fw {
-			font-size: 30px;
+$system-alert-icons: () !default;
+$system-alert-icons: map.merge(
+	(
+		'success': '\f058',
+		'info': '\f05a',
+		'warning': '\f06a',
+		'danger': '\f071'
+	),
+	$system-alert-icons
+);
+
+.alert {
+	@include border($ux-color-alert-success, 2px, 3px);
+	background: $ux-color-white;
+	display: flex;
+	align-items: center;
+	padding: 0 $alert-padding-x;
+	overflow: hidden;
+
+	@each $type, $color in $system-alert-colors {
+		&.alert-#{$type} {
+			border-color: $color;
+		}
+
+		.system-alert-icon-#{$type} {
+			color: $color;
+
+			&:before {
+				content: map.get($system-alert-icons, $type);
+			}
 		}
 	}
 
-	.system-alert-message {
-		@include font-normal(16px);
+	.system-alert-icon {
+		font-size: 30px;
+		margin-right: $spacer;
+	}
+
+	.system-alert-content {
 		color: $ux-color-body-text;
+		font-size: 16px;
+		flex-grow: 1;
+		padding: 1rem 0;
 	}
 
-	.system-alert-subtext {
-		@include font-normal(12px);
+	button.close {
 		color: $ux-color-body-text;
-	}
-
-	&.alert-success {
-		@include border($ux-color-alert-success, 2px, 3px);
-		background: $ux-color-white;
-
-		.alert-icon {
-			.fa-fw {
-				color: $ux-color-alert-success;
-			}
-		}
-	}
-
-	&.alert-danger {
-		@include border($ux-color-alert-error, 2px, 3px);
-		background: $ux-color-white;
-
-		.alert-icon {
-			.fa-fw {
-				color: $ux-color-alert-error;
-			}
-		}
-	}
-
-	&.alert-warning {
-		@include border($ux-color-alert-warning, 2px, 3px);
-		background: $ux-color-white;
-
-		.alert-icon {
-			.fa-fw {
-				color: $ux-color-alert-warning;
-			}
-		}
-	}
-
-	&.alert-info {
-		@include border($ux-color-alert-notification, 2px, 3px);
-		background: $ux-color-white;
-
-		.alert-icon {
-			.fa-fw {
-				color: $ux-color-alert-notification;
-			}
-		}
-	}
-
-	button {
-		&.close {
-			color: $ux-color-body-text;
-			opacity: 1;
-			padding: 1rem 1.25rem;
-		}
+		opacity: 1;
+		padding: 1rem 0 1rem 1.25rem;
+		align-self: flex-start;
 	}
 }

@@ -1,28 +1,52 @@
 <div class="container">
 	<h1>System Alerts</h1>
-	<div class="row">
-		<div class="col-md-3">
-			<button class="mr-3 btn btn-primary" (click)="addAlert('Success', 'success')">
-				Success
-			</button>
-		</div>
-		<div class="col-md-3">
-			<button class="mr-3 btn btn-primary" (click)="addAlert('Danger', 'danger')">
-				Danger
-			</button>
-		</div>
-		<div class="col-md-3">
-			<button class="mr-3 btn btn-primary" (click)="addAlert('Warning', 'warning')">
-				Warning
-			</button>
-		</div>
-		<div class="col-md-3">
-			<button class="mr-3 btn btn-primary" (click)="addAlert('Info', 'info')">Info</button>
-		</div>
-	</div>
 	<div class="row mt-3">
 		<div class="col-md-12">
 			<system-alert></system-alert>
 		</div>
 	</div>
+
+	<h2 class="mt-3">Add Alert</h2>
+
+	<div class="form-row">
+		<div class="form-group col">
+			<label for="type">Type</label>
+			<ng-select
+				id="type"
+				[(ngModel)]="type"
+				[items]="['success', 'danger', 'warning', 'info']"
+			>
+				<ng-template let-item="item" ng-label-tmp ng-option-tmp>
+					{{ item | titlecase }}
+				</ng-template>
+			</ng-select>
+		</div>
+		<div class="form-group col">
+			<label for="message">TTL <small>(milliseconds)</small></label>
+			<input class="form-control" id="ttl" type="number" [(ngModel)]="ttl" />
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group col">
+			<label for="message">Message</label>
+			<textarea
+				class="form-control"
+				id="message"
+				type="text"
+				[(ngModel)]="message"
+			></textarea>
+		</div>
+		<div class="form-group col">
+			<label for="message">Subtext</label>
+			<textarea
+				class="form-control"
+				id="subtext"
+				type="text"
+				[(ngModel)]="subtext"
+			></textarea>
+		</div>
+	</div>
+
+	<button class="btn btn-primary" (click)="addAlert()">Add Alert</button>
 </div>
