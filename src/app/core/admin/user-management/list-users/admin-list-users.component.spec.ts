@@ -1,8 +1,8 @@
+import { DialogModule } from '@angular/cdk/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { ModalService } from '../../../../common/modal/modal.service';
@@ -62,7 +62,7 @@ describe('Admin List Users Component Spec', () => {
 			imports: [
 				RouterTestingModule,
 				BrowserAnimationsModule,
-				ModalModule.forRoot(),
+				DialogModule,
 				AdminListUsersComponent
 			],
 			providers: [

@@ -1,14 +1,14 @@
 <asy-modal
-	[title]="title"
-	[cancelText]="cancelText"
+	[title]="data.title"
+	[cancelText]="data.cancelText"
 	[disableOk]="!modalForm.form.valid"
-	[okText]="okText"
+	[okText]="data.okText"
 	(cancel)="cancel()"
 	(ok)="ok()"
 >
-	<p *ngIf="message" [innerHTML]="message"></p>
+	<p *ngIf="data.message" [innerHTML]="data.message"></p>
 	<form id="modalForm" #modalForm="ngForm">
-		<div class="form-group" *ngFor="let input of inputs; first as isFirst">
+		<div class="form-group" *ngFor="let input of data.inputs; first as isFirst">
 			<label [class.form-required]="input.required">{{ input.label }}</label>
 
 			<textarea

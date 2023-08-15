@@ -1,6 +1,36 @@
 <form style="max-width: 800px">
 	<h1 class="pb-3">Common Modal Module Examples</h1>
 
+	<div class="form-group">
+		<label class="form-required">Modal creation type:</label>
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				id="type-option-cdk"
+				name="type-option-radio"
+				type="radio"
+				value="cdk"
+				required
+				[(ngModel)]="modalType"
+			/>
+			<label class="form-check-label mb-2" for="type-option-cdk">CDK Dialog</label>
+		</div>
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				id="type-option-ngx"
+				name="type-option-radio"
+				type="radio"
+				value="ngx"
+				required
+				[(ngModel)]="modalType"
+			/>
+			<label class="form-check-label mb-2" for="type-option-ngx"
+				>NGX-Bootstrap Modal (deprecated)</label
+			>
+		</div>
+	</div>
+
 	<h2>Alert</h2>
 	<div class="row">
 		<div class="form-group col-6">
@@ -11,6 +41,7 @@
 				name="alertTitle"
 				type="text"
 				placeholder="Enter title..."
+				required
 				[(ngModel)]="alertConfig.title"
 			/>
 		</div>
@@ -33,11 +64,13 @@
 				name="alertMessage"
 				type="text"
 				placeholder="Enter message..."
+				required
 				[(ngModel)]="alertConfig.message"
 			/>
 		</div>
 	</div>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showAlert()">Show Alert</button>
+	Output: {{ alertOutput$ | async | json }}
 
 	<h2 class="pt-5">Confirm</h2>
 	<div class="row">
@@ -49,11 +82,12 @@
 				name="confirmTitle"
 				type="text"
 				placeholder="Enter title..."
+				required
 				[(ngModel)]="confirmConfig.title"
 			/>
 		</div>
 		<div class="form-group col-4">
-			<label class="form-required" for="confirmOK">OK Text</label>
+			<label for="confirmOK">OK Text</label>
 			<input
 				class="form-control"
 				id="confirmOK"
@@ -64,7 +98,7 @@
 			/>
 		</div>
 		<div class="form-group col-4">
-			<label class="form-required" for="confirmCancel">Cancel Text</label>
+			<label for="confirmCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="confirmCancel"
@@ -82,11 +116,13 @@
 				name="confirmMessage"
 				type="text"
 				placeholder="Enter message..."
+				required
 				[(ngModel)]="confirmConfig.message"
 			/>
 		</div>
 	</div>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showConfirm()">Show Confirm</button>
+	Output: {{ confirmOutput$ | async | json }}
 
 	<h2 class="pt-5">Prompt</h2>
 	<div class="row">
@@ -98,6 +134,7 @@
 				name="promptTitle"
 				type="text"
 				placeholder="Enter title..."
+				required
 				[(ngModel)]="promptConfig.title"
 			/>
 		</div>
@@ -109,11 +146,12 @@
 				name="promptLabel"
 				type="text"
 				placeholder="Enter input label..."
+				required
 				[(ngModel)]="promptConfig.inputLabel"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label class="form-required" for="promptOK">OK Text</label>
+			<label for="promptOK">OK Text</label>
 			<input
 				class="form-control"
 				id="promptOK"
@@ -124,7 +162,7 @@
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label class="form-required" for="promptCancel">Cancel Text</label>
+			<label for="promptCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="promptCancel"
@@ -142,11 +180,13 @@
 				name="promptMessage"
 				type="text"
 				placeholder="Enter message..."
+				required
 				[(ngModel)]="promptConfig.message"
 			/>
 		</div>
 	</div>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showPrompt()">Show Prompt</button>
+	Output: {{ promptOutput$ | async | json }}
 
 	<h2 class="pt-5">Show</h2>
 	<div class="row">
@@ -158,11 +198,12 @@
 				name="showTitle"
 				type="text"
 				placeholder="Enter title..."
+				required
 				[(ngModel)]="showConfig.title"
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label class="form-required" for="showOK">OK Text</label>
+			<label for="showOK">OK Text</label>
 			<input
 				class="form-control"
 				id="showOK"
@@ -173,7 +214,7 @@
 			/>
 		</div>
 		<div class="form-group col-6">
-			<label class="form-required" for="showCancel">Cancel Text</label>
+			<label for="showCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="showCancel"
@@ -191,6 +232,7 @@
 				name="showMessage"
 				type="text"
 				placeholder="Enter message..."
+				required
 				[(ngModel)]="showConfig.message"
 			/>
 		</div>
@@ -202,12 +244,14 @@
 				name="showInput"
 				type="text"
 				placeholder="Enter input config..."
+				required
 				style="height: 6.5rem"
 				[(ngModel)]="showInputConfig"
 			></textarea>
 		</div>
 	</div>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showModal()">Show Modal</button>
+	Output: {{ showOutput$ | async | json }}
 
 	<h2 class="pt-5">Show Modal with Component</h2>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showComponentModal()">

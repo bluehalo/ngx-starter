@@ -1,10 +1,10 @@
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
@@ -14,6 +14,10 @@ import { PagingOptions } from '../../../common/paging.model';
 import { User } from '../../auth/user.model';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
+
+export type AddMembersModalData = {
+	teamId: string;
+};
 
 @UntilDestroy()
 @Component({
@@ -38,10 +42,6 @@ import { AddedMember, TeamsService } from '../teams.service';
 	]
 })
 export class AddMembersModalComponent implements OnInit {
-	@Input() teamId!: string;
-
-	@Output() readonly usersAdded = new EventEmitter<number>();
-
 	addedMembers: AddedMember[] = [];
 
 	submitting = false;
@@ -54,17 +54,16 @@ export class AddMembersModalComponent implements OnInit {
 	usersInput$ = new Subject<string>();
 	users$!: Observable<User[]>;
 
+	teamsService = inject(TeamsService);
+	dialogRef = inject(DialogRef);
+	data: AddMembersModalData = inject(DIALOG_DATA);
+
 	private defaultRole = 'member';
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 
-	constructor(
-		private teamsService: TeamsService,
-		public modalRef: BsModalRef
-	) {}
-
 	ngOnInit() {
-		if (!this.teamId) {
+		if (!this.data.teamId) {
 			throw new TypeError(`'TeamId' is required`);
 		}
 
@@ -75,7 +74,7 @@ export class AddMembersModalComponent implements OnInit {
 				tap(() => (this.usersLoading = true)),
 				switchMap((term) =>
 					this.teamsService.searchUsers(
-						{ 'teams._id': { $ne: this.teamId } },
+						{ 'teams._id': { $ne: this.data.teamId } },
 						term,
 						this.pagingOptions,
 						{}
@@ -99,12 +98,11 @@ export class AddMembersModalComponent implements OnInit {
 
 		// Add users who are already in the system
 		this.teamsService
-			.addMembers(this.addedMembers, { _id: this.teamId })
+			.addMembers(this.addedMembers, { _id: this.data.teamId })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.submitting = false;
-				this.modalRef.hide();
-				this.usersAdded.emit(this.addedMembers.length);
+				this.dialogRef.close(this.addedMembers.length);
 			});
 	}
 

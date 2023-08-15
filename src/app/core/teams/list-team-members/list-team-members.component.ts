@@ -8,19 +8,18 @@ import {
 	OnDestroy,
 	OnInit,
 	SimpleChanges,
-	ViewChild
+	ViewChild,
+	inject
 } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
-import { ModalAction } from '../../../common/modal/modal.model';
-import { ModalService } from '../../../common/modal/modal.service';
+import { DialogAction, DialogService } from '../../../common/dialog';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
@@ -41,9 +40,11 @@ import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-s
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
-import { AddMembersModalComponent } from '../add-members-modal/add-members-modal.component';
+import {
+	AddMembersModalComponent,
+	AddMembersModalData
+} from '../add-members-modal/add-members-modal.component';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
-import { TeamAuthorizationService } from '../team-authorization.service';
 import { TeamMember } from '../team-member.model';
 import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
@@ -109,15 +110,12 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 	);
 
-	private modalRef: BsModalRef | null = null;
+	private dialogService = inject(DialogService);
 
 	constructor(
-		private bsModalService: BsModalService,
-		private modalService: ModalService,
 		private router: Router,
 		private teamsService: TeamsService,
 		private authorizationService: AuthorizationService,
-		private teamAuthorizationService: TeamAuthorizationService,
 		private sessionService: SessionService,
 		private alertService: SystemAlertService
 	) {}
@@ -148,7 +146,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	}
 
 	ngOnDestroy(): void {
-		this.modalRef?.hide();
 		this.dataSource.disconnect();
 	}
 
@@ -166,32 +163,29 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	}
 
 	addMembers() {
-		this.modalRef = this.bsModalService.show(AddMembersModalComponent, {
-			ignoreBackdropClick: true,
-			class: 'modal-dialog-scrollable modal-lg',
-			initialState: {
-				teamId: this.team._id
-			}
-		});
-		this.modalRef.content.usersAdded
-			.pipe(untilDestroyed(this))
-			.subscribe((usersAdded: number) => {
+		this.dialogService
+			.open<number, AddMembersModalData>(AddMembersModalComponent, {
+				data: {
+					teamId: this.team._id
+				}
+			})
+			.closed.pipe(isNotNullOrUndefined(), untilDestroyed(this))
+			.subscribe((usersAdded) => {
 				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
-				this.modalRef = null;
 				this.reloadTeamMembers();
 			});
 	}
 
 	removeMember(member: TeamMember) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Remove member from team?',
 				`Are you sure you want to remove member: "${member.userModel.name}" from this team?`,
 				'Remove Member'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.teamsService.removeMember(this.team, member.userModel._id)),
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: unknown) => {
@@ -217,15 +211,15 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			member.role === 'admin' &&
 			role !== 'admin'
 		) {
-			this.modalService
+			this.dialogService
 				.confirm(
 					'Remove "Team Admin" role?',
 					"Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won't be able to give the role back to yourself.</strong>",
 					'Remove Admin'
 				)
-				.pipe(
+				.closed.pipe(
 					first(),
-					filter((action) => action === ModalAction.OK),
+					filter((result) => result?.action === DialogAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
 					switchMap(() => this.sessionService.reloadSession()),
 					catchError((error: unknown) => {

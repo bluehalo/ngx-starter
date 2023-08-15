@@ -1,7 +1,6 @@
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { JsonPipe, NgIf, TitleCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
-
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, inject } from '@angular/core';
 
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
@@ -19,7 +18,6 @@ import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 	imports: [ModalComponent, NgIf, JsonPipe, TitleCasePipe, UtcDatePipe]
 })
 export class AuditViewDetailsModalComponent {
-	auditEntry: any;
-
-	constructor(public modalRef: BsModalRef) {}
+	dialogRef = inject(DialogRef);
+	data = inject(DIALOG_DATA);
 }

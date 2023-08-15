@@ -1,8 +1,8 @@
+import { DialogModule } from '@angular/cdk/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../common/paging.model';
@@ -103,8 +103,8 @@ describe('Audit Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			imports: [
-				ModalModule.forRoot(),
 				BrowserAnimationsModule,
+				DialogModule,
 				ListAuditEntriesComponent,
 				AuditObjectComponent,
 				UrlAuditObjectComponent,

@@ -1,20 +1,20 @@
 <asy-modal
-	title="Changes to {{ auditEntry?.audit?.auditType }} by {{
-		auditEntry?.audit?.actor?.username
-	}} on {{ auditEntry?.created | utcDate }}"
+	title="Changes to {{ data.auditEntry?.audit?.auditType }} by {{
+		data.auditEntry?.audit?.actor?.username
+	}} on {{ data.auditEntry?.created | utcDate }}"
 	cancelText=""
 	okText="Close"
-	(cancel)="modalRef.hide()"
-	(ok)="modalRef.hide()"
+	(cancel)="dialogRef.close()"
+	(ok)="dialogRef.close()"
 >
 	<div class="row">
 		<div class="col-md-6">
 			<h4>Before</h4>
-			<pre>{{ auditEntry?.audit?.object?.before | sortObjectKeys | json }}</pre>
+			<pre>{{ data.auditEntry?.audit?.object?.before | sortObjectKeys | json }}</pre>
 		</div>
 		<div class="col-md-6">
 			<h4>After</h4>
-			<pre>{{ auditEntry?.audit?.object?.after | sortObjectKeys | json }}</pre>
+			<pre>{{ data.auditEntry?.audit?.object?.after | sortObjectKeys | json }}</pre>
 		</div>
 	</div>
 </asy-modal>

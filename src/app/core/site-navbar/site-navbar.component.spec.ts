@@ -1,9 +1,9 @@
+import { DialogModule } from '@angular/cdk/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { of } from 'rxjs';
 
@@ -77,7 +77,7 @@ describe('Site Navbar Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [PopoverDirective],
-			imports: [HttpClientTestingModule, ModalModule.forRoot(), RouterTestingModule],
+			imports: [HttpClientTestingModule, RouterTestingModule, DialogModule],
 			providers: [
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },

@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -7,9 +7,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { ModalAction } from '../../../../common/modal/modal.model';
-import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
 import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
@@ -57,10 +56,11 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private dialogService = inject(DialogService);
+
 	constructor(
 		private messageService: MessageService,
-		public alertService: SystemAlertService,
-		private modalService: ModalService
+		public alertService: SystemAlertService
 	) {}
 
 	ngOnInit() {
@@ -84,15 +84,15 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteMessage(message: Message) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Delete message?',
 				`Are you sure you want to delete message: "${message.title}" ?`,
 				'Delete'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.messageService.delete(message)),
 				untilDestroyed(this)
 			)
@@ -109,6 +109,6 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 	 */
 	previewMessage(message: Message) {
 		const { body, title } = message;
-		this.modalService.alert(title, body);
+		this.dialogService.alert(title, body);
 	}
 }

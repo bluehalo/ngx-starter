@@ -5,7 +5,7 @@ import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { ModalService } from '../../../common/modal/modal.service';
+import { DialogService } from '../../../common/dialog';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
 import { Message } from '../../messages/message.model';
@@ -24,7 +24,7 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	protected config: any;
 
-	protected modalService = inject(ModalService);
+	protected dialogService = inject(DialogService);
 	protected router = inject(Router);
 	protected configService = inject(ConfigService);
 	protected alertService = inject(SystemAlertService);
@@ -54,7 +54,7 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	previewMessage() {
 		const { body, title } = this.message;
-		this.modalService.alert(title, body);
+		this.dialogService.alert(title, body);
 	}
 
 	submit() {

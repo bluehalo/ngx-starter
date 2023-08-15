@@ -13,6 +13,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+import { providerCdkDialog } from './common/dialog/provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { euaInterceptor } from './core/auth/eua.interceptor';
 import { signinInterceptor } from './core/auth/signin.interceptor';
@@ -44,6 +45,7 @@ export const appConfig: ApplicationConfig = {
 			// Ensures any legacy class based interceptors are used.
 			withInterceptorsFromDi()
 		),
+		providerCdkDialog(),
 		provideRouter([], withHashLocation()),
 		provideCoreRoutes(),
 		provideExampleRoutes(),

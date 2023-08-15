@@ -1,18 +1,16 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { DialogAction, DialogService } from '../../../common/dialog';
 import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { ModalAction } from '../../../common/modal/modal.model';
-import { ModalService } from '../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
@@ -64,12 +62,10 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private modalRef: BsModalRef | null = null;
+	private dialogService = inject(DialogService);
 
 	constructor(
 		private cacheEntriesService: CacheEntriesService,
-		private modalService: ModalService,
-		private bsModalService: BsModalService,
 		private alertService: SystemAlertService
 	) {}
 
@@ -78,7 +74,6 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 	}
 
 	ngOnDestroy(): void {
-		this.modalRef?.hide();
 		this.dataSource.disconnect();
 	}
 
@@ -95,15 +90,15 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteEntry(cacheEntry: CacheEntry) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Delete cache entry?',
 				`Are you sure you want to delete entry: ${cacheEntry.key}?`,
 				'Delete'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key)),
 				untilDestroyed(this)
 			)
@@ -121,10 +116,8 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
-		this.modalRef = this.bsModalService.show(CacheEntryModalComponent, {
-			ignoreBackdropClick: true,
-			class: 'modal-dialog-scrollable modal-lg',
-			initialState: {
+		this.dialogService.open(CacheEntryModalComponent, {
+			data: {
 				cacheEntry
 			}
 		});

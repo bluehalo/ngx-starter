@@ -1,9 +1,8 @@
 <asy-modal
 	title="Give Feedback"
 	okText="Submit"
-	[autoCaptureFocus]="true"
 	[disableOk]="submitting || !submitFeedbackForm.form.valid"
-	(cancel)="modalRef.hide()"
+	(cancel)="dialogRef.close()"
 	(ok)="submit()"
 >
 	<form #submitFeedbackForm="ngForm">

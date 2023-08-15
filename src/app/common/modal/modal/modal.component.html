@@ -1,24 +1,22 @@
-<div cdkTrapFocus [cdkTrapFocusAutoCapture]="autoCaptureFocus">
-	<section class="modal-header">
-		<h2 class="modal-title">
-			{{ title }}
-		</h2>
+<section class="modal-header">
+	<h2 class="modal-title">
+		{{ title }}
+	</h2>
 
-		<button class="close" type="button" aria-label="Cancel" (click)="cancel.emit()">
-			<span class="fa-solid fa-remove" aria-hidden="true"></span>
-		</button>
-	</section>
+	<button class="close" type="button" aria-label="Cancel" (click)="cancel.emit()">
+		<span class="fa-solid fa-remove" aria-hidden="true"></span>
+	</button>
+</section>
 
-	<section class="modal-body">
-		<ng-content></ng-content>
-	</section>
+<section class="modal-body">
+	<ng-content></ng-content>
+</section>
 
-	<section class="modal-footer">
-		<button class="btn btn-outline-secondary mr-2" *ngIf="cancelText" (click)="cancel.emit()">
-			{{ cancelText }}
-		</button>
-		<button class="btn btn-primary" [disabled]="disableOk" (click)="ok.emit()">
-			{{ okText }}
-		</button>
-	</section>
-</div>
+<section class="modal-footer">
+	<button class="btn btn-outline-secondary mr-2" *ngIf="cancelText" (click)="cancel.emit()">
+		{{ cancelText }}
+	</button>
+	<button class="btn btn-primary" [disabled]="disableOk" (click)="ok.emit()">
+		{{ okText }}
+	</button>
+</section>

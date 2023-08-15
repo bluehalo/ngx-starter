@@ -1,12 +1,12 @@
+import { DialogRef } from '@angular/cdk/dialog';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { first } from 'rxjs/operators';
 
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
@@ -32,11 +32,12 @@ export class FeedbackModalComponent implements OnInit {
 
 	feedback: Feedback = new Feedback();
 
+	public dialogRef = inject(DialogRef);
+
 	constructor(
 		private router: Router,
 		private configService: ConfigService,
-		private feedbackService: FeedbackService,
-		public modalRef: BsModalRef
+		private feedbackService: FeedbackService
 	) {}
 
 	ngOnInit() {
@@ -67,7 +68,7 @@ export class FeedbackModalComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((feedback) => {
 				if (feedback) {
-					setTimeout(() => this.modalRef.hide(), 1500);
+					setTimeout(() => this.dialogRef.close(), 1500);
 				}
 			});
 	}

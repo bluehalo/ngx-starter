@@ -1,18 +1,26 @@
-import { Component } from '@angular/core';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { ModalConfig } from '../../../common/modal/modal.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Subject } from 'rxjs';
+
+import { ConfigurableDialogData, DialogService } from '../../../common/dialog';
 import { ModalService } from '../../../common/modal/modal.service';
 import { FormModalComponent } from './form-modal.component';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
 	standalone: true,
-	imports: [FormsModule]
+	imports: [FormsModule, AsyncPipe, JsonPipe]
 })
 export class ModalComponent {
-	constructor(public modalService: ModalService) {}
+	modalType = 'cdk';
+
+	dialogService = inject(DialogService);
+	modalService = inject(ModalService);
 
 	alertConfig: any = {
 		title: 'Alert!',
@@ -30,7 +38,7 @@ export class ModalComponent {
 		inputLabel: 'Input'
 	};
 
-	showConfig: ModalConfig = {
+	showConfig: ConfigurableDialogData = {
 		title: 'Custom Input',
 		message: 'Are you sure?',
 		okText: 'OK',
@@ -41,44 +49,122 @@ export class ModalComponent {
 	{ "type": "textarea", "label": "Field 2", "key": "field2", "required": true }
 ]`;
 
+	alertOutput$ = new Subject<any>();
+	confirmOutput$ = new Subject<any>();
+	promptOutput$ = new Subject<any>();
+	showOutput$ = new Subject<any>();
+
+	getService() {
+		if (this.modalType === 'cdk') {
+			return this.dialogService;
+		}
+		return this.modalService;
+	}
+
 	showAlert() {
-		this.modalService.alert(
-			this.alertConfig.title,
-			this.alertConfig.message,
-			this.alertConfig.okText
-		);
+		if (this.modalType === 'cdk') {
+			this.dialogService
+				.alert(this.alertConfig.title, this.alertConfig.message, this.alertConfig.okText)
+				.closed.pipe(untilDestroyed(this))
+				.subscribe((returnData) => {
+					this.alertOutput$.next(returnData);
+				});
+		} else {
+			this.modalService
+				.alert(this.alertConfig.title, this.alertConfig.message, this.alertConfig.okText)
+				.pipe(untilDestroyed(this))
+				.subscribe((action) => {
+					this.alertOutput$.next(action);
+				});
+		}
 	}
 
 	showConfirm() {
-		this.modalService.confirm(
-			this.confirmConfig.title,
-			this.confirmConfig.message,
-			this.confirmConfig.okText,
-			this.confirmConfig.cancelText
-		);
+		if (this.modalType === 'cdk') {
+			this.dialogService
+				.confirm(
+					this.alertConfig.title,
+					this.alertConfig.message,
+					this.alertConfig.okText,
+					this.confirmConfig.cancelText
+				)
+				.closed.pipe(untilDestroyed(this))
+				.subscribe((returnData) => {
+					this.confirmOutput$.next(returnData);
+				});
+		} else {
+			this.modalService
+				.confirm(
+					this.alertConfig.title,
+					this.alertConfig.message,
+					this.alertConfig.okText,
+					this.confirmConfig.cancelText
+				)
+				.pipe(untilDestroyed(this))
+				.subscribe((action) => {
+					this.confirmOutput$.next(action);
+				});
+		}
 	}
 
 	showPrompt() {
-		this.modalService.prompt(
-			this.promptConfig.title,
-			this.promptConfig.message,
-			this.promptConfig.inputLabel,
-			this.promptConfig.okText,
-			this.promptConfig.cancelText
-		);
+		if (this.modalType === 'cdk') {
+			this.dialogService
+				.prompt(
+					this.alertConfig.title,
+					this.alertConfig.message,
+					this.promptConfig.inputLabel,
+					this.alertConfig.okText,
+					this.confirmConfig.cancelText
+				)
+				.closed.pipe(untilDestroyed(this))
+				.subscribe((returnData) => {
+					this.promptOutput$.next(returnData);
+				});
+		} else {
+			this.modalService
+				.prompt(
+					this.alertConfig.title,
+					this.alertConfig.message,
+					this.promptConfig.inputLabel,
+					this.alertConfig.okText,
+					this.confirmConfig.cancelText
+				)
+				.pipe(untilDestroyed(this))
+				.subscribe((action) => {
+					this.promptOutput$.next(action);
+				});
+		}
 	}
 
 	showModal() {
 		this.showConfig.inputs = JSON.parse(this.showInputConfig);
-		this.modalService.show(this.showConfig);
+		if (this.modalType === 'cdk') {
+			this.dialogService
+				.show(this.showConfig)
+				.closed.pipe(untilDestroyed(this))
+				.subscribe((returnData) => {
+					this.showOutput$.next(returnData);
+				});
+		} else {
+			this.modalService
+				.show(this.showConfig)
+				.pipe(untilDestroyed(this))
+				.subscribe((action) => {
+					this.showOutput$.next(action);
+				});
+		}
 	}
 
 	showComponentModal() {
-		this.modalService.showContainerModal({
-			title: 'Showing My Component',
-			okText: 'Submit',
-			cancelText: 'Cancel',
-			modalizableComponent: FormModalComponent
-		});
+		if (this.modalType === 'cdk') {
+		} else {
+			this.modalService.showContainerModal({
+				title: 'Showing My Component',
+				okText: 'Submit',
+				cancelText: 'Cancel',
+				modalizableComponent: FormModalComponent
+			});
+		}
 	}
 }
