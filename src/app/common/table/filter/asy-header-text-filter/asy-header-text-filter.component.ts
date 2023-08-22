@@ -1,10 +1,11 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, Optional } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import escapeRegExp from 'lodash/escapeRegExp';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
@@ -24,12 +25,15 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: [
-		BsDropdownModule,
 		NgClass,
 		NgSelectModule,
 		FormsModule,
 		SearchInputComponent,
-		TooltipModule
+		TooltipModule,
+		A11yModule,
+		OverlayModule,
+		CdkConnectedOverlay,
+		CdkOverlayOrigin
 	]
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {

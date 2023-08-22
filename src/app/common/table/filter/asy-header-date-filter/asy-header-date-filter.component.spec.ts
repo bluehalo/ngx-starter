@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DateTime, Settings } from 'luxon';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AsyFilterDirective } from '../asy-filter.directive';
 import { AsyHeaderDateFilterComponent } from './asy-header-date-filter.component';
@@ -36,7 +35,7 @@ describe('AsyHeaderDateFilter', () => {
 		filterSpy.deregister.and.callFake(() => {});
 
 		await TestBed.configureTestingModule({
-			imports: [BrowserAnimationsModule, BsDropdownModule, AsyHeaderDateFilterComponent],
+			imports: [BrowserAnimationsModule, AsyHeaderDateFilterComponent],
 			providers: [{ provide: AsyFilterDirective, useValue: filterSpy as AsyFilterDirective }]
 		}).compileComponents();
 

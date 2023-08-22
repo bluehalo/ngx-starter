@@ -1,10 +1,10 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
@@ -36,9 +36,11 @@ export type AddMembersModalData = {
 		NgSelectModule,
 		NgIf,
 		NgFor,
-		BsDropdownModule,
 		TooltipModule,
-		AsyncPipe
+		AsyncPipe,
+		CdkMenu,
+		CdkMenuItem,
+		CdkMenuTrigger
 	]
 })
 export class AddMembersModalComponent implements OnInit {

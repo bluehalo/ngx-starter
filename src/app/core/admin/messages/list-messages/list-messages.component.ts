@@ -1,12 +1,13 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item-router-link.directive';
 import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
@@ -38,10 +39,13 @@ import { MessageService } from '../../../messages/message.service';
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
-		BsDropdownModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
-		UtcDatePipe
+		UtcDatePipe,
+		CdkMenuTrigger,
+		CdkMenu,
+		CdkMenuItem,
+		CdkMenuItemRouterLinkDirective
 	]
 })
 export class ListMessagesComponent implements OnDestroy, OnInit {

@@ -38,7 +38,11 @@
 			<ng-container cdkColumnDef="title">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 				<td cdk-cell *cdkCellDef="let message">
-					{{ message.title }}
+					<a
+						class="text-decoration-underline"
+						[routerLink]="['/admin/message', message._id]"
+						>{{ message.title }}</a
+					>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="type">
@@ -61,49 +65,43 @@
 			</ng-container>
 			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 				<th cdk-header-cell *cdkHeaderCellDef></th>
-				<td
-					cdk-cell
-					container="body"
-					dropdown
-					placement="bottom right"
-					*cdkCellDef="let message"
-				>
-					<div class="dropdown border-left pl-2">
-						<button
-							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
-							id="message-{{ message._id }}-action-menu-btn"
-							type="button"
-							attr.aria-controls="message-{{ message._id }}-action-menu"
-							dropdownToggle
-						>
-							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-						</button>
-						<ul
-							class="dropdown-menu dropdown-menu-right"
+				<td cdk-cell *cdkCellDef="let message">
+					<button
+						class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
+						id="message-{{ message._id }}-action-menu-btn"
+						type="button"
+						attr.aria-controls="message-{{ message._id }}-action-menu"
+						[cdkMenuTriggerFor]="actionsMenu"
+					>
+						<span class="fa-solid fa-lg fa-ellipsis-v"></span>
+					</button>
+					<ng-template #actionsMenu>
+						<div
+							class="dropdown-menu"
 							id="message-{{ message._id }}-action-menu"
-							role="menu"
 							attr.aria-labelledby="message-{{ message._id }}-action-menu-btn"
-							*dropdownMenu
+							cdkMenu
 						>
-							<li role="menuitem">
-								<a class="dropdown-item" (click)="previewMessage(message)"
-									>Preview</a
-								>
-							</li>
-							<li role="menuitem">
-								<a
-									class="dropdown-item"
-									[routerLink]="['/admin/message', message._id]"
-									>Edit</a
-								>
-							</li>
-							<li role="menuitem">
-								<a class="dropdown-item" (click)="confirmDeleteMessage(message)"
-									>Delete</a
-								>
-							</li>
-						</ul>
-					</div>
+							<a
+								class="dropdown-item"
+								cdkMenuItem
+								[routerLink]="['/admin/message', message._id]"
+								>Edit</a
+							>
+							<a
+								class="dropdown-item"
+								cdkMenuItem
+								(cdkMenuItemTriggered)="previewMessage(message)"
+								>Preview</a
+							>
+							<a
+								class="dropdown-item"
+								cdkMenuItem
+								(cdkMenuItemTriggered)="confirmDeleteMessage(message)"
+								>Delete</a
+							>
+						</div>
+					</ng-template>
 				</td>
 			</ng-container>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>

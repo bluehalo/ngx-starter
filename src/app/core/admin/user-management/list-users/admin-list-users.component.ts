@@ -1,3 +1,5 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -5,11 +7,11 @@ import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
 
+import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item-router-link.directive';
 import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
@@ -48,6 +50,7 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		RouterLink,
 		TooltipModule,
 		CdkTableModule,
+		OverlayModule,
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
@@ -56,7 +59,6 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		NgFor,
 		NgIf,
 		NgClass,
-		BsDropdownModule,
 		AsyTableEmptyStateComponent,
 		SidebarComponent,
 		ColumnChooserComponent,
@@ -64,7 +66,11 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		AsyncPipe,
 		AgoDatePipe,
 		JoinPipe,
-		UtcDatePipe
+		UtcDatePipe,
+		CdkMenuTrigger,
+		CdkMenu,
+		CdkMenuItem,
+		CdkMenuItemRouterLinkDirective
 	]
 })
 export class AdminListUsersComponent implements OnDestroy, OnInit {
@@ -160,7 +166,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	private dialogService = inject(DialogService);
 
 	constructor(
-		private router: Router,
+		public router: Router,
 		private route: ActivatedRoute,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,

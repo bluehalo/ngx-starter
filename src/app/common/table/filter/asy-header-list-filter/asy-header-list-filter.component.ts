@@ -1,8 +1,9 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, Optional, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
@@ -27,14 +28,17 @@ export type ListFilterOption = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: [
-		BsDropdownModule,
 		NgClass,
 		NgIf,
 		SearchInputComponent,
 		NgFor,
 		FormsModule,
 		TitleCasePipe,
-		TooltipModule
+		TooltipModule,
+		CdkOverlayOrigin,
+		CdkConnectedOverlay,
+		A11yModule,
+		OverlayModule
 	],
 	providers: [TitleCasePipe]
 })

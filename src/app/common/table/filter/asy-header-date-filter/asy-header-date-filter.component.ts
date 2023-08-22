@@ -1,3 +1,5 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -5,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DateTime } from 'luxon';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import {
@@ -20,12 +21,15 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: [
-		BsDropdownModule,
 		FormsModule,
 		NgSelectModule,
 		BsDatepickerModule,
 		TitleCasePipe,
-		TooltipModule
+		TooltipModule,
+		CdkOverlayOrigin,
+		CdkConnectedOverlay,
+		A11yModule,
+		OverlayModule
 	]
 })
 export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterComponent {

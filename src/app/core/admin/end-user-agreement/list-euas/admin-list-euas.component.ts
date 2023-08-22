@@ -1,9 +1,9 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
@@ -41,13 +41,15 @@ import { EuaService } from '../eua.service';
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
-		BsDropdownModule,
 		AsyTableEmptyStateComponent,
 		SidebarComponent,
 		ColumnChooserComponent,
 		PaginatorComponent,
 		UtcDatePipe,
-		TooltipModule
+		TooltipModule,
+		CdkMenuTrigger,
+		CdkMenu,
+		CdkMenuItem
 	]
 })
 export class AdminListEuasComponent implements OnDestroy, OnInit {

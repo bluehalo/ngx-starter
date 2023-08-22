@@ -1,3 +1,4 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +15,6 @@ import {
 import { Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
@@ -65,12 +65,14 @@ import { TeamsService } from '../teams.service';
 		AsySortHeaderComponent,
 		TooltipModule,
 		AsyHeaderListFilterComponent,
-		BsDropdownModule,
 		NgFor,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		AgoDatePipe,
-		UtcDatePipe
+		UtcDatePipe,
+		CdkMenu,
+		CdkMenuTrigger,
+		CdkMenuItem
 	]
 })
 export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {

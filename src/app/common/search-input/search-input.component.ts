@@ -35,7 +35,7 @@ export class SearchInputComponent {
 	/**
 	 * If true, searches will be made on `input` events, otherwise searches will be made on `keyup` events
 	 */
-	@Input() preferInputEvent = false;
+	@Input() preferInputEvent = true;
 
 	/**
 	 * Specifies a minimum character count required to search.

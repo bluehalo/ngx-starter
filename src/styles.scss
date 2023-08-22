@@ -3,6 +3,8 @@
 @import 'styles/links';
 @import 'styles/selection';
 
+@import '@angular/cdk/overlay-prebuilt.css';
+
 /* You can add global styles to this file, and also import other style files */
 
 // Import the main ngx-bootstrap style file
@@ -13,6 +15,8 @@
 
 // Import the main ng-select style file
 @import 'styles/ng-select';
+@import 'styles/cdk-bootstrap';
+
 
 body {
 	@include font-normal();
