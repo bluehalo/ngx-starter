@@ -1,5 +1,5 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -8,9 +8,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
+import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { ModalAction } from '../../../../common/modal/modal.model';
-import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
 import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
@@ -95,8 +94,9 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private dialogService = inject(DialogService);
+
 	constructor(
-		private modalService: ModalService,
 		private euaService: EuaService,
 		private route: ActivatedRoute,
 		private alertService: SystemAlertService
@@ -120,15 +120,15 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteEua(eua: EndUserAgreement) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Delete End User Agreement?',
 				`Are you sure you want to delete eua: "${eua.title}" ?`,
 				'Delete'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.euaService.delete(eua)),
 				untilDestroyed(this)
 			)
@@ -163,6 +163,6 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	 */
 	previewEndUserAgreement(endUserAgreement: any) {
 		const { text, title } = endUserAgreement;
-		this.modalService.alert(title, text);
+		this.dialogService.alert(title, text);
 	}
 }

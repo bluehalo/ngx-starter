@@ -1,8 +1,8 @@
+import { DialogModule } from '@angular/cdk/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
 		configServiceSpy.getConfig.and.returnValue(of({}));
 
 		TestBed.configureTestingModule({
-			imports: [ModalModule.forRoot(), AppComponent],
+			imports: [DialogModule, AppComponent],
 			providers: [
 				{ provide: ConfigService, useValue: configServiceSpy },
 				provideHttpClient(),

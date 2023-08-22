@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalService } from '../../../common/modal/modal.service';
+import { DialogService } from '../../../common/dialog';
 import { EndUserAgreement } from './eua.model';
 
 export abstract class ManageEuaComponent {
@@ -9,7 +9,7 @@ export abstract class ManageEuaComponent {
 	eua = new EndUserAgreement();
 
 	protected router = inject(Router);
-	protected modalService = inject(ModalService);
+	protected dialogService = inject(DialogService);
 
 	protected constructor(
 		public title: string,
@@ -20,6 +20,6 @@ export abstract class ManageEuaComponent {
 	abstract submitEua(): any;
 
 	previewEua() {
-		this.modalService.alert(this.eua.title, this.eua.text);
+		this.dialogService.alert(this.eua.title, this.eua.text);
 	}
 }

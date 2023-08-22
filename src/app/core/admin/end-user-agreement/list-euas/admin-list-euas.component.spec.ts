@@ -1,9 +1,10 @@
+import { DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
 import { of } from 'rxjs';
 
-import { ModalService } from '../../../../common/modal/modal.service';
+import { DialogService } from '../../../../common/dialog';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { EuaService } from '../eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';
@@ -11,7 +12,7 @@ import { AdminListEuasComponent } from './admin-list-euas.component';
 describe('Admin List End User Agreements Component', () => {
 	let activatedRoute: any;
 	let endUserAgreementServiceSpy: any;
-	let modalServiceSpy: any;
+	let dialogServiceSpy: any;
 
 	let fixture: ComponentFixture<AdminListEuasComponent>;
 	let component: AdminListEuasComponent;
@@ -26,16 +27,17 @@ describe('Admin List End User Agreements Component', () => {
 			return of(void 0);
 		});
 		endUserAgreementServiceSpy.cache = {};
-		modalServiceSpy = jasmine.createSpyObj('ModalService', ['alert']);
-		modalServiceSpy.alert.and.callFake(() => {
+		dialogServiceSpy = jasmine.createSpyObj('DialogService', ['alert']);
+		dialogServiceSpy.alert.and.callFake(() => {
 			return of(void 0);
 		});
 		const testBed = TestBed.configureTestingModule({
-			imports: [AdminListEuasComponent],
+			imports: [AdminListEuasComponent, DialogModule],
 			providers: [
 				{ provide: ActivatedRoute, useValue: activatedRoute },
 				{ provide: EuaService, useValue: endUserAgreementServiceSpy },
-				{ provide: ModalService, useValue: modalServiceSpy },
+				{ provide: DialogService, useValue: dialogServiceSpy },
+				{ provide: DIALOG_DATA, useValue: {} },
 				SystemAlertService
 			]
 		});
@@ -50,8 +52,8 @@ describe('Admin List End User Agreements Component', () => {
 
 	it('Should Open a Modal When Preview End User Agreement', () => {
 		fixture.detectChanges();
-		expect(modalServiceSpy.alert).toHaveBeenCalledTimes(0);
+		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(0);
 		component.previewEndUserAgreement({});
-		expect(modalServiceSpy.alert).toHaveBeenCalledTimes(1);
+		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(1);
 	});
 });

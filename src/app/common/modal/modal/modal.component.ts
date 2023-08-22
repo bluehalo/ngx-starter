@@ -27,13 +27,10 @@ export class ModalComponent {
 	 * Text to display on the modal 'cancel' button
 	 */
 	@Input()
-	cancelText = 'Cancel';
+	cancelText?: string = 'Cancel';
 
 	@Input()
 	disableOk = false;
-
-	@Input()
-	autoCaptureFocus = false;
 
 	@Output()
 	readonly ok = new EventEmitter<void>();

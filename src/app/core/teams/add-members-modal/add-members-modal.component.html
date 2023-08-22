@@ -1,9 +1,8 @@
 <asy-modal
 	title="Add Team Members"
 	okText="Add Users"
-	[autoCaptureFocus]="true"
 	[disableOk]="submitting || addedMembers.length === 0"
-	(cancel)="modalRef.hide()"
+	(cancel)="dialogRef.close()"
 	(ok)="submit()"
 >
 	<h3>Add users</h3>
@@ -17,7 +16,6 @@
 			#selectDropdown
 			[items]="(users$ | async) || []"
 			[loading]="usersLoading"
-			[tabIndex]="-1"
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"
 		>
@@ -43,7 +41,7 @@
 						{{ invited.username }}
 					</td>
 					<td>
-						<div class="dropdown dropdown-table-inline" dropdown>
+						<div class="dropdown dropdown-table-inline" container="body" dropdown>
 							<span class="dropdown-toggle" dropdownToggle>
 								<span class="mr-1">{{ invited.roleDisplay }}</span>
 							</span>

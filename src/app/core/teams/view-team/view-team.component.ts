@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
 	ActivatedRoute,
 	Router,
@@ -11,8 +11,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, first, map, switchMap } from 'rxjs/operators';
 
-import { ModalAction } from '../../../common/modal/modal.model';
-import { ModalService } from '../../../common/modal/modal.service';
+import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { SessionService } from '../../auth/session.service';
@@ -41,10 +40,11 @@ export class ViewTeamComponent implements OnInit {
 	topics = getTeamTopics();
 	team?: Team;
 
+	private dialogService = inject(DialogService);
+
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		private modalService: ModalService,
 		private teamsService: TeamsService,
 		private alertService: SystemAlertService,
 		private sessionService: SessionService
@@ -70,15 +70,15 @@ export class ViewTeamComponent implements OnInit {
 	}
 
 	remove(team: Team) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Delete team?',
 				`Are you sure you want to delete the team: <strong>"${team.name}"</strong>?<br/>This action cannot be undone.`,
 				'Delete'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
 				untilDestroyed(this)

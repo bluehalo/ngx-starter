@@ -1,13 +1,13 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { first } from 'rxjs/operators';
 
+import { DialogService } from '../../common/dialog';
 import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
 import { getAdminTopics } from '../admin/admin-topic.model';
 import { HasRoleDirective } from '../auth/directives/has-role.directive';
@@ -88,8 +88,9 @@ export class SiteNavbarComponent implements OnInit {
 		}
 	}
 
+	private dialogService = inject(DialogService);
+
 	constructor(
-		private modalService: BsModalService,
 		private configService: ConfigService,
 		private sessionService: SessionService,
 		private messageService: MessageService,
@@ -129,9 +130,6 @@ export class SiteNavbarComponent implements OnInit {
 	}
 
 	showFeedbackModal() {
-		this.modalService.show(FeedbackModalComponent, {
-			ignoreBackdropClick: true,
-			class: 'modal-dialog-scrollable modal-lg'
-		});
+		this.dialogService.open(FeedbackModalComponent);
 	}
 }

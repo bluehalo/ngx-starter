@@ -1,0 +1,6 @@
+@import '@angular/cdk/overlay-prebuilt.css';
+
+// CDK Dialog
+.cdk-overlay-pane.modal {
+  display: block;
+}

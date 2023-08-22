@@ -1,7 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -10,9 +10,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
 
+import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { ModalAction } from '../../../../common/modal/modal.model';
-import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
 import { AgoDatePipe } from '../../../../common/pipes/ago-date.pipe';
 import { JoinPipe } from '../../../../common/pipes/join.pipe';
@@ -158,13 +157,14 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private dialogService = inject(DialogService);
+
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		private adminUsersService: AdminUsersService,
 		private exportConfigService: ExportConfigService,
 		private alertService: SystemAlertService,
-		private modalService: ModalService,
 		private configService: ConfigService
 	) {}
 
@@ -201,15 +201,15 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteUser(user: User) {
-		this.modalService
+		this.dialogService
 			.confirm(
 				'Delete user?',
 				`Are you sure you want to delete the user: <strong>"${user.userModel.name}"</strong>?<br/>This action cannot be undone.`,
 				'Delete'
 			)
-			.pipe(
+			.closed.pipe(
 				first(),
-				filter((action) => action === ModalAction.OK),
+				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {

@@ -1,13 +1,14 @@
+import { ComponentType } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
+import { DialogService } from '../../../common/dialog';
 import { SkipToDirective } from '../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
@@ -77,11 +78,10 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		}
 	);
 
-	private auditModalRef: BsModalRef | null = null;
+	private dialogService = inject(DialogService);
 
 	constructor(
 		private auditService: AuditService,
-		private modalService: BsModalService,
 		private configService: ConfigService
 	) {
 		this.configService
@@ -107,28 +107,19 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		this.filter.clearFilter();
 	}
 
+	viewComponents = new Map<string, ComponentType<unknown>>([
+		['viewDetails', AuditViewDetailsModalComponent],
+		['viewChanges', AuditViewChangeModalComponent]
+	]);
+
 	viewMore(auditEntry: any, type: string) {
-		switch (type) {
-			case 'viewDetails':
-				this.auditModalRef = this.modalService.show(AuditViewDetailsModalComponent, {
-					ignoreBackdropClick: true,
-					class: 'modal-dialog-scrollable modal-lg',
-					initialState: {
-						auditEntry
-					}
-				});
-				break;
-			case 'viewChanges':
-				this.auditModalRef = this.modalService.show(AuditViewChangeModalComponent, {
-					ignoreBackdropClick: true,
-					class: 'modal-dialog-scrollable modal-lg',
-					initialState: {
-						auditEntry
-					}
-				});
-				break;
-			default:
-				break;
+		const component = this.viewComponents.get(type);
+		if (component) {
+			this.dialogService.open(component, {
+				data: {
+					auditEntry
+				}
+			});
 		}
 	}
 }
