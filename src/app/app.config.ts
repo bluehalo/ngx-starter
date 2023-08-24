@@ -4,14 +4,9 @@ import { ApplicationConfig } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TitleStrategy, provideRouter, withHashLocation } from '@angular/router';
 
-import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { providerCdkDialog } from './common/dialog/provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
@@ -25,14 +20,14 @@ import { provideExampleRoutes } from './site/example/provider';
 export const appConfig: ApplicationConfig = {
 	providers: [
 		importProvidersFrom(
-			AlertModule.forRoot(),
 			BsDatepickerModule.forRoot(),
-			BsDropdownModule.forRoot(),
-			ModalModule.forRoot(),
 			PopoverModule.forRoot(),
-			TabsModule.forRoot(),
-			TooltipModule.forRoot(),
-			TypeaheadModule.forRoot()
+			TooltipModule.forRoot()
+			// ngx-bootstrap modules - If still using uncomment imports below.
+			// AlertModule.forRoot(),
+			// BsDropdownModule.forRoot(),
+			// ModalModule.forRoot(),
+			// TypeaheadModule.forRoot()
 		),
 		provideAnimations(),
 		provideHttpClient(

@@ -130,107 +130,93 @@
 						></asy-header-filter>
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="btn-group" container="body" dropdown placement="bottom right">
-							<button
-								class="dropdown-toggle feedback-status-button"
-								[class.feedback-status-closed]="
-									feedback.status === feedbackStatusOptions.CLOSED
-								"
-								[class.feedback-status-new]="
-									feedback.status === feedbackStatusOptions.NEW
-								"
-								[class.feedback-status-open]="
+						<button
+							class="dropdown-toggle feedback-status-button"
+							[ngClass]="{
+								'feedback-status-closed':
+									feedback.status === feedbackStatusOptions.CLOSED,
+								'feedback-status-new':
+									feedback.status === feedbackStatusOptions.NEW,
+								'feedback-status-open':
 									feedback.status === feedbackStatusOptions.OPEN
-								"
-								id="feedback-{{ feedback._id }}-status-menu-btn"
-								type="button"
-								attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
-								dropdownToggle
-							>
-								{{ feedback.status }}
-							</button>
-							<ul
-								class="dropdown-menu dropdown-menu-right"
+							}"
+							id="feedback-{{ feedback._id }}-status-menu-btn"
+							type="button"
+							attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
+							[cdkMenuTriggerFor]="statusMenu"
+						>
+							{{ feedback.status }}
+						</button>
+						<ng-template #statusMenu>
+							<div
+								class="dropdown-menu"
 								id="feedback-{{ feedback._id }}-status-menu"
-								role="menu"
 								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
-								*dropdownMenu
+								cdkMenu
 							>
-								<li
-									role="menuitem"
+								<button
+									class="dropdown-item"
+									cdkMenuItem
 									*ngIf="feedback.status !== feedbackStatusOptions.OPEN"
+									(cdkMenuItemTriggered)="
+										updateFeedbackStatus(feedback, feedbackStatusOptions.OPEN)
+									"
 								>
-									<button
-										class="dropdown-item"
-										(click)="
-											updateFeedbackStatus(
-												feedback,
-												feedbackStatusOptions.OPEN
-											)
-										"
-									>
-										Open
-									</button>
-								</li>
-								<li
-									role="menuitem"
+									Open
+								</button>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
 									*ngIf="feedback.status !== feedbackStatusOptions.CLOSED"
+									(cdkMenuItemTriggered)="
+										updateFeedbackStatus(feedback, feedbackStatusOptions.CLOSED)
+									"
 								>
-									<button
-										class="dropdown-item"
-										(click)="
-											updateFeedbackStatus(
-												feedback,
-												feedbackStatusOptions.CLOSED
-											)
-										"
-									>
-										Close
-									</button>
-								</li>
-							</ul>
-						</div>
+									Close
+								</button>
+							</div>
+						</ng-template>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="assignee">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Assignee</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="btn-group" container="body" dropdown placement="bottom right">
-							<button
-								class="dropdown-toggle feedback-status-button"
-								[class.feedback-status-open]="!!feedback.assignee"
-								id="feedback-{{ feedback._id }}-assignee-menu-btn"
-								type="button"
-								attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
-								dropdownToggle
-							>
-								{{ feedback.assignee ?? 'None' }}
-							</button>
-							<ul
-								class="dropdown-menu dropdown-menu-right"
+						<button
+							class="dropdown-toggle feedback-status-button"
+							[class.feedback-status-open]="!!feedback.assignee"
+							id="feedback-{{ feedback._id }}-assignee-menu-btn"
+							type="button"
+							attr.aria-controls="feedback-{{ feedback._id }}-assignee-menu"
+							[cdkMenuTriggerFor]="assigneeMenu"
+						>
+							{{ feedback.assignee ?? 'None' }}
+						</button>
+						<ng-template #assigneeMenu>
+							<div
+								class="dropdown-menu"
 								id="feedback-{{ feedback._id }}-assignee-menu"
-								role="menu"
-								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
-								*dropdownMenu
+								attr.aria-labelledby="feedback-{{ feedback._id }}-assignee-menu-btn"
+								cdkMenu
 							>
-								<li role="menuitem">
-									<button
-										class="dropdown-item"
-										(click)="updateFeedbackAssignee(feedback)"
-									>
-										None
-									</button>
-								</li>
-								<li role="menuitem" *ngFor="let username of assigneeUsernames">
-									<button
-										class="dropdown-item"
-										(click)="updateFeedbackAssignee(feedback, username)"
-									>
-										{{ username }}
-									</button>
-								</li>
-							</ul>
-						</div>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									(cdkMenuItemTriggered)="updateFeedbackAssignee(feedback)"
+								>
+									None
+								</button>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									*ngFor="let username of assigneeUsernames"
+									(cdkMenuItemTriggered)="
+										updateFeedbackAssignee(feedback, username)
+									"
+								>
+									{{ username }}
+								</button>
+							</div>
+						</ng-template>
 					</td>
 				</ng-container>
 				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>

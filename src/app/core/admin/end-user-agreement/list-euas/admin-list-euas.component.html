@@ -92,51 +92,48 @@
 						placement="bottom right"
 						*cdkCellDef="let eua"
 					>
-						<div class="dropdown border-left pl-2">
-							<button
-								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
-								id="eua-{{ eua._id }}-action-menu-btn"
-								type="button"
-								attr.aria-controls="eua-{{ eua._id }}-action-menu"
-								dropdownToggle
-							>
-								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-							</button>
-							<ul
-								class="dropdown-menu dropdown-menu-right"
+						<button
+							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret border-left py-0 pl-3"
+							id="eua-{{ eua._id }}-action-menu-btn"
+							type="button"
+							attr.aria-controls="eua-{{ eua._id }}-action-menu"
+							[cdkMenuTriggerFor]="actionsMenu"
+						>
+							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
+						</button>
+						<ng-template #actionsMenu>
+							<div
+								class="dropdown-menu"
 								id="eua-{{ eua._id }}-action-menu"
-								role="menu"
 								attr.aria-labelledby="eua-{{ eua._id }}-action-menu-btn"
-								*dropdownMenu
+								cdkMenu
 							>
-								<li role="menuitem">
-									<button
-										class="dropdown-item"
-										(click)="previewEndUserAgreement(eua)"
-									>
-										Preview
-									</button>
-								</li>
-								<li role="menuitem">
-									<button
-										class="dropdown-item"
-										[routerLink]="['/admin/eua', eua._id]"
-									>
-										Edit
-									</button>
-								</li>
-								<li role="menuitem">
-									<button class="dropdown-item" (click)="publishEua(eua)">
-										Publish
-									</button>
-								</li>
-								<li role="menuitem">
-									<button class="dropdown-item" (click)="confirmDeleteEua(eua)">
-										Delete
-									</button>
-								</li>
-							</ul>
-						</div>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									(click)="previewEndUserAgreement(eua)"
+								>
+									Preview
+								</button>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									[routerLink]="['/admin/eua', eua._id]"
+								>
+									Edit
+								</button>
+								<button class="dropdown-item" cdkMenuItem (click)="publishEua(eua)">
+									Publish
+								</button>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									(click)="confirmDeleteEua(eua)"
+								>
+									Delete
+								</button>
+							</div>
+						</ng-template>
 					</td>
 				</ng-container>
 

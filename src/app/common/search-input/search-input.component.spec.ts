@@ -41,6 +41,7 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not apply the search if keyup is never triggered', fakeAsync(() => {
+		componentInstance.preferInputEvent = false;
 		inputElement.nativeElement.value = 'search value';
 		fixture.detectChanges();
 		// need to trigger input event here so ngModel will set `search` property correctly

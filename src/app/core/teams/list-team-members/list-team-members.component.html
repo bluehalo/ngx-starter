@@ -67,25 +67,34 @@
 					</asy-header-filter>
 				</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<div
-						class="dropdown dropdown-table-inline"
-						container="body"
-						dropdown
+					<button
+						class="btn btn-sm dropdown-toggle p-0"
+						id="member-{{ member.userModel._id }}-role-menu-btn"
+						type="button"
+						attr.aria-controls="member-{{ member.userModel._id }}-role-menu"
 						*hasTeamRole="team; role: 'admin'; else: readOnlyRole"
+						[cdkMenuTriggerFor]="roleMenu"
 					>
-						<span class="dropdown-toggle" dropdownToggle>
-							<span class="mr-1">{{ member.roleDisplay }}</span>
-						</span>
-						<ul class="dropdown-menu" role="menu" *dropdownMenu>
-							<li
-								[value]="role.role"
+						<span class="mr-1">{{ member.roleDisplay }}</span>
+					</button>
+					<ng-template #roleMenu>
+						<div
+							class="dropdown-menu"
+							id="member-{{ member.userModel._id }}-role-menu"
+							attr.aria-labelledby="member-{{ member.userModel._id }}-role-menu-btn"
+							cdkMenu
+						>
+							<button
+								class="dropdown-item"
+								cdkMenuItem
 								*ngFor="let role of teamRoleOptions"
-								(click)="updateRole(member, role.role)"
+								(cdkMenuItemTriggered)="updateRole(member, role.role)"
 							>
-								<a class="dropdown-item">{{ role.label }}</a>
-							</li>
-						</ul>
-					</div>
+								{{ role.label }}
+							</button>
+						</div>
+					</ng-template>
+
 					<ng-template #readOnlyRole>
 						{{ member.roleDisplay }}
 					</ng-template>

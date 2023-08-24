@@ -63,8 +63,12 @@
 				</ng-container>
 				<ng-container cdkColumnDef="name">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
-					<td cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.name }}
+					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
+						<a
+							class="text-decoration-underline"
+							[routerLink]="['/admin/user', user.userModel._id]"
+							>{{ user.userModel.name }}</a
+						>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="username">
@@ -163,56 +167,53 @@
 				<ng-container cdkColumnDef="teams">
 					<th cdk-header-cell *cdkHeaderCellDef>Teams</th>
 					<td cdk-cell *cdkCellDef="let user">
-						<div class="text-nowrap" *ngFor="let team of user.userModel.teams">
-							<a
-								class="text-decoration-underline"
-								[routerLink]="['/team', team._id]"
-								>{{ team.team.name }}</a
-							>
+						<div class="cdk-cell-collapsible">
+							<div class="text-nowrap" *ngFor="let team of user.userModel.teams">
+								<a
+									class="text-decoration-underline"
+									[routerLink]="['/team', team._id]"
+									>{{ team.team.name }}</a
+								>
+							</div>
 						</div>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
-					<td
-						cdk-cell
-						container="body"
-						dropdown
-						placement="bottom right"
-						*cdkCellDef="let user"
-					>
-						<div class="dropdown border-left pl-2">
-							<button
-								class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret"
-								id="user-{{ user._id }}-action-menu-btn"
-								type="button"
-								attr.aria-controls="user-{{ user._id }}-action-menu"
-								dropdownToggle
-							>
-								<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-							</button>
-							<ul
-								class="dropdown-menu dropdown-menu-right"
+					<td cdk-cell *cdkCellDef="let user">
+						<button
+							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret border-left py-0 pl-3"
+							id="user-{{ user._id }}-action-menu-btn"
+							type="button"
+							attr.aria-controls="user-{{ user._id }}-action-menu"
+							[cdkMenuTriggerFor]="actionsMenu"
+						>
+							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
+						</button>
+						<ng-template #actionsMenu>
+							<div
+								class="dropdown-menu"
 								id="user-{{ user._id }}-action-menu"
-								role="menu"
 								attr.aria-labelledby="user-{{ user._id }}-action-menu-btn"
-								*dropdownMenu
+								cdkMenu
 							>
-								<li role="menuitem">
-									<button
-										class="dropdown-item"
-										[routerLink]="['/admin/user', user.userModel._id]"
-									>
-										Edit
-									</button>
-								</li>
-								<li role="menuitem" *ngIf="allowDeleteUser$ | async">
-									<button class="dropdown-item" (click)="confirmDeleteUser(user)">
-										Delete
-									</button>
-								</li>
-							</ul>
-						</div>
+								<a
+									class="dropdown-item"
+									cdkMenuItem
+									[routerLink]="['/admin/user', user.userModel._id]"
+								>
+									Edit
+								</a>
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									*ngIf="allowDeleteUser$ | async"
+									(cdkMenuItemTriggered)="confirmDeleteUser(user)"
+								>
+									Delete
+								</button>
+							</div>
+						</ng-template>
 					</td>
 				</ng-container>
 				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>

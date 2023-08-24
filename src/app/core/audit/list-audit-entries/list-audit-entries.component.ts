@@ -1,4 +1,4 @@
-import { ComponentType } from '@angular/cdk/overlay';
+import { ComponentType, OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
 import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
@@ -13,6 +13,7 @@ import { SkipToDirective } from '../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
+import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
 import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import { AsyHeaderDateFilterComponent } from '../../../common/table/filter/asy-header-date-filter/asy-header-date-filter.component';
@@ -39,6 +40,7 @@ import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter
 		SkipToDirective,
 		SystemAlertComponent,
 		CdkTableModule,
+		OverlayModule,
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
@@ -81,9 +83,11 @@ export class ListAuditEntriesComponent implements OnDestroy {
 	private dialogService = inject(DialogService);
 
 	constructor(
+		private alertService: SystemAlertService,
 		private auditService: AuditService,
 		private configService: ConfigService
 	) {
+		this.alertService.clearAllAlerts();
 		this.configService
 			.getConfig()
 			.pipe(first(), untilDestroyed(this))

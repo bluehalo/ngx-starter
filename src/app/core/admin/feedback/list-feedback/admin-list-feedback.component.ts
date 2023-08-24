@@ -1,10 +1,11 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
@@ -40,11 +41,11 @@ import { AdminUsersService } from '../../user-management/admin-users.service';
 		SearchInputComponent,
 		TooltipModule,
 		CdkTableModule,
+		OverlayModule,
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
 		AsyHeaderListFilterComponent,
-		BsDropdownModule,
 		NgIf,
 		NgFor,
 		AsyTableEmptyStateComponent,
@@ -54,7 +55,11 @@ import { AdminUsersService } from '../../user-management/admin-users.service';
 		TitleCasePipe,
 		AgoDatePipe,
 		UtcDatePipe,
-		SkipToDirective
+		SkipToDirective,
+		NgClass,
+		CdkMenuTrigger,
+		CdkMenu,
+		CdkMenuItem
 	]
 })
 export class AdminListFeedbackComponent implements OnDestroy, OnInit {

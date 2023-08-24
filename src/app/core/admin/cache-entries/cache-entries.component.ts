@@ -1,10 +1,10 @@
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
@@ -42,12 +42,14 @@ import { CacheEntry } from './cache-entry.model';
 		AsyFilterDirective,
 		AsySortHeaderComponent,
 		TooltipModule,
-		BsDropdownModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		JsonPipe,
 		AgoDatePipe,
-		UtcDatePipe
+		UtcDatePipe,
+		CdkMenu,
+		CdkMenuTrigger,
+		CdkMenuItem
 	]
 })
 export class CacheEntriesComponent implements OnDestroy, OnInit {

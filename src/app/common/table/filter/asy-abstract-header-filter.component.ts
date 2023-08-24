@@ -28,6 +28,8 @@ export abstract class AsyAbstractHeaderFilterComponent
 
 	isFiltered = false;
 
+	isOpen = false;
+
 	private storage = new SessionStorageService();
 
 	/**

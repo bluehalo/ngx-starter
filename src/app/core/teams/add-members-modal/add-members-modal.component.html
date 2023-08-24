@@ -41,21 +41,26 @@
 						{{ invited.username }}
 					</td>
 					<td>
-						<div class="dropdown dropdown-table-inline" container="body" dropdown>
-							<span class="dropdown-toggle" dropdownToggle>
-								<span class="mr-1">{{ invited.roleDisplay }}</span>
-							</span>
+						<button
+							class="btn btn-sm dropdown-toggle py-0"
+							[cdkMenuTriggerFor]="rolesMenu"
+						>
+							<span class="mr-1">{{ invited.roleDisplay }}</span>
+						</button>
 
-							<ul class="dropdown-menu" role="menu" *dropdownMenu>
-								<li
+						<ng-template #rolesMenu>
+							<div class="dropdown-menu" cdkMenu>
+								<button
+									class="dropdown-item"
 									[value]="role.role"
+									cdkMenuItem
 									*ngFor="let role of teamRoleOptions"
-									(click)="updateRoleSelection(invited, role.role)"
+									(cdkMenuItemTriggered)="updateRoleSelection(invited, role.role)"
 								>
-									<a class="dropdown-item">{{ role.label }}</a>
-								</li>
-							</ul>
-						</div>
+									{{ role.label }}
+								</button>
+							</div>
+						</ng-template>
 					</td>
 					<td>
 						<a

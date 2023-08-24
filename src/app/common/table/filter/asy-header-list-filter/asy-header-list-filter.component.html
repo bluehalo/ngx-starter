@@ -1,26 +1,34 @@
-<span class="dropdown" container="body" dropdown [insideClick]="true">
-	<button class="dropdown-toggle dropdown-toggle-hide-caret" dropdownToggle>
-		<span
-			class="filter fa-solid fa-list"
-			container="body"
-			placement="bottom"
-			tooltip="Apply Filters"
-			[hidden]="isFiltered"
-		></span>
-		<span
-			class="filter fa-solid fa-filter"
-			container="body"
-			placement="bottom"
-			tooltip="Edit Filters"
-			[hidden]="!isFiltered"
-		></span>
-	</button>
+<button
+	class="dropdown-toggle dropdown-toggle-hide-caret"
+	cdkOverlayOrigin
+	#trigger
+	(click)="isOpen = !isOpen"
+>
+	<span
+		class="filter fa-solid fa-list"
+		container="body"
+		placement="bottom"
+		tooltip="Apply Filters"
+		[hidden]="isFiltered"
+	></span>
+	<span
+		class="filter fa-solid fa-filter"
+		container="body"
+		placement="bottom"
+		tooltip="Edit Filters"
+		[hidden]="!isFiltered"
+	></span>
+</button>
 
-	<div
-		class="dropdown-menu d-flex flex-column"
-		[ngClass]="{ 'dropdown-menu-right': dropdownMenuRight }"
-		*dropdownMenu
-	>
+<ng-template
+	cdkConnectedOverlay
+	cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+	[cdkConnectedOverlayHasBackdrop]="true"
+	[cdkConnectedOverlayOpen]="isOpen"
+	[cdkConnectedOverlayOrigin]="trigger"
+	(backdropClick)="isOpen = false"
+>
+	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<ng-container *ngIf="showSearch">
 			<div class="search mt-2">
 				<asy-search-input
@@ -86,4 +94,4 @@
 			</div>
 		</ng-container>
 	</div>
-</span>
+</ng-template>
