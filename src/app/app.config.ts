@@ -5,7 +5,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { TitleStrategy, provideRouter, withHashLocation } from '@angular/router';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { providerCdkDialog } from './common/dialog/provider';
@@ -21,12 +20,12 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		importProvidersFrom(
 			BsDatepickerModule.forRoot(),
-			PopoverModule.forRoot(),
 			TooltipModule.forRoot()
 			// ngx-bootstrap modules - If still using uncomment imports below.
 			// AlertModule.forRoot(),
 			// BsDropdownModule.forRoot(),
 			// ModalModule.forRoot(),
+			// PopoverModule.forRoot(),
 			// TypeaheadModule.forRoot()
 		),
 		provideAnimations(),

@@ -1,10 +1,10 @@
 import { DialogModule } from '@angular/cdk/dialog';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { of } from 'rxjs';
 
 import { AuthorizationService } from '../auth/authorization.service';
@@ -76,7 +76,7 @@ describe('Site Navbar Component Spec', () => {
 		masqServiceSpy.getMasqueradeDn.and.returnValue(undefined);
 
 		TestBed.configureTestingModule({
-			declarations: [PopoverDirective],
+			declarations: [],
 			imports: [HttpClientTestingModule, RouterTestingModule, DialogModule],
 			providers: [
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
@@ -170,7 +170,7 @@ describe('Site Navbar Component Spec', () => {
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			const bottomMenuItems = fixture.debugElement.queryAll(By.directive(PopoverDirective));
+			const bottomMenuItems = fixture.debugElement.queryAll(By.directive(CdkMenuTrigger));
 			const helpMenuItem = bottomMenuItems[bottomMenuItems.length - 1];
 			helpMenuItem.triggerEventHandler('click', null);
 
