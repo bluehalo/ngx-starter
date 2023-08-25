@@ -1,5 +1,5 @@
 import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -17,8 +17,11 @@ import { MessageService } from '../message.service';
 	imports: [NgIf, NgFor, NgClass, LowerCasePipe]
 })
 export class RecentMessagesComponent implements OnInit {
-	@Input() container: any;
+	@Output()
+	readonly viewAllClicked = new EventEmitter();
+
 	messages: Message[] = [];
+
 	loading = false;
 
 	messageType = MessageType;
@@ -69,7 +72,7 @@ export class RecentMessagesComponent implements OnInit {
 
 	viewAll() {
 		this.router.navigate(['/messages']).then(() => {
-			this.container.hide();
+			this.viewAllClicked.emit();
 		});
 	}
 }

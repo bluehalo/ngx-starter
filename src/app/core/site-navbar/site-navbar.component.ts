@@ -1,12 +1,16 @@
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { first } from 'rxjs/operators';
 
+import { CdkMenuItemHrefDirective } from '../../common/cdk-menu-item-href.directive';
+import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-router-link.directive';
 import { DialogService } from '../../common/dialog';
 import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
 import { getAdminTopics } from '../admin/admin-topic.model';
@@ -38,9 +42,15 @@ import { getNavbarTopics } from './navbar-topic.model';
 		RouterLink,
 		HasRoleDirective,
 		LinkAccessibilityDirective,
-		PopoverModule,
 		IsAuthenticatedDirective,
-		RecentMessagesComponent
+		RecentMessagesComponent,
+		CdkMenu,
+		CdkMenuItem,
+		CdkMenuItemHrefDirective,
+		CdkMenuItemRouterLinkDirective,
+		CdkMenuTrigger,
+		CdkConnectedOverlay,
+		A11yModule
 	]
 })
 export class SiteNavbarComponent implements OnInit {
@@ -70,6 +80,17 @@ export class SiteNavbarComponent implements OnInit {
 	isMasquerade = false;
 
 	numNewMessages = 0;
+
+	menuPositions: ConnectedPosition[] = [
+		{
+			originX: 'end',
+			originY: 'bottom',
+			overlayX: 'start',
+			overlayY: 'bottom',
+			offsetX: 8,
+			panelClass: 'nav-menu'
+		}
+	];
 
 	@Output()
 	readonly navbarOpenChange = new EventEmitter<boolean>();

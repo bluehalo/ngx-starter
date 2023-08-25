@@ -167,14 +167,15 @@
 	overflow: auto;
 }
 
-::ng-deep .popover.site-nav-popover-container {
-	width: $nav-popover-width;
-	z-index: $nav-popover-z-index;
+.messages-menu {
+	max-width: min(calc(100vw - #{$nav-open-width} - 1rem), #{$nav-messages-popover-max-width});
 }
 
-::ng-deep .popover.site-nav-popover-container-messages {
-	max-width: min(calc(100vw - #{$nav-open-width} - 1rem), #{$nav-messages-popover-max-width});
-	z-index: $nav-popover-z-index;
+.nav-menu {
+	width: $nav-popover-width;
+	.dropdown-item {
+		padding: 10px 24px;
+	}
 }
 
 // new messages number badge

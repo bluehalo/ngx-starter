@@ -35,39 +35,40 @@
 		<!-- Bottom Aux Nav -->
 		<ul class="nav nav-aux">
 			<!-- Admin Nav	-->
-			<li class="element nav-popover nav-popover-bottom" *hasRole="'admin'">
+			<li class="element" *hasRole="'admin'">
 				<a
 					[class.highlight-link]="adminNavOpen"
-					container="body"
-					containerClass="site-nav-popover-container"
+					id="admin-nav-menu-btn"
+					aria-controls="admin-nav-menu"
 					linkAccessibility
 					placement="left"
 					tooltip="Admin"
-					#adminNavPopover="bs-popover"
+					[cdkMenuPosition]="menuPositions"
+					[cdkMenuTriggerFor]="adminNav"
 					[isDisabled]="navbarOpen"
-					[outsideClick]="true"
-					[popover]="adminNav"
-					(onHidden)="adminNavOpen = false"
-					(onShown)="adminNavOpen = true"
+					(cdkMenuClosed)="adminNavOpen = false"
+					(cdkMenuOpened)="adminNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-cog"></span>
 					<span [hidden]="!navbarOpen">Admin</span>
 				</a>
 
 				<ng-template #adminNav>
-					<ul class="popover-menu" role="menu">
-						<li *ngFor="let adminItem of adminTopics">
-							<a
-								[routerLink]="[
-									'admin/' + adminItem.path,
-									{ clearCachedFilter: true }
-								]"
-								(click)="adminNavPopover.hide()"
-							>
-								{{ adminItem.title }}
-							</a>
-						</li>
-					</ul>
+					<div
+						class="nav-menu dropdown-menu"
+						id="admin-nav-menu"
+						aria-labelledby="admin-nav-menu-btn"
+						cdkMenu
+					>
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							*ngFor="let adminItem of adminTopics"
+							[routerLink]="['admin/' + adminItem.path]"
+						>
+							{{ adminItem.title }}
+						</button>
+					</div>
 				</ng-template>
 			</li>
 
@@ -102,20 +103,19 @@
 			</li>
 
 			<!-- User Nav	-->
-			<li class="element nav-popover nav-popover-bottom" *isAuthenticated>
+			<li class="element" *isAuthenticated>
 				<a
 					[class.highlight-link]="userNavOpen"
-					container="body"
-					containerClass="site-nav-popover-container"
+					id="user-nav-menu-btn"
+					aria-controls="user-nav-menu"
 					linkAccessibility
 					placement="left"
 					tooltip="User Profile"
-					#userNavPopover="bs-popover"
+					[cdkMenuPosition]="menuPositions"
+					[cdkMenuTriggerFor]="userNav"
 					[isDisabled]="navbarOpen"
-					[outsideClick]="true"
-					[popover]="userNav"
-					(onHidden)="userNavOpen = false"
-					(onShown)="userNavOpen = true"
+					(cdkMenuClosed)="userNavOpen = false"
+					(cdkMenuOpened)="userNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
 					<span class="fa-stack" *ngIf="isMasquerade">
@@ -126,35 +126,43 @@
 				</a>
 
 				<ng-template #userNav>
-					<ul class="popover-menu" role="menu">
+					<div
+						class="nav-menu dropdown-menu"
+						id="user-nav-menu"
+						aria-labelledby="user-nav-menu-btn"
+						cdkMenu
+					>
 						<!-- User Signout -->
-						<li><a href="/api/auth/signout">Sign out</a></li>
-						<li *ngIf="session?.user?.eua">
-							<a [routerLink]="['/eua']">View EUA</a>
-						</li>
+						<a class="dropdown-item" href="/api/auth/signout" cdkMenuItem> Sign out </a>
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							routerLink="/eua"
+							*ngIf="session?.user?.eua"
+						>
+							View EUA
+						</button>
 
 						<!-- User Preferences -->
-						<li *ngIf="showUserPreferencesLink">
-							<a [routerLink]="userPreferencesLink" (click)="userNavPopover.hide()">
-								User Preferences
-							</a>
-						</li>
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							*ngIf="showUserPreferencesLink"
+							[routerLink]="userPreferencesLink"
+						>
+							User Preferences
+						</button>
 
-						<ng-container *ngIf="masqueradeEnabled">
-							<li>
-								<a
-									routerLink="/masquerade"
-									*ngIf="!isMasquerade && canMasquerade"
-									(click)="userNavPopover.hide()"
-								>
-									Masquerade
-								</a>
-								<a routerLink="/masquerade" *ngIf="isMasquerade">
-									Clear Masquerade
-								</a>
-							</li>
-						</ng-container>
-					</ul>
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							routerLink="/masquerade"
+							*ngIf="masqueradeEnabled && canMasquerade"
+						>
+							<ng-container *ngIf="!isMasquerade"> Clear </ng-container>
+							Masquerade
+						</button>
+					</div>
 				</ng-template>
 			</li>
 
@@ -180,20 +188,15 @@
 			</li>
 
 			<!-- Messages Nav   -->
-			<li class="element nav-popover nav-popover-bottom" *hasRole="'user'">
+			<li class="element" *hasRole="'user'">
 				<a
 					[class.highlight-link]="messagesNavOpen"
-					container="body"
-					containerClass="site-nav-popover-container-messages"
 					linkAccessibility
 					placement="left bottom"
 					tooltip="Notifications"
-					#messagesNavPopover="bs-popover"
+					#trigger
 					[isDisabled]="navbarOpen"
-					[outsideClick]="true"
-					[popover]="messagesNav"
-					(onHidden)="messagesNavOpen = false"
-					(onShown)="messagesNavOpen = true"
+					(click)="messagesNavOpen = !messagesNavOpen"
 				>
 					<span
 						class="fa-solid fa-fw fa-bell"
@@ -202,8 +205,21 @@
 					></span>
 					<span [hidden]="!navbarOpen">Notifications</span>
 				</a>
-				<ng-template #messagesNav>
-					<app-recent-messages [container]="messagesNavPopover"></app-recent-messages>
+				<ng-template
+					cdkConnectedOverlay
+					cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+					cdkConnectedOverlayPanelClass="messages-nav"
+					[cdkConnectedOverlayHasBackdrop]="true"
+					[cdkConnectedOverlayOpen]="messagesNavOpen"
+					[cdkConnectedOverlayOrigin]="trigger"
+					[cdkConnectedOverlayPositions]="menuPositions"
+					(backdropClick)="messagesNavOpen = false"
+				>
+					<div class="dropdown-menu messages-menu">
+						<app-recent-messages
+							(viewAllClicked)="messagesNavOpen = false"
+						></app-recent-messages>
+					</div>
 				</ng-template>
 			</li>
 
@@ -211,52 +227,54 @@
 			<li class="element nav-popover nav-popover-bottom">
 				<a
 					[class.highlight-link]="helpNavOpen"
-					container="body"
-					containerClass="site-nav-popover-container"
+					id="help-nav-menu-btn"
+					aria-controls="help-nav-menu"
 					linkAccessibility
 					placement="left"
 					tooltip="Help"
-					#helpNavPopover="bs-popover"
+					[cdkMenuPosition]="menuPositions"
+					[cdkMenuTriggerFor]="helpNav"
 					[isDisabled]="navbarOpen"
-					[outsideClick]="true"
-					[popover]="helpNav"
-					(onHidden)="helpNavOpen = false"
-					(onShown)="helpNavOpen = true"
+					(cdkMenuClosed)="helpNavOpen = false"
+					(cdkMenuOpened)="helpNavOpen = true"
 				>
 					<span class="fa-solid fa-fw fa-question-circle"></span>
 					<span [hidden]="!navbarOpen">Help</span>
 				</a>
 
 				<ng-template #helpNav>
-					<ul class="popover-menu" role="menu">
+					<div
+						class="dropdown-menu"
+						id="help-nav-menu"
+						aria-labelledby="help-nav-menu-btn"
+						cdkMenu
+					>
 						<!-- Help -->
-						<li>
-							<a routerLink="/help" (click)="helpNavPopover.hide()"> Help Docs </a>
-						</li>
-
+						<button class="dropdown-item" cdkMenuItem routerLink="/help">
+							Help Docs
+						</button>
 						<!-- Feedback -->
-						<li *isAuthenticated="true; and: showFeedbackOption">
-							<a
-								class="link"
-								linkAccessibility
-								(click)="showFeedbackModal(); helpNavPopover.hide()"
-							>
-								Give Feedback
-							</a>
-						</li>
-
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							*isAuthenticated="true; and: showFeedbackOption"
+							(cdkMenuItemTriggered)="showFeedbackModal()"
+						>
+							Give Feedback
+						</button>
 						<!-- API Docs -->
-						<li *ngIf="showApiDocsLink">
-							<a [href]="apiDocsLink" target="_blank" (click)="helpNavPopover.hide()">
-								API Docs
-							</a>
-						</li>
-
+						<a
+							class="dropdown-item"
+							[href]="apiDocsLink"
+							cdkMenuItem
+							target="_blank"
+							*ngIf="showApiDocsLink"
+						>
+							API Docs
+						</a>
 						<!-- About -->
-						<li>
-							<a routerLink="/about" (click)="helpNavPopover.hide()"> About </a>
-						</li>
-					</ul>
+						<button class="dropdown-item" cdkMenuItem routerLink="/about">About</button>
+					</div>
 				</ng-template>
 			</li>
 		</ul>

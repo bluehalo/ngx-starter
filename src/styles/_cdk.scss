@@ -4,3 +4,18 @@
 .cdk-overlay-pane.modal {
   display: block;
 }
+
+.cdk-menu {
+	&.dropdown-menu {
+		display: block;
+		position: static;
+	}
+}
+
+.cdk-overlay-pane {
+	.dropdown-menu {
+		display: block;
+		position: static;
+	}
+}
+
