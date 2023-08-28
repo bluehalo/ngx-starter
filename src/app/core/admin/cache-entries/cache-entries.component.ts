@@ -25,7 +25,7 @@ import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-head
 import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
 import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { CacheEntriesService } from './cache-entries.service';
-import { CacheEntryModalComponent } from './cache-entry-modal.component';
+import { CacheEntryModalComponent, CacheEntryModalData } from './cache-entry-modal.component';
 import { CacheEntry } from './cache-entry.model';
 
 @UntilDestroy()
@@ -118,7 +118,7 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
-		this.dialogService.open(CacheEntryModalComponent, {
+		this.dialogService.open<unknown, CacheEntryModalData>(CacheEntryModalComponent, {
 			data: {
 				cacheEntry
 			}

@@ -207,13 +207,11 @@
 				</a>
 				<ng-template
 					cdkConnectedOverlay
-					cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
 					cdkConnectedOverlayPanelClass="messages-nav"
-					[cdkConnectedOverlayHasBackdrop]="true"
 					[cdkConnectedOverlayOpen]="messagesNavOpen"
 					[cdkConnectedOverlayOrigin]="trigger"
 					[cdkConnectedOverlayPositions]="menuPositions"
-					(backdropClick)="messagesNavOpen = false"
+					(overlayOutsideClick)="messagesNavOpen = false"
 				>
 					<div class="dropdown-menu messages-menu">
 						<app-recent-messages

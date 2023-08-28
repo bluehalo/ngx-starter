@@ -22,11 +22,9 @@
 
 <ng-template
 	cdkConnectedOverlay
-	cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
-	[cdkConnectedOverlayHasBackdrop]="true"
 	[cdkConnectedOverlayOpen]="isOpen"
 	[cdkConnectedOverlayOrigin]="trigger"
-	(backdropClick)="isOpen = false"
+	(overlayOutsideClick)="isOpen = false"
 >
 	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<div class="my-3">

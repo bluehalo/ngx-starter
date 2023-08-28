@@ -6,7 +6,7 @@ import {
 	ConfigurableDialogComponent,
 	ConfigurableDialogData
 } from './configurable-dialog/configurable-dialog.component';
-import { DialogReturn } from './dialog.modal';
+import { DialogReturn } from './dialog.model';
 
 @Injectable({
 	providedIn: 'root'
