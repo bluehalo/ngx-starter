@@ -4,7 +4,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ModalComponent } from '../../modal/modal/modal.component';
-import { DialogAction, DialogReturn } from '../dialog.modal';
+import { DialogAction, DialogReturn } from '../dialog.model';
 
 export type DialogInput = {
 	type: 'textarea' | 'text';
@@ -21,6 +21,8 @@ export class ConfigurableDialogData {
 	inputs?: DialogInput[];
 }
 
+export type ConfigurableDialogReturn = DialogReturn<any>;
+
 @Component({
 	standalone: true,
 	imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent],
@@ -28,10 +30,10 @@ export class ConfigurableDialogData {
 	styleUrls: ['./configurable-dialog.component.scss']
 })
 export class ConfigurableDialogComponent {
+	dialogRef: DialogRef<ConfigurableDialogReturn> = inject(DialogRef);
 	data: ConfigurableDialogData = inject(DIALOG_DATA);
-	dialogRef = inject(DialogRef);
 
-	formData: any = {};
+	formData: Record<string, unknown> = {};
 
 	cancel() {
 		this.dialogRef.close({ action: DialogAction.CANCEL });

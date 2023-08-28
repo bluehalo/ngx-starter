@@ -2,7 +2,7 @@
 	title="Add Team Members"
 	okText="Add Users"
 	[disableOk]="submitting || addedMembers.length === 0"
-	(cancel)="dialogRef.close()"
+	(cancel)="cancel()"
 	(ok)="submit()"
 >
 	<h3>Add users</h3>

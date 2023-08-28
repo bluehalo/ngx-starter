@@ -2,21 +2,19 @@
 	title="Cache Entry Details"
 	cancelText=""
 	okText="Close"
-	(cancel)="dialogRef.close()"
-	(ok)="dialogRef.close()"
+	(cancel)="close()"
+	(ok)="close()"
 >
 	<div class="row">
 		<div class="col-md-12">
 			<label>Key</label>
-			<div>{{ data.cacheEntry.key }}</div>
+			<div>{{ cacheEntry.key }}</div>
 
 			<label>Last Updated</label>
-			<div>
-				{{ data.cacheEntry.date | utcDate }} ({{ data.cacheEntry.date | agoDate: false }})
-			</div>
+			<div>{{ cacheEntry.date | utcDate }} ({{ cacheEntry.date | agoDate: false }})</div>
 
 			<label>Value</label>
-			<pre>{{ data.cacheEntry.value | json }}</pre>
+			<pre>{{ cacheEntry.value | json }}</pre>
 		</div>
 	</div>
 </asy-modal>

@@ -19,7 +19,12 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
-import { DialogAction, DialogService } from '../../../common/dialog';
+import {
+	DialogAction,
+	DialogService,
+	isDialogActionOK,
+	mapToDialogReturnData
+} from '../../../common/dialog';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
@@ -42,7 +47,8 @@ import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import {
 	AddMembersModalComponent,
-	AddMembersModalData
+	AddMembersModalData,
+	AddMembersModalReturn
 } from '../add-members-modal/add-members-modal.component';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { TeamMember } from '../team-member.model';
@@ -166,12 +172,17 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 	addMembers() {
 		this.dialogService
-			.open<number, AddMembersModalData>(AddMembersModalComponent, {
+			.open<AddMembersModalReturn, AddMembersModalData>(AddMembersModalComponent, {
 				data: {
 					teamId: this.team._id
 				}
 			})
-			.closed.pipe(isNotNullOrUndefined(), untilDestroyed(this))
+			.closed.pipe(
+				isNotNullOrUndefined(),
+				isDialogActionOK(),
+				mapToDialogReturnData(),
+				untilDestroyed(this)
+			)
 			.subscribe((usersAdded) => {
 				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
 				this.reloadTeamMembers();
