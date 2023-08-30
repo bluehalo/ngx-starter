@@ -9,6 +9,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 
+import { DialogAction, DialogReturn } from '../../../common/dialog';
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
 import { PagingOptions } from '../../../common/paging.model';
 import { User } from '../../auth/user.model';
@@ -18,6 +19,8 @@ import { AddedMember, TeamsService } from '../teams.service';
 export type AddMembersModalData = {
 	teamId: string;
 };
+
+export type AddMembersModalReturn = DialogReturn<number>;
 
 @UntilDestroy()
 @Component({
@@ -44,6 +47,8 @@ export type AddMembersModalData = {
 	]
 })
 export class AddMembersModalComponent implements OnInit {
+	teamId: string;
+
 	addedMembers: AddedMember[] = [];
 
 	submitting = false;
@@ -57,12 +62,17 @@ export class AddMembersModalComponent implements OnInit {
 	users$!: Observable<User[]>;
 
 	teamsService = inject(TeamsService);
-	dialogRef = inject(DialogRef);
-	data: AddMembersModalData = inject(DIALOG_DATA);
 
 	private defaultRole = 'member';
 
 	private pagingOptions: PagingOptions = new PagingOptions();
+
+	private dialogRef: DialogRef<AddMembersModalReturn> = inject(DialogRef);
+	private data: AddMembersModalData = inject(DIALOG_DATA);
+
+	constructor() {
+		this.teamId = this.data.teamId;
+	}
 
 	ngOnInit() {
 		if (!this.data.teamId) {
@@ -104,8 +114,12 @@ export class AddMembersModalComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.submitting = false;
-				this.dialogRef.close(this.addedMembers.length);
+				this.dialogRef.close({ action: DialogAction.OK, data: this.addedMembers.length });
 			});
+	}
+
+	cancel() {
+		this.dialogRef.close({ action: DialogAction.CANCEL });
 	}
 
 	remove(ndx: number) {

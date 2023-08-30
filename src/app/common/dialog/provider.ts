@@ -3,7 +3,7 @@ import { importProvidersFrom, makeEnvironmentProviders } from '@angular/core';
 
 import { BsDialogContainerComponent } from './bs-dialog-container/bs-dialog-container.component';
 
-export function providerCdkDialog() {
+export function provideCdkDialog() {
 	return makeEnvironmentProviders([
 		importProvidersFrom(DialogModule),
 		{

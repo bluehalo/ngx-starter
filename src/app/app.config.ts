@@ -5,9 +5,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { TitleStrategy, provideRouter, withHashLocation } from '@angular/router';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { providerCdkDialog } from './common/dialog/provider';
+import { provideCdkDialog } from './common/dialog/provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { euaInterceptor } from './core/auth/eua.interceptor';
 import { signinInterceptor } from './core/auth/signin.interceptor';
@@ -20,11 +21,12 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		importProvidersFrom(
 			BsDatepickerModule.forRoot(),
-			TooltipModule.forRoot()
+			TooltipModule.forRoot(),
+			// only used by modal example.  no longer used for any core functionality.
+			ModalModule.forRoot()
 			// ngx-bootstrap modules - If still using uncomment imports below.
 			// AlertModule.forRoot(),
 			// BsDropdownModule.forRoot(),
-			// ModalModule.forRoot(),
 			// PopoverModule.forRoot(),
 			// TypeaheadModule.forRoot()
 		),
@@ -39,7 +41,7 @@ export const appConfig: ApplicationConfig = {
 			// Ensures any legacy class based interceptors are used.
 			withInterceptorsFromDi()
 		),
-		providerCdkDialog(),
+		provideCdkDialog(),
 		provideRouter([], withHashLocation()),
 		provideCoreRoutes(),
 		provideExampleRoutes(),

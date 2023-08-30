@@ -1,18 +1,18 @@
 <asy-modal
-	title="{{ data.auditEntry?.audit?.auditType | titlecase }} {{
-		data.auditEntry?.audit?.action + 'd'
-	}} by {{ data.auditEntry?.audit?.actor?.username }} on {{ data.auditEntry?.created | utcDate }}"
+	title="{{ auditEntry?.audit?.auditType | titlecase }} {{
+		auditEntry?.audit?.action + 'd'
+	}} by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}"
 	cancelText=""
 	okText="Close"
-	(cancel)="dialogRef.close()"
-	(ok)="dialogRef.close()"
+	(cancel)="close()"
+	(ok)="close()"
 >
 	<div class="row">
 		<div class="col-md-12">
-			<h4 *ngIf="data.auditEntry?.audit?.object?.title">
-				{{ data.auditEntry?.audit?.object?.title }}
+			<h4 *ngIf="auditEntry?.audit?.object?.title">
+				{{ auditEntry?.audit?.object?.title }}
 			</h4>
-			<pre>{{ data.auditEntry?.audit?.object | json }}</pre>
+			<pre>{{ auditEntry?.audit?.object | json }}</pre>
 		</div>
 	</div>
 </asy-modal>

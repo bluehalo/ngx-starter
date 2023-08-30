@@ -23,9 +23,6 @@ export interface AsyFilterHeaderColumnDef {
 export abstract class AsyAbstractHeaderFilterComponent
 	implements AsyFilterable, AfterViewInit, OnDestroy, OnInit
 {
-	@Input()
-	dropdownMenuRight = false;
-
 	isFiltered = false;
 
 	isOpen = false;

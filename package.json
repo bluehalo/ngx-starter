@@ -7,7 +7,7 @@
     "start:prod": "ng serve --proxy-config proxy.conf.json --configuration production",
     "build": "npm run lint && ng build",
     "build:prod": "npm run lint && ng build --configuration production",
-    "build:bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
+    "build:bundle-report": "ng build --configuration development --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
     "build:bundle-report:prod": "ng build --configuration production --stats-json && webpack-bundle-analyzer dist/ngx-starter/stats.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage",
