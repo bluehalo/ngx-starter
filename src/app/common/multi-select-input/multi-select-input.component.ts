@@ -3,6 +3,19 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
+/**
+ * @deprecated
+ * Use multi-select directive instead.  It provides the same functionality, but with more flexibility
+ *
+ * Replace:
+ *
+ * <asy-multi-select-input ...></asy-multi-select-input>
+ *
+ * With:
+ *
+ * <ng-select multi-select ...></ng-select>
+ *
+ */
 @Component({
 	selector: 'asy-multi-select-input',
 	templateUrl: './multi-select-input.component.html',

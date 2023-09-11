@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 
-import { MultiSelectInputComponent } from '../../../../common/multi-select-input/multi-select-input.component';
+import { MultiSelectDirective } from '../../../../common/multi-select.directive';
 import { JoinPipe } from '../../../../common/pipes/join.pipe';
 import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { UserExternalRolesSelectDirective } from '../../../auth/directives/user-external-roles-select.directive';
 import { SessionService } from '../../../auth/session.service';
 import { ConfigService } from '../../../config.service';
 import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';
@@ -30,11 +32,13 @@ import { TeamsService } from '../../teams.service';
 		HasTeamRoleDirective,
 		FormsModule,
 		RouterLink,
-		MultiSelectInputComponent,
 		ListSubTeamsComponent,
 		TitleCasePipe,
 		JoinPipe,
-		UtcDatePipe
+		UtcDatePipe,
+		MultiSelectDirective,
+		NgSelectModule,
+		UserExternalRolesSelectDirective
 	]
 })
 export class GeneralDetailsComponent implements OnInit {

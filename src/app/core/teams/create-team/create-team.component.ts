@@ -16,12 +16,13 @@ import {
 	tap
 } from 'rxjs/operators';
 
-import { MultiSelectInputComponent } from '../../../common/multi-select-input/multi-select-input.component';
+import { MultiSelectDirective } from '../../../common/multi-select.directive';
 import { PagingOptions } from '../../../common/paging.model';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
+import { UserExternalRolesSelectDirective } from '../../auth/directives/user-external-roles-select.directive';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { ConfigService } from '../../config.service';
@@ -40,8 +41,9 @@ import { TeamsService } from '../teams.service';
 		NgIf,
 		NgSelectModule,
 		TeamSelectInputComponent,
-		MultiSelectInputComponent,
-		AsyncPipe
+		AsyncPipe,
+		MultiSelectDirective,
+		UserExternalRolesSelectDirective
 	]
 })
 export class CreateTeamComponent implements OnInit {
