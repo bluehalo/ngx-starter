@@ -124,11 +124,13 @@
 			[hidden]="!team.implicitMembers"
 		>
 			<label>External Roles</label>
-			<asy-multi-select-input
+			<ng-select
 				name="externalRoles"
+				appUserExternalRolesSelect
+				multi-select
 				placeholder="Start typing a role..."
 				[(ngModel)]="team.requiresExternalRoles"
-			></asy-multi-select-input>
+			></ng-select>
 		</div>
 
 		<!-- External Teams -->
@@ -138,11 +140,12 @@
 			[hidden]="!team.implicitMembers"
 		>
 			<label>External Teams</label>
-			<asy-multi-select-input
+			<ng-select
 				name="externalTeams"
+				multi-select
 				placeholder="Start typing a team..."
 				[(ngModel)]="team.requiresExternalTeams"
-			></asy-multi-select-input>
+			></ng-select>
 		</div>
 
 		<div class="form-group">

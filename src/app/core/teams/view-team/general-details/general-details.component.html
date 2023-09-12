@@ -106,11 +106,13 @@
 								<div>{{ team.requiresExternalRoles | join: ', ' }}</div>
 							</div>
 							<div class="col" *ngIf="isEditing">
-								<asy-multi-select-input
+								<ng-select
 									name="externalRoles"
+									appUserExternalRolesSelect
+									multi-select
 									placeholder="Start typing a role..."
 									[(ngModel)]="_team.requiresExternalRoles"
-								></asy-multi-select-input>
+								></ng-select>
 							</div>
 						</div>
 
@@ -127,11 +129,12 @@
 								<div>{{ team.requiresExternalTeams | join: ', ' }}</div>
 							</div>
 							<div class="col" *ngIf="isEditing">
-								<asy-multi-select-input
+								<ng-select
 									name="externalTeams"
+									multi-select
 									placeholder="Start typing a team..."
 									[(ngModel)]="_team.requiresExternalTeams"
-								></asy-multi-select-input>
+								></ng-select>
 							</div>
 						</div>
 					</div>
