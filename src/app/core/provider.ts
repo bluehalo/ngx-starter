@@ -1,4 +1,5 @@
-import { APP_INITIALIZER, makeEnvironmentProviders } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { APP_INITIALIZER, Provider, makeEnvironmentProviders } from '@angular/core';
 import { ROUTES } from '@angular/router';
 
 import { firstValueFrom } from 'rxjs';
@@ -7,6 +8,7 @@ import { tap } from 'rxjs/operators';
 import { ADMIN_TOPICS } from './admin/admin-topic.model';
 import { ConfigService } from './config.service';
 import { CORE_ROUTES } from './core-routes';
+import { CustomViewportScroller, SCROLL_ELEMENT } from './custom_viewport_scroller';
 import { GettingStartedHelpComponent } from './help/getting-started/getting-started-help.component';
 import { HELP_TOPICS } from './help/help-topic.component';
 import { NavigationService } from './navigation.service';
@@ -118,4 +120,21 @@ export function provideNavigationService() {
 			multi: true
 		}
 	]);
+}
+
+export function provideViewportScroller(scrollElementID?: string) {
+	const providers: Provider[] = [
+		{
+			provide: ViewportScroller,
+			useClass: CustomViewportScroller
+		}
+	];
+	if (scrollElementID) {
+		providers.push({
+			provide: SCROLL_ELEMENT,
+			useValue: scrollElementID
+		});
+	}
+
+	return makeEnvironmentProviders(providers);
 }
