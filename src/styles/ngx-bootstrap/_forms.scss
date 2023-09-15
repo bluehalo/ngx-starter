@@ -93,7 +93,7 @@ $form-inline-edit-label-col-width: 30% !default;
 			flex: 0 0 100% - $form-inline-edit-label-col-width;
 			max-width: 100% - $form-inline-edit-label-col-width;
 
-			& div {
+			& > div {
 				padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
 					calc(#{$input-padding-x} + #{$input-border-width}) calc(#{$input-padding-y});
 			}

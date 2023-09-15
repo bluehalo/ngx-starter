@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
 
-import { ModalService } from '../../../../common/modal/modal.service';
 import { PagingResults } from '../../../../common/paging.model';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
@@ -68,8 +67,7 @@ describe('Admin List Users Component Spec', () => {
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
-				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
-				ModalService
+				{ provide: ExportConfigService, useValue: exportConfigServiceSpy }
 			]
 		});
 

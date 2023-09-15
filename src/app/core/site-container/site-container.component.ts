@@ -1,3 +1,4 @@
+import { CdkScrollable } from '@angular/cdk/overlay';
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 
@@ -15,7 +16,13 @@ import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 	templateUrl: 'site-container.component.html',
 	styleUrls: ['site-container.component.scss'],
 	standalone: true,
-	imports: [NgIf, SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent]
+	imports: [
+		NgIf,
+		SiteNavbarComponent,
+		IsAuthenticatedDirective,
+		FeedbackFlyoutComponent,
+		CdkScrollable
+	]
 })
 export class SiteContainerComponent {
 	bannerHtml?: string;

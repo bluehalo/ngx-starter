@@ -46,7 +46,7 @@ $card-header-height: 4rem !default;
 			color: $ux-color-white;
 			content: '\f00c';
 			position: absolute;
-			left: math.div($card-selected-check-size, -2);
+			right: math.div($card-selected-check-size, -2);
 			top: math.div($card-selected-check-size, -2);
 			width: $card-selected-check-size;
 			height: $card-selected-check-size;

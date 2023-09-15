@@ -3,8 +3,42 @@
 
 $anchored-table-min-height: 375px !default;
 
+.table-header,
+.table-footer {
+	display: flex;
+	align-items: center;
+
+	&.border-top {
+		border-top: $table-border-width * 2 solid $table-border-color !important;
+		padding-top: $spacer;
+	}
+
+	.table-actions {
+		display: flex;
+		flex-wrap: wrap;
+		flex-grow: 1;
+
+		.table-actions-group {
+			align-items: center;
+			margin-bottom: 1rem;
+			margin-right: 3rem;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+
+			& ~ &.ml-auto {
+				margin-right: 0;
+			}
+		}
+	}
+}
+.table-footer.border-top {
+	margin-top: $spacer;
+}
+
 .table-content {
-	border-bottom: 2px solid $border-color;
+	border-bottom: $table-border-width * 2 solid $border-color;
 	flex-grow: 1;
 	margin-bottom: map.get($spacers, 3);
 	overflow: auto;
@@ -31,7 +65,7 @@ $anchored-table-min-height: 375px !default;
 
 	th {
 		background: $ux-color-background;
-		border-top-width: 2px;
+		border-top-width: $table-border-width * 2;
 	}
 }
 
@@ -89,4 +123,8 @@ tr.cdk-row-expanded-details {
 
 .cdk-table-sticky {
 	background: inherit;
+}
+
+.table tfoot tr:first-child td.cdk-footer-cell {
+	border-top: (2 * $table-border-width) solid $table-border-color;
 }

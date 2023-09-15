@@ -47,8 +47,6 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 }
 
 .flyout {
-	z-index: $zindex-popover;
-
 	&.flyout-left {
 		flex-direction: row-reverse;
 	}
