@@ -3,10 +3,7 @@ import { Directive, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
-import {
-	AsyHeaderListFilterComponent,
-	ListFilterOption
-} from '../../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
+import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../../common/table';
 import { Role } from '../../../auth/role.model';
 import { ConfigService } from '../../../config.service';
 

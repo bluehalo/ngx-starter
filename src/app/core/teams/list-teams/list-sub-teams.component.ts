@@ -10,12 +10,14 @@ import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
-import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
-import { PaginatorComponent } from '../../../common/table/paginator/paginator.component';
-import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-header/asy-sort-header.component';
-import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
-import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
+import {
+	AsyFilterDirective,
+	AsySortDirective,
+	AsySortHeaderComponent,
+	AsyTableDataSource,
+	AsyTableEmptyStateComponent,
+	PaginatorComponent
+} from '../../../common/table';
 import { Team } from '../team.model';
 import { BaseListTeamsComponent } from './base-list-teams.component';
 

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PagingOptions } from '../../../common/paging.model';
-import { AsyHeaderTypeaheadFilterComponent } from '../../../common/table/filter/asy-header-typeahead-filter/asy-header-typeahead-filter.component';
+import { AsyHeaderTypeaheadFilterComponent } from '../../../common/table';
 import { AuditService } from '../audit.service';
 
 @Directive({

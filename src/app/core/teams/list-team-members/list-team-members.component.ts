@@ -32,16 +32,16 @@ import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../common/sorting.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
-import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
 import {
+	AsyFilterDirective,
 	AsyHeaderListFilterComponent,
-	ListFilterOption
-} from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
-import { PaginatorComponent } from '../../../common/table/paginator/paginator.component';
-import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-header/asy-sort-header.component';
-import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
-import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
+	AsySortDirective,
+	AsySortHeaderComponent,
+	AsyTableDataSource,
+	AsyTableEmptyStateComponent,
+	ListFilterOption,
+	PaginatorComponent
+} from '../../../common/table';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';

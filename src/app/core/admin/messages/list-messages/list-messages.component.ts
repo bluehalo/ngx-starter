@@ -16,12 +16,14 @@ import { SearchInputComponent } from '../../../../common/search-input/search-inp
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
-import { AsyFilterDirective } from '../../../../common/table/filter/asy-filter.directive';
-import { PaginatorComponent } from '../../../../common/table/paginator/paginator.component';
-import { AsySortHeaderComponent } from '../../../../common/table/sort/asy-sort-header/asy-sort-header.component';
-import { AsySortDirective } from '../../../../common/table/sort/asy-sort.directive';
-import { AsyTableEmptyStateComponent } from '../../../../common/table/table-empty-state/asy-table-empty-state.component';
+import {
+	AsyFilterDirective,
+	AsySortDirective,
+	AsySortHeaderComponent,
+	AsyTableDataSource,
+	AsyTableEmptyStateComponent,
+	PaginatorComponent
+} from '../../../../common/table';
 import { Message } from '../../../messages/message.model';
 import { MessageService } from '../../../messages/message.service';
 

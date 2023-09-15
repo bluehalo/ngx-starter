@@ -16,14 +16,16 @@ import { SearchInputComponent } from '../../../../common/search-input/search-inp
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { AsyTableDataSource } from '../../../../common/table/asy-table-data-source';
-import { ColumnChooserComponent } from '../../../../common/table/column-chooser/column-chooser.component';
-import { AsyFilterDirective } from '../../../../common/table/filter/asy-filter.directive';
-import { PaginatorComponent } from '../../../../common/table/paginator/paginator.component';
-import { SidebarComponent } from '../../../../common/table/sidebar/sidebar.component';
-import { AsySortHeaderComponent } from '../../../../common/table/sort/asy-sort-header/asy-sort-header.component';
-import { AsySortDirective } from '../../../../common/table/sort/asy-sort.directive';
-import { AsyTableEmptyStateComponent } from '../../../../common/table/table-empty-state/asy-table-empty-state.component';
+import {
+	AsyFilterDirective,
+	AsySortDirective,
+	AsySortHeaderComponent,
+	AsyTableDataSource,
+	AsyTableEmptyStateComponent,
+	ColumnChooserComponent,
+	PaginatorComponent,
+	SidebarComponent
+} from '../../../../common/table';
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
 

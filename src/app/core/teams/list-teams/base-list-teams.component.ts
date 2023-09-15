@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
+import { AsyTableDataSource } from '../../../common/table';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
