@@ -233,15 +233,6 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			.filter((column) => this.displayedColumns.includes(column.key))
 			.map((column) => ({ key: column.key, title: column.label }));
 
-		const rolesIndex = viewColumns.findIndex((pair: any) => pair.key === 'roles');
-
-		if (rolesIndex !== -1) {
-			const roleColumns = Role.ROLES.map((role) => {
-				return { key: `roles.${role.role}`, title: `${role.label} Role` };
-			});
-			viewColumns.splice(rolesIndex, 1, ...roleColumns);
-		}
-
 		this.exportConfigService
 			.postExportConfig('user', {
 				q: this.dataSource.filterEvent$.value,
