@@ -48,6 +48,10 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 		super(_columnDef);
 	}
 
+	isClickOnDateRangePicker(event: Event) {
+		return ((event.target as Element).closest('bs-daterangepicker-container') ?? null) !== null;
+	}
+
 	onDateFilterChange() {
 		if (this.enabled) {
 			super.onFilterChange();
