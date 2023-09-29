@@ -1,21 +1,14 @@
 import { DialogModule } from '@angular/cdk/dialog';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { ConfigService } from '../../config.service';
-import {
-	AuditObjectComponent,
-	DefaultAuditObjectComponent,
-	ExportAuditObjectComponent,
-	UrlAuditObjectComponent,
-	UserAuditObjectComponent,
-	UserAuthenticationObjectComponent
-} from '../audit-object.component';
 import { AuditService } from '../audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 
@@ -102,21 +95,13 @@ describe('Audit Component Spec', () => {
 		configServiceSpy.getConfig.and.returnValue(of({}));
 
 		TestBed.configureTestingModule({
-			imports: [
-				BrowserAnimationsModule,
-				DialogModule,
-				ListAuditEntriesComponent,
-				AuditObjectComponent,
-				UrlAuditObjectComponent,
-				DefaultAuditObjectComponent,
-				ExportAuditObjectComponent,
-				UserAuditObjectComponent,
-				UserAuthenticationObjectComponent
-			],
+			imports: [DialogModule],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },
-				SystemAlertService
+				SystemAlertService,
+				provideHttpClient(),
+				provideHttpClientTesting()
 			]
 		}).overrideModule(BrowserDynamicTestingModule, {
 			set: {}

@@ -24,6 +24,7 @@ import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-head
 import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
 import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
 import { ConfigService } from '../../config.service';
+import { ExportConfigService } from '../../export-config.service';
 import { AuditObjectComponent } from '../audit-object.component';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
@@ -61,12 +62,54 @@ export class ListAuditEntriesComponent implements OnDestroy {
 	@ViewChild(AsyFilterDirective)
 	filter: AsyFilterDirective;
 
+	columns = [
+		{
+			key: 'audit.actor',
+			label: 'Actor',
+			selected: true
+		},
+		{
+			key: 'created',
+			label: 'Timestamp',
+			selected: true
+		},
+		{
+			key: 'audit.action',
+			label: 'Action',
+			selected: true
+		},
+		{
+			key: 'audit.auditType',
+			label: 'Type',
+			selected: true
+		},
+		{
+			key: 'audit.object',
+			label: 'Object',
+			selected: true
+		},
+		{
+			key: 'before',
+			label: 'Before',
+			selected: true
+		},
+		{
+			key: 'message',
+			label: 'Message',
+			selected: true
+		},
+		{
+			key: 'audit.masqueradingUser',
+			label: 'Masquerading User'
+		}
+	];
+
 	displayedColumns = [
-		'actor',
+		'audit.actor',
 		'created',
 		'audit.action',
 		'audit.auditType',
-		'object',
+		'audit.object',
 		'before',
 		'message'
 	];
@@ -85,7 +128,8 @@ export class ListAuditEntriesComponent implements OnDestroy {
 	constructor(
 		private alertService: SystemAlertService,
 		private auditService: AuditService,
-		private configService: ConfigService
+		private configService: ConfigService,
+		private exportConfigService: ExportConfigService
 	) {
 		this.alertService.clearAllAlerts();
 		this.configService
@@ -93,7 +137,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 			.pipe(first(), untilDestroyed(this))
 			.subscribe((config) => {
 				if (config?.masqueradeEnabled) {
-					this.displayedColumns.push('masqueradingUser');
+					this.displayedColumns.push('audit.masqueradingUser');
 				}
 			});
 	}
@@ -104,6 +148,25 @@ export class ListAuditEntriesComponent implements OnDestroy {
 
 	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults> {
 		return this.auditService.search(query, search, pagingOptions);
+	}
+
+	exportCurrentView() {
+		const viewColumns = this.columns
+			.filter((column) => this.displayedColumns.includes(column.key))
+			.map((column) => ({ key: column.key, title: column.label }));
+
+		this.exportConfigService
+			.postExportConfig('audit', {
+				q: this.dataSource.filterEvent$.value,
+				s: this.dataSource.searchEvent$.value,
+				sort: this.dataSource.sortEvent$.value.sortField,
+				dir: this.dataSource.sortEvent$.value.sortDir,
+				cols: viewColumns
+			})
+			.pipe(untilDestroyed(this))
+			.subscribe((response: any) => {
+				window.open(`/api/audit/csv/${response._id}`);
+			});
 	}
 
 	clearFilters() {

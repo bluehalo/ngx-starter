@@ -105,18 +105,12 @@ describe('Admin List Users Component Spec', () => {
 		// Click the export button
 		await clickExportButton();
 
-		const expectedBaseColumnNames = ['name', 'username', 'lastLogin', 'email'];
-		const expectedBaseColumns = component.columns
+		const expectedBaseColumnNames = ['name', 'username', 'lastLogin', 'email', 'roles'];
+		const expectedColumns = component.columns
 			.filter((column) => expectedBaseColumnNames.includes(column.key))
 			.map((column) => {
 				return { key: column.key, title: column.label };
 			});
-
-		const roleColumns = Role.ROLES.map((role) => {
-			return { key: `roles.${role.role}`, title: `${role.label} Role` };
-		});
-
-		const expectedColumns = [...expectedBaseColumns, ...roleColumns];
 
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(1);
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledWith('user', {
