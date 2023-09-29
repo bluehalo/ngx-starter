@@ -14,15 +14,17 @@ import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { AsyTableDataSource } from '../../../common/table/asy-table-data-source';
-import { AsyFilterDirective } from '../../../common/table/filter/asy-filter.directive';
-import { AsyHeaderDateFilterComponent } from '../../../common/table/filter/asy-header-date-filter/asy-header-date-filter.component';
-import { AsyHeaderListFilterComponent } from '../../../common/table/filter/asy-header-list-filter/asy-header-list-filter.component';
-import { AsyHeaderTypeaheadFilterComponent } from '../../../common/table/filter/asy-header-typeahead-filter/asy-header-typeahead-filter.component';
-import { PaginatorComponent } from '../../../common/table/paginator/paginator.component';
-import { AsySortHeaderComponent } from '../../../common/table/sort/asy-sort-header/asy-sort-header.component';
-import { AsySortDirective } from '../../../common/table/sort/asy-sort.directive';
-import { AsyTableEmptyStateComponent } from '../../../common/table/table-empty-state/asy-table-empty-state.component';
+import {
+	AsyFilterDirective,
+	AsyHeaderDateFilterComponent,
+	AsyHeaderListFilterComponent,
+	AsyHeaderTypeaheadFilterComponent,
+	AsySortDirective,
+	AsySortHeaderComponent,
+	AsyTableDataSource,
+	AsyTableEmptyStateComponent,
+	PaginatorComponent
+} from '../../../common/table';
 import { ConfigService } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
 import { AuditObjectComponent } from '../audit-object.component';
