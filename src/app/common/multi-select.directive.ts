@@ -21,6 +21,12 @@ export class MultiSelectDirective implements OnInit {
 		this.select.multiple = true;
 		this.updateIsOpen(false);
 
+		// change detection doesn't work properly when setting items programmatically
+		// tslint:disable-next-line:no-lifecycle-call
+		this.select.ngOnChanges({
+			items: new SimpleChange([], [], true)
+		});
+
 		this.select.addEvent.pipe(untilDestroyed(this)).subscribe(() => {
 			this.updateIsOpen(false);
 		});
