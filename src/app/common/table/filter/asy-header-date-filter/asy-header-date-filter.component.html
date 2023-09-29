@@ -24,7 +24,7 @@
 	cdkConnectedOverlay
 	[cdkConnectedOverlayOpen]="isOpen"
 	[cdkConnectedOverlayOrigin]="trigger"
-	(overlayOutsideClick)="isOpen = false"
+	(overlayOutsideClick)="isOpen = isClickOnDateRangePicker($event)"
 >
 	<div class="dropdown-menu" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<div class="form-check">
