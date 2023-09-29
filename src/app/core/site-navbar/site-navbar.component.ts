@@ -1,6 +1,6 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
+import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -50,7 +50,8 @@ import { getNavbarTopics } from './navbar-topic.model';
 		CdkMenuItemRouterLinkDirective,
 		CdkMenuTrigger,
 		CdkConnectedOverlay,
-		A11yModule
+		A11yModule,
+		CdkScrollable
 	]
 })
 export class SiteNavbarComponent implements OnInit {

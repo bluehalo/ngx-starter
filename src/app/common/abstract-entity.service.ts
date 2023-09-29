@@ -21,7 +21,10 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 	protected http = inject(HttpClient);
 	protected alertService = inject(SystemAlertService);
 
-	protected constructor(protected urls: Record<ServiceMethod | string, string>) {}
+	protected constructor(
+		protected urls: Record<ServiceMethod | string, string>,
+		protected createMethod: 'PUT' | 'POST' = 'POST'
+	) {}
 
 	abstract mapToType(model: any): T;
 
@@ -40,12 +43,18 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 	}
 
 	create(t: T): Observable<T | null> {
-		return this.http
-			.post(this.getMethodUrl(ServiceMethod.create), t, { headers: this.headers })
-			.pipe(
-				map((model) => this.mapToType(model)),
-				catchError((error: unknown) => this.handleError(error, null))
-			);
+		let obs$ =
+			this.createMethod === 'PUT'
+				? this.http.put(this.getMethodUrl(ServiceMethod.create), t, {
+						headers: this.headers
+				  })
+				: this.http.post(this.getMethodUrl(ServiceMethod.create), t, {
+						headers: this.headers
+				  });
+		return obs$.pipe(
+			map((model) => this.mapToType(model)),
+			catchError((error: unknown) => this.handleError(error, null))
+		);
 	}
 
 	read(id: string): Observable<T | null> {
@@ -55,10 +64,11 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 		);
 	}
 
-	update(t: T): Observable<T | null> {
+	update(t: T, params: any = null): Observable<T | null> {
 		return this.http
 			.post(this.getMethodUrl(ServiceMethod.update, t), t, {
-				headers: this.headers
+				headers: this.headers,
+				params
 			})
 			.pipe(
 				map((model) => this.mapToType(model)),

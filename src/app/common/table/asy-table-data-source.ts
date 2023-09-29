@@ -8,7 +8,7 @@ import { NULL_PAGING_RESULTS, PageChange, PagingOptions, PagingResults } from '.
 import { SortChange } from '../sorting.model';
 import { SessionStorageService } from '../storage/session-storage.service';
 
-type LoadPageFunction<T> = (options: {
+export type LoadPageFunction<T> = (options: {
 	pagingOptions: PagingOptions;
 	search: string;
 	filter: any;

@@ -79,21 +79,16 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 	&.btn-outline-primary,
 	&.btn-outline-secondary {
 		@include button-outline-variant(
-			$ux-button-bg,
-			#fff,
-			$ux-button-bg-mouse-down,
-			$ux-button-bg-mouse-down
+				$ux-button-bg,
+				#fff,
+				$ux-button-bg-hover,
+				$ux-button-bg-hover
 		);
 
-		&:hover {
-			border-color: $ux-button-bg-hover;
-			background-color: $ux-button-bg-hover;
-		}
-
-		&.disabled,
-		&:disabled {
-			border-color: inherit;
-			background-color: inherit;
+		&:not(:disabled):not(.disabled):active,
+		&:not(:disabled):not(.disabled).active {
+			border-color: $ux-button-bg-mouse-down;
+			background-color: $ux-button-bg-mouse-down;
 		}
 	}
 
@@ -121,6 +116,11 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 			box-shadow: 0 0 0 $btn-focus-width $ux-color-highlight;
 		}
 	}
+
+	.input-group-append & {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
 }
 
 // Submit button with progress indicator
@@ -132,7 +132,7 @@ $btn-padding-square-lg: $input-btn-padding-y-lg !default;
 			opacity: 0;
 			display: inline-block;
 			margin-right: math.div($spacer, 2);
-			font-family: $btn-submit-spinner-font-family;
+			font: $btn-submit-spinner-font-family;
 			content: $btn-submit-spinner-content;
 			-webkit-animation: $btn-submit-spinner-animation;
 			animation: $btn-submit-spinner-animation;

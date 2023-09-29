@@ -12,7 +12,7 @@
 		</li>
 	</ul>
 
-	<div class="nav-inner-scroll">
+	<div class="nav-inner-scroll" cdkScrollable>
 		<!-- Main Nav -->
 		<ul class="nav nav-main">
 			<ng-container *ngFor="let navbarItem of navbarItems">
@@ -211,6 +211,8 @@
 					[cdkConnectedOverlayOpen]="messagesNavOpen"
 					[cdkConnectedOverlayOrigin]="trigger"
 					[cdkConnectedOverlayPositions]="menuPositions"
+					[cdkConnectedOverlayPush]="true"
+					[cdkConnectedOverlayViewportMargin]="24"
 					(overlayOutsideClick)="messagesNavOpen = false"
 				>
 					<div class="dropdown-menu messages-menu">
