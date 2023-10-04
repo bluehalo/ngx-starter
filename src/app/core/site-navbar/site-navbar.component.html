@@ -157,9 +157,9 @@
 							class="dropdown-item"
 							cdkMenuItem
 							routerLink="/masquerade"
-							*ngIf="masqueradeEnabled && canMasquerade"
+							*ngIf="masqueradeEnabled && (canMasquerade || isMasquerade)"
 						>
-							<ng-container *ngIf="!isMasquerade"> Clear </ng-container>
+							<ng-container *ngIf="isMasquerade"> Clear </ng-container>
 							Masquerade
 						</button>
 					</div>
