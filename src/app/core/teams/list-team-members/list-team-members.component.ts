@@ -286,11 +286,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			.subscribe(() => this.reloadTeamMembers());
 	}
 
-	private doUpdateRole(
-		member: TeamMember,
-		role: string,
-		persist: boolean = true
-	): Observable<any> {
+	private doUpdateRole(member: TeamMember, role: string, persist = true): Observable<any> {
 		if (!persist) {
 			member.role = role;
 			member.roleDisplay = TeamRole.getDisplay(member.role);

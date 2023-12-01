@@ -28,7 +28,7 @@ export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit
 	set sticky(v: BooleanInput) {
 		this._sticky = coerceBooleanProperty(v);
 	}
-	_sticky: boolean = false;
+	_sticky = false;
 
 	/**
 	 * Whether this column should be sticky positioned on the end of the row.
@@ -40,7 +40,7 @@ export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit
 	set stickyEnd(v: BooleanInput) {
 		this._stickyEnd = coerceBooleanProperty(v);
 	}
-	_stickyEnd: boolean = false;
+	_stickyEnd = false;
 
 	/** @docs-private */
 	@ViewChild(CdkColumnDef, { static: true }) columnDef: CdkColumnDef;

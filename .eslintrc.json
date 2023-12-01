@@ -5,7 +5,7 @@
   ],
   "settings": {
     "import/resolver": {
-      "typescript": {} // this loads <rootdir>/tsconfig.js to eslint
+      "typescript": {}
     }
   },
   "overrides": [
@@ -19,8 +19,12 @@
         ],
         "createDefaultProgram": true
       },
-      "plugins": ["deprecation", "rxjs-angular"],
+      "plugins": [
+        "deprecation",
+        "rxjs-angular"
+      ],
       "extends": [
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:import/recommended",
@@ -45,35 +49,55 @@
             "style": "kebab-case"
           }
         ],
+        "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/no-unused-vars": [
           "warn",
-          { "vars": "all", "args": "none" }
+          {
+            "vars": "all",
+            "args": "none"
+          }
         ],
-        "deprecation/deprecation": "warn", // or "error" to have stricter rule
-        "no-restricted-imports": ["error", {
-          "paths": [
-            "lodash",
-            "ngx-bootstrap",
-            "rxjs/Rx"
-          ]
-        }],
-        "import/no-unresolved": ["error"],
-        "rxjs/prefer-observer": ["error"],
-        "rxjs/finnish": ["error", {
-          "methods": false
-        }],
+        "deprecation/deprecation": "warn",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              "lodash",
+              "ngx-bootstrap",
+              "rxjs/Rx"
+            ]
+          }
+        ],
+        "import/no-unresolved": [
+          "error"
+        ],
+        "rxjs/prefer-observer": [
+          "error"
+        ],
+        "rxjs/finnish": [
+          "error",
+          {
+            "methods": false
+          }
+        ],
         "rxjs/no-unsafe-takeuntil": [
           "error",
           {
-            "alias": ["untilDestroyed"]
+            "alias": [
+              "untilDestroyed"
+            ]
           }
         ],
-        "rxjs-angular/prefer-takeuntil": ["error", {
-          "alias":  ["untilDestroyed"]
-        }]
+        "rxjs-angular/prefer-takeuntil": [
+          "error",
+          {
+            "alias": [
+              "untilDestroyed"
+            ]
+          }
+        ]
       }
     },
-    // NOTE: WE ARE NOT APPLYING PRETTIER IN THIS OVERRIDE, ONLY @ANGULAR-ESLINT/TEMPLATE
     {
       "files": [
         "*.html"
@@ -83,18 +107,23 @@
       ],
       "rules": {}
     },
-    // NOTE: WE ARE NOT APPLYING @ANGULAR-ESLINT/TEMPLATE IN THIS OVERRIDE, ONLY PRETTIER
     {
       "files": [
         "*.html"
       ],
-      "excludedFiles": ["*inline-template-*.component.html"],
+      "excludedFiles": [
+        "*inline-template-*.component.html"
+      ],
       "extends": [
         "plugin:prettier/recommended"
       ],
       "rules": {
-        // NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
-        "prettier/prettier": ["error", { "parser": "angular" }]
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular"
+          }
+        ]
       }
     }
   ]

@@ -32,7 +32,7 @@ export class BreadcrumbComponent {
 		private router: Router
 	) {
 		const navEnd$: Observable<Event> = router.events.pipe(
-			filter((event: Event) => event instanceof NavigationEnd)
+			filter((event) => event instanceof NavigationEnd)
 		);
 		merge(navEnd$, this.homeBreadcrumbChanged$)
 			.pipe(untilDestroyed(this))

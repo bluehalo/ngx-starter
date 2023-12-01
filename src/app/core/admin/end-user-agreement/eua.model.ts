@@ -1,7 +1,7 @@
 export class EndUserAgreement {
 	_id: string;
-	title: string = '';
-	text: string = '';
+	title = '';
+	text = '';
 	published: string;
 	created: string;
 	updated: string;

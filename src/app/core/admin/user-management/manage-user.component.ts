@@ -44,7 +44,7 @@ export abstract class ManageUserComponent implements OnInit {
 			});
 	}
 
-	abstract initialize(): any;
+	abstract initialize(): void;
 
 	abstract submitUser(user: User): Observable<any>;
 

@@ -37,7 +37,7 @@ export class HelpComponent {
 	) {
 		router.events
 			.pipe(
-				filter((event: Event) => event instanceof NavigationEnd),
+				filter((event) => event instanceof NavigationEnd),
 				untilDestroyed(this)
 			)
 			.subscribe(() => (this.title = BreadcrumbService.getBreadcrumbLabel(route.snapshot)));

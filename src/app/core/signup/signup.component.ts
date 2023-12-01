@@ -44,7 +44,9 @@ export class SignupComponent extends ManageUserComponent implements OnInit {
 		});
 	}
 
-	initialize() {}
+	initialize() {
+		// no-op
+	}
 
 	handleBypassAccessCheck() {
 		// Don't need to do anything

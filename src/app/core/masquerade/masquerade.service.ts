@@ -28,11 +28,7 @@ export class MasqueradeService {
 		return this.storage.getValue(this.LOCAL_STORAGE_KEY);
 	}
 
-	searchUsers(
-		query: any = {},
-		search: string = '',
-		options: any = {}
-	): Observable<PagingResults<User>> {
+	searchUsers(query: any = {}, search = '', options: any = {}): Observable<PagingResults<User>> {
 		return this.http.post<PagingResults>('api/users', { q: query, s: search, options }).pipe(
 			tap((results: PagingResults) => {
 				if (null != results && Array.isArray(results.elements)) {

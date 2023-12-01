@@ -15,8 +15,12 @@ import { ContainerModalComponent } from './container-modal.component';
 	template: ` <button></button><button></button> `
 })
 class ConcreteModalizedComponent extends AbstractModalizableDirective {
-	onCancel() {}
-	onOk() {}
+	onCancel() {
+		// do nothing
+	}
+	onOk() {
+		// do nothing
+	}
 }
 
 describe('Container Modal Component', () => {

@@ -44,7 +44,9 @@ export class ColumnChooserComponent implements OnInit {
 
 	private storage = new LocalStorageService();
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	ngOnInit(): void {
 		this._loadState();

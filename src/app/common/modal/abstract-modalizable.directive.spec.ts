@@ -12,8 +12,12 @@ import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 	standalone: true
 })
 class ConcreteModalizedComponent extends AbstractModalizableDirective {
-	onCancel() {}
-	onOk() {}
+	onCancel() {
+		// do nothing
+	}
+	onOk() {
+		// do nothing
+	}
 }
 
 describe('Abstract Modalized Directive', () => {

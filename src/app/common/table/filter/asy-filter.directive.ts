@@ -51,7 +51,9 @@ export class AsyFilterDirective {
 		this.filterables.delete(filterable.id);
 	}
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	filter(id: string, query: any): void {
 		this.filters.set(id, query);

@@ -21,7 +21,9 @@ export class AuthenticationService {
 		return this.http.get('api/user/me');
 	}
 
-	logout() {}
+	logout() {
+		// do nothing
+	}
 
 	getCurrentEua(): Observable<any> {
 		return this.http.get('api/eua');
