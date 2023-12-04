@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
@@ -18,10 +18,8 @@ import { User } from '../auth/user.model';
 	standalone: true,
 	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgFor, TooltipModule]
 })
-export class SignupComponent extends ManageUserComponent implements OnInit {
+export class SignupComponent extends ManageUserComponent {
 	mode = 'signup';
-
-	inviteId?: string;
 
 	private authService = inject(AuthenticationService);
 	private route = inject(ActivatedRoute);
@@ -35,14 +33,9 @@ export class SignupComponent extends ManageUserComponent implements OnInit {
 		);
 	}
 
-	override ngOnInit() {
-		super.ngOnInit();
-		this.route.queryParams
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe((params: Params) => {
-				this.inviteId = params['inviteId'];
-				this.user.userModel.email = params['email'];
-			});
+	@Input()
+	set email(email: string) {
+		this.user.userModel.email = email;
 	}
 
 	initialize() {

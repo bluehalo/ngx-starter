@@ -1,15 +1,9 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-	ActivatedRoute,
-	Router,
-	RouterLink,
-	RouterLinkActive,
-	RouterOutlet
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { filter, first, map, switchMap } from 'rxjs/operators';
+import { filter, first, switchMap } from 'rxjs/operators';
 
 import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
@@ -34,36 +28,18 @@ import { TeamsService } from '../teams.service';
 		RouterOutlet
 	]
 })
-export class ViewTeamComponent implements OnInit {
+export class ViewTeamComponent {
 	topics = getTeamTopics();
+
+	@Input()
 	team?: Team;
 
 	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
 
 	private router = inject(Router);
-	private route = inject(ActivatedRoute);
 	private teamsService = inject(TeamsService);
 	private sessionService = inject(SessionService);
-
-	ngOnInit() {
-		this.route.data
-			.pipe(
-				map((data) => data['team']),
-				takeUntilDestroyed(this.destroyRef)
-			)
-			.subscribe((team) => {
-				this.updateTeam(team);
-			});
-	}
-
-	updateTeam(team: Team) {
-		if (team) {
-			this.team = team;
-		} else {
-			this.router.navigate(['resource/invalid', { type: 'team' }]);
-		}
-	}
 
 	remove(team: Team) {
 		this.dialogService

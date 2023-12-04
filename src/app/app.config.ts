@@ -4,6 +4,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {
 	TitleStrategy,
 	provideRouter,
+	withComponentInputBinding,
 	withHashLocation,
 	withInMemoryScrolling
 } from '@angular/router';
@@ -54,7 +55,8 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(
 			[],
 			withHashLocation(),
-			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
+			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+			withComponentInputBinding()
 		),
 		provideViewportScroller(),
 		provideCoreRoutes(),
