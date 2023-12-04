@@ -1,13 +1,12 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { ConfigService } from '../../config.service';
 import { ExternalLinksComponent } from './external-links.component';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'getting-started-help.component.html',
 	standalone: true,
@@ -20,12 +19,13 @@ export class GettingStartedHelpComponent implements OnInit {
 
 	appName = 'Application';
 
-	constructor(private configService: ConfigService) {}
+	private destroyRef = inject(DestroyRef);
+	private configService = inject(ConfigService);
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				if (config?.welcomeLinks?.enabled && Array.isArray(config?.welcomeLinks?.links)) {
 					this.externalLinks = config.welcomeLinks.links;

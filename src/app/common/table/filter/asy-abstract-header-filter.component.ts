@@ -85,7 +85,7 @@ export abstract class AsyAbstractHeaderFilterComponent
 	loadState(): any {
 		const storageKey = this._filter.dataSource.storageKey;
 		if (storageKey) {
-			return this.storage.getValue(`${this._filter.dataSource.storageKey}-${this.id}-filter`);
+			return this.storage.getValue(`${storageKey}-${this.id}-filter`);
 		}
 		return undefined;
 	}
@@ -93,10 +93,7 @@ export abstract class AsyAbstractHeaderFilterComponent
 	saveState() {
 		const storageKey = this._filter.dataSource.storageKey;
 		if (storageKey) {
-			this.storage.setValue(
-				`${this._filter.dataSource.storageKey}-${this.id}-filter`,
-				this._buildState()
-			);
+			this.storage.setValue(`${storageKey}-${this.id}-filter`, this._buildState());
 		}
 	}
 

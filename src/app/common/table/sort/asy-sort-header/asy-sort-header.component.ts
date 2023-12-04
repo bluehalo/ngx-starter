@@ -3,14 +3,15 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	DestroyRef,
 	Inject,
 	Input,
 	OnDestroy,
 	OnInit,
-	Optional
+	Optional,
+	inject
 } from '@angular/core';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SortDir, SortDirection } from '../../../sorting.model';
 import { AsySortDirective, AsySortable } from '../asy-sort.directive';
@@ -20,7 +21,6 @@ interface AsySortHeaderColumnDef {
 	name: string;
 }
 
-@UntilDestroy()
 @Component({
 	selector: '[asy-sort-header]',
 	templateUrl: './asy-sort-header.component.html',
@@ -53,8 +53,10 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 
 	@Input() sortable = true;
 
+	private destroyRef = inject(DestroyRef);
+	private changeDetectorRef = inject(ChangeDetectorRef);
+
 	constructor(
-		private changeDetectorRef: ChangeDetectorRef,
 		// `AsySortDirective` is not optionally injected, but just asserted manually w/ better error.
 		@Optional()
 		public _sort: AsySortDirective,
@@ -75,13 +77,15 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 		}
 		this._sort.register(this);
 
-		this._sort.dataSource.sortEvent$.pipe(untilDestroyed(this)).subscribe((sortChange) => {
-			this.isSorted = sortChange.sortField === this.id;
-			if (this.isSorted) {
-				this.sortDir = sortChange.sortDir;
-			}
-			this.changeDetectorRef.markForCheck();
-		});
+		this._sort.dataSource.sortEvent$
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe((sortChange) => {
+				this.isSorted = sortChange.sortField === this.id;
+				if (this.isSorted) {
+					this.sortDir = sortChange.sortDir;
+				}
+				this.changeDetectorRef.markForCheck();
+			});
 	}
 
 	ngOnDestroy() {

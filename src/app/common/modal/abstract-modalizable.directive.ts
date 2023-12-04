@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 /**
@@ -10,7 +10,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
  * Components extending the AbstractModalizableDirective that need to auto-focus a particular element when the modal is
  * opened should add a cdkFocusInitial attribute to the element to be focused.
  */
-@UntilDestroy()
 @Directive()
 export abstract class AbstractModalizableDirective {
 	isModal = false;
@@ -35,7 +34,7 @@ export abstract class AbstractModalizableDirective {
 	disableOkSubject = new BehaviorSubject<boolean>(false);
 
 	constructor() {
-		this.okSubject.pipe(untilDestroyed(this)).subscribe({
+		this.okSubject.pipe(takeUntilDestroyed()).subscribe({
 			next: () => {
 				this.onOk();
 			},
@@ -44,7 +43,7 @@ export abstract class AbstractModalizableDirective {
 			}
 		});
 
-		this.cancelSubject.pipe(untilDestroyed(this)).subscribe({
+		this.cancelSubject.pipe(takeUntilDestroyed()).subscribe({
 			next: () => {
 				this.onCancel();
 			},

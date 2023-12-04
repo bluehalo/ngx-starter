@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
-
 import { AbstractModalizableDirective } from './abstract-modalizable.directive';
 
-@UntilDestroy()
 @Component({
 	selector: 'test-modalized-component',
 	template: ``,

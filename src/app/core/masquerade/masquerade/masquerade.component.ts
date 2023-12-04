@@ -1,10 +1,10 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, Subject, concat, of } from 'rxjs';
 import {
 	catchError,
@@ -21,7 +21,6 @@ import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
 import { MasqueradeService } from '../masquerade.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './masquerade.component.html',
 	standalone: true,
@@ -39,11 +38,10 @@ export class MasqueradeComponent implements OnInit {
 
 	searchByDn = false;
 
-	constructor(
-		public router: Router,
-		private masqueradeService: MasqueradeService,
-		private sessionService: SessionService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	public router = inject(Router);
+	private masqueradeService = inject(MasqueradeService);
+	private sessionService = inject(SessionService);
 
 	ngOnInit() {
 		if (this.masqueradeService.getMasqueradeDn()) {
@@ -53,7 +51,7 @@ export class MasqueradeComponent implements OnInit {
 		} else {
 			this.sessionService
 				.getSession()
-				.pipe(isNotNullOrUndefined(), untilDestroyed(this))
+				.pipe(isNotNullOrUndefined(), takeUntilDestroyed(this.destroyRef))
 				.subscribe((session) => {
 					if (session.user.userModel.canMasquerade) {
 						this.loadUsers();

@@ -1,14 +1,13 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Event, NavigationEnd, Router, RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'breadcrumb',
 	templateUrl: 'breadcrumb.component.html',
@@ -35,7 +34,7 @@ export class BreadcrumbComponent {
 			filter((event) => event instanceof NavigationEnd)
 		);
 		merge(navEnd$, this.homeBreadcrumbChanged$)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed())
 			.subscribe(() => {
 				if (this._homeBreadcrumb) {
 					this.breadcrumbs = [this._homeBreadcrumb];

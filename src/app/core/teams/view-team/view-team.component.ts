@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
 	ActivatedRoute,
 	Router,
@@ -8,19 +9,16 @@ import {
 	RouterOutlet
 } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, first, map, switchMap } from 'rxjs/operators';
 
 import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { SessionService } from '../../auth/session.service';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { getTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-view-team',
 	templateUrl: './view-team.component.html',
@@ -40,21 +38,19 @@ export class ViewTeamComponent implements OnInit {
 	topics = getTeamTopics();
 	team?: Team;
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
 
-	constructor(
-		private router: Router,
-		private route: ActivatedRoute,
-		private teamsService: TeamsService,
-		private alertService: SystemAlertService,
-		private sessionService: SessionService
-	) {}
+	private router = inject(Router);
+	private route = inject(ActivatedRoute);
+	private teamsService = inject(TeamsService);
+	private sessionService = inject(SessionService);
 
 	ngOnInit() {
 		this.route.data
 			.pipe(
 				map((data) => data['team']),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((team) => {
 				this.updateTeam(team);
@@ -81,7 +77,7 @@ export class ViewTeamComponent implements OnInit {
 				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.teamsService.delete(team)),
 				switchMap(() => this.sessionService.reloadSession()),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => this.router.navigate(['/team']));
 	}

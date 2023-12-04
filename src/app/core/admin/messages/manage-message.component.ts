@@ -1,7 +1,7 @@
-import { Directive, OnInit, inject } from '@angular/core';
+import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
-import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -24,6 +24,7 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	protected config: any;
 
+	protected destroyRef = inject(DestroyRef);
 	protected dialogService = inject(DialogService);
 	protected router = inject(Router);
 	protected configService = inject(ConfigService);
@@ -41,7 +42,7 @@ export abstract class ManageMessageComponent implements OnInit {
 
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				this.config = config;
 				this.initialize();
@@ -59,7 +60,7 @@ export abstract class ManageMessageComponent implements OnInit {
 
 	submit() {
 		this.submitMessage(this.message)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((message) => {
 				if (message) {
 					this.router.navigate([this.navigateOnSuccess]);

@@ -1,14 +1,13 @@
 import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import orderBy from 'lodash/orderBy';
 
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-recent-messages',
 	templateUrl: './recent-messages.component.html',
@@ -26,16 +25,17 @@ export class RecentMessagesComponent implements OnInit {
 
 	messageType = MessageType;
 
-	constructor(
-		private messageService: MessageService,
-		private router: Router
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private messageService = inject(MessageService);
+	private router = inject(Router);
 
 	ngOnInit() {
-		this.messageService.messageReceived.pipe(untilDestroyed(this)).subscribe(() => {
-			// Redo search on a new message
-			this.load();
-		});
+		this.messageService.messageReceived
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe(() => {
+				// Redo search on a new message
+				this.load();
+			});
 		this.load();
 	}
 
@@ -43,7 +43,7 @@ export class RecentMessagesComponent implements OnInit {
 		this.loading = true;
 		this.messageService
 			.recent()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((result) => {
 				const messages = orderBy(result, ['created'], ['desc']);
 				this.messages = messages as Message[];
@@ -55,7 +55,7 @@ export class RecentMessagesComponent implements OnInit {
 	dismissMessage(message: Message) {
 		this.messageService
 			.dismiss([message._id])
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((result) => {
 				this.load();
 			});
@@ -64,7 +64,7 @@ export class RecentMessagesComponent implements OnInit {
 	dismissAll() {
 		this.messageService
 			.dismiss(this.messages.map((m) => m._id))
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.load();
 			});

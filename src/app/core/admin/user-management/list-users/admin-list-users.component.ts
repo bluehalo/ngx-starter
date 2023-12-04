@@ -3,10 +3,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
@@ -40,7 +40,6 @@ import { ExportConfigService } from '../../../export-config.service';
 import { AdminUsersService } from '../admin-users.service';
 import { UserRoleFilterDirective } from './user-role-filter.directive';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './admin-list-users.component.html',
 	styleUrls: ['./admin-list-users.component.scss'],
@@ -165,23 +164,19 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-
-	constructor(
-		public router: Router,
-		private route: ActivatedRoute,
-		private adminUsersService: AdminUsersService,
-		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService,
-		private configService: ConfigService
-	) {}
+	private adminUsersService = inject(AdminUsersService);
+	private exportConfigService = inject(ExportConfigService);
+	private alertService = inject(SystemAlertService);
+	private configService = inject(ConfigService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
 		this.allowDeleteUser$ = this.configService.getConfig().pipe(
 			map((config) => config?.allowDeleteUser ?? true),
-			untilDestroyed(this)
+			takeUntilDestroyed(this.destroyRef)
 		);
 	}
 
@@ -225,7 +220,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 					}
 					return of(null);
 				}),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => this.dataSource.reload());
 	}
@@ -243,7 +238,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/users/csv/${response._id}`);
 			});

@@ -92,7 +92,8 @@
           "error",
           {
             "alias": [
-              "untilDestroyed"
+              "untilDestroyed",
+              "takeUntilDestroyed"
             ]
           }
         ]

@@ -1,15 +1,13 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'admin-create-eua',
 	templateUrl: './manage-eua.component.html',
@@ -17,14 +15,17 @@ import { ManageEuaComponent } from './manage-eua.component';
 	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf]
 })
 export class AdminCreateEuaComponent extends ManageEuaComponent {
-	constructor(protected euaService: EuaService) {
+	private destroyRef = inject(DestroyRef);
+	protected euaService = inject(EuaService);
+
+	constructor() {
 		super('Create EUA', 'Provide the required information to create a new eua', 'Create');
 	}
 
 	submitEua() {
 		this.euaService
 			.create(this.eua)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((eua) => {
 				if (eua) {
 					this.router.navigate(['/admin/euas', { clearCachedFilter: true }]);

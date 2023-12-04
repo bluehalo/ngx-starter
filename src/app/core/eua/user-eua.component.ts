@@ -1,9 +1,9 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
@@ -12,7 +12,6 @@ import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { NavigationService } from '../navigation.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'user-eua.component.html',
 	standalone: true,
@@ -24,6 +23,8 @@ export class UserEuaComponent implements OnInit {
 	eua$: Observable<any>;
 
 	alreadyAccepted: boolean;
+
+	destroyRef = inject(DestroyRef);
 
 	constructor(
 		private sessionService: SessionService,
@@ -42,7 +43,7 @@ export class UserEuaComponent implements OnInit {
 		this.alertService.clearAllAlerts();
 		this.sessionService
 			.acceptEua()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe({
 				next: () => {
 					this.navigationService.navigateToPreviousRoute();

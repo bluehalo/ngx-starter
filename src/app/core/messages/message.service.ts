@@ -35,7 +35,7 @@ export class MessageService extends AbstractEntityService<Message> {
 		this.sessionService
 			.getSession()
 			.pipe(
-				first(() => authorizationService.isUser()),
+				first(() => this.authorizationService.isUser()),
 				untilDestroyed(this)
 			)
 			.subscribe(() => {

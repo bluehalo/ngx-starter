@@ -2,19 +2,20 @@ import {
 	AfterContentChecked,
 	AfterViewInit,
 	Component,
+	DestroyRef,
 	Type,
 	ViewChild,
-	ViewContainerRef
+	ViewContainerRef,
+	inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
 
 import { AbstractModalDirective } from '../abstract-modal.directive';
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 import { ModalComponent } from '../modal/modal.component';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'container-modal.component.html',
 	styleUrls: ['container-modal.component.scss'],
@@ -42,6 +43,8 @@ export class ContainerModalComponent
 
 	isCdkFocusInitial = false;
 
+	private destroyRef = inject(DestroyRef);
+
 	ngAfterViewInit(): void {
 		// Add the supplied modalized component to the content container
 		this.modalizableComponentContainer.clear();
@@ -65,7 +68,7 @@ export class ContainerModalComponent
 		this.cancelSubject = componentRef.instance.cancelSubject;
 
 		// Enable/Disable the OK button
-		componentRef.instance.disableOkSubject.pipe(untilDestroyed(this)).subscribe({
+		componentRef.instance.disableOkSubject.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
 			next: (isOkDisabled) => {
 				this.isOkDisabled = isOkDisabled;
 			},

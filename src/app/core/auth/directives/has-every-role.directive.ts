@@ -1,13 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Directive, Input, OnInit, inject } from '@angular/core';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DestroyRef, Directive, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AuthorizationService } from '../authorization.service';
 import { Role } from '../role.model';
 import { SessionService } from '../session.service';
 
-@UntilDestroy()
 @Directive({
 	selector: '[hasEveryRole]',
 	hostDirectives: [
@@ -23,6 +21,7 @@ export class HasEveryRoleDirective implements OnInit {
 	andCondition = true;
 	orCondition = false;
 
+	private destroyRef = inject(DestroyRef);
 	private ngIfDirective = inject(NgIf);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
@@ -48,7 +47,7 @@ export class HasEveryRoleDirective implements OnInit {
 	ngOnInit() {
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.updateNgIf();
 			});

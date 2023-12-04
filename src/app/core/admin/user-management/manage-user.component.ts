@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Directive, OnInit, inject } from '@angular/core';
+import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
-import { untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -20,6 +20,7 @@ export abstract class ManageUserComponent implements OnInit {
 	user: User = new User();
 	possibleRoles = Role.ROLES;
 
+	protected destroyRef = inject(DestroyRef);
 	protected router = inject(Router);
 	protected configService = inject(ConfigService);
 	protected alertService = inject(SystemAlertService);
@@ -34,7 +35,7 @@ export abstract class ManageUserComponent implements OnInit {
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				this.config = config;
 				this.proxyPki = config.auth === 'proxy-pki';
@@ -53,7 +54,7 @@ export abstract class ManageUserComponent implements OnInit {
 	submit() {
 		if (this.validatePassword()) {
 			this.submitUser(this.user)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe({
 					next: () => this.router.navigate([this.navigateOnSuccess]),
 					error: (error: unknown) => {

@@ -3,9 +3,9 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
@@ -33,7 +33,6 @@ import { Feedback, FeedbackStatusOption } from '../../../feedback/feedback.model
 import { FeedbackService } from '../../../feedback/feedback.service';
 import { AdminUsersService } from '../../user-management/admin-users.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'admin-list-feedback.component.html',
 	styleUrls: ['admin-list-feedback.component.scss'],
@@ -135,15 +134,16 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	constructor(
-		private feedbackService: FeedbackService,
-		private exportConfigService: ExportConfigService,
-		private alertService: SystemAlertService,
-		private adminUsersService: AdminUsersService
-	) {
+	private destroyRef = inject(DestroyRef);
+	private feedbackService = inject(FeedbackService);
+	private exportConfigService = inject(ExportConfigService);
+	private alertService = inject(SystemAlertService);
+	private adminUsersService = inject(AdminUsersService);
+
+	constructor() {
 		this.adminUsersService
 			.getAll({ 'roles.admin': true }, 'username')
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed())
 			.subscribe({
 				next: (usernames) => {
 					this.assigneeUsernames = usernames as string[];
@@ -183,7 +183,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});
@@ -200,7 +200,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 	updateFeedbackAssignee(feedback: Feedback, assignee: string | null = null) {
 		this.feedbackService
 			.updateFeedbackAssignee(feedback._id, assignee)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe({
 				next: (updatedFeedback) => {
 					this.dataSource.reload();
@@ -216,7 +216,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 	updateFeedbackStatus(feedback: Feedback, status: FeedbackStatusOption) {
 		this.feedbackService
 			.updateFeedbackStatus(feedback._id, status)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe({
 				next: (updatedFeedback) => {
 					this.dataSource.reload();

@@ -2,9 +2,9 @@ import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
@@ -30,7 +30,6 @@ import { CacheEntriesService } from './cache-entries.service';
 import { CacheEntryModalComponent, CacheEntryModalData } from './cache-entry-modal.component';
 import { CacheEntry } from './cache-entry.model';
 
-@UntilDestroy()
 @Component({
 	selector: 'cache-entries',
 	templateUrl: './cache-entries.component.html',
@@ -66,12 +65,11 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
 
-	constructor(
-		private cacheEntriesService: CacheEntriesService,
-		private alertService: SystemAlertService
-	) {}
+	private cacheEntriesService = inject(CacheEntriesService);
+	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -104,7 +102,7 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key)),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe({
 				next: () => {
@@ -133,7 +131,7 @@ export class CacheEntriesComponent implements OnDestroy, OnInit {
 
 		this.cacheEntriesService
 			.refresh(cacheEntry.key)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe({
 				next: () => {
 					this.alertService.addAlert(

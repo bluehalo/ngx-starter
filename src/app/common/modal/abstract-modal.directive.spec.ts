@@ -2,13 +2,11 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { AbstractModalDirective } from './abstract-modal.directive';
 import { ModalAction } from './modal.model';
 
-@UntilDestroy()
 @Component({
 	selector: 'test-modal-component',
 	template: ``,

@@ -1,15 +1,14 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
 
 import { ConfigurableDialogData, DialogService } from '../../../common/dialog';
 import { ModalService } from '../../../common/modal/modal.service';
 import { FormModalComponent } from './form-modal.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-modal',
 	templateUrl: './modal.component.html',
@@ -19,6 +18,7 @@ import { FormModalComponent } from './form-modal.component';
 export class ModalComponent {
 	modalType = 'cdk';
 
+	private destroyRef = inject(DestroyRef);
 	dialogService = inject(DialogService);
 	modalService = inject(ModalService);
 
@@ -65,14 +65,14 @@ export class ModalComponent {
 		if (this.modalType === 'cdk') {
 			this.dialogService
 				.alert(this.alertConfig.title, this.alertConfig.message, this.alertConfig.okText)
-				.closed.pipe(untilDestroyed(this))
+				.closed.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((returnData) => {
 					this.alertOutput$.next(returnData);
 				});
 		} else {
 			this.modalService
 				.alert(this.alertConfig.title, this.alertConfig.message, this.alertConfig.okText)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((action) => {
 					this.alertOutput$.next(action);
 				});
@@ -88,7 +88,7 @@ export class ModalComponent {
 					this.alertConfig.okText,
 					this.confirmConfig.cancelText
 				)
-				.closed.pipe(untilDestroyed(this))
+				.closed.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((returnData) => {
 					this.confirmOutput$.next(returnData);
 				});
@@ -100,7 +100,7 @@ export class ModalComponent {
 					this.alertConfig.okText,
 					this.confirmConfig.cancelText
 				)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((action) => {
 					this.confirmOutput$.next(action);
 				});
@@ -117,7 +117,7 @@ export class ModalComponent {
 					this.alertConfig.okText,
 					this.confirmConfig.cancelText
 				)
-				.closed.pipe(untilDestroyed(this))
+				.closed.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((returnData) => {
 					this.promptOutput$.next(returnData);
 				});
@@ -130,7 +130,7 @@ export class ModalComponent {
 					this.alertConfig.okText,
 					this.confirmConfig.cancelText
 				)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((action) => {
 					this.promptOutput$.next(action);
 				});
@@ -142,14 +142,14 @@ export class ModalComponent {
 		if (this.modalType === 'cdk') {
 			this.dialogService
 				.show(this.showConfig)
-				.closed.pipe(untilDestroyed(this))
+				.closed.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((returnData) => {
 					this.showOutput$.next(returnData);
 				});
 		} else {
 			this.modalService
 				.show(this.showConfig)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe((action) => {
 					this.showOutput$.next(action);
 				});

@@ -4,6 +4,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
 	Component,
+	DestroyRef,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -12,9 +13,9 @@ import {
 	ViewChild,
 	inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
@@ -56,7 +57,6 @@ import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'list-team-members',
 	templateUrl: './list-team-members.component.html',
@@ -118,15 +118,13 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-
-	constructor(
-		private router: Router,
-		private teamsService: TeamsService,
-		private authorizationService: AuthorizationService,
-		private sessionService: SessionService,
-		private alertService: SystemAlertService
-	) {}
+	private router = inject(Router);
+	private teamsService = inject(TeamsService);
+	private authorizationService = inject(AuthorizationService);
+	private sessionService = inject(SessionService);
+	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
 		if (!this.team) {
@@ -136,7 +134,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 		this.sessionService
 			.getSession()
-			.pipe(isNotNullOrUndefined(), untilDestroyed(this))
+			.pipe(isNotNullOrUndefined(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isUserAdmin = this.authorizationService.isAdmin();
@@ -181,7 +179,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				isNotNullOrUndefined(),
 				isDialogActionOK(),
 				mapToDialogReturnData(),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((usersAdded) => {
 				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
@@ -207,7 +205,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 					}
 					return of(null);
 				}),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}
@@ -241,7 +239,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 						}
 						return of(null);
 					}),
-					untilDestroyed(this)
+					takeUntilDestroyed(this.destroyRef)
 				)
 				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
@@ -259,7 +257,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 						}
 						return of(null);
 					}),
-					untilDestroyed(this)
+					takeUntilDestroyed(this.destroyRef)
 				)
 				.subscribe(() => this.reloadTeamMembers());
 		}
@@ -281,7 +279,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 					}
 					return of(null);
 				}),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}

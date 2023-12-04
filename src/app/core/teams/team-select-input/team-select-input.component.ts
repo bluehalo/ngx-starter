@@ -1,15 +1,14 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, ViewChild, forwardRef } from '@angular/core';
+import { Component, DestroyRef, Input, ViewChild, forwardRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-team-select-input',
 	templateUrl: './team-select-input.component.html',
@@ -36,8 +35,11 @@ export class TeamSelectInputComponent implements ControlValueAccessor {
 
 	options$: Observable<Team[]>;
 
-	constructor(private teamsService: TeamsService) {
-		this.options$ = this.teamsService.getTeamsCanManageResources().pipe(untilDestroyed(this));
+	private destroyRef = inject(DestroyRef);
+	private teamsService = inject(TeamsService);
+
+	constructor() {
+		this.options$ = this.teamsService.getTeamsCanManageResources().pipe(takeUntilDestroyed());
 	}
 
 	get value(): Team | undefined {
