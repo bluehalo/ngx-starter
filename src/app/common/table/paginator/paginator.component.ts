@@ -15,7 +15,7 @@ import { AsyTableDataSource } from '../asy-table-data-source';
 	imports: [NgIf, NgSelectModule, FormsModule, AsyncPipe, DecimalPipe]
 })
 export class PaginatorComponent<T> implements OnInit {
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<T>;
 
 	@Input()

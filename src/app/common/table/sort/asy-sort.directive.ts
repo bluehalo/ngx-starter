@@ -20,7 +20,7 @@ export class AsySortDirective {
 	/** Collection of all registered sortables that this directive manages. */
 	sortables = new Map<string, AsySortable>();
 
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<any>;
 
 	/**
