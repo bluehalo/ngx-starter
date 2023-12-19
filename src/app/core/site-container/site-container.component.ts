@@ -1,8 +1,8 @@
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
@@ -10,7 +10,6 @@ import { ConfigService } from '../config.service';
 import { FeedbackFlyoutComponent } from '../feedback/feedback-flyout/feedback-flyout.component';
 import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'site-container',
 	templateUrl: 'site-container.component.html',
@@ -29,11 +28,13 @@ export class SiteContainerComponent {
 	copyrightHtml?: string;
 	showFeedbackFlyout = false;
 
-	constructor(private configService: ConfigService) {
-		configService
+	private configService = inject(ConfigService);
+
+	constructor() {
+		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
-			.subscribe((config) => {
+			.pipe(first(), takeUntilDestroyed())
+			.subscribe((config: any) => {
 				this.bannerHtml = config?.banner?.html;
 				this.copyrightHtml = config?.copyright?.html;
 				this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;

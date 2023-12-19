@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { Message, MessageType } from '../../messages/message.model';
 import { MessageService } from '../../messages/message.service';
 import { ManageMessageComponent } from './manage-message.component';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './manage-message.component.html',
 	standalone: true,

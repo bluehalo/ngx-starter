@@ -1,10 +1,10 @@
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-import { ApplicationConfig } from '@angular/platform-browser';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
 	TitleStrategy,
 	provideRouter,
+	withComponentInputBinding,
 	withHashLocation,
 	withInMemoryScrolling
 } from '@angular/router';
@@ -55,7 +55,8 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(
 			[],
 			withHashLocation(),
-			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
+			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+			withComponentInputBinding()
 		),
 		provideViewportScroller(),
 		provideCoreRoutes(),

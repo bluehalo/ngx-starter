@@ -1,11 +1,11 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
 
@@ -14,7 +14,6 @@ import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'feedback-modal.component.html',
 	styleUrls: ['feedback-modal.component.scss'],
@@ -32,18 +31,17 @@ export class FeedbackModalComponent implements OnInit {
 
 	feedback: Feedback = new Feedback();
 
+	private destroyRef = inject(DestroyRef);
 	public dialogRef = inject(DialogRef);
 
-	constructor(
-		private router: Router,
-		private configService: ConfigService,
-		private feedbackService: FeedbackService
-	) {}
+	private router = inject(Router);
+	private configService = inject(ConfigService);
+	private feedbackService = inject(FeedbackService);
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				this.baseUrl = config.app.clientUrl || '';
 
@@ -65,7 +63,7 @@ export class FeedbackModalComponent implements OnInit {
 
 		this.feedbackService
 			.create(this.feedback)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((feedback) => {
 				if (feedback) {
 					setTimeout(() => this.dialogRef.close(), 1500);

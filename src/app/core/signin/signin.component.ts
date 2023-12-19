@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
@@ -12,7 +12,6 @@ import { SessionService } from '../auth/session.service';
 import { ConfigService } from '../config.service';
 import { NavigationService } from '../navigation.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'signin.component.html',
 	styleUrls: ['signin.component.scss'],
@@ -27,16 +26,15 @@ export class SigninComponent implements OnInit {
 	password?: string;
 	error?: string;
 
-	constructor(
-		private configService: ConfigService,
-		private sessionService: SessionService,
-		private navigationService: NavigationService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private configService = inject(ConfigService);
+	private sessionService = inject(SessionService);
+	private navigationService = inject(NavigationService);
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config) => {
 				this.pkiMode = config?.auth === 'proxy-pki' ?? false;
 				this.loaded = true;
@@ -51,7 +49,7 @@ export class SigninComponent implements OnInit {
 	pkiSignin() {
 		this.sessionService
 			.reloadSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe({
 				next: () => {
 					this.navigationService.navigateToPreviousRoute();
@@ -68,7 +66,7 @@ export class SigninComponent implements OnInit {
 		if (this.username && this.password) {
 			this.sessionService
 				.signin(this.username, this.password)
-				.pipe(untilDestroyed(this))
+				.pipe(takeUntilDestroyed(this.destroyRef))
 				.subscribe({
 					next: () => {
 						this.navigationService.navigateToPreviousRoute();

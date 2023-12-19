@@ -1,11 +1,11 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { Component, DestroyRef, Inject, Input, OnInit, Optional, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject, concat, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
@@ -18,7 +18,6 @@ import {
 type TypeaheadFunction = (search: string) => Observable<any[]>;
 type BuildFilterFunction = (selectedValue: any | null) => any;
 
-@UntilDestroy()
 @Component({
 	selector: 'asy-header-filter[typeahead-filter]',
 	templateUrl: './asy-header-typeahead-filter.component.html',
@@ -52,6 +51,7 @@ export class AsyHeaderTypeaheadFilterComponent
 	@Input()
 	buildFilterFunc?: BuildFilterFunction;
 
+	private destroyRef = inject(DestroyRef);
 	constructor(
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
@@ -78,7 +78,7 @@ export class AsyHeaderTypeaheadFilterComponent
 				tap(() => {
 					this.loading = false;
 				}),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 		);
 	}

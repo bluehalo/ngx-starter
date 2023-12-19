@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-forms',
 	templateUrl: './forms.component.html',
@@ -14,6 +13,8 @@ import { delay, first } from 'rxjs/operators';
 	imports: [FormsModule, NgSelectModule]
 })
 export class FormsComponent {
+	private destroyRef = inject(DestroyRef);
+
 	fileSelected($event: Event) {
 		const target = $event.target as HTMLInputElement;
 		target.parentElement?.setAttribute('data-after', target?.files?.[0]?.name ?? '');
@@ -26,7 +27,7 @@ export class FormsComponent {
 
 		// Simulate component submitting w/ delay
 		of(true)
-			.pipe(delay(4000), first(), untilDestroyed(this))
+			.pipe(delay(4000), first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				btn.disabled = false;
 				btn.classList.remove('btn-submitting');

@@ -1,9 +1,9 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
@@ -27,7 +27,6 @@ import {
 import { Message } from '../../../messages/message.model';
 import { MessageService } from '../../../messages/message.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './list-messages.component.html',
 	styleUrls: ['./list-messages.component.scss'],
@@ -62,12 +61,10 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-
-	constructor(
-		private messageService: MessageService,
-		public alertService: SystemAlertService
-	) {}
+	private messageService = inject(MessageService);
+	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -100,7 +97,7 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.messageService.delete(message)),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => {
 				this.alertService.addAlert(`Deleted message.`, 'success');

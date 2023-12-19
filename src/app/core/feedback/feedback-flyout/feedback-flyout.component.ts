@@ -1,10 +1,10 @@
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import isEmpty from 'lodash/isEmpty';
 import { first } from 'rxjs/operators';
 
@@ -13,7 +13,6 @@ import { ConfigService } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-feedback-flyout',
 	templateUrl: './feedback-flyout.component.html',
@@ -31,16 +30,15 @@ export class FeedbackFlyoutComponent implements OnInit {
 
 	status: 'ready' | 'submitting' | 'success' | 'failure' = 'ready';
 
-	constructor(
-		private router: Router,
-		private configService: ConfigService,
-		private feedbackService: FeedbackService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private router = inject(Router);
+	private configService = inject(ConfigService);
+	private feedbackService = inject(FeedbackService);
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				this.baseUrl = config.app.clientUrl || '';
 
@@ -68,7 +66,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 		this.feedback.url = `${this.baseUrl}${this.router.url}`;
 		this.feedbackService
 			.create(this.feedback)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((feedback) => {
 				if (feedback) {
 					this.status = 'success';

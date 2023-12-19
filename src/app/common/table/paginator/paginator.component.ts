@@ -15,7 +15,7 @@ import { AsyTableDataSource } from '../asy-table-data-source';
 	imports: [NgIf, NgSelectModule, FormsModule, AsyncPipe, DecimalPipe]
 })
 export class PaginatorComponent<T> implements OnInit {
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<T>;
 
 	@Input()
@@ -32,7 +32,9 @@ export class PaginatorComponent<T> implements OnInit {
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	ngOnInit() {
 		// Constrain the max page size
@@ -66,7 +68,7 @@ export class PaginatorComponent<T> implements OnInit {
 		});
 	}
 
-	_constrain(value: number, max: number, min: number = 0) {
+	_constrain(value: number, max: number, min = 0) {
 		return Math.min(max, Math.max(value, min));
 	}
 

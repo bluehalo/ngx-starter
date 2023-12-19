@@ -7,7 +7,7 @@ import { first, map } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
 import { MasqueradeService } from './masquerade.service';
 
-const DEFAULT_HEADER: string = 'x-masquerade-user-dn';
+const DEFAULT_HEADER = 'x-masquerade-user-dn';
 
 /**
  * HTTP Interceptor that will add Masquerade related headers

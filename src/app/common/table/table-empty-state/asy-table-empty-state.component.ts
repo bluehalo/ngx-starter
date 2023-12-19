@@ -12,7 +12,7 @@ import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.com
 	imports: [NgIf, AsySkeletonRowsComponent]
 })
 export class AsyTableEmptyStateComponent<T> {
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<T>;
 
 	@Input()

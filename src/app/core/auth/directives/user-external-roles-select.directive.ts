@@ -1,18 +1,18 @@
-import { Directive, OnInit, SimpleChange, inject } from '@angular/core';
+import { DestroyRef, Directive, OnInit, SimpleChange, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
 import { SessionService } from '../session.service';
 
-@UntilDestroy()
 @Directive({
 	selector: 'ng-select[appUserExternalRolesSelect]',
 	standalone: true
 })
 export class UserExternalRolesSelectDirective implements OnInit {
+	private destroyRef = inject(DestroyRef);
 	private select = inject(NgSelectComponent);
 	private sessionService = inject(SessionService);
 
@@ -23,7 +23,7 @@ export class UserExternalRolesSelectDirective implements OnInit {
 			.pipe(
 				isNotNullOrUndefined(),
 				map((session) => session.user.userModel.externalRoles),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((externalRoles) => {
 				const change = new SimpleChange(this.select.items, externalRoles, false);

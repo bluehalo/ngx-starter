@@ -1,7 +1,6 @@
 import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Component, DestroyRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
@@ -11,7 +10,6 @@ import { SystemAlertComponent } from '../../../common/system-alert/system-alert.
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-view-all-messages',
 	templateUrl: './view-all-messages.component.html',
@@ -37,13 +35,16 @@ export class ViewAllMessagesComponent implements OnInit {
 
 	@ViewChild(SearchInputComponent, { static: true }) searchInput?: SearchInputComponent;
 
-	constructor(private messagesService: MessageService) {}
+	private destroyRef = inject(DestroyRef);
+	private messagesService = inject(MessageService);
 
 	ngOnInit() {
 		this.loadMessages(this.pageNumber);
-		this.messagesService.messageReceived.pipe(untilDestroyed(this)).subscribe((message) => {
-			this.newMessages = true;
-		});
+		this.messagesService.messageReceived
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe((message) => {
+				this.newMessages = true;
+			});
 	}
 
 	@HostListener('window:scroll')
@@ -63,7 +64,7 @@ export class ViewAllMessagesComponent implements OnInit {
 				{},
 				this.search
 			)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((messages: PagingResults) => {
 				if (page === 0) {
 					this.messages = messages.elements;

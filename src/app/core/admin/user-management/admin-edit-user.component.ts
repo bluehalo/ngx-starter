@@ -1,9 +1,9 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, switchMap } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +13,6 @@ import { User } from '../../auth/user.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'admin-edit-user',
 	templateUrl: './manage-user.component.html',
@@ -35,7 +34,7 @@ export class AdminEditUserComponent extends ManageUserComponent {
 			.pipe(
 				switchMap((params: Params) => this.adminUsersService.get(params['id'])),
 				map((userRaw: any) => new User().setFromUserModel(userRaw)),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((user) => {
 				this.user = user;

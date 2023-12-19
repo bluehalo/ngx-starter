@@ -1,15 +1,24 @@
-import { Directive, HostBinding, Input, OnInit, SimpleChange, inject } from '@angular/core';
+import {
+	DestroyRef,
+	Directive,
+	HostBinding,
+	Input,
+	OnInit,
+	SimpleChange,
+	inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-@UntilDestroy()
 @Directive({
 	selector: 'ng-select[multi-select]',
 	standalone: true
 })
 export class MultiSelectDirective implements OnInit {
 	private select = inject(NgSelectComponent);
+
+	private destroyRef = inject(DestroyRef);
 
 	@Input()
 	@HostBinding('class.ng-hide-arrow-wrapper')
@@ -27,10 +36,10 @@ export class MultiSelectDirective implements OnInit {
 			items: new SimpleChange([], [], true)
 		});
 
-		this.select.addEvent.pipe(untilDestroyed(this)).subscribe(() => {
+		this.select.addEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
 			this.updateIsOpen(false);
 		});
-		this.select.searchEvent.pipe(untilDestroyed(this)).subscribe((event) => {
+		this.select.searchEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
 			const isOpen = event.term.trim().length > 0;
 			this.updateIsOpen(isOpen);
 		});

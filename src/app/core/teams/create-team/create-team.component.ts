@@ -1,10 +1,10 @@
-import { AsyncPipe, Location, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, Subject, concat, of } from 'rxjs';
 import {
 	debounceTime,
@@ -20,7 +20,6 @@ import { MultiSelectDirective } from '../../../common/multi-select.directive';
 import { PagingOptions } from '../../../common/paging.model';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { AuthenticationService } from '../../auth/authentication.service';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { UserExternalRolesSelectDirective } from '../../auth/directives/user-external-roles-select.directive';
 import { SessionService } from '../../auth/session.service';
@@ -30,7 +29,6 @@ import { TeamSelectInputComponent } from '../team-select-input/team-select-input
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './create-team.component.html',
 	standalone: true,
@@ -66,24 +64,21 @@ export class CreateTeamComponent implements OnInit {
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 
-	constructor(
-		private router: Router,
-		private route: ActivatedRoute,
-		private location: Location,
-		private configService: ConfigService,
-		private teamsService: TeamsService,
-		private sessionService: SessionService,
-		private authenticationService: AuthenticationService,
-		private authorizationService: AuthorizationService,
-		private alertService: SystemAlertService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private router = inject(Router);
+	private route = inject(ActivatedRoute);
+	private configService = inject(ConfigService);
+	private teamsService = inject(TeamsService);
+	private sessionService = inject(SessionService);
+	private authorizationService = inject(AuthorizationService);
+	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config) => {
 				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
 				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
@@ -91,7 +86,7 @@ export class CreateTeamComponent implements OnInit {
 
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((session) => {
 				this.user = session?.user ?? null;
 				this.isAdmin = this.authorizationService.isAdmin();
@@ -106,7 +101,7 @@ export class CreateTeamComponent implements OnInit {
 				map((params) => params.get('parent')),
 				filter((id: string | null): id is string => id !== null),
 				switchMap((id) => this.teamsService.read(id)),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((parent) => {
 				this.team.parent = parent ?? undefined;
@@ -146,7 +141,7 @@ export class CreateTeamComponent implements OnInit {
 			.create(this.team, this?.teamAdmin?.userModel._id)
 			.pipe(
 				switchMap(() => this.sessionService.reloadSession()),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => {
 				return this.router.navigate(['/team']);

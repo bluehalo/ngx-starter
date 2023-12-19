@@ -1,16 +1,23 @@
 import { DataSource, SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+	AfterViewInit,
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	Input,
+	OnInit,
+	inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 import { AsyTableDataSource } from '../asy-table-data-source';
 
-@UntilDestroy()
 @Component({
 	selector: 'asy-selection-column',
 	templateUrl: './asy-selection-column.component.html',
@@ -46,6 +53,8 @@ export class AsySelectionColumnComponent<T, TB = T>
 	@Input()
 	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
 
+	private destroyRef = inject(DestroyRef);
+
 	constructor() {
 		super();
 		this.name = 'selection';
@@ -68,14 +77,16 @@ export class AsySelectionColumnComponent<T, TB = T>
 
 	ngAfterViewInit(): void {
 		if (this.clearOnLoad) {
-			this.dataSource.pagingResults$.pipe(untilDestroyed(this)).subscribe(() => {
-				this.selectionModel.clear();
-			});
+			this.dataSource.pagingResults$
+				.pipe(takeUntilDestroyed(this.destroyRef))
+				.subscribe(() => {
+					this.selectionModel.clear();
+				});
 		}
 
 		this._isAllSelected$ = this.selectionModel.changed.pipe(
 			map(() => this._isAllSelected()),
-			untilDestroyed(this)
+			takeUntilDestroyed(this.destroyRef)
 		);
 	}
 

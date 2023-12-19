@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { ConfigService } from './config.service';
 
-@UntilDestroy()
 @Component({
 	template: `
 		<div class="container">
@@ -23,12 +22,13 @@ export class AboutComponent implements OnInit {
 	appTitle?: string;
 	version?: string;
 
-	constructor(private configService: ConfigService) {}
+	private destroyRef = inject(DestroyRef);
+	private configService = inject(ConfigService);
 
 	ngOnInit() {
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config) => {
 				this.appTitle = config?.app?.title ?? '';
 				this.version = config?.version ?? '';

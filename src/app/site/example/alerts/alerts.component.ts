@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './alerts.component.html',
 	standalone: true,

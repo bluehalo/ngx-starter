@@ -8,7 +8,7 @@ export interface Breadcrumb {
 export class BreadcrumbService {
 	static getBreadcrumbs(
 		route: ActivatedRouteSnapshot,
-		url: string = '',
+		url = '',
 		breadcrumbs: Breadcrumb[] = []
 	): Breadcrumb[] {
 		const ROUTE_DATA_BREADCRUMB = 'breadcrumb';

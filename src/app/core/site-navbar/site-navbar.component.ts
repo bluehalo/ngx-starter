@@ -2,10 +2,10 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { first } from 'rxjs/operators';
 
@@ -26,7 +26,6 @@ import { MessageService } from '../messages/message.service';
 import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
 import { getNavbarTopics } from './navbar-topic.model';
 
-@UntilDestroy()
 @Component({
 	selector: 'site-navbar',
 	templateUrl: 'site-navbar.component.html',
@@ -110,19 +109,17 @@ export class SiteNavbarComponent implements OnInit {
 		}
 	}
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-
-	constructor(
-		private configService: ConfigService,
-		private sessionService: SessionService,
-		private messageService: MessageService,
-		private masqueradeService: MasqueradeService
-	) {}
+	private configService = inject(ConfigService);
+	private sessionService = inject(SessionService);
+	private messageService = inject(MessageService);
+	private masqueradeService = inject(MasqueradeService);
 
 	ngOnInit() {
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((session) => {
 				this.session = session;
 				this.canMasquerade = session?.user?.userModel?.canMasquerade ?? false;
@@ -130,7 +127,7 @@ export class SiteNavbarComponent implements OnInit {
 
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config) => {
 				this.masqueradeEnabled = config?.masqueradeEnabled ?? false;
 				this.showApiDocsLink = config?.apiDocs?.enabled ?? false;
@@ -140,9 +137,11 @@ export class SiteNavbarComponent implements OnInit {
 				this.userPreferencesLink = config?.userPreferences?.path ?? '';
 			});
 
-		this.messageService.numMessagesIndicator$.pipe(untilDestroyed(this)).subscribe((count) => {
-			this.numNewMessages = count;
-		});
+		this.messageService.numMessagesIndicator$
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe((count) => {
+				this.numNewMessages = count;
+			});
 
 		this.isMasquerade = this.masqueradeService.getMasqueradeDn() !== undefined;
 	}

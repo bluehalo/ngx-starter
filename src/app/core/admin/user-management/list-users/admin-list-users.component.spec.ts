@@ -6,7 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
-import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';

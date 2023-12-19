@@ -43,7 +43,9 @@ export class Feedback {
 		organization: string;
 	};
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	public setFromModel(model: any): Feedback {
 		if (null == model) {

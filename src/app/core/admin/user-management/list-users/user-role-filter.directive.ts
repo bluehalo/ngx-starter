@@ -1,13 +1,12 @@
-import { Directive, OnInit } from '@angular/core';
+import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 
 import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../../common/table';
 import { Role } from '../../../auth/role.model';
 import { ConfigService } from '../../../config.service';
 
-@UntilDestroy()
 @Directive({
 	selector: 'asy-header-filter[list-filter][user-role-filter]',
 	standalone: true
@@ -15,10 +14,9 @@ import { ConfigService } from '../../../config.service';
 export class UserRoleFilterDirective implements OnInit {
 	private requiredExternalRoles: string[] = [];
 
-	constructor(
-		private listFilter: AsyHeaderListFilterComponent,
-		private configService: ConfigService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private listFilter = inject(AsyHeaderListFilterComponent);
+	private configService = inject(ConfigService);
 
 	ngOnInit() {
 		this.listFilter.options = [
@@ -35,7 +33,7 @@ export class UserRoleFilterDirective implements OnInit {
 
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((config: any) => {
 				this.requiredExternalRoles = Array.isArray(config.requiredRoles)
 					? config.requiredRoles
