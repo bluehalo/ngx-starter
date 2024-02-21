@@ -2,21 +2,23 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { AbstractModalizableDirective } from '../abstract-modalizable.directive';
 import { ModalComponent } from '../modal/modal.component';
 import { ContainerModalComponent } from './container-modal.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'test-modalized-component',
 	template: ` <button></button><button></button> `
 })
 class ConcreteModalizedComponent extends AbstractModalizableDirective {
-	onCancel() {}
-	onOk() {}
+	onCancel() {
+		// do nothing
+	}
+	onOk() {
+		// do nothing
+	}
 }
 
 describe('Container Modal Component', () => {

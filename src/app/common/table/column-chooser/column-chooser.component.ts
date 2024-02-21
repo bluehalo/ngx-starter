@@ -25,7 +25,7 @@ export type ColumnDefinition = {
 	imports: [CdkDropList, NgFor, CdkDrag, NgIf, CdkDragHandle, FormsModule, TitleCasePipe]
 })
 export class ColumnChooserComponent implements OnInit {
-	@Input()
+	@Input({ required: true })
 	set columns(columns: ColumnDefinition[]) {
 		this._columns = columns.map((c) => ({ ...c }));
 		this._defaultColumns = columns.map((c) => ({ ...c }));
@@ -44,7 +44,9 @@ export class ColumnChooserComponent implements OnInit {
 
 	private storage = new LocalStorageService();
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	ngOnInit(): void {
 		this._loadState();

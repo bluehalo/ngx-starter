@@ -1,13 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
 	selector: 'asy-search-input',
 	templateUrl: './search-input.component.html',
@@ -55,7 +54,7 @@ export class SearchInputComponent {
 	showMinCountMessage = false;
 
 	constructor() {
-		this.searchInput$.pipe(debounceTime(350), untilDestroyed(this)).subscribe(() => {
+		this.searchInput$.pipe(debounceTime(350), takeUntilDestroyed()).subscribe(() => {
 			if (this.search.length === 0 || this.search.length >= this.minSearchCharacterCount) {
 				this.showMinCountMessage = false;
 				this.applySearch.emit(this.search);

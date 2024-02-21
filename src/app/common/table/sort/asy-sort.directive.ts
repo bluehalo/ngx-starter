@@ -20,7 +20,7 @@ export class AsySortDirective {
 	/** Collection of all registered sortables that this directive manages. */
 	sortables = new Map<string, AsySortable>();
 
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<any>;
 
 	/**
@@ -47,7 +47,9 @@ export class AsySortDirective {
 		this.sortables.delete(sortable.id);
 	}
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	sort(sortChange: SortChange): void {
 		this.dataSource.sort(sortChange);

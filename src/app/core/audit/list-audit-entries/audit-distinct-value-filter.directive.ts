@@ -1,21 +1,19 @@
-import { Directive, OnInit } from '@angular/core';
+import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 
 import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../common/table';
 import { AuditService } from '../audit.service';
 
-@UntilDestroy()
 @Directive({
 	selector: 'asy-header-filter[list-filter][audit-distinct-value-filter]',
 	standalone: true
 })
 export class AuditDistinctValueFilterDirective implements OnInit {
-	constructor(
-		private listFilter: AsyHeaderListFilterComponent,
-		private auditService: AuditService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private listFilter = inject(AsyHeaderListFilterComponent);
+	private auditService = inject(AuditService);
 
 	ngOnInit() {
 		this.listFilter.options = [];
@@ -31,7 +29,7 @@ export class AuditDistinctValueFilterDirective implements OnInit {
 							}) as ListFilterOption
 					)
 				),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((types) => {
 				this.listFilter.options = types;

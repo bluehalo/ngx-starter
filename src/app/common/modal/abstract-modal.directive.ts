@@ -34,7 +34,9 @@ export abstract class AbstractModalDirective {
 	/* eslint-disable-next-line rxjs/finnish */
 	onClose: Subject<ModalCloseEvent> = new Subject();
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	ok() {
 		this.modalRef.hide();

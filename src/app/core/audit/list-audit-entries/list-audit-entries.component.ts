@@ -1,9 +1,9 @@
 import { ComponentType, OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
-import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -34,7 +34,6 @@ import { AuditService } from '../audit.service';
 import { AuditActorFilterDirective } from './audit-actor-filter.directive';
 import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter.directive';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './list-audit-entries.component.html',
 	styleUrls: ['./list-audit-entries.component.scss'],
@@ -125,18 +124,18 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
+	private alertService = inject(SystemAlertService);
+	private auditService = inject(AuditService);
+	private configService = inject(ConfigService);
+	private exportConfigService = inject(ExportConfigService);
 
-	constructor(
-		private alertService: SystemAlertService,
-		private auditService: AuditService,
-		private configService: ConfigService,
-		private exportConfigService: ExportConfigService
-	) {
+	constructor() {
 		this.alertService.clearAllAlerts();
 		this.configService
 			.getConfig()
-			.pipe(first(), untilDestroyed(this))
+			.pipe(first(), takeUntilDestroyed())
 			.subscribe((config) => {
 				if (config?.masqueradeEnabled) {
 					this.displayedColumns.push('audit.masqueradingUser');
@@ -165,7 +164,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/audit/csv/${response._id}`);
 			});

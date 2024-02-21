@@ -1,9 +1,9 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap } from 'rxjs';
 
 import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
@@ -12,7 +12,6 @@ import { EndUserAgreement } from './eua.model';
 import { EuaService } from './eua.service';
 import { ManageEuaComponent } from './manage-eua.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'admin-update-eua',
 	templateUrl: './manage-eua.component.html',
@@ -20,10 +19,11 @@ import { ManageEuaComponent } from './manage-eua.component';
 	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf]
 })
 export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnInit {
-	constructor(
-		protected euaService: EuaService,
-		protected route: ActivatedRoute
-	) {
+	private destroyRef = inject(DestroyRef);
+	protected euaService = inject(EuaService);
+	protected route = inject(ActivatedRoute);
+
+	constructor() {
 		super('Edit EUA', "Make changes to the EUA's information", 'Save');
 	}
 
@@ -32,7 +32,7 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 			.pipe(
 				switchMap((params: Params) => this.euaService.read(params['id'])),
 				isNotNullOrUndefined(),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((eua) => {
 				setTimeout(() => {
@@ -45,7 +45,7 @@ export class AdminUpdateEuaComponent extends ManageEuaComponent implements OnIni
 		const _eua = new EndUserAgreement().setFromModel(this.eua);
 		this.euaService
 			.update(_eua)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => this.router.navigate(['/admin/euas', { clearCachedFilter: true }]));
 	}
 }

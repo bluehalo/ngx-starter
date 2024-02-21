@@ -13,7 +13,9 @@ export class Team {
 	parent?: Team;
 	ancestors: Team[] = [];
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	setFromModel(model: any): Team {
 		if (null != model) {

@@ -1,9 +1,9 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
@@ -29,7 +29,6 @@ import {
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
 
-@UntilDestroy()
 @Component({
 	templateUrl: './admin-list-euas.component.html',
 	styleUrls: ['./admin-list-euas.component.scss'],
@@ -98,13 +97,10 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		}
 	);
 
+	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-
-	constructor(
-		private euaService: EuaService,
-		private route: ActivatedRoute,
-		private alertService: SystemAlertService
-	) {}
+	private euaService = inject(EuaService);
+	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -134,7 +130,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
 				switchMap(() => this.euaService.delete(eua)),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe(() => {
 				this.alertService.addAlert(`Deleted EUA entitled: ${eua.title}`, 'success');
@@ -145,7 +141,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	publishEua(eua: EndUserAgreement) {
 		this.euaService
 			.publish(eua)
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.alertService.addAlert(`Published ${eua.title}`, 'success');
 				this.dataSource.reload();

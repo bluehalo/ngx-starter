@@ -22,6 +22,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
+			// eslint-disable-next-line deprecation/deprecation
 			useExisting: MultiSelectInputComponent,
 			multi: true
 		}
@@ -40,10 +41,16 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 
 	private innerValue: string[] = [];
 
-	onChange = (_: any) => {};
-	onTouched = () => {};
+	onChange = (_: any) => {
+		// do nothing
+	};
+	onTouched = () => {
+		// do nothing
+	};
 
-	constructor() {}
+	constructor() {
+		// do nothing
+	}
 
 	onSearch($event: { term: string }) {
 		this.autocompleteOpen = $event.term.trim().length > 0;

@@ -43,7 +43,7 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 	}
 
 	create(t: T): Observable<T | null> {
-		let obs$ =
+		const obs$ =
 			this.createMethod === 'PUT'
 				? this.http.put(this.getMethodUrl(ServiceMethod.create), t, {
 						headers: this.headers
@@ -86,7 +86,7 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 	search(
 		paging: PagingOptions,
 		query: Record<string, any> = {},
-		search: string = '',
+		search = '',
 		body: any = null,
 		params: any = null,
 		options: any = {},

@@ -31,8 +31,12 @@ describe('AsyHeaderDateFilter', () => {
 		filterSpy = jasmine.createSpyObj('AsyFilterDirective', ['register', 'deregister'], {
 			dataSource: { storageKey: 'test' }
 		});
-		filterSpy.register.and.callFake(() => {});
-		filterSpy.deregister.and.callFake(() => {});
+		filterSpy.register.and.callFake(() => {
+			// do nothing
+		});
+		filterSpy.deregister.and.callFake(() => {
+			// do nothing
+		});
 
 		await TestBed.configureTestingModule({
 			imports: [BrowserAnimationsModule, AsyHeaderDateFilterComponent],

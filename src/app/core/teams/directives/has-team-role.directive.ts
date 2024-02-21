@@ -1,7 +1,6 @@
 import { NgIf } from '@angular/common';
-import { Directive, Input, OnInit, inject } from '@angular/core';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DestroyRef, Directive, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -9,7 +8,6 @@ import { TeamAuthorizationService } from '../team-authorization.service';
 import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
 
-@UntilDestroy()
 @Directive({
 	selector: '[hasTeamRole]',
 	hostDirectives: [
@@ -26,6 +24,7 @@ export class HasTeamRoleDirective implements OnInit {
 	private andCondition = true;
 	private orCondition = false;
 
+	private destroyRef = inject(DestroyRef);
 	private ngIfDirective = inject(NgIf);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
@@ -58,7 +57,7 @@ export class HasTeamRoleDirective implements OnInit {
 	ngOnInit() {
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.updateNgIf();
 			});

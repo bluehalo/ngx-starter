@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
@@ -12,7 +11,6 @@ import { User } from '../../auth/user.model';
 import { AdminUsersService } from './admin-users.service';
 import { ManageUserComponent } from './manage-user.component';
 
-@UntilDestroy()
 @Component({
 	selector: 'admin-create-user',
 	templateUrl: 'manage-user.component.html',

@@ -1,4 +1,6 @@
-import { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Routes } from '@angular/router';
+
+import { map } from 'rxjs/operators';
 
 import { authGuard } from '../auth/auth.guard';
 import { CreateTeamComponent } from './create-team/create-team.component';
@@ -36,7 +38,10 @@ export const TEAMS_ROUTES: Routes = [
 			},
 			{
 				path: 'general',
-				component: GeneralDetailsComponent
+				component: GeneralDetailsComponent,
+				resolve: {
+					team: (route: ActivatedRouteSnapshot) => route.parent?.data['team']
+				}
 			}
 		]
 	}

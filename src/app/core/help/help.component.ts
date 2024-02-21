@@ -1,8 +1,8 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
 	ActivatedRoute,
-	Event,
 	NavigationEnd,
 	Router,
 	RouterLink,
@@ -10,14 +10,12 @@ import {
 	RouterOutlet
 } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter } from 'rxjs/operators';
 
 import { BreadcrumbComponent } from '../../common/breadcrumb/breadcrumb.component';
 import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
 import { getHelpTopics } from './help-topic.component';
 
-@UntilDestroy()
 @Component({
 	templateUrl: 'help.component.html',
 	styleUrls: ['help.component.scss'],
@@ -31,17 +29,20 @@ export class HelpComponent {
 
 	title = '';
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router
-	) {
-		router.events
-			.pipe(
-				filter((event: Event) => event instanceof NavigationEnd),
-				untilDestroyed(this)
-			)
-			.subscribe(() => (this.title = BreadcrumbService.getBreadcrumbLabel(route.snapshot)));
-	}
-
 	protected readonly top = top;
+
+	private destroyRef = inject(DestroyRef);
+	private route = inject(ActivatedRoute);
+	private router = inject(Router);
+
+	constructor() {
+		this.router.events
+			.pipe(
+				filter((event) => event instanceof NavigationEnd),
+				takeUntilDestroyed(this.destroyRef)
+			)
+			.subscribe(
+				() => (this.title = BreadcrumbService.getBreadcrumbLabel(this.route.snapshot))
+			);
+	}
 }
