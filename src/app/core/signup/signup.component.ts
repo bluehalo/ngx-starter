@@ -1,52 +1,59 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { Observable } from 'rxjs';
 
 import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
-import { ManageUserComponent } from '../admin/user-management/manage-user.component';
+import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../auth/authentication.service';
 import { User } from '../auth/user.model';
 
 @Component({
-	selector: 'user-signup',
-	templateUrl: '../admin/user-management/manage-user.component.html',
 	standalone: true,
-	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgFor, TooltipModule]
+	templateUrl: './signup.component.html',
+	imports: [
+		NgIf,
+		RouterLink,
+		SystemAlertComponent,
+		FormsModule,
+		NgFor,
+		TooltipModule,
+		TitleCasePipe
+	]
 })
-export class SignupComponent extends ManageUserComponent {
-	mode = 'signup';
+export class SignupComponent {
+	user = new User();
 
+	private destroyRef = inject(DestroyRef);
+	private router = inject(Router);
+	private alertService = inject(SystemAlertService);
 	private authService = inject(AuthenticationService);
-	private route = inject(ActivatedRoute);
 
-	constructor() {
-		super(
-			'New Account Request',
-			'Provide the required information to request an account',
-			'Submit',
-			'/signed-up'
-		);
+	submit() {
+		if (this.validatePassword()) {
+			this.authService
+				.signup(this.user)
+				.pipe(takeUntilDestroyed(this.destroyRef))
+				.subscribe({
+					next: () => this.router.navigate(['/signed-up']),
+					error: (error: unknown) => {
+						if (error instanceof HttpErrorResponse) {
+							this.alertService.addClientErrorAlert(error);
+						}
+					}
+				});
+		}
 	}
 
-	@Input()
-	set email(email: string) {
-		this.user.userModel.email = email;
-	}
-
-	initialize() {
-		// no-op
-	}
-
-	handleBypassAccessCheck() {
-		// Don't need to do anything
-	}
-
-	submitUser(user: User): Observable<any> {
-		return this.authService.signup(user);
+	private validatePassword(): boolean {
+		if (this.user.userModel.password === this.user.userModel.verifyPassword) {
+			return true;
+		}
+		this.alertService.addAlert('Passwords must match', 'danger');
+		return false;
 	}
 }

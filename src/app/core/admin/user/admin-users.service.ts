@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -7,16 +8,26 @@ import { catchError, map } from 'rxjs/operators';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { User } from '../../auth/user.model';
+import { ErrorState } from '../../errors/error-state.model';
+
+export const userResolver: ResolveFn<User | null> = (
+	route: ActivatedRouteSnapshot,
+	state: RouterStateSnapshot,
+	router = inject(Router),
+	service = inject(AdminUsersService)
+) => {
+	const id = route.paramMap.get('id') ?? 'undefined';
+	return service.read(id).pipe(catchError((error: unknown) => service.redirectError(error)));
+};
 
 /**
  * Admin management of users
  */
 @Injectable({ providedIn: 'root' })
 export class AdminUsersService {
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
+	private http = inject(HttpClient);
+	private alertService = inject(SystemAlertService);
+	private router = inject(Router);
 
 	search(
 		query: any,
@@ -60,11 +71,34 @@ export class AdminUsersService {
 		return this.http.post('api/admin/user', user.userModel);
 	}
 
-	get(userId: string) {
-		return this.http.get(`api/admin/user/${userId}`);
+	read(userId: string) {
+		return this.http
+			.get(`api/admin/user/${userId}`)
+			.pipe(map((userRaw: any) => new User().setFromUserModel(userRaw)));
 	}
 
 	update(user: User): Observable<any> {
 		return this.http.post(`api/admin/user/${user.userModel._id}`, user.userModel);
+	}
+
+	redirectError(error: unknown) {
+		let state: ErrorState = {
+			statusText: 'Unknown Error',
+			message: 'Unknown Error'
+		};
+		if (error instanceof HttpErrorResponse) {
+			state = {
+				status: error.status,
+				statusText: error.statusText,
+				url: error.url,
+				message: error.error?.message ?? error.message,
+				stack: error.error?.stack
+			};
+		}
+		this.router.navigate(['/error'], {
+			replaceUrl: true,
+			state
+		});
+		return of(null);
 	}
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -8,7 +8,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
 import { AuthorizationService } from '../auth/authorization.service';
-import { SessionService } from '../auth/session.service';
 import { User } from '../auth/user.model';
 import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamMember } from './team-member.model';
@@ -24,13 +23,11 @@ export interface AddedMember {
 export const teamResolver: ResolveFn<Team | null> = (
 	route: ActivatedRouteSnapshot,
 	state: RouterStateSnapshot,
+	router = inject(Router),
 	service = inject(TeamsService)
 ) => {
-	const id = route.paramMap.get('id');
-	if (id == null) {
-		return null;
-	}
-	return service.read(id);
+	const id = route.paramMap.get('id') ?? 'undefined';
+	return service.read(id).pipe(catchError((error: unknown) => service.redirectError(error)));
 };
 
 @Injectable({
@@ -38,7 +35,6 @@ export const teamResolver: ResolveFn<Team | null> = (
 })
 export class TeamsService extends AbstractEntityService<Team> {
 	constructor(
-		private sessionService: SessionService,
 		private authorizationService: AuthorizationService,
 		private teamAuthorizationService: TeamAuthorizationService
 	) {

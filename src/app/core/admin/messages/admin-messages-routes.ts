@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { CreateMessageComponent } from './create-message.component';
-import { UpdateMessageComponent } from './edit-message.component';
+import { messageResolver } from '../../messages/message.service';
 import { ListMessagesComponent } from './list-messages/list-messages.component';
+import { ManageMessageComponent } from './manage-message/manage-message.component';
 
 export const ADMIN_MESSAGES_ROUTES: Routes = [
 	{
@@ -11,10 +11,13 @@ export const ADMIN_MESSAGES_ROUTES: Routes = [
 	},
 	{
 		path: 'message',
-		component: CreateMessageComponent
+		component: ManageMessageComponent
 	},
 	{
 		path: 'message/:id',
-		component: UpdateMessageComponent
+		resolve: {
+			message: messageResolver
+		},
+		component: ManageMessageComponent
 	}
 ];

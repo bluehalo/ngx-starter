@@ -1,4 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,6 +10,16 @@ import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
 import { Message } from './message.model';
+
+export const messageResolver: ResolveFn<Message | null> = (
+	route: ActivatedRouteSnapshot,
+	state: RouterStateSnapshot,
+	router = inject(Router),
+	service = inject(MessageService)
+) => {
+	const id = route.paramMap.get('id') ?? 'undefined';
+	return service.read(id).pipe(catchError((error: unknown) => service.redirectError(error)));
+};
 
 @UntilDestroy()
 @Injectable({

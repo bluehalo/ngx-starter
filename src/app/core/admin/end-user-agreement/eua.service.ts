@@ -1,9 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../../common/abstract-entity.service';
 import { EndUserAgreement } from './eua.model';
+
+export const euaResolver: ResolveFn<EndUserAgreement | null> = (
+	route: ActivatedRouteSnapshot,
+	state: RouterStateSnapshot,
+	router = inject(Router),
+	service = inject(EuaService)
+) => {
+	const id = route.paramMap.get('id') ?? 'undefined';
+	return service.read(id).pipe(catchError((error: unknown) => service.redirectError(error)));
+};
 
 @Injectable({ providedIn: 'root' })
 export class EuaService extends AbstractEntityService<EndUserAgreement> {

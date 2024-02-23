@@ -31,7 +31,7 @@ import {
 import { ExportConfigService } from '../../../export-config.service';
 import { Feedback, FeedbackStatusOption } from '../../../feedback/feedback.model';
 import { FeedbackService } from '../../../feedback/feedback.service';
-import { AdminUsersService } from '../../user-management/admin-users.service';
+import { AdminUsersService } from '../../user/admin-users.service';
 
 @Component({
 	templateUrl: 'admin-list-feedback.component.html',

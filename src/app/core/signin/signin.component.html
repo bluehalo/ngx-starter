@@ -1,5 +1,5 @@
 <section class="container">
-	<section class="row" *ngIf="loaded">
+	<ng-container *ngIf="loaded">
 		<!-- PKI Authentication Strategy -->
 		<div class="signin-loading-container mx-auto mt-5" *ngIf="pkiMode">
 			<loading-spinner message="Signing In..." [hidden]="error"> </loading-spinner>
@@ -9,8 +9,16 @@
 			</div>
 		</div>
 
-		<!-- Username/Password Authentication Strategy -->
-		<div class="signin-container mx-auto mt-5" *ngIf="!pkiMode">
+		<form
+			class="mx-auto mt-5 signin-container"
+			role="form"
+			autocomplete="off"
+			novalidate
+			#form="ngForm"
+			*ngIf="!pkiMode"
+			(ngSubmit)="signin()"
+		>
+			<!-- Username/Password Authentication Strategy -->
 			<h2 class="text-center">Sign In</h2>
 
 			<div class="signin-form" autocomplete="off">
@@ -25,6 +33,7 @@
 							type="text"
 							autofocus
 							placeholder="Username"
+							required
 							[(ngModel)]="username"
 							(keyup.enter)="signin()"
 						/>
@@ -36,13 +45,19 @@
 							id="password"
 							name="password"
 							type="password"
+							minlength="6"
 							placeholder="Password"
+							required
 							[(ngModel)]="password"
 							(keyup.enter)="signin()"
 						/>
 					</div>
 					<div class="form-group text-center">
-						<button class="btn btn-primary mr-2" type="submit" (click)="signin()">
+						<button
+							class="btn btn-primary mr-2"
+							type="submit"
+							[disabled]="!form.form.valid"
+						>
 							Sign In
 						</button>
 						<button class="btn btn-link" type="button" routerLink="/signup">
@@ -54,6 +69,6 @@
 					</div>
 				</fieldset>
 			</div>
-		</div>
-	</section>
+		</form>
+	</ng-container>
 </section>

@@ -1,10 +1,6 @@
 <section>
 	<!-- Show a breadcrumb to the list messages page -->
-	<a
-		class="back-link"
-		*ngIf="mode === 'admin-edit' || mode === 'admin-create'"
-		[routerLink]="['/admin/messages']"
-	>
+	<a class="back-link" routerLink="/admin/messages">
 		<span class="fa-solid fa-angle-double-left"></span> Back to Messages
 	</a>
 
@@ -18,11 +14,14 @@
 		novalidate
 		#form="ngForm"
 		*ngIf="message"
-		(ngSubmit)="submit()"
+		(ngSubmit)="submitMessage()"
 	>
-		<h1>
-			{{ title }}
-			<small>{{ subtitle }}</small>
+		<h1 class="mb-4">
+			{{ mode | titlecase }} Message
+			<small *ngIf="mode === 'create'"
+				>Provide the required information to create a new message</small
+			>
+			<small *ngIf="mode === 'edit'">Make changes to the message's information</small>
 		</h1>
 
 		<!-- Type -->
@@ -79,13 +78,9 @@
 					Preview
 				</button>
 				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-					{{ okButtonText }}
+					{{ mode === 'create' ? 'Create' : 'Save' }}
 				</button>
 			</div>
-		</div>
-
-		<div class="form-group" *ngIf="error">
-			<div class="text-right text-danger font-weight-bolder">{{ error }}</div>
 		</div>
 	</form>
 </section>

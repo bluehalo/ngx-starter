@@ -56,7 +56,11 @@
 				<ng-container cdkColumnDef="title">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
-						{{ eua.title }}
+						<a
+							class="text-decoration-underline"
+							[routerLink]="['/admin/eua', eua._id]"
+							>{{ eua.title }}</a
+						>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">
@@ -111,16 +115,16 @@
 								<button
 									class="dropdown-item"
 									cdkMenuItem
-									(click)="previewEndUserAgreement(eua)"
+									[routerLink]="['/admin/eua', eua._id]"
 								>
-									Preview
+									Edit
 								</button>
 								<button
 									class="dropdown-item"
 									cdkMenuItem
-									[routerLink]="['/admin/eua', eua._id]"
+									(click)="previewEndUserAgreement(eua)"
 								>
-									Edit
+									Preview
 								</button>
 								<button class="dropdown-item" cdkMenuItem (click)="publishEua(eua)">
 									Publish

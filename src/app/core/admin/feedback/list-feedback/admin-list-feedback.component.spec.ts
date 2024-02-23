@@ -8,7 +8,7 @@ import { User } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { FeedbackService } from '../../../feedback/feedback.service';
-import { AdminUsersService } from '../../user-management/admin-users.service';
+import { AdminUsersService } from '../../user/admin-users.service';
 import { AdminListFeedbackComponent } from './admin-list-feedback.component';
 
 describe('Admin List Feedback Component Spec', () => {

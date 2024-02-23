@@ -1,11 +1,7 @@
 <section class="admin-container">
 	<ul class="nav nav-tabs">
 		<li class="nav-item" role="presentation" *ngFor="let topic of helpTopics">
-			<a
-				class="nav-link"
-				routerLinkActive="active"
-				[routerLink]="['/admin/' + topic.path, { clearCachedFilter: true }]"
-			>
+			<a class="nav-link" routerLinkActive="active" [routerLink]="['/admin/', topic.path]">
 				{{ topic.title }}
 			</a>
 		</li>

@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
 
 import { AboutComponent } from './about.component';
-import { AccessComponent } from './access.component';
 import { authGuard } from './auth/auth.guard';
+import { AccessComponent } from './errors/access.component';
+import { ErrorComponent } from './errors/error.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { MasqueradeComponent } from './masquerade/masquerade/masquerade.component';
 import { ViewAllMessagesComponent } from './messages/view-all-messages/view-all-messages.component';
@@ -15,6 +16,10 @@ export const CORE_ROUTES: Routes = [
 	{
 		path: 'about',
 		component: AboutComponent
+	},
+	{
+		path: 'error',
+		component: ErrorComponent
 	},
 	{
 		path: 'access',

@@ -1,6 +1,6 @@
 <section>
 	<!-- Show a breadcrumb to the list EUAs page -->
-	<a class="back-link" [routerLink]="['/admin/euas']">
+	<a class="back-link" routerLink="/admin/euas">
 		<span class="fa-solid fa-angle-double-left"></span> Back to EUAs
 	</a>
 
@@ -16,9 +16,12 @@
 		#form="ngForm"
 		(ngSubmit)="submitEua()"
 	>
-		<h1>
-			{{ title }}
-			<small>{{ subtitle }}</small>
+		<h1 class="mb-4">
+			{{ mode | titlecase }} EUA
+			<small *ngIf="mode === 'create'"
+				>Provide the required information to create a new EUA</small
+			>
+			<small *ngIf="mode === 'edit'">Make changes to the EUA's information</small>
 		</h1>
 
 		<!-- Basic Information -->
@@ -59,7 +62,7 @@
 					Preview
 				</button>
 				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-					{{ submitText }}
+					{{ mode === 'create' ? 'Create' : 'Save' }}
 				</button>
 			</div>
 		</div>
