@@ -1,9 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { ErrorState } from '../core/errors/error-state.model';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from './paging.model';
 import { SystemAlertService } from './system-alert/system-alert.service';
 
@@ -18,6 +20,7 @@ export enum ServiceMethod {
 export abstract class AbstractEntityService<T extends { _id: string }> {
 	headers: any = { 'Content-Type': 'application/json' };
 
+	protected router = inject(Router);
 	protected http = inject(HttpClient);
 	protected alertService = inject(SystemAlertService);
 
@@ -57,11 +60,10 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 		);
 	}
 
-	read(id: string): Observable<T | null> {
-		return this.http.get(this.getMethodUrl(ServiceMethod.read, id)).pipe(
-			map((model) => this.mapToType(model)),
-			catchError((error: unknown) => this.handleError(error, null))
-		);
+	read(id: string): Observable<T> {
+		return this.http
+			.get(this.getMethodUrl(ServiceMethod.read, id))
+			.pipe(map((model) => this.mapToType(model)));
 	}
 
 	update(t: T, params: any = null): Observable<T | null> {
@@ -138,5 +140,26 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 			}
 		}
 		return of(returnValue);
+	}
+
+	redirectError(error: unknown) {
+		let state: ErrorState = {
+			statusText: 'Unknown Error',
+			message: 'Unknown Error'
+		};
+		if (error instanceof HttpErrorResponse) {
+			state = {
+				status: error.status,
+				statusText: error.statusText,
+				url: error.url,
+				message: error.error?.message ?? error.message,
+				stack: error.error?.stack
+			};
+		}
+		this.router.navigate(['/error'], {
+			replaceUrl: true,
+			state
+		});
+		return of(null);
 	}
 }

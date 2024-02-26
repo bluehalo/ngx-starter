@@ -9,15 +9,15 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
-import { DialogAction, DialogService } from '../../../common/dialog';
-import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../common/paging.model';
-import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
-import { SearchInputComponent } from '../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { DialogAction, DialogService } from '../../../../common/dialog';
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
+import { PagingOptions, PagingResults } from '../../../../common/paging.model';
+import { AgoDatePipe } from '../../../../common/pipes/ago-date.pipe';
+import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
+import { SortDirection } from '../../../../common/sorting.model';
+import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
 	AsyFilterDirective,
 	AsySortDirective,
@@ -25,15 +25,17 @@ import {
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
 	PaginatorComponent
-} from '../../../common/table';
-import { CacheEntriesService } from './cache-entries.service';
-import { CacheEntryModalComponent, CacheEntryModalData } from './cache-entry-modal.component';
-import { CacheEntry } from './cache-entry.model';
+} from '../../../../common/table';
+import { CacheEntriesService } from '../cache-entries.service';
+import {
+	CacheEntryModalComponent,
+	CacheEntryModalData
+} from '../cache-entry-modal/cache-entry-modal.component';
+import { CacheEntry } from '../cache-entry.model';
 
 @Component({
-	selector: 'cache-entries',
-	templateUrl: './cache-entries.component.html',
 	standalone: true,
+	templateUrl: './list-cache-entries.component.html',
 	imports: [
 		SkipToDirective,
 		SystemAlertComponent,
@@ -53,7 +55,7 @@ import { CacheEntry } from './cache-entry.model';
 		CdkMenuItem
 	]
 })
-export class CacheEntriesComponent implements OnDestroy, OnInit {
+export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 	displayedColumns = ['key', 'value', 'ts', 'actionsMenu'];
 
 	dataSource = new AsyTableDataSource<CacheEntry>(

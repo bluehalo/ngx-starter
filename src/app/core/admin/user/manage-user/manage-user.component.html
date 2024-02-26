@@ -1,0 +1,213 @@
+<section *ngIf="user?.userModel">
+	<!-- Show a breadcrumb to the list users page -->
+	<a class="back-link" routerLink="/admin/users">
+		<span class="fa-solid fa-angle-double-left"></span> Back to Users
+	</a>
+
+	<!-- Alert Notifications -->
+	<system-alert></system-alert>
+
+	<form
+		class="pt-3"
+		role="form"
+		autocomplete="off"
+		novalidate
+		style="max-width: 1000px"
+		#form="ngForm"
+		*ngIf="user"
+		(ngSubmit)="submitUser()"
+	>
+		<h1 class="mb-4">
+			{{ mode | titlecase }} User
+			<small *ngIf="mode === 'create'"
+				>Provide the required information to create a new User</small
+			>
+			<small *ngIf="mode === 'edit'">Make changes to the User's information</small>
+		</h1>
+
+		<!-- Name -->
+		<div class="form-group">
+			<label class="form-required" for="name">Name</label>
+			<input
+				class="form-control"
+				id="name"
+				name="name"
+				type="text"
+				required
+				[(ngModel)]="user.userModel.name"
+				[disabled]="metadataLocked"
+			/>
+		</div>
+
+		<!-- Username -->
+		<div class="form-group">
+			<label class="form-required" for="username">Username</label>
+			<input
+				class="form-control"
+				id="username"
+				name="username"
+				type="text"
+				required
+				[(ngModel)]="user.userModel.username"
+				[disabled]="metadataLocked"
+			/>
+		</div>
+
+		<!-- Organization -->
+		<div class="form-group">
+			<label class="form-required" for="organization">Organization</label>
+			<input
+				class="form-control"
+				id="organization"
+				name="organization"
+				type="text"
+				required
+				[(ngModel)]="user.userModel.organization"
+				[disabled]="metadataLocked"
+			/>
+		</div>
+
+		<!-- Email -->
+		<div class="form-group">
+			<label class="form-required" for="email">Email</label>
+			<input
+				class="form-control"
+				id="email"
+				name="email"
+				type="email"
+				required
+				[(ngModel)]="user.userModel.email"
+				[disabled]="metadataLocked"
+			/>
+		</div>
+
+		<!-- Local Login Information -->
+		<ng-container *ngIf="!proxyPki">
+			<h2 class="pt-3">
+				Password
+				<small>
+					At least 6 characters.
+					<span>Leave blank if you do not want to change the password.</span>
+				</small>
+			</h2>
+
+			<div class="form-group">
+				<label for="password"><label *ngIf="mode === 'edit'">New</label> Password</label>
+				<input
+					class="form-control"
+					id="password"
+					name="password"
+					type="password"
+					autocomplete="off"
+					[(ngModel)]="user.userModel.password"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="password2"
+					>Re-enter <label *ngIf="mode === 'edit'">New</label> Password</label
+				>
+				<input
+					class="form-control"
+					id="password2"
+					name="password2"
+					type="password"
+					autocomplete="off"
+					[(ngModel)]="user.userModel.verifyPassword"
+				/>
+			</div>
+		</ng-container>
+
+		<!-- PKI Information -->
+		<ng-container *ngIf="proxyPki">
+			<!-- Bypass Access Checker -->
+			<div class="form-group">
+				<label>Access Check</label>
+				<div class="form-check m-n1 p-1">
+					<input
+						class="form-check-input"
+						id="bypassAC"
+						name="bypassAccessCheck"
+						type="checkbox"
+						[(ngModel)]="user.userModel.bypassAccessCheck"
+					/>
+					<label class="form-check-label" for="bypassAC">Bypass Access Check</label>
+				</div>
+			</div>
+
+			<!-- Stuff that normal users can see, but won't be able to modify -->
+			<!-- dn -->
+			<div class="form-group">
+				<label for="dn">DN</label>
+				<input
+					class="form-control"
+					id="dn"
+					name="dn"
+					type="text"
+					disabled
+					[(ngModel)]="user.userModel.providerData.dn"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="externalRoles">External Roles</label>
+				<textarea
+					class="form-control"
+					id="externalRoles"
+					name="externalRoles"
+					type="text"
+					disabled
+					rows="4"
+					>{{ user.userModel.externalRolesDisplay }}</textarea
+				>
+			</div>
+
+			<div class="form-group">
+				<label for="externalGroups">External Groups</label>
+				<textarea
+					class="form-control"
+					id="externalGroups"
+					name="externalGroups"
+					type="text"
+					disabled
+					rows="4"
+					>{{ user.userModel.externalGroupsDisplay }}</textarea
+				>
+			</div>
+		</ng-container>
+
+		<!-- Admin only stuff -->
+		<div class="form-group">
+			<label>Roles</label>
+			<div>
+				<div
+					class="form-check form-check-inline"
+					tooltip="{{ role.description }}"
+					*ngFor="let role of possibleRoles"
+				>
+					<input
+						class="form-check-input"
+						id="role{{ role.role }}Cb"
+						name="role{{ role.role }}Cb"
+						type="checkbox"
+						[(ngModel)]="user.userModel.roles[role.role]"
+					/>
+					<label class="form-check-label" for="role{{ role.role }}Cb">{{
+						role.label
+					}}</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="text-right">
+				<button class="btn btn-link mr-2" type="button" routerLink="/admin/users">
+					Cancel
+				</button>
+				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+					{{ mode === 'create' ? 'Create' : 'Save' }}
+				</button>
+			</div>
+		</div>
+	</form>
+</section>

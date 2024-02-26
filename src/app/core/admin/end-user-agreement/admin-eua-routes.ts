@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { AdminCreateEuaComponent } from './admin-create-eua.component';
-import { AdminUpdateEuaComponent } from './admin-edit-eua.component';
+import { euaResolver } from './eua.service';
 import { AdminListEuasComponent } from './list-euas/admin-list-euas.component';
+import { ManageEuaComponent } from './manage-eua/manage-eua.component';
 
 export const ADMIN_EUA_ROUTES: Routes = [
 	{
@@ -11,10 +11,13 @@ export const ADMIN_EUA_ROUTES: Routes = [
 	},
 	{
 		path: 'eua',
-		component: AdminCreateEuaComponent
+		component: ManageEuaComponent
 	},
 	{
 		path: 'eua/:id',
-		component: AdminUpdateEuaComponent
+		resolve: {
+			eua: euaResolver
+		},
+		component: ManageEuaComponent
 	}
 ];

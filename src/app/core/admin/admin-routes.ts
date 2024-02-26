@@ -6,7 +6,7 @@ import { ADMIN_CACHE_ENTRIES_ROUTES } from './cache-entries/admin-cache-entries-
 import { ADMIN_EUA_ROUTES } from './end-user-agreement/admin-eua-routes';
 import { ADMIN_FEEDBACK_ROUTES } from './feedback/admin-feedback-routes';
 import { ADMIN_MESSAGES_ROUTES } from './messages/admin-messages-routes';
-import { ADMIN_USER_ROUTES } from './user-management/admin-user-routes';
+import { ADMIN_USER_ROUTES } from './user/admin-user-routes';
 
 export const ADMIN_ROUTES: Routes = [
 	{

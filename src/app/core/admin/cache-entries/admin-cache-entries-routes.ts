@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 
-import { CacheEntriesComponent } from './cache-entries.component';
+import { ListCacheEntriesComponent } from './list-cache-entries/list-cache-entries.component';
 
 export const ADMIN_CACHE_ENTRIES_ROUTES: Routes = [
 	{
 		path: 'cacheEntries',
-		component: CacheEntriesComponent
+		component: ListCacheEntriesComponent
 	}
 ];

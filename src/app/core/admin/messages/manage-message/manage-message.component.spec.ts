@@ -4,21 +4,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
 
-import { DialogService } from '../../../common/dialog';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { ConfigService } from '../../config.service';
-import { Message, MessageType } from '../../messages/message.model';
-import { MessageService } from '../../messages/message.service';
-import { CreateMessageComponent } from './create-message.component';
+import { DialogService } from '../../../../common/dialog';
+import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { Message, MessageType } from '../../../messages/message.model';
+import { MessageService } from '../../../messages/message.service';
+import { ManageMessageComponent } from './manage-message.component';
 
-describe('Create Message Component', () => {
-	let configServiceSpy: any;
+describe('ManageMessageComponent', () => {
+	let component: ManageMessageComponent;
+	let fixture: ComponentFixture<ManageMessageComponent>;
+	let rootHTMLElement: HTMLElement;
+
 	let messageServiceSpy: any;
 	let dialogServiceSpy: any;
-
-	let fixture: ComponentFixture<CreateMessageComponent>;
-	let rootHTMLElement: HTMLElement;
-	let component: CreateMessageComponent;
 
 	const dateTime = new Date().toISOString();
 	const message: Message[] = [
@@ -34,8 +32,6 @@ describe('Create Message Component', () => {
 	];
 
 	beforeEach(() => {
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of({}));
 		messageServiceSpy = jasmine.createSpyObj('MessageService', ['create']);
 		messageServiceSpy.create.and.callFake(() => {
 			return of(message);
@@ -44,28 +40,30 @@ describe('Create Message Component', () => {
 		dialogServiceSpy.alert.and.callFake(() => {
 			return of();
 		});
-		const testBed = TestBed.configureTestingModule({
-			imports: [RouterTestingModule, CreateMessageComponent, DialogModule],
+
+		TestBed.configureTestingModule({
+			imports: [ManageMessageComponent, RouterTestingModule, DialogModule],
 			providers: [
-				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: MessageService, useValue: messageServiceSpy },
 				{ provide: DialogService, useValue: dialogServiceSpy },
 				SystemAlertService
 			]
 		});
-		fixture = testBed.createComponent(CreateMessageComponent);
+		fixture = TestBed.createComponent(ManageMessageComponent);
 		component = fixture.componentInstance;
 		rootHTMLElement = fixture.debugElement.nativeElement;
+
+		fixture.detectChanges();
 	});
 
-	it('Should Exist', () => {
-		fixture.detectChanges();
-		expect(component).toBeDefined();
+	it('should create', () => {
+		expect(component).toBeTruthy();
 	});
 
 	it('Should Have a Preview Button', () => {
 		fixture.detectChanges();
 		const buttons = rootHTMLElement.querySelectorAll('button');
+
 		let foundPreviewButton = false;
 		buttons.forEach((button) => {
 			if (button.innerText === 'Preview') {

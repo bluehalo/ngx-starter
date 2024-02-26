@@ -1,7 +1,5 @@
 import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 
-import { map } from 'rxjs/operators';
-
 import { authGuard } from '../auth/auth.guard';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ListTeamsComponent } from './list-teams/list-teams.component';

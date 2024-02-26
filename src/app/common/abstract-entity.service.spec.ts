@@ -124,23 +124,6 @@ describe('AbstractEntityService', () => {
 
 			httpTestingController.verify();
 		});
-
-		it('should return null', () => {
-			const handleErrorSpy = spyOn(service, 'handleError').and.callThrough();
-
-			service.read(testData._id).subscribe((data) => {
-				expect(data).toBeNull();
-			});
-
-			const req = httpTestingController.expectOne('api/test/12345');
-			expect(req.request.method).toEqual('GET');
-
-			req.flush('error', { status: 404, statusText: 'error' });
-
-			expect(handleErrorSpy.calls.count()).toBe(1);
-
-			httpTestingController.verify();
-		});
 	});
 
 	describe('update', () => {

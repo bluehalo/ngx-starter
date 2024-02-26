@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { AdminCreateUserComponent } from './admin-create-user.component';
-import { AdminEditUserComponent } from './admin-edit-user.component';
+import { userResolver } from './admin-users.service';
 import { AdminListUsersComponent } from './list-users/admin-list-users.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 export const ADMIN_USER_ROUTES: Routes = [
 	{
@@ -11,10 +11,13 @@ export const ADMIN_USER_ROUTES: Routes = [
 	},
 	{
 		path: 'user',
-		component: AdminCreateUserComponent
+		component: ManageUserComponent
 	},
 	{
 		path: 'user/:id',
-		component: AdminEditUserComponent
+		resolve: {
+			user: userResolver
+		},
+		component: ManageUserComponent
 	}
 ];
