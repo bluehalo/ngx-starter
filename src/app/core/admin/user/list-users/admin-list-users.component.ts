@@ -207,13 +207,13 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		this.dialogService
 			.confirm(
 				'Delete user?',
-				`Are you sure you want to delete the user: <strong>"${user.userModel.name}"</strong>?<br/>This action cannot be undone.`,
+				`Are you sure you want to delete the user: <strong>"${user.name}"</strong>?<br/>This action cannot be undone.`,
 				'Delete'
 			)
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.adminUsersService.removeUser(user.userModel._id)),
+				switchMap(() => this.adminUsersService.removeUser(user._id)),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
 						this.alertService.addClientErrorAlert(error);

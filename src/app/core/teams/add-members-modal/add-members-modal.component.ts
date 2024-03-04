@@ -94,8 +94,7 @@ export class AddMembersModalComponent implements OnInit {
 				),
 				map((result) =>
 					result.elements.filter(
-						(user: any) =>
-							!this.addedMembers.map((m) => m._id).includes(user?.userModel._id)
+						(user: any) => !this.addedMembers.map((m) => m._id).includes(user?._id)
 					)
 				),
 				tap(() => {
@@ -134,8 +133,8 @@ export class AddMembersModalComponent implements OnInit {
 	}
 
 	typeaheadOnSelect(user: User, comp: NgSelectComponent) {
-		const selectedUsername = user?.userModel?.username;
-		const selectedUserId = user?.userModel?._id;
+		const selectedUsername = user?.username;
+		const selectedUserId = user?._id;
 		if (null != selectedUsername) {
 			this.addedMembers.push({
 				username: selectedUsername,

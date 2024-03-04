@@ -22,7 +22,7 @@ export class UserExternalRolesSelectDirective implements OnInit {
 			.getSession()
 			.pipe(
 				isNotNullOrUndefined(),
-				map((session) => session.user.userModel.externalRoles),
+				map((session) => session.user.externalRoles),
 				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((externalRoles) => {

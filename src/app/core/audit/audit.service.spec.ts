@@ -76,7 +76,7 @@ describe('Audit Service', () => {
 			} as PagingResults;
 			const expectedResults = _cloneDeep(results);
 			expectedResults.elements = expectedResults.elements.map((element) => {
-				return new User().setFromUserModel(element);
+				return new User(element);
 			});
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);

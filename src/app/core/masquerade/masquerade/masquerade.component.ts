@@ -53,7 +53,7 @@ export class MasqueradeComponent implements OnInit {
 				.getSession()
 				.pipe(isNotNullOrUndefined(), takeUntilDestroyed(this.destroyRef))
 				.subscribe((session) => {
-					if (session.user.userModel.canMasquerade) {
+					if (session.user.canMasquerade) {
 						this.loadUsers();
 					} else {
 						window.location.href = '#/';

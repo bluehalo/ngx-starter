@@ -10,7 +10,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
 import { AuthenticationService } from '../auth/authentication.service';
-import { User } from '../auth/user.model';
+import { EditUser } from '../auth/user.model';
 
 @Component({
 	standalone: true,
@@ -26,7 +26,7 @@ import { User } from '../auth/user.model';
 	]
 })
 export class SignupComponent {
-	user = new User();
+	user = new EditUser();
 
 	private destroyRef = inject(DestroyRef);
 	private router = inject(Router);
@@ -50,7 +50,7 @@ export class SignupComponent {
 	}
 
 	private validatePassword(): boolean {
-		if (this.user.userModel.password === this.user.userModel.verifyPassword) {
+		if (this.user.password === this.user.verifyPassword) {
 			return true;
 		}
 		this.alertService.addAlert('Passwords must match', 'danger');

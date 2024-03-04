@@ -51,7 +51,7 @@ export class AuditService {
 		search: string,
 		paging: PagingOptions,
 		options: any
-	): Observable<PagingResults> {
+	): Observable<PagingResults<User>> {
 		return this.http
 			.post<PagingResults>(
 				'api/users/match',
@@ -61,8 +61,8 @@ export class AuditService {
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map((element: any) =>
-							new User().setFromUserModel(element)
+						results.elements = results.elements.map(
+							(element: any) => new User(element)
 						);
 					}
 					return results;

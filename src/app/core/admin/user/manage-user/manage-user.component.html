@@ -1,4 +1,4 @@
-<section *ngIf="user?.userModel">
+<section>
 	<!-- Show a breadcrumb to the list users page -->
 	<a class="back-link" routerLink="/admin/users">
 		<span class="fa-solid fa-angle-double-left"></span> Back to Users
@@ -34,7 +34,7 @@
 				name="name"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.name"
+				[(ngModel)]="user.name"
 				[disabled]="metadataLocked"
 			/>
 		</div>
@@ -48,7 +48,7 @@
 				name="username"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.username"
+				[(ngModel)]="user.username"
 				[disabled]="metadataLocked"
 			/>
 		</div>
@@ -62,7 +62,7 @@
 				name="organization"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.organization"
+				[(ngModel)]="user.organization"
 				[disabled]="metadataLocked"
 			/>
 		</div>
@@ -76,7 +76,7 @@
 				name="email"
 				type="email"
 				required
-				[(ngModel)]="user.userModel.email"
+				[(ngModel)]="user.email"
 				[disabled]="metadataLocked"
 			/>
 		</div>
@@ -99,7 +99,7 @@
 					name="password"
 					type="password"
 					autocomplete="off"
-					[(ngModel)]="user.userModel.password"
+					[(ngModel)]="user.password"
 				/>
 			</div>
 
@@ -113,7 +113,7 @@
 					name="password2"
 					type="password"
 					autocomplete="off"
-					[(ngModel)]="user.userModel.verifyPassword"
+					[(ngModel)]="user.verifyPassword"
 				/>
 			</div>
 		</ng-container>
@@ -129,7 +129,7 @@
 						id="bypassAC"
 						name="bypassAccessCheck"
 						type="checkbox"
-						[(ngModel)]="user.userModel.bypassAccessCheck"
+						[(ngModel)]="user.bypassAccessCheck"
 					/>
 					<label class="form-check-label" for="bypassAC">Bypass Access Check</label>
 				</div>
@@ -145,7 +145,7 @@
 					name="dn"
 					type="text"
 					disabled
-					[(ngModel)]="user.userModel.providerData.dn"
+					[(ngModel)]="user.providerData.dn"
 				/>
 			</div>
 
@@ -158,7 +158,7 @@
 					type="text"
 					disabled
 					rows="4"
-					>{{ user.userModel.externalRolesDisplay }}</textarea
+					>{{ user.externalRolesDisplay }}</textarea
 				>
 			</div>
 
@@ -171,7 +171,7 @@
 					type="text"
 					disabled
 					rows="4"
-					>{{ user.userModel.externalGroupsDisplay }}</textarea
+					>{{ user.externalGroupsDisplay }}</textarea
 				>
 			</div>
 		</ng-container>
@@ -190,7 +190,7 @@
 						id="role{{ role.role }}Cb"
 						name="role{{ role.role }}Cb"
 						type="checkbox"
-						[(ngModel)]="user.userModel.roles[role.role]"
+						[(ngModel)]="user.roles[role.role]"
 					/>
 					<label class="form-check-label" for="role{{ role.role }}Cb">{{
 						role.label

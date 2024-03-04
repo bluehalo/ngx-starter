@@ -19,18 +19,12 @@ export class TeamAuthorizationService {
 		this.sessionService
 			.getSession()
 			.pipe(
-				map((session) =>
-					new TeamMember().setFromTeamMemberModel(null, session?.user.userModel)
-				),
+				map((session) => new TeamMember(session?.user)),
 				untilDestroyed(this)
 			)
 			.subscribe((member: TeamMember) => {
 				this.member = member;
 			});
-	}
-
-	hasTeams(): boolean {
-		return this.member.userModel.teams.length > 0;
 	}
 
 	public hasRole(team: Pick<Team, '_id'>, role: string | TeamRole): boolean {

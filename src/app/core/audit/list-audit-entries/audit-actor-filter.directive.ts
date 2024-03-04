@@ -22,7 +22,7 @@ export class AuditActorFilterDirective implements OnInit {
 		this.typeaheadFilter.buildFilterFunc = this.buildFilter;
 	}
 
-	typeaheadSearch(term: string): Observable<any> {
+	typeaheadSearch(term: string) {
 		return this.auditService
 			.matchUser({}, term, new PagingOptions(), {})
 			.pipe(map((pagingResult) => pagingResult.elements));
@@ -32,7 +32,7 @@ export class AuditActorFilterDirective implements OnInit {
 		if (selectedValue) {
 			return {
 				['audit.actor._id']: {
-					$obj: selectedValue.userModel._id
+					$obj: selectedValue._id
 				}
 			};
 		}

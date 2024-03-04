@@ -122,7 +122,7 @@ export class SiteNavbarComponent implements OnInit {
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe((session) => {
 				this.session = session;
-				this.canMasquerade = session?.user?.userModel?.canMasquerade ?? false;
+				this.canMasquerade = session?.user?.canMasquerade ?? false;
 			});
 
 		this.configService

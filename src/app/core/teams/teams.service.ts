@@ -150,8 +150,8 @@ export class TeamsService extends AbstractEntityService<Team> {
 			.pipe(
 				tap((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map((element: any) =>
-							new User().setFromUserModel(element)
+						results.elements = results.elements.map(
+							(element: any) => new User(element)
 						);
 					}
 				}),
@@ -166,9 +166,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 
 	private handleTeamMembers(result: any, team: Team): PagingResults<TeamMember> {
 		if (null != result && Array.isArray(result.elements)) {
-			result.elements = result.elements.map((element: any) =>
-				new TeamMember().setFromTeamMemberModel(team, element)
-			);
+			result.elements = result.elements.map((element: any) => new TeamMember(element, team));
 		}
 		return result;
 	}

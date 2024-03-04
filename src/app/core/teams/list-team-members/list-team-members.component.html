@@ -27,13 +27,13 @@
 			<ng-container cdkColumnDef="name">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.userModel.name }}</div>
+					<div>{{ member.name }}</div>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="username">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Username</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.userModel.username }}</div>
+					<div>{{ member.username }}</div>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="lastLogin">
@@ -42,9 +42,9 @@
 					<div
 						class="hide-overflow"
 						container="body"
-						tooltip="{{ user.userModel.lastLogin | utcDate }}"
+						tooltip="{{ user.lastLogin | utcDate }}"
 					>
-						{{ user.userModel.lastLogin | agoDate: false }}
+						{{ user.lastLogin | agoDate: false }}
 					</div>
 				</td>
 			</ng-container>
@@ -69,9 +69,9 @@
 				<td cdk-cell *cdkCellDef="let member">
 					<button
 						class="btn btn-sm dropdown-toggle p-0"
-						id="member-{{ member.userModel._id }}-role-menu-btn"
+						id="member-{{ member._id }}-role-menu-btn"
 						type="button"
-						attr.aria-controls="member-{{ member.userModel._id }}-role-menu"
+						attr.aria-controls="member-{{ member._id }}-role-menu"
 						*hasTeamRole="team; role: 'admin'; else: readOnlyRole"
 						[cdkMenuTriggerFor]="roleMenu"
 					>
@@ -80,8 +80,8 @@
 					<ng-template #roleMenu>
 						<div
 							class="dropdown-menu"
-							id="member-{{ member.userModel._id }}-role-menu"
-							attr.aria-labelledby="member-{{ member.userModel._id }}-role-menu-btn"
+							id="member-{{ member._id }}-role-menu"
+							attr.aria-labelledby="member-{{ member._id }}-role-menu-btn"
 							cdkMenu
 						>
 							<button

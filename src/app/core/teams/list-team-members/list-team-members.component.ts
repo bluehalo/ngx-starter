@@ -191,13 +191,13 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		this.dialogService
 			.confirm(
 				'Remove member from team?',
-				`Are you sure you want to remove member: "${member.userModel.name}" from this team?`,
+				`Are you sure you want to remove member: "${member.name}" from this team?`,
 				'Remove Member'
 			)
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.teamsService.removeMember(this.team, member.userModel._id)),
+				switchMap(() => this.teamsService.removeMember(this.team, member._id)),
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
@@ -217,11 +217,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 
 		// If user is removing their own admin, verify that they know what they're doing
-		if (
-			this?.user?.userModel._id === member.userModel._id &&
-			member.role === 'admin' &&
-			role !== 'admin'
-		) {
+		if (this.user?._id === member._id && member.role === 'admin' && role !== 'admin') {
 			this.dialogService
 				.confirm(
 					'Remove "Team Admin" role?',
@@ -270,7 +266,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 
 		this.teamsService
-			.addMember(this.team, member.userModel._id, role)
+			.addMember(this.team, member._id, role)
 			.pipe(
 				switchMap(() => this.sessionService.reloadSession()),
 				catchError((error: unknown) => {
@@ -291,7 +287,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			return of(member);
 		}
 
-		return this.teamsService.updateMemberRole(this.team, member.userModel._id, role);
+		return this.teamsService.updateMemberRole(this.team, member._id, role);
 	}
 
 	private reloadTeamMembers() {
