@@ -44,8 +44,8 @@ export class AdminUsersService {
 			.pipe(
 				map((results: PagingResults) => {
 					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map((element: any) =>
-							new User().setFromUserModel(element)
+						results.elements = results.elements.map(
+							(element: any) => new User(element)
 						);
 					}
 					return results;
@@ -68,17 +68,17 @@ export class AdminUsersService {
 	}
 
 	create(user: User) {
-		return this.http.post('api/admin/user', user.userModel);
+		return this.http.post('api/admin/user', user);
 	}
 
 	read(userId: string) {
 		return this.http
 			.get(`api/admin/user/${userId}`)
-			.pipe(map((userRaw: any) => new User().setFromUserModel(userRaw)));
+			.pipe(map((userRaw: any) => new User(userRaw)));
 	}
 
 	update(user: User): Observable<any> {
-		return this.http.post(`api/admin/user/${user.userModel._id}`, user.userModel);
+		return this.http.post(`api/admin/user/${user._id}`, user);
 	}
 
 	redirectError(error: unknown) {

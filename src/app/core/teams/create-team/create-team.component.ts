@@ -118,9 +118,7 @@ export class CreateTeamComponent implements OnInit {
 						this.teamsService.searchUsers({}, term, this.pagingOptions, {}, true)
 					),
 					map((result) =>
-						result.elements.filter(
-							(user: any) => user?.userModel._id !== this.teamAdmin?.userModel._id
-						)
+						result.elements.filter((user: any) => user?._id !== this.teamAdmin?._id)
 					),
 					tap(() => {
 						this.usersLoading = false;
@@ -138,7 +136,7 @@ export class CreateTeamComponent implements OnInit {
 	save() {
 		this.isSubmitting = true;
 		this.teamsService
-			.create(this.team, this?.teamAdmin?.userModel._id)
+			.create(this.team, this?.teamAdmin?._id)
 			.pipe(
 				switchMap(() => this.sessionService.reloadSession()),
 				takeUntilDestroyed(this.destroyRef)

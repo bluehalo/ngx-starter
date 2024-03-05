@@ -31,10 +31,8 @@ export class MasqueradeService {
 	searchUsers(query: any = {}, search = '', options: any = {}): Observable<PagingResults<User>> {
 		return this.http.post<PagingResults>('api/users', { q: query, s: search, options }).pipe(
 			tap((results: PagingResults) => {
-				if (null != results && Array.isArray(results.elements)) {
-					results.elements = results.elements.map((element: any) =>
-						new User().setFromUserModel(element)
-					);
+				if (Array.isArray(results?.elements)) {
+					results.elements = results.elements.map((element: any) => new User(element));
 				}
 			}),
 			catchError(() => of(NULL_PAGING_RESULTS))

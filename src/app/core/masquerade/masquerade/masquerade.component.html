@@ -32,7 +32,7 @@
 
 	<div class="form-group" *ngIf="!searchByDn">
 		<ng-select
-			bindValue="userModel.providerData.dn"
+			bindValue="providerData.dn"
 			placeholder="Search for user..."
 			style="width: 300px"
 			[(ngModel)]="selectedUserDn"
@@ -41,7 +41,7 @@
 			[typeahead]="usersInput$"
 		>
 			<ng-template let-item="item" ng-label-tmp ng-option-tmp>
-				{{ item.userModel.name }} [{{ item.userModel.username }}]
+				{{ item.name }} [{{ item.username }}]
 			</ng-template>
 		</ng-select>
 	</div>

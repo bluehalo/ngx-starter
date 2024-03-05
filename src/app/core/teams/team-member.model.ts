@@ -9,45 +9,40 @@ export class TeamMember extends User {
 
 	public roleDisplay = TeamRole.getDisplay(this.role);
 
-	hasTeams(): boolean {
-		return this.userModel.teams.length > 0;
+	constructor(model: any, team?: Team) {
+		super();
+		if (model) {
+			this.setFromTeamMemberModel(team, model);
+		}
 	}
 
-	public getRoleInTeam(team: Pick<Team, '_id'>): string | null {
-		if (null != this.userModel && null != team) {
-			const teams = this?.userModel?.teams ?? [];
-			// Find the role of this user in the team
-			const ndx = teams.findIndex((t: any) => t._id === team._id);
-
-			if (-1 !== ndx) {
-				return teams[ndx].role;
-			}
+	private setFromTeamMemberModel(model: any, team?: Team): TeamMember {
+		if (null == model) {
+			return this;
 		}
 
-		return null;
-	}
+		// Determine if user is implicit/explicit and active/inactive
+		this.explicit = (model.teams?.length ?? 0) > 0;
 
-	public setFromTeamMemberModel(team: Team | null, userModel: any): TeamMember {
-		// Set the user model
-		super.setFromUserModel(userModel);
+		if (team) {
+			this.role = this.getRoleInTeam(team) ?? TeamRole.MEMBER.role;
+			this.roleDisplay = TeamRole.getDisplay(this.role);
 
-		if (null != this.userModel) {
-			// Initialize the teams array if needed
-			if (null == userModel.teams) {
-				this.userModel.teams = [];
-			}
-
-			// Determine if user is implicit/explicit and active/inactive
-			this.explicit = (userModel.teams?.length ?? 0) > 0;
-
-			if (null != team) {
-				this.role = this.getRoleInTeam(team) ?? TeamRole.MEMBER.role;
-				this.roleDisplay = TeamRole.getDisplay(this.role);
-
-				this.explicit = userModel.teams.map((t: any) => t._id).includes(team._id);
-			}
+			this.explicit = model.teams.map((t: any) => t._id).includes(team._id);
 		}
 
 		return this;
+	}
+
+	public getRoleInTeam(team: Pick<Team, '_id'>): string | null {
+		const teams = this?.teams ?? [];
+		// Find the role of this user in the team
+		const ndx = teams.findIndex((t: any) => t._id === team._id);
+
+		if (-1 !== ndx) {
+			return teams[ndx].role;
+		}
+
+		return null;
 	}
 }

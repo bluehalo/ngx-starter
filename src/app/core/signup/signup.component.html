@@ -1,4 +1,4 @@
-<section *ngIf="user?.userModel">
+<section>
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
@@ -28,7 +28,7 @@
 				name="name"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.name"
+				[(ngModel)]="user.name"
 			/>
 		</div>
 
@@ -41,7 +41,7 @@
 				name="username"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.username"
+				[(ngModel)]="user.username"
 			/>
 		</div>
 
@@ -54,7 +54,7 @@
 				name="organization"
 				type="text"
 				required
-				[(ngModel)]="user.userModel.organization"
+				[(ngModel)]="user.organization"
 			/>
 		</div>
 
@@ -67,7 +67,7 @@
 				name="email"
 				type="email"
 				required
-				[(ngModel)]="user.userModel.email"
+				[(ngModel)]="user.email"
 			/>
 		</div>
 
@@ -81,7 +81,7 @@
 				type="password"
 				autocomplete="off"
 				minlength="6"
-				[(ngModel)]="user.userModel.password"
+				[(ngModel)]="user.password"
 			/>
 		</div>
 
@@ -94,7 +94,7 @@
 				type="password"
 				autocomplete="off"
 				minlength="6"
-				[(ngModel)]="user.userModel.verifyPassword"
+				[(ngModel)]="user.verifyPassword"
 			/>
 		</div>
 

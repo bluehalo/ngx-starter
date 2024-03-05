@@ -6,6 +6,7 @@ import { AuthorizationService } from './authorization.service';
 import { Role } from './role.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
+import { User } from './user.model';
 
 class MockSessionService {
 	sessionSubject$ = new BehaviorSubject<Session | null>(null);
@@ -20,42 +21,36 @@ describe('AuthorizationService', () => {
 	let sessionService: SessionService;
 
 	const EMPTY_SESSION: Session | null = null;
-	const USER_SESSION: any = {
-		name: 'test',
-		user: {
-			userModel: {
-				roles: {
-					user: true,
-					admin: false
-				},
-				externalRoles: ['ROLE1']
-			}
-		}
-	};
-	const ADMIN_SESSION: any = {
-		name: 'test',
-		user: {
-			userModel: {
-				roles: {
-					user: true,
-					admin: true
-				},
-				externalRoles: ['ROLE1', 'ROLE2']
-			}
-		}
-	};
-	const INACTIVE_USER_SESSION: any = {
-		name: 'test',
-		user: {
-			userModel: {
-				roles: {
-					user: false,
-					admin: false
-				},
-				externalRoles: ['ROLE1']
-			}
-		}
-	};
+	const USER_SESSION = new Session(
+		new User({
+			name: 'test',
+			roles: {
+				user: true,
+				admin: false
+			},
+			externalRoles: ['ROLE1']
+		})
+	);
+	const ADMIN_SESSION = new Session(
+		new User({
+			name: 'test',
+			roles: {
+				user: true,
+				admin: true
+			},
+			externalRoles: ['ROLE1', 'ROLE2']
+		})
+	);
+	const INACTIVE_USER_SESSION = new Session(
+		new User({
+			name: 'test',
+			roles: {
+				user: false,
+				admin: false
+			},
+			externalRoles: ['ROLE1']
+		})
+	);
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({

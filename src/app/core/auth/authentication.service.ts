@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { User } from './user.model';
+import { EditUser } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -13,8 +13,8 @@ export class AuthenticationService {
 		return this.http.post('api/auth/signin', { username, password });
 	}
 
-	signup(user: User): Observable<any> {
-		return this.http.post('api/auth/signup', user.userModel);
+	signup(user: EditUser): Observable<any> {
+		return this.http.post('api/auth/signup', user);
 	}
 
 	reloadCurrentUser(): Observable<any> {

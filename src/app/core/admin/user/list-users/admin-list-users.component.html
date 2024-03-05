@@ -58,7 +58,7 @@
 				<ng-container cdkColumnDef="id">
 					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
 					<td cdk-cell *cdkCellDef="let user">
-						{{ user.userModel._id }}
+						{{ user._id }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="name">
@@ -66,33 +66,33 @@
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						<a
 							class="text-decoration-underline"
-							[routerLink]="['/admin/user', user.userModel._id]"
-							>{{ user.userModel.name }}</a
+							[routerLink]="['/admin/user', user._id]"
+							>{{ user.name }}</a
 						>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="username">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Username</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.username }}
+						{{ user.username }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="organization">
 					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
 					<td cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.organization }}
+						{{ user.organization }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="email">
 					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
 					<td cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.email }}
+						{{ user.email }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="phone">
 					<th cdk-header-cell *cdkHeaderCellDef>Phone</th>
 					<td cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.phone }}
+						{{ user.phone }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="acceptedEua">
@@ -101,9 +101,9 @@
 						<div
 							class="text-nowrap"
 							container="body"
-							tooltip="{{ user.userModel.acceptedEua | utcDate }}"
+							tooltip="{{ user.acceptedEua | utcDate }}"
 						>
-							{{ user.userModel.acceptedEua | agoDate: false }}
+							{{ user.acceptedEua | agoDate: false }}
 						</div>
 					</td>
 				</ng-container>
@@ -113,34 +113,34 @@
 						<div
 							class="text-nowrap"
 							container="body"
-							tooltip="{{ user.userModel.lastLogin | utcDate }}"
+							tooltip="{{ user.lastLogin | utcDate }}"
 						>
-							{{ user.userModel.lastLogin | agoDate: false }}
+							{{ user.lastLogin | agoDate: false }}
 						</div>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="created">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.created | utcDate }}
+						{{ user.created | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="updated">
 					<th cdk-header-cell *cdkHeaderCellDef>Updated</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.updated | utcDate }}
+						{{ user.updated | utcDate }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalRoles">
 					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.externalRoles | join: ', ' }}
+						{{ user.externalRoles | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="externalGroups">
 					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
-						{{ user.userModel.externalGroups | join: ', ' }}
+						{{ user.externalGroups | join: ', ' }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="roles">
@@ -154,10 +154,9 @@
 								class="user-role text-nowrap"
 								[ngClass]="{
 									'user-role-external':
-										user.userModel.localRoles &&
-										!user.userModel.localRoles[role.role]
+										user.localRoles && !user.localRoles[role.role]
 								}"
-								*ngIf="user.userModel.roles?.[role.role]"
+								*ngIf="user.roles?.[role.role]"
 							>
 								{{ role.label }}
 							</div>
@@ -168,7 +167,7 @@
 					<th cdk-header-cell *cdkHeaderCellDef>Teams</th>
 					<td cdk-cell *cdkCellDef="let user">
 						<div class="cdk-cell-collapsible">
-							<div class="text-nowrap" *ngFor="let team of user.userModel.teams">
+							<div class="text-nowrap" *ngFor="let team of user.teams">
 								<a
 									class="text-decoration-underline"
 									[routerLink]="['/team', team._id]"
@@ -200,7 +199,7 @@
 								<a
 									class="dropdown-item"
 									cdkMenuItem
-									[routerLink]="['/admin/user', user.userModel._id]"
+									[routerLink]="['/admin/user', user._id]"
 								>
 									Edit
 								</a>

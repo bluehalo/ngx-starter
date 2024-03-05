@@ -24,8 +24,8 @@ export class AuthorizationService {
 		const euaPublished: number = this.session?.user?.eua?.published
 			? new Date(this.session?.user?.eua?.published).getTime()
 			: 0;
-		const euaAccepted: number = this.session?.user?.userModel?.acceptedEua
-			? new Date(this.session?.user?.userModel?.acceptedEua).getTime()
+		const euaAccepted: number = this.session?.user?.acceptedEua
+			? new Date(this.session?.user?.acceptedEua).getTime()
 			: 0;
 
 		return euaAccepted >= euaPublished;
@@ -36,7 +36,7 @@ export class AuthorizationService {
 	}
 
 	public hasExternalRole(role: string): boolean {
-		const externalRoles = this.session?.user?.userModel?.externalRoles ?? [];
+		const externalRoles = this.session?.user?.externalRoles ?? [];
 
 		return externalRoles.indexOf(role) !== -1;
 	}
@@ -44,7 +44,7 @@ export class AuthorizationService {
 	public hasRole(role: string | Role): boolean {
 		role = this.roleToString(role);
 
-		const roles = this.session?.user?.userModel?.roles ?? {};
+		const roles = this.session?.user?.roles ?? {};
 		return null != roles[role] && roles[role];
 	}
 

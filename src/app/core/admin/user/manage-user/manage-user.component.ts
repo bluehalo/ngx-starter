@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { Role } from '../../../auth/role.model';
-import { User } from '../../../auth/user.model';
+import { EditUser } from '../../../auth/user.model';
 import { ConfigService } from '../../../config.service';
 import { AdminUsersService } from '../admin-users.service';
 
@@ -25,7 +25,7 @@ export class ManageUserComponent implements OnInit {
 	mode: 'create' | 'edit' = 'create';
 
 	@Input()
-	user: User;
+	user: EditUser;
 
 	proxyPki = false;
 	metadataLocked = false;
@@ -42,20 +42,11 @@ export class ManageUserComponent implements OnInit {
 
 		if (this.user) {
 			this.mode = 'edit';
-			if (null === this.user.userModel.roles) {
-				this.user.userModel.roles = {};
-			}
-			this.user.userModel.externalRolesDisplay =
-				this.user.userModel.externalRoles?.join('\n');
-			this.user.userModel.externalGroupsDisplay =
-				this.user.userModel.externalGroups?.join('\n');
-			this.user.userModel.providerData = {
-				dn: this.user.userModel.providerData?.dn
-			};
-			this.metadataLocked = this.proxyPki && !this.user.userModel.bypassAccessCheck;
+			this.user.externalRolesDisplay = this.user.externalRoles?.join('\n');
+			this.user.externalGroupsDisplay = this.user.externalGroups?.join('\n');
+			this.metadataLocked = this.proxyPki && !this.user.bypassAccessCheck;
 		} else {
-			this.user = new User();
-			this.user.userModel.roles = {};
+			this.user = new EditUser();
 		}
 
 		this.configService
@@ -86,7 +77,7 @@ export class ManageUserComponent implements OnInit {
 	}
 
 	private validatePassword(): boolean {
-		if (this.user.userModel.password === this.user.userModel.verifyPassword) {
+		if (this.user.password === this.user.verifyPassword) {
 			return true;
 		}
 

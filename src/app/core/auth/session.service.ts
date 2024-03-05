@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
 
 import { BehaviorSubject, Observable, of, pipe } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -12,6 +11,8 @@ import { User } from './user.model';
 	providedIn: 'root'
 })
 export class SessionService {
+	private authService = inject(AuthenticationService);
+
 	// The current session information
 	sessionSubject$ = new BehaviorSubject<Session | null>(null);
 
@@ -20,19 +21,9 @@ export class SessionService {
 			if (result == null) {
 				return result;
 			}
-			const user = new User();
-			user.setFromUserModel(result);
-			return {
-				name: result.name,
-				user
-			};
+			return new Session(new User(result));
 		})
 	);
-
-	constructor(
-		private authService: AuthenticationService,
-		private router: Router
-	) {}
 
 	reloadSession(): Observable<Session | null> {
 		return this.authService.reloadCurrentUser().pipe(
