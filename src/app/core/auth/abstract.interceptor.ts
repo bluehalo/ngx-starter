@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
@@ -12,7 +12,10 @@ import { catchError } from 'rxjs/operators';
  */
 @Injectable()
 export abstract class AbstractHttpInterceptor implements HttpInterceptor {
-	protected constructor(public router: Router) {}
+	public router = inject(Router);
+	protected constructor() {
+		// no-op
+	}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
@@ -10,12 +10,8 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {
-	constructor(
-		private readonly title: Title,
-		private readonly configService: ConfigService
-	) {
-		super();
-	}
+	private readonly title = inject(Title);
+	private readonly configService = inject(ConfigService);
 
 	override updateTitle(snapshot: RouterStateSnapshot) {
 		this.configService

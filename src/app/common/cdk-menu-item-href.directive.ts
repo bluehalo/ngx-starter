@@ -10,6 +10,7 @@ import { Directive, inject } from '@angular/core';
 })
 export class CdkMenuItemHrefDirective {
 	menuItem = inject(CdkMenuItem);
+
 	constructor() {
 		this.menuItem.triggered.subscribe(() => {
 			this.menuItem._elementRef.nativeElement.click();

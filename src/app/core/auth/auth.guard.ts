@@ -54,12 +54,10 @@ export function authGuard(configOrRoles?: string | string[] | Partial<AuthGuardC
 	providedIn: 'root'
 })
 export class AuthGuard {
-	constructor(
-		private router: Router,
-		private configService: ConfigService,
-		private sessionService: SessionService,
-		private authorizationService: AuthorizationService
-	) {}
+	private router = inject(Router);
+	private configService = inject(ConfigService);
+	private sessionService = inject(SessionService);
+	private authorizationService = inject(AuthorizationService);
 
 	canActivate(
 		route: ActivatedRouteSnapshot,

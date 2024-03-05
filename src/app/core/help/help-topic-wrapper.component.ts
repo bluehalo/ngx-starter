@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -14,8 +14,10 @@ const defaultKey = 'getting-started';
 export class HelpTopicWrapperComponent {
 	key: string = defaultKey;
 
-	constructor(private route: ActivatedRoute) {
-		route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
+	private route = inject(ActivatedRoute);
+
+	constructor() {
+		this.route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
 			this.key = params['topic'];
 		});
 	}

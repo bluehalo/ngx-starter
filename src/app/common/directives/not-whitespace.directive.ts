@@ -10,7 +10,8 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 			useExisting: forwardRef(() => NotWhitespaceValidator),
 			multi: true
 		}
-	]
+	],
+	standalone: true
 })
 export class NotWhitespaceValidator implements Validator {
 	constructor(@Attribute('notWhitespace') public notWhitespace: string) {}

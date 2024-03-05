@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class ExportConfigService {
-	constructor(private http: HttpClient) {}
+	private http = inject(HttpClient);
 
 	postExportConfig(type: string, config: any): Observable<any> {
 		return this.http.post('/api/requestExport', JSON.stringify({ type, config }), {

@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DefaultUrlSerializer, NavigationStart, Router } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map } from 'rxjs/operators';
 
-@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
 export class NavigationService {
 	private previousUrl = '';
 
-	constructor(private readonly router: Router) {}
+	private destroyRef = inject(DestroyRef);
+	private readonly router = inject(Router);
 
 	init() {
 		this.router.events
@@ -24,7 +24,7 @@ export class NavigationService {
 						!url.includes('/access') &&
 						!url.includes('/eua')
 				),
-				untilDestroyed(this)
+				takeUntilDestroyed(this.destroyRef)
 			)
 			.subscribe((url) => {
 				this.previousUrl = url;

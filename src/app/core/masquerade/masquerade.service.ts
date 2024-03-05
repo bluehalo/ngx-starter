@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ export class MasqueradeService {
 
 	storage = new LocalStorageService();
 
-	constructor(private http: HttpClient) {}
+	private http = inject(HttpClient);
 
 	clear() {
 		this.storage.removeValue(this.LOCAL_STORAGE_KEY);

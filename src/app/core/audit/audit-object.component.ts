@@ -60,10 +60,6 @@ export class AuditObjectComponent implements OnInit {
 	@Input() auditObject: any = {};
 	@Input() auditType = '';
 
-	constructor() {
-		// do nothing
-	}
-
 	ngOnInit() {
 		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType)) {
 			this.auditType = 'default';

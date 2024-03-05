@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, first } from 'rxjs/operators';
 
@@ -21,7 +21,6 @@ export const messageResolver: ResolveFn<Message | null> = (
 	return service.read(id).pipe(catchError((error: unknown) => service.redirectError(error)));
 };
 
-@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
@@ -30,11 +29,11 @@ export class MessageService extends AbstractEntityService<Message> {
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed = 0;
 
-	constructor(
-		private sessionService: SessionService,
-		private authorizationService: AuthorizationService,
-		private socketService: SocketService
-	) {
+	private sessionService = inject(SessionService);
+	private authorizationService = inject(AuthorizationService);
+	private socketService = inject(SocketService);
+
+	constructor() {
 		super({
 			[ServiceMethod.create]: 'api/admin/message',
 			[ServiceMethod.read]: 'api/admin/message',
@@ -47,7 +46,7 @@ export class MessageService extends AbstractEntityService<Message> {
 			.getSession()
 			.pipe(
 				first(() => this.authorizationService.isUser()),
-				untilDestroyed(this)
+				takeUntilDestroyed()
 			)
 			.subscribe(() => {
 				this.initialize();

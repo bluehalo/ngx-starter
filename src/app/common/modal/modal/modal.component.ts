@@ -37,8 +37,4 @@ export class ModalComponent {
 
 	@Output()
 	readonly cancel = new EventEmitter<void>();
-
-	constructor() {
-		// do nothing
-	}
 }

@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Event, NavigationEnd, Router, RouterLink } from '@angular/router';
 
@@ -26,11 +26,11 @@ export class BreadcrumbComponent {
 
 	breadcrumbs: Breadcrumb[] = [];
 
-	constructor(
-		private route: ActivatedRoute,
-		private router: Router
-	) {
-		const navEnd$: Observable<Event> = router.events.pipe(
+	private route = inject(ActivatedRoute);
+	private router = inject(Router);
+
+	constructor() {
+		const navEnd$: Observable<Event> = this.router.events.pipe(
 			filter((event) => event instanceof NavigationEnd)
 		);
 		merge(navEnd$, this.homeBreadcrumbChanged$)
@@ -40,7 +40,7 @@ export class BreadcrumbComponent {
 					this.breadcrumbs = [this._homeBreadcrumb];
 					this.breadcrumbs = this.breadcrumbs.concat(
 						BreadcrumbService.getBreadcrumbs(
-							route.root.snapshot,
+							this.route.root.snapshot,
 							this._homeBreadcrumb.url
 						)
 					);

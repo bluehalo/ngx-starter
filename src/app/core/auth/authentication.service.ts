@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { EditUser } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-	constructor(private http: HttpClient) {}
+	private http = inject(HttpClient);
 
 	signin(username: string, password: string): Observable<any> {
 		return this.http.post('api/auth/signin', { username, password });

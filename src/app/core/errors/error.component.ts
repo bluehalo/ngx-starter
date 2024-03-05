@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { HasRoleDirective } from '../auth/directives/has-role.directive';
@@ -28,7 +28,9 @@ export class ErrorComponent {
 		url: '/'
 	};
 
-	constructor(private router: Router) {
+	private router = inject(Router);
+
+	constructor() {
 		const s = this.router.getCurrentNavigation()?.extras?.state;
 		if (s) {
 			this.state = s as ErrorState;

@@ -1,6 +1,5 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, OnInit, inject } from '@angular/core';
 
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PagingOptions } from '../../../common/paging.model';
@@ -12,10 +11,8 @@ import { AuditService } from '../audit.service';
 	standalone: true
 })
 export class AuditActorFilterDirective implements OnInit {
-	constructor(
-		private typeaheadFilter: AsyHeaderTypeaheadFilterComponent,
-		private auditService: AuditService
-	) {}
+	private typeaheadFilter = inject(AsyHeaderTypeaheadFilterComponent);
+	private auditService = inject(AuditService);
 
 	ngOnInit() {
 		this.typeaheadFilter.typeaheadFunc = this.typeaheadSearch.bind(this);
