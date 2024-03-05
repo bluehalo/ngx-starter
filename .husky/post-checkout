@@ -1,0 +1,4 @@
+if ! test -f proxy.conf.json; then
+    echo "proxy.conf.json not found.  Creating from template..."
+    cp proxy.conf.template.json proxy.conf.json
+fi
