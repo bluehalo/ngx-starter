@@ -47,10 +47,6 @@ export class AsySortDirective {
 		this.sortables.delete(sortable.id);
 	}
 
-	constructor() {
-		// do nothing
-	}
-
 	sort(sortChange: SortChange): void {
 		this.dataSource.sort(sortChange);
 	}

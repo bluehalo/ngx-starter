@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -18,7 +18,8 @@ export class AlertsComponent implements OnInit {
 	subtext = '';
 	ttl = 0;
 
-	constructor(public alertService: SystemAlertService) {}
+	private alertService = inject(SystemAlertService);
+
 	ngOnInit(): void {
 		this.alertService.clearAllAlerts();
 		this.alertService.addAlert('Success', 'success', 0, 'subtext');

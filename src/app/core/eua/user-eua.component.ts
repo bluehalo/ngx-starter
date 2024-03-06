@@ -24,14 +24,11 @@ export class UserEuaComponent implements OnInit {
 
 	alreadyAccepted: boolean;
 
-	destroyRef = inject(DestroyRef);
-
-	constructor(
-		private sessionService: SessionService,
-		private navigationService: NavigationService,
-		private alertService: SystemAlertService,
-		private authorizationService: AuthorizationService
-	) {}
+	private destroyRef = inject(DestroyRef);
+	private sessionService = inject(SessionService);
+	private navigationService = inject(NavigationService);
+	private alertService = inject(SystemAlertService);
+	private authorizationService = inject(AuthorizationService);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();

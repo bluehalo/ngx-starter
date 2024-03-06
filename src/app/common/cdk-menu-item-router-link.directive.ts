@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
 export class CdkMenuItemRouterLinkDirective {
 	menuItem = inject(CdkMenuItem);
 	routerLink = inject(RouterLink);
+
 	constructor() {
 		this.menuItem.triggered.subscribe(() => {
 			this.routerLink.onClick(0, false, false, false, false);

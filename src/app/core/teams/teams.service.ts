@@ -34,10 +34,10 @@ export const teamResolver: ResolveFn<Team | null> = (
 	providedIn: 'root'
 })
 export class TeamsService extends AbstractEntityService<Team> {
-	constructor(
-		private authorizationService: AuthorizationService,
-		private teamAuthorizationService: TeamAuthorizationService
-	) {
+	private authorizationService = inject(AuthorizationService);
+	private teamAuthorizationService = inject(TeamAuthorizationService);
+
+	constructor() {
 		super({
 			[ServiceMethod.create]: 'api/team',
 			[ServiceMethod.read]: 'api/team',

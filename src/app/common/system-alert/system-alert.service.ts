@@ -14,10 +14,6 @@ export class SystemAlertService {
 	private alerts: SystemAlert[] = [];
 	alerts$: BehaviorSubject<SystemAlert[]> = new BehaviorSubject(this.alerts);
 
-	constructor() {
-		// do nothing
-	}
-
 	clearAllAlerts() {
 		this.alerts.length = 0;
 		this.alerts$.next(this.alerts);

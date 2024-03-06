@@ -1,5 +1,13 @@
 import { NgClass } from '@angular/common';
-import { Component, ContentChild, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+	Component,
+	ContentChild,
+	ElementRef,
+	Input,
+	Renderer2,
+	ViewChild,
+	inject
+} from '@angular/core';
 
 @Component({
 	selector: 'app-flyout',
@@ -20,7 +28,7 @@ export class FlyoutComponent {
 
 	isOpen = false;
 
-	constructor(private renderer: Renderer2) {}
+	private renderer = inject(Renderer2);
 
 	toggle() {
 		if (this.content && this.container) {

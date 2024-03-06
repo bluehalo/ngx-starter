@@ -48,10 +48,6 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 		// do nothing
 	};
 
-	constructor() {
-		// do nothing
-	}
-
 	onSearch($event: { term: string }) {
 		this.autocompleteOpen = $event.term.trim().length > 0;
 	}

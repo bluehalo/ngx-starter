@@ -13,10 +13,6 @@ export class Team {
 	parent?: Team;
 	ancestors: Team[] = [];
 
-	constructor() {
-		// do nothing
-	}
-
 	setFromModel(model: any): Team {
 		if (null != model) {
 			this._id = model._id;

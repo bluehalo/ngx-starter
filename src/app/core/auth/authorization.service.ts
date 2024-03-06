@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Role } from './role.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
 
-@UntilDestroy()
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
 	private session: Session | null = null;
 
-	constructor(private sessionService: SessionService) {
+	private sessionService = inject(SessionService);
+
+	constructor() {
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed())
 			.subscribe((session) => {
 				this.session = session;
 			});

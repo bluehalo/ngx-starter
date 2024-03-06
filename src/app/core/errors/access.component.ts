@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,9 @@ export class AccessComponent {
 	status = '403';
 	message = 'User is missing authorizations for access.';
 
-	constructor(private router: Router) {
+	private router = inject(Router);
+
+	constructor() {
 		const state = this.router.getCurrentNavigation()?.extras?.state;
 		if (state) {
 			this.status = state['status'];

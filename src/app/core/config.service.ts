@@ -1,5 +1,5 @@
 import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { AsyncSubject, Observable } from 'rxjs';
 
@@ -11,7 +11,9 @@ import { Config } from './config.model';
 export class ConfigService {
 	configSubject$ = new AsyncSubject<Config | null>();
 
-	constructor(private http: HttpBackend) {
+	private http = inject(HttpBackend);
+
+	constructor() {
 		this.reloadConfig();
 	}
 

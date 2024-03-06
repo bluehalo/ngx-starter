@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -11,10 +11,8 @@ import { AuditActionTypes } from './audit.classes';
 
 @Injectable()
 export class AuditService {
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
+	private http = inject(HttpClient);
+	private alertService = inject(SystemAlertService);
 
 	public getDistinctAuditValues(field: string): Observable<string[]> {
 		return this.http.get<string[]>('api/audit/distinctValues', { params: { field } });

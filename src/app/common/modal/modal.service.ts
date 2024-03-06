@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import { ContainerModalConfig, ModalAction, ModalCloseEvent, ModalConfig } from 
 export class ModalService {
 	private modalRef: BsModalRef | null = null;
 
-	constructor(private modalService: BsModalService) {}
+	private modalService = inject(BsModalService);
 
 	alert(
 		title: string,

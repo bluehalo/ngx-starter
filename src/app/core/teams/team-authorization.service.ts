@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs/operators';
 
 import { SessionService } from '../auth/session.service';
@@ -8,19 +8,20 @@ import { TeamMember } from './team-member.model';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
 
-@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
 export class TeamAuthorizationService {
 	private member!: TeamMember;
 
-	constructor(private sessionService: SessionService) {
+	private sessionService = inject(SessionService);
+
+	constructor() {
 		this.sessionService
 			.getSession()
 			.pipe(
 				map((session) => new TeamMember(session?.user)),
-				untilDestroyed(this)
+				takeUntilDestroyed()
 			)
 			.subscribe((member: TeamMember) => {
 				this.member = member;

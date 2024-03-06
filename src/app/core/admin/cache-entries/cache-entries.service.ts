@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -10,10 +10,8 @@ import { CacheEntry } from './cache-entry.model';
 
 @Injectable({ providedIn: 'root' })
 export class CacheEntriesService {
-	constructor(
-		private http: HttpClient,
-		private alertService: SystemAlertService
-	) {}
+	private http = inject(HttpClient);
+	private alertService = inject(SystemAlertService);
 
 	public match(
 		query: any,

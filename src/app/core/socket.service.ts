@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as io from 'socket.io-client';
 
 import { AuthorizationService } from './auth/authorization.service';
@@ -10,17 +10,16 @@ import { SessionService } from './auth/session.service';
  * Handles sockets for the application
  */
 
-@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
 export class SocketService {
 	protected socket: SocketIOClient.Socket;
 
-	constructor(
-		private authorizationService: AuthorizationService,
-		private sessionService: SessionService
-	) {
+	private authorizationService = inject(AuthorizationService);
+	private sessionService = inject(SessionService);
+
+	constructor() {
 		// Do not autoconnect when the socket is created.  We will wait to do that ourselves once the
 		// user has logged in.
 		this.socket = io.connect({
@@ -35,7 +34,7 @@ export class SocketService {
 		// Subscribe to authorization changes
 		this.sessionService
 			.getSession()
-			.pipe(untilDestroyed(this))
+			.pipe(takeUntilDestroyed())
 			.subscribe(() => {
 				if (this.authorizationService.isAuthenticated()) {
 					// enable sockets/messaging

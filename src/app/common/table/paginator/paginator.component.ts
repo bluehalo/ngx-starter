@@ -32,10 +32,6 @@ export class PaginatorComponent<T> implements OnInit {
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
 
-	constructor() {
-		// do nothing
-	}
-
 	ngOnInit() {
 		// Constrain the max page size
 		this.maxPageSize = this._constrain(this.maxPageSize, 100, 1);

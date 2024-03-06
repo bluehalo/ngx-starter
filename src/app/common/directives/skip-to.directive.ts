@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Renderer2, inject } from '@angular/core';
 
 /**
  * Used to mark where in a page the "Skip to main content" link
@@ -10,12 +10,12 @@ import { Directive, ElementRef, Renderer2 } from '@angular/core';
 	standalone: true
 })
 export class SkipToDirective {
-	constructor(
-		private elRef: ElementRef,
-		private renderer: Renderer2
-	) {
-		const el = elRef.nativeElement;
-		renderer.addClass(el, 'skip-to');
-		renderer.setAttribute(el, 'tabindex', '-1');
+	private elRef = inject(ElementRef);
+	private renderer = inject(Renderer2);
+
+	constructor() {
+		const el = this.elRef.nativeElement;
+		this.renderer.addClass(el, 'skip-to');
+		this.renderer.setAttribute(el, 'tabindex', '-1');
 	}
 }
