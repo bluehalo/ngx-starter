@@ -14,7 +14,7 @@
     "test:ci": "ng test --watch=false --code-coverage",
     "lint": "ng lint && stylelint './src/**/*.scss'",
     "lint:fix": "ng lint --fix && stylelint './src/**/*.scss' --fix",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -66,7 +66,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-rxjs": "^5.0.3",
     "eslint-plugin-rxjs-angular": "^2.0.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -74,7 +74,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "karma-junit-reporter": "~2.0.0",
-    "lint-staged": "~13.2.3",
+    "lint-staged": "^15.2.2",
     "prettier": "~3.0.0",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "stylelint": "15.10.2",
