@@ -10,9 +10,9 @@ export class TeamMember extends User {
 	public roleDisplay = TeamRole.getDisplay(this.role);
 
 	constructor(model: any, team?: Team) {
-		super();
+		super(model);
 		if (model) {
-			this.setFromTeamMemberModel(team, model);
+			this.setFromTeamMemberModel(model, team);
 		}
 	}
 
