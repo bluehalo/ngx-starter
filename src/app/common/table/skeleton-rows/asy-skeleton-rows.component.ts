@@ -11,7 +11,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class AsySkeletonRowsComponent {
 	_rows: Array<number> = [];
-	@Input()
+
+	@Input({ required: true })
 	set rows(numRows: number) {
 		this._rows = Array(numRows).fill(0);
 	}

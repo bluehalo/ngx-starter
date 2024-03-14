@@ -85,7 +85,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	@ViewChild(AsyFilterDirective)
 	filter: AsyFilterDirective;
 
-	@Input()
+	@Input({ required: true })
 	team!: Team;
 
 	isUserAdmin = false;
@@ -111,7 +111,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 	dataSource = new AsyTableDataSource<TeamMember>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
-		null,
+		undefined,
 		{
 			sortField: 'name',
 			sortDir: SortDirection.asc
@@ -127,9 +127,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	private alertService = inject(SystemAlertService);
 
 	ngOnInit() {
-		if (!this.team) {
-			throw new TypeError(`'Team' is required`);
-		}
 		this.alertService.clearAllAlerts();
 
 		this.sessionService

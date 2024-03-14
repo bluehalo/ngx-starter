@@ -49,9 +49,11 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	matchAll = false;
 
-	@Input() showSearch = false;
+	@Input()
+	showSearch = false;
 
-	@Input() showMatch = false;
+	@Input()
+	showMatch = false;
 
 	@Input()
 	buildFilterFunc?: BuildFilterFunction;

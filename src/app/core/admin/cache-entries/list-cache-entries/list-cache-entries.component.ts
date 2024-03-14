@@ -60,7 +60,7 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 
 	dataSource = new AsyTableDataSource<CacheEntry>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
-		null,
+		undefined,
 		{
 			sortField: 'ts',
 			sortDir: SortDirection.desc

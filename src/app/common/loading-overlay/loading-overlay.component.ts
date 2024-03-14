@@ -12,12 +12,20 @@ import { NotificationComponent } from '../notification/notification.component';
 	imports: [NgIf, NotificationComponent, LoadingSpinnerComponent]
 })
 export class LoadingOverlayComponent {
-	@Input() message = 'Loading...';
-	@Input() isLoading = false;
-	@Input() isError = false;
-	@Input() errorMessage = '';
+	@Input()
+	message = 'Loading...';
 
-	@Output() readonly retry = new EventEmitter();
+	@Input()
+	isLoading = false;
+
+	@Input()
+	isError = false;
+
+	@Input()
+	errorMessage = '';
+
+	@Output()
+	readonly retry = new EventEmitter();
 
 	handleRetry() {
 		this.retry.emit(true);

@@ -27,9 +27,14 @@ import { debounceTime } from 'rxjs/operators';
 	imports: [FormsModule, NgIf]
 })
 export class SearchInputComponent {
-	@Input() placeholder = 'Search...';
-	@Output() readonly applySearch: EventEmitter<string> = new EventEmitter();
-	@Input() search = '';
+	@Input()
+	placeholder = 'Search...';
+
+	@Input()
+	search = '';
+
+	@Output()
+	readonly applySearch: EventEmitter<string> = new EventEmitter();
 
 	/**
 	 * If true, searches will be made on `input` events, otherwise searches will be made on `keyup` events

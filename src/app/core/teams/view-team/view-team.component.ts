@@ -31,8 +31,8 @@ import { TeamsService } from '../teams.service';
 export class ViewTeamComponent {
 	topics = getTeamTopics();
 
-	@Input()
-	team?: Team;
+	@Input({ required: true })
+	team!: Team;
 
 	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);

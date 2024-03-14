@@ -46,12 +46,15 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	 * ID of this sort header. If used within the context of a CdkColumnDef, this will default to
 	 * the column's name.
 	 */
-	@Input('asy-sort-header') id: string;
+	@Input('asy-sort-header')
+	id: string;
 
 	/** Overrides the sort start value of the containing AsySort for this AsySortable. */
-	@Input() start: SortDir;
+	@Input()
+	start: SortDir;
 
-	@Input() sortable = true;
+	@Input()
+	sortable = true;
 
 	private destroyRef = inject(DestroyRef);
 	private changeDetectorRef = inject(ChangeDetectorRef);

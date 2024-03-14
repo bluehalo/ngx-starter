@@ -16,7 +16,7 @@ import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 	imports: [NgFor, NgIf, RouterLink]
 })
 export class BreadcrumbComponent {
-	@Input()
+	@Input({ required: true })
 	set homeBreadcrumb(hb: Breadcrumb) {
 		this._homeBreadcrumb = hb;
 		this.homeBreadcrumbChanged$.next(hb);

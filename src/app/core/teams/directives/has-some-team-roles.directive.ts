@@ -30,7 +30,7 @@ export class HasSomeTeamRolesDirective implements OnInit {
 	private authorizationService = inject(AuthorizationService);
 	private teamAuthorizationService = inject(TeamAuthorizationService);
 
-	@Input()
+	@Input({ required: true })
 	set hasSomeTeamRoles(team: Pick<Team, '_id'>) {
 		this.team = team;
 		this.updateNgIf();
