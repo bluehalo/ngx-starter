@@ -45,18 +45,7 @@
 					}}</a>
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="created">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
-				<td cdk-cell *cdkCellDef="let team">
-					<div
-						class="text-nowrap"
-						container="body"
-						tooltip="{{ team.created | utcDate }}"
-					>
-						{{ team.created | agoDate }}
-					</div>
-				</td>
-			</ng-container>
+			<asy-ago-date-column name="created"></asy-ago-date-column>
 			<ng-container cdkColumnDef="description">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Description</th>
 				<td cdk-cell *cdkCellDef="let team">

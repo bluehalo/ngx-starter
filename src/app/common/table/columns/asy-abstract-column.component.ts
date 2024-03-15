@@ -5,7 +5,7 @@ import { Directive, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular
 @Directive()
 export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit {
 	/** Column name that should be used to reference this column. */
-	@Input()
+	@Input({ required: true })
 	get name(): string {
 		return this._name;
 	}

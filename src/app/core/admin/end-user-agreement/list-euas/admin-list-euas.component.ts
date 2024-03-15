@@ -11,7 +11,6 @@ import { filter, first, switchMap } from 'rxjs/operators';
 import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
@@ -23,8 +22,10 @@ import {
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
 	ColumnChooserComponent,
+	DateColumnComponent,
 	PaginatorComponent,
-	SidebarComponent
+	SidebarComponent,
+	TextColumnComponent
 } from '../../../../common/table';
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
@@ -46,17 +47,18 @@ import { EuaService } from '../eua.service';
 		SidebarComponent,
 		ColumnChooserComponent,
 		PaginatorComponent,
-		UtcDatePipe,
 		TooltipModule,
 		CdkMenuTrigger,
 		CdkMenu,
-		CdkMenuItem
+		CdkMenuItem,
+		TextColumnComponent,
+		DateColumnComponent
 	]
 })
 export class AdminListEuasComponent implements OnDestroy, OnInit {
 	columns = [
 		{
-			key: 'id',
+			key: '_id',
 			label: 'ID',
 			selected: false
 		},

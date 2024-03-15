@@ -15,8 +15,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { AsyTableDataSource } from '../../asy-table-data-source';
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
-import { AsyTableDataSource } from '../asy-table-data-source';
 
 @Component({
 	selector: 'asy-selection-column',

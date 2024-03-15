@@ -55,12 +55,7 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<ng-container cdkColumnDef="id">
-					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
-					<td cdk-cell *cdkCellDef="let user">
-						{{ user._id }}
-					</td>
-				</ng-container>
+				<asy-text-column name="_id" header="ID" [sortable]="false"></asy-text-column>
 				<ng-container cdkColumnDef="name">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
@@ -71,78 +66,22 @@
 						>
 					</td>
 				</ng-container>
-				<ng-container cdkColumnDef="username">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Username</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.username }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="organization">
-					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
-					<td cdk-cell *cdkCellDef="let user">
-						{{ user.organization }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="email">
-					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
-					<td cdk-cell *cdkCellDef="let user">
-						{{ user.email }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="phone">
-					<th cdk-header-cell *cdkHeaderCellDef>Phone</th>
-					<td cdk-cell *cdkCellDef="let user">
-						{{ user.phone }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="acceptedEua">
-					<th cdk-header-cell *cdkHeaderCellDef>EUA</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div
-							class="text-nowrap"
-							container="body"
-							tooltip="{{ user.acceptedEua | utcDate }}"
-						>
-							{{ user.acceptedEua | agoDate: false }}
-						</div>
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="lastLogin">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Last Login</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div
-							class="text-nowrap"
-							container="body"
-							tooltip="{{ user.lastLogin | utcDate }}"
-						>
-							{{ user.lastLogin | agoDate: false }}
-						</div>
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="created">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.created | utcDate }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="updated">
-					<th cdk-header-cell *cdkHeaderCellDef>Updated</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						{{ user.updated | utcDate }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="externalRoles">
-					<th cdk-header-cell *cdkHeaderCellDef>External Roles</th>
-					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
-						{{ user.externalRoles | join: ', ' }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="externalGroups">
-					<th cdk-header-cell *cdkHeaderCellDef>External Groups</th>
-					<td class="hide-overflow" cdk-cell *cdkCellDef="let user">
-						{{ user.externalGroups | join: ', ' }}
-					</td>
-				</ng-container>
+				<asy-text-column name="username" [sortable]="false"></asy-text-column>
+				<asy-text-column name="organization" [sortable]="false"></asy-text-column>
+				<asy-text-column name="email" [sortable]="false"></asy-text-column>
+				<asy-text-column name="phone" [sortable]="false"></asy-text-column>
+				<asy-ago-date-column name="acceptedEua" header="EUA"></asy-ago-date-column>
+				<asy-ago-date-column name="lastLogin" header="Last Login"></asy-ago-date-column>
+				<asy-date-column name="created"></asy-date-column>
+				<asy-date-column name="updated"></asy-date-column>
+				<asy-expandable-list-column
+					name="externalRoles"
+					header="External Roles"
+				></asy-expandable-list-column>
+				<asy-expandable-list-column
+					name="externalGroups"
+					header="External Groups"
+				></asy-expandable-list-column>
 				<ng-container cdkColumnDef="roles">
 					<th cdk-header-cell *cdkHeaderCellDef>
 						Roles
@@ -163,20 +102,13 @@
 						</ng-container>
 					</td>
 				</ng-container>
-				<ng-container cdkColumnDef="teams">
-					<th cdk-header-cell *cdkHeaderCellDef>Teams</th>
-					<td cdk-cell *cdkCellDef="let user">
-						<div class="cdk-cell-collapsible">
-							<div class="text-nowrap" *ngFor="let team of user.teams">
-								<a
-									class="text-decoration-underline"
-									[routerLink]="['/team', team._id]"
-									>{{ team.team.name }}</a
-								>
-							</div>
-						</div>
-					</td>
-				</ng-container>
+				<asy-expandable-list-column name="teams">
+					<ng-template lc-item-tmp let-team="listItem">
+						<a class="text-decoration-underline" [routerLink]="['/team', team._id]">{{
+							team.team.name
+						}}</a>
+					</ng-template>
+				</asy-expandable-list-column>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td cdk-cell *cdkCellDef="let user">

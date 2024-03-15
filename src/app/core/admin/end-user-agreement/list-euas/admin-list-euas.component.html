@@ -47,12 +47,7 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<ng-container cdkColumnDef="id">
-					<th cdk-header-cell *cdkHeaderCellDef>ID</th>
-					<td cdk-cell *cdkCellDef="let eua">
-						{{ eua._id }}
-					</td>
-				</ng-container>
+				<asy-text-column name="_id" header="ID" [sortable]="false"></asy-text-column>
 				<ng-container cdkColumnDef="title">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
@@ -69,24 +64,9 @@
 						{{ eua.text }}
 					</td>
 				</ng-container>
-				<ng-container cdkColumnDef="created">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
-						{{ eua.created | utcDate }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="published">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Published</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
-						{{ eua.published | utcDate }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="updated">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Updated</th>
-					<td class="text-nowrap" cdk-cell *cdkCellDef="let eua">
-						{{ eua.updated | utcDate }}
-					</td>
-				</ng-container>
+				<asy-date-column name="created"></asy-date-column>
+				<asy-date-column name="published"></asy-date-column>
+				<asy-date-column name="updated"></asy-date-column>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td

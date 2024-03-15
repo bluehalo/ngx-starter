@@ -11,7 +11,6 @@ import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item
 import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
@@ -22,7 +21,9 @@ import {
 	AsySortHeaderComponent,
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
-	PaginatorComponent
+	DateColumnComponent,
+	PaginatorComponent,
+	TextColumnComponent
 } from '../../../../common/table';
 import { Message } from '../../../messages/message.model';
 import { MessageService } from '../../../messages/message.service';
@@ -42,15 +43,16 @@ import { MessageService } from '../../../messages/message.service';
 		AsySortHeaderComponent,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
-		UtcDatePipe,
 		CdkMenuTrigger,
 		CdkMenu,
 		CdkMenuItem,
-		CdkMenuItemRouterLinkDirective
+		CdkMenuItemRouterLinkDirective,
+		TextColumnComponent,
+		DateColumnComponent
 	]
 })
 export class ListMessagesComponent implements OnDestroy, OnInit {
-	displayedColumns = ['title', 'type', 'created', 'updated', 'actionsMenu'];
+	displayedColumns = ['title', 'type', 'body', 'created', 'updated', 'actionsMenu'];
 
 	dataSource = new AsyTableDataSource<Message>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),

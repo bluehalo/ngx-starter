@@ -1,0 +1,17 @@
+<ng-container cdkColumnDef [sticky]="_sticky" [stickyEnd]="_stickyEnd">
+	<th asy-sort-header cdk-header-cell *cdkHeaderCellDef [sortable]="sortable">
+		<ng-template #defaultHeaderTemplate>
+			{{ header ?? (name | titlecase) }}
+		</ng-template>
+		<ng-template
+			[ngTemplateOutlet]="headerTemplate || defaultHeaderTemplate"
+			[ngTemplateOutletContext]="{
+				header: header
+			}"
+		>
+		</ng-template>
+	</th>
+	<td class="text-nowrap" cdk-cell *cdkCellDef="let obj">
+		{{ obj[name] | utcDate: format }}
+	</td>
+</ng-container>

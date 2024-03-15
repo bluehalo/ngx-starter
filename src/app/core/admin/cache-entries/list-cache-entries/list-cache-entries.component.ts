@@ -19,12 +19,14 @@ import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	AgoDateColumnComponent,
 	AsyFilterDirective,
 	AsySortDirective,
 	AsySortHeaderComponent,
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
-	PaginatorComponent
+	PaginatorComponent,
+	TextColumnComponent
 } from '../../../../common/table';
 import { CacheEntriesService } from '../cache-entries.service';
 import {
@@ -52,7 +54,9 @@ import { CacheEntry } from '../cache-entry.model';
 		UtcDatePipe,
 		CdkMenu,
 		CdkMenuTrigger,
-		CdkMenuItem
+		CdkMenuItem,
+		TextColumnComponent,
+		AgoDateColumnComponent
 	]
 })
 export class ListCacheEntriesComponent implements OnDestroy, OnInit {

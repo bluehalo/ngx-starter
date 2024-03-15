@@ -34,6 +34,7 @@ import { SearchInputComponent } from '../../../common/search-input/search-input.
 import { SortDirection } from '../../../common/sorting.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import {
+	AgoDateColumnComponent,
 	AsyFilterDirective,
 	AsyHeaderListFilterComponent,
 	AsySortDirective,
@@ -41,7 +42,8 @@ import {
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
 	ListFilterOption,
-	PaginatorComponent
+	PaginatorComponent,
+	TextColumnComponent
 } from '../../../common/table';
 import { AuthorizationService } from '../../auth/authorization.service';
 import { SessionService } from '../../auth/session.service';
@@ -78,7 +80,9 @@ import { TeamsService } from '../teams.service';
 		UtcDatePipe,
 		CdkMenu,
 		CdkMenuTrigger,
-		CdkMenuItem
+		CdkMenuItem,
+		TextColumnComponent,
+		AgoDateColumnComponent
 	]
 })
 export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {

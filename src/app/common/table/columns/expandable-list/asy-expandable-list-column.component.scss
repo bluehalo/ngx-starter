@@ -1,0 +1,13 @@
+.list-column-collapsed {
+  .list-item:not(:first-child) {
+    display: none;
+
+  }
+}
+
+.fa-angle-down {
+  transform: scale(1, -1);
+  .list-column-collapsed & {
+    transform: scale(1, 1);
+  }
+}

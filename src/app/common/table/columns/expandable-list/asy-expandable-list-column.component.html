@@ -1,0 +1,45 @@
+<ng-container cdkColumnDef [sticky]="_sticky" [stickyEnd]="_stickyEnd">
+	<th cdk-header-cell *cdkHeaderCellDef>
+		<ng-template #defaultHeaderTemplate>
+			{{ header ?? (name | titlecase) }}
+		</ng-template>
+		<ng-template
+			[ngTemplateOutlet]="headerTemplate || defaultHeaderTemplate"
+			[ngTemplateOutletContext]="{
+				header: header
+			}"
+		>
+		</ng-template>
+	</th>
+	<td
+		class=""
+		[class.list-column-collapsed]="isCollapsed(item)"
+		cdk-cell
+		*cdkCellDef="let item; let index = index"
+	>
+		<div class="d-flex justify-content-between align-items-stretch">
+			<div class="list-column-collapsible" *ngIf="item[name]?.length > 0">
+				<div class="list-item text-nowrap" *ngFor="let listItem of item[name]">
+					<ng-template #defaultItemTemplate>
+						{{ listItem }}
+					</ng-template>
+
+					<ng-template
+						[ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+						[ngTemplateOutletContext]="{
+							listItem: listItem,
+							item: item,
+							index: item.index
+						}"
+					>
+					</ng-template>
+				</div>
+			</div>
+			<div class="pl-auto" *ngIf="item[name]?.length > 1">
+				<button class="btn btn-sm btn-link py-0" (click)="toggle(item)">
+					<span class="fa-solid fa-lg fa-angle-down"></span>
+				</button>
+			</div>
+		</div>
+	</td>
+</ng-container>

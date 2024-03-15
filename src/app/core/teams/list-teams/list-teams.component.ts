@@ -6,16 +6,16 @@ import { RouterLink } from '@angular/router';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../common/search-input/search-input.component';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import {
+	AgoDateColumnComponent,
 	AsyFilterDirective,
 	AsySortDirective,
 	AsySortHeaderComponent,
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
+	DateColumnComponent,
 	PaginatorComponent
 } from '../../../common/table';
 import { Team } from '../team.model';
@@ -38,8 +38,8 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 		TooltipModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
-		AgoDatePipe,
-		UtcDatePipe
+		AgoDateColumnComponent,
+		DateColumnComponent
 	]
 })
 export class ListTeamsComponent
