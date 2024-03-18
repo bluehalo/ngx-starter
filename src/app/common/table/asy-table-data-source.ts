@@ -35,7 +35,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 
 	constructor(
 		private loadPageFunc: LoadPageFunction<T>,
-		public storageKey: string | null = null,
+		public storageKey?: string,
 		initialSort: SortChange = {} as SortChange,
 		initialSearch = '',
 		initialFilter: any = {},

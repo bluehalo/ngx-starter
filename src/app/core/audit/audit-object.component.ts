@@ -10,7 +10,8 @@ import { AuditObjectTypes } from './audit.classes';
 	imports: [JsonPipe]
 })
 export class DefaultAuditObjectComponent {
-	@Input() auditObject: any = {};
+	@Input()
+	auditObject: any = {};
 }
 AuditObjectTypes.registerType('default', DefaultAuditObjectComponent);
 
@@ -57,8 +58,11 @@ AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
 export class AuditObjectComponent implements OnInit {
 	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
 
-	@Input() auditObject: any = {};
-	@Input() auditType = '';
+	@Input()
+	auditObject: any = {};
+
+	@Input()
+	auditType = '';
 
 	ngOnInit() {
 		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType)) {

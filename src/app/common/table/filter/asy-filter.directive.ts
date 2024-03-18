@@ -24,7 +24,7 @@ export class AsyFilterDirective {
 
 	filters = new Map<string, any>();
 
-	@Input()
+	@Input({ required: true })
 	dataSource: AsyTableDataSource<any>;
 
 	/**

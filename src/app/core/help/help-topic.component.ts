@@ -38,7 +38,7 @@ export class HelpTopicComponent {
 
 	helpTopics = getHelpTopicsMap();
 
-	@Input()
+	@Input({ required: true })
 	set key(key: string) {
 		if (this.componentRef) {
 			this.componentRef.destroy();

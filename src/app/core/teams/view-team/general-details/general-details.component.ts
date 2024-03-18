@@ -41,8 +41,8 @@ import { TeamsService } from '../../teams.service';
 	]
 })
 export class GeneralDetailsComponent implements OnInit {
-	@Input()
-	team?: Team;
+	@Input({ required: true })
+	team!: Team;
 
 	_team: Team;
 

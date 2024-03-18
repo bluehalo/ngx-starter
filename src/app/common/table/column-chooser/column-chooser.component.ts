@@ -35,7 +35,7 @@ export class ColumnChooserComponent implements OnInit {
 	_defaultColumns: ColumnDefinition[] = [];
 
 	@Input()
-	storageKey: string | null;
+	storageKey?: string;
 
 	@Input()
 	sortingDisabled = false;

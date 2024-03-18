@@ -26,7 +26,7 @@ export class HasSomeRolesDirective implements OnInit {
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 
-	@Input()
+	@Input({ required: true })
 	set hasSomeRoles(roles: Array<string | Role>) {
 		this.roles = roles;
 		this.updateNgIf();

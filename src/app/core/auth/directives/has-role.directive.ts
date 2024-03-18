@@ -26,7 +26,7 @@ export class HasRoleDirective implements OnInit {
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 
-	@Input()
+	@Input({ required: true })
 	set hasRole(role: string | Role) {
 		this.role = role;
 		this.updateNgIf();

@@ -31,11 +31,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
 	imports: [NgSelectModule, FormsModule]
 })
 export class MultiSelectInputComponent implements ControlValueAccessor {
-	@Input() placeholder = '';
-
-	@Input() readonly = false;
-
 	@ViewChild(NgModel) model?: NgModel;
+
+	@Input()
+	placeholder = '';
+
+	@Input()
+	readonly = false;
 
 	autocompleteOpen = false;
 
