@@ -39,8 +39,9 @@
 			<label class="form-required">Team Admin</label>
 			<ng-select
 				name="teamAdmin"
-				bindLabel="userModel.name"
+				bindLabel="name"
 				placeholder="Search for user..."
+				required
 				style="width: 400px"
 				[(ngModel)]="teamAdmin"
 				[items]="(users$ | async) || []"
