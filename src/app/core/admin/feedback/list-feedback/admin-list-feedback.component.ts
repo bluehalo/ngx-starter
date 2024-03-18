@@ -11,13 +11,12 @@ import { Observable } from 'rxjs';
 
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { AgoDatePipe } from '../../../../common/pipes/ago-date.pipe';
-import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	AgoDateColumnComponent,
 	AsyFilterDirective,
 	AsyHeaderListFilterComponent,
 	AsySortDirective,
@@ -26,7 +25,8 @@ import {
 	AsyTableEmptyStateComponent,
 	ColumnChooserComponent,
 	PaginatorComponent,
-	SidebarComponent
+	SidebarComponent,
+	TextColumnComponent
 } from '../../../../common/table';
 import { ExportConfigService } from '../../../export-config.service';
 import { Feedback, FeedbackStatusOption } from '../../../feedback/feedback.model';
@@ -54,13 +54,13 @@ import { AdminUsersService } from '../../user/admin-users.service';
 		ColumnChooserComponent,
 		PaginatorComponent,
 		TitleCasePipe,
-		AgoDatePipe,
-		UtcDatePipe,
 		SkipToDirective,
 		NgClass,
 		CdkMenuTrigger,
 		CdkMenu,
-		CdkMenuItem
+		CdkMenuItem,
+		AgoDateColumnComponent,
+		TextColumnComponent
 	]
 })
 export class AdminListFeedbackComponent implements OnDestroy, OnInit {

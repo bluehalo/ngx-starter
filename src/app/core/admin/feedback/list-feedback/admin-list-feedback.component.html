@@ -54,73 +54,44 @@
 				<ng-container cdkColumnDef="creator.name">
 					<th cdk-header-cell *cdkHeaderCellDef>Submitted By</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.creator?.name }}
+						{{ feedback.creator.name }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.username">
 					<th cdk-header-cell *cdkHeaderCellDef>Username</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.creator?.username }}
+						{{ feedback.creator.username }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.email">
 					<th cdk-header-cell *cdkHeaderCellDef>Email</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.creator?.email }}
+						{{ feedback.creator.email }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="creator.organization">
 					<th cdk-header-cell *cdkHeaderCellDef>Organization</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.creator?.organization }}
+						{{ feedback.creator.organization }}
 					</td>
 				</ng-container>
-				<ng-container cdkColumnDef="created">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Submitted Date</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="text-nowrap" tooltip="{{ feedback?.created | utcDate }}">
-							{{ feedback?.created | agoDate }}
-						</div>
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="updated">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Updated</th>
-					<td cdk-cell *cdkCellDef="let feedback">
-						<div class="text-nowrap" tooltip="{{ feedback?.updated | utcDate }}">
-							{{ feedback?.updated | agoDate }}
-						</div>
-					</td>
-				</ng-container>
+				<asy-ago-date-column name="created" header="Submitted Date"></asy-ago-date-column>
+				<asy-ago-date-column name="updated"></asy-ago-date-column>
 				<ng-container cdkColumnDef="type">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Type</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.type | titlecase }}
+						{{ feedback.type | titlecase }}
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="body">
 					<th cdk-header-cell *cdkHeaderCellDef>Feedback</th>
 					<td cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.body }}
+						{{ feedback.body }}
 					</td>
 				</ng-container>
-				<ng-container cdkColumnDef="browser">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Browser</th>
-					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.browser }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="os">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>OS</th>
-					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.os }}
-					</td>
-				</ng-container>
-				<ng-container cdkColumnDef="url">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Submitted From</th>
-					<td class="hide-overflow" cdk-cell *cdkCellDef="let feedback">
-						{{ feedback?.url }}
-					</td>
-				</ng-container>
+				<asy-text-column name="browser"></asy-text-column>
+				<asy-text-column name="os"></asy-text-column>
+				<asy-text-column name="url" header="Submitted From"></asy-text-column>
 				<ng-container cdkColumnDef="status">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 						Status

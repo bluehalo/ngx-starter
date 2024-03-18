@@ -24,30 +24,9 @@
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<ng-container cdkColumnDef="name">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
-				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.name }}</div>
-				</td>
-			</ng-container>
-			<ng-container cdkColumnDef="username">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Username</th>
-				<td cdk-cell *cdkCellDef="let member">
-					<div>{{ member.username }}</div>
-				</td>
-			</ng-container>
-			<ng-container cdkColumnDef="lastLogin">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Last Login</th>
-				<td cdk-cell *cdkCellDef="let user">
-					<div
-						class="hide-overflow"
-						container="body"
-						tooltip="{{ user.lastLogin | utcDate }}"
-					>
-						{{ user.lastLogin | agoDate: false }}
-					</div>
-				</td>
-			</ng-container>
+			<asy-text-column name="name"></asy-text-column>
+			<asy-text-column name="username"></asy-text-column>
+			<asy-ago-date-column name="lastLogin" header="Last Login"></asy-ago-date-column>
 			<ng-container cdkColumnDef="type">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Type
@@ -56,8 +35,8 @@
 				</th>
 
 				<td cdk-cell *cdkCellDef="let member">
-					<div *ngIf="member.explicit">Explicit</div>
-					<div *ngIf="!member.explicit">Implicit</div>
+					<ng-container *ngIf="member.explicit">Explicit</ng-container>
+					<ng-container *ngIf="!member.explicit">Implicit</ng-container>
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="role">

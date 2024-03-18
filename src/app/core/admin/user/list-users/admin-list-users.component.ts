@@ -15,14 +15,14 @@ import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item
 import { DialogAction, DialogService } from '../../../../common/dialog';
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { AgoDatePipe } from '../../../../common/pipes/ago-date.pipe';
 import { JoinPipe } from '../../../../common/pipes/join.pipe';
-import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
 import { SortDirection } from '../../../../common/sorting.model';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	AgoDateColumnComponent,
+	AsyExpandableListColumnComponent,
 	AsyFilterDirective,
 	AsyHeaderListFilterComponent,
 	AsySortDirective,
@@ -30,8 +30,11 @@ import {
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
 	ColumnChooserComponent,
+	DateColumnComponent,
+	ItemTemplateDirective,
 	PaginatorComponent,
-	SidebarComponent
+	SidebarComponent,
+	TextColumnComponent
 } from '../../../../common/table';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
@@ -65,13 +68,16 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		ColumnChooserComponent,
 		PaginatorComponent,
 		AsyncPipe,
-		AgoDatePipe,
 		JoinPipe,
-		UtcDatePipe,
 		CdkMenuTrigger,
 		CdkMenu,
 		CdkMenuItem,
-		CdkMenuItemRouterLinkDirective
+		CdkMenuItemRouterLinkDirective,
+		AsyExpandableListColumnComponent,
+		ItemTemplateDirective,
+		DateColumnComponent,
+		AgoDateColumnComponent,
+		TextColumnComponent
 	]
 })
 export class AdminListUsersComponent implements OnDestroy, OnInit {
@@ -92,7 +98,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			selected: true
 		},
 		{
-			key: 'id',
+			key: '_id',
 			label: 'ID',
 			selected: false
 		},

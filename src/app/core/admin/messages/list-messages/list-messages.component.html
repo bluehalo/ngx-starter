@@ -45,24 +45,15 @@
 					>
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="type">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Type</th>
-				<td cdk-cell *cdkCellDef="let message">
-					{{ message.type }}
+			<asy-text-column name="type"></asy-text-column>
+			<ng-container cdkColumnDef="body">
+				<th cdk-header-cell *cdkHeaderCellDef>Body</th>
+				<td class="hide-overflow" cdk-cell *cdkCellDef="let message">
+					{{ message.body }}
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="created">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
-				<td class="text-nowrap" cdk-cell *cdkCellDef="let message">
-					{{ message.created | utcDate }}
-				</td>
-			</ng-container>
-			<ng-container cdkColumnDef="updated">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Updated</th>
-				<td class="text-nowrap" cdk-cell *cdkCellDef="let message">
-					{{ message.updated | utcDate }}
-				</td>
-			</ng-container>
+			<asy-date-column name="created"></asy-date-column>
+			<asy-date-column name="updated"></asy-date-column>
 			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td cdk-cell *cdkCellDef="let message">

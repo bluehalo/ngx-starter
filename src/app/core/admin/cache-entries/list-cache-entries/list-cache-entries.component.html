@@ -25,26 +25,14 @@
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<ng-container cdkColumnDef="key">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Key</th>
-				<td cdk-cell *cdkCellDef="let entry">
-					{{ entry.key }}
-				</td>
-			</ng-container>
+			<asy-text-column name="key"></asy-text-column>
 			<ng-container cdkColumnDef="value">
 				<th cdk-header-cell *cdkHeaderCellDef>Value</th>
 				<td class="hide-overflow" cdk-cell style="max-width: 300px" *cdkCellDef="let entry">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
-			<ng-container cdkColumnDef="ts">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Created</th>
-				<td cdk-cell *cdkCellDef="let entry">
-					<div class="text-nowrap" container="body" tooltip="{{ entry.ts | utcDate }}">
-						{{ entry.ts | agoDate: false }}
-					</div>
-				</td>
-			</ng-container>
+			<asy-ago-date-column name="ts" header="Created"></asy-ago-date-column>
 			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td cdk-cell *cdkCellDef="let entry; let i = index">
