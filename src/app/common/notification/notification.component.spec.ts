@@ -16,7 +16,7 @@ export class NotificationDefaultTestHostComponent {
 
 @Component({
 	template:
-		'<notification [message]="message" [showActions]="true">' +
+		'<notification [message]="message" showActions>' +
 		'<ng-template #notificationActions id="tableActions"><button>bar</button></ng-template>' +
 		'</notification>',
 	standalone: true,

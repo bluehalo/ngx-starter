@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, booleanAttribute } from '@angular/core';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
@@ -24,6 +24,6 @@ import { DateColumnComponent } from '../date/date-column.component';
 	styleUrls: ['./ago-date-column.component.scss']
 })
 export class AgoDateColumnComponent<T> extends DateColumnComponent<T> {
-	@Input()
+	@Input({ transform: booleanAttribute })
 	hideAgo = false;
 }

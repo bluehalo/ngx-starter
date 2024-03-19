@@ -9,6 +9,7 @@ import {
 	OnDestroy,
 	OnInit,
 	Optional,
+	booleanAttribute,
 	inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -53,7 +54,7 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	@Input()
 	start: SortDir;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	sortable = true;
 
 	private destroyRef = inject(DestroyRef);

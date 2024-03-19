@@ -1,5 +1,5 @@
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, TemplateRef, booleanAttribute } from '@angular/core';
 
 @Component({
 	selector: 'notification',
@@ -18,9 +18,9 @@ export class NotificationComponent {
 	@Input()
 	message = '';
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	showActions = false;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	small = false;
 }

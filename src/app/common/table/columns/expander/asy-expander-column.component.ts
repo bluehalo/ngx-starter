@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, booleanAttribute } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 
@@ -17,7 +17,7 @@ export class AsyExpanderColumnComponent<T, TB>
 	extends AsyAbstractColumnComponent<T>
 	implements OnInit
 {
-	@Input()
+	@Input({ transform: booleanAttribute })
 	multi = true;
 
 	private selectionModel: SelectionModel<TB>;

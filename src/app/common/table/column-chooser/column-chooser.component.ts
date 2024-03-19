@@ -6,7 +6,7 @@ import {
 	moveItemInArray
 } from '@angular/cdk/drag-drop';
 import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { LocalStorageService } from '../../storage/local-storage.service';
@@ -37,7 +37,7 @@ export class ColumnChooserComponent implements OnInit {
 	@Input()
 	storageKey?: string;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	sortingDisabled = false;
 
 	@Output() readonly columnsChange: EventEmitter<string[]> = new EventEmitter();

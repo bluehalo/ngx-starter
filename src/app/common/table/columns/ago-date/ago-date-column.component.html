@@ -1,4 +1,4 @@
-<ng-container cdkColumnDef [sticky]="_sticky" [stickyEnd]="_stickyEnd">
+<ng-container cdkColumnDef [sticky]="sticky" [stickyEnd]="stickyEnd">
 	<th asy-sort-header cdk-header-cell *cdkHeaderCellDef [sortable]="sortable">
 		<ng-template #defaultHeaderTemplate>
 			{{ header ?? (name | titlecase) }}

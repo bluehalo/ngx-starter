@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
@@ -39,20 +39,23 @@ export class SearchInputComponent {
 	/**
 	 * If true, searches will be made on `input` events, otherwise searches will be made on `keyup` events
 	 */
-	@Input() preferInputEvent = true;
+	@Input({ transform: booleanAttribute })
+	preferInputEvent = true;
 
 	/**
 	 * Specifies a minimum character count required to search.
 	 * In the event the number of characters is between 0 and the minimum, a warning message is shown beneath the search bar
 	 */
-	@Input() minSearchCharacterCount = 0;
+	@Input()
+	minSearchCharacterCount = 0;
 
 	/**
 	 * When set to true, the minimum search character
 	 * message count will not be displayed, even if the search
 	 * value is less than the minimum number of characters.
 	 */
-	@Input() disableMinCountMessage = false;
+	@Input({ transform: booleanAttribute })
+	disableMinCountMessage = false;
 
 	searchInput$ = new Subject<void>();
 
