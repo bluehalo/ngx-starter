@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, booleanAttribute } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -36,7 +36,7 @@ export class MultiSelectInputComponent implements ControlValueAccessor {
 	@Input()
 	placeholder = '';
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	readonly = false;
 
 	autocompleteOpen = false;

@@ -1,5 +1,5 @@
 import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -21,13 +21,13 @@ export class PaginatorComponent<T> implements OnInit {
 	@Input()
 	maxPageSize = 100;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	hidePageSize = false;
 
 	@Input()
 	pageSizeOptions = [10, 20, 50, 100];
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	disableGoToEnd = false;
 
 	@Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();

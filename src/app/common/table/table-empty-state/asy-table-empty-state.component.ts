@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angular/core';
 
 import { AsyTableDataSource } from '../asy-table-data-source';
 import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.component';
@@ -21,10 +21,10 @@ export class AsyTableEmptyStateComponent<T> {
 	@Input()
 	filteredText = 'No results matched your search.';
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	showClearFilters = true;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	showIcons = true;
 
 	@Output()

@@ -5,6 +5,7 @@ import {
 	OnDestroy,
 	OnInit,
 	SimpleChanges,
+	booleanAttribute,
 	inject
 } from '@angular/core';
 
@@ -23,7 +24,7 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, On
 	@Input()
 	parent?: Team;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	embedded = false;
 
 	canCreateTeam = false;

@@ -1,11 +1,19 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { CdkCellDef, CdkColumnDef, CdkHeaderCellDef, CdkTable } from '@angular/cdk/table';
-import { Directive, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+	Directive,
+	Input,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	booleanAttribute,
+	inject
+} from '@angular/core';
 
 @Directive()
 export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit {
 	/** Column name that should be used to reference this column. */
-	@Input({ required: true })
+	@Input()
 	get name(): string {
 		return this._name;
 	}
@@ -21,26 +29,14 @@ export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit
 	/**
 	 * Whether this column should be sticky positioned on the front of the row.
 	 */
-	@Input('sticky')
-	get sticky(): boolean {
-		return this._stickyEnd;
-	}
-	set sticky(v: BooleanInput) {
-		this._sticky = coerceBooleanProperty(v);
-	}
-	_sticky = false;
+	@Input({ transform: booleanAttribute })
+	sticky = false;
 
 	/**
 	 * Whether this column should be sticky positioned on the end of the row.
 	 */
-	@Input('stickyEnd')
-	get stickyEnd(): boolean {
-		return this._stickyEnd;
-	}
-	set stickyEnd(v: BooleanInput) {
-		this._stickyEnd = coerceBooleanProperty(v);
-	}
-	_stickyEnd = false;
+	@Input({ transform: booleanAttribute })
+	stickyEnd = false;
 
 	/** @docs-private */
 	@ViewChild(CdkColumnDef, { static: true }) columnDef: CdkColumnDef;

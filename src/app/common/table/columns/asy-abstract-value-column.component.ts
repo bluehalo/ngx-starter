@@ -1,4 +1,4 @@
-import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
+import { ContentChild, Directive, Input, TemplateRef, booleanAttribute } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from './asy-abstract-column.component';
 import { HeaderTemplateDirective } from './header-template.directive';
@@ -8,7 +8,7 @@ export abstract class AsyAbstractValueColumnComponent<T> extends AsyAbstractColu
 	@Input()
 	header?: string;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	sortable = true;
 
 	@ContentChild(HeaderTemplateDirective, { read: TemplateRef }) headerTemplate: TemplateRef<any>;

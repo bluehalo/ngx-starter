@@ -1,7 +1,15 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, Optional, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	Input,
+	Optional,
+	booleanAttribute,
+	inject
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -49,10 +57,10 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	matchAll = false;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	showSearch = false;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	showMatch = false;
 
 	@Input()

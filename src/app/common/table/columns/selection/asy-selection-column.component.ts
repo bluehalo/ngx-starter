@@ -8,6 +8,7 @@ import {
 	DestroyRef,
 	Input,
 	OnInit,
+	booleanAttribute,
 	inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,13 +31,13 @@ export class AsySelectionColumnComponent<T, TB = T>
 	extends AsyAbstractColumnComponent<T>
 	implements AfterViewInit, OnInit
 {
-	@Input()
+	@Input({ transform: booleanAttribute })
 	enableSelectAll = true;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	clearOnLoad = true;
 
-	@Input()
+	@Input({ transform: booleanAttribute })
 	multi = true;
 
 	_isAllSelected$: Observable<boolean>;
