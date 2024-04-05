@@ -54,8 +54,8 @@ export class MessageService extends AbstractEntityService<Message> {
 			});
 	}
 
-	mapToType(model: any): Message {
-		return new Message().setFromModel(model);
+	mapToType(model: unknown): Message {
+		return new Message(model);
 	}
 
 	recent(): Observable<any[]> {
@@ -122,8 +122,7 @@ export class MessageService extends AbstractEntityService<Message> {
 
 	private payloadRouterFn = (payload: any) => {
 		if (this.subscribed > 0) {
-			const message = new Message();
-			message.setFromModel(payload.message);
+			const message = new Message(payload.message());
 			this.messageReceived.emit(message);
 		}
 	};

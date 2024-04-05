@@ -29,7 +29,7 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 		protected createMethod: 'PUT' | 'POST' = 'POST'
 	) {}
 
-	abstract mapToType(model: any): T;
+	abstract mapToType(model: unknown): T;
 
 	getMethodUrl(method: ServiceMethod | string, entityOrId?: Pick<T, '_id'> | string): string {
 		const url = this.urls[method];

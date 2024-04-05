@@ -21,7 +21,7 @@ class TestEntityService extends AbstractEntityService<any> {
 		});
 	}
 
-	mapToType(model: any): any {
+	mapToType(model: unknown): any {
 		return model;
 	}
 }

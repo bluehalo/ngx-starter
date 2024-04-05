@@ -11,13 +11,11 @@ export class TeamMember extends User {
 
 	constructor(model: any, team?: Team) {
 		super(model);
-		if (model) {
-			this.setFromTeamMemberModel(model, team);
-		}
+		this.setFromModelAndTeam(model, team);
 	}
 
-	private setFromTeamMemberModel(model: any, team?: Team): TeamMember {
-		if (null == model) {
+	private setFromModelAndTeam(model: any, team?: Team): TeamMember {
+		if (!model) {
 			return this;
 		}
 

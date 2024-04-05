@@ -6,13 +6,14 @@ export class EndUserAgreement {
 	created: string;
 	updated: string;
 
-	public setFromModel(model: any): EndUserAgreement {
-		if (null == model) {
-			return this;
+	constructor(model?: unknown) {
+		this.setFromModel(model);
+	}
+
+	private setFromModel(model: unknown) {
+		if (!model) {
+			return;
 		}
-
 		Object.assign(this, model);
-
-		return this;
 	}
 }

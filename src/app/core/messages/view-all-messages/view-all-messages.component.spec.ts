@@ -12,7 +12,7 @@ describe('View All Messages Component Spec', () => {
 	let messageServiceSpy: any;
 	const messageResultsSpec: PagingResults<Message> = {
 		elements: [
-			new Message().setFromModel({
+			new Message({
 				_id: 'some-id',
 				title: 'THIS is a Test Message',
 				type: MessageType.INFO,
@@ -70,7 +70,7 @@ describe('View All Messages Component Spec', () => {
 			created: now,
 			creator: 'testuser'
 		};
-		expect(component.messages).toEqual([new Message().setFromModel(expectedMessage)]);
+		expect(component.messages).toEqual([new Message(expectedMessage)]);
 
 		expect(rootHTMLElement.querySelector('.card-title')?.textContent).toEqual(
 			'THIS is a Test Message'

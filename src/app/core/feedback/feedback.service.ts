@@ -29,8 +29,8 @@ export class FeedbackService extends AbstractEntityService<Feedback> {
 		});
 	}
 
-	mapToType(model: any): Feedback {
-		return new Feedback().setFromModel(model);
+	mapToType(model: unknown): Feedback {
+		return new Feedback(model);
 	}
 
 	getFormattedBody(feedback: Feedback): string {
@@ -48,7 +48,7 @@ export class FeedbackService extends AbstractEntityService<Feedback> {
 	}
 
 	override create(feedback: Feedback): Observable<Feedback | null> {
-		const f = new Feedback().setFromModel({
+		const f = new Feedback({
 			body: this.getFormattedBody(feedback),
 			type: feedback.type,
 			classification: feedback.classification?.level ?? '',

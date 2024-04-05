@@ -22,19 +22,23 @@ export class User {
 	public eua?: any;
 
 	constructor(model?: unknown) {
-		if (model) {
-			this.setFromModel(model);
-		}
+		this.setFromModel(model);
 	}
 
-	private setFromModel(model: unknown): User {
-		if (null == model) {
-			return this;
+	private setFromModel(model: unknown) {
+		if (!model) {
+			return;
 		}
-
 		Object.assign(this, model);
 
-		return this;
+		// Default to empty arrays if Object.assign wrote null/undefined
+		this.externalRoles ??= [];
+		this.externalGroups ??= [];
+		this.teams ??= [];
+
+		// Default to empty object if Object.assign wrote null/undefined
+		this.providerData ??= {};
+		this.roles ??= {};
 	}
 
 	public setEua(eua: any) {

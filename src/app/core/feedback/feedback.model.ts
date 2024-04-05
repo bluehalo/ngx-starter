@@ -43,13 +43,14 @@ export class Feedback {
 		organization: string;
 	};
 
-	public setFromModel(model: any): Feedback {
-		if (null == model) {
-			return this;
+	constructor(model?: unknown) {
+		this.setFromModel(model);
+	}
+
+	private setFromModel(model: unknown) {
+		if (!model) {
+			return;
 		}
-
 		Object.assign(this, model);
-
-		return this;
 	}
 }
