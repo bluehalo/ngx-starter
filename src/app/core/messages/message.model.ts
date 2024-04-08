@@ -14,13 +14,14 @@ export class Message {
 	public created: string;
 	public creator: any;
 
-	public setFromModel(model: any): Message {
-		if (model == null) {
-			return this;
+	constructor(model?: unknown) {
+		this.setFromModel(model);
+	}
+
+	private setFromModel(model: unknown) {
+		if (!model) {
+			return;
 		}
-
 		Object.assign(this, model);
-
-		return this;
 	}
 }

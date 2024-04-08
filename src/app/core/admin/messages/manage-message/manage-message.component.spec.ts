@@ -20,7 +20,7 @@ describe('ManageMessageComponent', () => {
 
 	const dateTime = new Date().toISOString();
 	const message: Message[] = [
-		new Message().setFromModel({
+		new Message({
 			_id: '1234567890',
 			title: 'Test Message',
 			type: MessageType.INFO,

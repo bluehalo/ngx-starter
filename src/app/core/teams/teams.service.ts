@@ -47,8 +47,8 @@ export class TeamsService extends AbstractEntityService<Team> {
 		});
 	}
 
-	mapToType(model: any): Team {
-		return new Team().setFromModel(model);
+	mapToType(model: unknown): Team {
+		return new Team(model);
 	}
 
 	override create(team: Team, firstAdmin?: string): Observable<any> {

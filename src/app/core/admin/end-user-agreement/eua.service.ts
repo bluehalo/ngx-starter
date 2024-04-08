@@ -29,8 +29,8 @@ export class EuaService extends AbstractEntityService<EndUserAgreement> {
 		});
 	}
 
-	mapToType(model: any): EndUserAgreement {
-		return new EndUserAgreement().setFromModel(model);
+	mapToType(model: unknown): EndUserAgreement {
+		return new EndUserAgreement(model);
 	}
 
 	publish(eua: EndUserAgreement): Observable<EndUserAgreement | null> {

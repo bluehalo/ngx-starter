@@ -68,7 +68,7 @@ export class GeneralDetailsComponent implements OnInit {
 	}
 
 	edit() {
-		this._team = new Team().setFromModel(this.team);
+		this._team = new Team(this.team);
 		this.isEditing = true;
 	}
 

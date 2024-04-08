@@ -10,7 +10,7 @@ describe('Recent Messages Component Spec', () => {
 	const now = new Date().toISOString();
 	let messageServiceSpy: any;
 	const messageResultsSpec: Message[] = [
-		new Message().setFromModel({
+		new Message({
 			_id: 'some-id',
 			title: 'THIS is a Test Message',
 			type: MessageType.INFO,
@@ -62,7 +62,7 @@ describe('Recent Messages Component Spec', () => {
 			created: now,
 			creator: 'testuser'
 		};
-		expect(component.messages).toEqual([new Message().setFromModel(expectedMessage)]);
+		expect(component.messages).toEqual([new Message(expectedMessage)]);
 
 		expect(rootHTMLElement.querySelector('.card-title').textContent).toEqual(
 			'THIS is a Test Message'

@@ -11,26 +11,25 @@ export class Team {
 	requiresExternalRoles: string[] = [];
 	requiresExternalTeams: string[] = [];
 	parent?: Team;
-	ancestors: Team[] = [];
 
-	setFromModel(model: any): Team {
-		if (null != model) {
-			this._id = model._id;
-			this.name = model.name;
-			this.description = model.description;
-			this.created = model.created;
-			this.implicitMembers = model.implicitMembers;
-			this.requiresExternalRoles = model.requiresExternalRoles || [];
-			this.requiresExternalTeams = model.requiresExternalTeams || [];
-			this.numResources = model.numResources;
-			this.ancestors = model.ancestors;
+	constructor(model?: unknown) {
+		this.setFromModel(model);
+	}
 
-			if (model.parent) {
-				this.parent = new Team().setFromModel(model.parent);
-			}
+	private setFromModel(model: unknown) {
+		if (typeof model !== 'object') {
+			return;
 		}
+		Object.assign(this, model);
 
-		return this;
+		// Default to empty arrays if Object.assign wrote null/undefined
+		this.requiresExternalRoles ??= [];
+		this.requiresExternalTeams ??= [];
+
+		// Replace raw objects (from Object.assign) with class instances
+		if (this.parent) {
+			this.parent = new Team(this.parent);
+		}
 	}
 
 	hasResourcesOfType(type: string): boolean {
