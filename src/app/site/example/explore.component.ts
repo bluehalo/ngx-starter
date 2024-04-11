@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+	selector: 'example-explore',
 	template: `
 		<div class="container">
 			<div class="row">

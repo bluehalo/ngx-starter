@@ -1,7 +1,7 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -58,7 +58,7 @@ describe('Admin List Users Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			imports: [
-				RouterTestingModule,
+				RouterModule.forRoot([]),
 				BrowserAnimationsModule,
 				DialogModule,
 				AdminListUsersComponent
