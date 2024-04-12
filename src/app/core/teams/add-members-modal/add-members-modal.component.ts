@@ -1,6 +1,6 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -36,8 +36,6 @@ export type AddMembersModalReturn = DialogReturn<number>;
 	imports: [
 		ModalComponent,
 		NgSelectModule,
-		NgIf,
-		NgFor,
 		TooltipModule,
 		AsyncPipe,
 		CdkMenu,

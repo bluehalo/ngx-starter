@@ -35,8 +35,11 @@
 				</th>
 
 				<td cdk-cell *cdkCellDef="let member">
-					<ng-container *ngIf="member.explicit">Explicit</ng-container>
-					<ng-container *ngIf="!member.explicit">Implicit</ng-container>
+					@if (member.explicit) {
+						Explicit
+					} @else {
+						Implicit
+					}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="role">
@@ -63,14 +66,15 @@
 							attr.aria-labelledby="member-{{ member._id }}-role-menu-btn"
 							cdkMenu
 						>
-							<button
-								class="dropdown-item"
-								cdkMenuItem
-								*ngFor="let role of teamRoleOptions"
-								(cdkMenuItemTriggered)="updateRole(member, role.role)"
-							>
-								{{ role.label }}
-							</button>
+							@for (role of teamRoleOptions; track role) {
+								<button
+									class="dropdown-item"
+									cdkMenuItem
+									(cdkMenuItemTriggered)="updateRole(member, role.role)"
+								>
+									{{ role.label }}
+								</button>
+							}
 						</div>
 					</ng-template>
 

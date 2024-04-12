@@ -24,9 +24,9 @@
 			>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'general feedback'">
+		@if (feedback.type === 'general feedback') {
 			<ng-container *ngTemplateOutlet="textInput"></ng-container>
-		</ng-container>
+		}
 
 		<div class="form-check pl-0">
 			<input
@@ -41,9 +41,9 @@
 			<label class="form-check-label mb-2" for="type-option-2">Suggest a new feature</label>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'feature request'">
+		@if (feedback.type === 'feature request') {
 			<ng-container *ngTemplateOutlet="textInput"></ng-container>
-		</ng-container>
+		}
 
 		<div class="form-check pl-0">
 			<input
@@ -58,9 +58,8 @@
 			<label class="form-check-label mb-2" for="type-option-3">Report a bug/error</label>
 		</div>
 
-		<ng-container *ngIf="feedback.type === 'bug report'">
+		@if (feedback.type === 'bug report') {
 			<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
-
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
@@ -73,7 +72,6 @@
 				/>
 				<label class="form-check-label mb-2" for="subtype-option-1">Content or data</label>
 			</div>
-
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
@@ -86,7 +84,6 @@
 				/>
 				<label class="form-check-label mb-2" for="subtype-option-2">Styling</label>
 			</div>
-
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
@@ -99,7 +96,6 @@
 				/>
 				<label class="form-check-label mb-2" for="subtype-option-3">Technical</label>
 			</div>
-
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
@@ -112,15 +108,16 @@
 				/>
 				<label class="form-check-label mb-2" for="subtype-option-4">Other</label>
 			</div>
-			<div class="mb-2" *ngIf="feedback.subType === 'Other'">
-				<input
-					class="form-control"
-					name="other-description"
-					required
-					[(ngModel)]="feedback.otherText"
-				/>
-			</div>
-
+			@if (feedback.subType === 'Other') {
+				<div class="mb-2">
+					<input
+						class="form-control"
+						name="other-description"
+						required
+						[(ngModel)]="feedback.otherText"
+					/>
+				</div>
+			}
 			<div class="form-check pl-0">
 				<input
 					class="form-check-input"
@@ -133,25 +130,26 @@
 				/>
 				<label class="form-check-label mb-2" for="subtype-option-5">Unsure</label>
 			</div>
-
 			<h3 class="pt-2">What happened?</h3>
 			<ng-container *ngTemplateOutlet="textInput"></ng-container>
-		</ng-container>
+		}
 
 		<ng-template #textInput>
-			<div class="form-group pt-2" *ngIf="classificationOptions">
-				<ng-select
-					name="classification"
-					bindLabel="level"
-					dropdownPosition="bottom"
-					placeholder="Select Classification"
-					required
-					[(ngModel)]="feedback.classification"
-					[clearable]="false"
-					[items]="classificationOptions"
-				>
-				</ng-select>
-			</div>
+			@if (classificationOptions) {
+				<div class="form-group pt-2">
+					<ng-select
+						name="classification"
+						bindLabel="level"
+						dropdownPosition="bottom"
+						placeholder="Select Classification"
+						required
+						[(ngModel)]="feedback.classification"
+						[clearable]="false"
+						[items]="classificationOptions"
+					>
+					</ng-select>
+				</div>
+			}
 
 			<div class="form-group">
 				<textarea

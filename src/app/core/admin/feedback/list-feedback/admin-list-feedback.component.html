@@ -125,26 +125,34 @@
 								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
 								cdkMenu
 							>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									*ngIf="feedback.status !== feedbackStatusOptions.OPEN"
-									(cdkMenuItemTriggered)="
-										updateFeedbackStatus(feedback, feedbackStatusOptions.OPEN)
-									"
-								>
-									Open
-								</button>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									*ngIf="feedback.status !== feedbackStatusOptions.CLOSED"
-									(cdkMenuItemTriggered)="
-										updateFeedbackStatus(feedback, feedbackStatusOptions.CLOSED)
-									"
-								>
-									Close
-								</button>
+								@if (feedback.status !== feedbackStatusOptions.OPEN) {
+									<button
+										class="dropdown-item"
+										cdkMenuItem
+										(cdkMenuItemTriggered)="
+											updateFeedbackStatus(
+												feedback,
+												feedbackStatusOptions.OPEN
+											)
+										"
+									>
+										Open
+									</button>
+								}
+								@if (feedback.status !== feedbackStatusOptions.CLOSED) {
+									<button
+										class="dropdown-item"
+										cdkMenuItem
+										(cdkMenuItemTriggered)="
+											updateFeedbackStatus(
+												feedback,
+												feedbackStatusOptions.CLOSED
+											)
+										"
+									>
+										Close
+									</button>
+								}
 							</div>
 						</ng-template>
 					</td>
@@ -176,16 +184,17 @@
 								>
 									None
 								</button>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									*ngFor="let username of assigneeUsernames"
-									(cdkMenuItemTriggered)="
-										updateFeedbackAssignee(feedback, username)
-									"
-								>
-									{{ username }}
-								</button>
+								@for (username of assigneeUsernames; track username) {
+									<button
+										class="dropdown-item"
+										cdkMenuItem
+										(cdkMenuItemTriggered)="
+											updateFeedbackAssignee(feedback, username)
+										"
+									>
+										{{ username }}
+									</button>
+								}
 							</div>
 						</ng-template>
 					</td>

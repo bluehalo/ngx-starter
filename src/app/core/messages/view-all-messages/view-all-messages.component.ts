@@ -1,4 +1,4 @@
-import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { LowerCasePipe, NgClass } from '@angular/common';
 import { Component, DestroyRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -15,15 +15,7 @@ import { MessageService } from '../message.service';
 	templateUrl: './view-all-messages.component.html',
 	styleUrls: ['./view-all-messages.component.scss'],
 	standalone: true,
-	imports: [
-		SystemAlertComponent,
-		SearchInputComponent,
-		NgIf,
-		NgFor,
-		NgClass,
-		LowerCasePipe,
-		AgoDatePipe
-	]
+	imports: [SystemAlertComponent, SearchInputComponent, NgClass, LowerCasePipe, AgoDatePipe]
 })
 export class ViewAllMessagesComponent implements OnInit {
 	pageNumber = 0;

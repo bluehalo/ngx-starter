@@ -1,4 +1,4 @@
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, ContentChild, Input, TemplateRef, booleanAttribute } from '@angular/core';
 
 @Component({
@@ -6,7 +6,7 @@ import { Component, ContentChild, Input, TemplateRef, booleanAttribute } from '@
 	templateUrl: 'notification.component.html',
 	styleUrls: ['notification.component.scss'],
 	standalone: true,
-	imports: [NgIf, NgTemplateOutlet]
+	imports: [NgTemplateOutlet]
 })
 export class NotificationComponent {
 	@ContentChild('notificationActions', { static: true }) actionTemplate: TemplateRef<any> | null =

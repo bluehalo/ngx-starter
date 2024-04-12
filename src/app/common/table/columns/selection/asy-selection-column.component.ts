@@ -1,6 +1,6 @@
 import { DataSource, SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
@@ -25,7 +25,7 @@ import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 	styleUrls: ['./asy-selection-column.component.scss'],
 	changeDetection: ChangeDetectionStrategy.Default,
 	standalone: true,
-	imports: [CdkTableModule, NgIf, AsyncPipe]
+	imports: [CdkTableModule, AsyncPipe]
 })
 export class AsySelectionColumnComponent<T, TB = T>
 	extends AsyAbstractColumnComponent<T>

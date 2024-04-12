@@ -88,18 +88,19 @@
 						<asy-header-filter list-filter user-role-filter></asy-header-filter>
 					</th>
 					<td cdk-cell *cdkCellDef="let user">
-						<ng-container *ngFor="let role of possibleRoles">
-							<div
-								class="user-role text-nowrap"
-								[ngClass]="{
-									'user-role-external':
-										user.localRoles && !user.localRoles[role.role]
-								}"
-								*ngIf="user.roles?.[role.role]"
-							>
-								{{ role.label }}
-							</div>
-						</ng-container>
+						@for (role of possibleRoles; track role) {
+							@if (user.roles?.[role.role]) {
+								<div
+									class="user-role text-nowrap"
+									[ngClass]="{
+										'user-role-external':
+											user.localRoles && !user.localRoles[role.role]
+									}"
+								>
+									{{ role.label }}
+								</div>
+							}
+						}
 					</td>
 				</ng-container>
 				<asy-expandable-list-column name="teams">
@@ -135,14 +136,15 @@
 								>
 									Edit
 								</a>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									*ngIf="allowDeleteUser$ | async"
-									(cdkMenuItemTriggered)="confirmDeleteUser(user)"
-								>
-									Delete
-								</button>
+								@if (allowDeleteUser$ | async) {
+									<button
+										class="dropdown-item"
+										cdkMenuItem
+										(cdkMenuItemTriggered)="confirmDeleteUser(user)"
+									>
+										Delete
+									</button>
+								}
 							</div>
 						</ng-template>
 					</td>

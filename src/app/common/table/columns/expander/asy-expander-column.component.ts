@@ -1,6 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, booleanAttribute } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
@@ -11,7 +10,7 @@ import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 	styleUrls: ['./asy-expander-column.component.scss'],
 	changeDetection: ChangeDetectionStrategy.Default,
 	standalone: true,
-	imports: [CdkTableModule, NgIf]
+	imports: [CdkTableModule]
 })
 export class AsyExpanderColumnComponent<T, TB>
 	extends AsyAbstractColumnComponent<T>

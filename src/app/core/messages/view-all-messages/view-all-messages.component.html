@@ -12,15 +12,19 @@
 		>
 		</asy-search-input>
 		<div class="p-2 text-center">
-			<div *ngIf="newMessages">
-				<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
-					Load new messages
-				</button>
-			</div>
-			<div *ngIf="messages.length === 0">
-				<p>No messages to display.</p>
-			</div>
-			<ng-container *ngFor="let message of messages">
+			@if (newMessages) {
+				<div>
+					<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
+						Load new messages
+					</button>
+				</div>
+			}
+			@if (messages.length === 0) {
+				<div>
+					<p>No messages to display.</p>
+				</div>
+			}
+			@for (message of messages; track message) {
 				<div class="card card-message mb-4 text-left">
 					<div class="row no-gutters">
 						<div class="col-alert-icon {{ messageType[message.type] | lowercase }}">
@@ -45,7 +49,7 @@
 						</div>
 					</div>
 				</div>
-			</ng-container>
+			}
 		</div>
 	</div>
 </section>

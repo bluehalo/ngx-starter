@@ -1,4 +1,4 @@
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { MessageService } from '../../../messages/message.service';
 	standalone: true,
 	templateUrl: './manage-message.component.html',
 	styleUrls: ['./manage-message.component.scss'],
-	imports: [NgIf, RouterLink, SystemAlertComponent, FormsModule, NgSelectModule, TitleCasePipe]
+	imports: [RouterLink, SystemAlertComponent, FormsModule, NgSelectModule, TitleCasePipe]
 })
 export class ManageMessageComponent implements OnInit {
 	mode: 'create' | 'edit' = 'create';

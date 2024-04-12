@@ -1,4 +1,4 @@
-import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,15 +15,7 @@ import { EditUser } from '../auth/user.model';
 @Component({
 	standalone: true,
 	templateUrl: './signup.component.html',
-	imports: [
-		NgIf,
-		RouterLink,
-		SystemAlertComponent,
-		FormsModule,
-		NgFor,
-		TooltipModule,
-		TitleCasePipe
-	]
+	imports: [RouterLink, SystemAlertComponent, FormsModule, TooltipModule, TitleCasePipe]
 })
 export class SignupComponent {
 	user = new EditUser();

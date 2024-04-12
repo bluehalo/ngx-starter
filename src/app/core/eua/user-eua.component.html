@@ -1,52 +1,54 @@
 <section>
 	<div class="row no-gutters">
-		<div class="col-xl-8 offset-xl-2" *ngIf="eua$ | async as eua">
-			<h1>
-				End User Agreement (EUA)<br />
-				<small *ngIf="!alreadyAccepted">
-					Please review and acknowledge the end user agreement
-				</small>
-			</h1>
-
-			<!-- Alert Notifications -->
-			<system-alert></system-alert>
-
-			<form name="userForm" role="form" autocomplete="off">
-				<div class="card mt-3">
-					<div class="card-header">
-						<h2>{{ eua.title }}</h2>
-					</div>
-
-					<!-- Contents of EUA -->
-					<div class="card-body" [innerHtml]="eua.text"></div>
-
-					<div class="card-footer" *ngIf="!alreadyAccepted">
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								id="acknowledge"
-								name="acknowledge"
-								type="checkbox"
-								[(ngModel)]="agree"
-							/>
-							<label class="form-check-label" for="acknowledge"
-								>I have read and acknowledge the end user agreement (EUA)</label
-							>
+		@if (eua$ | async; as eua) {
+			<div class="col-xl-8 offset-xl-2">
+				<h1>
+					End User Agreement (EUA)<br />
+					@if (!alreadyAccepted) {
+						<small> Please review and acknowledge the end user agreement </small>
+					}
+				</h1>
+				<!-- Alert Notifications -->
+				<system-alert></system-alert>
+				<form name="userForm" role="form" autocomplete="off">
+					<div class="card mt-3">
+						<div class="card-header">
+							<h2>{{ eua.title }}</h2>
 						</div>
+						<!-- Contents of EUA -->
+						<div class="card-body" [innerHtml]="eua.text"></div>
+						@if (!alreadyAccepted) {
+							<div class="card-footer">
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										id="acknowledge"
+										name="acknowledge"
+										type="checkbox"
+										[(ngModel)]="agree"
+									/>
+									<label class="form-check-label" for="acknowledge"
+										>I have read and acknowledge the end user agreement
+										(EUA)</label
+									>
+								</div>
+							</div>
+						}
 					</div>
-				</div>
-
-				<div class="pt-4" *ngIf="!alreadyAccepted">
-					<button
-						class="btn btn-primary"
-						type="submit"
-						[disabled]="!agree"
-						(click)="accept()"
-					>
-						Submit Acknowledgement
-					</button>
-				</div>
-			</form>
-		</div>
+					@if (!alreadyAccepted) {
+						<div class="pt-4">
+							<button
+								class="btn btn-primary"
+								type="submit"
+								[disabled]="!agree"
+								(click)="accept()"
+							>
+								Submit Acknowledgement
+							</button>
+						</div>
+					}
+				</form>
+			</div>
+		}
 	</div>
 </section>

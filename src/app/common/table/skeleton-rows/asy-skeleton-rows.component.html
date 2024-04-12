@@ -1,7 +1,9 @@
 <table class="table table-striped">
 	<tbody>
-		<tr class="skeleton-row" *ngFor="let e of _rows">
-			<td>&nbsp;</td>
-		</tr>
+		@for (e of _rows; track e) {
+			<tr class="skeleton-row">
+				<td>&nbsp;</td>
+			</tr>
+		}
 	</tbody>
 </table>

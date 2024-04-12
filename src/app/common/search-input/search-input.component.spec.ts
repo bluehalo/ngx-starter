@@ -92,8 +92,9 @@ describe('SearchInputComponent', () => {
 		fixture.detectChanges();
 
 		expect(
-			(fixture.debugElement.query(By.css('.text-muted')).nativeElement as HTMLElement)
-				.textContent
+			(
+				fixture.debugElement.query(By.css('.text-muted')).nativeElement as HTMLElement
+			).textContent?.trim()
 		).toEqual('Searches require a minimum of 3 characters.');
 	}));
 

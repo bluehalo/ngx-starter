@@ -1,10 +1,16 @@
-<div class="overlay" *ngIf="isLoading">
-	<notification notificationType="danger" showActions *ngIf="isError" [message]="errorMessage">
-		<ng-template #notificationActions>
-			<button class="btn btn-primary" (click)="handleRetry()">Retry</button>
-		</ng-template>
-	</notification>
-	<div class="overlay-spinner" *ngIf="!isError">
-		<loading-spinner [message]="message"> </loading-spinner>
+@if (isLoading) {
+	<div class="overlay">
+		@if (isError) {
+			<notification notificationType="danger" showActions [message]="errorMessage">
+				<ng-template #notificationActions>
+					<button class="btn btn-primary" (click)="handleRetry()">Retry</button>
+				</ng-template>
+			</notification>
+		}
+		@if (!isError) {
+			<div class="overlay-spinner">
+				<loading-spinner [message]="message"> </loading-spinner>
+			</div>
+		}
 	</div>
-</div>
+}

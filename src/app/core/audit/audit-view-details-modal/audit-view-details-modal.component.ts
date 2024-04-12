@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { JsonPipe, NgIf, TitleCasePipe } from '@angular/common';
+import { JsonPipe, TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
@@ -15,7 +15,7 @@ import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 		`
 	],
 	standalone: true,
-	imports: [ModalComponent, NgIf, JsonPipe, TitleCasePipe, UtcDatePipe]
+	imports: [ModalComponent, JsonPipe, TitleCasePipe, UtcDatePipe]
 })
 export class AuditViewDetailsModalComponent {
 	auditEntry: any;

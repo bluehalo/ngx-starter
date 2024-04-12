@@ -1,5 +1,5 @@
 import { DialogRef } from '@angular/cdk/dialog';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { FeedbackService } from '../feedback.service';
 	templateUrl: 'feedback-modal.component.html',
 	styleUrls: ['feedback-modal.component.scss'],
 	standalone: true,
-	imports: [ModalComponent, FormsModule, NgIf, NgTemplateOutlet, NgSelectModule]
+	imports: [ModalComponent, FormsModule, NgTemplateOutlet, NgSelectModule]
 })
 export class FeedbackModalComponent implements OnInit {
 	error: string | null = null;

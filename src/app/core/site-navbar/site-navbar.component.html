@@ -15,7 +15,7 @@
 	<div class="nav-inner-scroll" cdkScrollable>
 		<!-- Main Nav -->
 		<ul class="nav nav-main">
-			<ng-container *ngFor="let navbarItem of navbarItems">
+			@for (navbarItem of navbarItems; track navbarItem) {
 				<li class="element" *hasSomeRoles="navbarItem.hasSomeRoles">
 					<a
 						container="body"
@@ -29,7 +29,7 @@
 						<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
 					</a>
 				</li>
-			</ng-container>
+			}
 		</ul>
 
 		<!-- Bottom Aux Nav -->
@@ -60,14 +60,15 @@
 						aria-labelledby="admin-nav-menu-btn"
 						cdkMenu
 					>
-						<button
-							class="dropdown-item"
-							cdkMenuItem
-							*ngFor="let adminItem of adminTopics"
-							[routerLink]="['admin/' + adminItem.path]"
-						>
-							{{ adminItem.title }}
-						</button>
+						@for (adminItem of adminTopics; track adminItem) {
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								[routerLink]="['admin/' + adminItem.path]"
+							>
+								{{ adminItem.title }}
+							</button>
+						}
 					</div>
 				</ng-template>
 			</li>
@@ -117,11 +118,16 @@
 					(cdkMenuClosed)="userNavOpen = false"
 					(cdkMenuOpened)="userNavOpen = true"
 				>
-					<span class="fa-solid fa-fw fa-user-circle" *ngIf="!isMasquerade"></span>
-					<span class="fa-stack" *ngIf="isMasquerade">
-						<span class="fa-solid fa-circle fa-stack-2x"></span>
-						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"></span>
-					</span>
+					@if (!isMasquerade) {
+						<span class="fa-solid fa-fw fa-user-circle"></span>
+					} @else {
+						<span class="fa-stack">
+							<span class="fa-solid fa-circle fa-stack-2x"></span>
+							<span
+								class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
+							></span>
+						</span>
+					}
 					<span [hidden]="!navbarOpen">{{ session?.name }}</span>
 				</a>
 
@@ -134,58 +140,55 @@
 					>
 						<!-- User Signout -->
 						<a class="dropdown-item" href="/api/auth/signout" cdkMenuItem> Sign out </a>
-						<button
-							class="dropdown-item"
-							cdkMenuItem
-							routerLink="/eua"
-							*ngIf="session?.user?.eua"
-						>
-							View EUA
-						</button>
+						@if (session?.user?.eua) {
+							<button class="dropdown-item" cdkMenuItem routerLink="/eua">
+								View EUA
+							</button>
+						}
 
 						<!-- User Preferences -->
-						<button
-							class="dropdown-item"
-							cdkMenuItem
-							*ngIf="showUserPreferencesLink"
-							[routerLink]="userPreferencesLink"
-						>
-							User Preferences
-						</button>
-
-						<button
-							class="dropdown-item"
-							cdkMenuItem
-							routerLink="/masquerade"
-							*ngIf="masqueradeEnabled && (canMasquerade || isMasquerade)"
-						>
-							<ng-container *ngIf="isMasquerade"> Clear </ng-container>
-							Masquerade
-						</button>
+						@if (showUserPreferencesLink) {
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								[routerLink]="userPreferencesLink"
+							>
+								User Preferences
+							</button>
+						}
+						@if (masqueradeEnabled && (canMasquerade || isMasquerade)) {
+							<button class="dropdown-item" cdkMenuItem routerLink="/masquerade">
+								@if (isMasquerade) {
+									Clear
+								}
+								Masquerade
+							</button>
+						}
 					</div>
 				</ng-template>
 			</li>
 
-			<li
-				class="element"
-				*ngIf="masqueradeEnabled && isMasquerade && (this.session?.name ?? null) === null"
-			>
-				<a
-					container="body"
-					placement="left"
-					routerLink="masquerade"
-					routerLinkActive="active-link"
-					tooltip="Clear Masquerade"
-					[isDisabled]="navbarOpen"
-				>
-					<span class="fa-stack">
-						<span class="fa-solid fa-circle fa-stack-2x"></span>
-						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"></span>
-						<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
-					</span>
-					<span [hidden]="!navbarOpen">Clear Masquerade</span>
-				</a>
-			</li>
+			@if (masqueradeEnabled && isMasquerade && (this.session?.name ?? null) === null) {
+				<li class="element">
+					<a
+						container="body"
+						placement="left"
+						routerLink="masquerade"
+						routerLinkActive="active-link"
+						tooltip="Clear Masquerade"
+						[isDisabled]="navbarOpen"
+					>
+						<span class="fa-stack">
+							<span class="fa-solid fa-circle fa-stack-2x"></span>
+							<span
+								class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
+							></span>
+							<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
+						</span>
+						<span [hidden]="!navbarOpen">Clear Masquerade</span>
+					</a>
+				</li>
+			}
 
 			<!-- Messages Nav   -->
 			<li class="element" *hasRole="'user'">
@@ -263,15 +266,16 @@
 							Give Feedback
 						</button>
 						<!-- API Docs -->
-						<a
-							class="dropdown-item"
-							[href]="apiDocsLink"
-							cdkMenuItem
-							target="_blank"
-							*ngIf="showApiDocsLink"
-						>
-							API Docs
-						</a>
+						@if (showApiDocsLink) {
+							<a
+								class="dropdown-item"
+								[href]="apiDocsLink"
+								cdkMenuItem
+								target="_blank"
+							>
+								API Docs
+							</a>
+						}
 						<!-- About -->
 						<button class="dropdown-item" cdkMenuItem routerLink="/about">About</button>
 					</div>

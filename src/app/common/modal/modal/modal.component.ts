@@ -1,5 +1,4 @@
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
@@ -8,7 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 	styleUrls: ['./modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
-	imports: [A11yModule, NgIf]
+	imports: [A11yModule]
 })
 export class ModalComponent {
 	/**

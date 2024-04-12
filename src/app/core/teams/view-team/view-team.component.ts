@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, DestroyRef, Input, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -19,11 +18,9 @@ import { TeamsService } from '../teams.service';
 	styleUrls: ['./view-team.component.scss'],
 	standalone: true,
 	imports: [
-		NgIf,
 		SystemAlertComponent,
 		RouterLink,
 		HasTeamRoleDirective,
-		NgFor,
 		RouterLinkActive,
 		RouterOutlet
 	]

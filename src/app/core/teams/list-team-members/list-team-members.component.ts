@@ -1,6 +1,5 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
 	Component,
@@ -65,7 +64,6 @@ import { TeamsService } from '../teams.service';
 	standalone: true,
 	imports: [
 		SearchInputComponent,
-		NgIf,
 		HasTeamRoleDirective,
 		CdkTableModule,
 		AsySortDirective,
@@ -73,7 +71,6 @@ import { TeamsService } from '../teams.service';
 		AsySortHeaderComponent,
 		TooltipModule,
 		AsyHeaderListFilterComponent,
-		NgFor,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		AgoDatePipe,

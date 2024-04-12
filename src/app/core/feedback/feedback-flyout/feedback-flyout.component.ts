@@ -1,4 +1,4 @@
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { FeedbackService } from '../feedback.service';
 	templateUrl: './feedback-flyout.component.html',
 	styleUrls: ['./feedback-flyout.component.scss'],
 	standalone: true,
-	imports: [FlyoutComponent, NgIf, FormsModule, NgTemplateOutlet, NgSelectModule]
+	imports: [FlyoutComponent, FormsModule, NgTemplateOutlet, NgSelectModule]
 })
 export class FeedbackFlyoutComponent implements OnInit {
 	@ViewChild(FlyoutComponent) flyout?: FlyoutComponent;

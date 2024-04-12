@@ -1,4 +1,4 @@
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { EuaService } from '../eua.service';
 @Component({
 	standalone: true,
 	templateUrl: './manage-eua.component.html',
-	imports: [RouterLink, SystemAlertComponent, FormsModule, NgIf, TitleCasePipe]
+	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe]
 })
 export class ManageEuaComponent implements OnInit {
 	mode: 'create' | 'edit' = 'create';

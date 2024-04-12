@@ -2,111 +2,105 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form
-		class="pt-3 mx-auto"
-		role="form"
-		autocomplete="off"
-		novalidate
-		style="max-width: 1000px"
-		#form="ngForm"
-		*ngIf="user"
-		(ngSubmit)="submit()"
-	>
-		<div class="d-flex">
-			<h1>
-				New Account Request
-				<small>Provide the required information to request an account</small>
-			</h1>
-		</div>
-
-		<!-- Name -->
-		<div class="form-group pt-3">
-			<label class="form-required" for="name">Name</label>
-			<input
-				class="form-control"
-				id="name"
-				name="name"
-				type="text"
-				required
-				[(ngModel)]="user.name"
-			/>
-		</div>
-
-		<!-- Username -->
-		<div class="form-group">
-			<label class="form-required" for="username">Username</label>
-			<input
-				class="form-control"
-				id="username"
-				name="username"
-				type="text"
-				required
-				[(ngModel)]="user.username"
-			/>
-		</div>
-
-		<!-- Organization -->
-		<div class="form-group">
-			<label class="form-required" for="organization">Organization</label>
-			<input
-				class="form-control"
-				id="organization"
-				name="organization"
-				type="text"
-				required
-				[(ngModel)]="user.organization"
-			/>
-		</div>
-
-		<!-- Email -->
-		<div class="form-group">
-			<label class="form-required" for="email">Email</label>
-			<input
-				class="form-control"
-				id="email"
-				name="email"
-				type="email"
-				required
-				[(ngModel)]="user.email"
-			/>
-		</div>
-
-		<!-- Local Login Information -->
-		<div class="form-group">
-			<label for="password">Password <small>At least 6 characters.</small></label>
-			<input
-				class="form-control"
-				id="password"
-				name="password"
-				type="password"
-				autocomplete="off"
-				minlength="6"
-				[(ngModel)]="user.password"
-			/>
-		</div>
-
-		<div class="form-group">
-			<label for="password2">Re-enter Password</label>
-			<input
-				class="form-control"
-				id="password2"
-				name="password2"
-				type="password"
-				autocomplete="off"
-				minlength="6"
-				[(ngModel)]="user.verifyPassword"
-			/>
-		</div>
-
-		<div class="form-group">
-			<div class="text-right">
-				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-					Submit
-				</button>
-				<button class="btn btn-link ml-2" type="button" routerLink="/signin">
-					or Sign In
-				</button>
+	@if (user) {
+		<form
+			class="pt-3 mx-auto"
+			role="form"
+			autocomplete="off"
+			novalidate
+			style="max-width: 1000px"
+			#form="ngForm"
+			(ngSubmit)="submit()"
+		>
+			<div class="d-flex">
+				<h1>
+					New Account Request
+					<small>Provide the required information to request an account</small>
+				</h1>
 			</div>
-		</div>
-	</form>
+			<!-- Name -->
+			<div class="form-group pt-3">
+				<label class="form-required" for="name">Name</label>
+				<input
+					class="form-control"
+					id="name"
+					name="name"
+					type="text"
+					required
+					[(ngModel)]="user.name"
+				/>
+			</div>
+			<!-- Username -->
+			<div class="form-group">
+				<label class="form-required" for="username">Username</label>
+				<input
+					class="form-control"
+					id="username"
+					name="username"
+					type="text"
+					required
+					[(ngModel)]="user.username"
+				/>
+			</div>
+			<!-- Organization -->
+			<div class="form-group">
+				<label class="form-required" for="organization">Organization</label>
+				<input
+					class="form-control"
+					id="organization"
+					name="organization"
+					type="text"
+					required
+					[(ngModel)]="user.organization"
+				/>
+			</div>
+			<!-- Email -->
+			<div class="form-group">
+				<label class="form-required" for="email">Email</label>
+				<input
+					class="form-control"
+					id="email"
+					name="email"
+					type="email"
+					required
+					[(ngModel)]="user.email"
+				/>
+			</div>
+			<!-- Local Login Information -->
+			<div class="form-group">
+				<label for="password">Password <small>At least 6 characters.</small></label>
+				<input
+					class="form-control"
+					id="password"
+					name="password"
+					type="password"
+					autocomplete="off"
+					minlength="6"
+					[(ngModel)]="user.password"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="password2">Re-enter Password</label>
+				<input
+					class="form-control"
+					id="password2"
+					name="password2"
+					type="password"
+					autocomplete="off"
+					minlength="6"
+					[(ngModel)]="user.verifyPassword"
+				/>
+			</div>
+			<div class="form-group">
+				<div class="text-right">
+					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+						Submit
+					</button>
+					<button class="btn btn-link ml-2" type="button" routerLink="/signin">
+						or Sign In
+					</button>
+				</div>
+			</div>
+		</form>
+	}
 </section>

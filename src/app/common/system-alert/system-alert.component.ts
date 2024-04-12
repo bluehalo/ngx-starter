@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { SystemAlertService } from './system-alert.service';
@@ -22,7 +22,7 @@ import { SystemAlertService } from './system-alert.service';
 		])
 	],
 	standalone: true,
-	imports: [NgFor, NgIf, AsyncPipe]
+	imports: [AsyncPipe]
 })
 export class SystemAlertComponent {
 	alertService = inject(SystemAlertService);

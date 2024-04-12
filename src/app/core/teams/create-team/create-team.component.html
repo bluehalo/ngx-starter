@@ -35,28 +35,30 @@
 		</div>
 
 		<!-- Team Admin -->
-		<div class="form-group" *ngIf="isAdmin">
-			<label class="form-required">Team Admin</label>
-			<ng-select
-				name="teamAdmin"
-				bindLabel="name"
-				placeholder="Search for user..."
-				required
-				style="width: 400px"
-				[(ngModel)]="teamAdmin"
-				[items]="(users$ | async) || []"
-				[loading]="usersLoading"
-				[typeahead]="usersInput$"
-			>
-			</ng-select>
-			<button
-				class="btn btn-sm btn-link px-0 pb-0"
-				type="button"
-				(click)="setCurrentUserAsAdmin()"
-			>
-				I am the Team Admin
-			</button>
-		</div>
+		@if (isAdmin) {
+			<div class="form-group">
+				<label class="form-required">Team Admin</label>
+				<ng-select
+					name="teamAdmin"
+					bindLabel="name"
+					placeholder="Search for user..."
+					required
+					style="width: 400px"
+					[(ngModel)]="teamAdmin"
+					[items]="(users$ | async) || []"
+					[loading]="usersLoading"
+					[typeahead]="usersInput$"
+				>
+				</ng-select>
+				<button
+					class="btn btn-sm btn-link px-0 pb-0"
+					type="button"
+					(click)="setCurrentUserAsAdmin()"
+				>
+					I am the Team Admin
+				</button>
+			</div>
+		}
 
 		<!-- Description -->
 		<div class="form-group">
@@ -72,82 +74,82 @@
 		</div>
 
 		<!-- Team Parent -->
-		<div class="form-group" *ngIf="nestedTeamsEnabled">
-			<label for="parent">Parent Team</label>
-			<app-team-select-input
-				class="d-block"
-				id="parent"
-				name="parent"
-				placeholder="Select parent..."
-				style="width: 400px"
-				[(ngModel)]="team.parent"
-			>
-			</app-team-select-input>
-		</div>
+		@if (nestedTeamsEnabled) {
+			<div class="form-group">
+				<label for="parent">Parent Team</label>
+				<app-team-select-input
+					class="d-block"
+					id="parent"
+					name="parent"
+					placeholder="Select parent..."
+					style="width: 400px"
+					[(ngModel)]="team.parent"
+				>
+				</app-team-select-input>
+			</div>
+		}
 
 		<!-- Implicit Teams Members -->
-		<div class="form-group" *ngIf="implicitMembersStrategy !== null">
-			<label class="form-required">Implicit Team Members</label>
-			<p class="mt-n1 mb-1">
-				Do you want to automatically grant users access to team based on external
-				{{ implicitMembersStrategy }}?
-			</p>
-			<div class="form-check">
-				<input
-					class="form-check-input"
-					id="implicit-members-option-yes"
-					name="name-type-option-radio"
-					type="radio"
-					[value]="true"
-					required
-					[(ngModel)]="team.implicitMembers"
-				/>
-				<label class="form-check-label mb-2" for="implicit-members-option-yes">Yes</label>
+		@if (implicitMembersStrategy !== undefined) {
+			<div class="form-group">
+				<label class="form-required">Implicit Team Members</label>
+				<p class="mt-n1 mb-1">
+					Do you want to automatically grant users access to team based on external
+					{{ implicitMembersStrategy }}?
+				</p>
+				<div class="form-check">
+					<input
+						class="form-check-input"
+						id="implicit-members-option-yes"
+						name="name-type-option-radio"
+						type="radio"
+						[value]="true"
+						required
+						[(ngModel)]="team.implicitMembers"
+					/>
+					<label class="form-check-label mb-2" for="implicit-members-option-yes"
+						>Yes</label
+					>
+				</div>
+				<div class="form-check">
+					<input
+						class="form-check-label"
+						id="implicit-members-option-no"
+						name="name-type-option-radio"
+						type="radio"
+						[value]="false"
+						required
+						[(ngModel)]="team.implicitMembers"
+					/>
+					<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
+				</div>
 			</div>
-			<div class="form-check">
-				<input
-					class="form-check-label"
-					id="implicit-members-option-no"
-					name="name-type-option-radio"
-					type="radio"
-					[value]="false"
-					required
-					[(ngModel)]="team.implicitMembers"
-				/>
-				<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
+		}
+
+		@if (implicitMembersStrategy === 'roles') {
+			<!-- External Roles -->
+			<div class="form-group" [hidden]="!team.implicitMembers">
+				<label>External Roles</label>
+				<ng-select
+					name="externalRoles"
+					appUserExternalRolesSelect
+					multi-select
+					placeholder="Start typing a role..."
+					[(ngModel)]="team.requiresExternalRoles"
+				></ng-select>
 			</div>
-		</div>
-
-		<!-- External Roles -->
-		<div
-			class="form-group"
-			*ngIf="implicitMembersStrategy === 'roles'"
-			[hidden]="!team.implicitMembers"
-		>
-			<label>External Roles</label>
-			<ng-select
-				name="externalRoles"
-				appUserExternalRolesSelect
-				multi-select
-				placeholder="Start typing a role..."
-				[(ngModel)]="team.requiresExternalRoles"
-			></ng-select>
-		</div>
-
-		<!-- External Teams -->
-		<div
-			class="form-group"
-			*ngIf="implicitMembersStrategy === 'teams'"
-			[hidden]="!team.implicitMembers"
-		>
-			<label>External Teams</label>
-			<ng-select
-				name="externalTeams"
-				multi-select
-				placeholder="Start typing a team..."
-				[(ngModel)]="team.requiresExternalTeams"
-			></ng-select>
-		</div>
+		} @else if (implicitMembersStrategy === 'teams') {
+			<!-- External Teams -->
+			<div class="form-group" [hidden]="!team.implicitMembers">
+				<label>External Teams</label>
+				<ng-select
+					name="externalTeams"
+					multi-select
+					placeholder="Start typing a team..."
+					[(ngModel)]="team.requiresExternalTeams"
+				></ng-select>
+			</div>
+		}
 
 		<div class="form-group">
 			<div class="text-right">

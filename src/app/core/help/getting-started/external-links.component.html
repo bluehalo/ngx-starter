@@ -1,8 +1,10 @@
 <ul>
-	<li *ngFor="let link of links">
-		<a href="{{ link.href }}" target="_blank" (click)="handleLinkClick($event)">{{
-			link.title
-		}}</a>
-		- {{ link.description }}
-	</li>
+	@for (link of links; track link) {
+		<li>
+			<a href="{{ link.href }}" target="_blank" (click)="handleLinkClick($event)">{{
+				link.title
+			}}</a>
+			- {{ link.description }}
+		</li>
+	}
 </ul>

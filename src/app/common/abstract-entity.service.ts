@@ -50,10 +50,10 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 			this.createMethod === 'PUT'
 				? this.http.put(this.getMethodUrl(ServiceMethod.create), t, {
 						headers: this.headers
-				  })
+					})
 				: this.http.post(this.getMethodUrl(ServiceMethod.create), t, {
 						headers: this.headers
-				  });
+					});
 		return obs$.pipe(
 			map((model) => this.mapToType(model)),
 			catchError((error: unknown) => this.handleError(error, null))

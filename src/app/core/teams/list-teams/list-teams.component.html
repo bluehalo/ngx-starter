@@ -1,14 +1,16 @@
-<section class="page-header mb-3" *ngIf="!embedded">
-	<div class="row no-gutters">
-		<div class="media col">
-			<div class="media-body">
-				<h1 skipTo>Teams</h1>
-				View and manage team membership and roles.
+@if (!embedded) {
+	<section class="page-header mb-3">
+		<div class="row no-gutters">
+			<div class="media col">
+				<div class="media-body">
+					<h1 skipTo>Teams</h1>
+					View and manage team membership and roles.
+				</div>
 			</div>
 		</div>
-	</div>
-	<system-alert></system-alert>
-</section>
+		<system-alert></system-alert>
+	</section>
+}
 
 <section [class.anchored-page-body]="!embedded" [class.page-body]="!embedded">
 	<div class="table-header d-flex align-items-center">
@@ -22,15 +24,16 @@
 			</div>
 
 			<div class="mb-3 ml-auto">
-				<button
-					class="btn btn-primary ml-auto"
-					type="button"
-					*ngIf="canCreateTeam"
-					[queryParams]="{ parent: parent?._id }"
-					[routerLink]="['/team/create']"
-				>
-					<span class="fa-solid fa-plus"></span> Create Team
-				</button>
+				@if (canCreateTeam) {
+					<button
+						class="btn btn-primary ml-auto"
+						type="button"
+						[queryParams]="{ parent: parent?._id }"
+						[routerLink]="['/team/create']"
+					>
+						<span class="fa-solid fa-plus"></span> Create Team
+					</button>
+				}
 			</div>
 		</div>
 	</div>

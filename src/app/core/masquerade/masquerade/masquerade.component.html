@@ -1,8 +1,8 @@
-<div class="mx-auto mt-5" *ngIf="isMasquerading">
-	<loading-spinner message="Clearing Masquerade..."> </loading-spinner>
-</div>
-
-<ng-container *ngIf="!isMasquerading">
+@if (isMasquerading) {
+	<div class="mx-auto mt-5">
+		<loading-spinner message="Clearing Masquerade..."> </loading-spinner>
+	</div>
+} @else {
 	<div class="form-group mb-2">
 		<label>Search Type</label>
 		<div class="form-check">
@@ -16,7 +16,6 @@
 			/>
 			<label class="form-check-label mb-2" for="searchType-option-user">By User</label>
 		</div>
-
 		<div class="form-check">
 			<input
 				class="form-check-input"
@@ -29,33 +28,33 @@
 			<label class="form-check-label mb-2" for="searchType-option-dn">By DN</label>
 		</div>
 	</div>
-
-	<div class="form-group" *ngIf="!searchByDn">
-		<ng-select
-			bindValue="providerData.dn"
-			placeholder="Search for user..."
-			style="width: 300px"
-			[(ngModel)]="selectedUserDn"
-			[items]="users$ | async"
-			[loading]="usersLoading"
-			[typeahead]="usersInput$"
-		>
-			<ng-template let-item="item" ng-label-tmp ng-option-tmp>
-				{{ item.name }} [{{ item.username }}]
-			</ng-template>
-		</ng-select>
-	</div>
-
-	<div class="form-group" *ngIf="searchByDn">
-		<input
-			class="form-control"
-			placeholder="User DN..."
-			style="width: 300px"
-			[(ngModel)]="selectedUserDn"
-		/>
-	</div>
-
+	@if (!searchByDn) {
+		<div class="form-group">
+			<ng-select
+				bindValue="providerData.dn"
+				placeholder="Search for user..."
+				style="width: 300px"
+				[(ngModel)]="selectedUserDn"
+				[items]="users$ | async"
+				[loading]="usersLoading"
+				[typeahead]="usersInput$"
+			>
+				<ng-template let-item="item" ng-label-tmp ng-option-tmp>
+					{{ item.name }} [{{ item.username }}]
+				</ng-template>
+			</ng-select>
+		</div>
+	} @else {
+		<div class="form-group">
+			<input
+				class="form-control"
+				placeholder="User DN..."
+				style="width: 300px"
+				[(ngModel)]="selectedUserDn"
+			/>
+		</div>
+	}
 	<button class="btn btn-primary" [disabled]="!selectedUserDn" (click)="submit()">
 		Masquerade
 	</button>
-</ng-container>
+}

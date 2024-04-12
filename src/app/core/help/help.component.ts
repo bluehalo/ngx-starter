@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -20,7 +19,7 @@ import { getHelpTopics } from './help-topic.component';
 	templateUrl: 'help.component.html',
 	styleUrls: ['help.component.scss'],
 	standalone: true,
-	imports: [BreadcrumbComponent, NgFor, RouterLinkActive, RouterLink, RouterOutlet]
+	imports: [BreadcrumbComponent, RouterLinkActive, RouterLink, RouterOutlet]
 })
 export class HelpComponent {
 	helpTopics = getHelpTopics();

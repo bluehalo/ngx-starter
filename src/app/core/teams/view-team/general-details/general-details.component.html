@@ -1,170 +1,195 @@
-<div class="cards row pb-5" *ngIf="team">
-	<div class="col col-na-xl-7 col-12">
-		<div class="card">
-			<div class="card-header">
-				<h2>Members</h2>
-			</div>
-			<div class="card-body">
-				<list-team-members [team]="team"></list-team-members>
-			</div>
-		</div>
-	</div>
-
-	<div class="col col-na-xl-5 col-12">
-		<div class="card">
-			<div class="card-header">
-				<h2>Details</h2>
-				<button
-					class="btn btn-outline-secondary ml-3"
-					type="button"
-					*hasTeamRole="team; role: 'admin'"
-					[disabled]="isEditing"
-					(click)="edit()"
-				>
-					<span class="fa-solid fa-lg fa-pencil"></span>
-				</button>
-				<div class="inline-edit-header-btns ml-auto" *ngIf="isEditing">
-					<button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">
-						Cancel
-					</button>
-					<button
-						class="btn btn-primary ml-2"
-						type="button"
-						[disabled]="!editTeamForm.form.valid"
-						(click)="saveEdit()"
-					>
-						Save
-					</button>
+@if (team) {
+	<div class="cards row pb-5">
+		<div class="col col-na-xl-7 col-12">
+			<div class="card">
+				<div class="card-header">
+					<h2>Members</h2>
+				</div>
+				<div class="card-body">
+					<list-team-members [team]="team"></list-team-members>
 				</div>
 			</div>
-			<div class="card-body" [class.editing]="isEditing">
-				<form id="edit-team-form" #editTeamForm="ngForm">
-					<div class="form-inline-edit mb-3">
-						<div class="form-group">
-							<label class="col col-form-label">Name</label>
-							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div>{{ team.name || '' | titlecase }}</div>
-							</div>
-							<div class="col" *ngIf="isEditing">
-								<input
-									class="form-control"
-									name="name"
-									placeholder="Enter name"
-									required
-									[(ngModel)]="_team.name"
-								/>
-							</div>
+		</div>
+		<div class="col col-na-xl-5 col-12">
+			<div class="card">
+				<div class="card-header">
+					<h2>Details</h2>
+					<button
+						class="btn btn-outline-secondary ml-3"
+						type="button"
+						*hasTeamRole="team; role: 'admin'"
+						[disabled]="isEditing"
+						(click)="edit()"
+					>
+						<span class="fa-solid fa-lg fa-pencil"></span>
+					</button>
+					@if (isEditing) {
+						<div class="inline-edit-header-btns ml-auto">
+							<button
+								class="btn btn-outline-secondary"
+								type="button"
+								(click)="cancelEdit()"
+							>
+								Cancel
+							</button>
+							<button
+								class="btn btn-primary ml-2"
+								type="button"
+								[disabled]="!editTeamForm.form.valid"
+								(click)="saveEdit()"
+							>
+								Save
+							</button>
 						</div>
-
-						<div class="form-group">
-							<label class="col col-form-label">Description</label>
-							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div style="white-space: pre-wrap">{{ team.description }}</div>
+					}
+				</div>
+				<div class="card-body" [class.editing]="isEditing">
+					<form id="edit-team-form" #editTeamForm="ngForm">
+						<div class="form-inline-edit mb-3">
+							<div class="form-group">
+								<label class="col col-form-label">Name</label>
+								@if (!isEditing) {
+									<div class="col col-form-readonly-value">
+										<div>{{ team.name || '' | titlecase }}</div>
+									</div>
+								} @else {
+									<div class="col">
+										<input
+											class="form-control"
+											name="name"
+											placeholder="Enter name"
+											required
+											[(ngModel)]="_team.name"
+										/>
+									</div>
+								}
 							</div>
-							<div class="col" *ngIf="isEditing">
-								<textarea
-									class="form-control"
-									name="description"
-									placeholder="Enter description"
-									[(ngModel)]="_team.description"
-								>
-								</textarea>
+							<div class="form-group">
+								<label class="col col-form-label">Description</label>
+								@if (!isEditing) {
+									<div class="col col-form-readonly-value">
+										<div style="white-space: pre-wrap">
+											{{ team.description }}
+										</div>
+									</div>
+								} @else {
+									<div class="col">
+										<textarea
+											class="form-control"
+											name="description"
+											placeholder="Enter description"
+											[(ngModel)]="_team.description"
+										>
+										</textarea>
+									</div>
+								}
 							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col col-form-label">Date Created</label>
-							<div class="col col-form-readonly-value">
-								<div>{{ team.created | utcDate: 'yyyy-MM-dd' }}</div>
-							</div>
-						</div>
-
-						<div class="form-group" *ngIf="team.parent">
-							<label class="col col-form-label">Parent</label>
-							<div class="col col-form-readonly-value">
-								<div>
-									<a
-										class="text-decoration-underline"
-										[routerLink]="['/team', team.parent._id || team.parent]"
-									>
-										{{ team.parent.name }}
-									</a>
+							<div class="form-group">
+								<label class="col col-form-label">Date Created</label>
+								<div class="col col-form-readonly-value">
+									<div>{{ team.created | utcDate: 'yyyy-MM-dd' }}</div>
 								</div>
 							</div>
-						</div>
-
-						<div
-							class="form-group"
-							*ngIf="
+							@if (team.parent) {
+								<div class="form-group">
+									<label class="col col-form-label">Parent</label>
+									<div class="col col-form-readonly-value">
+										<div>
+											<a
+												class="text-decoration-underline"
+												[routerLink]="[
+													'/team',
+													team.parent._id || team.parent
+												]"
+											>
+												{{ team.parent.name }}
+											</a>
+										</div>
+									</div>
+								</div>
+							}
+							@if (
 								team.implicitMembers &&
 								implicitMembersStrategy === 'roles' &&
-								((team.requiresExternalRoles?.length || 0) > 0 || isEditing)
-							"
-						>
-							<label class="col col-form-label">External Roles</label>
-							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div>{{ team.requiresExternalRoles | join: ', ' }}</div>
-							</div>
-							<div class="col" *ngIf="isEditing">
-								<ng-select
-									name="externalRoles"
-									appUserExternalRolesSelect
-									multi-select
-									placeholder="Start typing a role..."
-									[(ngModel)]="_team.requiresExternalRoles"
-								></ng-select>
-							</div>
-						</div>
-
-						<div
-							class="form-group"
-							*ngIf="
+								((team.requiresExternalRoles.length || 0) > 0 || isEditing)
+							) {
+								<div class="form-group">
+									<label class="col col-form-label">External Roles</label>
+									@if (!isEditing) {
+										<div class="col col-form-readonly-value">
+											<div>{{ team.requiresExternalRoles | join: ', ' }}</div>
+										</div>
+									} @else {
+										<div class="col">
+											<ng-select
+												name="externalRoles"
+												appUserExternalRolesSelect
+												multi-select
+												placeholder="Start typing a role..."
+												[(ngModel)]="_team.requiresExternalRoles"
+											></ng-select>
+										</div>
+									}
+								</div>
+							}
+							@if (
 								team.implicitMembers &&
 								implicitMembersStrategy === 'teams' &&
-								((team.requiresExternalTeams?.length || 0) > 0 || isEditing)
-							"
-						>
-							<label class="col col-form-label">External Teams</label>
-							<div class="col col-form-readonly-value" *ngIf="!isEditing">
-								<div>{{ team.requiresExternalTeams | join: ', ' }}</div>
-							</div>
-							<div class="col" *ngIf="isEditing">
-								<ng-select
-									name="externalTeams"
-									multi-select
-									placeholder="Start typing a team..."
-									[(ngModel)]="_team.requiresExternalTeams"
-								></ng-select>
-							</div>
+								((team.requiresExternalTeams.length || 0) > 0 || isEditing)
+							) {
+								<div class="form-group">
+									<label class="col col-form-label">External Teams</label>
+									@if (!isEditing) {
+										<div class="col col-form-readonly-value">
+											<div>{{ team.requiresExternalTeams | join: ', ' }}</div>
+										</div>
+									} @else {
+										<div class="col">
+											<ng-select
+												name="externalTeams"
+												multi-select
+												placeholder="Start typing a team..."
+												[(ngModel)]="_team.requiresExternalTeams"
+											></ng-select>
+										</div>
+									}
+								</div>
+							}
 						</div>
-					</div>
-				</form>
-
-				<div class="inline-edit-btns text-right" *ngIf="isEditing">
-					<button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">
-						Cancel
-					</button>
-					<button
-						class="btn btn-primary ml-2"
-						type="button"
-						[disabled]="!editTeamForm.form.valid"
-						(click)="saveEdit()"
-					>
-						Save
-					</button>
+					</form>
+					@if (isEditing) {
+						<div class="inline-edit-btns text-right">
+							<button
+								class="btn btn-outline-secondary"
+								type="button"
+								(click)="cancelEdit()"
+							>
+								Cancel
+							</button>
+							<button
+								class="btn btn-primary ml-2"
+								type="button"
+								[disabled]="!editTeamForm.form.valid"
+								(click)="saveEdit()"
+							>
+								Save
+							</button>
+						</div>
+					}
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="col col-na-xl-7 col-12" *ngIf="nestedTeamsEnabled">
-		<div class="card">
-			<div class="card-header">
-				<h2>Sub-Teams</h2>
+		@if (nestedTeamsEnabled) {
+			<div class="col col-na-xl-7 col-12">
+				<div class="card">
+					<div class="card-header">
+						<h2>Sub-Teams</h2>
+					</div>
+					<div class="card-body">
+						<app-list-sub-teams embedded [parent]="team"></app-list-sub-teams>
+					</div>
+				</div>
 			</div>
-			<div class="card-body">
-				<app-list-sub-teams embedded [parent]="team"></app-list-sub-teams>
-			</div>
-		</div>
+		}
 	</div>
-</div>
+}
