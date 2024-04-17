@@ -23,9 +23,8 @@
 		</ng-select>
 	</div>
 
-	<ng-container *ngIf="addedMembers.length > 0">
+	@if (addedMembers.length > 0) {
 		<h3 class="pt-2">Set user roles</h3>
-
 		<table class="table table-condensed" aria-describedby="Set user roles">
 			<thead>
 				<tr>
@@ -34,47 +33,50 @@
 					<th scope="col">&nbsp;</th>
 				</tr>
 			</thead>
-
 			<tbody>
-				<tr class="table-row" *ngFor="let invited of addedMembers; let i = index">
-					<td class="text-nowrap">
-						{{ invited.username }}
-					</td>
-					<td>
-						<button
-							class="btn btn-sm dropdown-toggle py-0"
-							[cdkMenuTriggerFor]="rolesMenu"
-						>
-							<span class="mr-1">{{ invited.roleDisplay }}</span>
-						</button>
-
-						<ng-template #rolesMenu>
-							<div class="dropdown-menu" cdkMenu>
-								<button
-									class="dropdown-item"
-									[value]="role.role"
-									cdkMenuItem
-									*ngFor="let role of teamRoleOptions"
-									(cdkMenuItemTriggered)="updateRoleSelection(invited, role.role)"
-								>
-									{{ role.label }}
-								</button>
-							</div>
-						</ng-template>
-					</td>
-					<td>
-						<a
-							class="btn-icon"
-							container="body"
-							placement="bottom"
-							tooltip="Remove User"
-							(click)="remove(i)"
-						>
-							<span class="fa-solid fa-lg fa-trash"></span>
-						</a>
-					</td>
-				</tr>
+				@for (invited of addedMembers; track invited; let i = $index) {
+					<tr class="table-row">
+						<td class="text-nowrap">
+							{{ invited.username }}
+						</td>
+						<td>
+							<button
+								class="btn btn-sm dropdown-toggle py-0"
+								[cdkMenuTriggerFor]="rolesMenu"
+							>
+								<span class="mr-1">{{ invited.roleDisplay }}</span>
+							</button>
+							<ng-template #rolesMenu>
+								<div class="dropdown-menu" cdkMenu>
+									@for (role of teamRoleOptions; track role) {
+										<button
+											class="dropdown-item"
+											[value]="role.role"
+											cdkMenuItem
+											(cdkMenuItemTriggered)="
+												updateRoleSelection(invited, role.role)
+											"
+										>
+											{{ role.label }}
+										</button>
+									}
+								</div>
+							</ng-template>
+						</td>
+						<td>
+							<a
+								class="btn-icon"
+								container="body"
+								placement="bottom"
+								tooltip="Remove User"
+								(click)="remove(i)"
+							>
+								<span class="fa-solid fa-lg fa-trash"></span>
+							</a>
+						</td>
+					</tr>
+				}
 			</tbody>
 		</table>
-	</ng-container>
+	}
 </asy-modal>

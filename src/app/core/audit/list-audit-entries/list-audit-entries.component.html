@@ -85,18 +85,20 @@
 						[auditType]="entry.audit.auditType"
 					></asy-audit-component>
 					<div>
-						<small *ngIf="entry.isViewDetailsAction">
-							<a
-								class="btn-icon no-href"
-								[hidden]="(entry.audit.object ?? null) === null"
-								(click)="viewMore(entry, 'viewDetails')"
-							>
-								<span class="fa-solid fa-eye"></span><span>View Details</span>
-							</a>
-						</small>
-						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
-							><span>No Changes Detected</span></small
-						>
+						@if (entry.isViewDetailsAction) {
+							<small>
+								<a
+									class="btn-icon no-href"
+									[hidden]="(entry.audit.object ?? null) === null"
+									(click)="viewMore(entry, 'viewDetails')"
+								>
+									<span class="fa-solid fa-eye"></span><span>View Details</span>
+								</a>
+							</small>
+						}
+						@if (entry.audit.action === 'save') {
+							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
+						}
 					</div>
 				</td>
 			</ng-container>
@@ -111,21 +113,23 @@
 						[auditType]="entry.audit.auditType"
 					></asy-audit-component>
 					<div>
-						<small *ngIf="entry.isViewChangesAction">
-							<a
-								class="btn-icon no-href"
-								container="body"
-								placement="bottom"
-								tooltip="See details of the update"
-								[hidden]="(entry.audit.object?.before ?? null) === null"
-								(click)="viewMore(entry, 'viewChanges')"
-							>
-								<span class="fa-solid fa-eye"></span><span>View Changes</span>
-							</a>
-						</small>
-						<small style="opacity: 0.5" *ngIf="entry.audit.action === 'save'"
-							><span>No Changes Detected</span></small
-						>
+						@if (entry.isViewChangesAction) {
+							<small>
+								<a
+									class="btn-icon no-href"
+									container="body"
+									placement="bottom"
+									tooltip="See details of the update"
+									[hidden]="(entry.audit.object?.before ?? null) === null"
+									(click)="viewMore(entry, 'viewChanges')"
+								>
+									<span class="fa-solid fa-eye"></span><span>View Changes</span>
+								</a>
+							</small>
+						}
+						@if (entry.audit.action === 'save') {
+							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
+						}
 					</div>
 				</td>
 			</ng-container>

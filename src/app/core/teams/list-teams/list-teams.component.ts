@@ -1,5 +1,4 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgIf } from '@angular/common';
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -26,7 +25,6 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 	styleUrls: ['./list-teams.component.scss'],
 	standalone: true,
 	imports: [
-		NgIf,
 		SkipToDirective,
 		SystemAlertComponent,
 		SearchInputComponent,

@@ -7,80 +7,83 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form
-		class="pt-3"
-		role="form"
-		autocomplete="off"
-		novalidate
-		#form="ngForm"
-		*ngIf="message"
-		(ngSubmit)="submitMessage()"
-	>
-		<h1 class="mb-4">
-			{{ mode | titlecase }} Message
-			<small *ngIf="mode === 'create'"
-				>Provide the required information to create a new message</small
-			>
-			<small *ngIf="mode === 'edit'">Make changes to the message's information</small>
-		</h1>
-
-		<!-- Type -->
-		<div class="form-group">
-			<label class="form-required" for="messageType">Type</label>
-			<ng-select
-				id="messageType"
-				name="type"
-				bindLabel="display"
-				bindValue="value"
-				style="width: 350px"
-				[(ngModel)]="message.type"
-				[items]="typeOptions"
-			></ng-select>
-		</div>
-
-		<!-- Title -->
-		<div class="form-group">
-			<label class="form-required" for="title">Title</label>
-			<input
-				class="form-control"
-				id="title"
-				name="title"
-				type="text"
-				required
-				[(ngModel)]="message.title"
-			/>
-		</div>
-
-		<!-- Body -->
-		<div class="form-group">
-			<label class="form-required" for="text">Message Body</label>
-			<textarea
-				class="form-control"
-				id="text"
-				name="text"
-				required
-				rows="6"
-				[(ngModel)]="message.body"
-			></textarea>
-		</div>
-
-		<!-- Buttons -->
-		<div class="form-group">
-			<div class="text-right">
-				<button class="btn btn-link mr-2" type="button" [routerLink]="['/admin/messages']">
-					Cancel
-				</button>
-				<button
-					class="btn btn-outline-secondary mr-2"
-					type="button"
-					(click)="previewMessage()"
-				>
-					Preview
-				</button>
-				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-					{{ mode === 'create' ? 'Create' : 'Save' }}
-				</button>
+	@if (message) {
+		<form
+			class="pt-3"
+			role="form"
+			autocomplete="off"
+			novalidate
+			#form="ngForm"
+			(ngSubmit)="submitMessage()"
+		>
+			<h1 class="mb-4">
+				{{ mode | titlecase }} Message
+				@if (mode === 'create') {
+					<small>Provide the required information to create a new message</small>
+				}
+				@if (mode === 'edit') {
+					<small>Make changes to the message's information</small>
+				}
+			</h1>
+			<!-- Type -->
+			<div class="form-group">
+				<label class="form-required" for="messageType">Type</label>
+				<ng-select
+					id="messageType"
+					name="type"
+					bindLabel="display"
+					bindValue="value"
+					style="width: 350px"
+					[(ngModel)]="message.type"
+					[items]="typeOptions"
+				></ng-select>
 			</div>
-		</div>
-	</form>
+			<!-- Title -->
+			<div class="form-group">
+				<label class="form-required" for="title">Title</label>
+				<input
+					class="form-control"
+					id="title"
+					name="title"
+					type="text"
+					required
+					[(ngModel)]="message.title"
+				/>
+			</div>
+			<!-- Body -->
+			<div class="form-group">
+				<label class="form-required" for="text">Message Body</label>
+				<textarea
+					class="form-control"
+					id="text"
+					name="text"
+					required
+					rows="6"
+					[(ngModel)]="message.body"
+				></textarea>
+			</div>
+			<!-- Buttons -->
+			<div class="form-group">
+				<div class="text-right">
+					<button
+						class="btn btn-link mr-2"
+						type="button"
+						[routerLink]="['/admin/messages']"
+					>
+						Cancel
+					</button>
+					<button
+						class="btn btn-outline-secondary mr-2"
+						type="button"
+						(click)="previewMessage()"
+					>
+						Preview
+					</button>
+					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+						{{ mode === 'create' ? 'Create' : 'Save' }}
+					</button>
+				</div>
+			</div>
+		</form>
+	}
 </section>

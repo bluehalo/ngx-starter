@@ -1,5 +1,4 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +23,7 @@ import { debounceTime } from 'rxjs/operators';
 		])
 	],
 	standalone: true,
-	imports: [FormsModule, NgIf]
+	imports: [FormsModule]
 })
 export class SearchInputComponent {
 	@Input()

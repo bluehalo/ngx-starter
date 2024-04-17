@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+	selector: 'example-welcome',
 	template: `
 		<div class="container">
 			<div class="row">

@@ -1,4 +1,4 @@
-import { JsonPipe, NgIf } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { AuditObjectTypes } from './audit.classes';
@@ -42,10 +42,12 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 @Component({
 	selector: 'export-audit',
 	template: `
-		<span *ngIf="auditObject"> <span class="fa-solid fa-download"></span> Export config </span>
+		@if (auditObject) {
+			<span> <span class="fa-solid fa-download"></span> Export config </span>
+		}
 	`,
 	standalone: true,
-	imports: [NgIf]
+	imports: []
 })
 export class ExportAuditObjectComponent extends DefaultAuditObjectComponent {}
 AuditObjectTypes.registerType('export', ExportAuditObjectComponent);

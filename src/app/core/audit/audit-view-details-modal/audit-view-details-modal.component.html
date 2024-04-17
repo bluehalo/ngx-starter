@@ -9,9 +9,11 @@
 >
 	<div class="row">
 		<div class="col-md-12">
-			<h4 *ngIf="auditEntry?.audit?.object?.title">
-				{{ auditEntry?.audit?.object?.title }}
-			</h4>
+			@if (auditEntry?.audit?.object?.title) {
+				<h4>
+					{{ auditEntry?.audit?.object?.title }}
+				</h4>
+			}
 			<pre>{{ auditEntry?.audit?.object | json }}</pre>
 		</div>
 	</div>

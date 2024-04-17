@@ -19,11 +19,9 @@ export class CacheEntriesService {
 		paging: PagingOptions
 	): Observable<PagingResults<CacheEntry>> {
 		return this.http
-			.post<PagingResults<CacheEntry>>(
-				'api/access-checker/entries/match',
-				{ s: search, q: query },
-				{ params: paging.toObj() }
-			)
+			.post<
+				PagingResults<CacheEntry>
+			>('api/access-checker/entries/match', { s: search, q: query }, { params: paging.toObj() })
 			.pipe(
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {

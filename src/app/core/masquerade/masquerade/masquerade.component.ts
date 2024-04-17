@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,7 @@ import { MasqueradeService } from '../masquerade.service';
 @Component({
 	templateUrl: './masquerade.component.html',
 	standalone: true,
-	imports: [NgIf, LoadingSpinnerComponent, FormsModule, NgSelectModule, AsyncPipe]
+	imports: [LoadingSpinnerComponent, FormsModule, NgSelectModule, AsyncPipe]
 })
 export class MasqueradeComponent implements OnInit {
 	usersLoading = false;

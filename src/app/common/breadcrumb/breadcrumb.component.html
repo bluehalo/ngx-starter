@@ -1,9 +1,16 @@
 <div class="header">
-	<ng-container class="header-breadcrumb" *ngFor="let b of breadcrumbs; let last = last">
-		<span class="header-breadcrumb">
-			<a *ngIf="!last" [routerLink]="[b.url]">{{ b?.label }}</a>
-			<ng-container *ngIf="last">{{ b?.label }}</ng-container>
-		</span>
-		<span class="header-breadcrumb-separator" *ngIf="!last"> > </span>
-	</ng-container>
+	@for (b of breadcrumbs; track b; let last = $last) {
+		<ng-container class="header-breadcrumb">
+			<span class="header-breadcrumb">
+				@if (!last) {
+					<a [routerLink]="[b.url]">{{ b?.label }}</a>
+				} @else {
+					{{ b?.label }}
+				}
+			</span>
+			@if (!last) {
+				<span class="header-breadcrumb-separator"> > </span>
+			}
+		</ng-container>
+	}
 </div>

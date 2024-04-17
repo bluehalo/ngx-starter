@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -10,7 +9,7 @@ import { ExternalLinksComponent } from './external-links.component';
 @Component({
 	templateUrl: 'getting-started-help.component.html',
 	standalone: true,
-	imports: [NgIf, ExternalLinksComponent]
+	imports: [ExternalLinksComponent]
 })
 export class GettingStartedHelpComponent implements OnInit {
 	@Output() readonly backEvent = new EventEmitter();

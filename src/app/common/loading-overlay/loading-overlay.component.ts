@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
@@ -9,7 +8,7 @@ import { NotificationComponent } from '../notification/notification.component';
 	templateUrl: 'loading-overlay.component.html',
 	styleUrls: ['loading-overlay.component.scss'],
 	standalone: true,
-	imports: [NgIf, NotificationComponent, LoadingSpinnerComponent]
+	imports: [NotificationComponent, LoadingSpinnerComponent]
 })
 export class LoadingOverlayComponent {
 	@Input()

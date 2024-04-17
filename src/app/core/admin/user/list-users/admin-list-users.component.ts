@@ -1,7 +1,7 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -60,8 +60,6 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		AsySortHeaderComponent,
 		AsyHeaderListFilterComponent,
 		UserRoleFilterDirective,
-		NgFor,
-		NgIf,
 		NgClass,
 		AsyTableEmptyStateComponent,
 		SidebarComponent,

@@ -1,4 +1,4 @@
-import { LowerCasePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { LowerCasePipe, NgClass } from '@angular/common';
 import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { MessageService } from '../message.service';
 	templateUrl: './recent-messages.component.html',
 	styleUrls: ['./recent-messages.component.scss'],
 	standalone: true,
-	imports: [NgIf, NgFor, NgClass, LowerCasePipe]
+	imports: [NgClass, LowerCasePipe]
 })
 export class RecentMessagesComponent implements OnInit {
 	@Output()

@@ -12,9 +12,9 @@
 
 <div class="callout callout-info">
 	<h4>Browser Recommendation</h4>
-	<pre>	
-		<span class="fa-brands fa-3x fa-firefox"></span><span class="ml-3" style="font-size: 3em">Firefox</span>    <span class="fa-brands fa-3x fa-chrome"></span><span class="ml-3" style="font-size: 3em">Chrome</span>
-	</pre>
+	<pre>
+    <span class="fa-brands fa-3x fa-firefox"></span><span class="ml-3" style="font-size: 3em">Firefox</span>    <span class="fa-brands fa-3x fa-chrome"></span><span class="ml-3" style="font-size: 3em">Chrome</span>
+  </pre>
 	<p>
 		{{ appName }} is designed to work in all modern browsers, and is optimized for Firefox and
 		Chrome.
@@ -36,7 +36,9 @@
 	</p>
 </div>
 
-<div *ngIf="externalLinks.length > 0">
-	<h2>External Resources</h2>
-	<external-links [links]="externalLinks"></external-links>
-</div>
+@if (externalLinks.length > 0) {
+	<div>
+		<h2>External Resources</h2>
+		<external-links [links]="externalLinks"></external-links>
+	</div>
+}

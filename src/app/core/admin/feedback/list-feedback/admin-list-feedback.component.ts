@@ -1,7 +1,7 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -47,8 +47,6 @@ import { AdminUsersService } from '../../user/admin-users.service';
 		AsyFilterDirective,
 		AsySortHeaderComponent,
 		AsyHeaderListFilterComponent,
-		NgIf,
-		NgFor,
 		AsyTableEmptyStateComponent,
 		SidebarComponent,
 		ColumnChooserComponent,

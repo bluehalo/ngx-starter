@@ -1,4 +1,4 @@
-import { LowerCasePipe, NgFor, NgIf } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { ModalComponent } from '../modal/modal.component';
 	templateUrl: 'configurable-modal.component.html',
 	styleUrls: ['configurable-modal.component.scss'],
 	standalone: true,
-	imports: [ModalComponent, NgIf, FormsModule, NgFor, LowerCasePipe]
+	imports: [ModalComponent, FormsModule, LowerCasePipe]
 })
 export class ConfigurableModalComponent extends AbstractModalDirective {
 	message = '';

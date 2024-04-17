@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Event, NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -13,7 +12,7 @@ import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 	templateUrl: 'breadcrumb.component.html',
 	styleUrls: ['breadcrumb.component.scss'],
 	standalone: true,
-	imports: [NgFor, NgIf, RouterLink]
+	imports: [RouterLink]
 })
 export class BreadcrumbComponent {
 	@Input({ required: true })

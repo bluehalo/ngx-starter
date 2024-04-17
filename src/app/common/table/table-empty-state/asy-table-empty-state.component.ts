@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angular/core';
 
 import { AsyTableDataSource } from '../asy-table-data-source';
@@ -9,7 +8,7 @@ import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.com
 	templateUrl: './asy-table-empty-state.component.html',
 	styleUrls: ['./asy-table-empty-state.component.scss'],
 	standalone: true,
-	imports: [NgIf, AsySkeletonRowsComponent]
+	imports: [AsySkeletonRowsComponent]
 })
 export class AsyTableEmptyStateComponent<T> {
 	@Input({ required: true })

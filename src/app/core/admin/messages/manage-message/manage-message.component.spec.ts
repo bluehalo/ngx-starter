@@ -1,6 +1,6 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -42,7 +42,7 @@ describe('ManageMessageComponent', () => {
 		});
 
 		TestBed.configureTestingModule({
-			imports: [ManageMessageComponent, RouterTestingModule, DialogModule],
+			imports: [ManageMessageComponent, RouterModule.forRoot([]), DialogModule],
 			providers: [
 				{ provide: MessageService, useValue: messageServiceSpy },
 				{ provide: DialogService, useValue: dialogServiceSpy },

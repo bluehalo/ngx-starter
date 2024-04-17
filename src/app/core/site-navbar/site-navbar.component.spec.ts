@@ -3,7 +3,7 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -77,7 +77,7 @@ describe('Site Navbar Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [],
-			imports: [HttpClientTestingModule, RouterTestingModule, DialogModule],
+			imports: [HttpClientTestingModule, RouterModule.forRoot([]), DialogModule],
 			providers: [
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: ConfigService, useValue: configServiceSpy },

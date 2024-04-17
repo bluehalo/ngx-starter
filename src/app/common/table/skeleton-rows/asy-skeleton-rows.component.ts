@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
@@ -7,7 +6,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 	styleUrls: ['./asy-skeleton-rows.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
-	imports: [NgFor]
+	imports: []
 })
 export class AsySkeletonRowsComponent {
 	_rows: Array<number> = [];

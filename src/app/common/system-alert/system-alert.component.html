@@ -1,15 +1,14 @@
-<div
-	class="alert alert-{{ alert.type }} d-flex"
-	role="alert"
-	*ngFor="let alert of alertService.alerts$ | async; let i = index"
-	@animateAddRemove
->
-	<span class="fa-solid fa-fw system-alert-icon system-alert-icon-{{ alert.type }}"></span>
-	<div class="system-alert-content">
-		<div class="system-alert-message">{{ alert.msg }}</div>
-		<small *ngIf="alert.subtext">{{ alert.subtext }}</small>
+@for (alert of alertService.alerts$ | async; track alert; let i = $index) {
+	<div class="alert alert-{{ alert.type }} d-flex" role="alert" @animateAddRemove>
+		<span class="fa-solid fa-fw system-alert-icon system-alert-icon-{{ alert.type }}"></span>
+		<div class="system-alert-content">
+			<div class="system-alert-message">{{ alert.msg }}</div>
+			@if (alert.subtext) {
+				<small>{{ alert.subtext }}</small>
+			}
+		</div>
+		<button class="close" type="button" aria-label="Close" (click)="clearAlert(i)">
+			<span aria-hidden="true">×</span>
+		</button>
 	</div>
-	<button class="close" type="button" aria-label="Close" (click)="clearAlert(i)">
-		<span aria-hidden="true">×</span>
-	</button>
-</div>
+}

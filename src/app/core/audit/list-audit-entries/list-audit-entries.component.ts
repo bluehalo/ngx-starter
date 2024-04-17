@@ -1,6 +1,5 @@
 import { ComponentType, OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgIf } from '@angular/common';
 import { Component, DestroyRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -52,7 +51,6 @@ import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter
 		AsyHeaderDateFilterComponent,
 		AsyHeaderListFilterComponent,
 		AuditDistinctValueFilterDirective,
-		NgIf,
 		TooltipModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,

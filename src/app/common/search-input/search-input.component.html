@@ -7,13 +7,16 @@
 		(input)="onInput()"
 		(keyup)="onKeyup()"
 	/>
-	<span class="icon fa-solid fa-search" *ngIf="search.length === 0"></span>
-	<span
-		class="icon fa-solid fa-times"
-		*ngIf="search.length > 0"
-		(click)="clearSearch($event)"
-	></span>
+	@if (search.length === 0) {
+		<span class="icon fa-solid fa-search"></span>
+	} @else {
+		<span class="icon fa-solid fa-times" (click)="clearSearch($event)"></span>
+	}
 </div>
-<div class="text-muted pt-2" *ngIf="!disableMinCountMessage && showMinCountMessage" [@minCount]>
-	<div class="pt-2">Searches require a minimum of {{ minSearchCharacterCount }} characters.</div>
-</div>
+@if (!disableMinCountMessage && showMinCountMessage) {
+	<div class="text-muted pt-2" [@minCount]>
+		<div class="pt-2">
+			Searches require a minimum of {{ minSearchCharacterCount }} characters.
+		</div>
+	</div>
+}

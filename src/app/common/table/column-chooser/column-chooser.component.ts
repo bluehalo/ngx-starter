@@ -5,7 +5,7 @@ import {
 	CdkDropList,
 	moveItemInArray
 } from '@angular/cdk/drag-drop';
-import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +22,7 @@ export type ColumnDefinition = {
 	templateUrl: './column-chooser.component.html',
 	styleUrls: ['./column-chooser.component.scss'],
 	standalone: true,
-	imports: [CdkDropList, NgFor, CdkDrag, NgIf, CdkDragHandle, FormsModule, TitleCasePipe]
+	imports: [CdkDropList, CdkDrag, CdkDragHandle, FormsModule, TitleCasePipe]
 })
 export class ColumnChooserComponent implements OnInit {
 	@Input({ required: true })

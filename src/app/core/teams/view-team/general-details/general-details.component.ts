@@ -1,4 +1,4 @@
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +26,6 @@ import { TeamsService } from '../../teams.service';
 	styleUrls: ['./general-details.component.scss'],
 	standalone: true,
 	imports: [
-		NgIf,
 		ListTeamMembersComponent,
 		HasTeamRoleDirective,
 		FormsModule,

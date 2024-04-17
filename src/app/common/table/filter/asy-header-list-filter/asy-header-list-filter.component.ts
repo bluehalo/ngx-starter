@@ -1,6 +1,6 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
-import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -37,9 +37,7 @@ export type ListFilterOption = {
 	standalone: true,
 	imports: [
 		NgClass,
-		NgIf,
 		SearchInputComponent,
-		NgFor,
 		FormsModule,
 		TitleCasePipe,
 		TooltipModule,

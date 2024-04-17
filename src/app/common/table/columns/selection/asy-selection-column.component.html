@@ -1,15 +1,17 @@
 <ng-container cdkColumnDef [sticky]="sticky" [stickyEnd]="stickyEnd">
 	<th cdk-header-cell *cdkHeaderCellDef>
-		<div class="form-check" *ngIf="enableSelectAll && multi">
-			<input
-				class="form-check-input"
-				id="table-select-all"
-				type="checkbox"
-				[checked]="_isAllSelected$ | async"
-				(change)="_toggleAll()"
-			/>
-			<label class="form-check-label" for="table-select-all"></label>
-		</div>
+		@if (enableSelectAll && multi) {
+			<div class="form-check">
+				<input
+					class="form-check-input"
+					id="table-select-all"
+					type="checkbox"
+					[checked]="_isAllSelected$ | async"
+					(change)="_toggleAll()"
+				/>
+				<label class="form-check-label" for="table-select-all"></label>
+			</div>
+		}
 	</th>
 	<td cdk-cell *cdkCellDef="let result; let index = index; let dataIndex = dataIndex">
 		<div class="form-check">

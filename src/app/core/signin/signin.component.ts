@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -16,7 +15,7 @@ import { NavigationService } from '../navigation.service';
 	templateUrl: 'signin.component.html',
 	styleUrls: ['signin.component.scss'],
 	standalone: true,
-	imports: [NgIf, LoadingSpinnerComponent, FormsModule, RouterLink]
+	imports: [LoadingSpinnerComponent, FormsModule, RouterLink]
 })
 export class SigninComponent implements OnInit {
 	loaded = false;

@@ -5,14 +5,16 @@
 		<div class="col-lg-3 col-xl-2 help-menu" role="complementary">
 			<nav class="card">
 				<ul class="nav flex-column">
-					<li class="nav-item" role="presentation" *ngFor="let topic of helpTopics">
-						<a
-							class="nav-link no-href btn-link"
-							routerLinkActive="selected"
-							[routerLink]="['/help/' + topic.id]"
-							>{{ topic.title }}</a
-						>
-					</li>
+					@for (topic of helpTopics; track topic) {
+						<li class="nav-item" role="presentation">
+							<a
+								class="nav-link no-href btn-link"
+								routerLinkActive="selected"
+								[routerLink]="['/help/' + topic.id]"
+								>{{ topic.title }}</a
+							>
+						</li>
+					}
 				</ul>
 			</nav>
 		</div>

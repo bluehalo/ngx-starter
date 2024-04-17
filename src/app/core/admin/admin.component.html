@@ -1,10 +1,16 @@
 <section class="admin-container">
 	<ul class="nav nav-tabs">
-		<li class="nav-item" role="presentation" *ngFor="let topic of helpTopics">
-			<a class="nav-link" routerLinkActive="active" [routerLink]="['/admin/', topic.path]">
-				{{ topic.title }}
-			</a>
-		</li>
+		@for (topic of helpTopics; track topic) {
+			<li class="nav-item" role="presentation">
+				<a
+					class="nav-link"
+					routerLinkActive="active"
+					[routerLink]="['/admin/', topic.path]"
+				>
+					{{ topic.title }}
+				</a>
+			</li>
+		}
 	</ul>
 
 	<div class="admin-section-container">

@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,7 +15,7 @@ import { NavigationService } from '../navigation.service';
 @Component({
 	templateUrl: 'user-eua.component.html',
 	standalone: true,
-	imports: [NgIf, SystemAlertComponent, FormsModule, AsyncPipe]
+	imports: [SystemAlertComponent, FormsModule, AsyncPipe]
 })
 export class UserEuaComponent implements OnInit {
 	agree = false;

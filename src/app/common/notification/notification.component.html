@@ -2,7 +2,9 @@
 	<div class="float-left" [class.action-text]="showActions">
 		{{ message }}
 	</div>
-	<div class="table-actions d-flex flex-grow-1 float-right" *ngIf="showActions">
-		<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
-	</div>
+	@if (showActions) {
+		<div class="table-actions d-flex flex-grow-1 float-right">
+			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
+		</div>
+	}
 </div>
