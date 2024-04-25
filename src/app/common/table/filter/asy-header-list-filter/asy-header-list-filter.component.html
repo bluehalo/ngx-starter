@@ -24,6 +24,7 @@
 	cdkConnectedOverlay
 	[cdkConnectedOverlayOpen]="isOpen"
 	[cdkConnectedOverlayOrigin]="trigger"
+	(attach)="loadOptions()"
 	(overlayOutsideClick)="isOpen = false"
 >
 	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
@@ -50,23 +51,29 @@
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
 		}
 		<div class="flex-grow-1 overflow-auto my-2">
-			@for (option of _options; track option) {
-				@if (!option.hide) {
-					<div class="form-check">
-						<input
-							class="form-check-input"
-							id="filter-{{ id }}-option-{{ option.value }}"
-							type="checkbox"
-							[(ngModel)]="option.active"
-							[ngModelOptions]="{ standalone: true }"
-							(ngModelChange)="onFilterChange()"
-						/>
-						<label
-							class="form-check-label"
-							for="filter-{{ id }}-option-{{ option.value }}"
-							>{{ option.display }}</label
-						>
-					</div>
+			@if (optionsLoading()) {
+				<span class="fa-solid fa-spinner fa-spin mr-1"></span>Loading...
+			} @else {
+				@for (option of _options; track option) {
+					@if (!option.hide) {
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								id="filter-{{ id }}-option-{{ option.value }}"
+								type="checkbox"
+								[(ngModel)]="option.active"
+								[ngModelOptions]="{ standalone: true }"
+								(ngModelChange)="onFilterChange()"
+							/>
+							<label
+								class="form-check-label"
+								for="filter-{{ id }}-option-{{ option.value }}"
+								>{{ option.display }}</label
+							>
+						</div>
+					}
+				} @empty {
+					No options found
 				}
 			}
 		</div>
