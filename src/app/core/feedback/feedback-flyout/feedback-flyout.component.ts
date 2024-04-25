@@ -1,15 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, ViewChild, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import isEmpty from 'lodash/isEmpty';
-import { first } from 'rxjs/operators';
 
 import { FlyoutComponent } from '../../../common/flyout/flyout.component';
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
@@ -20,36 +18,25 @@ import { FeedbackService } from '../feedback.service';
 	standalone: true,
 	imports: [FlyoutComponent, FormsModule, NgTemplateOutlet, NgSelectModule]
 })
-export class FeedbackFlyoutComponent implements OnInit {
+export class FeedbackFlyoutComponent {
 	@ViewChild(FlyoutComponent) flyout?: FlyoutComponent;
 
-	baseUrl = '';
 	feedback: Feedback = new Feedback();
-
-	classificationOptions: any[] = [];
 
 	status: 'ready' | 'submitting' | 'success' | 'failure' = 'ready';
 
 	private destroyRef = inject(DestroyRef);
 	private router = inject(Router);
-	private configService = inject(ConfigService);
 	private feedbackService = inject(FeedbackService);
+	private config = inject(APP_CONFIG);
 
-	ngOnInit() {
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config: any) => {
-				this.baseUrl = config.app.clientUrl || '';
-
-				if (
-					Array.isArray(config.feedback.classificationOpts) &&
-					!isEmpty(config.feedback.classificationOpts)
-				) {
-					this.classificationOptions = config.feedback.classificationOpts;
-				}
-			});
-	}
+	classificationOptions = computed(() => {
+		const options = this.config()?.feedback?.classificationOpts;
+		if (options && Array.isArray(options) && options.length > 0) {
+			return options;
+		}
+		return [];
+	});
 
 	closeForm() {
 		this.flyout?.toggle();
@@ -63,7 +50,7 @@ export class FeedbackFlyoutComponent implements OnInit {
 		this.status = 'submitting';
 
 		// Get the current URL from the router at the time of submission.
-		this.feedback.url = `${this.baseUrl}${this.router.url}`;
+		this.feedback.url = `${this.config()?.app?.clientUrl ?? ''}${this.router.url}`;
 		this.feedbackService
 			.create(this.feedback)
 			.pipe(takeUntilDestroyed(this.destroyRef))

@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { first } from 'rxjs/operators';
 
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { Role } from '../../../auth/role.model';
 import { EditUser } from '../../../auth/user.model';
-import { ConfigService } from '../../../config.service';
+import { APP_CONFIG } from '../../../config.service';
 import { AdminUsersService } from '../admin-users.service';
 
 @Component({
@@ -27,15 +26,16 @@ export class ManageUserComponent implements OnInit {
 	@Input()
 	user: EditUser;
 
-	proxyPki = false;
-	metadataLocked = false;
 	possibleRoles = Role.ROLES;
 
 	protected destroyRef = inject(DestroyRef);
 	protected router = inject(Router);
-	protected configService = inject(ConfigService);
 	private alertService = inject(SystemAlertService);
 	private adminUsersService = inject(AdminUsersService);
+	protected config = inject(APP_CONFIG);
+
+	proxyPki = computed(() => this.config()?.auth === 'proxy-pki' ?? false);
+	metadataLocked = computed(() => this.proxyPki());
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
@@ -44,18 +44,9 @@ export class ManageUserComponent implements OnInit {
 			this.mode = 'edit';
 			this.user.externalRolesDisplay = this.user.externalRoles?.join('\n');
 			this.user.externalGroupsDisplay = this.user.externalGroups?.join('\n');
-			this.metadataLocked = this.proxyPki && !this.user.bypassAccessCheck;
 		} else {
 			this.user = new EditUser();
 		}
-
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config: any) => {
-				this.proxyPki = config.auth === 'proxy-pki';
-				this.metadataLocked = this.proxyPki;
-			});
 	}
 
 	submitUser(): any {

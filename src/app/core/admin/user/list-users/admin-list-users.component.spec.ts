@@ -1,4 +1,5 @@
 import { DialogModule } from '@angular/cdk/dialog';
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -7,14 +8,13 @@ import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
 import { User } from '../../../auth/user.model';
-import { ConfigService } from '../../../config.service';
+import { APP_CONFIG } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { AdminUsersService } from '../admin-users.service';
 import { AdminListUsersComponent } from './admin-list-users.component';
 
 describe('Admin List Users Component Spec', () => {
 	let adminUsersServiceSpy: any;
-	let configServiceSpy: any;
 	let exportConfigServiceSpy: any;
 	let exportResponseId: string;
 
@@ -46,9 +46,6 @@ describe('Admin List Users Component Spec', () => {
 		adminUsersServiceSpy = jasmine.createSpyObj('AdminUsersService', ['search']);
 		adminUsersServiceSpy.search.and.returnValue(of(mockUsers));
 
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of({}));
-
 		exportConfigServiceSpy = jasmine.createSpyObj('ExportConfigService', ['postExportConfig']);
 		exportConfigServiceSpy.postExportConfig.and.returnValue(
 			of({
@@ -65,7 +62,7 @@ describe('Admin List Users Component Spec', () => {
 			],
 			providers: [
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy },
-				{ provide: ConfigService, useValue: configServiceSpy },
+				{ provide: APP_CONFIG, useValue: signal({}) },
 				{ provide: ExportConfigService, useValue: exportConfigServiceSpy }
 			]
 		});

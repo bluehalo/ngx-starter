@@ -1,9 +1,6 @@
-import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, computed, inject } from '@angular/core';
 
-import { first } from 'rxjs/operators';
-
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { ExternalLinksComponent } from './external-links.component';
 
 @Component({
@@ -11,30 +8,9 @@ import { ExternalLinksComponent } from './external-links.component';
 	standalone: true,
 	imports: [ExternalLinksComponent]
 })
-export class GettingStartedHelpComponent implements OnInit {
-	@Output() readonly backEvent = new EventEmitter();
+export class GettingStartedHelpComponent {
+	private config = inject(APP_CONFIG);
 
-	externalLinks: any[] = [];
-
-	appName = 'Application';
-
-	private destroyRef = inject(DestroyRef);
-	private configService = inject(ConfigService);
-
-	ngOnInit() {
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config: any) => {
-				if (config?.welcomeLinks?.enabled && Array.isArray(config?.welcomeLinks?.links)) {
-					this.externalLinks = config.welcomeLinks.links;
-				}
-
-				this.appName = config?.app?.title;
-			});
-	}
-
-	back() {
-		this.backEvent.emit({});
-	}
+	appName = computed(() => this.config()?.app?.title ?? 'Application');
+	externalLinks = computed(() => this.config()?.help.welcomeLinks ?? []);
 }

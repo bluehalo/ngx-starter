@@ -110,7 +110,7 @@
 							}
 							@if (
 								team.implicitMembers &&
-								implicitMembersStrategy === 'roles' &&
+								implicitMembersStrategy() === 'roles' &&
 								((team.requiresExternalRoles.length || 0) > 0 || isEditing)
 							) {
 								<div class="form-group">
@@ -134,7 +134,7 @@
 							}
 							@if (
 								team.implicitMembers &&
-								implicitMembersStrategy === 'teams' &&
+								implicitMembersStrategy() === 'teams' &&
 								((team.requiresExternalTeams.length || 0) > 0 || isEditing)
 							) {
 								<div class="form-group">
@@ -179,7 +179,7 @@
 				</div>
 			</div>
 		</div>
-		@if (nestedTeamsEnabled) {
+		@if (nestedTeamsEnabled()) {
 			<div class="col col-na-xl-7 col-12">
 				<div class="card">
 					<div class="card-header">

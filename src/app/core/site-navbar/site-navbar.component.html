@@ -147,16 +147,16 @@
 						}
 
 						<!-- User Preferences -->
-						@if (showUserPreferencesLink) {
+						@if (showUserPreferencesLink()) {
 							<button
 								class="dropdown-item"
 								cdkMenuItem
-								[routerLink]="userPreferencesLink"
+								[routerLink]="userPreferencesLink()"
 							>
 								User Preferences
 							</button>
 						}
-						@if (masqueradeEnabled && (canMasquerade || isMasquerade)) {
+						@if (masqueradeEnabled() && (canMasquerade || isMasquerade)) {
 							<button class="dropdown-item" cdkMenuItem routerLink="/masquerade">
 								@if (isMasquerade) {
 									Clear
@@ -168,7 +168,7 @@
 				</ng-template>
 			</li>
 
-			@if (masqueradeEnabled && isMasquerade && (this.session?.name ?? null) === null) {
+			@if (masqueradeEnabled() && isMasquerade && (this.session?.name ?? null) === null) {
 				<li class="element">
 					<a
 						container="body"
@@ -260,13 +260,13 @@
 						<button
 							class="dropdown-item"
 							cdkMenuItem
-							*isAuthenticated="true; and: showFeedbackOption"
+							*isAuthenticated="true; and: showFeedbackOption()"
 							(cdkMenuItemTriggered)="showFeedbackModal()"
 						>
 							Give Feedback
 						</button>
 						<!-- API Docs -->
-						@if (showApiDocsLink) {
+						@if (showApiDocsLink()) {
 							<a
 								class="dropdown-item"
 								[href]="apiDocsLink"

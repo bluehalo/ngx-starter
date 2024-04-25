@@ -5,7 +5,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 import { DialogService } from '../../../common/dialog';
 import { SkipToDirective } from '../../../common/directives/skip-to.directive';
@@ -24,7 +23,7 @@ import {
 	AsyTableEmptyStateComponent,
 	PaginatorComponent
 } from '../../../common/table';
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
 import { AuditObjectComponent } from '../audit-object.component';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
@@ -126,19 +125,15 @@ export class ListAuditEntriesComponent implements OnDestroy {
 	private dialogService = inject(DialogService);
 	private alertService = inject(SystemAlertService);
 	private auditService = inject(AuditService);
-	private configService = inject(ConfigService);
 	private exportConfigService = inject(ExportConfigService);
+	private config = inject(APP_CONFIG);
 
 	constructor() {
 		this.alertService.clearAllAlerts();
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed())
-			.subscribe((config) => {
-				if (config?.masqueradeEnabled) {
-					this.displayedColumns.push('audit.masqueradingUser');
-				}
-			});
+
+		if (this.config()?.masqueradeEnabled) {
+			this.displayedColumns.push('audit.masqueradingUser');
+		}
 	}
 
 	ngOnDestroy() {

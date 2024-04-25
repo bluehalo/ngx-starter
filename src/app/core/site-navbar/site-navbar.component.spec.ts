@@ -1,6 +1,7 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -10,21 +11,20 @@ import { of } from 'rxjs';
 import { AuthorizationService } from '../auth/authorization.service';
 import { SessionService } from '../auth/session.service';
 import { Config } from '../config.model';
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { SiteNavbarComponent } from './site-navbar.component';
 
 describe('Site Navbar Component Spec', () => {
 	let authorizationServiceSpy: any;
-	let configServiceSpy: any;
 	let messageServiceSpy: any;
 	let sessionServiceSpy: any;
 	let masqServiceSpy: any;
 
-	const defaultMockConfig: Config = {
+	const defaultMockConfig: Partial<Config> = {
 		auth: 'local',
-		app: { title: 'Test' },
+		app: { title: 'Test', clientUrl: '/' },
 		apiDocs: {
 			enabled: true,
 			path: '/api-docs'
@@ -41,7 +41,7 @@ describe('Site Navbar Component Spec', () => {
 		allowDeleteUser: true
 	};
 
-	let mockConfig: Config;
+	let mockConfig: Partial<Config>;
 
 	beforeEach(async () => {
 		// reset for each test
@@ -60,11 +60,6 @@ describe('Site Navbar Component Spec', () => {
 		authorizationServiceSpy.hasSomeRoles.and.returnValue(of(true));
 		authorizationServiceSpy.hasEveryRole.and.returnValue(of(true));
 
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.callFake(() => {
-			return of(mockConfig);
-		});
-
 		messageServiceSpy = jasmine.createSpyObj('MessageService', ['remove']);
 		messageServiceSpy.remove.and.returnValue(of({}));
 		messageServiceSpy.numMessagesIndicator$ = of(0);
@@ -80,7 +75,7 @@ describe('Site Navbar Component Spec', () => {
 			imports: [HttpClientTestingModule, RouterModule.forRoot([]), DialogModule],
 			providers: [
 				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
-				{ provide: ConfigService, useValue: configServiceSpy },
+				{ provide: APP_CONFIG, useValue: signal(mockConfig) },
 				{ provide: MessageService, useValue: messageServiceSpy },
 				{ provide: SessionService, useValue: sessionServiceSpy },
 				{ provide: MasqueradeService, useValue: masqServiceSpy }
@@ -112,8 +107,8 @@ describe('Site Navbar Component Spec', () => {
 			await fixture.whenStable();
 
 			expect(component.helpNavOpen).toEqual(true);
-			expect(component.showApiDocsLink).toEqual(false);
-			expect(component.apiDocsLink).toEqual('');
+			expect(component.showApiDocsLink()).toEqual(false);
+			expect(component.apiDocsLink()).toEqual('');
 
 			/*
 			 * TODO Unclear how to test that the popover contents do NOT
@@ -136,8 +131,8 @@ describe('Site Navbar Component Spec', () => {
 			await fixture.whenStable();
 
 			expect(component.helpNavOpen).toEqual(false);
-			expect(component.showApiDocsLink).toEqual(false);
-			expect(component.apiDocsLink).toEqual('/some-path');
+			expect(component.showApiDocsLink()).toEqual(false);
+			expect(component.apiDocsLink()).toEqual('/some-path');
 
 			const bottomMenuItems = fixture.debugElement.queryAll(
 				By.css('li.nav-popover-bottom > a')
@@ -149,8 +144,8 @@ describe('Site Navbar Component Spec', () => {
 			await fixture.whenStable();
 
 			expect(component.helpNavOpen).toEqual(true);
-			expect(component.showApiDocsLink).toEqual(false);
-			expect(component.apiDocsLink).toEqual('/some-path');
+			expect(component.showApiDocsLink()).toEqual(false);
+			expect(component.apiDocsLink()).toEqual('/some-path');
 
 			/*
 			 * TODO Unclear how to test that the popover contents do NOT
@@ -178,8 +173,8 @@ describe('Site Navbar Component Spec', () => {
 			await fixture.whenStable();
 
 			expect(component.helpNavOpen).toEqual(true);
-			expect(component.showApiDocsLink).toEqual(true);
-			expect(component.apiDocsLink).toEqual('/some-path');
+			expect(component.showApiDocsLink()).toEqual(true);
+			expect(component.apiDocsLink()).toEqual('/some-path');
 
 			/*
 			 * TODO Unclear how to test that the popover contents DO

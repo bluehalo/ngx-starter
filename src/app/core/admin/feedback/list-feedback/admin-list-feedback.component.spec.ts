@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
 import { User } from '../../../auth/user.model';
-import { ConfigService } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { FeedbackService } from '../../../feedback/feedback.service';
 import { AdminUsersService } from '../../user/admin-users.service';
@@ -13,7 +12,6 @@ import { AdminListFeedbackComponent } from './admin-list-feedback.component';
 
 describe('Admin List Feedback Component Spec', () => {
 	let feedbackServiceSpy: any;
-	let configServiceSpy: any;
 	let exportConfigServiceSpy: any;
 	let exportResponseId: string;
 	let adminUsersServiceSpy: any;
@@ -46,9 +44,6 @@ describe('Admin List Feedback Component Spec', () => {
 		feedbackServiceSpy = jasmine.createSpyObj('FeedbackService', ['search']);
 		feedbackServiceSpy.search.and.returnValue(of(mockFeedback));
 
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of({}));
-
 		exportConfigServiceSpy = jasmine.createSpyObj('ExportConfigService', ['postExportConfig']);
 		exportConfigServiceSpy.postExportConfig.and.returnValue(
 			of({
@@ -63,7 +58,6 @@ describe('Admin List Feedback Component Spec', () => {
 			imports: [BrowserAnimationsModule, AdminListFeedbackComponent],
 			providers: [
 				{ provide: FeedbackService, useValue: feedbackServiceSpy },
-				{ provide: ConfigService, useValue: configServiceSpy },
 				{ provide: ExportConfigService, useValue: exportConfigServiceSpy },
 				{ provide: AdminUsersService, useValue: adminUsersServiceSpy }
 			]

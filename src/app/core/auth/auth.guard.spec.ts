@@ -1,10 +1,10 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { of } from 'rxjs';
 
-import { Config } from '../config.model';
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { AuthGuard, authGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
 import { AuthorizationService } from './authorization.service';
@@ -14,7 +14,6 @@ import { SessionService } from './session.service';
 import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuard', () => {
-	let configServiceSpy: SpyObj<ConfigService>;
 	let authServiceSpy: SpyObj<AuthenticationService>;
 
 	const defaultConfig = {
@@ -22,9 +21,6 @@ describe('AuthGuard', () => {
 	};
 
 	beforeEach(() => {
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of(defaultConfig as Config));
-
 		authServiceSpy = jasmine.createSpyObj('AuthenticationService', [
 			'reloadCurrentUser',
 			'getCurrentEua'
@@ -34,7 +30,7 @@ describe('AuthGuard', () => {
 
 		TestBed.configureTestingModule({
 			providers: [
-				{ provide: ConfigService, useValue: configServiceSpy },
+				{ provide: APP_CONFIG, useValue: signal(defaultConfig) },
 				{ provide: AuthenticationService, useValue: authServiceSpy },
 				{ provide: SessionService },
 				{ provide: AuthorizationService },

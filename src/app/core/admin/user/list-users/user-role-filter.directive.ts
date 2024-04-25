@@ -1,22 +1,18 @@
-import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-import { first } from 'rxjs/operators';
+import { Directive, OnInit, computed, inject } from '@angular/core';
 
 import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../../common/table';
 import { Role } from '../../../auth/role.model';
-import { ConfigService } from '../../../config.service';
+import { APP_CONFIG } from '../../../config.service';
 
 @Directive({
 	selector: 'asy-header-filter[list-filter][user-role-filter]',
 	standalone: true
 })
 export class UserRoleFilterDirective implements OnInit {
-	private requiredExternalRoles: string[] = [];
-
-	private destroyRef = inject(DestroyRef);
 	private listFilter = inject(AsyHeaderListFilterComponent);
-	private configService = inject(ConfigService);
+	private config = inject(APP_CONFIG);
+
+	private requiredExternalRoles = computed(() => this.config()?.requiredRoles ?? []);
 
 	ngOnInit() {
 		this.listFilter.options = [
@@ -30,15 +26,6 @@ export class UserRoleFilterDirective implements OnInit {
 			'pending'
 		];
 		this.listFilter.buildFilterFunc = this.buildFilter.bind(this);
-
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config: any) => {
-				this.requiredExternalRoles = Array.isArray(config.requiredRoles)
-					? config.requiredRoles
-					: [];
-			});
 	}
 
 	buildFilter(options: ListFilterOption[]): any {
@@ -49,11 +36,11 @@ export class UserRoleFilterDirective implements OnInit {
 
 		if (options.find((option) => option.active && option.value === 'pending')) {
 			$or.push({ 'roles.user': { $ne: true } });
-			if (this.requiredExternalRoles.length > 0) {
+			if (this.requiredExternalRoles().length > 0) {
 				$or.push({
 					$and: [
 						{ bypassAccessCheck: { $ne: true } },
-						{ externalRoles: { $not: { $all: this.requiredExternalRoles } } }
+						{ externalRoles: { $not: { $all: this.requiredExternalRoles() } } }
 					]
 				});
 			}

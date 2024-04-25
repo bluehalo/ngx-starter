@@ -1,20 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, Subject, concat, of } from 'rxjs';
-import {
-	debounceTime,
-	distinctUntilChanged,
-	filter,
-	first,
-	map,
-	switchMap,
-	tap
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { MultiSelectDirective } from '../../../common/multi-select.directive';
 import { PagingOptions } from '../../../common/paging.model';
@@ -24,7 +16,7 @@ import { AuthorizationService } from '../../auth/authorization.service';
 import { UserExternalRolesSelectDirective } from '../../auth/directives/user-external-roles-select.directive';
 import { SessionService } from '../../auth/session.service';
 import { User } from '../../auth/user.model';
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { TeamSelectInputComponent } from '../team-select-input/team-select-input.component';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -46,9 +38,6 @@ import { TeamsService } from '../teams.service';
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();
 
-	nestedTeamsEnabled = false;
-	implicitMembersStrategy?: string;
-
 	isAdmin = false;
 
 	teamAdmin: User | null = null;
@@ -66,22 +55,17 @@ export class CreateTeamComponent implements OnInit {
 	private destroyRef = inject(DestroyRef);
 	private router = inject(Router);
 	private route = inject(ActivatedRoute);
-	private configService = inject(ConfigService);
 	private teamsService = inject(TeamsService);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
 	private alertService = inject(SystemAlertService);
+	private config = inject(APP_CONFIG);
+
+	nestedTeamsEnabled = computed(() => this.config()?.teams?.nestedTeams ?? false);
+	implicitMembersStrategy = computed(() => this.config()?.teams?.implicitMembers?.strategy);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config) => {
-				this.implicitMembersStrategy = config?.teams?.implicitMembers?.strategy;
-				this.nestedTeamsEnabled = config?.teams?.nestedTeams ?? false;
-			});
 
 		this.sessionService
 			.getSession()

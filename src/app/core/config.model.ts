@@ -1,5 +1,6 @@
 interface AppConfig {
 	title: string;
+	clientUrl: string;
 }
 
 interface ApiDocsConfig {
@@ -15,6 +16,7 @@ interface BannerConfig {
 interface FeedbackConfig {
 	showFlyout: boolean;
 	showInSidebar: boolean;
+	classificationOpts: Array<{ level: string; prefix: string }>;
 }
 
 interface TeamConfig {
@@ -24,6 +26,10 @@ interface TeamConfig {
 	nestedTeams?: boolean;
 }
 
+interface HelpConfig {
+	welcomeLinks: Array<{ href: string; title: string; description: string }>;
+}
+
 interface UserPreferencesConfig {
 	enabled: boolean;
 	path: string;
@@ -31,6 +37,7 @@ interface UserPreferencesConfig {
 
 export interface Config {
 	auth: string;
+	requiredRoles: Array<string>;
 	masqueradeEnabled?: boolean;
 	masqueradeHeader?: string;
 
@@ -50,4 +57,6 @@ export interface Config {
 	feedback?: FeedbackConfig;
 
 	userPreferences?: UserPreferencesConfig;
+
+	help: HelpConfig;
 }

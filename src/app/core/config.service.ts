@@ -1,15 +1,17 @@
 import { HttpBackend, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, InjectionToken, Signal, inject } from '@angular/core';
 
 import { AsyncSubject, Observable } from 'rxjs';
 
 import { Config } from './config.model';
 
+export const APP_CONFIG = new InjectionToken<Signal<Config | null | undefined>>('APP_CONFIG');
+
 @Injectable({
 	providedIn: 'root'
 })
 export class ConfigService {
-	configSubject$ = new AsyncSubject<Config | null>();
+	private configSubject$ = new AsyncSubject<Config | null>();
 
 	private http = inject(HttpBackend);
 

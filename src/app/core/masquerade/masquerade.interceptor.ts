@@ -1,10 +1,9 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 
-import { Observable, switchMap } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { MasqueradeService } from './masquerade.service';
 
 const DEFAULT_HEADER = 'x-masquerade-user-dn';
@@ -19,19 +18,13 @@ export function masqueradeInterceptor(
 ): Observable<HttpEvent<unknown>> {
 	const masqDn = inject(MasqueradeService).getMasqueradeDn();
 	if (masqDn) {
-		return inject(ConfigService)
-			.getConfig()
-			.pipe(
-				first(),
-				map((config) =>
-					req.clone({
-						setHeaders: {
-							[config?.masqueradeHeader ?? DEFAULT_HEADER]: masqDn ?? ''
-						}
-					})
-				),
-				switchMap((masReq) => next(masReq))
-			);
+		return next(
+			req.clone({
+				setHeaders: {
+					[inject(APP_CONFIG)()?.masqueradeHeader ?? DEFAULT_HEADER]: masqDn ?? ''
+				}
+			})
+		);
 	}
 	return next(req);
 }

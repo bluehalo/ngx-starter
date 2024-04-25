@@ -1,22 +1,23 @@
-import { DebugElement } from '@angular/core';
+import { DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { AsyncSubject } from 'rxjs';
-
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
 
 // mock configuration object
-const configSubject$ = new AsyncSubject();
 const mockConfigObject = {
 	app: { clientUrl: 'mock-config-url' },
-	feedback: { classificationOpts: ['classification-1', 'classification-2'] }
+	feedback: {
+		classificationOpts: [
+			{ level: 'classification-1', prefix: '(L1)' },
+			{ level: 'classification-2', prefix: '(L2)' }
+		]
+	}
 };
-configSubject$.next(mockConfigObject);
-configSubject$.complete();
+
 const mockSubmitFunction = jasmine.createSpy();
 
 describe('FeedbackFlyoutComponent', () => {
@@ -29,7 +30,7 @@ describe('FeedbackFlyoutComponent', () => {
 			imports: [FeedbackFlyoutComponent],
 			providers: [
 				{ provide: Router, useValue: { url: 'test-url' } },
-				{ provide: ConfigService, useValue: { getConfig: () => configSubject$ } },
+				{ provide: APP_CONFIG, useValue: signal(mockConfigObject) },
 				{ provide: FeedbackService, useValue: { submit: mockSubmitFunction } }
 			]
 		})
@@ -44,11 +45,8 @@ describe('FeedbackFlyoutComponent', () => {
 	}));
 
 	it('should set the correct properties after loading config', waitForAsync(() => {
-		// test that baseUrl is set
-		expect(instance.baseUrl).toEqual(mockConfigObject.app.clientUrl);
-
 		// test that classification options are set
-		expect(instance.classificationOptions).toEqual(
+		expect(instance.classificationOptions()).toEqual(
 			mockConfigObject.feedback.classificationOpts
 		);
 	}));

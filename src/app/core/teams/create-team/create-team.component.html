@@ -74,7 +74,7 @@
 		</div>
 
 		<!-- Team Parent -->
-		@if (nestedTeamsEnabled) {
+		@if (nestedTeamsEnabled()) {
 			<div class="form-group">
 				<label for="parent">Parent Team</label>
 				<app-team-select-input
@@ -90,12 +90,12 @@
 		}
 
 		<!-- Implicit Teams Members -->
-		@if (implicitMembersStrategy !== undefined) {
+		@if (implicitMembersStrategy() !== undefined) {
 			<div class="form-group">
 				<label class="form-required">Implicit Team Members</label>
 				<p class="mt-n1 mb-1">
 					Do you want to automatically grant users access to team based on external
-					{{ implicitMembersStrategy }}?
+					{{ implicitMembersStrategy() }}?
 				</p>
 				<div class="form-check">
 					<input
@@ -126,7 +126,7 @@
 			</div>
 		}
 
-		@if (implicitMembersStrategy === 'roles') {
+		@if (implicitMembersStrategy() === 'roles') {
 			<!-- External Roles -->
 			<div class="form-group" [hidden]="!team.implicitMembers">
 				<label>External Roles</label>
@@ -138,7 +138,7 @@
 					[(ngModel)]="team.requiresExternalRoles"
 				></ng-select>
 			</div>
-		} @else if (implicitMembersStrategy === 'teams') {
+		} @else if (implicitMembersStrategy() === 'teams') {
 			<!-- External Teams -->
 			<div class="form-group" [hidden]="!team.implicitMembers">
 				<label>External Teams</label>

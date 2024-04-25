@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { AuthorizationService } from './authorization.service';
 import { SessionService } from './session.service';
 
@@ -55,9 +55,9 @@ export function authGuard(configOrRoles?: string | string[] | Partial<AuthGuardC
 })
 export class AuthGuard {
 	private router = inject(Router);
-	private configService = inject(ConfigService);
 	private sessionService = inject(SessionService);
 	private authorizationService = inject(AuthorizationService);
+	private appConfig = inject(APP_CONFIG);
 
 	canActivate(
 		route: ActivatedRouteSnapshot,
@@ -76,13 +76,11 @@ export class AuthGuard {
 		// -----------------------------------------------------------
 		// Yes, the user needs to be authenticated
 		// -----------------------------------------------------------
-		const config$ = this.configService.getConfig().pipe(first());
-		const session$ = this.sessionService.getSession().pipe(first());
-
-		return combineLatest([config$, session$]).pipe(
-			switchMap(([config, session]) => {
+		return this.sessionService.getSession().pipe(
+			first(),
+			switchMap((session) => {
 				// The user isn't authenticated, try reloading
-				if (session === null && config?.auth !== 'proxy-pki') {
+				if (session === null && this.appConfig()?.auth !== 'proxy-pki') {
 					return this.sessionService.reloadSession();
 				}
 				return of(session);

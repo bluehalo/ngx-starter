@@ -1,12 +1,13 @@
 import { ViewportScroller } from '@angular/common';
 import { APP_INITIALIZER, Provider, makeEnvironmentProviders } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ROUTES } from '@angular/router';
 
 import { firstValueFrom } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ADMIN_TOPICS } from './admin/admin-topic.model';
-import { ConfigService } from './config.service';
+import { APP_CONFIG, ConfigService } from './config.service';
 import { CORE_ROUTES } from './core-routes';
 import { CustomViewportScroller, SCROLL_ELEMENT } from './custom_viewport_scroller';
 import { GettingStartedHelpComponent } from './help/getting-started/getting-started-help.component';
@@ -103,6 +104,13 @@ export function provideAppConfig() {
 			},
 			deps: [ConfigService],
 			multi: true
+		},
+		{
+			provide: APP_CONFIG,
+			useFactory: (configService: ConfigService) => {
+				return toSignal(configService.getConfig());
+			},
+			deps: [ConfigService]
 		}
 	]);
 }
