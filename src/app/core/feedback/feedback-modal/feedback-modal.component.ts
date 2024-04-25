@@ -1,16 +1,14 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import isEmpty from 'lodash/isEmpty';
-import { first } from 'rxjs/operators';
 
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
@@ -20,14 +18,10 @@ import { FeedbackService } from '../feedback.service';
 	standalone: true,
 	imports: [ModalComponent, FormsModule, NgTemplateOutlet, NgSelectModule]
 })
-export class FeedbackModalComponent implements OnInit {
+export class FeedbackModalComponent {
 	error: string | null = null;
 
 	submitting = false;
-
-	classificationOptions: any[] = [];
-
-	baseUrl = '';
 
 	feedback: Feedback = new Feedback();
 
@@ -35,31 +29,23 @@ export class FeedbackModalComponent implements OnInit {
 	public dialogRef = inject(DialogRef);
 
 	private router = inject(Router);
-	private configService = inject(ConfigService);
 	private feedbackService = inject(FeedbackService);
+	private config = inject(APP_CONFIG);
 
-	ngOnInit() {
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config: any) => {
-				this.baseUrl = config.app.clientUrl || '';
-
-				if (
-					Array.isArray(config.feedback.classificationOpts) &&
-					!isEmpty(config.feedback.classificationOpts)
-				) {
-					this.classificationOptions = config.feedback.classificationOpts;
-				}
-			});
-	}
+	classificationOptions = computed(() => {
+		const options = this.config()?.feedback?.classificationOpts;
+		if (options && Array.isArray(options) && options.length > 0) {
+			return options;
+		}
+		return [];
+	});
 
 	submit() {
 		this.error = null;
 		this.submitting = true;
 
 		// Get the current URL from the router at the time of submission.
-		this.feedback.url = `${this.baseUrl}${this.router.url}`;
+		this.feedback.url = `${this.config()?.app?.clientUrl ?? ''}${this.router.url}`;
 
 		this.feedbackService
 			.create(this.feedback)

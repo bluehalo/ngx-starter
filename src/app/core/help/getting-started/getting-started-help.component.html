@@ -4,7 +4,7 @@
 </p>
 
 <p>
-	Welcome to {{ appName }}! Here you’ll find documentation about the application as well as
+	Welcome to {{ appName() }}! Here you’ll find documentation about the application as well as
 	pointers to other available resources. Navigate topic areas in the Help using the links in the
 	left column.
 	<!-- Will want to add a link to our help site and our email (which should both be configurable) -->
@@ -16,7 +16,7 @@
     <span class="fa-brands fa-3x fa-firefox"></span><span class="ml-3" style="font-size: 3em">Firefox</span>    <span class="fa-brands fa-3x fa-chrome"></span><span class="ml-3" style="font-size: 3em">Chrome</span>
   </pre>
 	<p>
-		{{ appName }} is designed to work in all modern browsers, and is optimized for Firefox and
+		{{ appName() }} is designed to work in all modern browsers, and is optimized for Firefox and
 		Chrome.
 	</p>
 </div>
@@ -36,9 +36,9 @@
 	</p>
 </div>
 
-@if (externalLinks.length > 0) {
+@if (externalLinks().length > 0) {
 	<div>
 		<h2>External Resources</h2>
-		<external-links [links]="externalLinks"></external-links>
+		<external-links [links]="externalLinks()"></external-links>
 	</div>
 }

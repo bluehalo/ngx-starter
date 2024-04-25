@@ -1,7 +1,8 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 
-import { ConfigService } from './config.service';
+import { APP_CONFIG } from './config.service';
 import { PageTitleStrategy } from './page-title.strategy';
 
 describe('PageTitleStrategy', () => {
@@ -9,7 +10,7 @@ describe('PageTitleStrategy', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				PageTitleStrategy,
-				{ provide: ConfigService, useValue: null },
+				{ provide: APP_CONFIG, useValue: signal({}) },
 				{ provide: Title, useValue: null }
 			]
 		});

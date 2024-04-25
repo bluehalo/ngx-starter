@@ -2,9 +2,9 @@
 
 <!-- Site Header -->
 <header class="site-header">
-	@if (bannerHtml) {
+	@if (bannerHtml()) {
 		<div class="site-banner">
-			<div class="header-banner" [innerHtml]="bannerHtml"></div>
+			<div class="header-banner" [innerHtml]="bannerHtml()"></div>
 		</div>
 	}
 </header>
@@ -20,16 +20,16 @@
 
 <!-- Site Footer -->
 <footer class="site-footer">
-	@if (copyrightHtml) {
+	@if (copyrightHtml()) {
 		<div class="site-banner">
-			<div class="copyright-banner" [innerHtml]="copyrightHtml"></div>
+			<div class="copyright-banner" [innerHtml]="copyrightHtml()"></div>
 		</div>
 	}
-	@if (bannerHtml) {
+	@if (bannerHtml()) {
 		<div class="site-banner">
-			<div class="footer-banner" [innerHtml]="bannerHtml"></div>
+			<div class="footer-banner" [innerHtml]="bannerHtml()"></div>
 		</div>
 	}
 </footer>
 
-<app-feedback-flyout *isAuthenticated="true; and: showFeedbackFlyout"></app-feedback-flyout>
+<app-feedback-flyout *isAuthenticated="true; and: showFeedbackFlyout()"></app-feedback-flyout>

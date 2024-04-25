@@ -2,12 +2,20 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import {
+	Component,
+	DestroyRef,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	computed,
+	inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { first } from 'rxjs/operators';
 
 import { CdkMenuItemHrefDirective } from '../../common/cdk-menu-item-href.directive';
 import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-router-link.directive';
@@ -19,7 +27,7 @@ import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directi
 import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
 import { Session } from '../auth/session.model';
 import { SessionService } from '../auth/session.service';
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
@@ -59,21 +67,12 @@ export class SiteNavbarComponent implements OnInit {
 	userNavOpen = false;
 	messagesNavOpen = false;
 
-	apiDocsLink = '';
-	showApiDocsLink = false;
-
-	showFeedbackOption = true;
-
-	showUserPreferencesLink = false;
-	userPreferencesLink?: string;
-
 	session: Session | null = null;
 
 	adminTopics = getAdminTopics();
 
 	navbarItems = getNavbarTopics();
 
-	masqueradeEnabled = false;
 	canMasquerade = false;
 	isMasquerade = false;
 
@@ -109,10 +108,17 @@ export class SiteNavbarComponent implements OnInit {
 
 	private destroyRef = inject(DestroyRef);
 	private dialogService = inject(DialogService);
-	private configService = inject(ConfigService);
 	private sessionService = inject(SessionService);
 	private messageService = inject(MessageService);
 	private masqueradeService = inject(MasqueradeService);
+	private config = inject(APP_CONFIG);
+
+	masqueradeEnabled = computed(() => this.config()?.masqueradeEnabled ?? false);
+	showApiDocsLink = computed(() => this.config()?.apiDocs?.enabled ?? false);
+	apiDocsLink = computed(() => this.config()?.apiDocs?.path ?? '');
+	showFeedbackOption = computed(() => this.config()?.feedback?.showInSidebar ?? true);
+	showUserPreferencesLink = computed(() => this.config()?.userPreferences?.enabled ?? false);
+	userPreferencesLink = computed(() => this.config()?.userPreferences?.path ?? '');
 
 	ngOnInit() {
 		this.sessionService
@@ -121,18 +127,6 @@ export class SiteNavbarComponent implements OnInit {
 			.subscribe((session) => {
 				this.session = session;
 				this.canMasquerade = session?.user?.canMasquerade ?? false;
-			});
-
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config) => {
-				this.masqueradeEnabled = config?.masqueradeEnabled ?? false;
-				this.showApiDocsLink = config?.apiDocs?.enabled ?? false;
-				this.apiDocsLink = config?.apiDocs?.path ?? '';
-				this.showFeedbackOption = config?.feedback?.showInSidebar ?? true;
-				this.showUserPreferencesLink = config?.userPreferences?.enabled ?? false;
-				this.userPreferencesLink = config?.userPreferences?.path ?? '';
 			});
 
 		this.messageService.numMessagesIndicator$

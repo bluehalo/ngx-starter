@@ -1,6 +1,7 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
@@ -8,13 +9,12 @@ import { of } from 'rxjs';
 
 import { PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { ConfigService } from '../../config.service';
+import { APP_CONFIG } from '../../config.service';
 import { AuditService } from '../audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 
 describe('Audit Component Spec', () => {
 	let auditServiceSpy: any;
-	let configServiceSpy: any;
 
 	let fixture: ComponentFixture<ListAuditEntriesComponent>;
 	let component: ListAuditEntriesComponent;
@@ -91,14 +91,11 @@ describe('Audit Component Spec', () => {
 		auditServiceSpy.search.and.returnValue(of(searchResults));
 		auditServiceSpy.matchUser.and.returnValue(of(matchedUsers));
 
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of({}));
-
 		TestBed.configureTestingModule({
 			imports: [DialogModule],
 			providers: [
 				{ provide: AuditService, useValue: auditServiceSpy },
-				{ provide: ConfigService, useValue: configServiceSpy },
+				{ provide: APP_CONFIG, useValue: signal({}) },
 				SystemAlertService,
 				provideHttpClient(),
 				provideHttpClientTesting()

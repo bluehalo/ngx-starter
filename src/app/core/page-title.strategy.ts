@@ -4,32 +4,25 @@ import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
-import { first, map } from 'rxjs/operators';
 
-import { ConfigService } from './config.service';
+import { APP_CONFIG } from './config.service';
 
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {
 	private readonly title = inject(Title);
-	private readonly configService = inject(ConfigService);
+	private readonly config = inject(APP_CONFIG);
 
 	override updateTitle(snapshot: RouterStateSnapshot) {
-		this.configService
-			.getConfig()
-			.pipe(
-				first(),
-				map((config) => config?.app.title)
-			)
-			.subscribe((appTitle) => {
-				const title = this.buildTitle(snapshot) ?? this.buildTitleFromUrl(snapshot.url);
-				if (title !== undefined) {
-					if (isEmpty(appTitle) || isEmpty(title)) {
-						this.title.setTitle(`${appTitle}${title}`);
-					} else {
-						this.title.setTitle(`${appTitle} - ${title}`);
-					}
-				}
-			});
+		const appTitle = this.config()?.app.title;
+
+		const title = this.buildTitle(snapshot) ?? this.buildTitleFromUrl(snapshot.url);
+		if (title !== undefined) {
+			if (isEmpty(appTitle) || isEmpty(title)) {
+				this.title.setTitle(`${appTitle}${title}`);
+			} else {
+				this.title.setTitle(`${appTitle} - ${title}`);
+			}
+		}
 	}
 
 	buildTitleFromUrl(url: string) {

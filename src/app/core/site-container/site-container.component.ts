@@ -1,11 +1,8 @@
 import { CdkScrollable } from '@angular/cdk/overlay';
-import { Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-import { first } from 'rxjs/operators';
+import { Component, computed, inject } from '@angular/core';
 
 import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { FeedbackFlyoutComponent } from '../feedback/feedback-flyout/feedback-flyout.component';
 import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 
@@ -17,22 +14,11 @@ import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 	imports: [SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent, CdkScrollable]
 })
 export class SiteContainerComponent {
-	bannerHtml?: string;
-	copyrightHtml?: string;
-	showFeedbackFlyout = false;
+	private config = inject(APP_CONFIG);
 
-	private configService = inject(ConfigService);
-
-	constructor() {
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed())
-			.subscribe((config: any) => {
-				this.bannerHtml = config?.banner?.html;
-				this.copyrightHtml = config?.copyright?.html;
-				this.showFeedbackFlyout = config?.feedback?.showFlyout ?? false;
-			});
-	}
+	bannerHtml = computed(() => this.config()?.banner?.html);
+	copyrightHtml = computed(() => this.config()?.copyright?.html);
+	showFeedbackFlyout = computed(() => this.config()?.feedback?.showFlyout ?? false);
 
 	skipToMainContent(e: any) {
 		e.preventDefault();

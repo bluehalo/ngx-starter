@@ -1,24 +1,18 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { of } from 'rxjs';
-
 import { AppComponent } from './app.component';
-import { ConfigService } from './core/config.service';
+import { APP_CONFIG } from './core/config.service';
 
 describe('AppComponent', () => {
-	let configServiceSpy: any;
-
 	beforeEach(waitForAsync(() => {
-		configServiceSpy = jasmine.createSpyObj('ConfigService', ['getConfig']);
-		configServiceSpy.getConfig.and.returnValue(of({}));
-
 		TestBed.configureTestingModule({
 			imports: [DialogModule, AppComponent],
 			providers: [
-				{ provide: ConfigService, useValue: configServiceSpy },
+				{ provide: APP_CONFIG, useValue: signal({}) },
 				provideHttpClient(),
 				provideHttpClientTesting()
 			]

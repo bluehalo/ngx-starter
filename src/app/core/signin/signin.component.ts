@@ -1,48 +1,37 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { first } from 'rxjs/operators';
-
 import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
 import { SessionService } from '../auth/session.service';
-import { ConfigService } from '../config.service';
+import { APP_CONFIG } from '../config.service';
 import { NavigationService } from '../navigation.service';
 
 @Component({
 	templateUrl: 'signin.component.html',
 	styleUrls: ['signin.component.scss'],
 	standalone: true,
-	imports: [LoadingSpinnerComponent, FormsModule, RouterLink]
+	imports: [LoadingSpinnerComponent, FormsModule, RouterLink],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SigninComponent implements OnInit {
-	loaded = false;
-	pkiMode = false;
-
+export class SigninComponent {
 	username?: string;
 	password?: string;
 	error?: string;
 
 	private destroyRef = inject(DestroyRef);
-	private configService = inject(ConfigService);
 	private sessionService = inject(SessionService);
 	private navigationService = inject(NavigationService);
+	private config = inject(APP_CONFIG);
 
-	ngOnInit() {
-		this.configService
-			.getConfig()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((config) => {
-				this.pkiMode = config?.auth === 'proxy-pki' ?? false;
-				this.loaded = true;
+	pkiMode = computed(() => this.config()?.auth === 'proxy-pki' ?? false);
 
-				if (this.pkiMode) {
-					// Automatically sign in
-					this.pkiSignin();
-				}
-			});
+	constructor() {
+		if (this.pkiMode()) {
+			this.pkiSignin();
+		}
 	}
 
 	pkiSignin() {

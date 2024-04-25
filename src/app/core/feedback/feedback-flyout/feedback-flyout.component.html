@@ -138,7 +138,7 @@
 					<ng-container *ngTemplateOutlet="textInput"></ng-container>
 				}
 				<ng-template #textInput>
-					@if (classificationOptions) {
+					@if (classificationOptions().length > 0) {
 						<div class="form-group pt-2">
 							<ng-select
 								name="classification"
@@ -148,7 +148,7 @@
 								required
 								[(ngModel)]="feedback.classification"
 								[clearable]="false"
-								[items]="classificationOptions"
+								[items]="classificationOptions()"
 							>
 							</ng-select>
 						</div>

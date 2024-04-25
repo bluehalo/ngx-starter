@@ -3,13 +3,21 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+	Component,
+	DestroyRef,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	computed,
+	inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, first, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item-router-link.directive';
 import { DialogAction, DialogService } from '../../../../common/dialog';
@@ -38,7 +46,7 @@ import {
 } from '../../../../common/table';
 import { Role } from '../../../auth/role.model';
 import { User } from '../../../auth/user.model';
-import { ConfigService } from '../../../config.service';
+import { APP_CONFIG } from '../../../config.service';
 import { ExportConfigService } from '../../../export-config.service';
 import { AdminUsersService } from '../admin-users.service';
 import { UserRoleFilterDirective } from './user-role-filter.directive';
@@ -157,8 +165,6 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	];
 	displayedColumns: string[] = [];
 
-	allowDeleteUser$: Observable<boolean>;
-
 	dataSource = new AsyTableDataSource<User>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'admin-list-users-component',
@@ -173,15 +179,13 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 	private adminUsersService = inject(AdminUsersService);
 	private exportConfigService = inject(ExportConfigService);
 	private alertService = inject(SystemAlertService);
-	private configService = inject(ConfigService);
+	private config = inject(APP_CONFIG);
+
+	allowDeleteUser = computed(() => this.config()?.allowDeleteUser ?? true);
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
-		this.allowDeleteUser$ = this.configService.getConfig().pipe(
-			map((config) => config?.allowDeleteUser ?? true),
-			takeUntilDestroyed(this.destroyRef)
-		);
 	}
 
 	ngOnDestroy() {
