@@ -43,6 +43,10 @@ export class MultiSelectDirective implements OnInit {
 			const isOpen = event.term.trim().length > 0;
 			this.updateIsOpen(isOpen);
 		});
+		// Clear the items on clear event.  Fixes bug where cleared items are suggested as options.
+		this.select.clearEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+			this.select.itemsList.setItems([]);
+		});
 	}
 
 	private updateIsOpen(isOpen: boolean) {
