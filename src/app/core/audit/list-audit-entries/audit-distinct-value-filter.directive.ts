@@ -1,5 +1,4 @@
-import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Directive, OnInit, inject } from '@angular/core';
 
 import { map } from 'rxjs/operators';
 
@@ -11,15 +10,13 @@ import { AuditService } from '../audit.service';
 	standalone: true
 })
 export class AuditDistinctValueFilterDirective implements OnInit {
-	private destroyRef = inject(DestroyRef);
 	private listFilter = inject(AsyHeaderListFilterComponent);
 	private auditService = inject(AuditService);
 
 	ngOnInit() {
 		this.listFilter.options = [];
-		this.auditService
-			.getDistinctAuditValues(this.listFilter.id)
-			.pipe(
+		this.listFilter.loadOptionsFunc = () =>
+			this.auditService.getDistinctAuditValues(this.listFilter.id).pipe(
 				map((options: string[]) =>
 					options.map(
 						(o) =>
@@ -28,11 +25,7 @@ export class AuditDistinctValueFilterDirective implements OnInit {
 								value: o
 							}) as ListFilterOption
 					)
-				),
-				takeUntilDestroyed(this.destroyRef)
-			)
-			.subscribe((types) => {
-				this.listFilter.options = types;
-			});
+				)
+			);
 	}
 }

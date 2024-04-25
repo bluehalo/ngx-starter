@@ -4,15 +4,20 @@ import { NgClass, TitleCasePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
+	DestroyRef,
 	Inject,
 	Input,
 	Optional,
 	booleanAttribute,
-	inject
+	inject,
+	signal
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
@@ -21,6 +26,8 @@ import {
 } from '../asy-abstract-header-filter.component';
 
 type BuildFilterFunction = (options: ListFilterOption[], matchAll?: boolean) => any;
+
+type LoadOptionsFunction = () => Observable<(string | string[] | ListFilterOption)[]>;
 
 export type ListFilterOption = {
 	display: string;
@@ -55,6 +62,10 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	matchAll = false;
 
+	loadOptionsFunc?: LoadOptionsFunction;
+
+	optionsLoading = signal(false);
+
 	@Input({ transform: booleanAttribute })
 	showSearch = false;
 
@@ -65,6 +76,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 	buildFilterFunc?: BuildFilterFunction;
 
 	private titleCasePipe = inject(TitleCasePipe);
+	private destroyRef = inject(DestroyRef);
 
 	constructor(
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
@@ -72,6 +84,18 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 		_columnDef: AsyFilterHeaderColumnDef
 	) {
 		super(_columnDef);
+	}
+
+	loadOptions() {
+		if (this.loadOptionsFunc) {
+			this.optionsLoading.set(true);
+			this.loadOptionsFunc()
+				.pipe(first(), takeUntilDestroyed(this.destroyRef))
+				.subscribe((options) => {
+					this.options = options;
+					this.optionsLoading.set(false);
+				});
+		}
 	}
 
 	_buildFilter() {
