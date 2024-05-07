@@ -11,7 +11,7 @@ export interface NavbarTopic extends Topic {
 
 export const NAVBAR_TOPICS = new InjectionToken<NavbarTopic[][]>('NAVBAR_TOPIC');
 
-export const getNavbarTopics = () =>
+export const getNavbarTopics: () => Array<NavbarTopic> = () =>
 	sortBy((inject(NAVBAR_TOPICS, { optional: true }) ?? []).flat(), [
 		(t) => t.ordinal ?? 1,
 		'title',

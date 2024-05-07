@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
-import { User } from '../../../auth/user.model';
+import { User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
 import { FeedbackService } from '../../../feedback/feedback.service';
 import { AdminUsersService } from '../../user/admin-users.service';

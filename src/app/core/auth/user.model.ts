@@ -1,3 +1,5 @@
+import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
+
 export class User {
 	public _id: string;
 	public name: string;
@@ -19,7 +21,7 @@ export class User {
 	public providerData: { dn?: string } & Record<string, unknown> = {};
 	public roles: Record<string, boolean> = {};
 
-	public eua?: any;
+	public eua?: EndUserAgreement;
 
 	constructor(model?: unknown) {
 		this.setFromModel(model);
@@ -41,7 +43,7 @@ export class User {
 		this.roles ??= {};
 	}
 
-	public setEua(eua: any) {
+	public setEua(eua?: EndUserAgreement) {
 		this.eua = eua;
 	}
 }

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { AboutComponent } from './about.component';
-import { authGuard } from './auth/auth.guard';
+import { authGuard } from './auth';
 import { AccessComponent } from './errors/access.component';
 import { ErrorComponent } from './errors/error.component';
 import { UserEuaComponent } from './eua/user-eua.component';

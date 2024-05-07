@@ -9,9 +9,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { Role } from '../../../auth/role.model';
-import { EditUser } from '../../../auth/user.model';
-import { APP_CONFIG } from '../../../config.service';
+import { EditUser, Role } from '../../../auth';
+import { APP_CONFIG } from '../../../tokens';
 import { AdminUsersService } from '../admin-users.service';
 
 @Component({

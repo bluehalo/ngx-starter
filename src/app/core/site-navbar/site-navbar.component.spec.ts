@@ -8,18 +8,16 @@ import { RouterModule } from '@angular/router';
 
 import { of } from 'rxjs';
 
-import { AuthorizationService } from '../auth/authorization.service';
-import { SessionService } from '../auth/session.service';
+import { Session } from '../auth';
 import { Config } from '../config.model';
-import { APP_CONFIG } from '../config.service';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
+import { APP_CONFIG, APP_SESSION } from '../tokens';
 import { SiteNavbarComponent } from './site-navbar.component';
 
 describe('Site Navbar Component Spec', () => {
 	let authorizationServiceSpy: any;
 	let messageServiceSpy: any;
-	let sessionServiceSpy: any;
 	let masqServiceSpy: any;
 
 	const defaultMockConfig: Partial<Config> = {
@@ -64,9 +62,6 @@ describe('Site Navbar Component Spec', () => {
 		messageServiceSpy.remove.and.returnValue(of({}));
 		messageServiceSpy.numMessagesIndicator$ = of(0);
 
-		sessionServiceSpy = jasmine.createSpyObj('SessionService', ['getSession']);
-		sessionServiceSpy.getSession.and.returnValue(of({}));
-
 		masqServiceSpy = jasmine.createSpyObj('MasqueradeService', ['getMasqueradeDn']);
 		masqServiceSpy.getMasqueradeDn.and.returnValue(undefined);
 
@@ -74,10 +69,9 @@ describe('Site Navbar Component Spec', () => {
 			declarations: [],
 			imports: [HttpClientTestingModule, RouterModule.forRoot([]), DialogModule],
 			providers: [
-				{ provide: AuthorizationService, useValue: authorizationServiceSpy },
 				{ provide: APP_CONFIG, useValue: signal(mockConfig) },
+				{ provide: APP_SESSION, useValue: signal(new Session()) },
 				{ provide: MessageService, useValue: messageServiceSpy },
-				{ provide: SessionService, useValue: sessionServiceSpy },
 				{ provide: MasqueradeService, useValue: masqServiceSpy }
 			]
 		});
@@ -90,12 +84,12 @@ describe('Site Navbar Component Spec', () => {
 			const fixture = TestBed.createComponent(SiteNavbarComponent);
 			const component = fixture.componentInstance;
 
-			expect(component.helpNavOpen).toEqual(false);
+			expect(component.helpNavOpen()).toEqual(false);
 
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			expect(component.helpNavOpen).toEqual(false);
+			expect(component.helpNavOpen()).toEqual(false);
 
 			const bottomMenuItems = fixture.debugElement.queryAll(
 				By.css('li.nav-popover-bottom > a')
@@ -106,7 +100,7 @@ describe('Site Navbar Component Spec', () => {
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			expect(component.helpNavOpen).toEqual(true);
+			expect(component.helpNavOpen()).toEqual(true);
 			expect(component.showApiDocsLink()).toEqual(false);
 			expect(component.apiDocsLink()).toEqual('');
 
@@ -125,12 +119,12 @@ describe('Site Navbar Component Spec', () => {
 			const fixture = TestBed.createComponent(SiteNavbarComponent);
 			const component = fixture.componentInstance;
 
-			expect(component.helpNavOpen).toEqual(false);
+			expect(component.helpNavOpen()).toEqual(false);
 
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			expect(component.helpNavOpen).toEqual(false);
+			expect(component.helpNavOpen()).toEqual(false);
 			expect(component.showApiDocsLink()).toEqual(false);
 			expect(component.apiDocsLink()).toEqual('/some-path');
 
@@ -143,7 +137,7 @@ describe('Site Navbar Component Spec', () => {
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			expect(component.helpNavOpen).toEqual(true);
+			expect(component.helpNavOpen()).toEqual(true);
 			expect(component.showApiDocsLink()).toEqual(false);
 			expect(component.apiDocsLink()).toEqual('/some-path');
 
@@ -172,7 +166,7 @@ describe('Site Navbar Component Spec', () => {
 			fixture.detectChanges();
 			await fixture.whenStable();
 
-			expect(component.helpNavOpen).toEqual(true);
+			expect(component.helpNavOpen()).toEqual(true);
 			expect(component.showApiDocsLink()).toEqual(true);
 			expect(component.apiDocsLink()).toEqual('/some-path');
 

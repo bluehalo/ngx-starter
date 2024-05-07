@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 
-import { APP_CONFIG } from './config.service';
+import { APP_CONFIG } from './tokens';
 
 @Component({
 	template: `

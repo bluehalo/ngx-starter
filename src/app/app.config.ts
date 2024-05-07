@@ -23,6 +23,7 @@ import {
 	provideAppConfig,
 	provideCoreRoutes,
 	provideNavigationService,
+	provideSession,
 	provideViewportScroller
 } from './core/provider';
 import { provideExampleRoutes } from './site/example/provider';
@@ -44,8 +45,8 @@ export const appConfig: ApplicationConfig = {
 		provideHttpClient(
 			withInterceptors([
 				signinInterceptor,
-				euaInterceptor,
 				authInterceptor,
+				euaInterceptor,
 				masqueradeInterceptor
 			]),
 			// Ensures any legacy class based interceptors are used.
@@ -63,6 +64,7 @@ export const appConfig: ApplicationConfig = {
 		provideExampleRoutes(),
 		provideAppConfig(),
 		provideNavigationService(),
+		provideSession(),
 		{
 			provide: TitleStrategy,
 			useClass: PageTitleStrategy

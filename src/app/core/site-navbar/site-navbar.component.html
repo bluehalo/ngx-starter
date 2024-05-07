@@ -1,12 +1,12 @@
-<div class="navbar-left" [ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }">
+<div class="navbar-left" [ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }">
 	<!-- Logo -->
 	<ul class="nav nav-logo">
 		<!-- Logo -->
 		<li class="element element-logo">
-			<a href="/#/" [hidden]="navbarOpen">
+			<a href="/#/" [hidden]="navbarOpen()">
 				<img class="logo" src="/assets/images/nav-logo-icon.png" alt="Logo" />
 			</a>
-			<a href="/#/" [hidden]="!navbarOpen">
+			<a href="/#/" [hidden]="!navbarOpen()">
 				<img class="logo" src="/assets/images/nav-logo.png" alt="Logo" />
 			</a>
 		</li>
@@ -22,11 +22,11 @@
 						placement="left"
 						routerLinkActive="active-link"
 						tooltip="{{ navbarItem.title }}"
-						[isDisabled]="navbarOpen"
+						[isDisabled]="navbarOpen()"
 						[routerLink]="navbarItem.path"
 					>
 						<span class="fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
-						<span [hidden]="!navbarOpen">{{ navbarItem.title }}</span>
+						<span [hidden]="!navbarOpen()">{{ navbarItem.title }}</span>
 					</a>
 				</li>
 			}
@@ -37,7 +37,7 @@
 			<!-- Admin Nav	-->
 			<li class="element" *hasRole="'admin'">
 				<a
-					[class.highlight-link]="adminNavOpen"
+					[class.highlight-link]="adminNavOpen()"
 					id="admin-nav-menu-btn"
 					aria-controls="admin-nav-menu"
 					linkAccessibility
@@ -45,12 +45,12 @@
 					tooltip="Admin"
 					[cdkMenuPosition]="menuPositions"
 					[cdkMenuTriggerFor]="adminNav"
-					[isDisabled]="navbarOpen"
-					(cdkMenuClosed)="adminNavOpen = false"
-					(cdkMenuOpened)="adminNavOpen = true"
+					[isDisabled]="navbarOpen()"
+					(cdkMenuClosed)="adminNavOpen.set(false)"
+					(cdkMenuOpened)="adminNavOpen.set(true)"
 				>
 					<span class="fa-solid fa-fw fa-cog"></span>
-					<span [hidden]="!navbarOpen">Admin</span>
+					<span [hidden]="!navbarOpen()">Admin</span>
 				</a>
 
 				<ng-template #adminNav>
@@ -81,10 +81,10 @@
 					routerLink="/audit"
 					routerLinkActive="active-link"
 					tooltip="Audit Logs"
-					[isDisabled]="navbarOpen"
+					[isDisabled]="navbarOpen()"
 				>
 					<span class="fa-solid fa-fw fa-file-text"></span>
-					<span [hidden]="!navbarOpen">Audit Logs</span>
+					<span [hidden]="!navbarOpen()">Audit Logs</span>
 				</a>
 			</li>
 
@@ -96,17 +96,17 @@
 					routerLink="/team"
 					routerLinkActive="active-link"
 					tooltip="Teams"
-					[isDisabled]="navbarOpen"
+					[isDisabled]="navbarOpen()"
 				>
 					<span class="fa-solid fa-fw fa-users"></span>
-					<span [hidden]="!navbarOpen">Teams</span>
+					<span [hidden]="!navbarOpen()">Teams</span>
 				</a>
 			</li>
 
 			<!-- User Nav	-->
 			<li class="element" *isAuthenticated>
 				<a
-					[class.highlight-link]="userNavOpen"
+					[class.highlight-link]="userNavOpen()"
 					id="user-nav-menu-btn"
 					aria-controls="user-nav-menu"
 					linkAccessibility
@@ -114,11 +114,11 @@
 					tooltip="User Profile"
 					[cdkMenuPosition]="menuPositions"
 					[cdkMenuTriggerFor]="userNav"
-					[isDisabled]="navbarOpen"
-					(cdkMenuClosed)="userNavOpen = false"
-					(cdkMenuOpened)="userNavOpen = true"
+					[isDisabled]="navbarOpen()"
+					(cdkMenuClosed)="userNavOpen.set(false)"
+					(cdkMenuOpened)="userNavOpen.set(true)"
 				>
-					@if (!isMasquerade) {
+					@if (!isMasquerade()) {
 						<span class="fa-solid fa-fw fa-user-circle"></span>
 					} @else {
 						<span class="fa-stack">
@@ -128,7 +128,7 @@
 							></span>
 						</span>
 					}
-					<span [hidden]="!navbarOpen">{{ session?.name }}</span>
+					<span [hidden]="!navbarOpen()">{{ session().user?.name }}</span>
 				</a>
 
 				<ng-template #userNav>
@@ -140,7 +140,7 @@
 					>
 						<!-- User Signout -->
 						<a class="dropdown-item" href="/api/auth/signout" cdkMenuItem> Sign out </a>
-						@if (session?.user?.eua) {
+						@if (session().user?.eua) {
 							<button class="dropdown-item" cdkMenuItem routerLink="/eua">
 								View EUA
 							</button>
@@ -156,9 +156,9 @@
 								User Preferences
 							</button>
 						}
-						@if (masqueradeEnabled() && (canMasquerade || isMasquerade)) {
+						@if (masqueradeEnabled() && (canMasquerade() || isMasquerade())) {
 							<button class="dropdown-item" cdkMenuItem routerLink="/masquerade">
-								@if (isMasquerade) {
+								@if (isMasquerade()) {
 									Clear
 								}
 								Masquerade
@@ -168,7 +168,11 @@
 				</ng-template>
 			</li>
 
-			@if (masqueradeEnabled() && isMasquerade && (this.session?.name ?? null) === null) {
+			@if (
+				masqueradeEnabled() &&
+				isMasquerade() &&
+				(this.session().user?.name ?? null) === null
+			) {
 				<li class="element">
 					<a
 						container="body"
@@ -176,7 +180,7 @@
 						routerLink="masquerade"
 						routerLinkActive="active-link"
 						tooltip="Clear Masquerade"
-						[isDisabled]="navbarOpen"
+						[isDisabled]="navbarOpen()"
 					>
 						<span class="fa-stack">
 							<span class="fa-solid fa-circle fa-stack-2x"></span>
@@ -185,7 +189,7 @@
 							></span>
 							<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
 						</span>
-						<span [hidden]="!navbarOpen">Clear Masquerade</span>
+						<span [hidden]="!navbarOpen()">Clear Masquerade</span>
 					</a>
 				</li>
 			}
@@ -193,34 +197,34 @@
 			<!-- Messages Nav   -->
 			<li class="element" *hasRole="'user'">
 				<a
-					[class.highlight-link]="messagesNavOpen"
+					[class.highlight-link]="messagesNavOpen()"
 					linkAccessibility
 					placement="left bottom"
 					tooltip="Notifications"
 					#trigger
-					[isDisabled]="navbarOpen"
-					(click)="messagesNavOpen = !messagesNavOpen"
+					[isDisabled]="navbarOpen()"
+					(click)="messagesNavOpen.set(!messagesNavOpen())"
 				>
 					<span
 						class="fa-solid fa-fw fa-bell"
-						[class.messages-icon-new-messages-badge]="numNewMessages > 0"
-						attr.newMessagesCount="{{ numNewMessages }}"
+						[class.messages-icon-new-messages-badge]="numNewMessages() > 0"
+						[attr.newMessagesCount]="numNewMessages()"
 					></span>
-					<span [hidden]="!navbarOpen">Notifications</span>
+					<span [hidden]="!navbarOpen()">Notifications</span>
 				</a>
 				<ng-template
 					cdkConnectedOverlay
 					cdkConnectedOverlayPanelClass="messages-nav"
-					[cdkConnectedOverlayOpen]="messagesNavOpen"
+					[cdkConnectedOverlayOpen]="messagesNavOpen()"
 					[cdkConnectedOverlayOrigin]="trigger"
 					[cdkConnectedOverlayPositions]="menuPositions"
 					[cdkConnectedOverlayPush]="true"
 					[cdkConnectedOverlayViewportMargin]="24"
-					(overlayOutsideClick)="messagesNavOpen = false"
+					(overlayOutsideClick)="messagesNavOpen.set(false)"
 				>
 					<div class="dropdown-menu messages-menu">
 						<app-recent-messages
-							(viewAllClicked)="messagesNavOpen = false"
+							(viewAllClicked)="messagesNavOpen.set(false)"
 						></app-recent-messages>
 					</div>
 				</ng-template>
@@ -229,7 +233,7 @@
 			<!-- Help Nav -->
 			<li class="element nav-popover nav-popover-bottom">
 				<a
-					[class.highlight-link]="helpNavOpen"
+					[class.highlight-link]="helpNavOpen()"
 					id="help-nav-menu-btn"
 					aria-controls="help-nav-menu"
 					linkAccessibility
@@ -237,12 +241,12 @@
 					tooltip="Help"
 					[cdkMenuPosition]="menuPositions"
 					[cdkMenuTriggerFor]="helpNav"
-					[isDisabled]="navbarOpen"
-					(cdkMenuClosed)="helpNavOpen = false"
-					(cdkMenuOpened)="helpNavOpen = true"
+					[isDisabled]="navbarOpen()"
+					(cdkMenuClosed)="helpNavOpen.set(false)"
+					(cdkMenuOpened)="helpNavOpen.set(true)"
 				>
 					<span class="fa-solid fa-fw fa-question-circle"></span>
-					<span [hidden]="!navbarOpen">Help</span>
+					<span [hidden]="!navbarOpen()">Help</span>
 				</a>
 
 				<ng-template #helpNav>
@@ -290,17 +294,20 @@
 
 		<!-- Collapse/Expand -->
 		<li class="element" linkAccessibility (click)="toggleNavbar()">
-			<a container="body" placement="left" tooltip="Expand" [isDisabled]="navbarOpen">
+			<a container="body" placement="left" tooltip="Expand" [isDisabled]="navbarOpen()">
 				<span
 					class="fa-solid fa-fw fa-angle-double-right"
-					[class.fa-flip-horizontal]="navbarOpen"
+					[class.fa-flip-horizontal]="navbarOpen()"
 				></span>
-				<span [hidden]="!navbarOpen">Collapse</span>
+				<span [hidden]="!navbarOpen()">Collapse</span>
 			</a>
 		</li>
 	</ul>
 </div>
 
-<div class="navbar-content" [ngClass]="{ 'navbar-open': navbarOpen, 'navbar-close': !navbarOpen }">
+<div
+	class="navbar-content"
+	[ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }"
+>
 	<ng-content></ng-content>
 </div>

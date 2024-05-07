@@ -1,10 +1,9 @@
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef, Directive, Input, inject } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
-import { AuthorizationService } from '../authorization.service';
+import { APP_SESSION } from '../../tokens';
 import { Role } from '../role.model';
-import { SessionService } from '../session.service';
 
 @Directive({
 	selector: '[hasRole]',
@@ -16,15 +15,14 @@ import { SessionService } from '../session.service';
 	],
 	standalone: true
 })
-export class HasRoleDirective implements OnInit {
+export class HasRoleDirective {
 	role: string | Role;
 	andCondition = true;
 	orCondition = false;
 
 	private destroyRef = inject(DestroyRef);
 	private ngIfDirective = inject(NgIf);
-	private sessionService = inject(SessionService);
-	private authorizationService = inject(AuthorizationService);
+	#session = inject(APP_SESSION);
 
 	@Input({ required: true })
 	set hasRole(role: string | Role) {
@@ -44,9 +42,8 @@ export class HasRoleDirective implements OnInit {
 		this.updateNgIf();
 	}
 
-	ngOnInit() {
-		this.sessionService
-			.getSession()
+	constructor() {
+		toObservable(this.#session)
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.updateNgIf();
@@ -55,6 +52,6 @@ export class HasRoleDirective implements OnInit {
 
 	private updateNgIf() {
 		this.ngIfDirective.ngIf =
-			this.orCondition || (this.andCondition && this.authorizationService.hasRole(this.role));
+			this.orCondition || (this.andCondition && this.#session().hasRole(this.role));
 	}
 }

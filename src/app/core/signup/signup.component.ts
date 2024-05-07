@@ -9,8 +9,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-import { AuthenticationService } from '../auth/authentication.service';
-import { EditUser } from '../auth/user.model';
+import { AuthenticationService, EditUser } from '../auth';
 
 @Component({
 	standalone: true,

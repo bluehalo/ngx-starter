@@ -1,8 +1,8 @@
 import { Directive, OnInit, computed, inject } from '@angular/core';
 
 import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../../common/table';
-import { Role } from '../../../auth/role.model';
-import { APP_CONFIG } from '../../../config.service';
+import { Role } from '../../../auth';
+import { APP_CONFIG } from '../../../tokens';
 
 @Directive({
 	selector: 'asy-header-filter[list-filter][user-role-filter]',

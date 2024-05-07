@@ -1,9 +1,8 @@
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef, Directive, Input, inject } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
-import { AuthorizationService } from '../../auth/authorization.service';
-import { SessionService } from '../../auth/session.service';
+import { APP_SESSION } from '../../tokens';
 import { TeamAuthorizationService } from '../team-authorization.service';
 import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
@@ -18,7 +17,7 @@ import { Team } from '../team.model';
 	],
 	standalone: true
 })
-export class HasTeamRoleDirective implements OnInit {
+export class HasTeamRoleDirective {
 	private team: Pick<Team, '_id'>;
 	private role: string | TeamRole;
 	private andCondition = true;
@@ -26,9 +25,8 @@ export class HasTeamRoleDirective implements OnInit {
 
 	private destroyRef = inject(DestroyRef);
 	private ngIfDirective = inject(NgIf);
-	private sessionService = inject(SessionService);
-	private authorizationService = inject(AuthorizationService);
 	private teamAuthorizationService = inject(TeamAuthorizationService);
+	#session = inject(APP_SESSION);
 
 	@Input({ required: true })
 	set hasTeamRole(team: Pick<Team, '_id'>) {
@@ -54,9 +52,8 @@ export class HasTeamRoleDirective implements OnInit {
 		this.updateNgIf();
 	}
 
-	ngOnInit() {
-		this.sessionService
-			.getSession()
+	constructor() {
+		toObservable(this.#session)
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.updateNgIf();
@@ -65,8 +62,7 @@ export class HasTeamRoleDirective implements OnInit {
 
 	protected checkPermission(): boolean {
 		return (
-			this.authorizationService.isAdmin() ||
-			this.teamAuthorizationService.hasRole(this.team, this.role)
+			this.#session().isAdmin() || this.teamAuthorizationService.hasRole(this.team, this.role)
 		);
 	}
 

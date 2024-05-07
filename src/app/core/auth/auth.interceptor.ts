@@ -19,6 +19,8 @@ export function authInterceptor(
 	return errorInterceptor(req, next, (error, req) => {
 		if (!req.headers.has('bypass-auth-interceptor') && error.status === 403) {
 			router.navigate(['/access'], { state: error });
+			return true;
 		}
+		return false;
 	});
 }

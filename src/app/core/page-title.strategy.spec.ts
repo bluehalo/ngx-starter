@@ -2,8 +2,8 @@ import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 
-import { APP_CONFIG } from './config.service';
 import { PageTitleStrategy } from './page-title.strategy';
+import { APP_CONFIG } from './tokens';
 
 describe('PageTitleStrategy', () => {
 	beforeEach(() => {

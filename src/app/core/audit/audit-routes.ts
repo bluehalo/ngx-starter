@@ -1,4 +1,4 @@
-import { authGuard } from '../auth/auth.guard';
+import { authGuard } from '../auth';
 import { AuditService } from './audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries/list-audit-entries.component';
 

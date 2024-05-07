@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { APP_CONFIG } from '../../../config.service';
+import { APP_CONFIG } from '../../../tokens';
 import { ManageUserComponent } from './manage-user.component';
 
 describe('ManageUserComponent', () => {

@@ -1,83 +1,85 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 
-import { BehaviorSubject, Observable, of, pipe } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
 import { AuthenticationService } from './authentication.service';
 import { Session } from './session.model';
-import { User } from './user.model';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class SessionService {
-	private authService = inject(AuthenticationService);
+	readonly #authService = inject(AuthenticationService);
 
 	// The current session information
-	sessionSubject$ = new BehaviorSubject<Session | null>(null);
+	readonly #session = signal(new Session());
 
-	private readonly mapUserModelToSession = pipe(
-		map((result: any): Session | null => {
-			if (result == null) {
-				return result;
-			}
-			return new Session(new User(result));
-		})
-	);
+	readonly #sessionSubject$ = toObservable(this.#session);
 
-	reloadSession(): Observable<Session | null> {
-		return this.authService.reloadCurrentUser().pipe(
+	get session() {
+		return this.#session.asReadonly();
+	}
+
+	reloadSession(): Observable<Session> {
+		return this.#authService.reloadCurrentUser().pipe(
 			catchError(() => {
 				return of(null);
 			}),
-			this.mapUserModelToSession,
+			map((userModel) => new Session(userModel)),
 			tap((session) => {
-				this.sessionSubject$.next(session);
+				this.#session.set(session);
 			})
 		);
 	}
 
-	signin(username: string, password: string): Observable<Session | null> {
-		return this.authService.signin(username, password).pipe(
-			this.mapUserModelToSession,
+	signin(username: string, password: string): Observable<Session> {
+		return this.#authService.signin(username, password).pipe(
+			map((userModel) => new Session(userModel)),
 			tap((session) => {
-				this.sessionSubject$.next(session);
+				this.#session.set(session);
 			})
 		);
 	}
 
-	getCurrentEua(): Observable<any> {
-		if (this.sessionSubject$?.value?.user?.eua !== undefined) {
-			return of(this.sessionSubject$.value.user.eua);
+	getCurrentEua(): Observable<EndUserAgreement | undefined> {
+		if (this.#session().user?.eua) {
+			return of(this.#session().user?.eua);
 		}
-		return this.authService.getCurrentEua().pipe(
+		return this.#authService.getCurrentEua().pipe(
 			catchError(() => {
-				return of(null);
+				return of(undefined);
 			}),
-			tap((eua: any) => {
-				this.sessionSubject$.value?.user.setEua(eua);
-				this.sessionSubject$.next(this.sessionSubject$.value);
+			tap((eua) => {
+				this.#session.update((session) => {
+					session.user?.setEua(eua);
+					return session;
+				});
 			})
 		);
 	}
 
 	acceptEua(): Observable<any> {
-		return this.authService.acceptEua().pipe(
+		return this.#authService.acceptEua().pipe(
 			catchError(() => {
 				return of(null);
 			}),
-			this.mapUserModelToSession,
-			tap((session) => {
-				this.sessionSubject$.next(session);
+			tap((userModel) => {
+				this.#session.set(new Session(userModel));
 			})
 		);
 	}
 
 	clear() {
-		this.sessionSubject$.next(null);
+		this.#session.set(new Session());
 	}
 
-	getSession(): Observable<Session | null> {
-		return this.sessionSubject$;
+	/**
+	 * @deprecated Should use session signal instead
+	 */
+	getSession(): Observable<Session> {
+		return this.#sessionSubject$;
 	}
 }

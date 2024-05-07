@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { AsyTableDataSource } from '../../../common/table';
-import { AuthorizationService } from '../../auth/authorization.service';
+import { APP_SESSION } from '../../tokens';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
@@ -33,13 +33,13 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, On
 
 	teamsService = inject(TeamsService);
 	alertService = inject(SystemAlertService);
-	authorizationService = inject(AuthorizationService);
+	#session = inject(APP_SESSION);
 
 	protected constructor(public dataSource: AsyTableDataSource<Team>) {}
 
 	ngOnInit() {
 		this.alertService.clearAllAlerts();
-		this.canCreateTeam = this.authorizationService.hasSomeRoles(['editor', 'admin']);
+		this.canCreateTeam = this.#session().hasSomeRoles(['editor', 'admin']);
 	}
 
 	ngOnDestroy() {

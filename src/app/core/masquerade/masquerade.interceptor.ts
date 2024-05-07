@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { APP_CONFIG } from '../config.service';
+import { APP_CONFIG } from '../tokens';
 import { MasqueradeService } from './masquerade.service';
 
 const DEFAULT_HEADER = 'x-masquerade-user-dn';

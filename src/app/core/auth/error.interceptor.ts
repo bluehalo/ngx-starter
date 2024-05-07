@@ -1,11 +1,11 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 type HttpError = { status: number; type: string; url: string; message: string };
 
-export type HttpErrorHandlerFn = (err: HttpError, req: HttpRequest<unknown>) => void;
+export type HttpErrorHandlerFn = (err: HttpError, req: HttpRequest<unknown>) => boolean;
 
 // eslint-disable-next-line rxjs/finnish
 export function errorInterceptor(
@@ -15,7 +15,9 @@ export function errorInterceptor(
 ): Observable<HttpEvent<unknown>> {
 	return next(req).pipe(
 		catchError((err: unknown) => {
-			errorHandler(parseError(err), req);
+			if (errorHandler(parseError(err), req)) {
+				return EMPTY;
+			}
 			return throwError(() => err);
 		})
 	);

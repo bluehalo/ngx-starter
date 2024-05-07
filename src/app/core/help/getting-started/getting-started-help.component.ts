@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 
-import { APP_CONFIG } from '../../config.service';
+import { APP_CONFIG } from '../../tokens';
 import { ExternalLinksComponent } from './external-links.component';
 
 @Component({

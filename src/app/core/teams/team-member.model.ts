@@ -1,4 +1,4 @@
-import { User } from '../auth/user.model';
+import { User } from '../auth';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
 

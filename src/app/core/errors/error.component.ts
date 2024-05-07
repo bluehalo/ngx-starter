@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HasRoleDirective } from '../auth/directives/has-role.directive';
+import { HasRoleDirective } from '../auth';
 import { ErrorState } from './error-state.model';
 
 @Component({

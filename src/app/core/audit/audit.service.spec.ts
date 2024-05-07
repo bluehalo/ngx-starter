@@ -5,7 +5,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 
 import { PagingOptions, PagingResults } from '../../common/paging.model';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-import { User } from '../auth/user.model';
+import { User } from '../auth';
 import { AuditService } from './audit.service';
 
 describe('Audit Service', () => {

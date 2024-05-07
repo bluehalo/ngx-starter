@@ -1,77 +1,48 @@
 import { Injectable, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { APP_SESSION } from '../tokens';
 import { Role } from './role.model';
-import { Session } from './session.model';
-import { SessionService } from './session.service';
 
+/**
+ * @deprecated Implementation moved to Session.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
-	private session: Session | null = null;
-
-	private sessionService = inject(SessionService);
-
-	constructor() {
-		this.sessionService
-			.getSession()
-			.pipe(takeUntilDestroyed())
-			.subscribe((session) => {
-				this.session = session;
-			});
-	}
+	#session = inject(APP_SESSION);
 
 	public isEuaCurrent() {
-		const euaPublished: number = this.session?.user?.eua?.published
-			? new Date(this.session?.user?.eua?.published).getTime()
-			: 0;
-		const euaAccepted: number = this.session?.user?.acceptedEua
-			? new Date(this.session?.user?.acceptedEua).getTime()
-			: 0;
-
-		return euaAccepted >= euaPublished;
+		return this.#session().isEuaCurrent();
 	}
 
 	public isAuthenticated(): boolean {
-		return this.session?.name != null;
+		return this.#session().isAuthenticated();
 	}
 
 	public hasExternalRole(role: string): boolean {
-		const externalRoles = this.session?.user?.externalRoles ?? [];
-
-		return externalRoles.indexOf(role) !== -1;
+		return this.#session().hasExternalRole(role);
 	}
 
 	public hasRole(role: string | Role): boolean {
-		role = this.roleToString(role);
-
-		const roles = this.session?.user?.roles ?? {};
-		return null != roles[role] && roles[role];
+		return this.#session().hasRole(role);
 	}
 
 	public hasAnyRole(): boolean {
-		return Role.ROLES.some((r: Role) => this.hasRole(r.role));
+		return this.#session().hasAnyRole();
 	}
 
 	public hasSomeRoles(roles: Array<string | Role>): boolean {
-		return roles.some((role: string | Role) => this.hasRole(role));
+		return this.#session().hasSomeRoles(roles);
 	}
 
 	public hasEveryRole(roles: Array<string | Role>): boolean {
-		return roles.every((role: string | Role) => this.hasRole(role));
+		return this.#session().hasEveryRole(roles);
 	}
 
 	public isUser(): boolean {
-		return this.hasRole(Role.USER.role);
+		return this.#session().isUser();
 	}
 
 	public isAdmin(): boolean {
-		return this.hasRole(Role.ADMIN.role);
-	}
-
-	private roleToString(role: string | Role) {
-		if (typeof role !== 'string') {
-			return role.role;
-		}
-		return role;
+		return this.#session().isAdmin();
 	}
 }

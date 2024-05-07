@@ -2,10 +2,10 @@
 	<!-- PKI Authentication Strategy -->
 	@if (pkiMode()) {
 		<div class="signin-container mx-auto mt-5">
-			<loading-spinner message="Signing In..." [hidden]="error"> </loading-spinner>
-			<div class="text-center text-danger" [hidden]="!error">
+			<loading-spinner message="Signing In..." [hidden]="error()"> </loading-spinner>
+			<div class="text-center text-danger" [hidden]="!error()">
 				<p>Unable to authenticate:</p>
-				<strong>{{ error }}</strong>
+				<strong>{{ error() }}</strong>
 			</div>
 		</div>
 	} @else {
@@ -62,8 +62,8 @@
 							or Sign Up
 						</button>
 					</div>
-					<div class="text-center text-danger" [hidden]="!error">
-						<strong>{{ error }}</strong>
+					<div class="text-center text-danger" [hidden]="!error()">
+						<strong>{{ error() }}</strong>
 					</div>
 				</fieldset>
 			</div>

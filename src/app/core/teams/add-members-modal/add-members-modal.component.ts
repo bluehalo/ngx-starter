@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } fr
 import { DialogAction, DialogReturn } from '../../../common/dialog';
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
 import { PagingOptions } from '../../../common/paging.model';
-import { User } from '../../auth/user.model';
+import { User } from '../../auth';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';
 

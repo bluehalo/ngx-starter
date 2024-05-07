@@ -1,14 +1,13 @@
 import { EventEmitter, Injectable, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, filter, first } from 'rxjs/operators';
+import { BehaviorSubject, Observable, take } from 'rxjs';
+import { catchError, filter } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { AuthorizationService } from '../auth/authorization.service';
-import { SessionService } from '../auth/session.service';
 import { SocketService } from '../socket.service';
+import { APP_SESSION } from '../tokens';
 import { Message } from './message.model';
 
 export const messageResolver: ResolveFn<Message | null> = (
@@ -29,9 +28,8 @@ export class MessageService extends AbstractEntityService<Message> {
 	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
 	private subscribed = 0;
 
-	private sessionService = inject(SessionService);
-	private authorizationService = inject(AuthorizationService);
 	private socketService = inject(SocketService);
+	#session = inject(APP_SESSION);
 
 	constructor() {
 		super({
@@ -42,11 +40,10 @@ export class MessageService extends AbstractEntityService<Message> {
 			[ServiceMethod.search]: 'api/messages'
 		});
 
-		this.sessionService
-			.getSession()
+		toObservable(this.#session)
 			.pipe(
-				first(() => this.authorizationService.isUser()),
-				takeUntilDestroyed()
+				filter((session) => session.isUser()),
+				take(1)
 			)
 			.subscribe(() => {
 				this.initialize();

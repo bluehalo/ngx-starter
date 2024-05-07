@@ -1,9 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Injectable, computed, inject } from '@angular/core';
 
-import { map } from 'rxjs/operators';
-
-import { SessionService } from '../auth/session.service';
+import { APP_SESSION } from '../tokens';
 import { TeamMember } from './team-member.model';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
@@ -12,25 +9,11 @@ import { Team } from './team.model';
 	providedIn: 'root'
 })
 export class TeamAuthorizationService {
-	private member!: TeamMember;
-
-	private sessionService = inject(SessionService);
-
-	constructor() {
-		this.sessionService
-			.getSession()
-			.pipe(
-				map((session) => new TeamMember(session?.user)),
-				takeUntilDestroyed()
-			)
-			.subscribe((member: TeamMember) => {
-				this.member = member;
-			});
-	}
+	#session = inject(APP_SESSION);
+	#member = computed(() => new TeamMember(this.#session().user));
 
 	public hasRole(team: Pick<Team, '_id'>, role: string | TeamRole): boolean {
-		role = this.roleToString(role);
-		return this.member.getRoleInTeam(team) === role;
+		return this.#member().getRoleInTeam(team) === this.roleToString(role);
 	}
 
 	public hasAnyRole(team: Pick<Team, '_id'>): boolean {

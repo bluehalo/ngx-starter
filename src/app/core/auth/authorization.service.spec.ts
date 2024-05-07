@@ -1,26 +1,17 @@
+import { signal } from '@angular/core';
 import { TestBed, inject } from '@angular/core/testing';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-
+import { APP_SESSION } from '../tokens';
 import { AuthorizationService } from './authorization.service';
 import { Role } from './role.model';
 import { Session } from './session.model';
-import { SessionService } from './session.service';
 import { User } from './user.model';
-
-class MockSessionService {
-	sessionSubject$ = new BehaviorSubject<Session | null>(null);
-
-	getSession(): Observable<Session | null> {
-		return this.sessionSubject$;
-	}
-}
 
 describe('AuthorizationService', () => {
 	let localService: AuthorizationService;
-	let sessionService: SessionService;
+	const sessionSignal = signal<Session>(new Session());
 
-	const EMPTY_SESSION: Session | null = null;
+	const EMPTY_SESSION = new Session();
 	const USER_SESSION = new Session(
 		new User({
 			name: 'test',
@@ -54,20 +45,13 @@ describe('AuthorizationService', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			providers: [
-				AuthorizationService,
-				{ provide: SessionService, useClass: MockSessionService }
-			]
+			providers: [AuthorizationService, { provide: APP_SESSION, useValue: sessionSignal }]
 		});
 	});
 
-	beforeEach(inject(
-		[AuthorizationService, SessionService],
-		(service: AuthorizationService, session: SessionService) => {
-			localService = service;
-			sessionService = session;
-		}
-	));
+	beforeEach(inject([AuthorizationService], (service: AuthorizationService) => {
+		localService = service;
+	}));
 
 	it('should create an instance', () => {
 		expect(localService).toBeTruthy();
@@ -75,118 +59,118 @@ describe('AuthorizationService', () => {
 
 	describe('isAuthenticated', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.isAuthenticated()).toBeFalsy();
 		});
 
 		it('should return true when session is valid and user has "user" role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.isAuthenticated()).toBeTruthy();
 		});
 	});
 
 	describe('hasExternalRole', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.hasExternalRole('ROLE1')).toBeFalsy();
 		});
 
 		it('should return false when session is valid and does not have the external role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasExternalRole('ROLE2')).toBeFalsy();
 		});
 
 		it('should return true when session is valid and user has the external role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasExternalRole('ROLE1')).toBeTruthy();
 		});
 	});
 
 	describe('hasRole', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.hasRole('user')).toBeFalsy();
 		});
 
 		it('should return false when session is valid and user does not have the "user" role', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.hasRole('user')).toBeFalsy();
 		});
 
 		it('should return true when session is valid and user has the "user" role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasRole('user')).toBeTruthy();
 		});
 	});
 
 	describe('hasEveryRole', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.hasEveryRole([Role.USER])).toBeFalsy();
 		});
 
 		it('should return false when session is missing at least one role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasEveryRole([Role.USER, Role.ADMIN])).toBeFalsy();
 		});
 
 		it('should return true when session has every role', () => {
-			sessionService.sessionSubject$.next(ADMIN_SESSION);
+			sessionSignal.set(ADMIN_SESSION);
 			expect(localService.hasEveryRole([Role.USER, Role.ADMIN])).toBeTruthy();
 		});
 	});
 
 	describe('hasSomeRoles', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.hasSomeRoles([Role.USER])).toBeFalsy();
 		});
 
 		it('should return false when session is missing all roles', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasSomeRoles([Role.AUDITOR, Role.EDITOR])).toBeFalsy();
 		});
 
 		it('should return true when session has at least one role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.hasSomeRoles([Role.USER, Role.ADMIN])).toBeTruthy();
-			sessionService.sessionSubject$.next(ADMIN_SESSION);
+			sessionSignal.set(ADMIN_SESSION);
 			expect(localService.hasSomeRoles([Role.USER, Role.ADMIN])).toBeTruthy();
 		});
 	});
 
 	describe('isAdmin', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.isAdmin()).toBeFalsy();
 		});
 
 		it('should return false for user session', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.isAdmin()).toBeFalsy();
 		});
 
 		it('should return true for admin session', () => {
-			sessionService.sessionSubject$.next(ADMIN_SESSION);
+			sessionSignal.set(ADMIN_SESSION);
 			expect(localService.isAdmin()).toBeTruthy();
 		});
 	});
 
 	describe('isUser', () => {
 		it('should return false when session is null', () => {
-			sessionService.sessionSubject$.next(EMPTY_SESSION);
+			sessionSignal.set(EMPTY_SESSION);
 			expect(localService.isUser()).toBeFalsy();
 		});
 
 		it('should return false for session without user role', () => {
-			sessionService.sessionSubject$.next(INACTIVE_USER_SESSION);
+			sessionSignal.set(INACTIVE_USER_SESSION);
 			expect(localService.isUser()).toBeFalsy();
 		});
 
 		it('should return true for session with user role', () => {
-			sessionService.sessionSubject$.next(USER_SESSION);
+			sessionSignal.set(USER_SESSION);
 			expect(localService.isUser()).toBeTruthy();
-			sessionService.sessionSubject$.next(ADMIN_SESSION);
+			sessionSignal.set(ADMIN_SESSION);
 			expect(localService.isUser()).toBeTruthy();
 		});
 	});

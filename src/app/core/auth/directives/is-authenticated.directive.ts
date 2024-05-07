@@ -1,10 +1,9 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef, Directive, Input, inject } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
-import { AuthorizationService } from '../authorization.service';
-import { SessionService } from '../session.service';
+import { APP_SESSION } from '../../tokens';
 
 @Directive({
 	selector: '[isAuthenticated]',
@@ -16,15 +15,14 @@ import { SessionService } from '../session.service';
 	],
 	standalone: true
 })
-export class IsAuthenticatedDirective implements OnInit {
+export class IsAuthenticatedDirective {
 	private _isAuthenticated = true;
 	andCondition = true;
 	orCondition = false;
 
 	private destroyRef = inject(DestroyRef);
 	private ngIfDirective = inject(NgIf);
-	private sessionService = inject(SessionService);
-	private authorizationService = inject(AuthorizationService);
+	#session = inject(APP_SESSION);
 
 	@Input()
 	set isAuthenticated(isAuthenticated: BooleanInput) {
@@ -44,9 +42,8 @@ export class IsAuthenticatedDirective implements OnInit {
 		this.updateNgIf();
 	}
 
-	ngOnInit() {
-		this.sessionService
-			.getSession()
+	constructor() {
+		toObservable(this.#session)
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => {
 				this.updateNgIf();
@@ -55,6 +52,6 @@ export class IsAuthenticatedDirective implements OnInit {
 
 	private updateNgIf() {
 		this.ngIfDirective.ngIf =
-			this.orCondition || (this.andCondition && this.authorizationService.isAuthenticated());
+			this.orCondition || (this.andCondition && this.#session().isAuthenticated());
 	}
 }

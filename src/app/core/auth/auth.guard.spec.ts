@@ -4,10 +4,11 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/r
 
 import { of } from 'rxjs';
 
-import { APP_CONFIG } from '../config.service';
-import { AuthGuard, authGuard } from './auth.guard';
+import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
+import { provideSession } from '../provider';
+import { APP_CONFIG } from '../tokens';
+import { authGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
-import { AuthorizationService } from './authorization.service';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
 
@@ -26,24 +27,15 @@ describe('AuthGuard', () => {
 			'getCurrentEua'
 		]);
 		authServiceSpy.reloadCurrentUser.and.returnValue(of({}));
-		authServiceSpy.getCurrentEua.and.returnValue(of(null));
+		authServiceSpy.getCurrentEua.and.returnValue(of(undefined));
 
 		TestBed.configureTestingModule({
 			providers: [
 				{ provide: APP_CONFIG, useValue: signal(defaultConfig) },
-				{ provide: AuthenticationService, useValue: authServiceSpy },
-				{ provide: SessionService },
-				{ provide: AuthorizationService },
-				// eslint-disable-next-line deprecation/deprecation
-				{ provide: AuthGuard }
+				provideSession(),
+				{ provide: AuthenticationService, useValue: authServiceSpy }
 			]
 		});
-	});
-
-	it('should be created', () => {
-		// eslint-disable-next-line deprecation/deprecation
-		const guard = TestBed.inject(AuthGuard);
-		expect(guard).toBeTruthy();
 	});
 
 	describe('canActivate', () => {
@@ -75,7 +67,7 @@ describe('AuthGuard', () => {
 			});
 		});
 
-		it('should return false for authenticated user without user role', (done) => {
+		it('should redirect to /unauthorized for authenticated user without user role', (done) => {
 			authServiceSpy.reloadCurrentUser.and.returnValue(
 				of({
 					name: 'test',
@@ -113,7 +105,7 @@ describe('AuthGuard', () => {
 			});
 		});
 
-		it('should return false for authenticated user without required roles', (done) => {
+		it('should redirect to /unauthorized for authenticated user without required roles', (done) => {
 			authServiceSpy.reloadCurrentUser.and.returnValue(
 				of({
 					name: 'test',
@@ -135,7 +127,7 @@ describe('AuthGuard', () => {
 			});
 		});
 
-		it('should return false for authenticated user with none of the required roles', (done) => {
+		it('should redirect to /unauthorized for authenticated user with none of the required roles', (done) => {
 			authServiceSpy.reloadCurrentUser.and.returnValue(
 				of({
 					name: 'test',
@@ -199,7 +191,7 @@ describe('AuthGuard', () => {
 			});
 		});
 
-		it('should redirect to eua page for authenticated user who has not accepted latest eua', (done) => {
+		it('should redirect to /eua for authenticated user who has not accepted latest eua', (done) => {
 			authServiceSpy.reloadCurrentUser.and.returnValue(
 				of({
 					name: 'test',
@@ -207,7 +199,9 @@ describe('AuthGuard', () => {
 					roles: { user: true }
 				})
 			);
-			authServiceSpy.getCurrentEua.and.returnValue(of({ published: 1 }));
+			authServiceSpy.getCurrentEua.and.returnValue(
+				of(new EndUserAgreement({ published: 1 }))
+			);
 
 			const route = { data: { requiresEua: true } } as unknown as ActivatedRouteSnapshot;
 

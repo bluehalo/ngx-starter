@@ -12,11 +12,8 @@ import { MultiSelectDirective } from '../../../common/multi-select.directive';
 import { PagingOptions } from '../../../common/paging.model';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { AuthorizationService } from '../../auth/authorization.service';
-import { UserExternalRolesSelectDirective } from '../../auth/directives/user-external-roles-select.directive';
-import { SessionService } from '../../auth/session.service';
-import { User } from '../../auth/user.model';
-import { APP_CONFIG } from '../../config.service';
+import { SessionService, User, UserExternalRolesSelectDirective } from '../../auth';
+import { APP_CONFIG, APP_SESSION } from '../../tokens';
 import { TeamSelectInputComponent } from '../team-select-input/team-select-input.component';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -38,17 +35,13 @@ import { TeamsService } from '../teams.service';
 export class CreateTeamComponent implements OnInit {
 	team: Team = new Team();
 
-	isAdmin = false;
-
-	teamAdmin: User | null = null;
+	teamAdmin?: User;
 
 	usersLoading = false;
 	usersInput$ = new Subject<string>();
 	users$: Observable<User[]> = of([]);
 
 	isSubmitting = false;
-
-	private user: User | null = null;
 
 	private pagingOptions: PagingOptions = new PagingOptions();
 
@@ -57,27 +50,23 @@ export class CreateTeamComponent implements OnInit {
 	private route = inject(ActivatedRoute);
 	private teamsService = inject(TeamsService);
 	private sessionService = inject(SessionService);
-	private authorizationService = inject(AuthorizationService);
 	private alertService = inject(SystemAlertService);
 	private config = inject(APP_CONFIG);
+	#session = inject(APP_SESSION);
 
 	nestedTeamsEnabled = computed(() => this.config()?.teams?.nestedTeams ?? false);
 	implicitMembersStrategy = computed(() => this.config()?.teams?.implicitMembers?.strategy);
+	isAdmin = computed(() => this.#session().isAdmin());
 
-	ngOnInit() {
+	constructor() {
 		this.alertService.clearAllAlerts();
 
-		this.sessionService
-			.getSession()
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe((session) => {
-				this.user = session?.user ?? null;
-				this.isAdmin = this.authorizationService.isAdmin();
-				if (!this.isAdmin) {
-					this.setCurrentUserAsAdmin();
-				}
-			});
+		if (this.#session().isAdmin()) {
+			this.setCurrentUserAsAdmin();
+		}
+	}
 
+	ngOnInit() {
 		this.route.queryParamMap
 			.pipe(
 				filter((params) => params.has('parent')),
@@ -90,7 +79,7 @@ export class CreateTeamComponent implements OnInit {
 				this.team.parent = parent ?? undefined;
 			});
 
-		if (this.isAdmin) {
+		if (this.isAdmin()) {
 			this.users$ = concat(
 				of([]), // default items
 				this.usersInput$.pipe(
@@ -113,7 +102,7 @@ export class CreateTeamComponent implements OnInit {
 	}
 
 	setCurrentUserAsAdmin() {
-		this.teamAdmin = this.user;
+		this.teamAdmin = this.#session().user;
 	}
 
 	save() {
