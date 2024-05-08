@@ -1,36 +1,6 @@
 <form style="max-width: 800px">
 	<h1 class="pb-3">Common Modal Module Examples</h1>
 
-	<div class="form-group">
-		<label class="form-required">Modal creation type:</label>
-		<div class="form-check">
-			<input
-				class="form-check-input"
-				id="type-option-cdk"
-				name="type-option-radio"
-				type="radio"
-				value="cdk"
-				required
-				[(ngModel)]="modalType"
-			/>
-			<label class="form-check-label mb-2" for="type-option-cdk">CDK Dialog</label>
-		</div>
-		<div class="form-check">
-			<input
-				class="form-check-input"
-				id="type-option-ngx"
-				name="type-option-radio"
-				type="radio"
-				value="ngx"
-				required
-				[(ngModel)]="modalType"
-			/>
-			<label class="form-check-label mb-2" for="type-option-ngx"
-				>NGX-Bootstrap Modal (deprecated)</label
-			>
-		</div>
-	</div>
-
 	<h2>Alert</h2>
 	<div class="row">
 		<div class="form-group col-6">
@@ -252,9 +222,4 @@
 	</div>
 	<button class="mr-3 btn btn-primary" type="button" (click)="showModal()">Show Modal</button>
 	Output: {{ showOutput$ | async | json }}
-
-	<h2 class="pt-5">Show Modal with Component</h2>
-	<button class="mr-3 btn btn-primary" type="button" (click)="showComponentModal()">
-		Show Component Modal
-	</button>
 </form>
