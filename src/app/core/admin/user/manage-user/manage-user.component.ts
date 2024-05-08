@@ -33,7 +33,7 @@ export class ManageUserComponent implements OnInit {
 	private adminUsersService = inject(AdminUsersService);
 	protected config = inject(APP_CONFIG);
 
-	proxyPki = computed(() => this.config()?.auth === 'proxy-pki' ?? false);
+	proxyPki = computed(() => this.config()?.auth === 'proxy-pki');
 	metadataLocked = computed(() => this.proxyPki());
 
 	ngOnInit() {
