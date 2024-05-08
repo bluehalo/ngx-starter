@@ -10,7 +10,6 @@ import {
 } from '@angular/router';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { provideCdkDialog } from './common/dialog/provider';
@@ -30,17 +29,7 @@ import { provideExampleRoutes } from './site/example/provider';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		importProvidersFrom(
-			BsDatepickerModule.forRoot(),
-			TooltipModule.forRoot(),
-			// only used by modal example.  no longer used for any core functionality.
-			ModalModule.forRoot()
-			// ngx-bootstrap modules - If still using uncomment imports below.
-			// AlertModule.forRoot(),
-			// BsDropdownModule.forRoot(),
-			// PopoverModule.forRoot(),
-			// TypeaheadModule.forRoot()
-		),
+		importProvidersFrom(BsDatepickerModule.forRoot(), TooltipModule.forRoot()),
 		provideAnimations(),
 		provideHttpClient(
 			withInterceptors([

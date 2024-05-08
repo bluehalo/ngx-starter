@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { authGuard } from '../../core';
 import { AdminComponent } from '../../core/admin/admin.component';
-import { authGuard } from '../../core/auth/auth.guard';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { ExploreComponent } from './explore.component';
