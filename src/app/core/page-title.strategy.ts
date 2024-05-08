@@ -5,7 +5,7 @@ import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
 
-import { APP_CONFIG } from './config.service';
+import { APP_CONFIG } from './tokens';
 
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {

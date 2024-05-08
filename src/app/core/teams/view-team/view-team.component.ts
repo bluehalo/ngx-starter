@@ -6,7 +6,7 @@ import { filter, first, switchMap } from 'rxjs/operators';
 
 import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SessionService } from '../../auth/session.service';
+import { SessionService } from '../../auth';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { getTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';

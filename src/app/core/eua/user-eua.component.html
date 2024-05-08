@@ -4,7 +4,7 @@
 			<div class="col-xl-8 offset-xl-2">
 				<h1>
 					End User Agreement (EUA)<br />
-					@if (!alreadyAccepted) {
+					@if (!alreadyAccepted()) {
 						<small> Please review and acknowledge the end user agreement </small>
 					}
 				</h1>
@@ -17,7 +17,7 @@
 						</div>
 						<!-- Contents of EUA -->
 						<div class="card-body" [innerHtml]="eua.text"></div>
-						@if (!alreadyAccepted) {
+						@if (!alreadyAccepted()) {
 							<div class="card-footer">
 								<div class="form-check">
 									<input
@@ -35,7 +35,7 @@
 							</div>
 						}
 					</div>
-					@if (!alreadyAccepted) {
+					@if (!alreadyAccepted()) {
 						<div class="pt-4">
 							<button
 								class="btn btn-primary"

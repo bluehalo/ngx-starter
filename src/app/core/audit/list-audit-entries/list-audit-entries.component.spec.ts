@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 
 import { PagingResults } from '../../../common/paging.model';
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
-import { APP_CONFIG } from '../../config.service';
+import { APP_CONFIG } from '../../tokens';
 import { AuditService } from '../audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries.component';
 

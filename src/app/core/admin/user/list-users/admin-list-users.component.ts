@@ -44,10 +44,9 @@ import {
 	SidebarComponent,
 	TextColumnComponent
 } from '../../../../common/table';
-import { Role } from '../../../auth/role.model';
-import { User } from '../../../auth/user.model';
-import { APP_CONFIG } from '../../../config.service';
+import { Role, User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
+import { APP_CONFIG } from '../../../tokens';
 import { AdminUsersService } from '../admin-users.service';
 import { UserRoleFilterDirective } from './user-role-filter.directive';
 

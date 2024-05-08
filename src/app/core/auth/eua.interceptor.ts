@@ -16,9 +16,11 @@ export function euaInterceptor(
 ): Observable<HttpEvent<unknown>> {
 	const router = inject(Router);
 
-	return errorInterceptor(req, next, ({ status, type }) => {
-		if (status === 403 && type === 'eua') {
+	return errorInterceptor(req, next, ({ status, message }) => {
+		if (status === 403 && message === 'User must accept end-user agreement.') {
 			router.navigate(['/eua']);
+			return true;
 		}
+		return false;
 	});
 }

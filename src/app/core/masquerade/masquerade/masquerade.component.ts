@@ -1,8 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, Subject, concat, of } from 'rxjs';
@@ -16,9 +14,8 @@ import {
 } from 'rxjs/operators';
 
 import { LoadingSpinnerComponent } from '../../../common/loading-spinner/loading-spinner.component';
-import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
-import { SessionService } from '../../auth/session.service';
-import { User } from '../../auth/user.model';
+import { User } from '../../auth';
+import { APP_SESSION } from '../../tokens';
 import { MasqueradeService } from '../masquerade.service';
 
 @Component({
@@ -29,7 +26,6 @@ import { MasqueradeService } from '../masquerade.service';
 export class MasqueradeComponent implements OnInit {
 	usersLoading = false;
 	usersInput$ = new Subject<string>();
-
 	users$: Observable<User[]>;
 
 	selectedUserDn: string;
@@ -38,27 +34,18 @@ export class MasqueradeComponent implements OnInit {
 
 	searchByDn = false;
 
-	private destroyRef = inject(DestroyRef);
-	public router = inject(Router);
 	private masqueradeService = inject(MasqueradeService);
-	private sessionService = inject(SessionService);
+	#session = inject(APP_SESSION);
 
 	ngOnInit() {
 		if (this.masqueradeService.getMasqueradeDn()) {
 			this.isMasquerading = true;
 			this.masqueradeService.clear();
 			window.location.href = '/api/auth/signout';
+		} else if (this.#session().user?.canMasquerade) {
+			this.loadUsers();
 		} else {
-			this.sessionService
-				.getSession()
-				.pipe(isNotNullOrUndefined(), takeUntilDestroyed(this.destroyRef))
-				.subscribe((session) => {
-					if (session.user.canMasquerade) {
-						this.loadUsers();
-					} else {
-						window.location.href = '#/';
-					}
-				});
+			window.location.href = '#/';
 		}
 	}
 

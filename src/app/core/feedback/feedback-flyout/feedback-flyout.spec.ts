@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { APP_CONFIG } from '../../config.service';
+import { APP_CONFIG } from '../../tokens';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackFlyoutComponent } from './feedback-flyout.component';
 

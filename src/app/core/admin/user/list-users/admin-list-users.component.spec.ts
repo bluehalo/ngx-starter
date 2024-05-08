@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PagingResults } from '../../../../common/paging.model';
-import { User } from '../../../auth/user.model';
-import { APP_CONFIG } from '../../../config.service';
+import { User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
+import { APP_CONFIG } from '../../../tokens';
 import { AdminUsersService } from '../admin-users.service';
 import { AdminListUsersComponent } from './admin-list-users.component';
 

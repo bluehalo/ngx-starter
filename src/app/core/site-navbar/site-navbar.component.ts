@@ -5,12 +5,12 @@ import { NgClass } from '@angular/common';
 import {
 	Component,
 	DestroyRef,
-	EventEmitter,
-	Input,
 	OnInit,
-	Output,
 	computed,
-	inject
+	effect,
+	inject,
+	model,
+	signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -22,16 +22,12 @@ import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-route
 import { DialogService } from '../../common/dialog';
 import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
 import { getAdminTopics } from '../admin/admin-topic.model';
-import { HasRoleDirective } from '../auth/directives/has-role.directive';
-import { HasSomeRolesDirective } from '../auth/directives/has-some-roles.directive';
-import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
-import { Session } from '../auth/session.model';
-import { SessionService } from '../auth/session.service';
-import { APP_CONFIG } from '../config.service';
+import { HasRoleDirective, HasSomeRolesDirective, IsAuthenticatedDirective } from '../auth';
 import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
+import { APP_CONFIG, APP_SESSION } from '../tokens';
 import { getNavbarTopics } from './navbar-topic.model';
 
 @Component({
@@ -60,23 +56,18 @@ import { getNavbarTopics } from './navbar-topic.model';
 	]
 })
 export class SiteNavbarComponent implements OnInit {
-	navbarOpenValue = false;
-
-	adminNavOpen = false;
-	helpNavOpen = false;
-	userNavOpen = false;
-	messagesNavOpen = false;
-
-	session: Session | null = null;
+	navbarOpen = model(false);
+	adminNavOpen = signal(false);
+	helpNavOpen = signal(false);
+	userNavOpen = signal(false);
+	messagesNavOpen = signal(false);
 
 	adminTopics = getAdminTopics();
 
 	navbarItems = getNavbarTopics();
 
-	canMasquerade = false;
-	isMasquerade = false;
-
-	numNewMessages = 0;
+	isMasquerade = signal(false);
+	numNewMessages = signal(0);
 
 	menuPositions: ConnectedPosition[] = [
 		{
@@ -89,60 +80,46 @@ export class SiteNavbarComponent implements OnInit {
 		}
 	];
 
-	@Output()
-	readonly navbarOpenChange = new EventEmitter<boolean>();
+	#destroyRef = inject(DestroyRef);
+	#dialogService = inject(DialogService);
+	#messageService = inject(MessageService);
+	#masqueradeService = inject(MasqueradeService);
+	#config = inject(APP_CONFIG);
 
-	@Input()
-	get navbarOpen() {
-		return this.navbarOpenValue;
+	session = inject(APP_SESSION);
+
+	masqueradeEnabled = computed(() => this.#config()?.masqueradeEnabled ?? false);
+	showApiDocsLink = computed(() => this.#config()?.apiDocs?.enabled ?? false);
+	apiDocsLink = computed(() => this.#config()?.apiDocs?.path ?? '');
+	showFeedbackOption = computed(() => this.#config()?.feedback?.showInSidebar ?? true);
+	showUserPreferencesLink = computed(() => this.#config()?.userPreferences?.enabled ?? false);
+	userPreferencesLink = computed(() => this.#config()?.userPreferences?.path ?? '');
+	canMasquerade = computed(() => this.session().user?.canMasquerade ?? false);
+
+	constructor() {
+		effect(() => {
+			this.navbarOpen();
+			if (null != window) {
+				window.dispatchEvent(new Event('resize', { bubbles: true }));
+			}
+		});
 	}
-
-	set navbarOpen(v: boolean) {
-		this.navbarOpenValue = v;
-		this.navbarOpenChange.emit(v);
-
-		if (null != window) {
-			window.dispatchEvent(new Event('resize', { bubbles: true }));
-		}
-	}
-
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private sessionService = inject(SessionService);
-	private messageService = inject(MessageService);
-	private masqueradeService = inject(MasqueradeService);
-	private config = inject(APP_CONFIG);
-
-	masqueradeEnabled = computed(() => this.config()?.masqueradeEnabled ?? false);
-	showApiDocsLink = computed(() => this.config()?.apiDocs?.enabled ?? false);
-	apiDocsLink = computed(() => this.config()?.apiDocs?.path ?? '');
-	showFeedbackOption = computed(() => this.config()?.feedback?.showInSidebar ?? true);
-	showUserPreferencesLink = computed(() => this.config()?.userPreferences?.enabled ?? false);
-	userPreferencesLink = computed(() => this.config()?.userPreferences?.path ?? '');
 
 	ngOnInit() {
-		this.sessionService
-			.getSession()
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe((session) => {
-				this.session = session;
-				this.canMasquerade = session?.user?.canMasquerade ?? false;
-			});
-
-		this.messageService.numMessagesIndicator$
-			.pipe(takeUntilDestroyed(this.destroyRef))
+		this.#messageService.numMessagesIndicator$
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((count) => {
-				this.numNewMessages = count;
+				this.numNewMessages.set(count);
 			});
 
-		this.isMasquerade = this.masqueradeService.getMasqueradeDn() !== undefined;
+		this.isMasquerade.set(this.#masqueradeService.getMasqueradeDn() !== undefined);
 	}
 
 	toggleNavbar() {
-		this.navbarOpen = !this.navbarOpen;
+		this.navbarOpen.set(!this.navbarOpen());
 	}
 
 	showFeedbackModal() {
-		this.dialogService.open(FeedbackModalComponent);
+		this.#dialogService.open(FeedbackModalComponent);
 	}
 }

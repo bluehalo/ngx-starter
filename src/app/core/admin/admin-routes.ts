@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { authGuard } from '../auth/auth.guard';
+import { authGuard } from '../auth';
 import { AdminComponent } from './admin.component';
 import { ADMIN_CACHE_ENTRIES_ROUTES } from './cache-entries/admin-cache-entries-routes';
 import { ADMIN_EUA_ROUTES } from './end-user-agreement/admin-eua-routes';

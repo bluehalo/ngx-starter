@@ -1,13 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	computed,
+	inject,
+	signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
-import { SessionService } from '../auth/session.service';
-import { APP_CONFIG } from '../config.service';
+import { SessionService } from '../auth';
 import { NavigationService } from '../navigation.service';
+import { APP_CONFIG } from '../tokens';
 
 @Component({
 	templateUrl: 'signin.component.html',
@@ -19,7 +26,7 @@ import { NavigationService } from '../navigation.service';
 export class SigninComponent {
 	username?: string;
 	password?: string;
-	error?: string;
+	error = signal('');
 
 	private destroyRef = inject(DestroyRef);
 	private sessionService = inject(SessionService);
@@ -42,11 +49,7 @@ export class SigninComponent {
 				next: () => {
 					this.navigationService.navigateToPreviousRoute();
 				},
-				error: (error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.error = error.error?.message ?? 'Unexpected error signing in.';
-					}
-				}
+				error: (error: unknown) => this.handleError(error)
 			});
 	}
 
@@ -59,12 +62,16 @@ export class SigninComponent {
 					next: () => {
 						this.navigationService.navigateToPreviousRoute();
 					},
-					error: (error: unknown) => {
-						if (error instanceof HttpErrorResponse) {
-							this.error = error.error?.message ?? 'Unexpected error signing in.';
-						}
-					}
+					error: (error: unknown) => this.handleError(error)
 				});
+		}
+	}
+
+	handleError(error: unknown) {
+		if (error instanceof HttpErrorResponse && error.error?.message) {
+			this.error.set(error.error.message);
+		} else {
+			this.error.set('Unexpected error signing in.');
 		}
 	}
 }

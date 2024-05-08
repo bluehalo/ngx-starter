@@ -19,6 +19,8 @@ export function signinInterceptor(
 	return errorInterceptor(req, next, ({ status, url }) => {
 		if (status === 401 && !url.endsWith('auth/signin')) {
 			router.navigate(['/signin']);
+			return true;
 		}
+		return false;
 	});
 }

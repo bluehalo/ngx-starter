@@ -7,8 +7,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
-import { AuthorizationService } from '../auth/authorization.service';
-import { User } from '../auth/user.model';
+import { User } from '../auth';
+import { APP_SESSION } from '../tokens';
 import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamMember } from './team-member.model';
 import { Team } from './team.model';
@@ -34,7 +34,7 @@ export const teamResolver: ResolveFn<Team | null> = (
 	providedIn: 'root'
 })
 export class TeamsService extends AbstractEntityService<Team> {
-	private authorizationService = inject(AuthorizationService);
+	#session = inject(APP_SESSION);
 	private teamAuthorizationService = inject(TeamAuthorizationService);
 
 	constructor() {
@@ -130,7 +130,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 			map((teams) =>
 				teams.filter(
 					(team) =>
-						this.authorizationService.isAdmin() ||
+						this.#session().isAdmin() ||
 						this.teamAuthorizationService.canManageResources(team)
 				)
 			)

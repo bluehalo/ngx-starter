@@ -11,9 +11,8 @@ import { MultiSelectDirective } from '../../../../common/multi-select.directive'
 import { JoinPipe } from '../../../../common/pipes/join.pipe';
 import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { UserExternalRolesSelectDirective } from '../../../auth/directives/user-external-roles-select.directive';
-import { SessionService } from '../../../auth/session.service';
-import { APP_CONFIG } from '../../../config.service';
+import { SessionService, UserExternalRolesSelectDirective } from '../../../auth';
+import { APP_CONFIG } from '../../../tokens';
 import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';
 import { ListTeamMembersComponent } from '../../list-team-members/list-team-members.component';
 import { ListSubTeamsComponent } from '../../list-teams/list-sub-teams.component';

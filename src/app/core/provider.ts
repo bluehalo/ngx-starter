@@ -7,14 +7,16 @@ import { firstValueFrom } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ADMIN_TOPICS } from './admin/admin-topic.model';
-import { APP_CONFIG, ConfigService } from './config.service';
+import { SessionService } from './auth';
+import { ConfigService } from './config.service';
 import { CORE_ROUTES } from './core-routes';
 import { CustomViewportScroller, SCROLL_ELEMENT } from './custom_viewport_scroller';
 import { GettingStartedHelpComponent } from './help/getting-started/getting-started-help.component';
 import { HELP_TOPICS } from './help/help-topic.component';
 import { NavigationService } from './navigation.service';
+import { TEAM_TOPICS } from './teams';
 import { TeamsHelpComponent } from './teams/help/teams-help.component';
-import { TEAM_TOPICS } from './teams/team-topic.model';
+import { APP_CONFIG, APP_SESSION } from './tokens';
 
 export function provideCoreRoutes() {
 	// Registering Topics here.  Need to find better alternative for this.
@@ -86,6 +88,7 @@ export function provideCoreRoutes() {
 		}
 	]);
 }
+
 export function provideAppConfig() {
 	return makeEnvironmentProviders([
 		{
@@ -145,4 +148,16 @@ export function provideViewportScroller(scrollElementID?: string) {
 	}
 
 	return makeEnvironmentProviders(providers);
+}
+
+export function provideSession() {
+	return makeEnvironmentProviders([
+		{
+			provide: APP_SESSION,
+			useFactory: (sessionService: SessionService) => {
+				return sessionService.session;
+			},
+			deps: [SessionService]
+		}
+	]);
 }

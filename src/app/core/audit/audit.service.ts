@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
 import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-import { User } from '../auth/user.model';
+import { User } from '../auth';
 import { AuditActionTypes } from './audit.classes';
 
 @Injectable()

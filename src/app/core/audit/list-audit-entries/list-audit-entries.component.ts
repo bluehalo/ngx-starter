@@ -23,8 +23,8 @@ import {
 	AsyTableEmptyStateComponent,
 	PaginatorComponent
 } from '../../../common/table';
-import { APP_CONFIG } from '../../config.service';
 import { ExportConfigService } from '../../export-config.service';
+import { APP_CONFIG } from '../../tokens';
 import { AuditObjectComponent } from '../audit-object.component';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';

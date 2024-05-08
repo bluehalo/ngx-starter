@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { NULL_PAGING_RESULTS, PagingResults } from '../../common/paging.model';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
-import { User } from '../auth/user.model';
+import { User } from '../auth';
 
 @Injectable({ providedIn: 'root' })
 export class MasqueradeService {

@@ -10,6 +10,7 @@ import {
 	OnInit,
 	SimpleChanges,
 	ViewChild,
+	computed,
 	inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -44,9 +45,8 @@ import {
 	PaginatorComponent,
 	TextColumnComponent
 } from '../../../common/table';
-import { AuthorizationService } from '../../auth/authorization.service';
-import { SessionService } from '../../auth/session.service';
-import { User } from '../../auth/user.model';
+import { SessionService } from '../../auth';
+import { APP_SESSION } from '../../tokens';
 import {
 	AddMembersModalComponent,
 	AddMembersModalData,
@@ -89,8 +89,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	@Input({ required: true })
 	team!: Team;
 
-	isUserAdmin = false;
-
 	teamRoleOptions: any[] = TeamRole.ROLES;
 
 	typeFilterOptions: ListFilterOption[] = [
@@ -104,8 +102,6 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				value: role.role
 			}) as ListFilterOption
 	);
-
-	user: User | null = null;
 
 	columns = ['name', 'username', 'lastLogin', 'type', 'role', 'actions'];
 	displayedColumns: string[] = [];
@@ -123,21 +119,17 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 	private dialogService = inject(DialogService);
 	private router = inject(Router);
 	private teamsService = inject(TeamsService);
-	private authorizationService = inject(AuthorizationService);
 	private sessionService = inject(SessionService);
 	private alertService = inject(SystemAlertService);
+	#session = inject(APP_SESSION);
+
+	#user = computed(() => this.#session().user);
+
+	constructor() {
+		this.alertService.clearAllAlerts();
+	}
 
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
-
-		this.sessionService
-			.getSession()
-			.pipe(isNotNullOrUndefined(), takeUntilDestroyed(this.destroyRef))
-			.subscribe((session) => {
-				this.user = session?.user ?? null;
-				this.isUserAdmin = this.authorizationService.isAdmin();
-			});
-
 		this.displayedColumns = this.columns.filter(
 			(column) => this.team.implicitMembers || column !== 'explicit'
 		);
@@ -215,7 +207,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 
 		// If user is removing their own admin, verify that they know what they're doing
-		if (this.user?._id === member._id && member.role === 'admin' && role !== 'admin') {
+		if (this.#user()?._id === member._id && member.role === 'admin' && role !== 'admin') {
 			this.dialogService
 				.confirm(
 					'Remove "Team Admin" role?',

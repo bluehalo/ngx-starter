@@ -1,10 +1,10 @@
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { Component, computed, inject } from '@angular/core';
 
-import { IsAuthenticatedDirective } from '../auth/directives/is-authenticated.directive';
-import { APP_CONFIG } from '../config.service';
+import { IsAuthenticatedDirective } from '../auth';
 import { FeedbackFlyoutComponent } from '../feedback/feedback-flyout/feedback-flyout.component';
 import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
+import { APP_CONFIG } from '../tokens';
 
 @Component({
 	selector: 'site-container',
@@ -14,11 +14,11 @@ import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 	imports: [SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent, CdkScrollable]
 })
 export class SiteContainerComponent {
-	private config = inject(APP_CONFIG);
+	#config = inject(APP_CONFIG);
 
-	bannerHtml = computed(() => this.config()?.banner?.html);
-	copyrightHtml = computed(() => this.config()?.copyright?.html);
-	showFeedbackFlyout = computed(() => this.config()?.feedback?.showFlyout ?? false);
+	bannerHtml = computed(() => this.#config()?.banner?.html);
+	copyrightHtml = computed(() => this.#config()?.copyright?.html);
+	showFeedbackFlyout = computed(() => this.#config()?.feedback?.showFlyout ?? false);
 
 	skipToMainContent(e: any) {
 		e.preventDefault();
