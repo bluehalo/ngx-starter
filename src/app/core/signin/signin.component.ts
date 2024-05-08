@@ -33,7 +33,7 @@ export class SigninComponent {
 	private navigationService = inject(NavigationService);
 	private config = inject(APP_CONFIG);
 
-	pkiMode = computed(() => this.config()?.auth === 'proxy-pki' ?? false);
+	pkiMode = computed(() => this.config()?.auth === 'proxy-pki');
 
 	constructor() {
 		if (this.pkiMode()) {
