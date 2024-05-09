@@ -15,6 +15,7 @@ import { Team } from './team.model';
 
 export interface AddedMember {
 	_id: string;
+	name?: string;
 	username?: string;
 	role: string;
 	roleDisplay: string;
@@ -35,7 +36,7 @@ export const teamResolver: ResolveFn<Team | null> = (
 })
 export class TeamsService extends AbstractEntityService<Team> {
 	#session = inject(APP_SESSION);
-	private teamAuthorizationService = inject(TeamAuthorizationService);
+	#teamAuthorizationService = inject(TeamAuthorizationService);
 
 	constructor() {
 		super({
@@ -131,7 +132,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 				teams.filter(
 					(team) =>
 						this.#session().isAdmin() ||
-						this.teamAuthorizationService.canManageResources(team)
+						this.#teamAuthorizationService.canManageResources(team)
 				)
 			)
 		);

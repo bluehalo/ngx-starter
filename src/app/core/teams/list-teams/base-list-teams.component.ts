@@ -1,12 +1,13 @@
 import {
 	Directive,
-	Input,
+	HostAttributeToken,
 	OnChanges,
-	OnDestroy,
 	OnInit,
 	SimpleChanges,
 	booleanAttribute,
-	inject
+	computed,
+	inject,
+	input
 } from '@angular/core';
 
 import cloneDeep from 'lodash/cloneDeep';
@@ -20,30 +21,24 @@ import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
 @Directive()
-export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, OnInit {
-	@Input()
-	parent?: Team;
+export abstract class BaseListTeamsComponent implements OnChanges, OnInit {
+	readonly #teamsService = inject(TeamsService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #session = inject(APP_SESSION);
 
-	@Input({ transform: booleanAttribute })
-	embedded = false;
+	readonly parent = input<Team>();
+	readonly embedded = booleanAttribute(
+		inject(new HostAttributeToken('embedded'), { optional: true })
+	);
 
-	canCreateTeam = false;
+	readonly canCreateTeam = computed(() => this.#session().hasSomeRoles(['editor', 'admin']));
 
-	displayedColumns = ['name', 'created', 'description'];
-
-	teamsService = inject(TeamsService);
-	alertService = inject(SystemAlertService);
-	#session = inject(APP_SESSION);
+	readonly displayedColumns = ['name', 'created', 'description'];
 
 	protected constructor(public dataSource: AsyTableDataSource<Team>) {}
 
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
-		this.canCreateTeam = this.#session().hasSomeRoles(['editor', 'admin']);
-	}
-
-	ngOnDestroy() {
-		this.dataSource.disconnect();
+		this.#alertService.clearAllAlerts();
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -57,15 +52,15 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnDestroy, On
 		search: string,
 		query: any
 	): Observable<PagingResults<Team>> {
-		if (this.parent) {
+		if (this.parent()) {
 			query = cloneDeep(query);
 			if (!query.$and) {
 				query.$and = [];
 			}
-			query.$and.push({ parent: this.parent._id });
+			query.$and.push({ parent: this.parent()?._id });
 		}
 
-		return this.teamsService.search(pagingOptions, query, search);
+		return this.#teamsService.search(pagingOptions, query, search);
 	}
 
 	clearFilters() {

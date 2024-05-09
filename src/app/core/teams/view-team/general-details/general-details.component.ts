@@ -1,5 +1,13 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, DestroyRef, Input, computed, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	computed,
+	inject,
+	model,
+	signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -36,47 +44,48 @@ import { TeamsService } from '../../teams.service';
 		MultiSelectDirective,
 		NgSelectModule,
 		UserExternalRolesSelectDirective
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralDetailsComponent {
-	@Input({ required: true })
-	team!: Team;
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #sessionService = inject(SessionService);
+	readonly #teamsService = inject(TeamsService);
+	readonly #config = inject(APP_CONFIG);
 
-	_team: Team;
+	readonly nestedTeamsEnabled = computed(() => this.#config()?.teams?.nestedTeams ?? false);
+	readonly implicitMembersStrategy = computed(
+		() => this.#config()?.teams?.implicitMembers?.strategy
+	);
 
-	isEditing = false;
+	readonly team = model.required<Team>();
+	readonly isEditing = signal(false);
 
-	private destroyRef = inject(DestroyRef);
-	private alertService = inject(SystemAlertService);
-	private sessionService = inject(SessionService);
-	private teamsService = inject(TeamsService);
-	private config = inject(APP_CONFIG);
-
-	nestedTeamsEnabled = computed(() => this.config()?.teams?.nestedTeams ?? false);
-	implicitMembersStrategy = computed(() => this.config()?.teams?.implicitMembers?.strategy);
+	teamEditCopy: Team;
 
 	edit() {
-		this._team = new Team(this.team);
-		this.isEditing = true;
+		this.teamEditCopy = new Team(this.team());
+		this.isEditing.set(true);
 	}
 
 	cancelEdit() {
-		this.isEditing = false;
+		this.isEditing.set(false);
 	}
 
 	saveEdit() {
-		this.teamsService
-			.update(this._team)
+		this.#teamsService
+			.update(this.teamEditCopy)
 			.pipe(
 				tap((team: Team | null) => {
-					this.isEditing = false;
+					this.isEditing.set(false);
 					if (team) {
-						this.team = team;
-						this.alertService.addAlert('Team updated', 'success', 5000);
+						this.team.set(team);
+						this.#alertService.addAlert('Team updated', 'success', 5000);
 					}
 				}),
-				switchMap(() => this.sessionService.reloadSession()),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#sessionService.reloadSession()),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe();
 	}

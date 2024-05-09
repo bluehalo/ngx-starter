@@ -6,7 +6,7 @@ import { Topic } from '../../common/topic.model';
 
 export const TEAM_TOPICS = new InjectionToken<Topic[][]>('TEAM_TOPIC');
 
-export const getTeamTopics = () =>
+export const injectTeamTopics: () => Topic[] = () =>
 	sortBy((inject(TEAM_TOPICS, { optional: true }) ?? []).flat(), [
 		(t) => t.ordinal ?? 1,
 		'title',

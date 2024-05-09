@@ -1,6 +1,5 @@
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, inject } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Directive, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 import { TeamAuthorizationService } from '../team-authorization.service';
@@ -18,55 +17,30 @@ import { Team } from '../team.model';
 	standalone: true
 })
 export class HasTeamRoleDirective {
-	private team: Pick<Team, '_id'>;
-	private role: string | TeamRole;
-	private andCondition = true;
-	private orCondition = false;
+	readonly #ngIfDirective = inject(NgIf);
+	readonly #teamAuthorizationService = inject(TeamAuthorizationService);
+	readonly #session = inject(APP_SESSION);
 
-	private destroyRef = inject(DestroyRef);
-	private ngIfDirective = inject(NgIf);
-	private teamAuthorizationService = inject(TeamAuthorizationService);
-	#session = inject(APP_SESSION);
-
-	@Input({ required: true })
-	set hasTeamRole(team: Pick<Team, '_id'>) {
-		this.team = team;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set hasTeamRoleRole(role: string | TeamRole) {
-		this.role = role;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set hasTeamRoleAnd(condition: boolean) {
-		this.andCondition = condition;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set hasTeamRoleOr(condition: boolean) {
-		this.orCondition = condition;
-		this.updateNgIf();
-	}
+	readonly team = input.required<Pick<Team, '_id'>>({ alias: 'hasTeamRole' });
+	readonly role = input.required<string | TeamRole>({ alias: 'hasTeamRoleRole' });
+	readonly andCondition = input(true, { alias: 'hasTeamRoleAnd' });
+	readonly orCondition = input(false, { alias: 'hasTeamRoleOr' });
 
 	constructor() {
-		toObservable(this.#session)
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe(() => {
-				this.updateNgIf();
-			});
+		effect(() => {
+			this.updateNgIf();
+		});
 	}
 
 	protected checkPermission(): boolean {
 		return (
-			this.#session().isAdmin() || this.teamAuthorizationService.hasRole(this.team, this.role)
+			this.#session().isAdmin() ||
+			this.#teamAuthorizationService.hasRole(this.team(), this.role())
 		);
 	}
 
 	private updateNgIf() {
-		this.ngIfDirective.ngIf = this.orCondition || (this.andCondition && this.checkPermission());
+		this.#ngIfDirective.ngIf =
+			this.orCondition() || (this.andCondition() && this.checkPermission());
 	}
 }

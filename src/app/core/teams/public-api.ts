@@ -6,3 +6,4 @@ export * from './team-role.model';
 export * from './team-topic.model';
 export * from './directives/has-some-team-roles.directive';
 export * from './directives/has-team-role.directive';
+export * from './directives/team-select.directive';

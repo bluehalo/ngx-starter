@@ -1,13 +1,21 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	OnInit,
+	inject,
+	signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
 import { DialogAction, DialogReturn } from '../../../common/dialog';
 import { ModalComponent } from '../../../common/modal/modal/modal.component';
@@ -23,15 +31,8 @@ export type AddMembersModalData = {
 export type AddMembersModalReturn = DialogReturn<number>;
 
 @Component({
-	selector: 'app-add-members-modal',
 	templateUrl: './add-members-modal.component.html',
-	styles: [
-		`
-			:host {
-				display: contents;
-			}
-		`
-	],
+	styleUrls: ['./add-members-modal.component.scss'],
 	standalone: true,
 	imports: [
 		ModalComponent,
@@ -40,88 +41,92 @@ export type AddMembersModalReturn = DialogReturn<number>;
 		AsyncPipe,
 		CdkMenu,
 		CdkMenuItem,
-		CdkMenuTrigger
-	]
+		CdkMenuTrigger,
+		CdkTableModule
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddMembersModalComponent implements OnInit {
-	teamId: string;
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogRef: DialogRef<AddMembersModalReturn> = inject(DialogRef);
+	readonly #data: AddMembersModalData = inject(DIALOG_DATA);
+	readonly #teamsService = inject(TeamsService);
+	readonly #defaultRole = 'member';
 
-	addedMembers: AddedMember[] = [];
+	readonly addedMembers = signal<AddedMember[]>([]);
+	readonly isSubmitting = signal(false);
+	readonly columns = ['name', 'username', 'role', 'actions'];
+	readonly teamRoleOptions = TeamRole.ROLES;
 
-	submitting = false;
-
-	queryUserSearchTerm = '';
-
-	teamRoleOptions: any[] = TeamRole.ROLES;
-
-	usersLoading = false;
-	usersInput$ = new Subject<string>();
-	users$!: Observable<User[]>;
-
-	teamsService = inject(TeamsService);
-
-	private defaultRole = 'member';
-
-	private pagingOptions: PagingOptions = new PagingOptions();
-
-	private destroyRef = inject(DestroyRef);
-	private dialogRef: DialogRef<AddMembersModalReturn> = inject(DialogRef);
-	private data: AddMembersModalData = inject(DIALOG_DATA);
-
-	constructor() {
-		this.teamId = this.data.teamId;
-	}
+	readonly usersLoading = signal(false);
+	readonly usersInput$ = new Subject<string>();
+	readonly typeaheadUsers = signal<User[]>([]);
 
 	ngOnInit() {
-		if (!this.data.teamId) {
+		if (!this.#data.teamId) {
 			throw new TypeError(`'TeamId' is required`);
 		}
 
-		this.users$ = this.usersInput$
+		this.usersInput$
 			.pipe(
 				debounceTime(200),
 				distinctUntilChanged(),
-				tap(() => (this.usersLoading = true)),
+				tap(() => {
+					this.usersLoading.set(true);
+				}),
 				switchMap((term) =>
-					this.teamsService.searchUsers(
-						{ 'teams._id': { $ne: this.data.teamId } },
+					this.#teamsService.searchUsers(
+						{ 'teams._id': { $ne: this.#data.teamId } },
 						term,
-						this.pagingOptions,
+						new PagingOptions(),
 						{}
 					)
 				),
 				map((result) =>
 					result.elements.filter(
-						(user: any) => !this.addedMembers.map((m) => m._id).includes(user?._id)
+						(user) =>
+							!this.addedMembers()
+								.map((m) => m._id)
+								.includes(user._id)
 					)
 				),
 				tap(() => {
-					this.usersLoading = false;
-				})
+					this.usersLoading.set(false);
+				}),
+				takeUntilDestroyed(this.#destroyRef)
 			)
-			.pipe(startWith([]));
+			.subscribe((users) => {
+				this.typeaheadUsers.set(users);
+			});
 	}
 
 	submit() {
-		this.submitting = true;
+		this.isSubmitting.set(true);
 
 		// Add users who are already in the system
-		this.teamsService
-			.addMembers(this.addedMembers, { _id: this.data.teamId })
-			.pipe(takeUntilDestroyed(this.destroyRef))
+		this.#teamsService
+			.addMembers(this.addedMembers(), { _id: this.#data.teamId })
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe(() => {
-				this.submitting = false;
-				this.dialogRef.close({ action: DialogAction.OK, data: this.addedMembers.length });
+				this.isSubmitting.set(false);
+				this.#dialogRef.close({
+					action: DialogAction.OK,
+					data: this.addedMembers().length
+				});
 			});
 	}
 
 	cancel() {
-		this.dialogRef.close({ action: DialogAction.CANCEL });
+		this.#dialogRef.close({ action: DialogAction.CANCEL });
 	}
 
-	remove(ndx: number) {
-		if (ndx >= 0 && ndx < this.addedMembers.length) {
-			this.addedMembers.splice(ndx, 1);
+	remove(index: number) {
+		if (index >= 0 && index < this.addedMembers().length) {
+			this.addedMembers.update((members) => {
+				// can be simplified with toSpliced once we upgrade to node 20
+				members.splice(index, 1);
+				return [...members];
+			});
 		}
 	}
 
@@ -131,18 +136,19 @@ export class AddMembersModalComponent implements OnInit {
 	}
 
 	typeaheadOnSelect(user: User, comp: NgSelectComponent) {
-		const selectedUsername = user?.username;
-		const selectedUserId = user?._id;
-		if (null != selectedUsername) {
-			this.addedMembers.push({
-				username: selectedUsername,
-				_id: selectedUserId,
-				role: this.defaultRole,
-				roleDisplay: TeamRole.getDisplay(this.defaultRole)
-			} as AddedMember);
+		if (user) {
+			this.addedMembers.update((members) => [
+				...members,
+				{
+					name: user.name,
+					username: user.username,
+					_id: user._id,
+					role: this.#defaultRole,
+					roleDisplay: TeamRole.getDisplay(this.#defaultRole)
+				}
+			]);
 
 			comp.clearModel();
 		}
-		this.queryUserSearchTerm = '';
 	}
 }

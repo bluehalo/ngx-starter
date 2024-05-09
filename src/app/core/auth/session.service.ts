@@ -55,7 +55,7 @@ export class SessionService {
 			tap((eua) => {
 				this.#session.update((session) => {
 					session.user?.setEua(eua);
-					return session;
+					return new Session(session.user);
 				});
 			})
 		);
