@@ -9,8 +9,8 @@ import { AbstractEntityService, ServiceMethod } from '../../common/abstract-enti
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
 import { User } from '../auth';
 import { APP_SESSION } from '../tokens';
-import { TeamAuthorizationService } from './team-authorization.service';
 import { TeamMember } from './team-member.model';
+import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
 
 export interface AddedMember {
@@ -36,7 +36,6 @@ export const teamResolver: ResolveFn<Team | null> = (
 })
 export class TeamsService extends AbstractEntityService<Team> {
 	#session = inject(APP_SESSION);
-	#teamAuthorizationService = inject(TeamAuthorizationService);
 
 	constructor() {
 		super({
@@ -132,7 +131,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 				teams.filter(
 					(team) =>
 						this.#session().isAdmin() ||
-						this.#teamAuthorizationService.canManageResources(team)
+						this.#session().hasSomeTeamRoles(team, [TeamRole.EDITOR, TeamRole.ADMIN])
 				)
 			)
 		);

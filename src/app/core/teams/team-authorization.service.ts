@@ -1,54 +1,47 @@
-import { Injectable, computed, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { APP_SESSION } from '../tokens';
-import { TeamMember } from './team-member.model';
 import { TeamRole } from './team-role.model';
 import { Team } from './team.model';
 
+/**
+ * @deprecated Implementation moved to Session.
+ */
 @Injectable({
 	providedIn: 'root'
 })
 export class TeamAuthorizationService {
 	readonly #session = inject(APP_SESSION);
-	readonly #member = computed(() => new TeamMember(this.#session().user));
 
 	public hasRole(team: Pick<Team, '_id'>, role: string | TeamRole): boolean {
-		return this.#member().getRoleInTeam(team) === this.roleToString(role);
+		return this.#session().hasTeamRole(team, role);
 	}
 
 	public hasAnyRole(team: Pick<Team, '_id'>): boolean {
-		return TeamRole.ROLES.some((role: TeamRole) => this.hasRole(team, role));
+		return this.#session().hasSomeTeamRoles(team, TeamRole.ROLES);
 	}
 
 	public hasSomeRoles(team: Pick<Team, '_id'>, roles: Array<string | TeamRole>): boolean {
-		return roles.some((role: string | TeamRole) => this.hasRole(team, role));
+		return this.#session().hasSomeTeamRoles(team, roles);
 	}
 
 	public hasEveryRole(team: Pick<Team, '_id'>, roles: Array<string | TeamRole>): boolean {
-		return roles.every((role: string | TeamRole) => this.hasRole(team, role));
-		// return roles.reduce( (p: boolean, c: string) => p && this.hasRole(c), true);
+		return this.#session().hasEveryTeamRole(team, roles);
 	}
 
 	public isMember(team: Pick<Team, '_id'>): boolean {
-		return this.hasRole(team, TeamRole.MEMBER.role);
+		return this.#session().hasTeamRole(team, TeamRole.MEMBER);
 	}
 
 	public isEditor(team: Pick<Team, '_id'>): boolean {
-		return this.hasRole(team, TeamRole.EDITOR.role);
-	}
-
-	public canManageResources(team: Pick<Team, '_id'>): boolean {
-		return this.isAdmin(team) || this.isEditor(team);
+		return this.#session().hasTeamRole(team, TeamRole.EDITOR);
 	}
 
 	public isAdmin(team: Pick<Team, '_id'>): boolean {
-		return this.hasRole(team, TeamRole.ADMIN.role);
+		return this.#session().hasRole(TeamRole.ADMIN);
 	}
 
-	private roleToString(role: string | TeamRole) {
-		if (typeof role !== 'string') {
-			return role?.role;
-		}
-		return role;
+	public canManageResources(team: Pick<Team, '_id'>): boolean {
+		return this.#session().hasSomeTeamRoles(team, [TeamRole.EDITOR, TeamRole.ADMIN]);
 	}
 }
