@@ -1,6 +1,5 @@
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, inject } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Directive, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 import { Role } from '../role.model';
@@ -16,42 +15,21 @@ import { Role } from '../role.model';
 	standalone: true
 })
 export class HasRoleDirective {
-	role: string | Role;
-	andCondition = true;
-	orCondition = false;
-
-	private destroyRef = inject(DestroyRef);
-	private ngIfDirective = inject(NgIf);
+	#ngIfDirective = inject(NgIf);
 	#session = inject(APP_SESSION);
 
-	@Input({ required: true })
-	set hasRole(role: string | Role) {
-		this.role = role;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set hasRoleAnd(condition: boolean) {
-		this.andCondition = condition;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set hasRoleOr(condition: boolean) {
-		this.orCondition = condition;
-		this.updateNgIf();
-	}
+	role = input.required<string | Role>({ alias: 'hasRole' });
+	andCondition = input(true, { alias: 'hasRoleAnd' });
+	orCondition = input(false, { alias: 'hasRoleOr' });
 
 	constructor() {
-		toObservable(this.#session)
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe(() => {
-				this.updateNgIf();
-			});
+		effect(() => {
+			this.updateNgIf();
+		});
 	}
 
 	private updateNgIf() {
-		this.ngIfDirective.ngIf =
-			this.orCondition || (this.andCondition && this.#session().hasRole(this.role));
+		this.#ngIfDirective.ngIf =
+			this.orCondition() || (this.andCondition() && this.#session().hasRole(this.role()));
 	}
 }
