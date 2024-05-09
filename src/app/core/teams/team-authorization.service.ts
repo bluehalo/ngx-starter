@@ -9,8 +9,8 @@ import { Team } from './team.model';
 	providedIn: 'root'
 })
 export class TeamAuthorizationService {
-	#session = inject(APP_SESSION);
-	#member = computed(() => new TeamMember(this.#session().user));
+	readonly #session = inject(APP_SESSION);
+	readonly #member = computed(() => new TeamMember(this.#session().user));
 
 	public hasRole(team: Pick<Team, '_id'>, role: string | TeamRole): boolean {
 		return this.#member().getRoleInTeam(team) === this.roleToString(role);

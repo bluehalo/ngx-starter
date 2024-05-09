@@ -2,16 +2,16 @@ import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	DestroyRef,
-	Input,
 	OnChanges,
-	OnDestroy,
 	OnInit,
 	SimpleChanges,
-	ViewChild,
 	computed,
-	inject
+	inject,
+	input,
+	viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -80,22 +80,32 @@ import { TeamsService } from '../teams.service';
 		CdkMenuItem,
 		TextColumnComponent,
 		AgoDateColumnComponent
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
-	@ViewChild(AsyFilterDirective)
-	filter: AsyFilterDirective;
+export class ListTeamMembersComponent implements OnChanges, OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #router = inject(Router);
+	readonly #teamsService = inject(TeamsService);
+	readonly #sessionService = inject(SessionService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #session = inject(APP_SESSION);
 
-	@Input({ required: true })
-	team!: Team;
+	readonly filter = viewChild.required(AsyFilterDirective);
 
-	teamRoleOptions: any[] = TeamRole.ROLES;
+	readonly team = input.required<Team>();
 
-	typeFilterOptions: ListFilterOption[] = [
+	readonly #user = computed(() => this.#session().user);
+
+	readonly teamRoleOptions = TeamRole.ROLES;
+
+	readonly typeFilterOptions: ListFilterOption[] = [
 		{ display: 'Explicit', value: 'explicit', active: false, hide: false },
 		{ display: 'Implicit', value: 'implicit', active: false, hide: false }
 	];
-	roleFilterOptions = TeamRole.ROLES.map(
+
+	readonly roleFilterOptions = TeamRole.ROLES.map(
 		(role) =>
 			({
 				display: role.label,
@@ -103,10 +113,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			}) as ListFilterOption
 	);
 
-	columns = ['name', 'username', 'lastLogin', 'type', 'role', 'actions'];
-	displayedColumns: string[] = [];
-
-	dataSource = new AsyTableDataSource<TeamMember>(
+	readonly dataSource = new AsyTableDataSource<TeamMember>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		undefined,
 		{
@@ -115,23 +122,16 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private router = inject(Router);
-	private teamsService = inject(TeamsService);
-	private sessionService = inject(SessionService);
-	private alertService = inject(SystemAlertService);
-	#session = inject(APP_SESSION);
-
-	#user = computed(() => this.#session().user);
+	readonly columns = ['name', 'username', 'lastLogin', 'type', 'role', 'actions'];
+	displayedColumns: string[] = [];
 
 	constructor() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 	}
 
 	ngOnInit() {
 		this.displayedColumns = this.columns.filter(
-			(column) => this.team.implicitMembers || column !== 'explicit'
+			(column) => this.team().implicitMembers || column !== 'explicit'
 		);
 	}
 
@@ -141,44 +141,40 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 		}
 	}
 
-	ngOnDestroy(): void {
-		this.dataSource.disconnect();
-	}
-
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
 		query: any
 	): Observable<PagingResults<TeamMember>> {
-		return this.teamsService.searchMembers(this.team, query, search, pagingOptions, {});
+		return this.#teamsService.searchMembers(this.team(), query, search, pagingOptions, {});
 	}
 
 	clearFilters() {
 		this.dataSource.search('');
-		this.filter.clearFilter();
+		this.filter().clearFilter();
 	}
 
 	addMembers() {
-		this.dialogService
+		this.#dialogService
 			.open<AddMembersModalReturn, AddMembersModalData>(AddMembersModalComponent, {
 				data: {
-					teamId: this.team._id
+					teamId: this.team()._id
 				}
 			})
 			.closed.pipe(
 				isNotNullOrUndefined(),
 				isDialogActionOK(),
 				mapToDialogReturnData(),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe((usersAdded) => {
-				this.alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
+				this.#alertService.addAlert(`${usersAdded} user(s) added`, 'success', 5000);
 				this.reloadTeamMembers();
 			});
 	}
 
 	removeMember(member: TeamMember) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Remove member from team?',
 				`Are you sure you want to remove member: "${member.name}" from this team?`,
@@ -187,15 +183,15 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.teamsService.removeMember(this.team, member._id)),
-				switchMap(() => this.sessionService.reloadSession()),
+				switchMap(() => this.#teamsService.removeMember(this.team(), member._id)),
+				switchMap(() => this.#sessionService.reloadSession()),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(null);
 				}),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}
@@ -208,7 +204,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 
 		// If user is removing their own admin, verify that they know what they're doing
 		if (this.#user()?._id === member._id && member.role === 'admin' && role !== 'admin') {
-			this.dialogService
+			this.#dialogService
 				.confirm(
 					'Remove "Team Admin" role?',
 					"Are you sure you want to remove <strong>yourself</strong> from the Team Admin role?<br/>Once you do this, you will no longer be able to manage the members of this team. <br/><strong>This also means you won't be able to give the role back to yourself.</strong>",
@@ -218,18 +214,18 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 					first(),
 					filter((result) => result?.action === DialogAction.OK),
 					switchMap(() => this.doUpdateRole(member, role)),
-					switchMap(() => this.sessionService.reloadSession()),
+					switchMap(() => this.#sessionService.reloadSession()),
 					catchError((error: unknown) => {
 						if (error instanceof HttpErrorResponse) {
-							this.alertService.addClientErrorAlert(error);
+							this.#alertService.addClientErrorAlert(error);
 						}
 						return of(null);
 					}),
-					takeUntilDestroyed(this.destroyRef)
+					takeUntilDestroyed(this.#destroyRef)
 				)
 				.subscribe(() => {
 					// If we successfully removed the role from ourselves, redirect away
-					this.router.navigate(['/team']);
+					this.#router.navigate(['/team']);
 				});
 		} else if (!member.explicit) {
 			// Member is implicitly in team, should explicitly add this member with the desired role
@@ -239,33 +235,33 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 				.pipe(
 					catchError((error: unknown) => {
 						if (error instanceof HttpErrorResponse) {
-							this.alertService.addClientErrorAlert(error);
+							this.#alertService.addClientErrorAlert(error);
 						}
 						return of(null);
 					}),
-					takeUntilDestroyed(this.destroyRef)
+					takeUntilDestroyed(this.#destroyRef)
 				)
 				.subscribe(() => this.reloadTeamMembers());
 		}
 	}
 
 	private addMember(member: TeamMember, role?: string) {
-		if (null == this.team._id || null == member) {
-			this.alertService.addAlert('Failed to add member. Missing member or teamId.');
+		if (null == this.team()._id || null == member) {
+			this.#alertService.addAlert('Failed to add member. Missing member or teamId.');
 			return;
 		}
 
-		this.teamsService
-			.addMember(this.team, member._id, role)
+		this.#teamsService
+			.addMember(this.team(), member._id, role)
 			.pipe(
-				switchMap(() => this.sessionService.reloadSession()),
+				switchMap(() => this.#sessionService.reloadSession()),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(null);
 				}),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => this.reloadTeamMembers());
 	}
@@ -277,7 +273,7 @@ export class ListTeamMembersComponent implements OnChanges, OnDestroy, OnInit {
 			return of(member);
 		}
 
-		return this.teamsService.updateMemberRole(this.team, member._id, role);
+		return this.#teamsService.updateMemberRole(this.team(), member._id, role);
 	}
 
 	private reloadTeamMembers() {

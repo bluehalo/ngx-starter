@@ -13,7 +13,7 @@
 				<button
 					class="btn btn-primary ml-auto"
 					type="button"
-					*hasTeamRole="team; role: 'admin'"
+					*hasTeamRole="team(); role: 'admin'"
 					(click)="addMembers()"
 				>
 					<span class="fa-solid fa-plus"></span> Add New
@@ -54,7 +54,7 @@
 						id="member-{{ member._id }}-role-menu-btn"
 						type="button"
 						attr.aria-controls="member-{{ member._id }}-role-menu"
-						*hasTeamRole="team; role: 'admin'; else: readOnlyRole"
+						*hasTeamRole="team(); role: 'admin'; else: readOnlyRole"
 						[cdkMenuTriggerFor]="roleMenu"
 					>
 						<span class="mr-1">{{ member.roleDisplay }}</span>
@@ -91,7 +91,7 @@
 						container="body"
 						placement="bottom"
 						tooltip="Remove Member"
-						*hasTeamRole="team; role: 'admin'; and: member.explicit"
+						*hasTeamRole="team(); role: 'admin'; and: member.explicit"
 						(click)="removeMember(member)"
 					>
 						<span class="fa-solid fa-lg fa-trash"></span>

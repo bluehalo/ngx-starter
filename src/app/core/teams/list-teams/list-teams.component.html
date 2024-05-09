@@ -24,11 +24,11 @@
 			</div>
 
 			<div class="mb-3 ml-auto">
-				@if (canCreateTeam) {
+				@if (canCreateTeam()) {
 					<button
 						class="btn btn-primary ml-auto"
 						type="button"
-						[queryParams]="{ parent: parent?._id }"
+						[queryParams]="{ parent: parent()?._id }"
 						[routerLink]="['/team/create']"
 					>
 						<span class="fa-solid fa-plus"></span> Create Team
@@ -60,8 +60,8 @@
 		</table>
 
 		<asy-table-empty-state
-			emptyText="No {{ parent ? 'sub-teams' : 'teams' }} are available."
-			filteredText="No {{ parent ? 'sub-teams' : 'teams' }} matched your search."
+			emptyText="No {{ parent() ? 'sub-teams' : 'teams' }} are available."
+			filteredText="No {{ parent() ? 'sub-teams' : 'teams' }} matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
 		></asy-table-empty-state>

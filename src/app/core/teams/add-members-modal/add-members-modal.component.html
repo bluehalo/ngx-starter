@@ -1,7 +1,7 @@
 <asy-modal
 	title="Add Team Members"
 	okText="Add Users"
-	[disableOk]="submitting || addedMembers.length === 0"
+	[disableOk]="isSubmitting() || addedMembers().length === 0"
 	(cancel)="cancel()"
 	(ok)="submit()"
 >
@@ -14,8 +14,8 @@
 			cdkFocusInitial
 			placeholder="Search for user..."
 			#selectDropdown
-			[items]="(users$ | async) || []"
-			[loading]="usersLoading"
+			[items]="typeaheadUsers()"
+			[loading]="usersLoading()"
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"
 		>
@@ -23,60 +23,74 @@
 		</ng-select>
 	</div>
 
-	@if (addedMembers.length > 0) {
-		<h3 class="pt-2">Set user roles</h3>
-		<table class="table table-condensed" aria-describedby="Set user roles">
-			<thead>
-				<tr>
-					<th scope="col">Username</th>
-					<th scope="col">Role</th>
-					<th scope="col">&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-				@for (invited of addedMembers; track invited; let i = $index) {
-					<tr class="table-row">
-						<td class="text-nowrap">
-							{{ invited.username }}
-						</td>
-						<td>
+	<h3 class="pt-2">Set user roles</h3>
+
+	<table
+		class="table table-striped"
+		aria-describedby="Set user roles"
+		cdk-table
+		[dataSource]="addedMembers()"
+	>
+		<ng-container cdkColumnDef="name">
+			<th cdk-header-cell *cdkHeaderCellDef>Username</th>
+			<td cdk-cell *cdkCellDef="let member">
+				{{ member.name }}
+			</td>
+		</ng-container>
+		<ng-container cdkColumnDef="username">
+			<th cdk-header-cell *cdkHeaderCellDef>Username</th>
+			<td cdk-cell *cdkCellDef="let member">
+				{{ member.username }}
+			</td>
+		</ng-container>
+		<ng-container cdkColumnDef="role">
+			<th cdk-header-cell *cdkHeaderCellDef>Role</th>
+			<td cdk-cell *cdkCellDef="let member">
+				<button
+					class="btn btn-sm dropdown-toggle p-0"
+					id="add-member-{{ member._id }}-role-menu-btn"
+					type="button"
+					attr.aria-controls="add-member-{{ member._id }}-role-menu"
+					[cdkMenuTriggerFor]="rolesMenu"
+				>
+					<span class="mr-1">{{ member.roleDisplay }}</span>
+				</button>
+				<ng-template #rolesMenu>
+					<div
+						class="dropdown-menu"
+						id="add-member-{{ member._id }}-role-menu"
+						attr.aria-labelledby="add-member-{{ member._id }}-role-menu-btn"
+						cdkMenu
+					>
+						@for (role of teamRoleOptions; track role) {
 							<button
-								class="btn btn-sm dropdown-toggle py-0"
-								[cdkMenuTriggerFor]="rolesMenu"
+								class="dropdown-item"
+								[value]="role.role"
+								cdkMenuItem
+								(cdkMenuItemTriggered)="updateRoleSelection(member, role.role)"
 							>
-								<span class="mr-1">{{ invited.roleDisplay }}</span>
+								{{ role.label }}
 							</button>
-							<ng-template #rolesMenu>
-								<div class="dropdown-menu" cdkMenu>
-									@for (role of teamRoleOptions; track role) {
-										<button
-											class="dropdown-item"
-											[value]="role.role"
-											cdkMenuItem
-											(cdkMenuItemTriggered)="
-												updateRoleSelection(invited, role.role)
-											"
-										>
-											{{ role.label }}
-										</button>
-									}
-								</div>
-							</ng-template>
-						</td>
-						<td>
-							<a
-								class="btn-icon"
-								container="body"
-								placement="bottom"
-								tooltip="Remove User"
-								(click)="remove(i)"
-							>
-								<span class="fa-solid fa-lg fa-trash"></span>
-							</a>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	}
+						}
+					</div>
+				</ng-template>
+			</td>
+		</ng-container>
+		<ng-container cdkColumnDef="actions">
+			<th cdk-header-cell *cdkHeaderCellDef></th>
+			<td cdk-cell *cdkCellDef="let index = index">
+				<a
+					class="btn-icon"
+					container="body"
+					placement="bottom"
+					tooltip="Remove User"
+					(click)="remove(index)"
+				>
+					<span class="fa-solid fa-lg fa-trash"></span>
+				</a>
+			</td>
+		</ng-container>
+		<tr cdk-header-row *cdkHeaderRowDef="columns"></tr>
+		<tr cdk-row *cdkRowDef="let item; columns: columns"></tr>
+	</table>
 </asy-modal>

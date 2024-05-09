@@ -45,8 +45,8 @@
 					required
 					style="width: 400px"
 					[(ngModel)]="teamAdmin"
-					[items]="(users$ | async) || []"
-					[loading]="usersLoading"
+					[items]="typeaheadUsers()"
+					[loading]="usersLoading()"
 					[typeahead]="usersInput$"
 				>
 				</ng-select>
@@ -77,15 +77,17 @@
 		@if (nestedTeamsEnabled()) {
 			<div class="form-group">
 				<label for="parent">Parent Team</label>
-				<app-team-select-input
+				<ng-select
 					class="d-block"
-					id="parent"
+					id="parent2"
 					name="parent"
+					appTeamSelect
+					bindLabel="name"
 					placeholder="Select parent..."
 					style="width: 400px"
 					[(ngModel)]="team.parent"
 				>
-				</app-team-select-input>
+				</ng-select>
 			</div>
 		}
 
@@ -156,9 +158,9 @@
 				<button class="btn btn-link" type="button" routerLink="/team">Cancel</button>
 				<button
 					class="btn btn-primary btn-submit ml-2"
-					[class.btn-submitting]="isSubmitting"
+					[class.btn-submitting]="isSubmitting()"
 					type="submit"
-					[disabled]="!form.form.valid || isSubmitting"
+					[disabled]="!form.form.valid || isSubmitting()"
 				>
 					Add
 				</button>

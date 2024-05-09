@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -39,12 +39,10 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		AgoDateColumnComponent
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListSubTeamsComponent
-	extends BaseListTeamsComponent
-	implements OnChanges, OnDestroy, OnInit
-{
+export class ListSubTeamsComponent extends BaseListTeamsComponent implements OnChanges, OnInit {
 	constructor() {
 		super(
 			new AsyTableDataSource<Team>(

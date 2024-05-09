@@ -1,11 +1,11 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, computed, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Observable, Subject, concat, of } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { MultiSelectDirective } from '../../../common/multi-select.directive';
@@ -14,7 +14,7 @@ import { SystemAlertComponent } from '../../../common/system-alert/system-alert.
 import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
 import { SessionService, User, UserExternalRolesSelectDirective } from '../../auth';
 import { APP_CONFIG, APP_SESSION } from '../../tokens';
-import { TeamSelectInputComponent } from '../team-select-input/team-select-input.component';
+import { TeamSelectDirective } from '../directives/team-select.directive';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
@@ -26,40 +26,40 @@ import { TeamsService } from '../teams.service';
 		SystemAlertComponent,
 		FormsModule,
 		NgSelectModule,
-		TeamSelectInputComponent,
 		AsyncPipe,
 		MultiSelectDirective,
-		UserExternalRolesSelectDirective
+		UserExternalRolesSelectDirective,
+		TeamSelectDirective
 	]
 })
 export class CreateTeamComponent implements OnInit {
-	team: Team = new Team();
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #router = inject(Router);
+	readonly #route = inject(ActivatedRoute);
+	readonly #teamsService = inject(TeamsService);
+	readonly #sessionService = inject(SessionService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #config = inject(APP_CONFIG);
+	readonly #session = inject(APP_SESSION);
 
-	teamAdmin?: User;
+	readonly nestedTeamsEnabled = computed(() => this.#config()?.teams?.nestedTeams ?? false);
+	readonly implicitMembersStrategy = computed(
+		() => this.#config()?.teams?.implicitMembers?.strategy
+	);
+	readonly isAdmin = computed(() => this.#session().isAdmin());
 
-	usersLoading = false;
-	usersInput$ = new Subject<string>();
-	users$: Observable<User[]> = of([]);
+	readonly isSubmitting = signal(false);
 
-	isSubmitting = false;
+	readonly usersLoading = signal(false);
+	readonly usersInput$ = new Subject<string>();
+	readonly typeaheadUsers = signal<User[]>([]);
 
-	private pagingOptions: PagingOptions = new PagingOptions();
+	teamAdmin = signal<User | undefined>(undefined);
 
-	private destroyRef = inject(DestroyRef);
-	private router = inject(Router);
-	private route = inject(ActivatedRoute);
-	private teamsService = inject(TeamsService);
-	private sessionService = inject(SessionService);
-	private alertService = inject(SystemAlertService);
-	private config = inject(APP_CONFIG);
-	#session = inject(APP_SESSION);
-
-	nestedTeamsEnabled = computed(() => this.config()?.teams?.nestedTeams ?? false);
-	implicitMembersStrategy = computed(() => this.config()?.teams?.implicitMembers?.strategy);
-	isAdmin = computed(() => this.#session().isAdmin());
+	readonly team = new Team();
 
 	constructor() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 
 		if (this.#session().isAdmin()) {
 			this.setCurrentUserAsAdmin();
@@ -67,54 +67,58 @@ export class CreateTeamComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.route.queryParamMap
+		this.#route.queryParamMap
 			.pipe(
 				filter((params) => params.has('parent')),
 				map((params) => params.get('parent')),
-				filter((id: string | null): id is string => id !== null),
-				switchMap((id) => this.teamsService.read(id)),
-				takeUntilDestroyed(this.destroyRef)
+				filter((id): id is string => id !== null),
+				switchMap((id) => this.#teamsService.read(id)),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe((parent) => {
 				this.team.parent = parent ?? undefined;
 			});
 
 		if (this.isAdmin()) {
-			this.users$ = concat(
-				of([]), // default items
-				this.usersInput$.pipe(
+			this.usersInput$
+				.pipe(
 					debounceTime(200),
 					distinctUntilChanged(),
-					tap(() => (this.usersLoading = true)),
+					tap(() => {
+						this.usersLoading.set(true);
+					}),
 					switchMap((term) =>
-						this.teamsService.searchUsers({}, term, this.pagingOptions, {}, true)
+						this.#teamsService.searchUsers({}, term, new PagingOptions(), {}, true)
 					),
 					map((result) =>
-						result.elements.filter((user: any) => user?._id !== this.teamAdmin?._id)
+						result.elements.filter((user) => user._id !== this.teamAdmin()?._id)
 					),
 					tap(() => {
-						this.usersLoading = false;
-					})
+						this.usersLoading.set(false);
+					}),
+					takeUntilDestroyed(this.#destroyRef)
 				)
-			);
+				.subscribe((users) => {
+					this.typeaheadUsers.set(users);
+				});
 		}
 		this.team.implicitMembers = false;
 	}
 
 	setCurrentUserAsAdmin() {
-		this.teamAdmin = this.#session().user;
+		this.teamAdmin.set(this.#session().user);
 	}
 
 	save() {
-		this.isSubmitting = true;
-		this.teamsService
-			.create(this.team, this?.teamAdmin?._id)
+		this.isSubmitting.set(true);
+		this.#teamsService
+			.create(this.team, this.teamAdmin()?._id)
 			.pipe(
-				switchMap(() => this.sessionService.reloadSession()),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#sessionService.reloadSession()),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => {
-				return this.router.navigate(['/team']);
+				return this.#router.navigate(['/team']);
 			});
 	}
 }

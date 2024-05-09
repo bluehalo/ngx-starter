@@ -1,14 +1,14 @@
-import { Component, DestroyRef, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { filter, first, switchMap } from 'rxjs/operators';
+import { filter, first, map, switchMap } from 'rxjs/operators';
 
 import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SessionService } from '../../auth';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
-import { getTeamTopics } from '../team-topic.model';
+import { injectTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
@@ -23,23 +23,22 @@ import { TeamsService } from '../teams.service';
 		HasTeamRoleDirective,
 		RouterLinkActive,
 		RouterOutlet
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTeamComponent {
-	topics = getTeamTopics();
+	readonly #router = inject(Router);
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #teamsService = inject(TeamsService);
+	readonly #sessionService = inject(SessionService);
 
-	@Input({ required: true })
-	team!: Team;
+	readonly topics = injectTeamTopics();
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-
-	private router = inject(Router);
-	private teamsService = inject(TeamsService);
-	private sessionService = inject(SessionService);
+	readonly team = input.required<Team>();
 
 	remove(team: Team) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Delete team?',
 				`Are you sure you want to delete the team: <strong>"${team.name}"</strong>?<br/>This action cannot be undone.`,
@@ -48,10 +47,16 @@ export class ViewTeamComponent {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.teamsService.delete(team)),
-				switchMap(() => this.sessionService.reloadSession()),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#teamsService.delete(team)),
+				switchMap((team) =>
+					this.#sessionService.reloadSession().pipe(map((session) => team))
+				),
+				takeUntilDestroyed(this.#destroyRef)
 			)
-			.subscribe(() => this.router.navigate(['/team']));
+			.subscribe((team) => {
+				if (team) {
+					this.#router.navigate(['/team']);
+				}
+			});
 	}
 }
