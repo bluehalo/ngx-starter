@@ -1,7 +1,5 @@
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, inject } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Directive, booleanAttribute, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 
@@ -16,42 +14,20 @@ import { APP_SESSION } from '../../tokens';
 	standalone: true
 })
 export class IsAuthenticatedDirective {
-	private _isAuthenticated = true;
-	andCondition = true;
-	orCondition = false;
-
-	private destroyRef = inject(DestroyRef);
-	private ngIfDirective = inject(NgIf);
+	#ngIfDirective = inject(NgIf);
 	#session = inject(APP_SESSION);
 
-	@Input()
-	set isAuthenticated(isAuthenticated: BooleanInput) {
-		this._isAuthenticated = coerceBooleanProperty(isAuthenticated);
-		this.updateNgIf();
-	}
-
-	@Input()
-	set isAuthenticatedAnd(condition: boolean) {
-		this.andCondition = condition;
-		this.updateNgIf();
-	}
-
-	@Input()
-	set isAuthenticatedOr(condition: boolean) {
-		this.orCondition = condition;
-		this.updateNgIf();
-	}
+	isAuthenticated = input(true, { transform: booleanAttribute });
+	andCondition = input(true, { alias: 'isAuthenticatedAnd' });
+	orCondition = input(false, { alias: 'isAuthenticatedOr' });
 
 	constructor() {
-		toObservable(this.#session)
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe(() => {
-				this.updateNgIf();
-			});
+		effect(() => {
+			this.updateNgIf();
+		});
 	}
-
 	private updateNgIf() {
-		this.ngIfDirective.ngIf =
-			this.orCondition || (this.andCondition && this.#session().isAuthenticated());
+		this.#ngIfDirective.ngIf =
+			this.orCondition() || (this.andCondition() && this.#session().isAuthenticated());
 	}
 }
