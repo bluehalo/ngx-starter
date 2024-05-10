@@ -91,10 +91,10 @@ describe('Admin List Users Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// add email to the column list
-		component.displayedColumns.push('email');
+		component.displayedColumns.update((cols) => [...cols, 'email']);
 
-		expect(component.displayedColumns.includes('name')).toEqual(true);
-		expect(component.displayedColumns.includes('email')).toEqual(true);
+		expect(component.displayedColumns().includes('name')).toEqual(true);
+		expect(component.displayedColumns().includes('email')).toEqual(true);
 
 		// Click the export button
 		await clickExportButton();
@@ -126,11 +126,15 @@ describe('Admin List Users Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// Toggle the Roles filter off
-		component.displayedColumns.splice(component.displayedColumns.indexOf('roles'), 1);
+		component.displayedColumns.update((cols) => {
+			const newCols = [...cols];
+			newCols.splice(component.displayedColumns().indexOf('roles'), 1);
+			return newCols;
+		});
 
-		expect(component.displayedColumns.includes('name')).toEqual(true);
-		expect(component.displayedColumns.includes('email')).toEqual(false);
-		expect(component.displayedColumns.includes('roles')).toEqual(false);
+		expect(component.displayedColumns().includes('name')).toEqual(true);
+		expect(component.displayedColumns().includes('email')).toEqual(false);
+		expect(component.displayedColumns().includes('roles')).toEqual(false);
 
 		// Click the export button
 		await clickExportButton();

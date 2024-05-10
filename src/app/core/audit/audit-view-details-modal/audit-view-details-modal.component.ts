@@ -18,16 +18,16 @@ import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
 	imports: [ModalComponent, JsonPipe, TitleCasePipe, UtcDatePipe]
 })
 export class AuditViewDetailsModalComponent {
+	#dialogRef = inject(DialogRef);
+	#data = inject(DIALOG_DATA);
+
 	auditEntry: any;
 
-	private dialogRef = inject(DialogRef);
-	private data = inject(DIALOG_DATA);
-
 	constructor() {
-		this.auditEntry = this.data.auditEntry;
+		this.auditEntry = this.#data.auditEntry;
 	}
 
 	close() {
-		this.dialogRef.close();
+		this.#dialogRef.close();
 	}
 }

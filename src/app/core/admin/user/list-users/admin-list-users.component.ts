@@ -3,15 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-	Component,
-	DestroyRef,
-	OnDestroy,
-	OnInit,
-	ViewChild,
-	computed,
-	inject
-} from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
@@ -85,13 +77,21 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		TextColumnComponent
 	]
 })
-export class AdminListUsersComponent implements OnDestroy, OnInit {
-	@ViewChild(AsyFilterDirective)
-	filter: AsyFilterDirective;
+export class AdminListUsersComponent implements OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #adminUsersService = inject(AdminUsersService);
+	readonly #exportConfigService = inject(ExportConfigService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #config = inject(APP_CONFIG);
 
-	possibleRoles: Role[] = Role.ROLES;
+	readonly filter = viewChild.required(AsyFilterDirective);
 
-	columns = [
+	readonly allowDeleteUser = computed(() => this.#config()?.allowDeleteUser ?? true);
+
+	readonly possibleRoles: Role[] = Role.ROLES;
+
+	readonly columns = [
 		{
 			key: 'name',
 			label: 'Name',
@@ -162,9 +162,10 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			label: 'Teams'
 		}
 	];
-	displayedColumns: string[] = [];
 
-	dataSource = new AsyTableDataSource<User>(
+	readonly displayedColumns = signal<string[]>([]);
+
+	readonly dataSource = new AsyTableDataSource<User>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'admin-list-users-component',
 		{
@@ -173,22 +174,9 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private adminUsersService = inject(AdminUsersService);
-	private exportConfigService = inject(ExportConfigService);
-	private alertService = inject(SystemAlertService);
-	private config = inject(APP_CONFIG);
-
-	allowDeleteUser = computed(() => this.config()?.allowDeleteUser ?? true);
-
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
-	}
-
-	ngOnDestroy() {
-		this.dataSource.disconnect();
 	}
 
 	loadData(
@@ -196,22 +184,22 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<User>> {
-		return this.adminUsersService.search(query, search, pagingOptions);
+		return this.#adminUsersService.search(query, search, pagingOptions);
 	}
 
 	columnsChanged(columns: string[]) {
 		setTimeout(() => {
-			this.displayedColumns = [...columns, 'actionsMenu'];
+			this.displayedColumns.set([...columns, 'actionsMenu']);
 		});
 	}
 
 	clearFilters() {
 		this.dataSource.search('');
-		this.filter.clearFilter();
+		this.filter().clearFilter();
 	}
 
 	confirmDeleteUser(user: User) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Delete user?',
 				`Are you sure you want to delete the user: <strong>"${user.name}"</strong>?<br/>This action cannot be undone.`,
@@ -220,24 +208,24 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.adminUsersService.removeUser(user._id)),
+				switchMap(() => this.#adminUsersService.removeUser(user._id)),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(null);
 				}),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => this.dataSource.reload());
 	}
 
 	exportCurrentView() {
 		const viewColumns = this.columns
-			.filter((column) => this.displayedColumns.includes(column.key))
+			.filter((column) => this.displayedColumns().includes(column.key))
 			.map((column) => ({ key: column.key, title: column.label }));
 
-		this.exportConfigService
+		this.#exportConfigService
 			.postExportConfig('user', {
 				q: this.dataSource.filterEvent$.value,
 				s: this.dataSource.searchEvent$.value,
@@ -245,7 +233,7 @@ export class AdminListUsersComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/users/csv/${response._id}`);
 			});

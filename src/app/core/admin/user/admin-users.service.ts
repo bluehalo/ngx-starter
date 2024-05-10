@@ -25,9 +25,9 @@ export const userResolver: ResolveFn<User | null> = (
  */
 @Injectable({ providedIn: 'root' })
 export class AdminUsersService {
-	private http = inject(HttpClient);
-	private alertService = inject(SystemAlertService);
-	private router = inject(Router);
+	readonly #http = inject(HttpClient);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #router = inject(Router);
 
 	search(
 		query: any,
@@ -35,7 +35,7 @@ export class AdminUsersService {
 		paging: PagingOptions,
 		options: any = {}
 	): Observable<PagingResults<User>> {
-		return this.http
+		return this.#http
 			.post<PagingResults>(
 				'api/admin/users',
 				{ q: query, s: search, options },
@@ -52,7 +52,7 @@ export class AdminUsersService {
 				}),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(NULL_PAGING_RESULTS);
 				})
@@ -60,25 +60,25 @@ export class AdminUsersService {
 	}
 
 	removeUser(id: string) {
-		return this.http.delete(`api/admin/user/${id}`);
+		return this.#http.delete(`api/admin/user/${id}`);
 	}
 
 	getAll(query: any, field: string) {
-		return this.http.post('api/admin/users/getAll', { query, field });
+		return this.#http.post('api/admin/users/getAll', { query, field });
 	}
 
 	create(user: User) {
-		return this.http.post('api/admin/user', user);
+		return this.#http.post('api/admin/user', user);
 	}
 
 	read(userId: string) {
-		return this.http
+		return this.#http
 			.get(`api/admin/user/${userId}`)
 			.pipe(map((userRaw: any) => new User(userRaw)));
 	}
 
 	update(user: User): Observable<any> {
-		return this.http.post(`api/admin/user/${user._id}`, user);
+		return this.#http.post(`api/admin/user/${user._id}`, user);
 	}
 
 	redirectError(error: unknown) {
@@ -95,7 +95,7 @@ export class AdminUsersService {
 				stack: error.error?.stack
 			};
 		}
-		this.router.navigate(['/error'], {
+		this.#router.navigate(['/error'], {
 			replaceUrl: true,
 			state
 		});

@@ -60,7 +60,7 @@ describe('FeedbackFlyoutComponent', () => {
 		for (const btn of radioButtons) {
 			const expectedValue = btn.attributes['value'];
 			btn.triggerEventHandler('change', {});
-			expect(instance.feedback.type).toEqual(expectedValue);
+			expect(instance.feedback.type).toEqual(expectedValue as string);
 		}
 	}));
 
@@ -69,13 +69,13 @@ describe('FeedbackFlyoutComponent', () => {
 		expect(bugReportRadioButton).toBeDefined();
 
 		bugReportRadioButton.triggerEventHandler('change', {});
-		expect(instance.feedback.type).toEqual(bugReportRadioButton.attributes['value']);
+		expect(instance.feedback.type).toEqual(bugReportRadioButton.attributes['value'] as string);
 
 		const bugReportTypeOptions = element.queryAll(By.css('[name="subtype-option-radio"]'));
 
 		for (const btn of bugReportTypeOptions) {
 			btn.triggerEventHandler('change', {});
-			expect(instance.feedback.subType).toEqual(btn.attributes['value']);
+			expect(instance.feedback.subType).toEqual(btn.attributes['value'] as string);
 		}
 	}));
 

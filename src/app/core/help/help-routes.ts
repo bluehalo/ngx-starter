@@ -1,11 +1,11 @@
 import { ActivatedRouteSnapshot, ResolveFn, Routes } from '@angular/router';
 
 import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
-import { getHelpTopicsMap } from './help-topic.component';
+import { injectHelpTopicsMap } from './help-topic.component';
 import { HelpComponent } from './help.component';
 
 const breadcrumbResolver: ResolveFn<string | null> = (route: ActivatedRouteSnapshot) =>
-	getHelpTopicsMap().get(route.params['topic'])?.title ?? null;
+	injectHelpTopicsMap().get(route.params['topic'])?.title ?? null;
 
 export const HELP_ROUTES: Routes = [
 	{

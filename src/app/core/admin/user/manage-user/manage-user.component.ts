@@ -20,24 +20,25 @@ import { AdminUsersService } from '../admin-users.service';
 	styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
+	readonly #alertService = inject(SystemAlertService);
+	readonly #adminUsersService = inject(AdminUsersService);
+
+	protected readonly destroyRef = inject(DestroyRef);
+	protected readonly router = inject(Router);
+	protected readonly config = inject(APP_CONFIG);
+
+	readonly proxyPki = computed(() => this.config()?.auth === 'proxy-pki');
+	readonly metadataLocked = computed(() => this.proxyPki());
+
+	readonly possibleRoles = Role.ROLES;
+
 	mode: 'create' | 'edit' = 'create';
 
 	@Input()
 	user: EditUser;
 
-	possibleRoles = Role.ROLES;
-
-	protected destroyRef = inject(DestroyRef);
-	protected router = inject(Router);
-	private alertService = inject(SystemAlertService);
-	private adminUsersService = inject(AdminUsersService);
-	protected config = inject(APP_CONFIG);
-
-	proxyPki = computed(() => this.config()?.auth === 'proxy-pki');
-	metadataLocked = computed(() => this.proxyPki());
-
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 
 		if (this.user) {
 			this.mode = 'edit';
@@ -52,14 +53,14 @@ export class ManageUserComponent implements OnInit {
 		if (this.validatePassword()) {
 			const obs$ =
 				this.mode === 'create'
-					? this.adminUsersService.create(this.user)
-					: this.adminUsersService.update(this.user);
+					? this.#adminUsersService.create(this.user)
+					: this.#adminUsersService.update(this.user);
 
 			obs$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
 				next: () => this.router.navigate(['/admin/users']),
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 				}
 			});
@@ -71,7 +72,7 @@ export class ManageUserComponent implements OnInit {
 			return true;
 		}
 
-		this.alertService.addAlert('Passwords must match', 'danger');
+		this.#alertService.addAlert('Passwords must match', 'danger');
 		return false;
 	}
 }

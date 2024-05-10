@@ -14,10 +14,10 @@ const defaultKey = 'getting-started';
 export class HelpTopicWrapperComponent {
 	key: string = defaultKey;
 
-	private route = inject(ActivatedRoute);
+	readonly #route = inject(ActivatedRoute);
 
 	constructor() {
-		this.route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
+		this.#route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
 			this.key = params['topic'];
 		});
 	}

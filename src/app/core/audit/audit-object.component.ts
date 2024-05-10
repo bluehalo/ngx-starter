@@ -1,23 +1,22 @@
 import { JsonPipe } from '@angular/common';
-import { Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewContainerRef, model, viewChild } from '@angular/core';
 
 import { AuditObjectTypes } from './audit.classes';
 
 @Component({
 	selector: 'default',
-	template: '<span>{{ auditObject | json }}</span>',
+	template: '<span>{{ auditObject() | json }}</span>',
 	standalone: true,
 	imports: [JsonPipe]
 })
 export class DefaultAuditObjectComponent {
-	@Input()
-	auditObject: any = {};
+	readonly auditObject = model<any>({});
 }
 AuditObjectTypes.registerType('default', DefaultAuditObjectComponent);
 
 @Component({
 	selector: 'url',
-	template: '<span>{{ auditObject.url }}</span>',
+	template: '<span>{{ auditObject().url }}</span>',
 	standalone: true
 })
 export class UrlAuditObjectComponent extends DefaultAuditObjectComponent {}
@@ -25,7 +24,7 @@ AuditObjectTypes.registerType('url', UrlAuditObjectComponent);
 
 @Component({
 	selector: 'user',
-	template: '<span>{{ auditObject?.username }}</span>',
+	template: '<span>{{ auditObject()?.username }}</span>',
 	standalone: true
 })
 export class UserAuditObjectComponent extends DefaultAuditObjectComponent {}
@@ -42,7 +41,7 @@ AuditObjectTypes.registerType('user-authentication', UserAuthenticationObjectCom
 @Component({
 	selector: 'export-audit',
 	template: `
-		@if (auditObject) {
+		@if (auditObject()) {
 			<span> <span class="fa-solid fa-download"></span> Export config </span>
 		}
 	`,
@@ -58,24 +57,21 @@ AuditObjectTypes.registerType('export', ExportAuditObjectComponent);
 	standalone: true
 })
 export class AuditObjectComponent implements OnInit {
-	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
+	readonly content = viewChild.required('content', { read: ViewContainerRef });
 
-	@Input()
-	auditObject: any = {};
-
-	@Input()
-	auditType = '';
+	readonly auditObject = model<any>({});
+	readonly auditType = model('');
 
 	ngOnInit() {
-		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType)) {
-			this.auditType = 'default';
+		if (!AuditObjectTypes.objects.hasOwnProperty(this.auditType())) {
+			this.auditType.set('default');
 		}
 
-		const componentRef = this.content?.createComponent(
-			AuditObjectTypes.objects[this.auditType]
+		const componentRef = this.content().createComponent(
+			AuditObjectTypes.objects[this.auditType()]
 		) as ComponentRef<DefaultAuditObjectComponent>;
 		if (componentRef) {
-			componentRef.instance.auditObject = this.auditObject;
+			componentRef.instance.auditObject.set(this.auditObject());
 		}
 	}
 }

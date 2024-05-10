@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class ExportConfigService {
-	private http = inject(HttpClient);
+	readonly #http = inject(HttpClient);
 
 	postExportConfig(type: string, config: any): Observable<any> {
-		return this.http.post('/api/requestExport', JSON.stringify({ type, config }), {
+		return this.#http.post('/api/requestExport', JSON.stringify({ type, config }), {
 			headers: { 'Content-Type': 'application/json' }
 		});
 	}

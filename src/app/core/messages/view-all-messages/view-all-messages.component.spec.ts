@@ -34,14 +34,8 @@ describe('View All Messages Component Spec', () => {
 
 	beforeEach(async () => {
 		// reset for each test
-		messageServiceSpy = jasmine.createSpyObj('MessageService', [
-			'search',
-			'remove',
-			'messageReceived'
-		]);
+		messageServiceSpy = jasmine.createSpyObj('MessageService', ['search', 'messageReceived']);
 		messageServiceSpy.messageReceived = new Subject<Message>();
-		messageServiceSpy.remove.and.returnValue(of({}));
-		messageServiceSpy.numMessagesIndicator$ = of(0);
 		messageServiceSpy.search.and.callFake(() => {
 			return of(messageResultsSpec);
 		});
@@ -70,7 +64,7 @@ describe('View All Messages Component Spec', () => {
 			created: now,
 			creator: 'testuser'
 		};
-		expect(component.messages).toEqual([new Message(expectedMessage)]);
+		expect(component.messages()).toEqual([new Message(expectedMessage)]);
 
 		expect(rootHTMLElement.querySelector('.card-title')?.textContent).toEqual(
 			'THIS is a Test Message'

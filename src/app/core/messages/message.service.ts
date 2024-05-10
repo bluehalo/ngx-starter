@@ -1,11 +1,12 @@
-import { EventEmitter, Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
-import { BehaviorSubject, Observable, take } from 'rxjs';
-import { catchError, filter } from 'rxjs/operators';
+import { Observable, take } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
+import { isNotNullOrUndefined } from '../../common/rxjs-utils';
 import { SocketService } from '../socket.service';
 import { APP_SESSION } from '../tokens';
 import { Message } from './message.model';
@@ -24,12 +25,18 @@ export const messageResolver: ResolveFn<Message | null> = (
 	providedIn: 'root'
 })
 export class MessageService extends AbstractEntityService<Message> {
-	public numMessagesIndicator$: BehaviorSubject<number> = new BehaviorSubject(0);
-	messageReceived: EventEmitter<Message> = new EventEmitter<Message>();
-	private subscribed = 0;
+	readonly #socketService = inject(SocketService);
+	readonly #session = inject(APP_SESSION);
 
-	private socketService = inject(SocketService);
-	#session = inject(APP_SESSION);
+	#newMessageCount = signal(0);
+
+	messageReceived = new EventEmitter<Message>();
+
+	#subscribed = 0;
+
+	get newMessageCount() {
+		return this.#newMessageCount.asReadonly();
+	}
 
 	constructor() {
 		super({
@@ -47,7 +54,7 @@ export class MessageService extends AbstractEntityService<Message> {
 			)
 			.subscribe(() => {
 				this.initialize();
-				this.updateNewMessageIndicator();
+				this.updateNewMessageCount();
 			});
 	}
 
@@ -55,10 +62,11 @@ export class MessageService extends AbstractEntityService<Message> {
 		return new Message(model);
 	}
 
-	recent(): Observable<any[]> {
-		return this.http
-			.post<any>('api/messages/recent', {}, { headers: this.headers })
-			.pipe(catchError((error: unknown) => this.handleError(error, [])));
+	recent(): Observable<Message[]> {
+		return this.http.post<unknown[]>('api/messages/recent', {}, { headers: this.headers }).pipe(
+			map((results) => results.map((result) => this.mapToType(result))),
+			catchError((error: unknown) => this.handleError(error, []))
+		);
 	}
 
 	dismiss(ids: string[]) {
@@ -71,32 +79,32 @@ export class MessageService extends AbstractEntityService<Message> {
 	 * Websocket functionality for messages
 	 */
 	subscribe() {
-		if (this.subscribed === 0) {
-			this.socketService.emit('message:subscribe');
+		if (this.#subscribed === 0) {
+			this.#socketService.emit('message:subscribe');
 		}
-		this.subscribed++;
+		this.#subscribed++;
 	}
 
 	unsubscribe() {
-		this.subscribed--;
+		this.#subscribed--;
 
-		if (this.subscribed === 0) {
-			this.socketService.emit('message:unsubscribe');
-		} else if (this.subscribed < 0) {
-			this.subscribed = 0;
+		if (this.#subscribed === 0) {
+			this.#socketService.emit('message:unsubscribe');
+		} else if (this.#subscribed < 0) {
+			this.#subscribed = 0;
 		}
 	}
 
 	initialize() {
 		// Add event listeners to the websocket, across all statuses
-		this.socketService.on('message:data', this.payloadRouterFn);
+		this.#socketService.on('message:data', this.payloadRouterFn);
 
-		this.socketService.on('disconnect', () => {
-			this.subscribed = 0;
+		this.#socketService.on('disconnect', () => {
+			this.#subscribed = 0;
 		});
 
-		if (!this.socketService.connected()) {
-			this.socketService.on('connect', () => {
+		if (!this.#socketService.connected()) {
+			this.#socketService.on('connect', () => {
 				// Register for new notifications from the websocket
 				this.subscribe();
 			});
@@ -105,21 +113,21 @@ export class MessageService extends AbstractEntityService<Message> {
 		}
 
 		this.messageReceived.subscribe(() => {
-			this.updateNewMessageIndicator();
+			this.updateNewMessageCount();
 		});
 	}
 
-	updateNewMessageIndicator() {
+	private updateNewMessageCount() {
 		this.recent()
-			.pipe(filter((results) => results !== null))
+			.pipe(isNotNullOrUndefined())
 			.subscribe((results) => {
-				this.numMessagesIndicator$.next(results.length);
+				this.#newMessageCount.set(results.length);
 			});
 	}
 
-	private payloadRouterFn = (payload: any) => {
-		if (this.subscribed > 0) {
-			const message = new Message(payload.message());
+	private payloadRouterFn = (payload: { message: unknown }) => {
+		if (this.#subscribed > 0) {
+			const message = new Message(payload.message);
 			this.messageReceived.emit(message);
 		}
 	};

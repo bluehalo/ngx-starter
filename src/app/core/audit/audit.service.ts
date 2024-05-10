@@ -11,15 +11,15 @@ import { AuditActionTypes } from './audit.classes';
 
 @Injectable()
 export class AuditService {
-	private http = inject(HttpClient);
-	private alertService = inject(SystemAlertService);
+	readonly #http = inject(HttpClient);
+	readonly #alertService = inject(SystemAlertService);
 
 	public getDistinctAuditValues(field: string): Observable<string[]> {
-		return this.http.get<string[]>('api/audit/distinctValues', { params: { field } });
+		return this.#http.get<string[]>('api/audit/distinctValues', { params: { field } });
 	}
 
 	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
-		return this.http
+		return this.#http
 			.post<PagingResults>('api/audit', { q: query, s: search }, { params: paging.toObj() })
 			.pipe(
 				map((results: PagingResults) => {
@@ -37,7 +37,7 @@ export class AuditService {
 				}),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(NULL_PAGING_RESULTS);
 				})
@@ -50,7 +50,7 @@ export class AuditService {
 		paging: PagingOptions,
 		options: any
 	): Observable<PagingResults<User>> {
-		return this.http
+		return this.#http
 			.post<PagingResults>(
 				'api/users/match',
 				{ q: query, s: search, options },

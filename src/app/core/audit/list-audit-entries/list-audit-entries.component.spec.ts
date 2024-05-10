@@ -127,9 +127,11 @@ describe('Audit Component Spec', () => {
 			await fixture.whenStable();
 
 			// Verify that the values are formatted properly
-			expect(rootHTMLElement.querySelector('.cdk-row').textContent).toContain('testuser01');
-			expect(rootHTMLElement.querySelector('.cdk-row').textContent).toContain('admin update');
-			expect(rootHTMLElement.querySelector('.cdk-row').textContent).toContain(
+			expect(rootHTMLElement.querySelector('.cdk-row')?.textContent).toContain('testuser01');
+			expect(rootHTMLElement.querySelector('.cdk-row')?.textContent).toContain(
+				'admin update'
+			);
+			expect(rootHTMLElement.querySelector('.cdk-row')?.textContent).toContain(
 				'2019-09-08 20:15:47'
 			);
 		});

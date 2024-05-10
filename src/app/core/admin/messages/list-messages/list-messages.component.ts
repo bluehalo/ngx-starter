@@ -1,6 +1,6 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
@@ -51,10 +51,13 @@ import { MessageService } from '../../../messages/message.service';
 		DateColumnComponent
 	]
 })
-export class ListMessagesComponent implements OnDestroy, OnInit {
-	displayedColumns = ['title', 'type', 'body', 'created', 'updated', 'actionsMenu'];
+export class ListMessagesComponent implements OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #messageService = inject(MessageService);
+	readonly #alertService = inject(SystemAlertService);
 
-	dataSource = new AsyTableDataSource<Message>(
+	readonly dataSource = new AsyTableDataSource<Message>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'list-messages-component',
 		{
@@ -63,17 +66,10 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private messageService = inject(MessageService);
-	private alertService = inject(SystemAlertService);
+	displayedColumns = ['title', 'type', 'body', 'created', 'updated', 'actionsMenu'];
 
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
-	}
-
-	ngOnDestroy() {
-		this.dataSource.disconnect();
+		this.#alertService.clearAllAlerts();
 	}
 
 	clearFilters() {
@@ -85,11 +81,11 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<Message>> {
-		return this.messageService.search(pagingOptions, query, search);
+		return this.#messageService.search(pagingOptions, query, search);
 	}
 
 	confirmDeleteMessage(message: Message) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Delete message?',
 				`Are you sure you want to delete message: "${message.title}" ?`,
@@ -98,11 +94,11 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.messageService.delete(message)),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#messageService.delete(message)),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => {
-				this.alertService.addAlert(`Deleted message.`, 'success');
+				this.#alertService.addAlert(`Deleted message.`, 'success');
 				this.dataSource.reload();
 			});
 	}
@@ -114,6 +110,6 @@ export class ListMessagesComponent implements OnDestroy, OnInit {
 	 */
 	previewMessage(message: Message) {
 		const { body, title } = message;
-		this.dialogService.alert(title, body);
+		this.#dialogService.alert(title, body);
 	}
 }

@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { ADMIN_TOPICS } from './admin-topic.model';
+import { injectAdminTopics } from './admin-topic.model';
 
 @Component({
 	templateUrl: 'admin.component.html',
@@ -10,5 +10,5 @@ import { ADMIN_TOPICS } from './admin-topic.model';
 	imports: [RouterLinkActive, RouterLink, RouterOutlet]
 })
 export class AdminComponent {
-	helpTopics = inject(ADMIN_TOPICS).flat();
+	readonly helpTopics = injectAdminTopics();
 }

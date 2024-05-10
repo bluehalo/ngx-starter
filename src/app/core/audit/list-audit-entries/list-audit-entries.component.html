@@ -151,8 +151,8 @@
 					{{ entry?.audit.masqueradingUser }}
 				</td>
 			</ng-container>
-			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
-			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns"></tr>
+			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns(); sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns()"></tr>
 		</table>
 
 		<asy-table-empty-state

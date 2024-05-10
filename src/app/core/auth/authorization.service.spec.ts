@@ -7,6 +7,7 @@ import { Role } from './role.model';
 import { Session } from './session.model';
 import { User } from './user.model';
 
+/* eslint-disable deprecation/deprecation */
 describe('AuthorizationService', () => {
 	let localService: AuthorizationService;
 	const sessionSignal = signal<Session>(new Session());
@@ -175,3 +176,5 @@ describe('AuthorizationService', () => {
 		});
 	});
 });
+
+/* eslint-enable deprecation/deprecation */

@@ -13,11 +13,11 @@ export const SCROLL_ELEMENT = new InjectionToken<string>('SCROLL_ELEMENT', {
  * Manages the scroll position for scrollElement.
  */
 export class CustomViewportScroller implements ViewportScroller {
-	private offset: () => [number, number] = () => [0, 0];
+	#offset: () => [number, number] = () => [0, 0];
 
-	private scrollElementID = inject(SCROLL_ELEMENT);
-	private document = inject(DOCUMENT);
-	private window = inject(WINDOW);
+	readonly #scrollElementID = inject(SCROLL_ELEMENT);
+	readonly #document = inject(DOCUMENT);
+	readonly #window = inject(WINDOW);
 
 	/**
 	 * Configures the top offset used when scrolling to an anchor.
@@ -27,9 +27,9 @@ export class CustomViewportScroller implements ViewportScroller {
 	 */
 	setOffset(offset: [number, number] | (() => [number, number])): void {
 		if (Array.isArray(offset)) {
-			this.offset = () => offset;
+			this.#offset = () => offset;
 		} else {
-			this.offset = offset;
+			this.#offset = offset;
 		}
 	}
 
@@ -73,7 +73,7 @@ export class CustomViewportScroller implements ViewportScroller {
 			return;
 		}
 
-		const elSelected = findAnchorFromDocument(this.document, target);
+		const elSelected = findAnchorFromDocument(this.#document, target);
 
 		if (elSelected) {
 			this.scrollToElement(elSelected);
@@ -92,7 +92,7 @@ export class CustomViewportScroller implements ViewportScroller {
 	 */
 	setHistoryScrollRestoration(scrollRestoration: 'auto' | 'manual'): void {
 		if (this.getScrollElement() && this.supportsScrolling()) {
-			this.window.history.scrollRestoration = scrollRestoration;
+			this.#window.history.scrollRestoration = scrollRestoration;
 		}
 	}
 
@@ -106,23 +106,23 @@ export class CustomViewportScroller implements ViewportScroller {
 		const scrollEl = this.getScrollElement();
 		if (scrollEl) {
 			const rect = el.getBoundingClientRect();
-			const left = rect.left + this.window.scrollX;
-			const top = rect.top + this.window.scrollY;
-			const offset = this.offset();
+			const left = rect.left + this.#window.scrollX;
+			const top = rect.top + this.#window.scrollY;
+			const offset = this.#offset();
 			scrollEl.scrollTo(left - offset[0], top - offset[1]);
 		}
 	}
 
 	private supportsScrolling(): boolean {
 		try {
-			return !!this.window && !!this.window.scrollTo && 'pageXOffset' in this.window;
+			return !!this.#window && !!this.#window.scrollTo && 'pageXOffset' in this.#window;
 		} catch {
 			return false;
 		}
 	}
 
 	private getScrollElement(): Element | null {
-		return this.document.querySelector(`#${this.scrollElementID}`);
+		return this.#document.querySelector(`#${this.#scrollElementID}`);
 	}
 }
 

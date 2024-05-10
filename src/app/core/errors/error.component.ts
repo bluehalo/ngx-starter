@@ -21,6 +21,8 @@ import { ErrorState } from './error-state.model';
 	`
 })
 export class ErrorComponent {
+	readonly #router = inject(Router);
+
 	state: ErrorState = {
 		status: 500,
 		statusText: '',
@@ -28,10 +30,8 @@ export class ErrorComponent {
 		url: '/'
 	};
 
-	private router = inject(Router);
-
 	constructor() {
-		const s = this.router.getCurrentNavigation()?.extras?.state;
+		const s = this.#router.getCurrentNavigation()?.extras?.state;
 		if (s) {
 			this.state = s as ErrorState;
 		}
