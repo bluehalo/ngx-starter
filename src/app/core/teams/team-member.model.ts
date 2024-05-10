@@ -23,24 +23,12 @@ export class TeamMember extends User {
 		this.explicit = (model.teams?.length ?? 0) > 0;
 
 		if (team) {
-			this.role = this.getRoleInTeam(team) ?? TeamRole.MEMBER.role;
+			this.role = this.getTeamRole(team) ?? TeamRole.MEMBER.role;
 			this.roleDisplay = TeamRole.getDisplay(this.role);
 
 			this.explicit = model.teams.map((t: any) => t._id).includes(team._id);
 		}
 
 		return this;
-	}
-
-	public getRoleInTeam(team: Pick<Team, '_id'>): string | null {
-		const teams = this?.teams ?? [];
-		// Find the role of this user in the team
-		const ndx = teams.findIndex((t: any) => t._id === team._id);
-
-		if (-1 !== ndx) {
-			return teams[ndx].role;
-		}
-
-		return null;
 	}
 }

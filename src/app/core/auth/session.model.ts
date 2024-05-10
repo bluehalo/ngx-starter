@@ -1,6 +1,9 @@
 import { Role } from './role.model';
 import { User } from './user.model';
 
+type Team = { _id: string };
+type TeamRole = { role: string };
+
 export class Session {
 	public user?: User;
 
@@ -26,6 +29,9 @@ export class Session {
 		return externalRoles.indexOf(role) !== -1;
 	}
 
+	/**
+	 * User Role utilities
+	 */
 	public hasRole(role: string | Role): boolean {
 		role = this.roleToString(role);
 
@@ -46,14 +52,29 @@ export class Session {
 	}
 
 	public isUser(): boolean {
-		return this.hasRole(Role.USER.role);
+		return this.hasRole(Role.USER);
 	}
 
 	public isAdmin(): boolean {
-		return this.hasRole(Role.ADMIN.role);
+		return this.hasRole(Role.ADMIN);
 	}
 
-	private roleToString(role: string | Role) {
+	/**
+	 * Team Role utilities
+	 */
+	public hasTeamRole(team: Pick<Team, '_id'>, role: string | TeamRole): boolean {
+		return this.user?.getTeamRole(team) === this.roleToString(role);
+	}
+
+	public hasSomeTeamRoles(team: Pick<Team, '_id'>, roles: Array<string | TeamRole>): boolean {
+		return roles.some((role: string | TeamRole) => this.hasTeamRole(team, role));
+	}
+
+	public hasEveryTeamRole(team: Pick<Team, '_id'>, roles: Array<string | TeamRole>): boolean {
+		return roles.every((role: string | TeamRole) => this.hasTeamRole(team, role));
+	}
+
+	private roleToString(role: string | Role | TeamRole) {
 		if (typeof role !== 'string') {
 			return role.role;
 		}

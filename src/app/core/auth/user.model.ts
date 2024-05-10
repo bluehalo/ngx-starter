@@ -14,7 +14,7 @@ export class User {
 
 	public externalRoles: string[] = [];
 	public externalGroups: string[] = [];
-	public teams: any[] = [];
+	public teams: { _id: string; role: string }[] = [];
 	public canMasquerade = false;
 	public bypassAccessCheck = false;
 
@@ -45,6 +45,13 @@ export class User {
 
 	public setEua(eua?: EndUserAgreement) {
 		this.eua = eua;
+	}
+
+	public getTeamRole(team: { _id: string }): string | undefined {
+		const teams = this?.teams ?? [];
+
+		// Find the role of this user in the team
+		return teams.find((t) => t._id === team._id)?.role;
 	}
 }
 

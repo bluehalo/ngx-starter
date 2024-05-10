@@ -2,7 +2,6 @@ import { NgIf } from '@angular/common';
 import { Directive, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
-import { TeamAuthorizationService } from '../team-authorization.service';
 import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
 
@@ -18,7 +17,6 @@ import { Team } from '../team.model';
 })
 export class HasTeamRoleDirective {
 	readonly #ngIfDirective = inject(NgIf);
-	readonly #teamAuthorizationService = inject(TeamAuthorizationService);
 	readonly #session = inject(APP_SESSION);
 
 	readonly team = input.required<Pick<Team, '_id'>>({ alias: 'hasTeamRole' });
@@ -33,10 +31,7 @@ export class HasTeamRoleDirective {
 	}
 
 	protected checkPermission(): boolean {
-		return (
-			this.#session().isAdmin() ||
-			this.#teamAuthorizationService.hasRole(this.team(), this.role())
-		);
+		return this.#session().isAdmin() || this.#session().hasTeamRole(this.team(), this.role());
 	}
 
 	private updateNgIf() {
