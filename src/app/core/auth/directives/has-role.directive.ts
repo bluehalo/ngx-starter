@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Directive, effect, inject, input } from '@angular/core';
+import { Directive, Injector, OnInit, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 import { Role } from '../role.model';
@@ -14,18 +14,22 @@ import { Role } from '../role.model';
 	],
 	standalone: true
 })
-export class HasRoleDirective {
-	#ngIfDirective = inject(NgIf);
-	#session = inject(APP_SESSION);
+export class HasRoleDirective implements OnInit {
+	readonly #ngIfDirective = inject(NgIf);
+	readonly #injector = inject(Injector);
+	readonly #session = inject(APP_SESSION);
 
-	role = input.required<string | Role>({ alias: 'hasRole' });
-	andCondition = input(true, { alias: 'hasRoleAnd' });
-	orCondition = input(false, { alias: 'hasRoleOr' });
+	readonly role = input.required<string | Role>({ alias: 'hasRole' });
+	readonly andCondition = input(true, { alias: 'hasRoleAnd' });
+	readonly orCondition = input(false, { alias: 'hasRoleOr' });
 
-	constructor() {
-		effect(() => {
-			this.updateNgIf();
-		});
+	ngOnInit() {
+		effect(
+			() => {
+				this.updateNgIf();
+			},
+			{ injector: this.#injector }
+		);
 	}
 
 	private updateNgIf() {

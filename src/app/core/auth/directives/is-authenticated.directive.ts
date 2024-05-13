@@ -1,5 +1,13 @@
 import { NgIf } from '@angular/common';
-import { Directive, booleanAttribute, effect, inject, input } from '@angular/core';
+import {
+	Directive,
+	Injector,
+	OnInit,
+	booleanAttribute,
+	effect,
+	inject,
+	input
+} from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 
@@ -13,19 +21,24 @@ import { APP_SESSION } from '../../tokens';
 	],
 	standalone: true
 })
-export class IsAuthenticatedDirective {
-	#ngIfDirective = inject(NgIf);
-	#session = inject(APP_SESSION);
+export class IsAuthenticatedDirective implements OnInit {
+	readonly #ngIfDirective = inject(NgIf);
+	readonly #injector = inject(Injector);
+	readonly #session = inject(APP_SESSION);
 
-	isAuthenticated = input(true, { transform: booleanAttribute });
-	andCondition = input(true, { alias: 'isAuthenticatedAnd' });
-	orCondition = input(false, { alias: 'isAuthenticatedOr' });
+	readonly isAuthenticated = input(true, { transform: booleanAttribute });
+	readonly andCondition = input(true, { alias: 'isAuthenticatedAnd' });
+	readonly orCondition = input(false, { alias: 'isAuthenticatedOr' });
 
-	constructor() {
-		effect(() => {
-			this.updateNgIf();
-		});
+	ngOnInit() {
+		effect(
+			() => {
+				this.updateNgIf();
+			},
+			{ injector: this.#injector }
+		);
 	}
+
 	private updateNgIf() {
 		this.#ngIfDirective.ngIf =
 			this.orCondition() || (this.andCondition() && this.#session().isAuthenticated());
