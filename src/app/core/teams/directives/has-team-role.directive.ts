@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Directive, effect, inject, input } from '@angular/core';
+import { Directive, Injector, OnInit, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 import { TeamRole } from '../team-role.model';
@@ -15,8 +15,9 @@ import { Team } from '../team.model';
 	],
 	standalone: true
 })
-export class HasTeamRoleDirective {
+export class HasTeamRoleDirective implements OnInit {
 	readonly #ngIfDirective = inject(NgIf);
+	readonly #injector = inject(Injector);
 	readonly #session = inject(APP_SESSION);
 
 	readonly team = input.required<Pick<Team, '_id'>>({ alias: 'hasTeamRole' });
@@ -24,10 +25,13 @@ export class HasTeamRoleDirective {
 	readonly andCondition = input(true, { alias: 'hasTeamRoleAnd' });
 	readonly orCondition = input(false, { alias: 'hasTeamRoleOr' });
 
-	constructor() {
-		effect(() => {
-			this.updateNgIf();
-		});
+	ngOnInit() {
+		effect(
+			() => {
+				this.updateNgIf();
+			},
+			{ injector: this.#injector }
+		);
 	}
 
 	protected checkPermission(): boolean {
