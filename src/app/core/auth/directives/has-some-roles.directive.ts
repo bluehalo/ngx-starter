@@ -1,6 +1,5 @@
 import { NgIf } from '@angular/common';
-import { DestroyRef, Directive, Input, effect, inject, input } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Directive, effect, inject, input } from '@angular/core';
 
 import { APP_SESSION } from '../../tokens';
 import { Role } from '../role.model';

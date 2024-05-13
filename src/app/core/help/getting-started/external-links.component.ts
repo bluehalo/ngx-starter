@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { Config } from '../../config.model';
 
@@ -9,8 +9,7 @@ import { Config } from '../../config.model';
 	imports: []
 })
 export class ExternalLinksComponent {
-	@Input()
-	links: Config['help']['welcomeLinks'] = [];
+	readonly links = input<Config['help']['welcomeLinks']>([]);
 
 	handleLinkClick(evt: any) {
 		evt.stopPropagation();

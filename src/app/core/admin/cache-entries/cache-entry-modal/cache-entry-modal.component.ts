@@ -1,6 +1,6 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { JsonPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { DialogAction } from '../../../../common/dialog';
 import { ModalComponent } from '../../../../common/modal/modal/modal.component';
@@ -21,25 +21,22 @@ export class CacheEntryModalData {
 		`
 	],
 	standalone: true,
-	imports: [ModalComponent, JsonPipe, AgoDatePipe, UtcDatePipe]
+	imports: [ModalComponent, JsonPipe, AgoDatePipe, UtcDatePipe],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CacheEntryModalComponent implements OnInit {
-	cacheEntry: CacheEntry;
+	readonly #dialogRef = inject(DialogRef);
+	readonly #data: CacheEntryModalData = inject(DIALOG_DATA);
 
-	private dialogRef = inject(DialogRef);
-	private data: CacheEntryModalData = inject(DIALOG_DATA);
-
-	constructor() {
-		this.cacheEntry = this.data.cacheEntry;
-	}
+	cacheEntry = this.#data.cacheEntry;
 
 	ngOnInit() {
-		if (!this.data.cacheEntry) {
+		if (!this.#data.cacheEntry) {
 			throw new TypeError(`'CacheEntry' is required`);
 		}
 	}
 
 	close() {
-		this.dialogRef.close({ action: DialogAction.OK });
+		this.#dialogRef.close({ action: DialogAction.OK });
 	}
 }

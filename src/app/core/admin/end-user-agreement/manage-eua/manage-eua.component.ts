@@ -16,6 +16,12 @@ import { EuaService } from '../eua.service';
 	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe]
 })
 export class ManageEuaComponent implements OnInit {
+	readonly #router = inject(Router);
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #euaService = inject(EuaService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #dialogService = inject(DialogService);
+
 	mode: 'create' | 'edit' = 'create';
 
 	error?: string;
@@ -23,14 +29,8 @@ export class ManageEuaComponent implements OnInit {
 	@Input()
 	eua: EndUserAgreement;
 
-	private router = inject(Router);
-	private destroyRef = inject(DestroyRef);
-	private euaService = inject(EuaService);
-	private alertService = inject(SystemAlertService);
-	private dialogService = inject(DialogService);
-
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 
 		if (this.eua) {
 			this.mode = 'edit';
@@ -42,15 +42,15 @@ export class ManageEuaComponent implements OnInit {
 	submitEua(): any {
 		const obs$ =
 			this.mode === 'create'
-				? this.euaService.create(this.eua)
-				: this.euaService.update(this.eua);
+				? this.#euaService.create(this.eua)
+				: this.#euaService.update(this.eua);
 
-		obs$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() =>
-			this.router.navigate(['/admin/euas'])
+		obs$.pipe(takeUntilDestroyed(this.#destroyRef)).subscribe(() =>
+			this.#router.navigate(['/admin/euas'])
 		);
 	}
 
 	previewEua() {
-		this.dialogService.alert(this.eua.title, this.eua.text);
+		this.#dialogService.alert(this.eua.title, this.eua.text);
 	}
 }

@@ -1,6 +1,13 @@
 import { ComponentType, OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, DestroyRef, OnDestroy, ViewChild, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	inject,
+	signal,
+	viewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -54,13 +61,20 @@ import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		UtcDatePipe
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListAuditEntriesComponent implements OnDestroy {
-	@ViewChild(AsyFilterDirective)
-	filter: AsyFilterDirective;
+export class ListAuditEntriesComponent {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #auditService = inject(AuditService);
+	readonly #exportConfigService = inject(ExportConfigService);
+	readonly #config = inject(APP_CONFIG);
 
-	columns = [
+	readonly filter = viewChild.required(AsyFilterDirective);
+
+	readonly #columns = [
 		{
 			key: 'audit.actor',
 			label: 'Actor',
@@ -102,7 +116,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		}
 	];
 
-	displayedColumns = [
+	readonly displayedColumns = signal([
 		'audit.actor',
 		'created',
 		'audit.action',
@@ -110,9 +124,9 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		'audit.object',
 		'before',
 		'message'
-	];
+	]);
 
-	dataSource = new AsyTableDataSource(
+	readonly dataSource = new AsyTableDataSource(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'list-audit-entries-component',
 		{
@@ -121,35 +135,24 @@ export class ListAuditEntriesComponent implements OnDestroy {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private alertService = inject(SystemAlertService);
-	private auditService = inject(AuditService);
-	private exportConfigService = inject(ExportConfigService);
-	private config = inject(APP_CONFIG);
-
 	constructor() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 
-		if (this.config()?.masqueradeEnabled) {
-			this.displayedColumns.push('audit.masqueradingUser');
+		if (this.#config()?.masqueradeEnabled) {
+			this.displayedColumns.update((cols) => [...cols, 'audit.masqueradingUser']);
 		}
 	}
 
-	ngOnDestroy() {
-		this.dataSource.disconnect();
-	}
-
 	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults> {
-		return this.auditService.search(query, search, pagingOptions);
+		return this.#auditService.search(query, search, pagingOptions);
 	}
 
 	exportCurrentView() {
-		const viewColumns = this.columns
-			.filter((column) => this.displayedColumns.includes(column.key))
+		const viewColumns = this.#columns
+			.filter((column) => this.displayedColumns().includes(column.key))
 			.map((column) => ({ key: column.key, title: column.label }));
 
-		this.exportConfigService
+		this.#exportConfigService
 			.postExportConfig('audit', {
 				q: this.dataSource.filterEvent$.value,
 				s: this.dataSource.searchEvent$.value,
@@ -157,7 +160,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/audit/csv/${response._id}`);
 			});
@@ -165,7 +168,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 
 	clearFilters() {
 		this.dataSource.search('');
-		this.filter.clearFilter();
+		this.filter().clearFilter();
 	}
 
 	viewComponents = new Map<string, ComponentType<unknown>>([
@@ -176,7 +179,7 @@ export class ListAuditEntriesComponent implements OnDestroy {
 	viewMore(auditEntry: any, type: string) {
 		const component = this.viewComponents.get(type);
 		if (component) {
-			this.dialogService.open(component, {
+			this.#dialogService.open(component, {
 				data: {
 					auditEntry
 				}

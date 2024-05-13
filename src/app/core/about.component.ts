@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { APP_CONFIG } from './tokens';
 
@@ -17,14 +17,8 @@ import { APP_CONFIG } from './tokens';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutComponent {
-	private config = inject(APP_CONFIG);
+	readonly #config = inject(APP_CONFIG);
 
-	appTitle = computed(() => this.config()?.app?.title);
-	version = computed(() => this.config()?.version);
-
-	constructor() {
-		effect(() => {
-			console.log(this.config()?.app);
-		});
-	}
+	readonly appTitle = computed(() => this.#config()?.app?.title);
+	readonly version = computed(() => this.#config()?.version);
 }

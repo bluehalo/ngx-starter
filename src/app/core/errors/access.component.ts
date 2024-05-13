@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,16 +13,17 @@ import { Router } from '@angular/router';
 			</div>
 		</div>
 	`,
-	standalone: true
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccessComponent {
+	readonly #router = inject(Router);
+
 	status = '403';
 	message = 'User is missing authorizations for access.';
 
-	private router = inject(Router);
-
 	constructor() {
-		const state = this.router.getCurrentNavigation()?.extras?.state;
+		const state = this.#router.getCurrentNavigation()?.extras?.state;
 		if (state) {
 			this.status = state['status'];
 			this.message = state['message'];

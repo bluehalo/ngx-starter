@@ -11,16 +11,16 @@ import { AuditService } from '../audit.service';
 	standalone: true
 })
 export class AuditActorFilterDirective implements OnInit {
-	private typeaheadFilter = inject(AsyHeaderTypeaheadFilterComponent);
-	private auditService = inject(AuditService);
+	readonly #typeaheadFilter = inject(AsyHeaderTypeaheadFilterComponent);
+	readonly #auditService = inject(AuditService);
 
 	ngOnInit() {
-		this.typeaheadFilter.typeaheadFunc = this.typeaheadSearch.bind(this);
-		this.typeaheadFilter.buildFilterFunc = this.buildFilter;
+		this.#typeaheadFilter.typeaheadFunc = this.typeaheadSearch.bind(this);
+		this.#typeaheadFilter.buildFilterFunc = this.buildFilter;
 	}
 
 	typeaheadSearch(term: string) {
-		return this.auditService
+		return this.#auditService
 			.matchUser({}, term, new PagingOptions(), {})
 			.pipe(map((pagingResult) => pagingResult.elements));
 	}

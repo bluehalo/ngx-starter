@@ -1,5 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, DestroyRef, ViewChild, computed, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	computed,
+	inject,
+	signal,
+	viewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,50 +24,55 @@ import { FeedbackService } from '../feedback.service';
 	templateUrl: './feedback-flyout.component.html',
 	styleUrls: ['./feedback-flyout.component.scss'],
 	standalone: true,
-	imports: [FlyoutComponent, FormsModule, NgTemplateOutlet, NgSelectModule]
+	imports: [FlyoutComponent, FormsModule, NgTemplateOutlet, NgSelectModule],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeedbackFlyoutComponent {
-	@ViewChild(FlyoutComponent) flyout?: FlyoutComponent;
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #router = inject(Router);
+	readonly #feedbackService = inject(FeedbackService);
+	readonly #config = inject(APP_CONFIG);
 
-	feedback: Feedback = new Feedback();
+	readonly flyout = viewChild.required(FlyoutComponent);
 
-	status: 'ready' | 'submitting' | 'success' | 'failure' = 'ready';
+	readonly status = signal<'ready' | 'submitting' | 'success' | 'failure'>('ready');
 
-	private destroyRef = inject(DestroyRef);
-	private router = inject(Router);
-	private feedbackService = inject(FeedbackService);
-	private config = inject(APP_CONFIG);
-
-	classificationOptions = computed(() => {
-		const options = this.config()?.feedback?.classificationOpts;
+	readonly classificationOptions = computed(() => {
+		const options = this.#config()?.feedback?.classificationOpts;
 		if (options && Array.isArray(options) && options.length > 0) {
 			return options;
 		}
 		return [];
 	});
 
+	feedback = new Feedback();
+
 	closeForm() {
-		this.flyout?.toggle();
+		this.flyout().toggle();
 		setTimeout(() => {
 			this.feedback = new Feedback();
-			this.status = 'ready';
+			this.status.set('ready');
 		}, 1000);
 	}
 
+	backToForm(): void {
+		this.status.set('ready');
+	}
+
 	submit() {
-		this.status = 'submitting';
+		this.status.set('submitting');
 
 		// Get the current URL from the router at the time of submission.
-		this.feedback.url = `${this.config()?.app?.clientUrl ?? ''}${this.router.url}`;
-		this.feedbackService
+		this.feedback.url = `${this.#config()?.app?.clientUrl ?? ''}${this.#router.url}`;
+		this.#feedbackService
 			.create(this.feedback)
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((feedback) => {
 				if (feedback) {
-					this.status = 'success';
+					this.status.set('success');
 					setTimeout(() => this.closeForm(), 2000);
 				} else {
-					this.status = 'failure';
+					this.status.set('failure');
 				}
 			});
 	}

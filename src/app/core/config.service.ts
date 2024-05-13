@@ -9,9 +9,9 @@ import { Config } from './config.model';
 	providedIn: 'root'
 })
 export class ConfigService {
-	private configSubject$ = new AsyncSubject<Config | null>();
+	readonly #http = inject(HttpBackend);
 
-	private http = inject(HttpBackend);
+	readonly #configSubject$ = new AsyncSubject<Config | null>();
 
 	constructor() {
 		this.reloadConfig();
@@ -21,7 +21,7 @@ export class ConfigService {
 	 * Get the shared config observable
 	 */
 	public getConfig(): Observable<Config | null> {
-		return this.configSubject$;
+		return this.#configSubject$;
 	}
 
 	/**
@@ -34,7 +34,7 @@ export class ConfigService {
 	public reloadConfig() {
 		const request = new HttpRequest<Config>('GET', 'api/config', {});
 
-		this.http.handle(request).subscribe({
+		this.#http.handle(request).subscribe({
 			next: (httpEvent: HttpEvent<Config>) => {
 				if (httpEvent instanceof HttpResponse) {
 					let newConfig = null;
@@ -44,13 +44,13 @@ export class ConfigService {
 						newConfig = response.body;
 					}
 
-					this.configSubject$.next(newConfig);
-					this.configSubject$.complete();
+					this.#configSubject$.next(newConfig);
+					this.#configSubject$.complete();
 				}
 			},
 			error: () => {
-				this.configSubject$.next(null);
-				this.configSubject$.complete();
+				this.#configSubject$.next(null);
+				this.#configSubject$.complete();
 			}
 		});
 	}

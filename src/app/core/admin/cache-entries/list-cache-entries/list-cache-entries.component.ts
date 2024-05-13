@@ -2,7 +2,7 @@ import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -59,10 +59,13 @@ import { CacheEntry } from '../cache-entry.model';
 		AgoDateColumnComponent
 	]
 })
-export class ListCacheEntriesComponent implements OnDestroy, OnInit {
-	displayedColumns = ['key', 'value', 'ts', 'actionsMenu'];
+export class ListCacheEntriesComponent implements OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #cacheEntriesService = inject(CacheEntriesService);
 
-	dataSource = new AsyTableDataSource<CacheEntry>(
+	readonly dataSource = new AsyTableDataSource<CacheEntry>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		undefined,
 		{
@@ -71,18 +74,10 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-
-	private cacheEntriesService = inject(CacheEntriesService);
-	private alertService = inject(SystemAlertService);
+	displayedColumns = ['key', 'value', 'ts', 'actionsMenu'];
 
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
-	}
-
-	ngOnDestroy(): void {
-		this.dataSource.disconnect();
+		this.#alertService.clearAllAlerts();
 	}
 
 	loadData(
@@ -90,7 +85,7 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<CacheEntry>> {
-		return this.cacheEntriesService.match(query, search, pagingOptions);
+		return this.#cacheEntriesService.match(query, search, pagingOptions);
 	}
 
 	clearFilters() {
@@ -98,7 +93,7 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteEntry(cacheEntry: CacheEntry) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Delete cache entry?',
 				`Are you sure you want to delete entry: ${cacheEntry.key}?`,
@@ -107,24 +102,27 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.cacheEntriesService.remove(cacheEntry.key)),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#cacheEntriesService.remove(cacheEntry.key)),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe({
 				next: () => {
-					this.alertService.addAlert(`Deleted cache entry: ${cacheEntry.key}`, 'success');
+					this.#alertService.addAlert(
+						`Deleted cache entry: ${cacheEntry.key}`,
+						'success'
+					);
 					this.dataSource.reload();
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.error.message);
+						this.#alertService.addAlert(error.error.message);
 					}
 				}
 			});
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
-		this.dialogService.open<unknown, CacheEntryModalData>(CacheEntryModalComponent, {
+		this.#dialogService.open<unknown, CacheEntryModalData>(CacheEntryModalComponent, {
 			data: {
 				cacheEntry
 			}
@@ -135,12 +133,12 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 		// temporary flag to show that the entry is refreshing
 		cacheEntry.isRefreshing = true;
 
-		this.cacheEntriesService
+		this.#cacheEntriesService
 			.refresh(cacheEntry.key)
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
 				next: () => {
-					this.alertService.addAlert(
+					this.#alertService.addAlert(
 						`Refreshed cache entry: ${cacheEntry.key}`,
 						'success'
 					);
@@ -149,7 +147,7 @@ export class ListCacheEntriesComponent implements OnDestroy, OnInit {
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.error.message);
+						this.#alertService.addAlert(error.error.message);
 					}
 					cacheEntry.isRefreshing = false;
 				}

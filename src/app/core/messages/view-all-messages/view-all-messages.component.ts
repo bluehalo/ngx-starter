@@ -1,6 +1,16 @@
-import { LowerCasePipe, NgClass } from '@angular/common';
-import { Component, DestroyRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import { DOCUMENT, LowerCasePipe, NgClass } from '@angular/common';
+import {
+	Component,
+	DestroyRef,
+	HostListener,
+	OnInit,
+	inject,
+	signal,
+	viewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { WINDOW } from '@ng-web-apis/common';
 
 import { PagingOptions, PagingResults } from '../../../common/paging.model';
 import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
@@ -18,68 +28,76 @@ import { MessageService } from '../message.service';
 	imports: [SystemAlertComponent, SearchInputComponent, NgClass, LowerCasePipe, AgoDatePipe]
 })
 export class ViewAllMessagesComponent implements OnInit {
-	pageNumber = 0;
-	messages: Message[] = [];
-	loadMore = true;
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #messagesService = inject(MessageService);
+	readonly #window = inject(WINDOW);
+	readonly #document = inject(DOCUMENT);
+
+	#pageNumber = 0;
+	#loadMore = true;
+
+	readonly searchInput = viewChild.required(SearchInputComponent);
+
+	readonly newMessages = signal(false);
+	readonly messages = signal<Message[]>([]);
+
+	readonly messageType = MessageType;
+
 	search = '';
-	newMessages = false;
-	messageType = MessageType;
-
-	@ViewChild(SearchInputComponent, { static: true }) searchInput?: SearchInputComponent;
-
-	private destroyRef = inject(DestroyRef);
-	private messagesService = inject(MessageService);
 
 	ngOnInit() {
-		this.loadMessages(this.pageNumber);
-		this.messagesService.messageReceived
-			.pipe(takeUntilDestroyed(this.destroyRef))
+		this.loadMessages(this.#pageNumber);
+		this.#messagesService.messageReceived
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((message) => {
-				this.newMessages = true;
+				this.newMessages.set(true);
 			});
 	}
 
 	@HostListener('window:scroll')
 	onScroll() {
 		// If at the bottom of the page, load more messages
-		if (window.innerHeight + window.scrollY >= document.body.offsetHeight && this.loadMore) {
-			this.loadMore = false; // Set to false temporarily to avoid multiple loads
-			this.pageNumber++;
-			this.loadMessages(this.pageNumber);
+		if (
+			this.#window.innerHeight + this.#window.scrollY >= this.#document.body.offsetHeight &&
+			this.#loadMore
+		) {
+			this.#loadMore = false; // Set to false temporarily to avoid multiple loads
+			this.#pageNumber++;
+			this.loadMessages(this.#pageNumber);
 		}
 	}
 
 	loadMessages(page: number) {
-		this.messagesService
+		this.#messagesService
 			.search(
 				new PagingOptions(page, 20, 0, 0, 'created', SortDirection.desc),
 				{},
 				this.search
 			)
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe((messages: PagingResults) => {
+			.pipe(takeUntilDestroyed(this.#destroyRef))
+			.subscribe((result: PagingResults) => {
 				if (page === 0) {
-					this.messages = messages.elements;
+					this.messages.set(result.elements);
 				} else {
-					this.messages = this.messages.concat(messages.elements);
+					this.messages.update((messages) => [...messages, ...result.elements]);
 				}
-				if (this.messages.length < messages.totalSize) {
-					this.loadMore = true;
+				if (this.messages.length < result.totalSize) {
+					this.#loadMore = true;
 				}
 			});
 	}
 
 	loadNewMessages() {
-		this.newMessages = false;
+		this.newMessages.set(false);
 		this.search = '';
-		this.searchInput?.clearSearch();
-		this.pageNumber = 0;
-		this.loadMessages(this.pageNumber);
+		this.searchInput().clearSearch();
+		this.#pageNumber = 0;
+		this.loadMessages(this.#pageNumber);
 	}
 
 	onSearch(search: string) {
 		this.search = search;
-		this.pageNumber = 0;
-		this.loadMessages(this.pageNumber);
+		this.#pageNumber = 0;
+		this.loadMessages(this.#pageNumber);
 	}
 }

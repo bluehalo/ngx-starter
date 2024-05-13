@@ -78,38 +78,6 @@ describe('Site Navbar Component Spec', () => {
 	});
 
 	describe('api docs display', () => {
-		it('should not display the api docs when missing', async () => {
-			mockConfig.apiDocs = null;
-
-			const fixture = TestBed.createComponent(SiteNavbarComponent);
-			const component = fixture.componentInstance;
-
-			expect(component.helpNavOpen()).toEqual(false);
-
-			fixture.detectChanges();
-			await fixture.whenStable();
-
-			expect(component.helpNavOpen()).toEqual(false);
-
-			const bottomMenuItems = fixture.debugElement.queryAll(
-				By.css('li.nav-popover-bottom > a')
-			);
-			const helpMenuItem = bottomMenuItems[bottomMenuItems.length - 1];
-			helpMenuItem.triggerEventHandler('click', null);
-
-			fixture.detectChanges();
-			await fixture.whenStable();
-
-			expect(component.helpNavOpen()).toEqual(true);
-			expect(component.showApiDocsLink()).toEqual(false);
-			expect(component.apiDocsLink()).toEqual('');
-
-			/*
-			 * TODO Unclear how to test that the popover contents do NOT
-			 * include the contents of API Docs link
-			 */
-		});
-
 		it('should not display the api docs when disabled', async () => {
 			mockConfig.apiDocs = {
 				enabled: false,

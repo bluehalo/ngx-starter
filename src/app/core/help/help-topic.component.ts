@@ -3,9 +3,9 @@ import {
 	ComponentRef,
 	InjectionToken,
 	Input,
-	ViewChild,
 	ViewContainerRef,
-	inject
+	inject,
+	viewChild
 } from '@angular/core';
 
 import sortBy from 'lodash/sortBy';
@@ -16,7 +16,7 @@ type HelpTopic = { id: string; component: any; title?: string; ordinal?: number 
 
 export const HELP_TOPICS = new InjectionToken<HelpTopic[][]>('HELP_TOPIC');
 
-export const getHelpTopics = () =>
+export const injectHelpTopics = () =>
 	sortBy(
 		(inject(HELP_TOPICS, { optional: true }) ?? [])
 			.flat()
@@ -24,7 +24,8 @@ export const getHelpTopics = () =>
 		[(t) => t.ordinal ?? 1, 'key']
 	);
 
-export const getHelpTopicsMap = () => new Map(getHelpTopics().map((topic) => [topic.id, topic]));
+export const injectHelpTopicsMap = () =>
+	new Map(injectHelpTopics().map((topic) => [topic.id, topic]));
 
 @Component({
 	selector: 'help-topic',
@@ -32,11 +33,11 @@ export const getHelpTopicsMap = () => new Map(getHelpTopics().map((topic) => [to
 	standalone: true
 })
 export class HelpTopicComponent {
-	@ViewChild('content', { read: ViewContainerRef, static: true }) content?: ViewContainerRef;
+	readonly content = viewChild.required('content', { read: ViewContainerRef });
 
 	componentRef?: ComponentRef<any>;
 
-	helpTopics = getHelpTopicsMap();
+	helpTopics = injectHelpTopicsMap();
 
 	@Input({ required: true })
 	set key(key: string) {
@@ -46,7 +47,7 @@ export class HelpTopicComponent {
 
 		if (this.content && key && this.helpTopics.has(key)) {
 			// Dynamically create the component
-			this.componentRef = this.content.createComponent(this.helpTopics.get(key)?.component);
+			this.componentRef = this.content().createComponent(this.helpTopics.get(key)?.component);
 		} else {
 			console.warn(`WARNING: No handler for help topic: ${key}.`);
 		}

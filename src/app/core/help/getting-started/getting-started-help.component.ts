@@ -9,8 +9,8 @@ import { ExternalLinksComponent } from './external-links.component';
 	imports: [ExternalLinksComponent]
 })
 export class GettingStartedHelpComponent {
-	private config = inject(APP_CONFIG);
+	readonly #config = inject(APP_CONFIG);
 
-	appName = computed(() => this.config()?.app?.title ?? 'Application');
-	externalLinks = computed(() => this.config()?.help.welcomeLinks ?? []);
+	readonly appName = computed(() => this.#config()?.app?.title ?? 'Application');
+	readonly externalLinks = computed(() => this.#config()?.help.welcomeLinks ?? []);
 }

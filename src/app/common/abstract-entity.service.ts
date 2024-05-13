@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { ErrorState } from '../core/errors/error-state.model';
+import { ErrorState } from '../core';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from './paging.model';
 import { SystemAlertService } from './system-alert/system-alert.service';
 
@@ -20,13 +20,13 @@ export enum ServiceMethod {
 export abstract class AbstractEntityService<T extends { _id: string }> {
 	headers: any = { 'Content-Type': 'application/json' };
 
-	protected router = inject(Router);
-	protected http = inject(HttpClient);
-	protected alertService = inject(SystemAlertService);
+	protected readonly router = inject(Router);
+	protected readonly http = inject(HttpClient);
+	protected readonly alertService = inject(SystemAlertService);
 
 	protected constructor(
-		protected urls: Record<ServiceMethod | string, string>,
-		protected createMethod: 'PUT' | 'POST' = 'POST'
+		protected readonly urls: Record<ServiceMethod | string, string>,
+		protected readonly createMethod: 'PUT' | 'POST' = 'POST'
 	) {}
 
 	abstract mapToType(model: unknown): T;

@@ -10,13 +10,13 @@ import { AuditService } from '../audit.service';
 	standalone: true
 })
 export class AuditDistinctValueFilterDirective implements OnInit {
-	private listFilter = inject(AsyHeaderListFilterComponent);
-	private auditService = inject(AuditService);
+	readonly #listFilter = inject(AsyHeaderListFilterComponent);
+	readonly #auditService = inject(AuditService);
 
 	ngOnInit() {
-		this.listFilter.options = [];
-		this.listFilter.loadOptionsFunc = () =>
-			this.auditService.getDistinctAuditValues(this.listFilter.id).pipe(
+		this.#listFilter.options = [];
+		this.#listFilter.loadOptionsFunc = () =>
+			this.#auditService.getDistinctAuditValues(this.#listFilter.id).pipe(
 				map((options: string[]) =>
 					options.map(
 						(o) =>

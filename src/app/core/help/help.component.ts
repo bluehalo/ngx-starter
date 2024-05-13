@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
 	ActivatedRoute,
@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators';
 
 import { BreadcrumbComponent } from '../../common/breadcrumb/breadcrumb.component';
 import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
-import { getHelpTopics } from './help-topic.component';
+import { injectHelpTopics } from './help-topic.component';
 
 @Component({
 	templateUrl: 'help.component.html',
@@ -22,7 +22,9 @@ import { getHelpTopics } from './help-topic.component';
 	imports: [BreadcrumbComponent, RouterLinkActive, RouterLink, RouterOutlet]
 })
 export class HelpComponent {
-	helpTopics = getHelpTopics();
+	readonly #route = inject(ActivatedRoute);
+	readonly #router = inject(Router);
+	readonly helpTopics = injectHelpTopics();
 
 	homeBreadcrumb: Breadcrumb = { label: 'Help', url: '/help' };
 
@@ -30,18 +32,14 @@ export class HelpComponent {
 
 	protected readonly top = top;
 
-	private destroyRef = inject(DestroyRef);
-	private route = inject(ActivatedRoute);
-	private router = inject(Router);
-
 	constructor() {
-		this.router.events
+		this.#router.events
 			.pipe(
 				filter((event) => event instanceof NavigationEnd),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed()
 			)
-			.subscribe(
-				() => (this.title = BreadcrumbService.getBreadcrumbLabel(this.route.snapshot))
-			);
+			.subscribe(() => {
+				this.title = BreadcrumbService.getBreadcrumbLabel(this.#route.snapshot);
+			});
 	}
 }

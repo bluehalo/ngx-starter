@@ -24,16 +24,17 @@ import { APP_CONFIG } from '../tokens';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SigninComponent {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #sessionService = inject(SessionService);
+	readonly #navigationService = inject(NavigationService);
+	readonly #config = inject(APP_CONFIG);
+
+	readonly error = signal('');
+
 	username?: string;
 	password?: string;
-	error = signal('');
 
-	private destroyRef = inject(DestroyRef);
-	private sessionService = inject(SessionService);
-	private navigationService = inject(NavigationService);
-	private config = inject(APP_CONFIG);
-
-	pkiMode = computed(() => this.config()?.auth === 'proxy-pki');
+	pkiMode = computed(() => this.#config()?.auth === 'proxy-pki');
 
 	constructor() {
 		if (this.pkiMode()) {
@@ -42,12 +43,12 @@ export class SigninComponent {
 	}
 
 	pkiSignin() {
-		this.sessionService
+		this.#sessionService
 			.reloadSession()
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
 				next: () => {
-					this.navigationService.navigateToPreviousRoute();
+					this.#navigationService.navigateToPreviousRoute();
 				},
 				error: (error: unknown) => this.handleError(error)
 			});
@@ -55,12 +56,12 @@ export class SigninComponent {
 
 	signin() {
 		if (this.username && this.password) {
-			this.sessionService
+			this.#sessionService
 				.signin(this.username, this.password)
-				.pipe(takeUntilDestroyed(this.destroyRef))
+				.pipe(takeUntilDestroyed(this.#destroyRef))
 				.subscribe({
 					next: () => {
-						this.navigationService.navigateToPreviousRoute();
+						this.#navigationService.navigateToPreviousRoute();
 					},
 					error: (error: unknown) => this.handleError(error)
 				});

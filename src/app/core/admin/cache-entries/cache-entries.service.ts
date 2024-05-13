@@ -10,22 +10,22 @@ import { CacheEntry } from './cache-entry.model';
 
 @Injectable({ providedIn: 'root' })
 export class CacheEntriesService {
-	private http = inject(HttpClient);
-	private alertService = inject(SystemAlertService);
+	readonly #http = inject(HttpClient);
+	readonly #alertService = inject(SystemAlertService);
 
 	public match(
 		query: any,
 		search: string,
 		paging: PagingOptions
 	): Observable<PagingResults<CacheEntry>> {
-		return this.http
+		return this.#http
 			.post<
 				PagingResults<CacheEntry>
 			>('api/access-checker/entries/match', { s: search, q: query }, { params: paging.toObj() })
 			.pipe(
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addClientErrorAlert(error);
+						this.#alertService.addClientErrorAlert(error);
 					}
 					return of(NULL_PAGING_RESULTS);
 				})
@@ -33,14 +33,14 @@ export class CacheEntriesService {
 	}
 
 	public remove(key: string): Observable<any> {
-		return this.http.delete(
+		return this.#http.delete(
 			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{ params: { key } } // query parameter 'key'
 		);
 	}
 
 	public refresh(key: string): Observable<any> {
-		return this.http.post(
+		return this.#http.post(
 			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{}, // empty POST body
 			{ params: { key } } // query parameter 'key'
@@ -48,7 +48,7 @@ export class CacheEntriesService {
 	}
 
 	public refreshCurrentUser(): Observable<any> {
-		return this.http.post(
+		return this.#http.post(
 			`api/access-checker/user`,
 			{} // empty POST body
 		);

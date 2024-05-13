@@ -1,4 +1,4 @@
-import { Directive, OnInit, computed, inject } from '@angular/core';
+import { Directive, OnInit, inject } from '@angular/core';
 
 import { AsyHeaderListFilterComponent, ListFilterOption } from '../../../../common/table';
 import { Role } from '../../../auth';
@@ -9,13 +9,11 @@ import { APP_CONFIG } from '../../../tokens';
 	standalone: true
 })
 export class UserRoleFilterDirective implements OnInit {
-	private listFilter = inject(AsyHeaderListFilterComponent);
-	private config = inject(APP_CONFIG);
-
-	private requiredExternalRoles = computed(() => this.config()?.requiredRoles ?? []);
+	readonly #listFilter = inject(AsyHeaderListFilterComponent);
+	readonly #config = inject(APP_CONFIG);
 
 	ngOnInit() {
-		this.listFilter.options = [
+		this.#listFilter.options = [
 			...Role.ROLES.map(
 				(role) =>
 					({
@@ -25,7 +23,7 @@ export class UserRoleFilterDirective implements OnInit {
 			),
 			'pending'
 		];
-		this.listFilter.buildFilterFunc = this.buildFilter.bind(this);
+		this.#listFilter.buildFilterFunc = this.buildFilter.bind(this);
 	}
 
 	buildFilter(options: ListFilterOption[]): any {
@@ -35,12 +33,14 @@ export class UserRoleFilterDirective implements OnInit {
 			.filter((query) => query !== undefined);
 
 		if (options.find((option) => option.active && option.value === 'pending')) {
+			const requiredExternalRoles = this.#config()?.requiredRoles ?? [];
+
 			$or.push({ 'roles.user': { $ne: true } });
-			if (this.requiredExternalRoles().length > 0) {
+			if (requiredExternalRoles.length > 0) {
 				$or.push({
 					$and: [
 						{ bypassAccessCheck: { $ne: true } },
-						{ externalRoles: { $not: { $all: this.requiredExternalRoles() } } }
+						{ externalRoles: { $not: { $all: requiredExternalRoles } } }
 					]
 				});
 			}

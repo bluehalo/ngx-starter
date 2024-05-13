@@ -1,6 +1,6 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
-import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
@@ -55,8 +55,15 @@ import { EuaService } from '../eua.service';
 		DateColumnComponent
 	]
 })
-export class AdminListEuasComponent implements OnDestroy, OnInit {
-	columns = [
+export class AdminListEuasComponent implements OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #euaService = inject(EuaService);
+	readonly #alertService = inject(SystemAlertService);
+
+	readonly displayedColumns = signal<string[]>([]);
+
+	readonly columns = [
 		{
 			key: '_id',
 			label: 'ID',
@@ -88,9 +95,8 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 			selected: true
 		}
 	];
-	displayedColumns: string[] = [];
 
-	dataSource = new AsyTableDataSource<EndUserAgreement>(
+	readonly dataSource = new AsyTableDataSource<EndUserAgreement>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'admin-list-euas-component',
 		{
@@ -99,22 +105,13 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private euaService = inject(EuaService);
-	private alertService = inject(SystemAlertService);
-
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
 	}
 
-	ngOnDestroy() {
-		this.dataSource.disconnect();
-	}
-
 	columnsChanged(columns: string[]) {
-		this.displayedColumns = [...columns, 'actionsMenu'];
+		this.displayedColumns.set([...columns, 'actionsMenu']);
 	}
 
 	clearFilters() {
@@ -122,7 +119,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	}
 
 	confirmDeleteEua(eua: EndUserAgreement) {
-		this.dialogService
+		this.#dialogService
 			.confirm(
 				'Delete End User Agreement?',
 				`Are you sure you want to delete eua: "${eua.title}" ?`,
@@ -131,21 +128,21 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 			.closed.pipe(
 				first(),
 				filter((result) => result?.action === DialogAction.OK),
-				switchMap(() => this.euaService.delete(eua)),
-				takeUntilDestroyed(this.destroyRef)
+				switchMap(() => this.#euaService.delete(eua)),
+				takeUntilDestroyed(this.#destroyRef)
 			)
 			.subscribe(() => {
-				this.alertService.addAlert(`Deleted EUA entitled: ${eua.title}`, 'success');
+				this.#alertService.addAlert(`Deleted EUA entitled: ${eua.title}`, 'success');
 				this.dataSource.reload();
 			});
 	}
 
 	publishEua(eua: EndUserAgreement) {
-		this.euaService
+		this.#euaService
 			.publish(eua)
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe(() => {
-				this.alertService.addAlert(`Published ${eua.title}`, 'success');
+				this.#alertService.addAlert(`Published ${eua.title}`, 'success');
 				this.dataSource.reload();
 			});
 	}
@@ -155,7 +152,7 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<EndUserAgreement>> {
-		return this.euaService.search(pagingOptions, query, search);
+		return this.#euaService.search(pagingOptions, query, search);
 	}
 
 	/**
@@ -165,6 +162,6 @@ export class AdminListEuasComponent implements OnDestroy, OnInit {
 	 */
 	previewEndUserAgreement(endUserAgreement: any) {
 		const { text, title } = endUserAgreement;
-		this.dialogService.alert(title, text);
+		this.#dialogService.alert(title, text);
 	}
 }

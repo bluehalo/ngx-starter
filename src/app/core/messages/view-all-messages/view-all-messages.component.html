@@ -12,7 +12,7 @@
 		>
 		</asy-search-input>
 		<div class="p-2 text-center">
-			@if (newMessages) {
+			@if (newMessages()) {
 				<div>
 					<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
 						Load new messages
@@ -24,7 +24,7 @@
 					<p>No messages to display.</p>
 				</div>
 			}
-			@for (message of messages; track message) {
+			@for (message of messages(); track message) {
 				<div class="card card-message mb-4 text-left">
 					<div class="row no-gutters">
 						<div class="col-alert-icon {{ messageType[message.type] | lowercase }}">

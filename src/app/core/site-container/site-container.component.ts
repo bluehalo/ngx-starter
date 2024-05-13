@@ -14,11 +14,11 @@ import { APP_CONFIG } from '../tokens';
 	imports: [SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent, CdkScrollable]
 })
 export class SiteContainerComponent {
-	#config = inject(APP_CONFIG);
+	readonly #config = inject(APP_CONFIG);
 
-	bannerHtml = computed(() => this.#config()?.banner?.html);
-	copyrightHtml = computed(() => this.#config()?.copyright?.html);
-	showFeedbackFlyout = computed(() => this.#config()?.feedback?.showFlyout ?? false);
+	readonly bannerHtml = computed(() => this.#config()?.banner?.html);
+	readonly copyrightHtml = computed(() => this.#config()?.copyright?.html);
+	readonly showFeedbackFlyout = computed(() => this.#config()?.feedback?.showFlyout ?? false);
 
 	skipToMainContent(e: any) {
 		e.preventDefault();

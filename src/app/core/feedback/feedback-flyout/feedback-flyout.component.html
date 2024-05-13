@@ -1,9 +1,9 @@
 <app-flyout label="Feedback">
 	<div
-		class="feedback-form feedback-{{ status }} d-flex flex-column flex-grow-1 h-100"
+		class="feedback-form feedback-{{ status() }} d-flex flex-column flex-grow-1 h-100"
 		#flyoutContent
 	>
-		@if (status === 'ready') {
+		@if (status() === 'ready') {
 			<form #form="ngForm">
 				<h2 class="pb-2">What's on your mind?</h2>
 				<div class="form-check pl-0">
@@ -180,15 +180,14 @@
 					Send Feedback
 				</button>
 			</div>
-		}
-		@if (status === 'submitting') {
+		} @else if (status() === 'submitting') {
 			<div class="media p-5">
 				<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw mr-3"></span>
 				<div class="media-body">
 					<h1 class="mt-0">Submitting</h1>
 				</div>
 			</div>
-		} @else if (status === 'success') {
+		} @else if (status() === 'success') {
 			<div class="media p-5">
 				<span class="fa-solid fa-check-circle text-highlight fa-3x fa-fw mr-3"></span>
 				<div class="media-body">
@@ -196,7 +195,7 @@
 					We got your feedback.
 				</div>
 			</div>
-		} @else if (status === 'failure') {
+		} @else if (status() === 'failure') {
 			<div class="p-5">
 				<div class="media">
 					<span
@@ -211,7 +210,7 @@
 					<button
 						class="btn btn-outline-secondary mr-2"
 						type="button"
-						(click)="status = 'ready'"
+						(click)="backToForm()"
 					>
 						Back to Feedback Form
 					</button>

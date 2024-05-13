@@ -3,7 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -61,12 +61,18 @@ import { AdminUsersService } from '../../user/admin-users.service';
 		TextColumnComponent
 	]
 })
-export class AdminListFeedbackComponent implements OnDestroy, OnInit {
-	feedbackStatusOptions = FeedbackStatusOption;
+export class AdminListFeedbackComponent implements OnInit {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #feedbackService = inject(FeedbackService);
+	readonly #exportConfigService = inject(ExportConfigService);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #adminUsersService = inject(AdminUsersService);
+	readonly feedbackStatusOptions = FeedbackStatusOption;
 
-	assigneeUsernames: string[] = [];
+	readonly displayedColumns = signal<string[]>([]);
+	readonly assigneeUsernames = signal<string[]>([]);
 
-	columns = [
+	readonly columns = [
 		{
 			key: 'creator.name',
 			label: 'Submitted By',
@@ -121,9 +127,8 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 			selected: false
 		}
 	];
-	displayedColumns: string[] = [];
 
-	dataSource = new AsyTableDataSource<Feedback>(
+	readonly dataSource = new AsyTableDataSource<Feedback>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'admin-list-feedback-component',
 		{
@@ -132,35 +137,25 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 		}
 	);
 
-	private destroyRef = inject(DestroyRef);
-	private feedbackService = inject(FeedbackService);
-	private exportConfigService = inject(ExportConfigService);
-	private alertService = inject(SystemAlertService);
-	private adminUsersService = inject(AdminUsersService);
-
 	constructor() {
-		this.adminUsersService
+		this.#adminUsersService
 			.getAll({ 'roles.admin': true }, 'username')
 			.pipe(takeUntilDestroyed())
 			.subscribe({
 				next: (usernames) => {
-					this.assigneeUsernames = usernames as string[];
+					this.assigneeUsernames.set(usernames as string[]);
 				}
 			});
 	}
 
 	ngOnInit() {
-		this.alertService.clearAllAlerts();
+		this.#alertService.clearAllAlerts();
 		this.columnsChanged(this.columns.filter((c) => c.selected).map((c) => c.key));
-	}
-
-	ngOnDestroy() {
-		this.dataSource.disconnect();
 	}
 
 	columnsChanged(columns: string[]) {
 		setTimeout(() => {
-			this.displayedColumns = [...columns];
+			this.displayedColumns.set([...columns]);
 		});
 	}
 
@@ -170,10 +165,10 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 
 	exportCurrentView() {
 		const viewColumns = this.columns
-			.filter((column) => this.displayedColumns.includes(column.key))
+			.filter((column) => this.displayedColumns().includes(column.key))
 			.map((column) => ({ key: column.key, title: column.label }));
 
-		this.exportConfigService
+		this.#exportConfigService
 			.postExportConfig('feedback', {
 				q: this.dataSource.filterEvent$.value,
 				s: this.dataSource.searchEvent$.value,
@@ -181,7 +176,7 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 				dir: this.dataSource.sortEvent$.value.sortDir,
 				cols: viewColumns
 			})
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((response: any) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});
@@ -192,36 +187,36 @@ export class AdminListFeedbackComponent implements OnDestroy, OnInit {
 		search: string,
 		query: any
 	): Observable<PagingResults<Feedback>> {
-		return this.feedbackService.search(pagingOptions, query, search);
+		return this.#feedbackService.search(pagingOptions, query, search);
 	}
 
 	updateFeedbackAssignee(feedback: Feedback, assignee: string | null = null) {
-		this.feedbackService
+		this.#feedbackService
 			.updateFeedbackAssignee(feedback._id, assignee)
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
-				next: (updatedFeedback) => {
+				next: () => {
 					this.dataSource.reload();
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.error.message);
+						this.#alertService.addAlert(error.error.message);
 					}
 				}
 			});
 	}
 
 	updateFeedbackStatus(feedback: Feedback, status: FeedbackStatusOption) {
-		this.feedbackService
+		this.#feedbackService
 			.updateFeedbackStatus(feedback._id, status)
-			.pipe(takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
-				next: (updatedFeedback) => {
+				next: () => {
 					this.dataSource.reload();
 				},
 				error: (error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
-						this.alertService.addAlert(error.error.message);
+						this.#alertService.addAlert(error.error.message);
 					}
 				}
 			});

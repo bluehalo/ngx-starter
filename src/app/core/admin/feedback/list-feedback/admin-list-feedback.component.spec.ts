@@ -87,9 +87,9 @@ describe('Admin List Feedback Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// Toggle the email filter on
-		component.displayedColumns.push('creator.email');
+		component.displayedColumns.update((cols) => [...cols, 'creator.email']);
 
-		expect(component.displayedColumns.includes('creator.email')).toEqual(true);
+		expect(component.displayedColumns().includes('creator.email')).toEqual(true);
 
 		// Click the export button
 		await clickExportButton();
@@ -128,9 +128,13 @@ describe('Admin List Feedback Component Spec', () => {
 		expect(exportConfigServiceSpy.postExportConfig).toHaveBeenCalledTimes(0);
 
 		// Toggle the Submitted By filter off
-		component.displayedColumns.splice(component.displayedColumns.indexOf('creator.name'), 1);
+		component.displayedColumns.update((cols) => {
+			const newCols = [...cols];
+			newCols.splice(component.displayedColumns().indexOf('creator.name'), 1);
+			return newCols;
+		});
 
-		expect(component.displayedColumns.includes('creator.name')).toEqual(false);
+		expect(component.displayedColumns().includes('creator.name')).toEqual(false);
 
 		// Click the export button
 		await clickExportButton();

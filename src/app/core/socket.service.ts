@@ -11,9 +11,9 @@ import { APP_SESSION } from './tokens';
 	providedIn: 'root'
 })
 export class SocketService {
-	protected socket: SocketIOClient.Socket;
-
 	#session = inject(APP_SESSION);
+
+	protected socket: SocketIOClient.Socket;
 
 	constructor() {
 		// Do not auto connect when the socket is created.  We will wait to do that ourselves once the
