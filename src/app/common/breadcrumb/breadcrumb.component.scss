@@ -1,25 +1,16 @@
-@import '../../../styles/shared';
-@import '../../core/site-navbar/shared';
+@import "../../../styles/bootstrap/shared";
 
-$breadcrumb-header-height: $nav-closed-width !default;
-$breadcrumb-font-size: $font-size !default;
-$breadcrumb-line-height: $font-line-height !default;
-$breadcrumb-item-padding-left: 0.5rem !default;
-$breadcrumb-first-item-padding-left: 1rem !default;
-
-.header {
+:host {
 	display: flex;
 	align-items: center;
-	@include font-bold($breadcrumb-font-size);
-	line-height: $breadcrumb-line-height;
-	background-color: $color-white;
-	height: $breadcrumb-header-height;
+	font-weight: bold;
+}
 
-	.header-breadcrumb,
-	.header-breadcrumb-separator {
-		padding-left: $breadcrumb-item-padding-left;
-		&:first-child {
-			padding-left: $breadcrumb-first-item-padding-left;
-		}
+.header-breadcrumb,
+.header-breadcrumb-separator {
+	padding-left: $spacer * .5;
+
+	&:first-child {
+		padding-left: 0
 	}
 }

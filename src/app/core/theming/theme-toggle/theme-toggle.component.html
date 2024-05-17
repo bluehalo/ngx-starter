@@ -1,0 +1,19 @@
+<a class="nav-link" id="color-mode-btn" aria-controls="color-mode-menu" [cdkMenuTriggerFor]="menu">
+	Theme: {{ selectedTheme() }}
+	<span class="fa-solid fa-lg {{ themeOptions.get(selectedTheme()) }} ms-2"></span>
+</a>
+<ng-template #menu>
+	<div class="dropdown-menu py-0" id="color-mode-menu" aria-labelledby="color-mode-btn" cdkMenu>
+		@for (theme of themeOptions.keys(); track theme) {
+			<button
+				class="dropdown-item"
+				[class.active]="theme === selectedTheme()"
+				cdkMenuItem
+				(cdkMenuItemTriggered)="setTheme(theme)"
+			>
+				<span class="fa-solid fa-fw {{ themeOptions.get(theme) }} me-2"></span>
+				{{ theme }}
+			</button>
+		}
+	</div>
+</ng-template>

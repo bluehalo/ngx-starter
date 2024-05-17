@@ -1,33 +1,24 @@
 <section>
-	<!-- Show a breadcrumb to the list messages page -->
-	<a class="back-link" routerLink="/admin/messages">
-		<span class="fa-solid fa-angle-double-left"></span> Back to Messages
-	</a>
-
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
 	@if (message) {
-		<form
-			class="pt-3"
-			role="form"
-			autocomplete="off"
-			novalidate
-			#form="ngForm"
-			(ngSubmit)="submitMessage()"
-		>
-			<h1 class="mb-4">
-				{{ mode | titlecase }} Message
-				@if (mode === 'create') {
-					<small>Provide the required information to create a new message</small>
-				}
-				@if (mode === 'edit') {
-					<small>Make changes to the message's information</small>
-				}
-			</h1>
+		<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="submitMessage()">
+			<div class="media col mb-4">
+				<div class="media-body">
+					<h2 skipTo>{{ mode | titlecase }} Message</h2>
+					@if (mode === 'create') {
+						Provide the required information to create a new message
+					}
+					@if (mode === 'edit') {
+						Make changes to the message's information
+					}
+				</div>
+			</div>
+
 			<!-- Type -->
-			<div class="form-group">
-				<label class="form-required" for="messageType">Type</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="messageType">Type</label>
 				<ng-select
 					id="messageType"
 					name="type"
@@ -39,8 +30,8 @@
 				></ng-select>
 			</div>
 			<!-- Title -->
-			<div class="form-group">
-				<label class="form-required" for="title">Title</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="title">Title</label>
 				<input
 					class="form-control"
 					id="title"
@@ -51,8 +42,8 @@
 				/>
 			</div>
 			<!-- Body -->
-			<div class="form-group">
-				<label class="form-required" for="text">Message Body</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="text">Message Body</label>
 				<textarea
 					class="form-control"
 					id="text"
@@ -63,17 +54,17 @@
 				></textarea>
 			</div>
 			<!-- Buttons -->
-			<div class="form-group">
-				<div class="text-right">
+			<div class="mb-3">
+				<div class="text-end">
 					<button
-						class="btn btn-link mr-2"
+						class="btn btn-link me-2"
 						type="button"
 						[routerLink]="['/admin/messages']"
 					>
 						Cancel
 					</button>
 					<button
-						class="btn btn-outline-secondary mr-2"
+						class="btn btn-outline-primary me-2"
 						type="button"
 						(click)="previewMessage()"
 					>

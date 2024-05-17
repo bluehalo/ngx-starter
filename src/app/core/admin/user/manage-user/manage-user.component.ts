@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { EditUser, Role } from '../../../auth';
@@ -15,7 +16,14 @@ import { AdminUsersService } from '../admin-users.service';
 
 @Component({
 	standalone: true,
-	imports: [CommonModule, RouterLink, SystemAlertComponent, FormsModule, TooltipModule],
+	imports: [
+		CommonModule,
+		RouterLink,
+		SystemAlertComponent,
+		FormsModule,
+		TooltipModule,
+		SkipToDirective
+	],
 	templateUrl: './manage-user.component.html',
 	styleUrls: ['./manage-user.component.scss']
 })

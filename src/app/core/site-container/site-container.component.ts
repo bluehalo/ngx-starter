@@ -8,6 +8,7 @@ import { APP_CONFIG } from '../tokens';
 
 @Component({
 	selector: 'site-container',
+
 	templateUrl: 'site-container.component.html',
 	styleUrls: ['site-container.component.scss'],
 	standalone: true,

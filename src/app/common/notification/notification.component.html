@@ -1,9 +1,9 @@
-<div class="{{ notificationType }}-notification notification-container" [class.small]="small">
-	<div class="float-left" [class.action-text]="showActions">
+<div class="alert alert-{{ notificationType }} d-flex" [class.small]="small">
+	<div class="flex-grow-1" [class.action-text]="showActions">
 		{{ message }}
 	</div>
 	@if (showActions) {
-		<div class="table-actions d-flex flex-grow-1 float-right">
+		<div class="table-actions d-flex">
 			<ng-container *ngTemplateOutlet="actionTemplate"></ng-container>
 		</div>
 	}

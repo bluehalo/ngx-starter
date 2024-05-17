@@ -1,7 +1,12 @@
 @import '../../../styles/shared';
-@import './shared';
 
-$skip-link-z-index: 10002;
+$header-banner-bg: #212121 !default;
+$header-banner-color: #ffffff !default;
+
+$footer-banner-bg: #212121 !default;
+$footer-banner-color: #ffffff !default;
+
+$skip-link-z-index: 10002 !default;
 
 :host {
 	display: flex;
@@ -21,8 +26,7 @@ $skip-link-z-index: 10002;
 }
 
 .copyright-banner {
-	background-color: $copyright-banner-bg;
-	color: $copyright-banner-color;
+	background-color: var(--bs-tertiary-bg);
 }
 
 .footer-banner {
@@ -50,8 +54,7 @@ a.skip-link {
 		z-index: $skip-link-z-index;
 
 		padding: 10px;
-		background-color: $ux-color-primary;
-		color: $color-white;
+		background-color: var(--bs-body-bg);
 		text-decoration: underline;
 	}
 }

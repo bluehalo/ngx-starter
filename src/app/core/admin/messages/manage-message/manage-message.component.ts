@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { DialogService } from '../../../../common/dialog';
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { Message, MessageType } from '../../../messages/message.model';
@@ -16,7 +17,14 @@ import { MessageService } from '../../../messages/message.service';
 	standalone: true,
 	templateUrl: './manage-message.component.html',
 	styleUrls: ['./manage-message.component.scss'],
-	imports: [RouterLink, SystemAlertComponent, FormsModule, NgSelectModule, TitleCasePipe]
+	imports: [
+		RouterLink,
+		SystemAlertComponent,
+		FormsModule,
+		NgSelectModule,
+		TitleCasePipe,
+		SkipToDirective
+	]
 })
 export class ManageMessageComponent implements OnInit {
 	mode: 'create' | 'edit' = 'create';

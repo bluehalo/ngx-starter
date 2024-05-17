@@ -27,7 +27,7 @@ export function provideCoreRoutes() {
 			useValue: [
 				{
 					id: 'users',
-					title: 'User',
+					title: 'Users',
 					ordinal: 0,
 					path: 'users'
 				},

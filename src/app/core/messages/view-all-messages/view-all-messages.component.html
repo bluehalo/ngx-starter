@@ -11,7 +11,7 @@
 			(applySearch)="onSearch($event)"
 		>
 		</asy-search-input>
-		<div class="p-2 text-center">
+		<div class="p-2">
 			@if (newMessages()) {
 				<div>
 					<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
@@ -19,14 +19,14 @@
 					</button>
 				</div>
 			}
-			@if (messages.length === 0) {
+			@if (messages().length === 0) {
 				<div>
-					<p>No messages to display.</p>
+					<p class="text-center">No messages to display.</p>
 				</div>
 			}
 			@for (message of messages(); track message) {
-				<div class="card card-message mb-4 text-left">
-					<div class="row no-gutters">
+				<div class="card card-message mb-4">
+					<div class="row g-0">
 						<div class="col-alert-icon {{ messageType[message.type] | lowercase }}">
 							<span
 								class="fa-solid alert-icon d-flex align-items-center"
@@ -42,7 +42,7 @@
 							<div class="card-body">
 								<div class="d-flex">
 									<h3 class="card-title">{{ message.title }}</h3>
-									<span class="ml-auto">{{ message.created | agoDate }}</span>
+									<span class="ms-auto">{{ message.created | agoDate }}</span>
 								</div>
 								<p class="mb-0" [innerHTML]="message.body"></p>
 							</div>

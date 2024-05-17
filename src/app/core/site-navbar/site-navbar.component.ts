@@ -3,10 +3,13 @@ import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
 import { Component, OnInit, computed, effect, inject, model, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { WINDOW } from '@ng-web-apis/common';
+import { STORAGE_EVENT, StorageService, filterByKey, toValue } from '@ng-web-apis/storage';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { map } from 'rxjs/operators';
 
 import { CdkMenuItemHrefDirective } from '../../common/cdk-menu-item-href.directive';
 import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-router-link.directive';
@@ -18,8 +21,11 @@ import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-moda
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
+import { ThemeToggleComponent } from '../theming/theme-toggle/theme-toggle.component';
 import { APP_CONFIG, APP_SESSION } from '../tokens';
 import { injectNavbarTopics } from './navbar-topic.model';
+
+const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 
 @Component({
 	selector: 'site-navbar',
@@ -43,7 +49,8 @@ import { injectNavbarTopics } from './navbar-topic.model';
 		CdkMenuTrigger,
 		CdkConnectedOverlay,
 		A11yModule,
-		CdkScrollable
+		CdkScrollable,
+		ThemeToggleComponent
 	]
 })
 export class SiteNavbarComponent implements OnInit {
@@ -52,12 +59,13 @@ export class SiteNavbarComponent implements OnInit {
 	readonly #masqueradeService = inject(MasqueradeService);
 	readonly #config = inject(APP_CONFIG);
 	readonly #window = inject(WINDOW);
+	readonly #storage = inject(StorageService);
 
 	readonly session = inject(APP_SESSION);
 	readonly adminTopics = injectAdminTopics();
 	readonly navbarItems = injectNavbarTopics();
 
-	readonly navbarOpen = model(false);
+	readonly navbarOpenOld = model(false);
 	readonly adminNavOpen = signal(false);
 	readonly helpNavOpen = signal(false);
 	readonly userNavOpen = signal(false);
@@ -65,6 +73,7 @@ export class SiteNavbarComponent implements OnInit {
 	readonly isMasquerade = signal(false);
 	readonly numNewMessages = this.#messageService.newMessageCount;
 
+	readonly appTitle = computed(() => this.#config()?.app?.title ?? 'NGX Starter');
 	readonly masqueradeEnabled = computed(() => this.#config()?.masqueradeEnabled ?? false);
 	readonly showApiDocsLink = computed(() => this.#config()?.apiDocs?.enabled ?? false);
 	readonly apiDocsLink = computed(() => this.#config()?.apiDocs?.path ?? '');
@@ -74,6 +83,15 @@ export class SiteNavbarComponent implements OnInit {
 	);
 	readonly userPreferencesLink = computed(() => this.#config()?.userPreferences?.path ?? '');
 	readonly canMasquerade = computed(() => this.session().user?.canMasquerade ?? false);
+
+	readonly navbarOpen = toSignal(
+		inject(STORAGE_EVENT).pipe(
+			filterByKey(NAV_OPEN_STORAGE_KEY),
+			toValue(),
+			map((value) => Boolean(value))
+		),
+		{ initialValue: Boolean(this.#storage.getItem(NAV_OPEN_STORAGE_KEY)) }
+	);
 
 	readonly menuPositions: ConnectedPosition[] = [
 		{
@@ -98,7 +116,11 @@ export class SiteNavbarComponent implements OnInit {
 	}
 
 	toggleNavbar() {
-		this.navbarOpen.set(!this.navbarOpen());
+		if (this.navbarOpen()) {
+			this.#storage.removeItem(NAV_OPEN_STORAGE_KEY);
+		} else {
+			this.#storage.setItem(NAV_OPEN_STORAGE_KEY, 'true');
+		}
 	}
 
 	showFeedbackModal() {

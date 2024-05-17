@@ -1,5 +1,5 @@
 <section class="page-header mb-3">
-	<div class="row no-gutters">
+	<div class="row g-0">
 		<div class="media col">
 			<div class="media-body">
 				<h1 skipTo>System Feedback</h1>
@@ -13,7 +13,7 @@
 <section class="page-body anchored-page-body">
 	<div class="table-header d-flex align-items-center">
 		<div class="table-actions d-flex flex-wrap flex-grow-1">
-			<div class="mb-3 mr-5">
+			<div class="mb-3 me-5">
 				<asy-search-input
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
@@ -21,9 +21,9 @@
 				></asy-search-input>
 			</div>
 
-			<div class="mb-3 ml-auto">
+			<div class="mb-3 ms-auto">
 				<button
-					class="btn btn-outline-secondary ml-auto"
+					class="btn btn-outline-primary ms-auto"
 					type="button"
 					(click)="exportCurrentView()"
 				>
@@ -31,7 +31,7 @@
 				</button>
 
 				<button
-					class="btn btn-outline-secondary font-weight-bold ml-3"
+					class="btn btn-outline-primary font-weight-bold ms-3"
 					type="button"
 					tooltip="Set Columns"
 					(click)="sidebar.toggle()"
@@ -102,15 +102,7 @@
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						<button
-							class="dropdown-toggle feedback-status-button"
-							[ngClass]="{
-								'feedback-status-closed':
-									feedback.status === feedbackStatusOptions.CLOSED,
-								'feedback-status-new':
-									feedback.status === feedbackStatusOptions.NEW,
-								'feedback-status-open':
-									feedback.status === feedbackStatusOptions.OPEN
-							}"
+							class="btn dropdown-toggle"
 							id="feedback-{{ feedback._id }}-status-menu-btn"
 							type="button"
 							attr.aria-controls="feedback-{{ feedback._id }}-status-menu"
@@ -120,7 +112,7 @@
 						</button>
 						<ng-template #statusMenu>
 							<div
-								class="dropdown-menu"
+								class="dropdown-menu py-0"
 								id="feedback-{{ feedback._id }}-status-menu"
 								attr.aria-labelledby="feedback-{{ feedback._id }}-status-menu-btn"
 								cdkMenu
@@ -161,8 +153,7 @@
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Assignee</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						<button
-							class="dropdown-toggle feedback-status-button"
-							[class.feedback-status-open]="!!feedback.assignee"
+							class="btn dropdown-toggle"
 							id="feedback-{{ feedback._id }}-assignee-menu-btn"
 							type="button"
 							attr.aria-controls="feedback-{{ feedback._id }}-assignee-menu"
@@ -172,7 +163,7 @@
 						</button>
 						<ng-template #assigneeMenu>
 							<div
-								class="dropdown-menu"
+								class="dropdown-menu py-0"
 								id="feedback-{{ feedback._id }}-assignee-menu"
 								attr.aria-labelledby="feedback-{{ feedback._id }}-assignee-menu-btn"
 								cdkMenu
@@ -221,7 +212,7 @@
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
-		<div class="table-footer-pager ml-auto">
+		<div class="table-footer-pager ms-auto">
 			<asy-paginator [dataSource]="dataSource"></asy-paginator>
 		</div>
 	</div>

@@ -2,12 +2,11 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { of } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 
 @Component({
-	selector: 'app-forms',
 	templateUrl: './forms.component.html',
 	standalone: true,
 	imports: [FormsModule, NgSelectModule]
@@ -32,5 +31,18 @@ export class FormsComponent {
 				btn.disabled = false;
 				btn.classList.remove('btn-submitting');
 			});
+	}
+
+	disableSelects(
+		event: Event,
+		refInput: HTMLInputElement,
+		select: NgSelectComponent,
+		selectMulti: NgSelectComponent
+	) {
+		refInput.disabled = !refInput.disabled;
+		select.readonly = !select.readonly;
+		selectMulti.readonly = !selectMulti.readonly;
+
+		(event?.target as HTMLButtonElement).textContent = select.readonly ? 'Enable' : 'Disable';
 	}
 }

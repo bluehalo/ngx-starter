@@ -4,12 +4,10 @@ import { authGuard } from '../../core';
 import { AdminComponent } from '../../core/admin/admin.component';
 import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
-import { ExploreComponent } from './explore.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
 import { ExampleLoadingOverlayComponent } from './loading-overlay/example-loading-overlay.component';
 import { ModalComponent } from './modal/modal.component';
-import { SearchComponent } from './search.component';
 import { WelcomeComponent } from './welcome.component';
 
 export const EXAMPLE_ROUTES: Routes = [
@@ -21,16 +19,6 @@ export const EXAMPLE_ROUTES: Routes = [
 	{
 		path: 'welcome',
 		component: WelcomeComponent,
-		canActivate: [authGuard()]
-	},
-	{
-		path: 'explore',
-		component: ExploreComponent,
-		canActivate: [authGuard()]
-	},
-	{
-		path: 'search',
-		component: SearchComponent,
 		canActivate: [authGuard()]
 	},
 	{

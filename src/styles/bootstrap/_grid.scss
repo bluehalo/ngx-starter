@@ -2,6 +2,8 @@
 @use 'sass:math';
 @import 'shared';
 
+$enable-nav-aware-grid-classes: true !default;
+
 // Modified copy of make-grid-columns from Bootstrap (node_modules/bootstrap/scss/mixins/_grid-framework.scss).
 // Creates 'col-na' classes vs 'col'.
 @mixin make-nav-aware-grid-columns(
@@ -82,7 +84,7 @@
 	$nav-opened-grid-breakpoints: ();
 
 	@each $key, $value in $grid-breakpoints {
-		$bp: $value + $ux-nav-open-width - $ux-nav-closed-width;
+		$bp: $value + $nav-open-width - $nav-closed-width;
 		@if $value == 0 {
 			$bp: 0;
 		}

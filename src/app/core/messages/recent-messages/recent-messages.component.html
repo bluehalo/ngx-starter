@@ -3,7 +3,7 @@
 	<div class="cards">
 		@for (message of messages; track message) {
 			<div class="card card-message">
-				<div class="row no-gutters">
+				<div class="row g-0">
 					<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
 						<span
 							class="fa-solid alert-icon {{ messageType[message.type] | lowercase }}"
@@ -18,9 +18,9 @@
 					<div class="col-alert-body">
 						<div class="card-body">
 							<div class="d-flex">
-								<h4 class="card-title text-truncate mr-3">{{ message.title }}</h4>
+								<h4 class="card-title text-truncate me-3">{{ message.title }}</h4>
 								<span
-									class="fa-solid fa-lg fa-close ml-auto"
+									class="fa-solid fa-lg fa-close ms-auto"
 									style="cursor: pointer"
 									(click)="dismissMessage(message)"
 								></span>
@@ -32,15 +32,11 @@
 			</div>
 		}
 	</div>
-	<div class="row m-0">
-		<button class="btn btn-sm btn-link pl-0" type="button" (click)="dismissAll()">
+	<div class="d-flex">
+		<button class="btn btn-secondary btn-sm px-3" type="button" (click)="dismissAll()">
 			Dismiss all
 		</button>
-		<button
-			class="btn btn-sm btn-outline-secondary px-3 ml-auto"
-			type="button"
-			(click)="viewAll()"
-		>
+		<button class="btn btn-primary btn-sm px-3 ms-auto" type="button" (click)="viewAll()">
 			View All
 		</button>
 	</div>
@@ -48,11 +44,7 @@
 	<div class="text-center">
 		<h2 class="mt-4">You're all caught up!</h2>
 		<p class="mb-4">You don't have any new notifications.</p>
-		<button
-			class="btn btn-sm btn-outline-secondary px-3 mb-2"
-			type="button"
-			(click)="viewAll()"
-		>
+		<button class="btn btn-sm btn-outline-primary px-3 mb-2" type="button" (click)="viewAll()">
 			View All
 		</button>
 	</div>

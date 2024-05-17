@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { SkipToDirective } from '../../../common/directives/skip-to.directive';
 import { MultiSelectDirective } from '../../../common/multi-select.directive';
 import { PagingOptions } from '../../../common/paging.model';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
@@ -29,7 +30,9 @@ import { TeamsService } from '../teams.service';
 		AsyncPipe,
 		MultiSelectDirective,
 		UserExternalRolesSelectDirective,
-		TeamSelectDirective
+		TeamSelectDirective,
+		SkipToDirective,
+		TitleCasePipe
 	]
 })
 export class CreateTeamComponent implements OnInit {

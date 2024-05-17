@@ -1,7 +1,7 @@
 @use 'sass:math';
 @import 'shared';
 
-$card-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3) !default;
+$card-color-highlight: #61d9d9 !default;
 $card-selected-check-size: 2rem !default;
 $card-header-height: 4rem !default;
 
@@ -10,14 +10,12 @@ $card-header-height: 4rem !default;
 }
 
 .card {
-	box-shadow: $card-box-shadow;
-
 	.card-header {
 		display: flex;
 		align-items: center;
 		height: $card-header-height;
 
-		h2 {
+		h1,h2,h3,h4,h5,h6 {
 			margin-bottom: 0;
 		}
 	}
@@ -35,15 +33,15 @@ $card-header-height: 4rem !default;
 	&:hover,
 	&.hover,
 	&.selected {
-		box-shadow: 0 0 0 $btn-focus-width $ux-color-highlight;
-		border-color: $ux-color-highlight;
+		box-shadow: 0 0 0 $btn-focus-width $card-color-highlight;
+		border-color: $card-color-highlight;
 	}
 
 	&.selected {
 		&:before {
 			font: var(--fa-font-solid);
 			font-size: math.div($card-selected-check-size, 2);
-			color: $ux-color-white;
+			color: var(--bs-light);
 			content: '\f00c';
 			position: absolute;
 			right: math.div($card-selected-check-size, -2);
@@ -51,7 +49,7 @@ $card-header-height: 4rem !default;
 			width: $card-selected-check-size;
 			height: $card-selected-check-size;
 			border-radius: 100%;
-			background: $ux-color-highlight;
+			background: $card-color-highlight;
 			padding-top: math.div($card-selected-check-size, 4);
 			box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4);
 		}

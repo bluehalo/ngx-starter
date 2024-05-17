@@ -7,7 +7,6 @@
 }
 
 .feedback-form {
-	background: $ux-color-white;
 	width: 550px;
 
 	form {
@@ -18,10 +17,6 @@
 }
 
 .feedback-ready {
-	background: $ux-color-white url(/assets/images/feedback-bg.png) no-repeat right 1rem;
+	background: var(--bs-body-bg) url('/assets/images/feedback-bg.png') no-repeat right 1rem;
 	background-size: 219px 129px;
-}
-
-.form-check-label {
-	font-family: $font-family;
 }

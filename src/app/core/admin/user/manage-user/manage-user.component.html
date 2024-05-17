@@ -1,15 +1,9 @@
 <section>
-	<!-- Show a breadcrumb to the list users page -->
-	<a class="back-link" routerLink="/admin/users">
-		<span class="fa-solid fa-angle-double-left"></span> Back to Users
-	</a>
-
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
 	@if (user) {
 		<form
-			class="pt-3"
 			role="form"
 			autocomplete="off"
 			novalidate
@@ -17,18 +11,21 @@
 			#form="ngForm"
 			(ngSubmit)="submitUser()"
 		>
-			<h1 class="mb-4">
-				{{ mode | titlecase }} User
-				@if (mode === 'create') {
-					<small>Provide the required information to create a new User</small>
-				}
-				@if (mode === 'edit') {
-					<small>Make changes to the User's information</small>
-				}
-			</h1>
+			<div class="media col mb-4">
+				<div class="media-body">
+					<h2 skipTo>{{ mode | titlecase }} User</h2>
+					@if (mode === 'create') {
+						Provide the required information to create a new User
+					}
+					@if (mode === 'edit') {
+						Make changes to the User's information
+					}
+				</div>
+			</div>
+
 			<!-- Name -->
-			<div class="form-group">
-				<label class="form-required" for="name">Name</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="name">Name</label>
 				<input
 					class="form-control"
 					id="name"
@@ -40,8 +37,8 @@
 				/>
 			</div>
 			<!-- Username -->
-			<div class="form-group">
-				<label class="form-required" for="username">Username</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="username">Username</label>
 				<input
 					class="form-control"
 					id="username"
@@ -53,8 +50,8 @@
 				/>
 			</div>
 			<!-- Organization -->
-			<div class="form-group">
-				<label class="form-required" for="organization">Organization</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="organization">Organization</label>
 				<input
 					class="form-control"
 					id="organization"
@@ -66,8 +63,8 @@
 				/>
 			</div>
 			<!-- Email -->
-			<div class="form-group">
-				<label class="form-required" for="email">Email</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="email">Email</label>
 				<input
 					class="form-control"
 					id="email"
@@ -80,15 +77,16 @@
 			</div>
 			<!-- Local Login Information -->
 			@if (!proxyPki()) {
-				<h2 class="pt-3">
-					Password
-					<small>
+				<div class="media col py-3">
+					<div class="media-body">
+						<h3>Password</h3>
 						At least 6 characters.
 						<span>Leave blank if you do not want to change the password.</span>
-					</small>
-				</h2>
-				<div class="form-group">
-					<label for="password">
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" for="password">
 						@if (mode === 'edit') {
 							<label>New</label>
 						}
@@ -103,8 +101,8 @@
 						[(ngModel)]="user.password"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="password2"
+				<div class="mb-3">
+					<label class="form-label" for="password2"
 						>Re-enter
 						@if (mode === 'edit') {
 							<label>New</label>
@@ -124,9 +122,9 @@
 			<!-- PKI Information -->
 			@if (proxyPki()) {
 				<!-- Bypass Access Checker -->
-				<div class="form-group">
-					<label>Access Check</label>
-					<div class="form-check m-n1 p-1">
+				<div class="mb-3">
+					<label class="form-label">Access Check</label>
+					<div class="form-check m-n1">
 						<input
 							class="form-check-input"
 							id="bypassAC"
@@ -139,8 +137,8 @@
 				</div>
 				<!-- Stuff that normal users can see, but won't be able to modify -->
 				<!-- dn -->
-				<div class="form-group">
-					<label for="dn">DN</label>
+				<div class="mb-3">
+					<label class="form-label" for="dn">DN</label>
 					<input
 						class="form-control"
 						id="dn"
@@ -150,8 +148,8 @@
 						[(ngModel)]="user.providerData.dn"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="externalRoles">External Roles</label>
+				<div class="mb-3">
+					<label class="form-label" for="externalRoles">External Roles</label>
 					<textarea
 						class="form-control"
 						id="externalRoles"
@@ -162,8 +160,8 @@
 						>{{ user.externalRolesDisplay }}</textarea
 					>
 				</div>
-				<div class="form-group">
-					<label for="externalGroups">External Groups</label>
+				<div class="mb-3">
+					<label class="form-label" for="externalGroups">External Groups</label>
 					<textarea
 						class="form-control"
 						id="externalGroups"
@@ -176,8 +174,8 @@
 				</div>
 			}
 			<!-- Admin only stuff -->
-			<div class="form-group">
-				<label>Roles</label>
+			<div class="mb-3">
+				<label class="form-label">Roles</label>
 				<div>
 					@for (role of possibleRoles; track role) {
 						<div class="form-check form-check-inline" tooltip="{{ role.description }}">
@@ -195,9 +193,9 @@
 					}
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="text-right">
-					<button class="btn btn-link mr-2" type="button" routerLink="/admin/users">
+			<div class="mb-3">
+				<div class="text-end">
+					<button class="btn btn-link me-2" type="button" routerLink="/admin/users">
 						Cancel
 					</button>
 					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">

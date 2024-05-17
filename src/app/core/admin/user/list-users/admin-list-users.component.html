@@ -1,5 +1,5 @@
 <section class="page-header mb-3">
-	<div class="row no-gutters">
+	<div class="row g-0">
 		<div class="media col">
 			<div class="media-body">
 				<h1 skipTo>Users</h1>
@@ -13,7 +13,7 @@
 <section class="page-body anchored-page-body">
 	<div class="table-header d-flex align-items-center">
 		<div class="table-actions d-flex flex-wrap flex-grow-1">
-			<div class="mb-3 mr-5">
+			<div class="mb-3 me-5">
 				<asy-search-input
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
@@ -21,21 +21,17 @@
 				></asy-search-input>
 			</div>
 
-			<div class="mb-3 ml-auto">
-				<button
-					class="btn btn-outline-secondary"
-					type="button"
-					(click)="exportCurrentView()"
-				>
+			<div class="mb-3 ms-auto">
+				<button class="btn btn-outline-primary" type="button" (click)="exportCurrentView()">
 					<span class="fa-solid fa-download"></span> Export
 				</button>
 
-				<button class="btn btn-primary ml-3" type="button" routerLink="/admin/user">
+				<button class="btn btn-primary ms-3" type="button" routerLink="/admin/user">
 					<span class="fa-solid fa-user-plus"></span> Create User
 				</button>
 
 				<button
-					class="btn btn-outline-secondary font-weight-bold ml-3"
+					class="btn btn-outline-primary font-weight-bold ms-3"
 					type="button"
 					tooltip="Set Columns"
 					(click)="sidebar.toggle()"
@@ -59,11 +55,7 @@
 				<ng-container cdkColumnDef="name">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						<a
-							class="text-decoration-underline"
-							[routerLink]="['/admin/user', user._id]"
-							>{{ user.name }}</a
-						>
+						<a [routerLink]="['/admin/user', user._id]">{{ user.name }}</a>
 					</td>
 				</ng-container>
 				<asy-text-column name="username" [sortable]="false"></asy-text-column>
@@ -105,16 +97,14 @@
 				</ng-container>
 				<asy-expandable-list-column name="teams">
 					<ng-template lc-item-tmp let-team="listItem">
-						<a class="text-decoration-underline" [routerLink]="['/team', team._id]">{{
-							team.team.name
-						}}</a>
+						<a [routerLink]="['/team', team._id]">{{ team.team.name }}</a>
 					</ng-template>
 				</asy-expandable-list-column>
 				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
 					<th cdk-header-cell *cdkHeaderCellDef></th>
 					<td cdk-cell *cdkCellDef="let user">
 						<button
-							class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret border-left py-0 pl-3"
+							class="btn dropdown-toggle dropdown-toggle-hide-caret shadow-none py-0 ps-3"
 							id="user-{{ user._id }}-action-menu-btn"
 							type="button"
 							attr.aria-controls="user-{{ user._id }}-action-menu"
@@ -124,7 +114,7 @@
 						</button>
 						<ng-template #actionsMenu>
 							<div
-								class="dropdown-menu"
+								class="dropdown-menu py-0"
 								id="user-{{ user._id }}-action-menu"
 								attr.aria-labelledby="user-{{ user._id }}-action-menu-btn"
 								cdkMenu
@@ -171,7 +161,7 @@
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
-		<div class="table-footer-pager ml-auto">
+		<div class="table-footer-pager ms-auto">
 			<asy-paginator [dataSource]="dataSource"></asy-paginator>
 		</div>
 	</div>

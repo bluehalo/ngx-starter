@@ -1,24 +1,8 @@
 @use 'sass:math';
 @import 'shared';
 
-$form-label-font-color: $ux-color-primary-dark !default;
 $form-inline-edit-btns-bottom: -2rem !default;
-
-.form-control {
-	font-style: normal;
-	@include font-smoothing(auto);
-
-	&::placeholder {
-		font-family: $font-family-light;
-	}
-}
-
-.form-group {
-	label {
-		@include font-bold($input-font-size);
-		@include font-color-dark($form-label-font-color);
-	}
-}
+$form-inline-edit-label-col-width: 30% !default;
 
 input[bsDatepicker] + span {
 	position: relative;
@@ -43,8 +27,9 @@ input[bsDatepicker] + span {
 }
 
 .inline-edit-btns {
-	background: $ux-color-white;
+	background: var(--bs-body-bg);
 	border-top: 1px solid $border-color;
+	border-radius: 0 0 $border-radius $border-radius;
 	bottom: $form-inline-edit-btns-bottom;
 	margin-left: -1 * $card-spacer-x;
 	padding: $card-spacer-y $card-spacer-x;
@@ -53,29 +38,28 @@ input[bsDatepicker] + span {
 	z-index: $zindex-sticky;
 }
 
-$form-inline-edit-label-col-width: 30% !default;
 
 .form-inline-edit {
-	border-top: $border-width solid $border-color;
+	border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 
 	textarea.form-control {
 		padding-top: calc(#{$input-padding-y} + 1px);
 	}
 
 	.form-check-inline .form-check-label {
-		margin-top: math.div($spacer, 2);
+		margin-top: $spacer * 0.5;
 		margin-bottom: 0;
 	}
 
-	.form-group {
-		border-bottom: $border-width solid $border-color;
+	.form-inline-edit-item {
+		border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 		display: flex;
 		flex-wrap: wrap;
 		margin-bottom: 0;
-		padding: 0.75 * $spacer;
+		padding: $spacer * 0.75;
 
 		&:nth-of-type(odd) {
-			background-color: $ux-color-background;
+			background-color: $table-striped-bg;
 		}
 
 		.col:first-child {
@@ -94,13 +78,13 @@ $form-inline-edit-label-col-width: 30% !default;
 			max-width: 100% - $form-inline-edit-label-col-width;
 
 			& > div {
-				padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
+				padding: calc(#{$input-padding-y} + #{$input-border-width} * 2)
 					calc(#{$input-padding-x} + #{$input-border-width}) calc(#{$input-padding-y});
 			}
 		}
 
 		.col-form-label {
-			padding: calc(#{$input-padding-y} + #{$input-border-width * 2})
+			padding: calc(#{$input-padding-y} + #{$input-border-width} * 2)
 				calc(#{math.div($grid-gutter-width, 2)} + #{$input-border-width})
 				calc(#{$input-padding-y});
 		}

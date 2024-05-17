@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { LoadingOverlayComponent } from '../../../common/loading-overlay/loading-overlay.component';
 
 @Component({
-	selector: 'example-loading-overlay',
 	templateUrl: './example-loading-overlay.component.html',
 	standalone: true,
 	imports: [LoadingOverlayComponent]

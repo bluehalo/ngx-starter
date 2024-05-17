@@ -2,8 +2,9 @@
 	<h1 class="pb-3">Bootstrap Form Examples</h1>
 
 	<h2>Form Controls</h2>
-	<div class="form-group">
-		<label class="form-required" for="exampleFormControlText">Example text</label>
+
+	<div class="mb-3">
+		<label class="form-label form-required" for="exampleFormControlText">Example text</label>
 		<input
 			class="form-control"
 			id="exampleFormControlText"
@@ -14,8 +15,8 @@
 		<small class="form-text text-muted">Extra explanation provided if necessary.</small>
 	</div>
 
-	<div class="form-group">
-		<label for="exampleFormControlTextarea1">Example textarea</label>
+	<div class="mb-3">
+		<label class="form-label" for="exampleFormControlTextarea1">Example textarea</label>
 		<textarea
 			class="form-control"
 			id="exampleFormControlTextarea1"
@@ -25,30 +26,75 @@
 	</div>
 
 	<h2 class="pt-4">Sizing</h2>
-	<div class="form-group">
+	<div class="mb-3">
 		<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" />
 	</div>
 
-	<div class="form-group">
+	<div class="mb-3">
 		<input class="form-control" type="text" placeholder="Default input" />
 	</div>
 
-	<div class="form-group">
+	<div class="mb-3">
 		<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" />
 	</div>
 
-	<h2 class="pt-4">ng-select</h2>
-	<div class="form-group">
-		<input class="form-control" type="text" placeholder="text input for comparison" />
+	<h2 class="pt-4">
+		ng-select
+		<button
+			class="btn btn-primary"
+			type="button"
+			(click)="disableSelects($event, input, ngSelect, ngSelectMulti)"
+		>
+			Disable
+		</button>
+	</h2>
+
+	<div class="mb-3">
+		<label class="form-label" for="selectInputComp">Standard input for comparison</label>
+		<input
+			class="form-control"
+			id="selectInputComp"
+			type="text"
+			placeholder="Select a value..."
+			#input
+		/>
 	</div>
 
-	<div class="form-group">
+	<div class="mb-3">
+		<label class="form-label" for="ngSelectBS">ng-select</label>
 		<ng-select
 			id="ngSelectBS"
 			bindLabel="value"
 			bindValue="value"
 			placeholder="Select a value..."
-			[items]="[{ value: 'item1' }, { value: 'item2', disabled: true }, { value: 'item3' }]"
+			#ngSelect
+			[items]="[
+				{ value: 'item1' },
+				{ value: 'item2' },
+				{ value: 'item3' },
+				{ value: 'item4' },
+				{ value: 'item5', disabled: true }
+			]"
+		>
+		</ng-select>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label" for="ngSelectBSMulti">ng-select (multi)</label>
+		<ng-select
+			id="ngSelectBSMulti"
+			bindLabel="value"
+			bindValue="value"
+			placeholder="Select a value..."
+			#ngSelectMulti
+			[items]="[
+				{ value: 'item1' },
+				{ value: 'item2' },
+				{ value: 'item3' },
+				{ value: 'item4' },
+				{ value: 'item5', disabled: true }
+			]"
+			[multiple]="true"
 		>
 		</ng-select>
 	</div>
@@ -56,7 +102,7 @@
 	<h2 class="pt-4">Checkboxes and radios</h2>
 
 	<h3 class="pt-3">Default (stacked)</h3>
-	<div class="form-group">
+	<div class="mb-3">
 		<div class="form-check">
 			<input class="form-check-input" id="defaultCheck1" type="checkbox" value="" />
 			<label class="form-check-label" for="defaultCheck1"> Default checkbox </label>
@@ -84,7 +130,7 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="mb-3">
 		<div class="form-check">
 			<input
 				class="form-check-input"
@@ -134,7 +180,7 @@
 	</div>
 
 	<h3 class="pt-3">Inline</h3>
-	<div class="form-group">
+	<div class="mb-3">
 		<div class="form-check form-check-inline">
 			<input class="form-check-input" id="inlineCheckbox1" type="checkbox" value="option1" />
 			<label class="form-check-label" for="inlineCheckbox1">1</label>
@@ -155,7 +201,7 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="mb-3">
 		<div class="form-check form-check-inline">
 			<input
 				class="form-check-input"
@@ -210,116 +256,57 @@
 		/>
 	</div>
 
-	<h3 class="pt-3">Slide Toggle Checkboxes</h3>
-	<div class="form-check">
-		<input class="form-check-input slide-toggle" id="slideToggle1" type="checkbox" />
+	<h3 class="pt-3">Switches</h3>
+	<div class="form-check form-switch">
+		<input class="form-check-input" id="slideToggle1" type="checkbox" />
 		<label class="form-check-label" for="slideToggle1">Toggle this switch element</label>
 	</div>
-	<div class="form-check">
-		<input class="form-check-input slide-toggle" id="slideToggle2" type="checkbox" disabled />
+	<div class="form-check form-switch">
+		<input class="form-check-input" id="slideToggle2" type="checkbox" disabled />
 		<label class="form-check-label" for="slideToggle2">Disabled switch element</label>
 	</div>
 
 	<h2 class="pt-3">Buttons</h2>
 
 	<h3 class="pt-3">Standard</h3>
-	<button class="mr-3 btn btn-primary" type="button">Primary</button>
-	<button class="mr-3 btn btn-secondary" type="button">Secondary</button>
-	<button class="mr-3 btn btn-success" type="button">Success</button>
-	<button class="mr-3 btn btn-danger" type="button">Danger</button>
-	<button class="mr-3 btn btn-warning" type="button">Warning</button>
-	<button class="mr-3 btn btn-info" type="button">Info</button>
-	<button class="mr-3 btn btn-light" type="button">Light</button>
-	<button class="mr-3 btn btn-dark" type="button">Dark</button>
-	<button class="mr-3 btn btn-link" type="button">Link</button>
+	<button class="me-3 btn btn-primary" type="button">Primary</button>
+	<button class="me-3 btn btn-secondary" type="button">Secondary</button>
+	<button class="me-3 btn btn-success" type="button">Success</button>
+	<button class="me-3 btn btn-danger" type="button">Danger</button>
+	<button class="me-3 btn btn-warning" type="button">Warning</button>
+	<button class="me-3 btn btn-info" type="button">Info</button>
+	<button class="me-3 btn btn-light" type="button">Light</button>
+	<button class="me-3 btn btn-dark" type="button">Dark</button>
+	<button class="me-3 btn btn-link" type="button">Link</button>
 
 	<h3 class="pt-3">Outline Buttons</h3>
-	<button class="mr-3 btn btn-outline-primary" type="button">Primary</button>
-	<button class="mr-3 btn btn-outline-secondary" type="button">Secondary</button>
-	<button class="mr-3 btn btn-outline-success" type="button">Success</button>
-	<button class="mr-3 btn btn-outline-danger" type="button">Danger</button>
-	<button class="mr-3 btn btn-outline-warning" type="button">Warning</button>
-	<button class="mr-3 btn btn-outline-info" type="button">Info</button>
-	<button class="mr-3 btn btn-outline-light" type="button">Light</button>
-	<button class="mr-3 btn btn-outline-dark" type="button">Dark</button>
-
-	<h3 class="pt-3">Button Tags</h3>
-	<a class="mr-3 btn btn-primary" href="#" role="button">Link</a>
-	<button class="mr-3 btn btn-primary" type="submit">Button</button>
-	<input class="mr-3 btn btn-primary" type="button" value="Input" />
-	<input class="mr-3 btn btn-primary" type="submit" value="Submit" />
-	<input class="mr-3 btn btn-primary" type="reset" value="Reset" />
+	<button class="me-3 btn btn-outline-primary" type="button">Primary</button>
+	<button class="me-3 btn btn-outline-secondary" type="button">Secondary</button>
+	<button class="me-3 btn btn-outline-success" type="button">Success</button>
+	<button class="me-3 btn btn-outline-danger" type="button">Danger</button>
+	<button class="me-3 btn btn-outline-warning" type="button">Warning</button>
+	<button class="me-3 btn btn-outline-info" type="button">Info</button>
+	<button class="me-3 btn btn-outline-light" type="button">Light</button>
+	<button class="me-3 btn btn-outline-dark" type="button">Dark</button>
 
 	<h3 class="pt-3">Large Buttons</h3>
-	<button class="mr-3 btn btn-primary btn-lg" type="button">Large button</button>
-	<button class="mr-3 btn btn-secondary btn-lg" type="button">Large button</button>
+	<button class="me-3 btn btn-primary btn-lg" type="button">Large button</button>
+	<button class="me-3 btn btn-secondary btn-lg" type="button">Large button</button>
 
 	<h3 class="pt-3">Small Buttons</h3>
-	<button class="mr-3 btn btn-primary btn-sm" type="button">Small button</button>
-	<button class="mr-3 btn btn-secondary btn-sm" type="button">Small button</button>
+	<button class="me-3 btn btn-primary btn-sm" type="button">Small button</button>
+	<button class="me-3 btn btn-secondary btn-sm" type="button">Small button</button>
 
 	<h3 class="pt-3">Active State</h3>
-	<a class="mr-3 btn btn-primary active" href="#" role="button" aria-pressed="true"
-		>Primary Button</a
-	>
-	<a class="mr-3 btn btn-secondary active" href="#" role="button" aria-pressed="true"
-		>Secondary Button</a
-	>
+	<a class="me-3 btn btn-primary active" role="button" aria-pressed="true">Primary Button</a>
+	<a class="me-3 btn btn-secondary active" role="button" aria-pressed="true">Secondary Button</a>
 
 	<h3 class="pt-3">Disabled State</h3>
-	<button class="mr-3 btn btn-primary" type="button" disabled>Primary button</button>
-	<button class="mr-3 btn btn-secondary" type="button" disabled>Secondary Button</button>
+	<button class="me-3 btn btn-primary" type="button" disabled>Primary button</button>
+	<button class="me-3 btn btn-secondary" type="button" disabled>Secondary Button</button>
 
-	<h2 class="pt-4">Submit Button w/ progress indicator</h2>
-	<button class="mr-3 btn btn-primary btn-submit" type="button" (click)="submit($event)">
+	<h3 class="pt-4">Submit Button w/ progress indicator</h3>
+	<button class="me-3 btn btn-primary btn-submit" type="button" (click)="submit($event)">
 		Submit
 	</button>
-
-	<h3 class="pt-3">Square Buttons <small>(for use with fa-fw icons)</small></h3>
-	<button class="mr-3 btn btn-primary btn-square btn-sm" type="button">
-		<span class="fa-solid fa-fw fa-upload"></span>
-	</button>
-	<button class="mr-3 btn btn-primary btn-square" type="button">
-		<span class="fa-solid fa-fw fa-upload"></span>
-	</button>
-	<button class="mr-3 btn btn-primary btn-square btn-lg" type="button">
-		<span class="fa-solid fa-fw fa-upload"></span>
-	</button>
-
-	<h2 class="pt-4">File Input</h2>
-
-	<h3 class="pt-3">Native File Input Component</h3>
-	<input type="file" />
-
-	<h3 class="pt-3">Bootstrap Custom File Input Component</h3>
-
-	<div class="custom-file">
-		<input class="custom-file-input" id="customFile" type="file" />
-		<label class="custom-file-label" data-browse="Choose File" for="customFile"
-			>Choose file</label
-		>
-	</div>
-
-	<h3 class="pt-3">Bootstrap Standard Button Style File Input Component</h3>
-
-	<div class="custom-file-btn custom-file-btn-primary">
-		<input class="custom-file-btn-input" id="customFile2" type="file" />
-		<label class="btn custom-file-btn-label" for="customFile2"
-			><span class="fa-solid fa-upload mr-2"></span>Choose File</label
-		>
-	</div>
-
-	<h3 class="pt-3">Bootstrap Outline Button Style File Input Component</h3>
-
-	<div class="custom-file-btn custom-file-btn-outline" data-after="No file chosen">
-		<input
-			class="custom-file-btn-input"
-			id="customFile3"
-			type="file"
-			(change)="fileSelected($event)"
-		/>
-		<label class="btn custom-file-btn-label" for="customFile3"
-			><span class="fa-solid fa-upload mr-2"></span>Choose File</label
-		>
-	</div>
 </form>

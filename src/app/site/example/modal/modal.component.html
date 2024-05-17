@@ -3,8 +3,8 @@
 
 	<h2>Alert</h2>
 	<div class="row">
-		<div class="form-group col-6">
-			<label class="form-required" for="alertTitle">Title</label>
+		<div class="mb-3 col-6">
+			<label class="form-label form-required" for="alertTitle">Title</label>
 			<input
 				class="form-control"
 				id="alertTitle"
@@ -15,8 +15,8 @@
 				[(ngModel)]="alertConfig.title"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label for="alertOK">OK Text</label>
+		<div class="mb-3 col-6">
+			<label class="form-label" for="alertOK">OK Text</label>
 			<input
 				class="form-control"
 				id="alertOK"
@@ -26,8 +26,8 @@
 				[(ngModel)]="alertConfig.okText"
 			/>
 		</div>
-		<div class="form-group col-12">
-			<label class="form-required" for="alertMessage">Message</label>
+		<div class="mb-3 col-12">
+			<label class="form-label form-required" for="alertMessage">Message</label>
 			<input
 				class="form-control"
 				id="alertMessage"
@@ -39,13 +39,13 @@
 			/>
 		</div>
 	</div>
-	<button class="mr-3 btn btn-primary" type="button" (click)="showAlert()">Show Alert</button>
+	<button class="me-3 btn btn-primary" type="button" (click)="showAlert()">Show Alert</button>
 	Output: {{ alertOutput$ | async | json }}
 
 	<h2 class="pt-5">Confirm</h2>
 	<div class="row">
-		<div class="form-group col-4">
-			<label class="form-required" for="confirmTitle">Title</label>
+		<div class="mb-3 col-4">
+			<label class="form-label form-required" for="confirmTitle">Title</label>
 			<input
 				class="form-control"
 				id="confirmTitle"
@@ -56,8 +56,8 @@
 				[(ngModel)]="confirmConfig.title"
 			/>
 		</div>
-		<div class="form-group col-4">
-			<label for="confirmOK">OK Text</label>
+		<div class="mb-3 col-4">
+			<label class="form-label" for="confirmOK">OK Text</label>
 			<input
 				class="form-control"
 				id="confirmOK"
@@ -67,8 +67,8 @@
 				[(ngModel)]="confirmConfig.okText"
 			/>
 		</div>
-		<div class="form-group col-4">
-			<label for="confirmCancel">Cancel Text</label>
+		<div class="mb-3 col-4">
+			<label class="form-label" for="confirmCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="confirmCancel"
@@ -78,8 +78,8 @@
 				[(ngModel)]="confirmConfig.cancelText"
 			/>
 		</div>
-		<div class="form-group col-12">
-			<label class="form-required" for="confirmMessage">Message</label>
+		<div class="mb-3 col-12">
+			<label class="form-label form-required" for="confirmMessage">Message</label>
 			<input
 				class="form-control"
 				id="confirmMessage"
@@ -91,13 +91,13 @@
 			/>
 		</div>
 	</div>
-	<button class="mr-3 btn btn-primary" type="button" (click)="showConfirm()">Show Confirm</button>
+	<button class="me-3 btn btn-primary" type="button" (click)="showConfirm()">Show Confirm</button>
 	Output: {{ confirmOutput$ | async | json }}
 
 	<h2 class="pt-5">Prompt</h2>
 	<div class="row">
-		<div class="form-group col-6">
-			<label class="form-required" for="promptTitle">Title</label>
+		<div class="mb-3 col-6">
+			<label class="form-label form-required" for="promptTitle">Title</label>
 			<input
 				class="form-control"
 				id="promptTitle"
@@ -108,8 +108,8 @@
 				[(ngModel)]="promptConfig.title"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label class="form-required" for="promptLabel">Input Label</label>
+		<div class="mb-3 col-6">
+			<label class="form-label form-required" for="promptLabel">Input Label</label>
 			<input
 				class="form-control"
 				id="promptLabel"
@@ -120,8 +120,8 @@
 				[(ngModel)]="promptConfig.inputLabel"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label for="promptOK">OK Text</label>
+		<div class="mb-3 col-6">
+			<label class="form-label" for="promptOK">OK Text</label>
 			<input
 				class="form-control"
 				id="promptOK"
@@ -131,8 +131,8 @@
 				[(ngModel)]="promptConfig.okText"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label for="promptCancel">Cancel Text</label>
+		<div class="mb-3 col-6">
+			<label class="form-label" for="promptCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="promptCancel"
@@ -142,8 +142,8 @@
 				[(ngModel)]="promptConfig.cancelText"
 			/>
 		</div>
-		<div class="form-group col-12">
-			<label class="form-required" for="promptMessage">Message</label>
+		<div class="mb-3 col-12">
+			<label class="form-label form-required" for="promptMessage">Message</label>
 			<input
 				class="form-control"
 				id="promptMessage"
@@ -155,13 +155,13 @@
 			/>
 		</div>
 	</div>
-	<button class="mr-3 btn btn-primary" type="button" (click)="showPrompt()">Show Prompt</button>
+	<button class="me-3 btn btn-primary" type="button" (click)="showPrompt()">Show Prompt</button>
 	Output: {{ promptOutput$ | async | json }}
 
 	<h2 class="pt-5">Show</h2>
 	<div class="row">
-		<div class="form-group col-6">
-			<label class="form-required" for="showTitle">Title</label>
+		<div class="mb-3 col-6">
+			<label class="form-label form-required" for="showTitle">Title</label>
 			<input
 				class="form-control"
 				id="showTitle"
@@ -172,8 +172,8 @@
 				[(ngModel)]="showConfig.title"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label for="showOK">OK Text</label>
+		<div class="mb-3 col-6">
+			<label class="form-label" for="showOK">OK Text</label>
 			<input
 				class="form-control"
 				id="showOK"
@@ -183,8 +183,8 @@
 				[(ngModel)]="showConfig.okText"
 			/>
 		</div>
-		<div class="form-group col-6">
-			<label for="showCancel">Cancel Text</label>
+		<div class="mb-3 col-6">
+			<label class="form-label" for="showCancel">Cancel Text</label>
 			<input
 				class="form-control"
 				id="showCancel"
@@ -194,8 +194,8 @@
 				[(ngModel)]="showConfig.cancelText"
 			/>
 		</div>
-		<div class="form-group col-12">
-			<label class="form-required" for="showMessage">Message</label>
+		<div class="mb-3 col-12">
+			<label class="form-label form-required" for="showMessage">Message</label>
 			<input
 				class="form-control"
 				id="showMessage"
@@ -206,8 +206,8 @@
 				[(ngModel)]="showConfig.message"
 			/>
 		</div>
-		<div class="form-group col-12">
-			<label class="form-required" for="showInput">Inputs Config</label>
+		<div class="mb-3 col-12">
+			<label class="form-label form-required" for="showInput">Inputs Config</label>
 			<textarea
 				class="form-control"
 				id="showInput"
@@ -220,6 +220,6 @@
 			></textarea>
 		</div>
 	</div>
-	<button class="mr-3 btn btn-primary" type="button" (click)="showModal()">Show Modal</button>
+	<button class="me-3 btn btn-primary" type="button" (click)="showModal()">Show Modal</button>
 	Output: {{ showOutput$ | async | json }}
 </form>

@@ -14,23 +14,13 @@ button.dropdown-toggle {
 }
 
 .dropdown-menu {
-	font-size: $filter-dropdown-font-size;
-	//margin-top: 0.5rem;
 	max-height: $filter-dropdown-max-height;
-
-	input {
-		font-size: $filter-dropdown-font-size;
-	}
 
 	.search {
 		width: 250px;
 
 		::ng-deep .search-input-container {
 			width: 100%;
-
-			input {
-				font-size: $filter-dropdown-font-size;
-			}
 		}
 	}
 	& > div {

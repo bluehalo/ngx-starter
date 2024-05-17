@@ -1,14 +1,14 @@
 <div class="sidebar-header" [class.card-header]="showInCard">
 	<h2>{{ headerText }}</h2>
-	<a
-		class="btn-icon no-href ml-auto"
+	<button
+		class="btn-close ms-auto"
+		type="button"
+		aria-label="Close"
 		container="body"
 		placement="bottom"
 		tooltip="Close"
 		(click)="open = false"
-	>
-		<span class="fa-solid fa-lg fa-times"></span>
-	</a>
+	></button>
 </div>
 <div class="sidebar-body" [class.card-body]="showInCard">
 	<ng-content></ng-content>

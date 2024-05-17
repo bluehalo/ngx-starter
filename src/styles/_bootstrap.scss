@@ -1,0 +1,20 @@
+@import 'bootstrap/shared';
+
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+@import '../../node_modules/ngx-bootstrap/datepicker/bs-datepicker';
+
+/**
+ * _bootstrap.scss
+
+ * This file is globally included in the Angular application.
+ * All bootstrap theme styles should be included in this file.
+ */
+
+@import 'bootstrap/buttons';
+@import 'bootstrap/cards';
+@import 'bootstrap/dropdowns';
+@import 'bootstrap/forms';
+@import 'bootstrap/grid';
+@import 'bootstrap/nav';
+@import 'bootstrap/tables';

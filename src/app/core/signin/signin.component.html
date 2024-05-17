@@ -22,8 +22,8 @@
 			<div class="signin-form" autocomplete="off">
 				<fieldset>
 					<legend></legend>
-					<div class="form-group">
-						<label for="username">Username</label>
+					<div class="mb-3">
+						<label class="form-label" for="username">Username</label>
 						<input
 							class="form-control"
 							id="username"
@@ -36,8 +36,8 @@
 							(keyup.enter)="signin()"
 						/>
 					</div>
-					<div class="form-group">
-						<label for="password">Password</label>
+					<div class="mb-3">
+						<label class="form-label" for="password">Password</label>
 						<input
 							class="form-control"
 							id="password"
@@ -50,9 +50,9 @@
 							(keyup.enter)="signin()"
 						/>
 					</div>
-					<div class="form-group text-center">
+					<div class="mb-3 text-center">
 						<button
-							class="btn btn-primary mr-2"
+							class="btn btn-primary me-2"
 							type="submit"
 							[disabled]="!form.form.valid"
 						>

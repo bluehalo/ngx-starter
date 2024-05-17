@@ -1,16 +1,12 @@
 @import '../../../styles/shared';
-@import '../../../styles/ngx-bootstrap/shared';
+@import '../../../styles/bootstrap/shared';
 
-$flyout-btn-color: $ux-color-white !default;
-$flyout-btn-bg-color: $ux-color-highlight !default;
-$flyout-content-border-top-color: $ux-color-highlight !default;
-$flyout-content-border-left-color: $ux-color-highlight !default;
 $flyout-border-top: 10px !default;
-$flyout-box-shadow: 0 0.25rem 0.5rem rgba($ux-color-black, 0.2) !default;
+$flyout-box-shadow: 0 0.25rem 0.5rem rgba(var(--bs-body-bg-rgb), 0.2) !default;
 
-$flyout-right-top: 25px !default;
-$flyout-top-top: $font-line-height !default;
-$flyout-bottom-bottom: $font-line-height * 2 !default;
+$flyout-right-top: 24px !default;
+$flyout-top-top: 20px !default;
+$flyout-bottom-bottom: 20px * 2 !default;
 
 :host {
 	position: fixed;
@@ -21,20 +17,20 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 
 	&[placement='left'] {
 		right: auto;
-		left: $ux-nav-open-width;
+		left: $nav-open-width;
 	}
 
 	&[placement='top'] {
 		right: auto;
 		top: $flyout-top-top;
-		left: $ux-nav-open-width;
+		left: $nav-open-width;
 	}
 
 	&[placement='bottom'] {
 		right: auto;
 		top: auto;
 		bottom: $flyout-bottom-bottom;
-		left: $ux-nav-open-width;
+		left: $nav-open-width;
 	}
 }
 
@@ -42,7 +38,7 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 	:host[placement='left'],
 	:host[placement='top'],
 	:host[placement='bottom'] {
-		left: $ux-nav-closed-width;
+		left: $nav-closed-width;
 	}
 }
 
@@ -58,8 +54,12 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 	&.flyout-bottom {
 		flex-direction: column;
 
-		.flyout-btn .fa-angle-down {
-			transform: rotate(180deg);
+		.flyout-btn {
+			border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
+
+			.fa-angle-down {
+				transform: rotate(180deg);
+			}
 		}
 
 		&.flyout-open {
@@ -78,12 +78,10 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 
 .flyout-btn {
 	position: absolute;
-	color: $flyout-btn-color;
-	background-color: $flyout-btn-bg-color;
 	transform: rotate(90deg);
 	transform-origin: 0 0;
 
-	border-radius: 0 0 $border-radius $border-radius;
+	border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
 	box-shadow: none;
 
 	.flyout-left & {
@@ -108,16 +106,17 @@ $flyout-bottom-bottom: $font-line-height * 2 !default;
 }
 
 .flyout-content {
+	@include box-shadow(var(--bs-box-shadow));
+
 	overflow: auto;
-	border-top: $flyout-border-top solid $flyout-content-border-top-color;
-	box-shadow: $flyout-box-shadow;
+	border-top: $flyout-border-top solid var(--bs-primary);
 	max-height: calc(100vh - 80px);
 	width: 0;
 
 	.flyout-top &,
 	.flyout-bottom & {
 		border-top: none;
-		border-left: $flyout-border-top solid $flyout-content-border-left-color;
+		border-left: $flyout-border-top solid  var(--bs-primary);
 		width: auto;
 		height: 0;
 		max-height: calc(100vh - 100px);

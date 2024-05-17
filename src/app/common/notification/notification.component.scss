@@ -1,26 +1,7 @@
 @import '../../../styles/shared';
 
-.info-notification {
-	@include border($ux-color-alert-notification, 2px, 3px);
-	background: $ux-color-white;
-}
-.success-notification {
-	@include border($ux-color-alert-success, 2px, 3px);
-	background: $ux-color-white;
-}
-.warning-notification {
-	@include border($ux-color-alert-warning, 2px, 3px);
-	background: $ux-color-white;
-}
-.danger-notification {
-	@include border($ux-color-alert-error, 2px, 3px);
-	background: $ux-color-white;
-}
-
-.action-text {
-	transform: translate(0%, 25%);
-}
 .notification-container {
+	background-color: var(--bs-body-bg);
 	border-radius: 3px 3px 3px 3px;
 	margin: 10px 0;
 	overflow: auto;
@@ -32,4 +13,24 @@
 		margin: 2px 0;
 		padding: 5px;
 	}
+}
+
+.action-text {
+	transform: translate(0%, 25%);
+}
+
+.info-notification {
+	@include border(var(--bs-info), 2px, 3px);
+}
+
+.success-notification {
+	@include border(var(--bs-success), 2px, 3px);
+}
+
+.warning-notification {
+	@include border(var(--bs-warning), 2px, 3px);
+}
+
+.danger-notification {
+	@include border(var(--bs-danger), 2px, 3px);
 }

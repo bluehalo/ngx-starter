@@ -1,5 +1,9 @@
 @for (alert of alertService.alerts$ | async; track alert; let i = $index) {
-	<div class="alert alert-{{ alert.type }} d-flex" role="alert" @animateAddRemove>
+	<div
+		class="alert alert-{{ alert.type }} alert-dismissible d-flex"
+		role="alert"
+		@animateAddRemove
+	>
 		<span class="fa-solid fa-fw system-alert-icon system-alert-icon-{{ alert.type }}"></span>
 		<div class="system-alert-content">
 			<div class="system-alert-message">{{ alert.msg }}</div>
@@ -7,8 +11,6 @@
 				<small>{{ alert.subtext }}</small>
 			}
 		</div>
-		<button class="close" type="button" aria-label="Close" (click)="clearAlert(i)">
-			<span aria-hidden="true">×</span>
-		</button>
+		<button class="btn-close" type="button" aria-label="Close" (click)="clearAlert(i)"></button>
 	</div>
 }

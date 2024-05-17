@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { DialogService } from '../../../../common/dialog';
+import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { EndUserAgreement } from '../eua.model';
@@ -13,7 +14,7 @@ import { EuaService } from '../eua.service';
 @Component({
 	standalone: true,
 	templateUrl: './manage-eua.component.html',
-	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe]
+	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe, SkipToDirective]
 })
 export class ManageEuaComponent implements OnInit {
 	readonly #router = inject(Router);

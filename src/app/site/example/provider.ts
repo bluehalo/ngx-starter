@@ -24,25 +24,9 @@ export function provideExampleRoutes() {
 			multi: true,
 			useValue: [
 				{
-					id: 'explore',
-					title: 'Explore',
-					ordinal: 1,
-					path: 'explore',
-					iconClass: 'fa-compass',
-					hasSomeRoles: ['user']
-				},
-				{
-					id: 'search',
-					title: 'Search',
-					ordinal: 2,
-					path: 'search',
-					iconClass: 'fa-search',
-					hasSomeRoles: ['user']
-				},
-				{
 					id: 'forms',
 					title: 'Forms',
-					ordinal: 3,
+					ordinal: 1,
 					path: 'forms',
 					iconClass: 'fa-check-square',
 					hasSomeRoles: ['user']
@@ -50,7 +34,7 @@ export function provideExampleRoutes() {
 				{
 					id: 'modals',
 					title: 'Modals',
-					ordinal: 4,
+					ordinal: 2,
 					path: 'modal',
 					iconClass: 'fa-window-restore',
 					hasSomeRoles: ['user']
@@ -58,7 +42,7 @@ export function provideExampleRoutes() {
 				{
 					id: 'grid',
 					title: 'Grid',
-					ordinal: 5,
+					ordinal: 3,
 					path: 'grid',
 					iconClass: 'fa-th',
 					hasSomeRoles: ['user']
@@ -66,7 +50,7 @@ export function provideExampleRoutes() {
 				{
 					id: 'loading-overlay',
 					title: 'Loading Overlay',
-					ordinal: 6,
+					ordinal: 4,
 					path: 'loading-overlay',
 					iconClass: 'fa-spinner',
 					hasSomeRoles: ['user']
