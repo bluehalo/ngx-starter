@@ -13,14 +13,11 @@
 			(ngSubmit)="submit()"
 		>
 			<div class="d-flex">
-				<h1>
-					New Account Request
-					<small>Provide the required information to request an account</small>
-				</h1>
+				<h1>New Account Request</h1>
 			</div>
 			<!-- Name -->
-			<div class="form-group pt-3">
-				<label class="form-required" for="name">Name</label>
+			<div class="mb-3 pt-3">
+				<label class="form-label form-required" for="name">Name</label>
 				<input
 					class="form-control"
 					id="name"
@@ -31,8 +28,8 @@
 				/>
 			</div>
 			<!-- Username -->
-			<div class="form-group">
-				<label class="form-required" for="username">Username</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="username">Username</label>
 				<input
 					class="form-control"
 					id="username"
@@ -43,8 +40,8 @@
 				/>
 			</div>
 			<!-- Organization -->
-			<div class="form-group">
-				<label class="form-required" for="organization">Organization</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="organization">Organization</label>
 				<input
 					class="form-control"
 					id="organization"
@@ -55,8 +52,8 @@
 				/>
 			</div>
 			<!-- Email -->
-			<div class="form-group">
-				<label class="form-required" for="email">Email</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="email">Email</label>
 				<input
 					class="form-control"
 					id="email"
@@ -67,8 +64,10 @@
 				/>
 			</div>
 			<!-- Local Login Information -->
-			<div class="form-group">
-				<label for="password">Password <small>At least 6 characters.</small></label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="password"
+					>Password <small>At least 6 characters.</small></label
+				>
 				<input
 					class="form-control"
 					id="password"
@@ -79,8 +78,8 @@
 					[(ngModel)]="user.password"
 				/>
 			</div>
-			<div class="form-group">
-				<label for="password2">Re-enter Password</label>
+			<div class="mb-3">
+				<label class="form-label form-required" for="password2">Re-enter Password</label>
 				<input
 					class="form-control"
 					id="password2"
@@ -91,12 +90,12 @@
 					[(ngModel)]="user.verifyPassword"
 				/>
 			</div>
-			<div class="form-group">
-				<div class="text-right">
+			<div class="mb-3">
+				<div class="text-end">
 					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
 						Submit
 					</button>
-					<button class="btn btn-link ml-2" type="button" routerLink="/signin">
+					<button class="btn btn-link ms-2" type="button" routerLink="/signin">
 						or Sign In
 					</button>
 				</div>

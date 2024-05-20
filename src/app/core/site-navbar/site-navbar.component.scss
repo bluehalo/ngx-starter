@@ -1,125 +1,56 @@
 @import '../../../styles/shared';
 
-@import '../site-container/shared';
-@import './shared';
+$nav-icon-size: 1.25rem !default;
+$nav-icon-margin-left: -2px;
+
+$nav-element-active-indicator-width: 4px !default;
+
+$nav-logo-img-margin: 4px !default;
+$nav-logo-text-font-size: 1.75rem !default;
+
+$nav-popover-width: 192px !default;
 
 :host {
 	display: flex;
 	height: 100%;
 }
 
-// -------------------------------------------------
-// Navbar Left
-// A left-docked vertical navigation bar
-// -------------------------------------------------
-.navbar-left {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+.navbar {
 	flex-shrink: 0;
-	background-color: $nav-background-color;
+	flex-wrap: nowrap;
 	overflow-x: hidden;
 
 	width: $nav-closed-width;
-	z-index: $nav-z-index;
 
 	transition: width 0.15s ease-in-out;
 
-	// Main nav: The top area where the site logo exists
-	.nav-logo {
-		background-color: $nav-element-logo-color-bg;
-		flex-shrink: 0;
-		width: 100%;
-	}
+	&.navbar-open {
+		width: $nav-open-width;
 
-	// A normal element
-	.element {
-		position: relative;
+		.nav-link, .nav-inner-scroll {
+			width: $nav-open-width;
+		}
 
-		> a {
-			@include font-normal($nav-element-font-size);
-			@include font-color-light($nav-element-font-color);
-
-			display: block;
-			padding: $nav-element-padding 0;
-			width: $nav-closed-width;
-
-			&:hover {
-				color: $nav-element-hover-color;
-			}
-			&:hover,
-			&.highlight-link {
-				background-color: $nav-element-hover-background-color;
-				cursor: pointer;
-				text-decoration: none;
-			}
-
-			> span.fa-solid,
-			> span.fa-brands {
-				font-size: $nav-element-icon-size;
-				margin-left: $nav-element-icon-margin-left;
-			}
-
-			> span.fa-stack {
-				font-size: $nav-element-icon-size * 0.5;
-				margin-left: $nav-element-icon-margin-left;
-				> span.fa-solid,
-				> span.fa-brands {
-					vertical-align: middle;
-				}
-			}
-
-			> span {
-				font-size: $nav-element-font-size;
-				margin-left: 10px;
-			}
-
-			&.active-link {
-				background-color: $nav-element-active-background-color;
-				border-left: $nav-element-active-indicator-width solid
-					$nav-element-active-border-color;
-				color: $nav-element-active-color;
-
-				> span.fa-solid,
-				> span.fa-brands {
-					margin-left: $nav-element-icon-margin-left - $nav-element-active-indicator-width;
-				}
+		.nav-link {
+			.nav-label {
+				display: inline-block;
 			}
 		}
 	}
 
-	// A divider element
-	.element-divider {
-		border-bottom: $nav-element-font-color solid 1px;
-		margin-left: $nav-element-divider-margin;
-		margin-right: $nav-element-divider-margin;
-		padding: 0;
+	.navbar-logo {
+		img {
 
-		height: 0;
-		width: $nav-closed-width - 2 * $nav-element-divider-margin;
-	}
+			height: auto;
+			width: $nav-closed-width - 2 * $nav-logo-img-margin;
 
-	// The element that contains the logo
-	.element-logo {
-		margin: 0;
-		padding: 0;
-
-		> a {
-			background-color: $nav-element-logo-color-bg;
-			padding: 0;
-
-			&:hover {
-				background-color: $nav-element-logo-hover-color-bg;
+			[data-bs-theme=light] & {
+				filter: invert(100%);
 			}
-
-			> img {
-				margin: $nav-element-logo-img-margin;
-
-				&.logo {
-					height: auto;
-					width: $nav-closed-width - 2 * $nav-element-logo-img-margin;
-				}
-			}
+		}
+		.nav-label {
+			font-size: $nav-logo-text-font-size;
+			font-weight: bold;
 		}
 	}
 
@@ -134,29 +65,53 @@
 		width: $nav-closed-width;
 	}
 
-	.nav-collapse {
+	.nav-link {
 		width: $nav-closed-width;
-	}
 
-	// Adjustments for when the navbar is open
-	&.navbar-open {
-		width: $nav-open-width;
+		display: flex;
+		align-items: center;
+		justify-items: start;
 
-		.element > a {
-			width: $nav-open-width;
+		.nav-icon {
+			font-size: $nav-icon-size;
+			margin: 2px 0 2px $nav-icon-margin-left;
+			flex-shrink: 0;
+
+			&.fa-stack {
+				font-size: $nav-icon-size * 0.5;
+				> span.fa-solid,
+				> span.fa-brands {
+					vertical-align: middle;
+				}
+			}
+
+			// new messages number badge
+			&.messages-icon[data-new-messages-count]::after {
+				content: attr(data-new-messages-count);
+				position: absolute;
+				left: .75rem;
+				border-radius: 50%;
+				height: 1rem;
+				min-width: 1rem;
+				line-height: 1rem;
+				font-size: .75rem;
+				font-weight: 500;
+				background-color: var(--bs-primary-bg-subtle);
+				font-family: Roboto, sans-serif;
+			}
 		}
 
-		.element-divider {
-			width: $nav-open-width - 2 * $nav-element-divider-margin;
+		.nav-label {
+			display: none;
+			margin-left: .5rem;
 		}
 
-		.element-logo > a > img.logo {
-			width: $nav-open-width - 2 * $nav-element-logo-img-margin;
-		}
+		&.active {
+			border-left: $nav-element-active-indicator-width solid var(--bs-secondary);
 
-		.nav-inner-scroll,
-		.nav-collapse {
-			width: $nav-open-width;
+			.nav-icon {
+				margin-left: $nav-icon-margin-left - $nav-element-active-indicator-width;
+			}
 		}
 	}
 }
@@ -172,28 +127,10 @@
 }
 
 .nav-menu {
+	padding: 0;
 	width: $nav-popover-width;
+
 	.dropdown-item {
 		padding: 10px 24px;
-	}
-}
-
-// new messages number badge
-.messages-icon-new-messages-badge[newMessagesCount]::after {
-	content: attr(newMessagesCount);
-	position: absolute;
-	top: 7px;
-	right: 11px;
-	border-radius: 50%;
-	height: 16px;
-	width: 16px;
-	line-height: 16px;
-	font-size: 12px;
-	font-weight: 500;
-	background: #00abf4;
-	font-family: Roboto, sans-serif;
-
-	.navbar-open & {
-		right: 11px + $nav-open-width - $nav-closed-width;
 	}
 }

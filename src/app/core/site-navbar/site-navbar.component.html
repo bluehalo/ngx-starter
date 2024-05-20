@@ -1,111 +1,72 @@
-<div class="navbar-left" [ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }">
-	<!-- Logo -->
-	<ul class="nav nav-logo">
-		<!-- Logo -->
-		<li class="element element-logo">
-			<a href="/#/" [hidden]="navbarOpen()">
-				<img class="logo" src="/assets/images/nav-logo-icon.png" alt="Logo" />
-			</a>
-			<a href="/#/" [hidden]="!navbarOpen()">
-				<img class="logo" src="/assets/images/nav-logo.png" alt="Logo" />
-			</a>
-		</li>
-	</ul>
+<nav
+	class="navbar d-flex flex-column align-items-start py-0 bg-body-tertiary border-end"
+	[ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }"
+>
+	<nav class="nav flex-column border-bottom">
+		<a class="nav-link navbar-logo p-1" href="#">
+			<img src="/assets/images/nav-logo.png" alt="Logo" />
+			<span class="nav-label">{{ appTitle() }}</span>
+		</a>
+	</nav>
 
 	<div class="nav-inner-scroll" cdkScrollable>
-		<!-- Main Nav -->
-		<ul class="nav nav-main">
+		<nav class="nav nav-main flex-column">
 			@for (navbarItem of navbarItems; track navbarItem) {
-				<li class="element" *hasSomeRoles="navbarItem.hasSomeRoles">
+				@if (session().hasSomeRoles(navbarItem.hasSomeRoles)) {
 					<a
+						class="nav-link"
 						container="body"
 						placement="left"
-						routerLinkActive="active-link"
+						routerLinkActive="active"
 						tooltip="{{ navbarItem.title }}"
 						[isDisabled]="navbarOpen()"
 						[routerLink]="navbarItem.path"
 					>
-						<span class="fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
-						<span [hidden]="!navbarOpen()">{{ navbarItem.title }}</span>
+						<span class="nav-icon fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
+						<span class="nav-label">{{ navbarItem.title }}</span>
 					</a>
-				</li>
+				}
 			}
-		</ul>
+		</nav>
 
 		<!-- Bottom Aux Nav -->
-		<ul class="nav nav-aux">
-			<!-- Admin Nav	-->
-			<li class="element" *hasRole="'admin'">
-				<a
-					[class.highlight-link]="adminNavOpen()"
-					id="admin-nav-menu-btn"
-					aria-controls="admin-nav-menu"
-					linkAccessibility
-					placement="left"
-					tooltip="Admin"
-					[cdkMenuPosition]="menuPositions"
-					[cdkMenuTriggerFor]="adminNav"
-					[isDisabled]="navbarOpen()"
-					(cdkMenuClosed)="adminNavOpen.set(false)"
-					(cdkMenuOpened)="adminNavOpen.set(true)"
-				>
-					<span class="fa-solid fa-fw fa-cog"></span>
-					<span [hidden]="!navbarOpen()">Admin</span>
-				</a>
-
-				<ng-template #adminNav>
-					<div
-						class="nav-menu dropdown-menu"
-						id="admin-nav-menu"
-						aria-labelledby="admin-nav-menu-btn"
-						cdkMenu
-					>
-						@for (adminItem of adminTopics; track adminItem) {
-							<button
-								class="dropdown-item"
-								cdkMenuItem
-								[routerLink]="['admin/' + adminItem.path]"
-							>
-								{{ adminItem.title }}
-							</button>
-						}
-					</div>
-				</ng-template>
-			</li>
-
+		<nav class="nav nav-aux flex-column">
 			<!-- Auditor Nav	-->
-			<li class="element" *hasRole="'auditor'">
+			@if (session().hasRole('auditor')) {
 				<a
+					class="nav-link"
 					container="body"
 					placement="left"
 					routerLink="/audit"
-					routerLinkActive="active-link"
+					routerLinkActive="active"
 					tooltip="Audit Logs"
 					[isDisabled]="navbarOpen()"
 				>
-					<span class="fa-solid fa-fw fa-file-text"></span>
-					<span [hidden]="!navbarOpen()">Audit Logs</span>
+					<span class="nav-icon fa-solid fa-fw fa-file-text"></span>
+					<span class="nav-label">Audit Logs</span>
 				</a>
-			</li>
+			}
 
 			<!-- Team Nav   -->
-			<li class="element" *hasRole="'user'">
+			@if (session().isUser()) {
 				<a
+					class="nav-link"
 					container="body"
 					placement="left"
 					routerLink="/team"
-					routerLinkActive="active-link"
+					routerLinkActive="active"
 					tooltip="Teams"
 					[isDisabled]="navbarOpen()"
 				>
-					<span class="fa-solid fa-fw fa-users"></span>
-					<span [hidden]="!navbarOpen()">Teams</span>
+					<span class="nav-icon fa-solid fa-fw fa-users"></span>
+					<span class="nav-label">Teams</span>
 				</a>
-			</li>
+			}
 
 			<!-- User Nav	-->
-			<li class="element" *isAuthenticated>
+			@if (session().isAuthenticated()) {
 				<a
+					class="nav-link"
 					[class.highlight-link]="userNavOpen()"
 					id="user-nav-menu-btn"
 					aria-controls="user-nav-menu"
@@ -119,16 +80,11 @@
 					(cdkMenuOpened)="userNavOpen.set(true)"
 				>
 					@if (!isMasquerade()) {
-						<span class="fa-solid fa-fw fa-user-circle"></span>
+						<span class="nav-icon fa-solid fa-fw fa-user-circle"></span>
 					} @else {
-						<span class="fa-stack">
-							<span class="fa-solid fa-circle fa-stack-2x"></span>
-							<span
-								class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
-							></span>
-						</span>
+						<span class="nav-icon fa-solid fa-fw fa-user-secret"></span>
 					}
-					<span [hidden]="!navbarOpen()">{{ session().user?.name }}</span>
+					<span class="nav-label">{{ session().user?.name }}</span>
 				</a>
 
 				<ng-template #userNav>
@@ -164,39 +120,73 @@
 								Masquerade
 							</button>
 						}
+						<app-theme-toggle class="dropdown-item" cdkMenuItem />
 					</div>
 				</ng-template>
-			</li>
+			}
 
-			@if (
-				masqueradeEnabled() &&
-				isMasquerade() &&
-				(this.session().user?.name ?? null) === null
-			) {
-				<li class="element">
-					<a
-						container="body"
-						placement="left"
-						routerLink="masquerade"
-						routerLinkActive="active-link"
-						tooltip="Clear Masquerade"
-						[isDisabled]="navbarOpen()"
+			@if (masqueradeEnabled() && isMasquerade() && !this.session().isAuthenticated()) {
+				<a
+					class="nav-link"
+					container="body"
+					placement="left"
+					routerLink="masquerade"
+					routerLinkActive="active"
+					tooltip="Clear Masquerade"
+					[isDisabled]="navbarOpen()"
+				>
+					<span class="class nav-icon fa-stack">
+						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x"></span>
+						<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
+					</span>
+					<span class="nav-label">Clear Masquerade</span>
+				</a>
+			}
+
+			<!-- Admin Nav	-->
+			@if (session().isAdmin()) {
+				<a
+					class="nav-link"
+					[class.highlight-link]="adminNavOpen()"
+					id="admin-nav-menu-btn"
+					aria-controls="admin-nav-menu"
+					linkAccessibility
+					placement="left"
+					tooltip="Admin"
+					[cdkMenuPosition]="menuPositions"
+					[cdkMenuTriggerFor]="adminNav"
+					[isDisabled]="navbarOpen()"
+					(cdkMenuClosed)="adminNavOpen.set(false)"
+					(cdkMenuOpened)="adminNavOpen.set(true)"
+				>
+					<span class="nav-icon fa-solid fa-fw fa-cog"></span>
+					<span class="nav-label">Admin</span>
+				</a>
+
+				<ng-template #adminNav>
+					<div
+						class="nav-menu dropdown-menu"
+						id="admin-nav-menu"
+						aria-labelledby="admin-nav-menu-btn"
+						cdkMenu
 					>
-						<span class="fa-stack">
-							<span class="fa-solid fa-circle fa-stack-2x"></span>
-							<span
-								class="fa-solid fa-lg fa-user-secret fa-stack-1x text-primary"
-							></span>
-							<span class="fa-solid fa-ban fa-stack-2x text-danger"></span>
-						</span>
-						<span [hidden]="!navbarOpen()">Clear Masquerade</span>
-					</a>
-				</li>
+						@for (adminItem of adminTopics; track adminItem) {
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								[routerLink]="['admin/' + adminItem.path]"
+							>
+								{{ adminItem.title }}
+							</button>
+						}
+					</div>
+				</ng-template>
 			}
 
 			<!-- Messages Nav   -->
-			<li class="element" *hasRole="'user'">
+			@if (session().isUser()) {
 				<a
+					class="nav-link"
 					[class.highlight-link]="messagesNavOpen()"
 					linkAccessibility
 					placement="left bottom"
@@ -206,11 +196,11 @@
 					(click)="messagesNavOpen.set(!messagesNavOpen())"
 				>
 					<span
-						class="fa-solid fa-fw fa-bell"
-						[class.messages-icon-new-messages-badge]="numNewMessages() > 0"
-						[attr.newMessagesCount]="numNewMessages()"
+						class="nav-icon fa-solid fa-fw fa-bell position-relative"
+						[class.messages-icon]="numNewMessages() > 0"
+						[attr.data-new-messages-count]="numNewMessages()"
 					></span>
-					<span [hidden]="!navbarOpen()">Notifications</span>
+					<span class="nav-label">Notifications</span>
 				</a>
 				<ng-template
 					cdkConnectedOverlay
@@ -228,82 +218,79 @@
 						></app-recent-messages>
 					</div>
 				</ng-template>
-			</li>
+			}
 
 			<!-- Help Nav -->
-			<li class="element nav-popover nav-popover-bottom">
-				<a
-					[class.highlight-link]="helpNavOpen()"
-					id="help-nav-menu-btn"
-					aria-controls="help-nav-menu"
-					linkAccessibility
-					placement="left"
-					tooltip="Help"
-					[cdkMenuPosition]="menuPositions"
-					[cdkMenuTriggerFor]="helpNav"
-					[isDisabled]="navbarOpen()"
-					(cdkMenuClosed)="helpNavOpen.set(false)"
-					(cdkMenuOpened)="helpNavOpen.set(true)"
-				>
-					<span class="fa-solid fa-fw fa-question-circle"></span>
-					<span [hidden]="!navbarOpen()">Help</span>
-				</a>
+			<a
+				class="nav-link"
+				[class.highlight-link]="helpNavOpen()"
+				id="help-nav-menu-btn"
+				aria-controls="help-nav-menu"
+				linkAccessibility
+				placement="left"
+				tooltip="Help"
+				[cdkMenuPosition]="menuPositions"
+				[cdkMenuTriggerFor]="helpNav"
+				[isDisabled]="navbarOpen()"
+				(cdkMenuClosed)="helpNavOpen.set(false)"
+				(cdkMenuOpened)="helpNavOpen.set(true)"
+			>
+				<span class="nav-icon fa-solid fa-fw fa-question-circle"></span>
+				<span class="nav-label">Help</span>
+			</a>
 
-				<ng-template #helpNav>
-					<div
-						class="dropdown-menu"
-						id="help-nav-menu"
-						aria-labelledby="help-nav-menu-btn"
-						cdkMenu
+			<ng-template #helpNav>
+				<div
+					class="nav-menu dropdown-menu py-0"
+					id="help-nav-menu"
+					aria-labelledby="help-nav-menu-btn"
+					cdkMenu
+				>
+					<!-- Help -->
+					<button class="dropdown-item" cdkMenuItem routerLink="/help">Help Docs</button>
+					<!-- Feedback -->
+					<button
+						class="dropdown-item"
+						cdkMenuItem
+						*isAuthenticated="true; and: showFeedbackOption()"
+						(cdkMenuItemTriggered)="showFeedbackModal()"
 					>
-						<!-- Help -->
-						<button class="dropdown-item" cdkMenuItem routerLink="/help">
-							Help Docs
-						</button>
-						<!-- Feedback -->
-						<button
-							class="dropdown-item"
-							cdkMenuItem
-							*isAuthenticated="true; and: showFeedbackOption()"
-							(cdkMenuItemTriggered)="showFeedbackModal()"
-						>
-							Give Feedback
-						</button>
-						<!-- API Docs -->
-						@if (showApiDocsLink()) {
-							<a
-								class="dropdown-item"
-								[href]="apiDocsLink()"
-								cdkMenuItem
-								target="_blank"
-							>
-								API Docs
-							</a>
-						}
-						<!-- About -->
-						<button class="dropdown-item" cdkMenuItem routerLink="/about">About</button>
-					</div>
-				</ng-template>
-			</li>
-		</ul>
+						Give Feedback
+					</button>
+					<!-- API Docs -->
+					@if (showApiDocsLink()) {
+						<a class="dropdown-item" [href]="apiDocsLink()" cdkMenuItem target="_blank">
+							API Docs
+						</a>
+					}
+					<!-- About -->
+					<button class="dropdown-item" cdkMenuItem routerLink="/about">About</button>
+				</div>
+			</ng-template>
+		</nav>
 	</div>
 
-	<ul class="nav nav-collapse">
+	<nav class="nav nav-collapse flex-column border-top">
 		<!-- Divider -->
 		<li class="element element-divider element-divider-collapse"></li>
 
 		<!-- Collapse/Expand -->
-		<li class="element" linkAccessibility (click)="toggleNavbar()">
-			<a container="body" placement="left" tooltip="Expand" [isDisabled]="navbarOpen()">
-				<span
-					class="fa-solid fa-fw fa-angle-double-right"
-					[class.fa-flip-horizontal]="navbarOpen()"
-				></span>
-				<span [hidden]="!navbarOpen()">Collapse</span>
-			</a>
-		</li>
-	</ul>
-</div>
+		<button
+			class="nav-link text-start"
+			container="body"
+			placement="left"
+			tooltip="Expand"
+			[isDisabled]="navbarOpen()"
+			(click)="toggleNavbar()"
+		>
+			<span
+				class="nav-icon fa-solid fa-fw fa-angle-double-right"
+				[class.fa-flip-horizontal]="navbarOpen()"
+			></span>
+			<span class="nav-label">Collapse</span>
+		</button>
+	</nav>
+</nav>
 
 <div
 	class="navbar-content"

@@ -8,7 +8,6 @@ import { Subject } from 'rxjs';
 import { ConfigurableDialogData, DialogService } from '../../../common/dialog';
 
 @Component({
-	selector: 'app-modal',
 	templateUrl: './modal.component.html',
 	standalone: true,
 	imports: [FormsModule, AsyncPipe, JsonPipe]

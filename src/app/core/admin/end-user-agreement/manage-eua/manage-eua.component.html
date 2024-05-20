@@ -1,14 +1,8 @@
 <section>
-	<!-- Show a breadcrumb to the list EUAs page -->
-	<a class="back-link" routerLink="/admin/euas">
-		<span class="fa-solid fa-angle-double-left"></span> Back to EUAs
-	</a>
-
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
 	<form
-		class="pt-3"
 		name="euaForm"
 		role="form"
 		autocomplete="off"
@@ -16,18 +10,20 @@
 		#form="ngForm"
 		(ngSubmit)="submitEua()"
 	>
-		<h1 class="mb-4">
-			{{ mode | titlecase }} EUA
-			@if (mode === 'create') {
-				<small>Provide the required information to create a new EUA</small>
-			} @else if (mode === 'edit') {
-				<small>Make changes to the EUA's information</small>
-			}
-		</h1>
+		<div class="media col mb-4">
+			<div class="media-body">
+				<h2 skipTo>{{ mode | titlecase }} EUA</h2>
+				@if (mode === 'create') {
+					Provide the required information to create a new EUA
+				} @else if (mode === 'edit') {
+					Make changes to the EUA's information
+				}
+			</div>
+		</div>
 
 		<!-- Basic Information -->
-		<div class="form-group">
-			<label class="form-required" for="title">Title of the Agreement</label>
+		<div class="mb-3">
+			<label class="form-label form-required" for="title">Title of the Agreement</label>
 			<div>
 				<input
 					class="form-control"
@@ -40,8 +36,8 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<label class="form-required" for="text">Text Content of the Agreement</label>
+		<div class="mb-3">
+			<label class="form-label form-required" for="text">Text Content of the Agreement</label>
 			<div>
 				<textarea
 					class="form-control"
@@ -54,12 +50,12 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<div class="text-right">
-				<button class="btn btn-link mr-2" type="button" [routerLink]="['/admin/euas']">
+		<div class="mb-3">
+			<div class="text-end">
+				<button class="btn btn-link me-2" type="button" [routerLink]="['/admin/euas']">
 					Cancel
 				</button>
-				<button class="btn btn-outline-secondary mr-2" type="button" (click)="previewEua()">
+				<button class="btn btn-outline-primary me-2" type="button" (click)="previewEua()">
 					Preview
 				</button>
 				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
@@ -69,8 +65,8 @@
 		</div>
 
 		@if (error) {
-			<div class="form-group">
-				<div class="text-right text-danger font-weight-bolder">{{ error }}</div>
+			<div class="mb-3">
+				<div class="text-end text-danger font-weight-bolder">{{ error }}</div>
 			</div>
 		}
 	</form>

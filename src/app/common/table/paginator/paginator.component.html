@@ -1,9 +1,9 @@
 @if (dataSource.pagingResults$ | async; as page) {
 	<span>
-		<span class="page-size mr-4">
+		<span class="page-size me-4">
 			<span>Items per page:</span>
 			<ng-select
-				class="d-inline-block ml-2"
+				class="d-inline-block ms-2"
 				[clearable]="false"
 				[items]="pageSizeOptions"
 				[ngModel]="page.pageSize"

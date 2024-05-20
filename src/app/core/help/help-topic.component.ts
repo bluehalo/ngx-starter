@@ -16,11 +16,13 @@ type HelpTopic = { id: string; component: any; title?: string; ordinal?: number 
 
 export const HELP_TOPICS = new InjectionToken<HelpTopic[][]>('HELP_TOPIC');
 
-export const injectHelpTopics = () =>
+export const injectHelpTopics: () => HelpTopic[] = () =>
 	sortBy(
 		(inject(HELP_TOPICS, { optional: true }) ?? [])
 			.flat()
-			.map((topic) => ({ title: StringUtils.hyphenToHuman(topic.id), ...topic })),
+			.map(
+				(topic) => ({ title: StringUtils.hyphenToHuman(topic.id), ...topic }) as HelpTopic
+			),
 		[(t) => t.ordinal ?? 1, 'key']
 	);
 

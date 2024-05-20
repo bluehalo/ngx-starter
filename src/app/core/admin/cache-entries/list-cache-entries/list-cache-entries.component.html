@@ -1,5 +1,5 @@
 <section class="page-header mb-3">
-	<div class="row no-gutters">
+	<div class="row g-0">
 		<div class="media col">
 			<div class="media-body">
 				<h1 skipTo>Cache Entries</h1>
@@ -13,7 +13,7 @@
 <section class="page-body anchored-page-body">
 	<div class="table-header d-flex align-items-center">
 		<div class="table-actions d-flex flex-wrap flex-grow-1">
-			<div class="mb-3 mr-5">
+			<div class="mb-3 me-5">
 				<asy-search-input
 					placeholder="Search key and value..."
 					[search]="dataSource.searchEvent$.value"
@@ -37,7 +37,7 @@
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td cdk-cell *cdkCellDef="let entry; let i = index">
 					<button
-						class="btn btn-sm dropdown-toggle dropdown-toggle-hide-caret border-left py-0 pl-3"
+						class="btn dropdown-toggle dropdown-toggle-hide-caret shadow-none py-0 ps-3"
 						id="cache-entry-{{ entry._id }}-action-menu-btn"
 						type="button"
 						attr.aria-controls="cache-entry-{{ entry._id }}-action-menu"
@@ -48,7 +48,7 @@
 
 					<ng-template #actionsMenu>
 						<div
-							class="dropdown-menu"
+							class="dropdown-menu py-0"
 							id="cache-entry-{{ entry._id }}-action-menu"
 							attr.aria-labelledby="cache-entry-{{ entry._id }}-action-menu-btn"
 							cdkMenu
@@ -91,7 +91,7 @@
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
-		<div class="table-footer-pager ml-auto">
+		<div class="table-footer-pager ms-auto">
 			<asy-paginator [dataSource]="dataSource"></asy-paginator>
 		</div>
 	</div>

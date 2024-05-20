@@ -1,6 +1,3 @@
-@use 'sass:color';
-@import '../../../../../styles/shared';
-
 $dropdown-min-width: 100px;
 
 :host {
@@ -16,26 +13,4 @@ $dropdown-min-width: 100px;
 
 .dropdown-menu {
 	min-width: $dropdown-min-width;
-}
-
-.feedback-status-button {
-	min-width: $dropdown-min-width;
-	border-radius: 15px;
-	border-width: 2px;
-	border-style: solid;
-}
-
-.feedback-status-new {
-	border-color: $ux-color-alert-error;
-	background-color: color.adjust($ux-color-alert-error, $lightness: 50%);
-}
-
-.feedback-status-open {
-	border-color: $ux-color-alert-notification;
-	background-color: color.adjust($ux-color-alert-notification, $lightness: 40%);
-}
-
-.feedback-status-closed {
-	border-color: $ux-color-alert-success;
-	background-color: color.adjust($ux-color-alert-success, $lightness: 40%);
 }

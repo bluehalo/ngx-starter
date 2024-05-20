@@ -1,28 +1,25 @@
 <section class="p-3">
-	<!-- Show a breadcrumb to the list teams page -->
-	<a class="back-link" [routerLink]="['/team']">
-		<span class="fa-solid fa-angle-double-left"></span> Back to Teams
-	</a>
-
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	<form class="pt-3" role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="save()">
-		<h1>
-			Create Team
-			<small>Provide some basic metadata to create a new team</small>
-		</h1>
+	<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="save()">
+		<div class="media col mb-4">
+			<div class="media-body">
+				<h2 skipTo>Create Team</h2>
+				Provide some basic metadata to create a new team
+			</div>
+		</div>
 
 		<!-- Required Indicator -->
 		<div>
-			<span class="required"
-				><span class="text-danger"><strong> *</strong></span> Required</span
-			>
+			<span class="required">
+				<span class="text-danger"><strong> *</strong></span> Required
+			</span>
 		</div>
 
 		<!-- Team Name -->
-		<div class="form-group pt-4">
-			<label class="form-required" for="name">Team Name</label>
+		<div class="mb-3 pt-4">
+			<label class="form-label form-required" for="name">Team Name</label>
 			<input
 				class="form-control"
 				id="name"
@@ -36,8 +33,8 @@
 
 		<!-- Team Admin -->
 		@if (isAdmin()) {
-			<div class="form-group">
-				<label class="form-required">Team Admin</label>
+			<div class="mb-3">
+				<label class="form-label form-required">Team Admin</label>
 				<ng-select
 					name="teamAdmin"
 					bindLabel="name"
@@ -61,8 +58,8 @@
 		}
 
 		<!-- Description -->
-		<div class="form-group">
-			<label for="description">Description</label>
+		<div class="mb-3">
+			<label class="form-label" for="description">Description</label>
 			<textarea
 				class="form-control"
 				id="description"
@@ -75,11 +72,11 @@
 
 		<!-- Team Parent -->
 		@if (nestedTeamsEnabled()) {
-			<div class="form-group">
-				<label for="parent">Parent Team</label>
+			<div class="mb-3">
+				<label class="form-label" for="parent">Parent Team</label>
 				<ng-select
 					class="d-block"
-					id="parent2"
+					id="parent"
 					name="parent"
 					appTeamSelect
 					bindLabel="name"
@@ -93,13 +90,13 @@
 
 		<!-- Implicit Teams Members -->
 		@if (implicitMembersStrategy() !== undefined) {
-			<div class="form-group">
-				<label class="form-required">Implicit Team Members</label>
+			<div class="mb-3">
+				<label class="form-label form-required">Implicit Team Members</label>
 				<p class="mt-n1 mb-1">
 					Do you want to automatically grant users access to team based on external
 					{{ implicitMembersStrategy() }}?
 				</p>
-				<div class="form-check">
+				<div class="form-check mb-2">
 					<input
 						class="form-check-input"
 						id="implicit-members-option-yes"
@@ -109,13 +106,11 @@
 						required
 						[(ngModel)]="team.implicitMembers"
 					/>
-					<label class="form-check-label mb-2" for="implicit-members-option-yes"
-						>Yes</label
-					>
+					<label class="form-check-label" for="implicit-members-option-yes">Yes</label>
 				</div>
-				<div class="form-check">
+				<div class="form-check mb-2">
 					<input
-						class="form-check-label"
+						class="form-check-input"
 						id="implicit-members-option-no"
 						name="name-type-option-radio"
 						type="radio"
@@ -123,15 +118,15 @@
 						required
 						[(ngModel)]="team.implicitMembers"
 					/>
-					<label class="form-check-label mb-2" for="implicit-members-option-no">No</label>
+					<label class="form-check-label" for="implicit-members-option-no">No</label>
 				</div>
 			</div>
 		}
 
 		@if (implicitMembersStrategy() === 'roles') {
 			<!-- External Roles -->
-			<div class="form-group" [hidden]="!team.implicitMembers">
-				<label>External Roles</label>
+			<div class="mb-3" [hidden]="!team.implicitMembers">
+				<label class="form-label">External Roles</label>
 				<ng-select
 					name="externalRoles"
 					appUserExternalRolesSelect
@@ -142,8 +137,8 @@
 			</div>
 		} @else if (implicitMembersStrategy() === 'teams') {
 			<!-- External Teams -->
-			<div class="form-group" [hidden]="!team.implicitMembers">
-				<label>External Teams</label>
+			<div class="mb-3" [hidden]="!team.implicitMembers">
+				<label class="form-label">External Teams</label>
 				<ng-select
 					name="externalTeams"
 					multi-select
@@ -153,11 +148,11 @@
 			</div>
 		}
 
-		<div class="form-group">
-			<div class="text-right">
+		<div class="mb-3">
+			<div class="text-end">
 				<button class="btn btn-link" type="button" routerLink="/team">Cancel</button>
 				<button
-					class="btn btn-primary btn-submit ml-2"
+					class="btn btn-primary btn-submit ms-2"
 					[class.btn-submitting]="isSubmitting()"
 					type="submit"
 					[disabled]="!form.form.valid || isSubmitting()"

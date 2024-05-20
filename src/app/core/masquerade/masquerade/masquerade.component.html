@@ -3,7 +3,7 @@
 		<loading-spinner message="Clearing Masquerade..."> </loading-spinner>
 	</div>
 } @else {
-	<div class="form-group mb-2">
+	<div class="mb-2">
 		<label>Search Type</label>
 		<div class="form-check">
 			<input
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	@if (!searchByDn) {
-		<div class="form-group">
+		<div class="mb-3">
 			<ng-select
 				bindValue="providerData.dn"
 				placeholder="Search for user..."
@@ -45,7 +45,7 @@
 			</ng-select>
 		</div>
 	} @else {
-		<div class="form-group">
+		<div class="mb-3">
 			<input
 				class="form-control"
 				placeholder="User DN..."

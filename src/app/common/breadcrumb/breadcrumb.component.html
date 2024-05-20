@@ -1,16 +1,15 @@
-<div class="header">
-	@for (b of breadcrumbs; track b; let last = $last) {
-		<ng-container class="header-breadcrumb">
-			<span class="header-breadcrumb">
-				@if (!last) {
-					<a [routerLink]="[b.url]">{{ b?.label }}</a>
-				} @else {
-					{{ b?.label }}
-				}
-			</span>
-			@if (!last) {
-				<span class="header-breadcrumb-separator"> > </span>
-			}
-		</ng-container>
-	}
-</div>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		@for (b of breadcrumbs; track b; let last = $last) {
+			<li class="breadcrumb-item">
+				<span>
+					@if (!last) {
+						<a [routerLink]="[b.url]">{{ b?.label }}</a>
+					} @else {
+						{{ b?.label }}
+					}
+				</span>
+			</li>
+		}
+	</ol>
+</nav>

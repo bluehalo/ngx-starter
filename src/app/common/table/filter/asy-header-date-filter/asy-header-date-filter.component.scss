@@ -3,12 +3,11 @@
 @import '../shared';
 
 .dropdown-menu {
-	padding: 0.75rem 0;
-	width: 196px;
+	width: 210px;
 
 	.input-group {
 		::ng-deep .ng-select-container {
-			border-radius: 0 $border-radius $border-radius 0;
+			border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
 			min-width: 82px;
 		}
 

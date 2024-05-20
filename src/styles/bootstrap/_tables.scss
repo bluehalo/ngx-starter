@@ -9,7 +9,7 @@ $anchored-table-min-height: 375px !default;
 	align-items: center;
 
 	&.border-top {
-		border-top: $table-border-width * 2 solid $table-border-color !important;
+		border-top: calc(#{$table-border-width} * 2) solid $table-border-color !important;
 		padding-top: $spacer;
 	}
 
@@ -27,18 +27,19 @@ $anchored-table-min-height: 375px !default;
 				margin-right: 0;
 			}
 
-			& ~ &.ml-auto {
+			& ~ &.ms-auto {
 				margin-right: 0;
 			}
 		}
 	}
 }
+
 .table-footer.border-top {
 	margin-top: $spacer;
 }
 
 .table-content {
-	border-bottom: $table-border-width * 2 solid $border-color;
+	border-bottom: calc(#{$table-border-width} * 2) solid $border-color;
 	flex-grow: 1;
 	margin-bottom: map.get($spacers, 3);
 	overflow: auto;
@@ -64,41 +65,7 @@ $anchored-table-min-height: 375px !default;
 	}
 
 	th {
-		background: $ux-color-background;
-		border-top-width: $table-border-width * 2;
-	}
-}
-
-.table-striped {
-	tbody tr {
-		background: $ux-color-background;
-	}
-}
-
-.card {
-	.table {
-		th,
-		&.table-striped tbody tr {
-			background-color: $card-bg;
-		}
-	}
-}
-
-.modal-body {
-	.table {
-		th,
-		&.table-striped tbody tr {
-			background-color: $modal-content-bg;
-		}
-	}
-}
-
-.card,
-.modal-body {
-	.table {
-		&.table-striped tbody tr:nth-of-type(#{$table-striped-order}) {
-			background-color: $ux-color-background;
-		}
+		border-top-width: calc(#{$table-border-width} * 2);
 	}
 }
 
@@ -126,5 +93,5 @@ tr.cdk-row-expanded-details {
 }
 
 .table tfoot tr:first-child td.cdk-footer-cell {
-	border-top: (2 * $table-border-width) solid $table-border-color;
+	border-top: calc(#{$table-border-width} * 2) solid $table-border-color;
 }

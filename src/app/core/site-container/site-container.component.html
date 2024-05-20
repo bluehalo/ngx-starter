@@ -3,9 +3,7 @@
 <!-- Site Header -->
 <header class="site-header">
 	@if (bannerHtml()) {
-		<div class="site-banner">
-			<div class="header-banner" [innerHtml]="bannerHtml()"></div>
-		</div>
+		<div class="site-banner header-banner" [innerHtml]="bannerHtml()"></div>
 	}
 </header>
 
@@ -21,14 +19,10 @@
 <!-- Site Footer -->
 <footer class="site-footer">
 	@if (copyrightHtml()) {
-		<div class="site-banner">
-			<div class="copyright-banner" [innerHtml]="copyrightHtml()"></div>
-		</div>
+		<div class="site-banner copyright-banner" [innerHtml]="copyrightHtml()"></div>
 	}
 	@if (bannerHtml()) {
-		<div class="site-banner">
-			<div class="footer-banner" [innerHtml]="bannerHtml()"></div>
-		</div>
+		<div class="site-banner footer-banner" [innerHtml]="bannerHtml()"></div>
 	}
 </footer>
 

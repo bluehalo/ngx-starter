@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { SiteContainerComponent } from './core/site-container/site-container.component';
+import { ThemingService } from './core/theming/theming.service';
 
 @Component({
 	selector: 'app-root',
@@ -9,4 +10,6 @@ import { SiteContainerComponent } from './core/site-container/site-container.com
 	standalone: true,
 	imports: [SiteContainerComponent, RouterOutlet]
 })
-export class AppComponent {}
+export class AppComponent {
+	private theming = inject(ThemingService);
+}

@@ -39,20 +39,9 @@
 			</div>
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
 		}
-		@if (isFiltered) {
-			<div class="clear mt-2">
-				<button
-					class="btn btn-sm btn-link px-0 text-decoration-underline"
-					(click)="clearFilter(); $event.stopPropagation()"
-				>
-					Clear Filters
-				</button>
-			</div>
-			<div class="divider dropdown-divider mb-0 mx-3"></div>
-		}
 		<div class="flex-grow-1 overflow-auto my-2">
 			@if (optionsLoading()) {
-				<span class="fa-solid fa-spinner fa-spin mr-1"></span>Loading...
+				<span class="fa-solid fa-spinner fa-spin me-1"></span>Loading...
 			} @else {
 				@for (option of _options; track option) {
 					@if (!option.hide) {
@@ -80,7 +69,7 @@
 		@if (showMatch) {
 			<div class="divider dropdown-divider my-0 mx-3"></div>
 			<div class="my-1">
-				<label class="mb-0 mr-3">Match:</label>
+				<label class="mb-0 me-3">Match:</label>
 				@for (operatorOption of [false, true]; track operatorOption; let i = $index) {
 					<div class="form-check form-check-inline">
 						<input
@@ -97,6 +86,14 @@
 						}}</label>
 					</div>
 				}
+			</div>
+		}
+		@if (isFiltered) {
+			<div class="divider dropdown-divider mb-0 mx-3"></div>
+			<div class="mt-2">
+				<button class="btn btn-link px-0" (click)="clearFilter(); $event.stopPropagation()">
+					Clear Filters
+				</button>
 			</div>
 		}
 	</div>

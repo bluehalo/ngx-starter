@@ -7,21 +7,21 @@
 </div>
 
 <div
-	class="overflow-auto ml-n1 column-drag-boundary"
+	class="overflow-auto ms-n1 column-drag-boundary"
 	cdkDropList
 	[cdkDropListData]="_columns"
 	(cdkDropListDropped)="onDrop($event)"
 >
 	@for (column of _columns; track column) {
 		<div
-			class="form-check text-nowrap ml-1"
+			class="form-check text-nowrap ms-1"
 			cdkDrag
 			cdkDragBoundary=".column-drag-boundary"
 			[cdkDragData]="column"
 			[cdkDragDisabled]="sortingDisabled"
 		>
 			@if (!sortingDisabled) {
-				<span class="fa-solid fa-lg fa-bars pr-1 mr-2" cdkDragHandle></span>
+				<span class="fa-solid fa-lg fa-bars pe-1 me-2" cdkDragHandle></span>
 			}
 			<input
 				class="form-check-input"

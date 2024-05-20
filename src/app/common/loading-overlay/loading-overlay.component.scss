@@ -1,16 +1,13 @@
-@import '../../../styles/shared';
-
 // Added in z-index to these classes to bring them to the front of card pageable tables
 .overlay {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(255, 255, 255, 0.75);
+	background-color: rgba(var(--bs-body-bg-rgb), 0.75);
 	z-index: 9001;
 }
 
 .overlay-spinner {
-	color: $ux-color-black;
 	position: absolute;
 	top: 5%;
 	left: 50%;

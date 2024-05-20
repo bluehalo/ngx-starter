@@ -12,7 +12,7 @@ button {
 	opacity: 0.3;
 
 	&.sorted {
-		color: $ux-color-primary;
+		color: var(--bs-body-color);
 		opacity: 1;
 	}
 }
@@ -20,7 +20,7 @@ button {
 .fa-stack {
 	font-size: 1rem;
 	height: 6px;
-	line-height: 6px;
+	line-height: 2px;
 	width: 22px;
 }
 

@@ -1,0 +1,88 @@
+@use 'sass:math';
+
+// Submit Button
+$btn-submit-style: spinner !default;
+$btn-submit-animation-iteration-count: infinite !default;
+
+// Submit Button - spinner
+$btn-submit-spinner-font-family: var(--fa-font-solid) !default;
+$btn-submit-spinner-content: '\f110' !default;
+$btn-submit-spinner-animation-name: fa-spin !default;
+$btn-submit-spinner-animation-duration: 1s !default;
+$btn-submit-spinner-animation-timing-function: steps(8) !default;
+$btn-submit-spinner-animation: $btn-submit-spinner-animation-name
+	$btn-submit-spinner-animation-duration $btn-submit-animation-iteration-count
+	$btn-submit-spinner-animation-timing-function;
+
+// Submit Button - linear
+$btn-submit-linear-steps: 10 !default;
+$btn-submit-linear-direction: to right !default;
+$btn-submit-linear-animation-name: btn-disabled-gradient !default;
+$btn-submit-linear-animation-duration: 2s !default;
+$btn-submit-linear-animation-timing-function: linear !default;
+$btn-submit-linear-animation: $btn-submit-linear-animation-name
+	$btn-submit-linear-animation-duration $btn-submit-animation-iteration-count
+	$btn-submit-linear-animation-timing-function;
+
+// Submit button with progress indicator
+@if $btn-submit-style == spinner {
+	.btn-submit {
+		padding-right: $btn-padding-x + 1.75rem;
+
+		&:before {
+			opacity: 0;
+			display: inline-block;
+			margin-right: math.div($spacer, 2);
+			font: $btn-submit-spinner-font-family;
+			content: $btn-submit-spinner-content;
+			-webkit-animation: $btn-submit-spinner-animation;
+			animation: $btn-submit-spinner-animation;
+		}
+
+		&.btn-submitting {
+			&:before {
+				opacity: 1;
+			}
+		}
+	}
+} @else if $btn-submit-style == linear {
+	.btn-submit {
+		&.btn-submitting {
+			&.disabled,
+			&:disabled {
+				opacity: 1;
+				mask-type: luminance;
+				-webkit-animation: $btn-submit-linear-animation;
+				animation: $btn-submit-linear-animation;
+			}
+		}
+	}
+
+	@if $btn-submit-linear-animation-name == btn-disabled-gradient {
+		@-webkit-keyframes btn-disabled-gradient {
+			@for $i from 0 through $btn-submit-linear-steps {
+				#{$i * (100% / $btn-submit-linear-steps)} {
+					mask-image: linear-gradient(
+						$btn-submit-linear-direction,
+						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, 0.3) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, $btn-disabled-opacity)
+					);
+				}
+			}
+		}
+
+		@keyframes btn-disabled-gradient {
+			@for $i from 0 through $btn-submit-linear-steps {
+				#{$i * (100% / $btn-submit-linear-steps)} {
+					mask-image: linear-gradient(
+						$btn-submit-linear-direction,
+						rgba(0, 0, 0, 1) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, 0.3) #{$i * (100% / $btn-submit-linear-steps)},
+						rgba(0, 0, 0, $btn-disabled-opacity)
+					);
+				}
+			}
+		}
+	}
+}

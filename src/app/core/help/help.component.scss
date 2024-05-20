@@ -1,64 +1,22 @@
 @use 'sass:map';
 @import '../../../styles/shared';
-@import '../../../styles/ngx-bootstrap/shared';
-
-$callout-color-default-light: #e4eaf0 !default;
-$callout-color-default-med: #cbd0d6 !default;
-$callout-color-default-dark: #777f93 !default;
-
-$callout-color-danger-light: #e99897 !default;
-$callout-color-danger-med: #c25152 !default;
-$callout-color-danger-dark: #7f2a2a !default;
-
-$callout-color-warning-light: #fed !default;
-$callout-color-warning-med: #c96 !default;
-$callout-color-warning-dark: #a63 !default;
-
-$callout-color-info-light: #def !default;
-$callout-color-info-med: #5bc0de !default;
-$callout-color-info-dark: #3a87ad !default;
-
-$callout-border-color: #eee !default;
-
-$help-section-selected-color: #33495f !default;
-$help-section-selected-background-color: $ux-color-light-gray !default;
-
-$help-content-padding-top: 2rem !default;
-$help-nav-link-padding: 1rem !default;
+@import '../../../styles/bootstrap/shared';
 
 .help-content {
-	padding-top: $help-content-padding-top;
-
-	.help-menu {
-		.nav-link {
-			padding: $help-nav-link-padding;
-
-			&.selected {
-				background-color: $help-section-selected-background-color;
-				color: $help-section-selected-color;
-				font-weight: bold;
-				text-decoration: none;
-
-				&:hover {
-					color: $help-section-selected-color;
-				}
-			}
-		}
-	}
+	padding-top: $site-content-padding-y;
 }
 
 //=====================================
 //	Callouts
 //=====================================
 ::ng-deep .callout {
-	border: 1px solid $callout-border-color;
+	border: 1px solid var(--bs-info);
 	border-left-width: 5px;
-	border-radius: 3px;
-	margin: map.get($spacers, 3) 0;
-	padding: map.get($spacers, 4);
+	margin: $spacer  0;
+	padding: $spacer * 1.5;
 
 	h4 {
-		margin-bottom: map.get($spacers, 1);
+		margin-bottom: $spacer * 1.5;
 		margin-top: 0;
 	}
 
@@ -70,38 +28,10 @@ $help-nav-link-padding: 1rem !default;
 
 	// Variations
 	&.callout-danger {
-		border-left-color: $callout-color-danger-med;
-
-		h4 {
-			color: $callout-color-danger-dark;
-		}
+		border-color: var(--bs-danger);
 	}
 
 	&.callout-warning {
-		border-left-color: $callout-color-warning-med;
-
-		h4 {
-			color: $callout-color-warning-dark;
-		}
-	}
-
-	&.callout-info {
-		border-left-color: $callout-color-info-med;
-
-		h4 {
-			color: $callout-color-info-dark;
-		}
-
-		span.ml-3 {
-			font-family: 'Times New Roman', Times, serif;
-		}
-	}
-
-	&.callout-default {
-		border-left-color: $callout-color-default-med;
-
-		h4 {
-			color: $callout-color-default-dark;
-		}
+		border-color: var(--bs-warning);
 	}
 }

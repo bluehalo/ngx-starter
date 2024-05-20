@@ -6,7 +6,7 @@
 		@if (status() === 'ready') {
 			<form #form="ngForm">
 				<h2 class="pb-2">What's on your mind?</h2>
-				<div class="form-check pl-0">
+				<div class="form-check">
 					<input
 						class="form-check-input"
 						id="fo-type-option-1"
@@ -23,7 +23,7 @@
 				@if (feedback.type === 'general feedback') {
 					<ng-container *ngTemplateOutlet="textInput"></ng-container>
 				}
-				<div class="form-check pl-0">
+				<div class="form-check">
 					<input
 						class="form-check-input"
 						id="fo-type-option-2"
@@ -40,7 +40,7 @@
 				@if (feedback.type === 'feature request') {
 					<ng-container *ngTemplateOutlet="textInput"></ng-container>
 				}
-				<div class="form-check pl-0">
+				<div class="form-check">
 					<input
 						class="form-check-input"
 						id="fo-type-option-3"
@@ -56,7 +56,7 @@
 				</div>
 				@if (feedback.type === 'bug report') {
 					<h3 class="pt-3 pb-2">What's the bug/error type?</h3>
-					<div class="form-check pl-0">
+					<div class="form-check">
 						<input
 							class="form-check-input"
 							id="fo-subtype-option-1"
@@ -70,7 +70,7 @@
 							>Content or data</label
 						>
 					</div>
-					<div class="form-check pl-0">
+					<div class="form-check">
 						<input
 							class="form-check-input"
 							id="fo-subtype-option-2"
@@ -84,7 +84,7 @@
 							>Styling</label
 						>
 					</div>
-					<div class="form-check pl-0">
+					<div class="form-check">
 						<input
 							class="form-check-input"
 							id="fo-subtype-option-3"
@@ -98,7 +98,7 @@
 							>Technical</label
 						>
 					</div>
-					<div class="form-check pl-0">
+					<div class="form-check">
 						<input
 							class="form-check-input"
 							id="fo-subtype-option-4"
@@ -120,7 +120,7 @@
 							/>
 						</div>
 					}
-					<div class="form-check pl-0">
+					<div class="form-check">
 						<input
 							class="form-check-input"
 							id="fo-subtype-option-5"
@@ -139,7 +139,7 @@
 				}
 				<ng-template #textInput>
 					@if (classificationOptions().length > 0) {
-						<div class="form-group pt-2">
+						<div class="mb-3 pt-2">
 							<ng-select
 								name="classification"
 								bindLabel="level"
@@ -153,7 +153,7 @@
 							</ng-select>
 						</div>
 					}
-					<div class="form-group" [class.mb-0]="feedback.type === 'bug report'">
+					<div class="mb-3" [class.mb-0]="feedback.type === 'bug report'">
 						<textarea
 							class="form-control"
 							name="text"
@@ -167,7 +167,7 @@
 				</ng-template>
 			</form>
 			<div class="d-flex justify-content-center p-3 border-top">
-				<button class="btn btn-link mr-2" type="button" (click)="closeForm()">
+				<button class="btn btn-link me-2" type="button" (click)="closeForm()">
 					Cancel
 				</button>
 				<button
@@ -182,14 +182,14 @@
 			</div>
 		} @else if (status() === 'submitting') {
 			<div class="media p-5">
-				<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw mr-3"></span>
+				<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw me-3"></span>
 				<div class="media-body">
 					<h1 class="mt-0">Submitting</h1>
 				</div>
 			</div>
 		} @else if (status() === 'success') {
 			<div class="media p-5">
-				<span class="fa-solid fa-check-circle text-highlight fa-3x fa-fw mr-3"></span>
+				<span class="fa-solid fa-check-circle text-highlight fa-3x fa-fw me-3"></span>
 				<div class="media-body">
 					<h1 class="mt-0">Thanks!</h1>
 					We got your feedback.
@@ -199,7 +199,7 @@
 			<div class="p-5">
 				<div class="media">
 					<span
-						class="fa-solid fa-exclamation-triangle text-danger fa-3x fa-fw mr-3"
+						class="fa-solid fa-exclamation-triangle text-danger fa-3x fa-fw me-3"
 					></span>
 					<div class="media-body">
 						<h1 class="mt-0">Unable To send feedback</h1>
@@ -208,7 +208,7 @@
 				</div>
 				<div class="d-flex justify-content-center mt-4">
 					<button
-						class="btn btn-outline-secondary mr-2"
+						class="btn btn-outline-primary me-2"
 						type="button"
 						(click)="backToForm()"
 					>

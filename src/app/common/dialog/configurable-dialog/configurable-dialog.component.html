@@ -11,7 +11,7 @@
 	}
 	<form id="modalForm" #modalForm="ngForm">
 		@for (input of data.inputs; track input; let isFirst = $first) {
-			<div class="form-group">
+			<div class="mb-3">
 				<label [class.form-required]="input.required">{{ input.label }}</label>
 				@if (input.type === 'textarea') {
 					<textarea

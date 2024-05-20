@@ -1,7 +1,6 @@
 @use 'sass:map';
-@import '../../../../styles/ngx-bootstrap/shared';
+@import '../../../../styles/bootstrap/shared';
 @import '../../../../styles/shared';
-@import '../../site-navbar/shared';
 @import '../shared';
 
 $recent-message-preview-lint-count: 3 !default;

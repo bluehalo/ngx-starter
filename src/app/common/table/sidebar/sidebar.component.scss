@@ -1,6 +1,6 @@
 @use 'sass:map';
 @import '../../../../styles/shared';
-@import '../../../../styles/ngx-bootstrap/shared';
+@import '../../../../styles/bootstrap/shared';
 
 $sidebar-width: 250px !default;
 $sidebar-transition-duration: 0.15s !default;
@@ -35,8 +35,6 @@ $sidebar-transition-duration: 0.15s !default;
 }
 
 .sidebar-header {
-	align-items: center;
-	display: flex;
 	white-space: nowrap;
 }
 

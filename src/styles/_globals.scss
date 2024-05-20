@@ -1,8 +1,13 @@
-$enable-nav-aware-grid-classes: true !default;
 $form-required: after !default;
-$border-radius: 2px !default;
 
-$ux-nav-closed-width: 54px !default;
-$ux-nav-open-width: 238px !default;
+$nav-closed-width: 54px !default;
+$nav-open-width: 275px !default;
+
+$nav-messages-popover-max-width: 800px !default;
+$nav-messages-popover-max-height: 392px !default;
+
+$site-content-padding-y: 2rem !default;
+$site-content-padding-x: 2rem !default;
+
 
 $anchored-table-min-height: 375px !default;

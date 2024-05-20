@@ -23,7 +23,7 @@ describe('LoadingOverlayComponent', () => {
 		fixture.detectChanges();
 		expect(rootHTMLElement.getElementsByClassName('overlay').length).toEqual(1);
 		expect(rootHTMLElement.getElementsByClassName('overlay-spinner').length).toEqual(1);
-		expect(rootHTMLElement.getElementsByClassName('notification-container').length).toEqual(0);
+		expect(rootHTMLElement.getElementsByClassName('alert').length).toEqual(0);
 	});
 
 	it('should display loading overlay and error message', () => {
@@ -32,7 +32,7 @@ describe('LoadingOverlayComponent', () => {
 		fixture.detectChanges();
 		expect(rootHTMLElement.getElementsByClassName('overlay').length).toEqual(1);
 		expect(rootHTMLElement.getElementsByClassName('overlay-spinner').length).toEqual(0);
-		expect(rootHTMLElement.getElementsByClassName('notification-container').length).toEqual(1);
+		expect(rootHTMLElement.getElementsByClassName('alert').length).toEqual(1);
 	});
 
 	it('should not display loading overlay', () => {
@@ -40,6 +40,6 @@ describe('LoadingOverlayComponent', () => {
 		fixture.detectChanges();
 		expect(rootHTMLElement.getElementsByClassName('overlay').length).toEqual(0);
 		expect(rootHTMLElement.getElementsByClassName('overlay-spinner').length).toEqual(0);
-		expect(rootHTMLElement.getElementsByClassName('notification-container').length).toEqual(0);
+		expect(rootHTMLElement.getElementsByClassName('alert').length).toEqual(0);
 	});
 });

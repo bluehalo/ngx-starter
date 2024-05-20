@@ -14,7 +14,7 @@
 			<div class="card-header">
 				<h2>Details</h2>
 				<button
-					class="btn btn-outline-secondary ml-3"
+					class="btn btn-outline-primary ms-3"
 					type="button"
 					*hasTeamRole="team(); role: 'admin'"
 					[disabled]="isEditing()"
@@ -23,16 +23,16 @@
 					<span class="fa-solid fa-lg fa-pencil"></span>
 				</button>
 				@if (isEditing()) {
-					<div class="inline-edit-header-btns ml-auto">
+					<div class="inline-edit-header-btns ms-auto">
 						<button
-							class="btn btn-outline-secondary"
+							class="btn btn-outline-primary"
 							type="button"
 							(click)="cancelEdit()"
 						>
 							Cancel
 						</button>
 						<button
-							class="btn btn-primary ml-2"
+							class="btn btn-primary ms-2"
 							type="button"
 							[disabled]="!editTeamForm.form.valid"
 							(click)="saveEdit()"
@@ -44,8 +44,8 @@
 			</div>
 			<div class="card-body" [class.editing]="isEditing()">
 				<form id="edit-team-form" #editTeamForm="ngForm">
-					<div class="form-inline-edit mb-3">
-						<div class="form-group">
+					<div class="form-inline-edit" [class.mb-3]="isEditing()">
+						<div class="form-inline-edit-item">
 							<label class="col col-form-label">Name</label>
 							@if (!isEditing()) {
 								<div class="col col-form-readonly-value">
@@ -63,7 +63,7 @@
 								</div>
 							}
 						</div>
-						<div class="form-group">
+						<div class="form-inline-edit-item">
 							<label class="col col-form-label">Description</label>
 							@if (!isEditing()) {
 								<div class="col col-form-readonly-value">
@@ -83,36 +83,12 @@
 								</div>
 							}
 						</div>
-						<div class="form-group">
-							<label class="col col-form-label">Date Created</label>
-							<div class="col col-form-readonly-value">
-								<div>{{ team().created | utcDate: 'yyyy-MM-dd' }}</div>
-							</div>
-						</div>
-						@if (team().parent) {
-							<div class="form-group">
-								<label class="col col-form-label">Parent</label>
-								<div class="col col-form-readonly-value">
-									<div>
-										<a
-											class="text-decoration-underline"
-											[routerLink]="[
-												'/team',
-												team().parent?._id || team().parent
-											]"
-										>
-											{{ team().parent?.name ?? 'Unknown' }}
-										</a>
-									</div>
-								</div>
-							</div>
-						}
 						@if (
 							team().implicitMembers &&
 							implicitMembersStrategy() === 'roles' &&
 							((team().requiresExternalRoles.length || 0) > 0 || isEditing())
 						) {
-							<div class="form-group">
+							<div class="form-inline-edit-item">
 								<label class="col col-form-label">External Roles</label>
 								@if (!isEditing()) {
 									<div class="col col-form-readonly-value">
@@ -138,7 +114,7 @@
 							implicitMembersStrategy() === 'teams' &&
 							((team().requiresExternalTeams.length || 0) > 0 || isEditing())
 						) {
-							<div class="form-group">
+							<div class="form-inline-edit-item">
 								<label class="col col-form-label">External Teams</label>
 								@if (!isEditing()) {
 									<div class="col col-form-readonly-value">
@@ -158,19 +134,42 @@
 								}
 							</div>
 						}
+						<div class="form-inline-edit-item">
+							<label class="col col-form-label">Date Created</label>
+							<div class="col col-form-readonly-value">
+								<div>{{ team().created | utcDate: 'yyyy-MM-dd' }}</div>
+							</div>
+						</div>
+						@if (team().parent) {
+							<div class="form-inline-edit-item">
+								<label class="col col-form-label">Parent</label>
+								<div class="col col-form-readonly-value">
+									<div>
+										<a
+											[routerLink]="[
+												'/team',
+												team().parent?._id || team().parent
+											]"
+										>
+											{{ team().parent?.name ?? 'Unknown' }}
+										</a>
+									</div>
+								</div>
+							</div>
+						}
 					</div>
 				</form>
 				@if (isEditing()) {
-					<div class="inline-edit-btns text-right">
+					<div class="inline-edit-btns text-end">
 						<button
-							class="btn btn-outline-secondary"
+							class="btn btn-outline-primary"
 							type="button"
 							(click)="cancelEdit()"
 						>
 							Cancel
 						</button>
 						<button
-							class="btn btn-primary ml-2"
+							class="btn btn-primary ms-2"
 							type="button"
 							[disabled]="!editTeamForm.form.valid"
 							(click)="saveEdit()"

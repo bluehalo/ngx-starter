@@ -96,9 +96,7 @@ describe('Site Navbar Component Spec', () => {
 			expect(component.showApiDocsLink()).toEqual(false);
 			expect(component.apiDocsLink()).toEqual('/some-path');
 
-			const bottomMenuItems = fixture.debugElement.queryAll(
-				By.css('li.nav-popover-bottom > a')
-			);
+			const bottomMenuItems = fixture.debugElement.queryAll(By.css('#help-nav-menu-btn'));
 			const helpMenuItem = bottomMenuItems[bottomMenuItems.length - 1];
 			helpMenuItem.triggerEventHandler('click', null);
 

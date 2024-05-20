@@ -6,7 +6,7 @@
 	(ok)="submit()"
 >
 	<h3>Add users</h3>
-	<div class="form-group">
+	<div class="mb-3">
 		<ng-select
 			name="teamAdmin"
 			appendTo="body"
@@ -47,13 +47,13 @@
 			<th cdk-header-cell *cdkHeaderCellDef>Role</th>
 			<td cdk-cell *cdkCellDef="let member">
 				<button
-					class="btn btn-sm dropdown-toggle p-0"
+					class="btn dropdown-toggle p-0"
 					id="add-member-{{ member._id }}-role-menu-btn"
 					type="button"
 					attr.aria-controls="add-member-{{ member._id }}-role-menu"
 					[cdkMenuTriggerFor]="rolesMenu"
 				>
-					<span class="mr-1">{{ member.roleDisplay }}</span>
+					<span class="me-1">{{ member.roleDisplay }}</span>
 				</button>
 				<ng-template #rolesMenu>
 					<div
@@ -79,15 +79,15 @@
 		<ng-container cdkColumnDef="actions">
 			<th cdk-header-cell *cdkHeaderCellDef></th>
 			<td cdk-cell *cdkCellDef="let index = index">
-				<a
-					class="btn-icon"
+				<button
+					class="btn btn-link p-0"
 					container="body"
-					placement="bottom"
+					placement="left"
 					tooltip="Remove User"
 					(click)="remove(index)"
 				>
 					<span class="fa-solid fa-lg fa-trash"></span>
-				</a>
+				</button>
 			</td>
 		</ng-container>
 		<tr cdk-header-row *cdkHeaderRowDef="columns"></tr>

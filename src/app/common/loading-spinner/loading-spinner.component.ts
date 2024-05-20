@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
 	selector: 'loading-spinner',
@@ -7,6 +7,5 @@ import { Component, Input } from '@angular/core';
 	standalone: true
 })
 export class LoadingSpinnerComponent {
-	@Input()
-	message = 'Loading...';
+	readonly message = input('Loading...');
 }

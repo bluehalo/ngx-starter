@@ -1,38 +1,31 @@
 @import '../../../styles/shared';
 
 @mixin card-message($card-icon-width: 2rem) {
-	border: none;
-	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.298039215686275);
 	display: block;
 
 	.col-alert-icon {
 		max-width: $card-icon-width;
 		flex: 0 0 $card-icon-width;
-		background-color: $ux-color-white;
+		background-color: var(--bs-info);
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
 		.alert-icon {
 			font-size: 1.6rem;
-			color: $ux-color-white;
+			color: var(--bs-white);
 		}
 
 		&.warn {
-			background-color: $ux-color-alert-warning;
+			background-color: var(--bs-warning);
 		}
 
 		&.error {
-			background-color: $ux-color-alert-error;
-		}
-
-		&.info {
-			background-color: $ux-color-alert-notification;
+			background-color: var(--bs-danger);
 		}
 
 		&.motd {
-			background-color: $ux-color-alert-success;
+			background-color: var(--bs-success);
 		}
 	}
 

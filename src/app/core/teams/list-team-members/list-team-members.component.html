@@ -1,7 +1,7 @@
 <section>
 	<div class="table-header d-flex align-items-center">
 		<div class="table-actions d-flex flex-wrap flex-grow-1">
-			<div class="mb-3 mr-5">
+			<div class="mb-3 me-5">
 				<asy-search-input
 					placeholder="Search team members..."
 					[search]="dataSource.searchEvent$.value"
@@ -9,9 +9,9 @@
 				></asy-search-input>
 			</div>
 
-			<div class="mb-3 ml-auto">
+			<div class="mb-3 ms-auto">
 				<button
-					class="btn btn-primary ml-auto"
+					class="btn btn-primary ms-auto"
 					type="button"
 					*hasTeamRole="team(); role: 'admin'"
 					(click)="addMembers()"
@@ -50,14 +50,14 @@
 				</th>
 				<td cdk-cell *cdkCellDef="let member">
 					<button
-						class="btn btn-sm dropdown-toggle p-0"
+						class="btn dropdown-toggle p-0"
 						id="member-{{ member._id }}-role-menu-btn"
 						type="button"
 						attr.aria-controls="member-{{ member._id }}-role-menu"
 						*hasTeamRole="team(); role: 'admin'; else: readOnlyRole"
 						[cdkMenuTriggerFor]="roleMenu"
 					>
-						<span class="mr-1">{{ member.roleDisplay }}</span>
+						<span class="me-1">{{ member.roleDisplay }}</span>
 					</button>
 					<ng-template #roleMenu>
 						<div
@@ -86,16 +86,16 @@
 			<ng-container cdkColumnDef="actions">
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td cdk-cell *cdkCellDef="let member">
-					<a
-						class="btn-icon"
+					<button
+						class="btn btn-link p-0"
 						container="body"
-						placement="bottom"
+						placement="left"
 						tooltip="Remove Member"
 						*hasTeamRole="team(); role: 'admin'; and: member.explicit"
 						(click)="removeMember(member)"
 					>
 						<span class="fa-solid fa-lg fa-trash"></span>
-					</a>
+					</button>
 				</td>
 			</ng-container>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -111,7 +111,7 @@
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
-		<div class="table-footer-pager ml-auto">
+		<div class="table-footer-pager ms-auto">
 			<asy-paginator [dataSource]="dataSource"></asy-paginator>
 		</div>
 	</div>

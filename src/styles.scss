@@ -1,14 +1,11 @@
 @import 'styles/shared';
-@import 'styles/display';
-@import 'styles/links';
-@import 'styles/selection';
 
 @import '@angular/cdk/overlay-prebuilt.css';
 
 /* You can add global styles to this file, and also import other style files */
 
-// Import the main ngx-bootstrap style file
-@import 'styles/ngx-bootstrap';
+// Import the main bootstrap style file
+@import 'styles/bootstrap';
 
 // Import the main cdk style file
 @import "styles/cdk";
@@ -16,39 +13,26 @@
 // Import the main ng-select style file
 @import 'styles/ng-select';
 
-body {
-	@include font-normal();
-	@include font-color-dark($ux-color-body-text);
-
-	background: $ux-color-background;
-
-	padding: 0;
-	margin: 0;
-	min-height: 100%;
-	overflow: hidden;
+:root {
+	--bs-body-font-family: 'Roboto', 'Arial';
 }
 
-html {
-	min-height: 100%;
+body {
+	overflow: hidden;
 }
 
 @if $form-required == before {
 	.form-required:before {
 		content: '*';
-		color: $red;
+		color: var(--bs-danger);
 		padding-right: 3px;
 	}
 } @else if $form-required == after {
 	.form-required:after {
 		content: '*';
-		color: $red;
+		color: var(--bs-danger);
 		padding-left: 3px;
 	}
-}
-
-.back-link,
-.text-decoration-underline {
-	text-decoration: underline;
 }
 
 // Adds ellipsis to any DOM element that is too long
