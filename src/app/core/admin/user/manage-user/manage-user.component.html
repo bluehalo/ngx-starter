@@ -11,16 +11,14 @@
 			#form="ngForm"
 			(ngSubmit)="submitUser()"
 		>
-			<div class="media col mb-4">
-				<div class="media-body">
-					<h2 skipTo>{{ mode | titlecase }} User</h2>
-					@if (mode === 'create') {
-						Provide the required information to create a new User
-					}
-					@if (mode === 'edit') {
-						Make changes to the User's information
-					}
-				</div>
+			<div class="mb-4">
+				<h2 skipTo>{{ mode | titlecase }} User</h2>
+				@if (mode === 'create') {
+					Provide the required information to create a new User
+				}
+				@if (mode === 'edit') {
+					Make changes to the User's information
+				}
 			</div>
 
 			<!-- Name -->
@@ -77,12 +75,10 @@
 			</div>
 			<!-- Local Login Information -->
 			@if (!proxyPki()) {
-				<div class="media col py-3">
-					<div class="media-body">
-						<h3>Password</h3>
-						At least 6 characters.
-						<span>Leave blank if you do not want to change the password.</span>
-					</div>
+				<div class="py-3">
+					<h3>Password</h3>
+					At least 6 characters.
+					<span>Leave blank if you do not want to change the password.</span>
 				</div>
 
 				<div class="mb-3">

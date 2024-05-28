@@ -4,16 +4,14 @@
 
 	@if (message) {
 		<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="submitMessage()">
-			<div class="media col mb-4">
-				<div class="media-body">
-					<h2 skipTo>{{ mode | titlecase }} Message</h2>
-					@if (mode === 'create') {
-						Provide the required information to create a new message
-					}
-					@if (mode === 'edit') {
-						Make changes to the message's information
-					}
-				</div>
+			<div class="mb-4">
+				<h2 skipTo>{{ mode | titlecase }} Message</h2>
+				@if (mode === 'create') {
+					Provide the required information to create a new message
+				}
+				@if (mode === 'edit') {
+					Make changes to the message's information
+				}
 			</div>
 
 			<!-- Type -->
