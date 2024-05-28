@@ -10,15 +10,13 @@
 		#form="ngForm"
 		(ngSubmit)="submitEua()"
 	>
-		<div class="media col mb-4">
-			<div class="media-body">
-				<h2 skipTo>{{ mode | titlecase }} EUA</h2>
-				@if (mode === 'create') {
-					Provide the required information to create a new EUA
-				} @else if (mode === 'edit') {
-					Make changes to the EUA's information
-				}
-			</div>
+		<div class="mb-4">
+			<h2 skipTo>{{ mode | titlecase }} EUA</h2>
+			@if (mode === 'create') {
+				Provide the required information to create a new EUA
+			} @else if (mode === 'edit') {
+				Make changes to the EUA's information
+			}
 		</div>
 
 		<!-- Basic Information -->

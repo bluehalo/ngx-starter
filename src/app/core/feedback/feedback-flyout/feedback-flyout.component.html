@@ -153,7 +153,10 @@
 							</ng-select>
 						</div>
 					}
-					<div class="mb-3" [class.mb-0]="feedback.type === 'bug report'">
+					<div
+						[class.mb-0]="feedback.type === 'bug report'"
+						[class.mb-3]="feedback.type !== 'bug report'"
+					>
 						<textarea
 							class="form-control"
 							name="text"
@@ -181,27 +184,29 @@
 				</button>
 			</div>
 		} @else if (status() === 'submitting') {
-			<div class="media p-5">
-				<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw me-3"></span>
-				<div class="media-body">
+			<div class="d-flex p-5">
+				<span class="fa-solid fa-spinner fa-pulse fa-3x fa-fw me-3 flex-shrink-0"></span>
+				<div class="flex-grow-1">
 					<h1 class="mt-0">Submitting</h1>
 				</div>
 			</div>
 		} @else if (status() === 'success') {
-			<div class="media p-5">
-				<span class="fa-solid fa-check-circle text-highlight fa-3x fa-fw me-3"></span>
-				<div class="media-body">
+			<div class="d-flex p-5">
+				<span
+					class="fa-solid fa-check-circle text-highlight fa-3x fa-fw me-3 flex-shrink-0"
+				></span>
+				<div class="flex-grow-1">
 					<h1 class="mt-0">Thanks!</h1>
 					We got your feedback.
 				</div>
 			</div>
 		} @else if (status() === 'failure') {
 			<div class="p-5">
-				<div class="media">
+				<div class="d-flex">
 					<span
-						class="fa-solid fa-exclamation-triangle text-danger fa-3x fa-fw me-3"
+						class="fa-solid fa-exclamation-triangle text-danger fa-3x fa-fw me-3 flex-shrink-0"
 					></span>
-					<div class="media-body">
+					<div class="flex-grow-1">
 						<h1 class="mt-0">Unable To send feedback</h1>
 						Something went wrong and we didn't get your feedback.
 					</div>

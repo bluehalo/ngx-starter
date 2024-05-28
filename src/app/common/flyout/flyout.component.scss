@@ -1,7 +1,7 @@
 @import '../../../styles/shared';
 @import '../../../styles/bootstrap/shared';
 
-$flyout-border-top: 10px !default;
+$flyout-border-top: 8px !default;
 $flyout-box-shadow: 0 0.25rem 0.5rem rgba(var(--bs-body-bg-rgb), 0.2) !default;
 
 $flyout-right-top: 24px !default;
@@ -43,6 +43,8 @@ $flyout-bottom-bottom: 20px * 2 !default;
 }
 
 .flyout {
+	background: var(--bs-body-bg);
+
 	&.flyout-left {
 		flex-direction: row-reverse;
 	}
@@ -82,7 +84,6 @@ $flyout-bottom-bottom: 20px * 2 !default;
 	transform-origin: 0 0;
 
 	border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
-	box-shadow: none;
 
 	.flyout-left & {
 		transform: rotate(-90deg);
@@ -95,13 +96,6 @@ $flyout-bottom-bottom: 20px * 2 !default;
 
 	.flyout-bottom & {
 		transform: translateY(-100%);
-	}
-
-	&:not(:disabled):not(.disabled):active,
-	&:not(:disabled):not(.disabled).active,
-	&.focus,
-	&:focus {
-		box-shadow: none;
 	}
 }
 

@@ -1,7 +1,8 @@
 @use 'sass:math';
 @import 'shared';
 
-$card-color-highlight: #61d9d9 !default;
+$card-color-highlight: var(--bs-primary) !default;
+$card-color-hover: var(--bs-primary-border-subtle) !default;
 $card-selected-check-size: 2rem !default;
 $card-header-height: 4rem !default;
 
@@ -31,13 +32,15 @@ $card-header-height: 4rem !default;
 
 .card-selectable {
 	&:hover,
-	&.hover,
-	&.selected {
-		box-shadow: 0 0 0 $btn-focus-width $card-color-highlight;
-		border-color: $card-color-highlight;
+	&.hover {
+		box-shadow: 0 0 0 $btn-focus-width $card-color-hover;
+		border-color: $card-color-hover;
 	}
 
 	&.selected {
+		box-shadow: 0 0 0 $btn-focus-width $card-color-highlight;
+		border-color: $card-color-highlight;
+
 		&:before {
 			font: var(--fa-font-solid);
 			font-size: math.div($card-selected-check-size, 2);

@@ -1,7 +1,14 @@
-<section class="flyout flyout-{{ placement }} d-flex" [ngClass]="{ 'flyout-open': isOpen }">
-	<button class="btn btn-primary flyout-btn" data-inline="true" (click)="toggle()">
+<section
+	class="flyout flyout-{{ placement }} d-flex text-nowrap"
+	[ngClass]="{ 'flyout-open': isOpen }"
+>
+	<button
+		class="btn btn-primary flyout-btn d-flex align-items-center"
+		data-inline="true"
+		(click)="toggle()"
+	>
 		{{ label }}
-		<span class="fa-solid fa-lg fa-angle-down" data-inline="true"></span>
+		<span class="fa-solid fa-lg fa-angle-down ms-2" data-inline="true"></span>
 	</button>
 
 	<div class="flyout-content" #flyoutContentContainer>

@@ -20,8 +20,8 @@ $anchored-table-min-height: 375px !default;
 
 		.table-actions-group {
 			align-items: center;
-			margin-bottom: 1rem;
-			margin-right: 3rem;
+			margin-bottom: $spacer;
+			margin-right: $spacer * 2;
 
 			&:last-of-type {
 				margin-right: 0;
@@ -39,7 +39,7 @@ $anchored-table-min-height: 375px !default;
 }
 
 .table-content {
-	border-bottom: calc(#{$table-border-width} * 2) solid $border-color;
+	border-bottom: calc(#{$table-border-width} * 2) solid $table-border-color;
 	flex-grow: 1;
 	margin-bottom: map.get($spacers, 3);
 	overflow: auto;
