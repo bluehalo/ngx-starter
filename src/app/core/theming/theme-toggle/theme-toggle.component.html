@@ -3,7 +3,7 @@
 	<span class="fa-solid fa-lg {{ themeOptions.get(selectedTheme()) }} ms-2"></span>
 </a>
 <ng-template #menu>
-	<div class="dropdown-menu py-0" id="color-mode-menu" aria-labelledby="color-mode-btn" cdkMenu>
+	<div class="dropdown-menu" id="color-mode-menu" aria-labelledby="color-mode-btn" cdkMenu>
 		@for (theme of themeOptions.keys(); track theme) {
 			<button
 				class="dropdown-item"
