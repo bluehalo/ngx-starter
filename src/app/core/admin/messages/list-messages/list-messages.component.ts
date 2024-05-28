@@ -1,4 +1,4 @@
-import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,6 +25,10 @@ import {
 	PaginatorComponent,
 	TextColumnComponent
 } from '../../../../common/table';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective
+} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
 import { Message } from '../../../messages/message.model';
 import { MessageService } from '../../../messages/message.service';
 
@@ -43,12 +47,13 @@ import { MessageService } from '../../../messages/message.service';
 		AsySortHeaderComponent,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
-		CdkMenuTrigger,
 		CdkMenu,
 		CdkMenuItem,
 		CdkMenuItemRouterLinkDirective,
 		TextColumnComponent,
-		DateColumnComponent
+		DateColumnComponent,
+		ActionsMenuColumnComponent,
+		ActionsMenuTemplateDirective
 	]
 })
 export class ListMessagesComponent implements OnInit {

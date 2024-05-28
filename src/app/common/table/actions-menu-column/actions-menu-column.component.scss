@@ -1,0 +1,12 @@
+.cdk-column-actionsMenu {
+	width: 50px;
+
+	button.dropdown-toggle {
+		display: block;
+		border: 0;
+
+		&:hover {
+			color: var(--bs-link-hover-color);
+		}
+	}
+}

@@ -1,4 +1,4 @@
-import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -28,6 +28,10 @@ import {
 	PaginatorComponent,
 	TextColumnComponent
 } from '../../../../common/table';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective
+} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
 import { CacheEntriesService } from '../cache-entries.service';
 import {
 	CacheEntryModalComponent,
@@ -53,10 +57,11 @@ import { CacheEntry } from '../cache-entry.model';
 		AgoDatePipe,
 		UtcDatePipe,
 		CdkMenu,
-		CdkMenuTrigger,
 		CdkMenuItem,
 		TextColumnComponent,
-		AgoDateColumnComponent
+		AgoDateColumnComponent,
+		ActionsMenuColumnComponent,
+		ActionsMenuTemplateDirective
 	]
 })
 export class ListCacheEntriesComponent implements OnInit {
