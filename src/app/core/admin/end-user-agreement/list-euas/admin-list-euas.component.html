@@ -59,60 +59,46 @@
 				<asy-date-column name="created"></asy-date-column>
 				<asy-date-column name="published"></asy-date-column>
 				<asy-date-column name="updated"></asy-date-column>
-				<ng-container cdkColumnDef="actionsMenu" stickyEnd>
-					<th cdk-header-cell *cdkHeaderCellDef></th>
-					<td
-						cdk-cell
-						container="body"
-						dropdown
-						placement="bottom right"
-						*cdkCellDef="let eua"
+				<asy-actions-menu-column scope="eua" stickyEnd>
+					<ng-template
+						actions-menu-tmp
+						let-item="item"
+						let-menuId="menuId"
+						let-triggerId="triggerId"
 					>
-						<button
-							class="btn dropdown-toggle dropdown-toggle-hide-caret shadow-none py-0 ps-3"
-							id="eua-{{ eua._id }}-action-menu-btn"
-							type="button"
-							attr.aria-controls="eua-{{ eua._id }}-action-menu"
-							[cdkMenuTriggerFor]="actionsMenu"
+						<div
+							class="dropdown-menu"
+							[attr.aria-labelledby]="triggerId"
+							cdkMenu
+							[id]="menuId"
 						>
-							<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-						</button>
-						<ng-template #actionsMenu>
-							<div
-								class="dropdown-menu"
-								id="eua-{{ eua._id }}-action-menu"
-								attr.aria-labelledby="eua-{{ eua._id }}-action-menu-btn"
-								cdkMenu
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								[routerLink]="['/admin/eua', item._id]"
 							>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									[routerLink]="['/admin/eua', eua._id]"
-								>
-									Edit
-								</button>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									(click)="previewEndUserAgreement(eua)"
-								>
-									Preview
-								</button>
-								<button class="dropdown-item" cdkMenuItem (click)="publishEua(eua)">
-									Publish
-								</button>
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									(click)="confirmDeleteEua(eua)"
-								>
-									Delete
-								</button>
-							</div>
-						</ng-template>
-					</td>
-				</ng-container>
-
+								Edit
+							</button>
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								(click)="previewEndUserAgreement(item)"
+							>
+								Preview
+							</button>
+							<button class="dropdown-item" cdkMenuItem (click)="publishEua(item)">
+								Publish
+							</button>
+							<button
+								class="dropdown-item"
+								cdkMenuItem
+								(click)="confirmDeleteEua(item)"
+							>
+								Delete
+							</button>
+						</div>
+					</ng-template>
+				</asy-actions-menu-column>
 				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns(); sticky: true"></tr>
 				<tr cdk-row *cdkRowDef="let team; columns: displayedColumns()"></tr>
 			</table>

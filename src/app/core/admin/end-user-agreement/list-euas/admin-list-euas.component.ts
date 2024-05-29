@@ -1,4 +1,4 @@
-import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,6 +27,10 @@ import {
 	SidebarComponent,
 	TextColumnComponent
 } from '../../../../common/table';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective
+} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
 import { EndUserAgreement } from '../eua.model';
 import { EuaService } from '../eua.service';
 
@@ -48,11 +52,12 @@ import { EuaService } from '../eua.service';
 		ColumnChooserComponent,
 		PaginatorComponent,
 		TooltipModule,
-		CdkMenuTrigger,
 		CdkMenu,
 		CdkMenuItem,
 		TextColumnComponent,
-		DateColumnComponent
+		DateColumnComponent,
+		ActionsMenuColumnComponent,
+		ActionsMenuTemplateDirective
 	]
 })
 export class AdminListEuasComponent implements OnInit {

@@ -46,47 +46,40 @@
 			</ng-container>
 			<asy-date-column name="created"></asy-date-column>
 			<asy-date-column name="updated"></asy-date-column>
-			<ng-container cdkColumnDef="actionsMenu" stickyEnd>
-				<th cdk-header-cell *cdkHeaderCellDef></th>
-				<td cdk-cell *cdkCellDef="let message">
-					<button
-						class="btn dropdown-toggle dropdown-toggle-hide-caret shadow-none py-0 ps-3"
-						id="message-{{ message._id }}-action-menu-btn"
-						type="button"
-						attr.aria-controls="message-{{ message._id }}-action-menu"
-						[cdkMenuTriggerFor]="actionsMenu"
+			<asy-actions-menu-column scope="user" stickyEnd>
+				<ng-template
+					actions-menu-tmp
+					let-item="item"
+					let-menuId="menuId"
+					let-triggerId="triggerId"
+				>
+					<div
+						class="dropdown-menu"
+						[attr.aria-labelledby]="triggerId"
+						cdkMenu
+						[id]="menuId"
 					>
-						<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-					</button>
-					<ng-template #actionsMenu>
-						<div
-							class="dropdown-menu"
-							id="message-{{ message._id }}-action-menu"
-							attr.aria-labelledby="message-{{ message._id }}-action-menu-btn"
-							cdkMenu
+						<a
+							class="dropdown-item"
+							cdkMenuItem
+							[routerLink]="['/admin/message', item._id]"
+							>Edit</a
 						>
-							<a
-								class="dropdown-item"
-								cdkMenuItem
-								[routerLink]="['/admin/message', message._id]"
-								>Edit</a
-							>
-							<a
-								class="dropdown-item"
-								cdkMenuItem
-								(cdkMenuItemTriggered)="previewMessage(message)"
-								>Preview</a
-							>
-							<a
-								class="dropdown-item"
-								cdkMenuItem
-								(cdkMenuItemTriggered)="confirmDeleteMessage(message)"
-								>Delete</a
-							>
-						</div>
-					</ng-template>
-				</td>
-			</ng-container>
+						<a
+							class="dropdown-item"
+							cdkMenuItem
+							(cdkMenuItemTriggered)="previewMessage(item)"
+							>Preview</a
+						>
+						<a
+							class="dropdown-item"
+							cdkMenuItem
+							(cdkMenuItemTriggered)="confirmDeleteMessage(item)"
+							>Delete</a
+						>
+					</div>
+				</ng-template>
+			</asy-actions-menu-column>
 			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
 			<tr cdk-row *cdkRowDef="let team; columns: displayedColumns"></tr>
 		</table>

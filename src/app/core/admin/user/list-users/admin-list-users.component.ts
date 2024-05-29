@@ -1,4 +1,4 @@
-import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { AsyncPipe, NgClass } from '@angular/common';
@@ -36,6 +36,10 @@ import {
 	SidebarComponent,
 	TextColumnComponent
 } from '../../../../common/table';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective
+} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
 import { Role, User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
 import { APP_CONFIG } from '../../../tokens';
@@ -66,7 +70,6 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		PaginatorComponent,
 		AsyncPipe,
 		JoinPipe,
-		CdkMenuTrigger,
 		CdkMenu,
 		CdkMenuItem,
 		CdkMenuItemRouterLinkDirective,
@@ -74,7 +77,9 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		ItemTemplateDirective,
 		DateColumnComponent,
 		AgoDateColumnComponent,
-		TextColumnComponent
+		TextColumnComponent,
+		ActionsMenuColumnComponent,
+		ActionsMenuTemplateDirective
 	]
 })
 export class AdminListUsersComponent implements OnInit {
