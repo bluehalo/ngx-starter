@@ -2,7 +2,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
-import { Component, OnInit, computed, effect, inject, model, signal } from '@angular/core';
+import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -65,7 +65,6 @@ export class SiteNavbarComponent implements OnInit {
 	readonly adminTopics = injectAdminTopics();
 	readonly navbarItems = injectNavbarTopics();
 
-	readonly navbarOpenOld = model(false);
 	readonly adminNavOpen = signal(false);
 	readonly helpNavOpen = signal(false);
 	readonly userNavOpen = signal(false);

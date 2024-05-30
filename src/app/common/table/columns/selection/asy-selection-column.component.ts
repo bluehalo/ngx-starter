@@ -9,7 +9,8 @@ import {
 	Input,
 	OnInit,
 	booleanAttribute,
-	inject
+	inject,
+	input
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -31,22 +32,13 @@ export class AsySelectionColumnComponent<T, TB = T>
 	extends AsyAbstractColumnComponent<T>
 	implements AfterViewInit, OnInit
 {
-	@Input({ transform: booleanAttribute })
-	enableSelectAll = true;
+	#destroyRef = inject(DestroyRef);
+	#dataSource: AsyTableDataSource<T>;
+	#selectionModel: SelectionModel<TB>;
 
-	@Input({ transform: booleanAttribute })
-	clearOnLoad = true;
-
-	@Input({ transform: booleanAttribute })
-	multi = true;
-
-	_isAllSelected$: Observable<boolean>;
-
-	_isMultiTemplateDataRows = false;
-
-	private dataSource: AsyTableDataSource<T>;
-
-	private selectionModel: SelectionModel<TB>;
+	readonly enableSelectAll = input(true, { transform: booleanAttribute });
+	readonly clearOnLoad = input(true, { transform: booleanAttribute });
+	readonly multi = input(true, { transform: booleanAttribute });
 
 	@Input()
 	isSelectable: (index: number, rowData: T) => boolean = () => true;
@@ -54,7 +46,9 @@ export class AsySelectionColumnComponent<T, TB = T>
 	@Input()
 	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
 
-	private destroyRef = inject(DestroyRef);
+	_isAllSelected$: Observable<boolean>;
+
+	_isMultiTemplateDataRows = false;
 
 	constructor() {
 		super();
@@ -64,10 +58,10 @@ export class AsySelectionColumnComponent<T, TB = T>
 	override ngOnInit(): void {
 		super.ngOnInit();
 
-		this.selectionModel = new SelectionModel<TB>(this.multi);
+		this.#selectionModel = new SelectionModel<TB>(this.multi());
 
 		if (this._isAsyTableDataSource(this._table.dataSource)) {
-			this.dataSource = this._table.dataSource;
+			this.#dataSource = this._table.dataSource;
 			this._isMultiTemplateDataRows = this._table.multiTemplateDataRows;
 		} else {
 			throw Error(
@@ -77,50 +71,50 @@ export class AsySelectionColumnComponent<T, TB = T>
 	}
 
 	ngAfterViewInit(): void {
-		if (this.clearOnLoad) {
-			this.dataSource.pagingResults$
-				.pipe(takeUntilDestroyed(this.destroyRef))
+		if (this.clearOnLoad()) {
+			this.#dataSource.pagingResults$
+				.pipe(takeUntilDestroyed(this.#destroyRef))
 				.subscribe(() => {
-					this.selectionModel.clear();
+					this.#selectionModel.clear();
 				});
 		}
 
-		this._isAllSelected$ = this.selectionModel.changed.pipe(
+		this._isAllSelected$ = this.#selectionModel.changed.pipe(
 			map(() => this._isAllSelected()),
-			takeUntilDestroyed(this.destroyRef)
+			takeUntilDestroyed(this.#destroyRef)
 		);
 	}
 
 	select(...trackByValues: TB[]) {
-		this.selectionModel.select(...trackByValues);
+		this.#selectionModel.select(...trackByValues);
 	}
 
 	toggle(index: number, result: T) {
-		this.selectionModel.toggle(this.trackBy(index, result));
+		this.#selectionModel.toggle(this.trackBy(index, result));
 	}
 
 	isSelected(index: number, result: T) {
-		return this.selectionModel.isSelected(this.trackBy(index, result));
+		return this.#selectionModel.isSelected(this.trackBy(index, result));
 	}
 
 	get selected() {
-		return this.selectionModel.selected;
+		return this.#selectionModel.selected;
 	}
 
 	// eslint-disable-next-line rxjs/finnish
 	get changed() {
-		return this.selectionModel.changed;
+		return this.#selectionModel.changed;
 	}
 
 	hasSelection() {
-		return this.selectionModel.hasValue();
+		return this.#selectionModel.hasValue();
 	}
 
 	_isAllSelected() {
 		return (
-			this.selectionModel.selected.length > 0 &&
-			this.selectionModel.selected.length ===
-				this.dataSource.pagingResults$.value.elements.filter((result, index) =>
+			this.#selectionModel.selected.length > 0 &&
+			this.#selectionModel.selected.length ===
+				this.#dataSource.pagingResults$.value.elements.filter((result, index) =>
 					this.isSelectable(index, result)
 				).length
 		);
@@ -128,9 +122,9 @@ export class AsySelectionColumnComponent<T, TB = T>
 
 	_toggleAll() {
 		if (this._isAllSelected()) {
-			this.selectionModel.clear();
+			this.#selectionModel.clear();
 		} else {
-			this.dataSource.pagingResults$.value.elements.forEach((result, index) => {
+			this.#dataSource.pagingResults$.value.elements.forEach((result, index) => {
 				if (this.isSelectable(index, result)) {
 					this.select(this.trackBy(index, result));
 				}

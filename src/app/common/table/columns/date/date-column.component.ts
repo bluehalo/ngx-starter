@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { UtcDatePipe } from '../../../pipes/utc-date-pipe/utc-date.pipe';
 import { AsySortHeaderComponent } from '../../sort/asy-sort-header/asy-sort-header.component';
@@ -14,6 +14,5 @@ import { AsyAbstractValueColumnComponent } from '../asy-abstract-value-column.co
 	styleUrls: ['./date-column.component.scss']
 })
 export class DateColumnComponent<T> extends AsyAbstractValueColumnComponent<T> {
-	@Input()
-	format?: string;
+	readonly format = input<string>();
 }

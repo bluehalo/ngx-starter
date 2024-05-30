@@ -2,29 +2,29 @@
 	class="dropdown-toggle dropdown-toggle-hide-caret"
 	cdkOverlayOrigin
 	#trigger
-	(click)="isOpen = !isOpen"
+	(click)="toggle()"
 >
 	<span
 		class="filter fa-solid fa-list"
 		container="body"
 		placement="bottom"
 		tooltip="Apply Filters"
-		[hidden]="isFiltered"
+		[hidden]="isFiltered()"
 	></span>
 	<span
 		class="filter fa-solid fa-filter"
 		container="body"
 		placement="bottom"
 		tooltip="Edit Filters"
-		[hidden]="!isFiltered"
+		[hidden]="!isFiltered()"
 	></span>
 </button>
 
 <ng-template
 	cdkConnectedOverlay
-	[cdkConnectedOverlayOpen]="isOpen"
+	[cdkConnectedOverlayOpen]="isOpen()"
 	[cdkConnectedOverlayOrigin]="trigger"
-	(overlayOutsideClick)="isOpen = false"
+	(overlayOutsideClick)="isOpen.set(false)"
 >
 	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<div class="my-3">
@@ -35,7 +35,7 @@
 				style="width: 200px"
 				[(ngModel)]="selectedValue"
 				[items]="(values$ | async) || []"
-				[loading]="loading"
+				[loading]="loading()"
 				[typeahead]="input$"
 				(ngModelChange)="onFilterChange()"
 			>

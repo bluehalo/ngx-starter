@@ -2,29 +2,29 @@
 	class="dropdown-toggle dropdown-toggle-hide-caret"
 	cdkOverlayOrigin
 	#trigger
-	(click)="isOpen = !isOpen"
+	(click)="toggle()"
 >
 	<span
 		class="filter fa-solid fa-list"
 		container="body"
 		placement="bottom"
 		tooltip="Apply Filters"
-		[hidden]="isFiltered"
+		[hidden]="isFiltered()"
 	></span>
 	<span
 		class="filter fa-solid fa-filter"
 		container="body"
 		placement="bottom"
 		tooltip="Edit Filters"
-		[hidden]="!isFiltered"
+		[hidden]="!isFiltered()"
 	></span>
 </button>
 
 <ng-template
 	cdkConnectedOverlay
-	[cdkConnectedOverlayOpen]="isOpen"
+	[cdkConnectedOverlayOpen]="isOpen()"
 	[cdkConnectedOverlayOrigin]="trigger"
-	(overlayOutsideClick)="isOpen = isClickOnDateRangePicker($event)"
+	(overlayOutsideClick)="isOpen.set(isClickOnDateRangePicker($event))"
 >
 	<div class="dropdown-menu px-3" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<div class="form-check">
@@ -45,7 +45,7 @@
 				type="radio"
 				value="past"
 				[(ngModel)]="direction"
-				[disabled]="isCustom"
+				[disabled]="isCustom()"
 				(ngModelChange)="onDateFilterChange()"
 			/>
 			<label class="form-check-label" for="dir-radio-past">Past</label>
@@ -57,7 +57,7 @@
 				type="radio"
 				value="next"
 				[(ngModel)]="direction"
-				[disabled]="isCustom"
+				[disabled]="isCustom()"
 				(ngModelChange)="onDateFilterChange()"
 			/>
 			<label class="form-check-label" for="dir-radio-next">Next</label>
@@ -70,7 +70,7 @@
 				type="number"
 				min="1"
 				[(ngModel)]="count"
-				[disabled]="isCustom"
+				[disabled]="isCustom()"
 				(ngModelChange)="onDateFilterChange()"
 			/>
 			<div class="input-group-append">
@@ -78,14 +78,14 @@
 					id="dateDurationInput"
 					[(ngModel)]="duration"
 					[clearable]="false"
-					[disabled]="isCustom"
+					[disabled]="isCustom()"
 					[items]="['hour', 'day', 'week', 'month', 'year']"
 					[searchable]="false"
 					(click)="$event.stopPropagation()"
 					(ngModelChange)="onDateFilterChange()"
 				>
 					<ng-template let-item="item" ng-label-tmp ng-option-tmp>
-						{{ item | titlecase }}{{ count > 1 ? 's' : '' }}
+						{{ item | titlecase }}{{ count() > 1 ? 's' : '' }}
 					</ng-template>
 				</ng-select>
 			</div>

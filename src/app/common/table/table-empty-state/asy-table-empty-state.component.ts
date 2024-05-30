@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angular/core';
+import { Component, booleanAttribute, input, output } from '@angular/core';
 
 import { AsyTableDataSource } from '../asy-table-data-source';
 import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.component';
@@ -11,21 +11,11 @@ import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.com
 	imports: [AsySkeletonRowsComponent]
 })
 export class AsyTableEmptyStateComponent<T> {
-	@Input({ required: true })
-	dataSource: AsyTableDataSource<T>;
+	readonly dataSource = input.required<AsyTableDataSource<T>>();
+	readonly emptyText = input('No results are available.');
+	readonly filteredText = input('No results matched your search.');
+	readonly showClearFilters = input(true, { transform: booleanAttribute });
+	readonly showIcons = input(true, { transform: booleanAttribute });
 
-	@Input()
-	emptyText = 'No results are available.';
-
-	@Input()
-	filteredText = 'No results matched your search.';
-
-	@Input({ transform: booleanAttribute })
-	showClearFilters = true;
-
-	@Input({ transform: booleanAttribute })
-	showIcons = true;
-
-	@Output()
-	readonly clearFilters = new EventEmitter();
+	readonly clearFilters = output();
 }

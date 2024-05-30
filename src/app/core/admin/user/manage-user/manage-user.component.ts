@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
+import { JoinPipe } from '../../../../common/pipes/join.pipe';
 import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { EditUser, Role } from '../../../auth';
@@ -22,7 +23,8 @@ import { AdminUsersService } from '../admin-users.service';
 		SystemAlertComponent,
 		FormsModule,
 		TooltipModule,
-		SkipToDirective
+		SkipToDirective,
+		JoinPipe
 	],
 	templateUrl: './manage-user.component.html',
 	styleUrls: ['./manage-user.component.scss']
@@ -50,8 +52,6 @@ export class ManageUserComponent implements OnInit {
 
 		if (this.user) {
 			this.mode = 'edit';
-			this.user.externalRolesDisplay = this.user.externalRoles?.join('\n');
-			this.user.externalGroupsDisplay = this.user.externalGroups?.join('\n');
 		} else {
 			this.user = new EditUser();
 		}

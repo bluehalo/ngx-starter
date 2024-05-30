@@ -80,7 +80,10 @@
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="body">
-					<th cdk-header-cell *cdkHeaderCellDef>Feedback</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						Feedback
+						<asy-header-filter text-filter></asy-header-filter>
+					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						{{ feedback.body }}
 					</td>

@@ -18,9 +18,9 @@
 			cdkDrag
 			cdkDragBoundary=".column-drag-boundary"
 			[cdkDragData]="column"
-			[cdkDragDisabled]="sortingDisabled"
+			[cdkDragDisabled]="sortingDisabled()"
 		>
-			@if (!sortingDisabled) {
+			@if (!sortingDisabled()) {
 				<span class="fa-solid fa-lg fa-bars pe-1 me-2" cdkDragHandle></span>
 			}
 			<input

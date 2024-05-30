@@ -1,15 +1,14 @@
-@if (isLoading) {
+@if (isLoading()) {
 	<div class="overlay">
-		@if (isError) {
-			<notification notificationType="danger" showActions [message]="errorMessage">
+		@if (isError()) {
+			<notification notificationType="danger" showActions [message]="errorMessage()">
 				<ng-template #notificationActions>
-					<button class="btn btn-primary" (click)="handleRetry()">Retry</button>
+					<button class="btn btn-primary" (click)="retry.emit()">Retry</button>
 				</ng-template>
 			</notification>
-		}
-		@if (!isError) {
+		} @else {
 			<div class="overlay-spinner">
-				<loading-spinner [message]="message"> </loading-spinner>
+				<loading-spinner [message]="message()"> </loading-spinner>
 			</div>
 		}
 	</div>

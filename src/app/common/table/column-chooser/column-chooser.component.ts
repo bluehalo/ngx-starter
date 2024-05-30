@@ -6,7 +6,16 @@ import {
 	moveItemInArray
 } from '@angular/cdk/drag-drop';
 import { TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	booleanAttribute,
+	input,
+	output
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { LocalStorageService } from '../../storage/local-storage.service';
@@ -34,13 +43,11 @@ export class ColumnChooserComponent implements OnInit {
 	_columns: ColumnDefinition[] = [];
 	_defaultColumns: ColumnDefinition[] = [];
 
-	@Input()
-	storageKey?: string;
+	readonly storageKey = input<string>();
 
-	@Input({ transform: booleanAttribute })
-	sortingDisabled = false;
+	readonly sortingDisabled = input(false, { transform: booleanAttribute });
 
-	@Output() readonly columnsChange: EventEmitter<string[]> = new EventEmitter();
+	readonly columnsChange = output<string[]>();
 
 	private storage = new LocalStorageService();
 
@@ -71,13 +78,13 @@ export class ColumnChooserComponent implements OnInit {
 	}
 
 	_loadState() {
-		if (this.storageKey) {
+		if (this.storageKey()) {
 			const columnsOrder: string[] = this.storage.getValue(
-				`${this.storageKey}-columns-order`,
+				`${this.storageKey()}-columns-order`,
 				[]
 			);
 			const columnsSelected: string[] = this.storage.getValue(
-				`${this.storageKey}-columns-selected`,
+				`${this.storageKey()}-columns-selected`,
 				[]
 			);
 
@@ -114,14 +121,14 @@ export class ColumnChooserComponent implements OnInit {
 	}
 
 	_saveState() {
-		if (this.storageKey) {
+		if (this.storageKey()) {
 			this.storage.setValue(
-				`${this.storageKey}-columns-selected`,
+				`${this.storageKey()}-columns-selected`,
 				this._columns.filter((c) => c.selected).map((c) => c.key)
 			);
 
 			this.storage.setValue(
-				`${this.storageKey}-columns-order`,
+				`${this.storageKey()}-columns-order`,
 				this._columns.map((c) => c.key)
 			);
 		}

@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, input } from '@angular/core';
 
 import isEmpty from 'lodash/isEmpty';
 
@@ -19,13 +19,12 @@ export interface AsyFilterable {
 	standalone: true
 })
 export class AsyFilterDirective {
+	dataSource = input.required<AsyTableDataSource<any>>();
+
 	/** Collection of all registered filterables that this directive manages. */
 	filterables = new Map<string, AsyFilterable>();
 
 	filters = new Map<string, any>();
-
-	@Input({ required: true })
-	dataSource: AsyTableDataSource<any>;
 
 	/**
 	 * Register function to be used by the contained AsyFilterables. Adds the AsyFilterable to the
@@ -53,7 +52,7 @@ export class AsyFilterDirective {
 
 	filter(id: string, query: any): void {
 		this.filters.set(id, query);
-		this.dataSource.filter(this._buildFilter());
+		this.dataSource().filter(this._buildFilter());
 	}
 
 	clearFilter(): void {

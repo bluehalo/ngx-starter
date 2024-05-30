@@ -19,6 +19,7 @@ import {
 	AgoDateColumnComponent,
 	AsyFilterDirective,
 	AsyHeaderListFilterComponent,
+	AsyHeaderTextFilterComponent,
 	AsySortDirective,
 	AsySortHeaderComponent,
 	AsyTableDataSource,
@@ -58,7 +59,8 @@ import { AdminUsersService } from '../../user/admin-users.service';
 		CdkMenu,
 		CdkMenuItem,
 		AgoDateColumnComponent,
-		TextColumnComponent
+		TextColumnComponent,
+		AsyHeaderTextFilterComponent
 	]
 })
 export class AdminListFeedbackComponent implements OnInit {

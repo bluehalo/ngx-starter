@@ -153,7 +153,7 @@
 						type="text"
 						disabled
 						rows="4"
-						>{{ user.externalRolesDisplay }}</textarea
+						>{{ user.externalRolesDisplay | join: '\n' }}</textarea
 					>
 				</div>
 				<div class="mb-3">
@@ -165,7 +165,7 @@
 						type="text"
 						disabled
 						rows="4"
-						>{{ user.externalGroupsDisplay }}</textarea
+						>{{ user.externalGroups | join: '\n' }}</textarea
 					>
 				</div>
 			}

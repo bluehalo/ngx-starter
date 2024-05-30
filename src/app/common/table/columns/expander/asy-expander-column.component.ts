@@ -1,6 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import { ChangeDetectionStrategy, Component, Input, OnInit, booleanAttribute } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnInit,
+	booleanAttribute,
+	input
+} from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 
@@ -16,10 +23,9 @@ export class AsyExpanderColumnComponent<T, TB>
 	extends AsyAbstractColumnComponent<T>
 	implements OnInit
 {
-	@Input({ transform: booleanAttribute })
-	multi = true;
+	#selectionModel: SelectionModel<TB>;
 
-	private selectionModel: SelectionModel<TB>;
+	readonly multi = input(true, { transform: booleanAttribute });
 
 	@Input()
 	isExpandable: (index: number, rowData: T) => boolean = () => true;
@@ -35,31 +41,31 @@ export class AsyExpanderColumnComponent<T, TB>
 	override ngOnInit(): void {
 		super.ngOnInit();
 
-		this.selectionModel = new SelectionModel<TB>(this.multi);
+		this.#selectionModel = new SelectionModel<TB>(this.multi());
 	}
 
 	expand(...trackByValues: TB[]) {
-		this.selectionModel.select(...trackByValues);
+		this.#selectionModel.select(...trackByValues);
 	}
 
 	toggle(index: number, result: T) {
-		this.selectionModel.toggle(this.trackBy(index, result));
+		this.#selectionModel.toggle(this.trackBy(index, result));
 	}
 
 	isExpanded(index: number, result: T) {
-		return this.selectionModel.isSelected(this.trackBy(index, result));
+		return this.#selectionModel.isSelected(this.trackBy(index, result));
 	}
 
 	get expanded() {
-		return this.selectionModel.selected;
+		return this.#selectionModel.selected;
 	}
 
 	// eslint-disable-next-line rxjs/finnish
 	get changed() {
-		return this.selectionModel.changed;
+		return this.#selectionModel.changed;
 	}
 
 	hasExpanded() {
-		return this.selectionModel.hasValue();
+		return this.#selectionModel.hasValue();
 	}
 }
