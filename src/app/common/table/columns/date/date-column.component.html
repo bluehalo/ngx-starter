@@ -12,6 +12,6 @@
 		</ng-template>
 	</th>
 	<td class="text-nowrap" cdk-cell *cdkCellDef="let obj">
-		{{ obj[name] | utcDate: format }}
+		{{ obj[name] | utcDate: format() }}
 	</td>
 </ng-container>

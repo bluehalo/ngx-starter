@@ -41,7 +41,7 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not apply the search if keyup is never triggered', fakeAsync(() => {
-		componentInstance.preferInputEvent = false;
+		fixture.componentRef.setInput('preferInputEvent', false);
 		inputElement.nativeElement.value = 'search value';
 		fixture.detectChanges();
 		// need to trigger input event here so ngModel will set `search` property correctly
@@ -53,8 +53,8 @@ describe('SearchInputComponent', () => {
 		expect(componentInstance.applySearch.emit).toHaveBeenCalledTimes(0);
 	}));
 
-	it('should apply search if preferInputEvent is true and an input event is trigered', fakeAsync(() => {
-		componentInstance.preferInputEvent = true;
+	it('should apply search if preferInputEvent is true and an input event is triggered', fakeAsync(() => {
+		fixture.componentRef.setInput('preferInputEvent', true);
 		inputElement.nativeElement.value = 'search value';
 		fixture.detectChanges();
 
@@ -67,7 +67,7 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not apply search if minSearchCharacterCount is specified not adhered to', fakeAsync(() => {
-		componentInstance.minSearchCharacterCount = 3;
+		fixture.componentRef.setInput('minSearchCharacterCount', 3);
 		inputElement.nativeElement.value = 'se';
 		fixture.detectChanges();
 
@@ -80,7 +80,7 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should show warning message if minSearchCharacterCount is specified and not adhered to', fakeAsync(() => {
-		componentInstance.minSearchCharacterCount = 3;
+		fixture.componentRef.setInput('minSearchCharacterCount', 3);
 		inputElement.nativeElement.value = 'se';
 		fixture.detectChanges();
 
@@ -99,7 +99,7 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not show warning message if minSearchCharacterCount is specified and adhered to', fakeAsync(() => {
-		componentInstance.minSearchCharacterCount = 3;
+		fixture.componentRef.setInput('minSearchCharacterCount', 3);
 		inputElement.nativeElement.value = 'sea';
 		fixture.detectChanges();
 
@@ -114,8 +114,8 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is adhered to', fakeAsync(() => {
-		componentInstance.minSearchCharacterCount = 3;
-		componentInstance.disableMinCountMessage = true;
+		fixture.componentRef.setInput('minSearchCharacterCount', 3);
+		fixture.componentRef.setInput('disableMinCountMessage', true);
 		inputElement.nativeElement.value = 'sea';
 		fixture.detectChanges();
 
@@ -130,8 +130,8 @@ describe('SearchInputComponent', () => {
 	}));
 
 	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is not adhered to', fakeAsync(() => {
-		componentInstance.minSearchCharacterCount = 3;
-		componentInstance.disableMinCountMessage = true;
+		fixture.componentRef.setInput('minSearchCharacterCount', 3);
+		fixture.componentRef.setInput('disableMinCountMessage', true);
 		inputElement.nativeElement.value = 'se';
 		fixture.detectChanges();
 
@@ -176,7 +176,7 @@ describe('SearchInputComponent', () => {
 		fixture.detectChanges();
 
 		expect(clearSearchSpy).toHaveBeenCalledTimes(1);
-		expect(componentInstance.search).toBe('');
+		expect(componentInstance.search()).toBe('');
 		expect(componentInstance.applySearch.emit).toHaveBeenCalledTimes(1);
 		expect(componentInstance.applySearch.emit).toHaveBeenCalledWith('');
 

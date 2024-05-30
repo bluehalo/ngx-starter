@@ -12,8 +12,8 @@
 		</ng-template>
 	</th>
 	<td class="text-nowrap" cdk-cell *cdkCellDef="let obj">
-		<div class="text-nowrap" container="body" tooltip="{{ obj[name] | utcDate: format }}">
-			{{ obj[name] | agoDate: hideAgo }}
+		<div class="text-nowrap" container="body" tooltip="{{ obj[name] | utcDate: format() }}">
+			{{ obj[name] | agoDate: hideAgo() }}
 		</div>
 	</td>
 </ng-container>

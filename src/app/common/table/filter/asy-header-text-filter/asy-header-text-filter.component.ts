@@ -1,7 +1,14 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, Optional } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	Optional,
+	effect,
+	signal
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -37,12 +44,10 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 	]
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {
-	@Input()
+	readonly search = signal('');
+	option = signal<TextFilterOption>('Contains');
+
 	buildFilterFunc?: BuildFilterFunction;
-
-	option: TextFilterOption = 'Contains';
-
-	search = '';
 
 	constructor(
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
@@ -53,44 +58,44 @@ export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterCompone
 	}
 
 	onSearchTypeChange() {
-		if (this.search) {
+		if (this.search()) {
 			this.onFilterChange();
 		}
 	}
 
 	onSearchText(search: string) {
-		this.search = search;
+		this.search.set(search);
 		this.onFilterChange();
 	}
 
-	_buildState() {
-		if (this.search) {
-			return { search: this.search, option: this.option };
+	_buildState(): { search: string; option: TextFilterOption } | undefined {
+		if (this.search()) {
+			return { search: this.search(), option: this.option() };
 		}
 		return undefined;
 	}
 
 	_restoreState(state: any) {
 		if (state) {
-			this.search = state.search;
-			this.option = state.option;
+			this.search.set(state.search);
+			this.option.set(state.option);
 			this.onFilterChange();
 		}
 	}
 
 	_clearState() {
-		this.search = '';
-		this.option = 'Contains';
+		this.search.set('');
+		this.option.set('Contains');
 	}
 
 	_buildFilter() {
-		if (this.search) {
+		if (this.search()) {
 			if (this.buildFilterFunc) {
-				return this.buildFilterFunc(this.search, this.option);
+				return this.buildFilterFunc(this.search(), this.option());
 			}
 
 			return {
-				[this.id]: { $regex: this.buildRegex(this.search, this.option), $options: 'i' }
+				[this.id]: { $regex: this.buildRegex(this.search(), this.option()), $options: 'i' }
 			};
 		}
 		return {};

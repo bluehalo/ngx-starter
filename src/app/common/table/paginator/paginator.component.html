@@ -1,11 +1,11 @@
-@if (dataSource.pagingResults$ | async; as page) {
+@if (dataSource().pagingResults$ | async; as page) {
 	<span>
 		<span class="page-size me-4">
 			<span>Items per page:</span>
 			<ng-select
 				class="d-inline-block ms-2"
 				[clearable]="false"
-				[items]="pageSizeOptions"
+				[items]="pageSizeOptions()"
 				[ngModel]="page.pageSize"
 				[searchable]="false"
 				(change)="setPageSize($event)"
@@ -46,7 +46,7 @@
 		>
 			<span class="fa-solid fa-lg fa-angle-right"></span>
 		</button>
-		@if (!disableGoToEnd) {
+		@if (!disableGoToEnd()) {
 			<button
 				class="btn btn-link"
 				type="button"

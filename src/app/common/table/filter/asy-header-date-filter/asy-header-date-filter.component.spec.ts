@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -29,7 +30,7 @@ describe('AsyHeaderDateFilter', () => {
 
 	beforeEach(async () => {
 		filterSpy = jasmine.createSpyObj('AsyFilterDirective', ['register', 'deregister'], {
-			dataSource: { storageKey: 'test' }
+			dataSource: signal({ storageKey: 'test' })
 		});
 		filterSpy.register.and.callFake(() => {
 			// do nothing
@@ -54,19 +55,19 @@ describe('AsyHeaderDateFilter', () => {
 	});
 
 	it('expect empty filter when disabled', () => {
-		component.enabled = false;
-		component.duration = 'day';
-		component.count = 3;
+		component.enabled.set(false);
+		component.duration.set('day');
+		component.count.set(3);
 		const filter = component._buildFilter();
 		expect(filter).toEqual({});
 	});
 
 	it('expect proper filter for next 3 hours', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'hour';
-		component.count = 3;
-		component.direction = 'next';
+		component.enabled.set(true);
+		component.duration.set('hour');
+		component.count.set(3);
+		component.direction.set('next');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -78,10 +79,10 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for past 6 hours', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'hour';
-		component.count = 6;
-		component.direction = 'past';
+		component.enabled.set(true);
+		component.duration.set('hour');
+		component.count.set(6);
+		component.direction.set('past');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -93,10 +94,10 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for next 3 days', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'day';
-		component.count = 3;
-		component.direction = 'next';
+		component.enabled.set(true);
+		component.duration.set('day');
+		component.count.set(3);
+		component.direction.set('next');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -108,10 +109,10 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for past 6 days', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'day';
-		component.count = 6;
-		component.direction = 'past';
+		component.enabled.set(true);
+		component.duration.set('day');
+		component.count.set(6);
+		component.direction.set('past');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -123,10 +124,10 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for next 3 weeks', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'week';
-		component.count = 3;
-		component.direction = 'next';
+		component.enabled.set(true);
+		component.duration.set('week');
+		component.count.set(3);
+		component.direction.set('next');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -138,10 +139,10 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for past 2 weeks', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.duration = 'week';
-		component.count = 2;
-		component.direction = 'past';
+		component.enabled.set(true);
+		component.duration.set('week');
+		component.count.set(2);
+		component.direction.set('past');
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {
@@ -153,12 +154,12 @@ describe('AsyHeaderDateFilter', () => {
 
 	it('expect proper filter for custom range', () => {
 		component.id = 'dateField';
-		component.enabled = true;
-		component.isCustom = true;
-		component.customRange = [
+		component.enabled.set(true);
+		component.isCustom.set(true);
+		component.customRange.set([
 			DateTime.local(2022, 1, 1).toJSDate(),
 			DateTime.local(2022, 8, 5).toJSDate()
-		];
+		]);
 		const filter = component._buildFilter();
 		expect(filter).toEqual({
 			dateField: {

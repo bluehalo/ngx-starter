@@ -3,20 +3,20 @@
 		class="form-control"
 		type="text"
 		[(ngModel)]="search"
-		[placeholder]="placeholder"
+		[placeholder]="placeholder()"
 		(input)="onInput()"
 		(keyup)="onKeyup()"
 	/>
-	@if (search.length === 0) {
+	@if (search().length === 0) {
 		<span class="icon fa-solid fa-search"></span>
 	} @else {
 		<span class="icon fa-solid fa-times" (click)="clearSearch($event)"></span>
 	}
 </div>
-@if (!disableMinCountMessage && showMinCountMessage) {
+@if (!disableMinCountMessage() && showMinCountMessage()) {
 	<div class="text-muted pt-2" [@minCount]>
 		<div class="pt-2">
-			Searches require a minimum of {{ minSearchCharacterCount }} characters.
+			Searches require a minimum of {{ minSearchCharacterCount() }} characters.
 		</div>
 	</div>
 }

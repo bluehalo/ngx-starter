@@ -2,33 +2,33 @@
 	class="dropdown-toggle dropdown-toggle-hide-caret"
 	cdkOverlayOrigin
 	#trigger
-	(click)="isOpen = !isOpen"
+	(click)="toggle()"
 >
 	<span
 		class="filter fa-solid fa-list"
 		container="body"
 		placement="bottom"
 		tooltip="Apply Filters"
-		[hidden]="isFiltered"
+		[hidden]="isFiltered()"
 	></span>
 	<span
 		class="filter fa-solid fa-filter"
 		container="body"
 		placement="bottom"
 		tooltip="Edit Filters"
-		[hidden]="!isFiltered"
+		[hidden]="!isFiltered()"
 	></span>
 </button>
 
 <ng-template
 	cdkConnectedOverlay
-	[cdkConnectedOverlayOpen]="isOpen"
+	[cdkConnectedOverlayOpen]="isOpen()"
 	[cdkConnectedOverlayOrigin]="trigger"
 	(attach)="loadOptions()"
-	(overlayOutsideClick)="isOpen = false"
+	(overlayOutsideClick)="isOpen.set(false)"
 >
 	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
-		@if (showSearch) {
+		@if (showSearch()) {
 			<div class="search mt-2">
 				<asy-search-input
 					placeholder="Search..."
@@ -66,7 +66,7 @@
 				}
 			}
 		</div>
-		@if (showMatch) {
+		@if (showMatch()) {
 			<div class="divider dropdown-divider my-0 mx-3"></div>
 			<div class="my-1">
 				<label class="mb-0 me-3">Match:</label>
@@ -88,7 +88,7 @@
 				}
 			</div>
 		}
-		@if (isFiltered) {
+		@if (isFiltered()) {
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
 			<div class="mt-2">
 				<button class="btn btn-link px-0" (click)="clearFilter(); $event.stopPropagation()">

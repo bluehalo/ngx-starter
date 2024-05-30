@@ -10,6 +10,7 @@ import {
 	Optional,
 	booleanAttribute,
 	inject,
+	input,
 	signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -56,27 +57,23 @@ export type ListFilterOption = {
 	providers: [TitleCasePipe]
 })
 export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterComponent {
+	readonly #titleCasePipe = inject(TitleCasePipe);
+	readonly #destroyRef = inject(DestroyRef);
+
+	readonly showSearch = input(false, { transform: booleanAttribute });
+	readonly showMatch = input(false, { transform: booleanAttribute });
+
+	readonly optionsLoading = signal(false);
+
+	matchAll = signal(false);
+
 	_options: ListFilterOption[];
 
 	search = '';
 
-	matchAll = false;
-
 	loadOptionsFunc?: LoadOptionsFunction;
 
-	optionsLoading = signal(false);
-
-	@Input({ transform: booleanAttribute })
-	showSearch = false;
-
-	@Input({ transform: booleanAttribute })
-	showMatch = false;
-
-	@Input()
 	buildFilterFunc?: BuildFilterFunction;
-
-	private titleCasePipe = inject(TitleCasePipe);
-	private destroyRef = inject(DestroyRef);
 
 	constructor(
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
@@ -90,7 +87,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 		if (this.loadOptionsFunc) {
 			this.optionsLoading.set(true);
 			this.loadOptionsFunc()
-				.pipe(first(), takeUntilDestroyed(this.destroyRef))
+				.pipe(first(), takeUntilDestroyed(this.#destroyRef))
 				.subscribe((options) => {
 					this.options = options;
 					this.optionsLoading.set(false);
@@ -100,12 +97,12 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	_buildFilter() {
 		if (this.buildFilterFunc) {
-			return this.buildFilterFunc(this._options, this.matchAll);
+			return this.buildFilterFunc(this._options, this.matchAll());
 		}
 
 		const active = this._options.filter((o) => o.active).map((o) => o.value);
 		if (active.length > 0) {
-			if (this.showMatch && this.matchAll) {
+			if (this.showMatch() && this.matchAll()) {
 				return { $and: active.map((a) => ({ [this.id]: a })) };
 			}
 			return { [this.id]: { $in: active } };
@@ -122,7 +119,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 				value: option.value
 			}));
 		if (active.length > 0) {
-			return { options: active, matchAll: this.matchAll };
+			return { options: active, matchAll: this.matchAll() };
 		}
 		return undefined;
 	}
@@ -139,7 +136,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 
 	_restoreState(state: any) {
 		if (state) {
-			this.matchAll = this.showMatch && (state.matchAll ?? false);
+			this.matchAll.set(this.showMatch() && (state.matchAll ?? false));
 			this._setActiveOptions(state.options as ListFilterOption[]);
 			this.onFilterChange();
 		}
@@ -161,7 +158,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 		this._options = options.map((option) => {
 			if (typeof option === 'string') {
 				return {
-					display: this.titleCasePipe.transform(option),
+					display: this.#titleCasePipe.transform(option),
 					value: option,
 					active: false
 				} as ListFilterOption;

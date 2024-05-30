@@ -15,6 +15,9 @@ import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 	imports: [RouterLink]
 })
 export class BreadcrumbComponent {
+	readonly #route = inject(ActivatedRoute);
+	readonly #router = inject(Router);
+
 	@Input({ required: true })
 	set homeBreadcrumb(hb: Breadcrumb) {
 		this._homeBreadcrumb = hb;
@@ -25,11 +28,8 @@ export class BreadcrumbComponent {
 
 	breadcrumbs: Breadcrumb[] = [];
 
-	private route = inject(ActivatedRoute);
-	private router = inject(Router);
-
 	constructor() {
-		const navEnd$: Observable<Event> = this.router.events.pipe(
+		const navEnd$: Observable<Event> = this.#router.events.pipe(
 			filter((event) => event instanceof NavigationEnd)
 		);
 		merge(navEnd$, this.homeBreadcrumbChanged$)
@@ -39,7 +39,7 @@ export class BreadcrumbComponent {
 					this.breadcrumbs = [this._homeBreadcrumb];
 					this.breadcrumbs = this.breadcrumbs.concat(
 						BreadcrumbService.getBreadcrumbs(
-							this.route.root.snapshot,
+							this.#route.root.snapshot,
 							this._homeBreadcrumb.url
 						)
 					);

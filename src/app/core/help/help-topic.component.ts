@@ -35,11 +35,11 @@ export const injectHelpTopicsMap = () =>
 	standalone: true
 })
 export class HelpTopicComponent {
+	readonly #helpTopics = injectHelpTopicsMap();
+
 	readonly content = viewChild.required('content', { read: ViewContainerRef });
 
 	componentRef?: ComponentRef<any>;
-
-	helpTopics = injectHelpTopicsMap();
 
 	@Input({ required: true })
 	set key(key: string) {
@@ -47,9 +47,11 @@ export class HelpTopicComponent {
 			this.componentRef.destroy();
 		}
 
-		if (this.content && key && this.helpTopics.has(key)) {
+		if (this.content && key && this.#helpTopics.has(key)) {
 			// Dynamically create the component
-			this.componentRef = this.content().createComponent(this.helpTopics.get(key)?.component);
+			this.componentRef = this.content().createComponent(
+				this.#helpTopics.get(key)?.component
+			);
 		} else {
 			console.warn(`WARNING: No handler for help topic: ${key}.`);
 		}

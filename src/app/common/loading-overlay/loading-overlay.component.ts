@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { NotificationComponent } from '../notification/notification.component';
@@ -8,25 +8,14 @@ import { NotificationComponent } from '../notification/notification.component';
 	templateUrl: 'loading-overlay.component.html',
 	styleUrls: ['loading-overlay.component.scss'],
 	standalone: true,
-	imports: [NotificationComponent, LoadingSpinnerComponent]
+	imports: [NotificationComponent, LoadingSpinnerComponent],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingOverlayComponent {
-	@Input()
-	message = 'Loading...';
+	readonly message = input('Loading...');
+	readonly isLoading = input(false);
+	readonly isError = input(false);
+	readonly errorMessage = input('');
 
-	@Input()
-	isLoading = false;
-
-	@Input()
-	isError = false;
-
-	@Input()
-	errorMessage = '';
-
-	@Output()
-	readonly retry = new EventEmitter();
-
-	handleRetry() {
-		this.retry.emit(true);
-	}
+	readonly retry = output();
 }

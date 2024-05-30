@@ -6,7 +6,8 @@ import {
 	Input,
 	OnDestroy,
 	OnInit,
-	inject
+	inject,
+	signal
 } from '@angular/core';
 
 import isEmpty from 'lodash/isEmpty';
@@ -23,11 +24,7 @@ export interface AsyFilterHeaderColumnDef {
 export abstract class AsyAbstractHeaderFilterComponent
 	implements AsyFilterable, AfterViewInit, OnDestroy, OnInit
 {
-	isFiltered = false;
-
-	isOpen = false;
-
-	private storage = new SessionStorageService();
+	#storage = new SessionStorageService();
 
 	/**
 	 * ID of this sort header. If used within the context of a CdkColumnDef, this will default to
@@ -41,12 +38,15 @@ export abstract class AsyAbstractHeaderFilterComponent
 
 	protected changeDetectorRef = inject(ChangeDetectorRef);
 
+	readonly isFiltered = signal(false);
+	readonly isOpen = signal(false);
+
+	protected constructor(public _columnDef: AsyFilterHeaderColumnDef) {}
+
 	abstract _buildFilter(): any;
 	abstract _buildState(): any;
 	abstract _clearState(): void;
 	abstract _restoreState(state: any): void;
-
-	protected constructor(public _columnDef: AsyFilterHeaderColumnDef) {}
 
 	ngOnInit(): void {
 		if (!this._filter) {
@@ -68,32 +68,36 @@ export abstract class AsyAbstractHeaderFilterComponent
 		this._filter?.deregister(this);
 	}
 
+	toggle() {
+		this.isOpen.set(!this.isOpen());
+	}
+
 	onFilterChange() {
 		const filter = this._buildFilter();
-		this.isFiltered = !isEmpty(filter);
+		this.isFiltered.set(!isEmpty(filter));
 		this._filter.filter(this.id, filter);
 		this.changeDetectorRef.markForCheck();
 		this.saveState();
 	}
 
 	clearFilter() {
-		this.isFiltered = false;
+		this.isFiltered.set(false);
 		this._clearState();
 		this.onFilterChange();
 	}
 
 	loadState(): any {
-		const storageKey = this._filter.dataSource.storageKey;
+		const storageKey = this._filter.dataSource().storageKey;
 		if (storageKey) {
-			return this.storage.getValue(`${storageKey}-${this.id}-filter`);
+			return this.#storage.getValue(`${storageKey}-${this.id}-filter`);
 		}
 		return undefined;
 	}
 
 	saveState() {
-		const storageKey = this._filter.dataSource.storageKey;
+		const storageKey = this._filter.dataSource().storageKey;
 		if (storageKey) {
-			this.storage.setValue(`${storageKey}-${this.id}-filter`, this._buildState());
+			this.#storage.setValue(`${storageKey}-${this.id}-filter`, this._buildState());
 		}
 	}
 

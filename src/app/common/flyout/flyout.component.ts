@@ -1,12 +1,13 @@
 import { NgClass } from '@angular/common';
 import {
 	Component,
-	ContentChild,
 	ElementRef,
-	Input,
 	Renderer2,
-	ViewChild,
-	inject
+	contentChild,
+	inject,
+	input,
+	signal,
+	viewChild
 } from '@angular/core';
 
 @Component({
@@ -17,44 +18,41 @@ import {
 	imports: [NgClass]
 })
 export class FlyoutComponent {
-	@ViewChild('flyoutContentContainer') container?: ElementRef;
-	@ContentChild('flyoutContent') content?: ElementRef;
+	readonly #renderer = inject(Renderer2);
 
-	@Input()
-	label = '';
+	readonly container = viewChild.required<ElementRef>('flyoutContentContainer');
+	readonly content = contentChild.required<ElementRef>('flyoutContent');
 
-	@Input()
-	placement: 'left' | 'right' | 'top' | 'bottom' = 'right';
+	readonly label = input('');
+	readonly placement = input<'left' | 'right' | 'top' | 'bottom'>('right');
 
-	isOpen = false;
-
-	private renderer = inject(Renderer2);
+	readonly isOpen = signal(false);
 
 	toggle() {
-		if (this.content && this.container) {
-			if (this.placement === 'top' || this.placement === 'bottom') {
-				if (this.isOpen) {
-					this.renderer.setStyle(this.container.nativeElement, 'height', 0);
+		if (this.content() && this.container()) {
+			if (this.placement() === 'top' || this.placement() === 'bottom') {
+				if (this.isOpen()) {
+					this.#renderer.setStyle(this.container().nativeElement, 'height', 0);
 				} else {
-					this.renderer.setStyle(
-						this.container.nativeElement,
+					this.#renderer.setStyle(
+						this.container().nativeElement,
 						'height',
-						`${this.content.nativeElement.clientHeight}px`
+						`${this.content().nativeElement.clientHeight}px`
 					);
 				}
 			} else {
-				if (this.isOpen) {
-					this.renderer.setStyle(this.container.nativeElement, 'width', 0);
+				if (this.isOpen()) {
+					this.#renderer.setStyle(this.container().nativeElement, 'width', 0);
 				} else {
-					this.renderer.setStyle(
-						this.container.nativeElement,
+					this.#renderer.setStyle(
+						this.container().nativeElement,
 						'width',
-						`${this.content.nativeElement.clientWidth}px`
+						`${this.content().nativeElement.clientWidth}px`
 					);
 				}
 			}
 
-			this.isOpen = !this.isOpen;
+			this.isOpen.set(!this.isOpen());
 		}
 	}
 }
