@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Route, Routes } from '@angular/router';
 
 import { authGuard } from '../auth';
 import { CreateTeamComponent } from './create-team/create-team.component';
@@ -33,7 +33,7 @@ export const TEAMS_ROUTES: Routes = [
 				path: '',
 				redirectTo: 'general',
 				pathMatch: 'full'
-			},
+			} as Route,
 			{
 				path: 'general',
 				component: GeneralDetailsComponent,

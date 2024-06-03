@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from '../../core';
-import { AdminComponent } from '../../core/admin/admin.component';
-import { AdminExampleComponent } from './admin/admin-example.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { FormsComponent } from './forms/forms.component';
 import { GridComponent } from './grid/grid.component';
@@ -45,16 +43,5 @@ export const EXAMPLE_ROUTES: Routes = [
 		path: 'alerts',
 		component: AlertsComponent,
 		canActivate: [authGuard()]
-	},
-	{
-		path: 'admin',
-		component: AdminComponent,
-		canActivate: [authGuard('admin')],
-		children: [
-			{
-				path: 'example',
-				component: AdminExampleComponent
-			}
-		]
 	}
 ];

@@ -15,12 +15,16 @@ import { CdkMenuItemHrefDirective } from '../../common/cdk-menu-item-href.direct
 import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-router-link.directive';
 import { DialogService } from '../../common/dialog';
 import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
+import { injectAdminEnabled } from '../admin';
 import { injectAdminTopics } from '../admin/admin-topic.model';
+import { injectAuditEnabled } from '../audit';
 import { HasRoleDirective, HasSomeRolesDirective, IsAuthenticatedDirective } from '../auth';
 import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
+import { injectHelpEnabled } from '../help';
 import { MasqueradeService } from '../masquerade/masquerade.service';
 import { MessageService } from '../messages/message.service';
 import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
+import { injectTeamsEnabled } from '../teams/provider';
 import { ThemeToggleComponent } from '../theming/theme-toggle/theme-toggle.component';
 import { APP_CONFIG, APP_SESSION } from '../tokens';
 import { injectNavbarTopics } from './navbar-topic.model';
@@ -64,6 +68,10 @@ export class SiteNavbarComponent implements OnInit {
 	readonly session = inject(APP_SESSION);
 	readonly adminTopics = injectAdminTopics();
 	readonly navbarItems = injectNavbarTopics();
+	readonly adminEnabled = injectAdminEnabled();
+	readonly auditEnabled = injectAuditEnabled();
+	readonly teamsEnabled = injectTeamsEnabled();
+	readonly helpEnabled = injectHelpEnabled();
 
 	readonly adminNavOpen = signal(false);
 	readonly helpNavOpen = signal(false);

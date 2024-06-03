@@ -54,21 +54,5 @@ export const CORE_ROUTES: Routes = [
 	{
 		path: 'masquerade',
 		component: MasqueradeComponent
-	},
-	{
-		path: 'team',
-		loadChildren: () => import('./teams/teams-routes').then((m) => m.TEAMS_ROUTES)
-	},
-	{
-		path: 'help',
-		loadChildren: () => import('./help/help-routes').then((m) => m.HELP_ROUTES)
-	},
-	{
-		path: 'admin',
-		loadChildren: () => import('./admin/admin-routes').then((m) => m.ADMIN_ROUTES)
-	},
-	{
-		path: 'audit',
-		loadChildren: () => import('./audit/audit-routes').then((m) => m.AUDIT_ROUTES)
 	}
 ];
