@@ -1,4 +1,4 @@
-import { Directive, Input, input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 
 import isEmpty from 'lodash/isEmpty';
 

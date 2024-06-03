@@ -1,10 +1,5 @@
-@use 'sass:map';
 @import '../../../styles/shared';
 @import '../../../styles/bootstrap/shared';
-
-.help-content {
-	padding-top: $site-content-padding-y;
-}
 
 //=====================================
 //	Callouts

@@ -1,22 +1,32 @@
 import { makeEnvironmentProviders } from '@angular/core';
 import { ROUTES } from '@angular/router';
 
-import { ADMIN_TOPICS } from '../../core/admin/admin-topic.model';
+import { ADMIN_TOPICS, NAVBAR_TOPICS } from '../../core';
 import { HELP_TOPICS } from '../../core/help/help-topic.component';
-import { NAVBAR_TOPICS } from '../../core/site-navbar/navbar-topic.model';
 import { EXAMPLE_ROUTES } from './example-routes';
 import { ExampleHelpComponent } from './help/example-help.component';
 
-export function provideExampleRoutes() {
+export function provideExampleSiteFeature() {
 	return makeEnvironmentProviders([
 		{
 			provide: ADMIN_TOPICS,
 			multi: true,
+			useValue: [
+				{
+					id: 'example',
+					ordinal: 10,
+					path: 'example',
+					title: 'Example'
+				}
+			]
+		},
+		{
+			provide: HELP_TOPICS,
+			multi: true,
 			useValue: {
 				id: 'example',
-				ordinal: 10,
-				path: 'example',
-				title: 'Example'
+				component: ExampleHelpComponent,
+				ordinal: 7
 			}
 		},
 		{
@@ -64,15 +74,6 @@ export function provideExampleRoutes() {
 					hasSomeRoles: ['user']
 				}
 			]
-		},
-		{
-			provide: HELP_TOPICS,
-			multi: true,
-			useValue: {
-				id: 'example',
-				component: ExampleHelpComponent,
-				ordinal: 7
-			}
 		},
 		{
 			provide: ROUTES,

@@ -32,7 +32,7 @@
 		<!-- Bottom Aux Nav -->
 		<nav class="nav nav-aux flex-column">
 			<!-- Auditor Nav	-->
-			@if (session().hasRole('auditor')) {
+			@if (auditEnabled && session().hasRole('auditor')) {
 				<a
 					class="nav-link"
 					container="body"
@@ -48,7 +48,7 @@
 			}
 
 			<!-- Team Nav   -->
-			@if (session().isUser()) {
+			@if (teamsEnabled && session().isUser()) {
 				<a
 					class="nav-link"
 					container="body"
@@ -144,7 +144,7 @@
 			}
 
 			<!-- Admin Nav	-->
-			@if (session().isAdmin()) {
+			@if (adminEnabled && session().isAdmin()) {
 				<a
 					class="nav-link"
 					[class.highlight-link]="adminNavOpen()"
@@ -247,7 +247,11 @@
 					cdkMenu
 				>
 					<!-- Help -->
-					<button class="dropdown-item" cdkMenuItem routerLink="/help">Help Docs</button>
+					@if (helpEnabled) {
+						<button class="dropdown-item" cdkMenuItem routerLink="/help">
+							Help Docs
+						</button>
+					}
 					<!-- Feedback -->
 					<button
 						class="dropdown-item"
