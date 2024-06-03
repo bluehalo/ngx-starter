@@ -2,9 +2,7 @@ import { makeEnvironmentProviders } from '@angular/core';
 import { ROUTES } from '@angular/router';
 
 import { ADMIN_TOPICS, NAVBAR_TOPICS } from '../../core';
-import { HELP_TOPICS } from '../../core/help/help-topic.component';
 import { EXAMPLE_ROUTES } from './example-routes';
-import { ExampleHelpComponent } from './help/example-help.component';
 
 export function provideExampleSiteFeature() {
 	return makeEnvironmentProviders([
@@ -19,15 +17,6 @@ export function provideExampleSiteFeature() {
 					title: 'Example'
 				}
 			]
-		},
-		{
-			provide: HELP_TOPICS,
-			multi: true,
-			useValue: {
-				id: 'example',
-				component: ExampleHelpComponent,
-				ordinal: 7
-			}
 		},
 		{
 			provide: NAVBAR_TOPICS,

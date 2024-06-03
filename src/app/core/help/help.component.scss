@@ -1,6 +1,12 @@
 @import '../../../styles/shared';
 @import '../../../styles/bootstrap/shared';
 
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
 //=====================================
 //	Callouts
 //=====================================

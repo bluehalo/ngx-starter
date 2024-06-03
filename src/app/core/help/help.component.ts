@@ -1,5 +1,6 @@
+import { JsonPipe, TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
 	ActivatedRoute,
 	NavigationEnd,
@@ -9,37 +10,22 @@ import {
 	RouterOutlet
 } from '@angular/router';
 
-import { filter } from 'rxjs/operators';
-
-import { BreadcrumbComponent } from '../../common/breadcrumb/breadcrumb.component';
-import { Breadcrumb, BreadcrumbService } from '../../common/breadcrumb/breadcrumb.service';
-import { injectHelpTopics } from './help-topic.component';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
 	templateUrl: 'help.component.html',
 	styleUrls: ['help.component.scss'],
 	standalone: true,
-	imports: [BreadcrumbComponent, RouterLinkActive, RouterLink, RouterOutlet]
+	imports: [RouterLinkActive, RouterLink, RouterOutlet, TitleCasePipe, JsonPipe]
 })
 export class HelpComponent {
 	readonly #route = inject(ActivatedRoute);
-	readonly #router = inject(Router);
-	readonly helpTopics = injectHelpTopics();
+	readonly childRoute = toSignal(
+		inject(Router).events.pipe(
+			filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+			map((event) => this.#route.firstChild?.routeConfig)
+		)
+	);
 
-	homeBreadcrumb: Breadcrumb = { label: 'Help', url: '/help' };
-
-	title = '';
-
-	protected readonly top = top;
-
-	constructor() {
-		this.#router.events
-			.pipe(
-				filter((event) => event instanceof NavigationEnd),
-				takeUntilDestroyed()
-			)
-			.subscribe(() => {
-				this.title = BreadcrumbService.getBreadcrumbLabel(this.#route.snapshot);
-			});
-	}
+	readonly childRoutes = (this.#route.routeConfig?.children ?? []).filter((route) => route.path);
 }
