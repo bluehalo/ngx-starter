@@ -1,26 +1,27 @@
-<div class="help-header">
-	<breadcrumb [homeBreadcrumb]="homeBreadcrumb"></breadcrumb>
-</div>
-
-<div class="help-content row">
-	<div class="col-lg-3 col-xl-2 help-menu" role="complementary">
-		<nav class="card nav">
-			@for (topic of helpTopics; track topic) {
-				<a
-					class="nav-link btn-link"
-					routerLinkActive="active"
-					[routerLink]="['/help/' + topic.id]"
-					>{{ topic.title }}</a
-				>
+<section class="page-header">
+	<h3>
+		Help
+		@if (childRoute(); as route) {
+			- {{ route.title ?? (route.path | titlecase) }}
+		}
+	</h3>
+</section>
+<section class="page-body anchored-page-body flex-row row h-100">
+	<div class="col-lg-3 col-xl-2 h-100" role="complementary">
+		<nav class="card nav h-100 overflow-auto align-items-stretch flex-nowrap">
+			@for (route of childRoutes; track route) {
+				<a class="nav-link" routerLinkActive="active" [routerLink]="['/help/', route.path]">
+					{{ route.title ?? (route.path | titlecase) }}
+				</a>
 			}
 		</nav>
 	</div>
 
-	<div class="col-lg-9 col-xl-10 help-main" role="main">
-		<section class="card">
-			<div class="card-body">
+	<div class="col-lg-9 col-xl-10 h-100" role="main">
+		<section class="card h-100">
+			<div class="card-body overflow-auto">
 				<router-outlet></router-outlet>
 			</div>
 		</section>
 	</div>
-</div>
+</section>

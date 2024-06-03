@@ -1,11 +1,9 @@
-import { ActivatedRouteSnapshot, ResolveFn, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-import { HelpTopicWrapperComponent } from './help-topic-wrapper.component';
-import { injectHelpTopicsMap } from './help-topic.component';
+import { EXAMPLE_HELP_ROUTES } from '../../site/example/example-help-routes';
+import { TEAMS_HELP_ROUTES } from '../teams/team-help-routes';
+import { GettingStartedHelpComponent } from './getting-started/getting-started-help.component';
 import { HelpComponent } from './help.component';
-
-const breadcrumbResolver: ResolveFn<string | null> = (route: ActivatedRouteSnapshot) =>
-	injectHelpTopicsMap().get(route.params['topic'])?.title ?? null;
 
 export const HELP_ROUTES: Routes = [
 	{
@@ -21,12 +19,12 @@ export const HELP_ROUTES: Routes = [
 				pathMatch: 'full'
 			},
 			{
-				path: ':topic',
-				component: HelpTopicWrapperComponent,
-				resolve: {
-					breadcrumb: breadcrumbResolver
-				}
-			}
+				path: 'getting-started',
+				title: 'Getting Started',
+				component: GettingStartedHelpComponent
+			},
+			...TEAMS_HELP_ROUTES,
+			...EXAMPLE_HELP_ROUTES
 		]
 	}
 ];

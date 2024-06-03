@@ -2,8 +2,6 @@ import { InjectionToken, inject, makeEnvironmentProviders } from '@angular/core'
 import { ROUTES, Routes } from '@angular/router';
 
 import { Topic } from '../../common/topic.model';
-import { HELP_TOPICS } from '../help/help-topic.component';
-import { TeamsHelpComponent } from './help/teams-help.component';
 import { TEAM_TOPICS } from './team-topic.model';
 
 export type AdditionalTeamsRoutes = {
@@ -22,11 +20,6 @@ export function provideTeamsFeature(additionalRoutes?: AdditionalTeamsRoutes) {
 		{
 			provide: APP_FEATURE_TEAM,
 			useValue: true
-		},
-		{
-			provide: HELP_TOPICS,
-			multi: true,
-			useValue: [{ id: 'teams', title: 'Teams', ordinal: 9, component: TeamsHelpComponent }]
 		},
 		{
 			provide: TEAM_TOPICS,
