@@ -17,6 +17,7 @@ export class ConfigurableDialogData {
 	title: string;
 	okText: string;
 	cancelText?: string;
+	hideCancel?: boolean;
 	message: string;
 	inputs?: DialogInput[];
 }

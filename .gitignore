@@ -13,6 +13,9 @@ proxy.conf.json
 npm-debug.log
 yarn-error.log
 
+# NX
+.nx/cache
+
 # IDEs and editors
 .idea/
 .project

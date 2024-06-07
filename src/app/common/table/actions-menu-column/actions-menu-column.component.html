@@ -1,4 +1,4 @@
-<ng-container cdkColumnDef="actionsMenu" [sticky]="sticky" [stickyEnd]="stickyEnd">
+<ng-container cdkColumnDef="actionsMenu" [sticky]="sticky()" [stickyEnd]="stickyEnd()">
 	<th cdk-header-cell *cdkHeaderCellDef></th>
 	<td cdk-cell *cdkCellDef="let item; let index = index">
 		<button

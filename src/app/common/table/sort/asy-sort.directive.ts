@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 
 import { SortChange } from '../../sorting.model';
 import { AsyTableDataSource } from '../asy-table-data-source';
@@ -17,11 +17,10 @@ export interface AsySortable {
 	standalone: true
 })
 export class AsySortDirective {
+	readonly dataSource = input.required<AsyTableDataSource<any>>();
+
 	/** Collection of all registered sortables that this directive manages. */
 	sortables = new Map<string, AsySortable>();
-
-	@Input({ required: true })
-	dataSource: AsyTableDataSource<any>;
 
 	/**
 	 * Register function to be used by the contained AsySortables. Adds the AsySortable to the
@@ -48,6 +47,6 @@ export class AsySortDirective {
 	}
 
 	sort(sortChange: SortChange): void {
-		this.dataSource.sort(sortChange);
+		this.dataSource().sort(sortChange);
 	}
 }

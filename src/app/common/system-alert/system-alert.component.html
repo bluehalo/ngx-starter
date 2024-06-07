@@ -1,4 +1,4 @@
-@for (alert of alertService.alerts$ | async; track alert; let i = $index) {
+@for (alert of alerts(); track alert; let i = $index) {
 	<div
 		class="alert alert-{{ alert.type }} alert-dismissible d-flex"
 		role="alert"

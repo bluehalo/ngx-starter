@@ -2,7 +2,7 @@
 	title="{{ auditEntry?.audit?.auditType | titlecase }} {{
 		auditEntry?.audit?.action + 'd'
 	}} by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}"
-	cancelText=""
+	hideCancel
 	okText="Close"
 	(cancel)="close()"
 	(ok)="close()"

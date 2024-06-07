@@ -1,18 +1,20 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	input,
+	numberAttribute
+} from '@angular/core';
 
 @Component({
 	selector: 'asy-skeleton-rows',
 	templateUrl: './asy-skeleton-rows.component.html',
 	styleUrls: ['./asy-skeleton-rows.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
-	imports: []
+	standalone: true
 })
 export class AsySkeletonRowsComponent {
-	_rows: Array<number> = [];
+	readonly rows = input.required({ transform: numberAttribute });
 
-	@Input({ required: true })
-	set rows(numRows: number) {
-		this._rows = Array(numRows).fill(0);
-	}
+	readonly _rows = computed(() => Array(this.rows()).fill(0));
 }

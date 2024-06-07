@@ -1,5 +1,5 @@
-<div class="sidebar-header" [class.card-header]="showInCard">
-	<h2>{{ headerText }}</h2>
+<div class="sidebar-header" [class.card-header]="showInCard()">
+	<h2>{{ headerText() }}</h2>
 	<button
 		class="btn-close ms-auto"
 		type="button"
@@ -7,9 +7,9 @@
 		container="body"
 		placement="bottom"
 		tooltip="Close"
-		(click)="open = false"
+		(click)="open.set(false)"
 	></button>
 </div>
-<div class="sidebar-body" [class.card-body]="showInCard">
+<div class="sidebar-body" [class.card-body]="showInCard()">
 	<ng-content></ng-content>
 </div>

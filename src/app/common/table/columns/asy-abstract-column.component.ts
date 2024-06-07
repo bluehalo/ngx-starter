@@ -6,7 +6,8 @@ import {
 	OnInit,
 	ViewChild,
 	booleanAttribute,
-	inject
+	inject,
+	input
 } from '@angular/core';
 
 @Directive()
@@ -28,14 +29,12 @@ export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit
 	/**
 	 * Whether this column should be sticky positioned on the front of the row.
 	 */
-	@Input({ transform: booleanAttribute })
-	sticky = false;
+	readonly sticky = input(false, { transform: booleanAttribute });
 
 	/**
 	 * Whether this column should be sticky positioned on the end of the row.
 	 */
-	@Input({ transform: booleanAttribute })
-	stickyEnd = false;
+	readonly stickyEnd = input(false, { transform: booleanAttribute });
 
 	/** @docs-private */
 	@ViewChild(CdkColumnDef, { static: true }) columnDef: CdkColumnDef;

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, Input, OnInit, computed, inject } from '@angular/core';
+import { Component, DestroyRef, computed, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -29,7 +29,7 @@ import { AdminUsersService } from '../admin-users.service';
 	templateUrl: './manage-user.component.html',
 	styleUrls: ['./manage-user.component.scss']
 })
-export class ManageUserComponent implements OnInit {
+export class ManageUserComponent {
 	readonly #alertService = inject(SystemAlertService);
 	readonly #adminUsersService = inject(AdminUsersService);
 
@@ -40,29 +40,24 @@ export class ManageUserComponent implements OnInit {
 	readonly proxyPki = computed(() => this.config()?.auth === 'proxy-pki');
 	readonly metadataLocked = computed(() => this.proxyPki());
 
+	readonly user = input.required({
+		transform: (value?: EditUser) => value ?? new EditUser()
+	});
+
+	readonly mode = computed(() => (this.user()._id ? 'edit' : 'create'));
+
 	readonly possibleRoles = Role.ROLES;
 
-	mode: 'create' | 'edit' = 'create';
-
-	@Input()
-	user: EditUser;
-
-	ngOnInit() {
+	constructor() {
 		this.#alertService.clearAllAlerts();
-
-		if (this.user) {
-			this.mode = 'edit';
-		} else {
-			this.user = new EditUser();
-		}
 	}
 
 	submitUser(): any {
 		if (this.validatePassword()) {
 			const obs$ =
-				this.mode === 'create'
-					? this.#adminUsersService.create(this.user)
-					: this.#adminUsersService.update(this.user);
+				this.mode() === 'create'
+					? this.#adminUsersService.create(this.user())
+					: this.#adminUsersService.update(this.user());
 
 			obs$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
 				next: () => this.router.navigate(['/admin/users']),
@@ -76,7 +71,7 @@ export class ManageUserComponent implements OnInit {
 	}
 
 	private validatePassword(): boolean {
-		if (this.user.password === this.user.verifyPassword) {
+		if (this.user().password === this.user().verifyPassword) {
 			return true;
 		}
 

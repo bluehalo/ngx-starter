@@ -2,15 +2,15 @@
 	<button class="px-0">
 		<ng-content></ng-content>
 
-		@if (sortable) {
+		@if (sortable()) {
 			<span class="fa-stack">
 				<span
 					class="fa-solid fa-sort-desc fa-stack-1x low-opacity"
-					[class.sorted]="isSorted && sortDir === 'DESC'"
+					[class.sorted]="isSorted() && sortDir() === 'DESC'"
 				></span>
 				<span
 					class="fa-solid fa-sort-asc fa-stack-1x low-opacity"
-					[class.sorted]="isSorted && sortDir === 'ASC'"
+					[class.sorted]="isSorted() && sortDir() === 'ASC'"
 				></span>
 			</span>
 		}

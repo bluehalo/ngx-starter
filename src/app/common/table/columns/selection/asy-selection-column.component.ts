@@ -6,7 +6,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	DestroyRef,
-	Input,
 	OnInit,
 	booleanAttribute,
 	inject,
@@ -20,6 +19,10 @@ import { map } from 'rxjs/operators';
 import { AsyTableDataSource } from '../../asy-table-data-source';
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
 
+type IsSelectableFn<T> = (index: number, rowData: T) => boolean;
+
+type TrackByFn<T, TB> = (index: number, rowData: T) => TB;
+
 @Component({
 	selector: 'asy-selection-column',
 	templateUrl: './asy-selection-column.component.html',
@@ -32,19 +35,15 @@ export class AsySelectionColumnComponent<T, TB = T>
 	extends AsyAbstractColumnComponent<T>
 	implements AfterViewInit, OnInit
 {
-	#destroyRef = inject(DestroyRef);
+	readonly #destroyRef = inject(DestroyRef);
 	#dataSource: AsyTableDataSource<T>;
 	#selectionModel: SelectionModel<TB>;
 
 	readonly enableSelectAll = input(true, { transform: booleanAttribute });
 	readonly clearOnLoad = input(true, { transform: booleanAttribute });
 	readonly multi = input(true, { transform: booleanAttribute });
-
-	@Input()
-	isSelectable: (index: number, rowData: T) => boolean = () => true;
-
-	@Input()
-	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
+	readonly isSelectable = input<IsSelectableFn<T>>(() => true);
+	readonly trackBy = input<TrackByFn<T, TB>>((index, rowData) => rowData as unknown as TB);
 
 	_isAllSelected$: Observable<boolean>;
 
@@ -90,11 +89,11 @@ export class AsySelectionColumnComponent<T, TB = T>
 	}
 
 	toggle(index: number, result: T) {
-		this.#selectionModel.toggle(this.trackBy(index, result));
+		this.#selectionModel.toggle(this.trackBy()(index, result));
 	}
 
 	isSelected(index: number, result: T) {
-		return this.#selectionModel.isSelected(this.trackBy(index, result));
+		return this.#selectionModel.isSelected(this.trackBy()(index, result));
 	}
 
 	get selected() {
@@ -115,7 +114,7 @@ export class AsySelectionColumnComponent<T, TB = T>
 			this.#selectionModel.selected.length > 0 &&
 			this.#selectionModel.selected.length ===
 				this.#dataSource.pagingResults$.value.elements.filter((result, index) =>
-					this.isSelectable(index, result)
+					this.isSelectable()(index, result)
 				).length
 		);
 	}
@@ -125,8 +124,8 @@ export class AsySelectionColumnComponent<T, TB = T>
 			this.#selectionModel.clear();
 		} else {
 			this.#dataSource.pagingResults$.value.elements.forEach((result, index) => {
-				if (this.isSelectable(index, result)) {
-					this.select(this.trackBy(index, result));
+				if (this.isSelectable()(index, result)) {
+					this.select(this.trackBy()(index, result));
 				}
 			});
 		}

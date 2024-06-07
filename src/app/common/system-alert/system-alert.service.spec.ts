@@ -19,7 +19,7 @@ describe('SystemAlertService', () => {
 	describe('clearAllAlerts', () => {
 		it('clears all alerts', () => {
 			service.clearAllAlerts();
-			expect(service.getAlerts().length).toBe(0);
+			expect(service.alerts().length).toBe(0);
 		});
 	});
 
@@ -27,7 +27,7 @@ describe('SystemAlertService', () => {
 		it('clears single alert by index', () => {
 			const indexToClear = 3;
 			service.clear(indexToClear);
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(4);
 			for (const alert of alerts) {
 				expect(alert.msg).not.toBe(testAlertMsgs[indexToClear]);
@@ -38,9 +38,10 @@ describe('SystemAlertService', () => {
 	describe('clearAlertById', () => {
 		it('clears single alert by Id', () => {
 			const idToClear = 3;
-			const clearedAlertMsg = service.getAlerts().find((alert) => alert.id === idToClear).msg;
+			const clearedAlertMsg =
+				service.alerts().find((alert) => alert.id === idToClear)?.msg ?? 'not found';
 			service.clearAlertById(idToClear);
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(4);
 			for (const alert of alerts) {
 				expect(alert.msg).not.toBe(clearedAlertMsg);
@@ -52,7 +53,7 @@ describe('SystemAlertService', () => {
 		it('new alert is created added to list', () => {
 			const newAlertMsg = 'added alert';
 			service.addAlert(newAlertMsg);
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(6);
 
 			const newAlert = alerts[alerts.length - 1];
@@ -66,7 +67,7 @@ describe('SystemAlertService', () => {
 			const newAlertType = 'warning';
 			const newAlertSubtext = 'alert subtext';
 			service.addAlert(newAlertMsg, newAlertType, null, newAlertSubtext);
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(6);
 
 			const newAlert = alerts[alerts.length - 1];
@@ -82,12 +83,12 @@ describe('SystemAlertService', () => {
 			const newAlertMsg = 'added alert';
 			const spy = spyOn(service, 'clearAlertById').and.callThrough();
 			service.addAlert(newAlertMsg, 'danger', ttl);
-			expect(service.getAlerts().length).toBe(6);
+			expect(service.alerts().length).toBe(6);
 
 			jasmine.clock().tick(ttl);
 
 			expect(spy).toHaveBeenCalled();
-			expect(service.getAlerts().length).toBe(5);
+			expect(service.alerts().length).toBe(5);
 
 			jasmine.clock().uninstall();
 		});
@@ -104,7 +105,7 @@ describe('SystemAlertService', () => {
 					}
 				})
 			);
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(6);
 			expect(alerts[alerts.length - 1].msg).toBe(newAlertMsg);
 		});
@@ -118,14 +119,13 @@ describe('SystemAlertService', () => {
 					}
 				})
 			);
-			const alerts = service.getAlerts();
-			expect(alerts.length).toBe(5);
+			expect(service.alerts().length).toBe(5);
 		});
 	});
 
 	describe('getAlerts', () => {
 		it('gets all alerts', () => {
-			const alerts = service.getAlerts();
+			const alerts = service.alerts();
 			expect(alerts.length).toBe(5);
 			for (let i = 0; i < testAlertMsgs.length; i++) {
 				expect(alerts[i].msg).toBe(testAlertMsgs[i]);

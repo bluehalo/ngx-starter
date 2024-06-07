@@ -22,6 +22,7 @@ describe('ManageUserComponent', () => {
 			]
 		});
 		fixture = TestBed.createComponent(ManageUserComponent);
+		fixture.componentRef.setInput('user', undefined);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

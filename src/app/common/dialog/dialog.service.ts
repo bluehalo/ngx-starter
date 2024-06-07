@@ -24,7 +24,8 @@ export class DialogService {
 			{
 				title,
 				message,
-				okText
+				okText,
+				hideCancel: true
 			},
 			modalOptions
 		);
