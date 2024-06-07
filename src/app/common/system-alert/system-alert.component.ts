@@ -1,6 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { SystemAlertService } from './system-alert.service';
 
@@ -22,10 +21,11 @@ import { SystemAlertService } from './system-alert.service';
 		])
 	],
 	standalone: true,
-	imports: [AsyncPipe]
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemAlertComponent {
-	alertService = inject(SystemAlertService);
+	readonly alertService = inject(SystemAlertService);
+	readonly alerts = this.alertService.alerts;
 
 	clearAlert(index: number) {
 		this.alertService.clear(index);

@@ -1,7 +1,8 @@
 <asy-modal
 	[title]="data.title"
-	[cancelText]="data.cancelText"
+	[cancelText]="data.cancelText ?? 'Cancel'"
 	[disableOk]="!modalForm.form.valid"
+	[hideCancel]="data.hideCancel ?? false"
 	[okText]="data.okText"
 	(cancel)="cancel()"
 	(ok)="ok()"

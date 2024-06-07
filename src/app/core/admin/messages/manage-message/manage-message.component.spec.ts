@@ -50,6 +50,7 @@ describe('ManageMessageComponent', () => {
 			]
 		});
 		fixture = TestBed.createComponent(ManageMessageComponent);
+		fixture.componentRef.setInput('message', undefined);
 		component = fixture.componentInstance;
 		rootHTMLElement = fixture.debugElement.nativeElement;
 

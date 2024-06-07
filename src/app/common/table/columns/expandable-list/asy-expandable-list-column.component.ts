@@ -21,16 +21,16 @@ export class AsyExpandableListColumnComponent<T>
 	extends AsyAbstractValueColumnComponent<T>
 	implements OnInit
 {
-	@ContentChild(ItemTemplateDirective, { read: TemplateRef })
-	itemTemplate: TemplateRef<any>;
+	readonly #selectionModel = new SelectionModel<T>();
 
-	private selectionModel = new SelectionModel<T>();
+	@ContentChild(ItemTemplateDirective, { read: TemplateRef })
+	itemTemplate?: TemplateRef<any>;
 
 	toggle(item: T) {
-		this.selectionModel.toggle(item);
+		this.#selectionModel.toggle(item);
 	}
 
 	isCollapsed(item: T) {
-		return !this.selectionModel.isSelected(item);
+		return !this.#selectionModel.isSelected(item);
 	}
 }

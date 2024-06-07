@@ -9,7 +9,9 @@ import {
 	OnInit,
 	Optional,
 	booleanAttribute,
-	inject
+	inject,
+	input,
+	signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -29,7 +31,7 @@ interface AsySortHeaderColumnDef {
 	host: {
 		class: 'asy-sort-header',
 		'(click)': '_handleClick()',
-		'[class.asy-sort-header-sorted]': 'isSorted',
+		'[class.asy-sort-header-sorted]': 'isSorted()',
 		'[attr.aria-sort]': '_getAriaSortAttribute()'
 	},
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,10 +39,13 @@ interface AsySortHeaderColumnDef {
 	imports: []
 })
 export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
-	/** The direction the arrow should be facing according to the current state. */
-	sortDir: SortDir = SortDirection.asc;
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #changeDetectorRef = inject(ChangeDetectorRef);
 
-	isSorted = false;
+	readonly isSorted = signal(false);
+
+	/** The direction the arrow should be facing according to the current state. */
+	readonly sortDir = signal<SortDir>(SortDirection.asc);
 
 	/**
 	 * ID of this sort header. If used within the context of a CdkColumnDef, this will default to
@@ -50,14 +55,9 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	id: string;
 
 	/** Overrides the sort start value of the containing AsySort for this AsySortable. */
-	@Input()
-	start: SortDir;
+	readonly start = input<SortDir>();
 
-	@Input({ transform: booleanAttribute })
-	sortable = true;
-
-	private destroyRef = inject(DestroyRef);
-	private changeDetectorRef = inject(ChangeDetectorRef);
+	readonly sortable = input(true, { transform: booleanAttribute });
 
 	constructor(
 		// `AsySortDirective` is not optionally injected, but just asserted manually w/ better error.
@@ -80,14 +80,15 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 		}
 		this._sort.register(this);
 
-		this._sort.dataSource.sortEvent$
-			.pipe(takeUntilDestroyed(this.destroyRef))
+		this._sort
+			.dataSource()
+			.sortEvent$.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe((sortChange) => {
-				this.isSorted = sortChange.sortField === this.id;
-				if (this.isSorted) {
-					this.sortDir = sortChange.sortDir;
+				this.isSorted.set(sortChange.sortField === this.id);
+				if (this.isSorted()) {
+					this.sortDir.set(sortChange.sortDir);
 				}
-				this.changeDetectorRef.markForCheck();
+				this.#changeDetectorRef.markForCheck();
 			});
 	}
 
@@ -96,10 +97,10 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	}
 
 	_handleClick() {
-		if (this.sortable) {
+		if (this.sortable()) {
 			this._sort.sort({
 				sortField: this.id,
-				sortDir: this.getNextSortDirection(this.sortDir)
+				sortDir: this.getNextSortDirection(this.sortDir())
 			});
 		}
 	}
@@ -118,11 +119,11 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	 * ensures this is true.
 	 */
 	_getAriaSortAttribute() {
-		if (!this.isSorted) {
+		if (!this.isSorted()) {
 			return 'none';
 		}
 
-		return this._sort.dataSource.sortEvent$.value.sortDir === SortDirection.asc
+		return this._sort.dataSource().sortEvent$.value.sortDir === SortDirection.asc
 			? 'ascending'
 			: 'descending';
 	}

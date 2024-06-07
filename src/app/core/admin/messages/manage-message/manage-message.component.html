@@ -2,77 +2,71 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	@if (message) {
-		<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="submitMessage()">
-			<div class="mb-4">
-				<h2 skipTo>{{ mode | titlecase }} Message</h2>
-				@if (mode === 'create') {
-					Provide the required information to create a new message
-				}
-				@if (mode === 'edit') {
-					Make changes to the message's information
-				}
-			</div>
+	<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="submitMessage()">
+		<div class="mb-4">
+			<h2 skipTo>{{ mode() | titlecase }} Message</h2>
+			@if (mode() === 'create') {
+				Provide the required information to create a new message
+			}
+			@if (mode() === 'edit') {
+				Make changes to the message's information
+			}
+		</div>
 
-			<!-- Type -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="messageType">Type</label>
-				<ng-select
-					id="messageType"
-					name="type"
-					bindLabel="display"
-					bindValue="value"
-					style="width: 350px"
-					[(ngModel)]="message.type"
-					[items]="typeOptions"
-				></ng-select>
+		<!-- Type -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="messageType">Type</label>
+			<ng-select
+				id="messageType"
+				name="type"
+				bindLabel="display"
+				bindValue="value"
+				style="width: 350px"
+				[(ngModel)]="message().type"
+				[items]="typeOptions"
+			></ng-select>
+		</div>
+		<!-- Title -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="title">Title</label>
+			<input
+				class="form-control"
+				id="title"
+				name="title"
+				type="text"
+				required
+				[(ngModel)]="message().title"
+			/>
+		</div>
+		<!-- Body -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="text">Message Body</label>
+			<textarea
+				class="form-control"
+				id="text"
+				name="text"
+				required
+				rows="6"
+				[(ngModel)]="message().body"
+			></textarea>
+		</div>
+		<!-- Buttons -->
+		<div class="mb-3">
+			<div class="text-end">
+				<button class="btn btn-link me-2" type="button" [routerLink]="['/admin/messages']">
+					Cancel
+				</button>
+				<button
+					class="btn btn-outline-primary me-2"
+					type="button"
+					(click)="previewMessage()"
+				>
+					Preview
+				</button>
+				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+					{{ mode() === 'create' ? 'Create' : 'Save' }}
+				</button>
 			</div>
-			<!-- Title -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="title">Title</label>
-				<input
-					class="form-control"
-					id="title"
-					name="title"
-					type="text"
-					required
-					[(ngModel)]="message.title"
-				/>
-			</div>
-			<!-- Body -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="text">Message Body</label>
-				<textarea
-					class="form-control"
-					id="text"
-					name="text"
-					required
-					rows="6"
-					[(ngModel)]="message.body"
-				></textarea>
-			</div>
-			<!-- Buttons -->
-			<div class="mb-3">
-				<div class="text-end">
-					<button
-						class="btn btn-link me-2"
-						type="button"
-						[routerLink]="['/admin/messages']"
-					>
-						Cancel
-					</button>
-					<button
-						class="btn btn-outline-primary me-2"
-						type="button"
-						(click)="previewMessage()"
-					>
-						Preview
-					</button>
-					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-						{{ mode === 'create' ? 'Create' : 'Save' }}
-					</button>
-				</div>
-			</div>
-		</form>
-	}
+		</div>
+	</form>
 </section>

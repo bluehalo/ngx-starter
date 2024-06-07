@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, computed, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -16,35 +16,28 @@ import { EuaService } from '../eua.service';
 	templateUrl: './manage-eua.component.html',
 	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe, SkipToDirective]
 })
-export class ManageEuaComponent implements OnInit {
+export class ManageEuaComponent {
 	readonly #router = inject(Router);
 	readonly #destroyRef = inject(DestroyRef);
 	readonly #euaService = inject(EuaService);
 	readonly #alertService = inject(SystemAlertService);
 	readonly #dialogService = inject(DialogService);
 
-	mode: 'create' | 'edit' = 'create';
+	readonly eua = input.required({
+		transform: (value?: EndUserAgreement) => value ?? new EndUserAgreement()
+	});
 
-	error?: string;
+	readonly mode = computed(() => (this.eua()._id ? 'edit' : 'create'));
 
-	@Input()
-	eua: EndUserAgreement;
-
-	ngOnInit() {
+	constructor() {
 		this.#alertService.clearAllAlerts();
-
-		if (this.eua) {
-			this.mode = 'edit';
-		} else {
-			this.eua = new EndUserAgreement();
-		}
 	}
 
 	submitEua(): any {
 		const obs$ =
-			this.mode === 'create'
-				? this.#euaService.create(this.eua)
-				: this.#euaService.update(this.eua);
+			this.mode() === 'create'
+				? this.#euaService.create(this.eua())
+				: this.#euaService.update(this.eua());
 
 		obs$.pipe(takeUntilDestroyed(this.#destroyRef)).subscribe(() =>
 			this.#router.navigate(['/admin/euas'])
@@ -52,6 +45,6 @@ export class ManageEuaComponent implements OnInit {
 	}
 
 	previewEua() {
-		this.#dialogService.alert(this.eua.title, this.eua.text);
+		this.#dialogService.alert(this.eua().title, this.eua().text);
 	}
 }

@@ -2,7 +2,7 @@
 	title="Changes to {{ auditEntry?.audit?.auditType }} by {{
 		auditEntry?.audit?.actor?.username
 	}} on {{ auditEntry?.created | utcDate }}"
-	cancelText=""
+	hideCancel
 	okText="Close"
 	(cancel)="close()"
 	(ok)="close()"

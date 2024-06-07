@@ -1,15 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Input,
-	OnInit,
-	booleanAttribute,
-	input
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, booleanAttribute, input } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../asy-abstract-column.component';
+
+type IsExpandableFn<T> = (index: number, rowData: T) => boolean;
+type TrackByFn<T, TB> = (index: number, rowData: T) => TB;
 
 @Component({
 	selector: 'asy-expander-column',
@@ -26,12 +22,8 @@ export class AsyExpanderColumnComponent<T, TB>
 	#selectionModel: SelectionModel<TB>;
 
 	readonly multi = input(true, { transform: booleanAttribute });
-
-	@Input()
-	isExpandable: (index: number, rowData: T) => boolean = () => true;
-
-	@Input()
-	trackBy: (index: number, rowData: T) => TB = (index, rowData) => rowData as unknown as TB;
+	readonly isExpandable = input<IsExpandableFn<T>>(() => true);
+	readonly trackBy = input<TrackByFn<T, TB>>((index, rowData) => rowData as unknown as TB);
 
 	constructor() {
 		super();
@@ -49,11 +41,11 @@ export class AsyExpanderColumnComponent<T, TB>
 	}
 
 	toggle(index: number, result: T) {
-		this.#selectionModel.toggle(this.trackBy(index, result));
+		this.#selectionModel.toggle(this.trackBy()(index, result));
 	}
 
 	isExpanded(index: number, result: T) {
-		return this.#selectionModel.isSelected(this.trackBy(index, result));
+		return this.#selectionModel.isSelected(this.trackBy()(index, result));
 	}
 
 	get expanded() {

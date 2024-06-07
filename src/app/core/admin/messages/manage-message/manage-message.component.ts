@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, computed, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -26,48 +26,42 @@ import { MessageService } from '../../../messages/message.service';
 		SkipToDirective
 	]
 })
-export class ManageMessageComponent implements OnInit {
-	mode: 'create' | 'edit' = 'create';
+export class ManageMessageComponent {
+	readonly #destroyRef = inject(DestroyRef);
+	readonly #dialogService = inject(DialogService);
+	readonly #router = inject(Router);
+	readonly #alertService = inject(SystemAlertService);
+	readonly #messageService = inject(MessageService);
 
-	@Input()
-	message: Message;
+	readonly message = input.required({
+		transform: (value?: Message) => value ?? new Message({ type: MessageType.MOTD })
+	});
 
-	typeOptions: any[] = [
+	readonly mode = computed(() => (this.message()._id ? 'edit' : 'create'));
+
+	readonly typeOptions: { value: string; display: string }[] = [
 		{ value: 'MOTD', display: 'MOTD' },
 		{ value: 'INFO', display: 'INFO' },
 		{ value: 'WARN', display: 'WARN' },
 		{ value: 'ERROR', display: 'ERROR' }
 	];
 
-	private destroyRef = inject(DestroyRef);
-	private dialogService = inject(DialogService);
-	private router = inject(Router);
-	private alertService = inject(SystemAlertService);
-	private messageService = inject(MessageService);
-
-	ngOnInit() {
-		this.alertService.clearAllAlerts();
-
-		if (this.message) {
-			this.mode = 'edit';
-		} else {
-			this.message = new Message();
-			this.message.type = MessageType.MOTD;
-		}
+	constructor() {
+		this.#alertService.clearAllAlerts();
 	}
 
 	submitMessage() {
 		const obs$ =
-			this.mode === 'create'
-				? this.messageService.create(this.message)
-				: this.messageService.update(this.message);
+			this.mode() === 'create'
+				? this.#messageService.create(this.message())
+				: this.#messageService.update(this.message());
 
-		obs$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((message) => {
-			this.router.navigate(['/admin/messages']);
+		obs$.pipe(takeUntilDestroyed(this.#destroyRef)).subscribe((message) => {
+			this.#router.navigate(['/admin/messages']);
 		});
 	}
 
 	previewMessage() {
-		this.dialogService.alert(this.message.title, this.message.body);
+		this.#dialogService.alert(this.message().title, this.message().body);
 	}
 }

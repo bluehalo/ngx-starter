@@ -1,6 +1,6 @@
 <section class="modal-header">
 	<h2 class="modal-title">
-		{{ title }}
+		{{ title() }}
 	</h2>
 
 	<button class="btn-close" type="button" aria-label="Cancel" (click)="cancel.emit()"></button>
@@ -11,12 +11,12 @@
 </section>
 
 <section class="modal-footer">
-	@if (cancelText) {
+	@if (hideCancel()) {
 		<button class="btn btn-outline-primary me-2" type="button" (click)="cancel.emit()">
-			{{ cancelText }}
+			{{ cancelText() }}
 		</button>
 	}
-	<button class="btn btn-primary" type="button" [disabled]="disableOk" (click)="ok.emit()">
-		{{ okText }}
+	<button class="btn btn-primary" type="button" [disabled]="disableOk()" (click)="ok.emit()">
+		{{ okText() }}
 	</button>
 </section>

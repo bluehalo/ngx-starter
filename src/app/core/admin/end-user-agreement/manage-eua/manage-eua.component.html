@@ -11,61 +11,49 @@
 		(ngSubmit)="submitEua()"
 	>
 		<div class="mb-4">
-			<h2 skipTo>{{ mode | titlecase }} EUA</h2>
-			@if (mode === 'create') {
+			<h2 skipTo>{{ mode() | titlecase }} EUA</h2>
+			@if (mode() === 'create') {
 				Provide the required information to create a new EUA
-			} @else if (mode === 'edit') {
+			} @else if (mode() === 'edit') {
 				Make changes to the EUA's information
 			}
 		</div>
 
 		<!-- Basic Information -->
 		<div class="mb-3">
-			<label class="form-label form-required" for="title">Title of the Agreement</label>
-			<div>
-				<input
-					class="form-control"
-					id="title"
-					name="title"
-					type="text"
-					required
-					[(ngModel)]="eua.title"
-				/>
-			</div>
+			<label class="form-label form-required" for="title">Title</label>
+			<input
+				class="form-control"
+				id="title"
+				name="title"
+				type="text"
+				required
+				[(ngModel)]="eua().title"
+			/>
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label form-required" for="text">Text Content of the Agreement</label>
-			<div>
-				<textarea
-					class="form-control"
-					id="text"
-					name="text"
-					required
-					rows="15"
-					[(ngModel)]="eua.text"
-				></textarea>
-			</div>
+			<label class="form-label form-required" for="text">Body</label>
+			<textarea
+				class="form-control"
+				id="text"
+				name="text"
+				required
+				rows="15"
+				[(ngModel)]="eua().text"
+			></textarea>
 		</div>
 
-		<div class="mb-3">
-			<div class="text-end">
-				<button class="btn btn-link me-2" type="button" [routerLink]="['/admin/euas']">
-					Cancel
-				</button>
-				<button class="btn btn-outline-primary me-2" type="button" (click)="previewEua()">
-					Preview
-				</button>
-				<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-					{{ mode === 'create' ? 'Create' : 'Save' }}
-				</button>
-			</div>
+		<div class="mb-3 text-end">
+			<button class="btn btn-link me-2" type="button" [routerLink]="['/admin/euas']">
+				Cancel
+			</button>
+			<button class="btn btn-outline-primary me-2" type="button" (click)="previewEua()">
+				Preview
+			</button>
+			<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+				{{ mode() === 'create' ? 'Create' : 'Save' }}
+			</button>
 		</div>
-
-		@if (error) {
-			<div class="mb-3">
-				<div class="text-end text-danger font-weight-bolder">{{ error }}</div>
-			</div>
-		}
 	</form>
 </section>

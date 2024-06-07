@@ -1,4 +1,4 @@
-<ng-container cdkColumnDef [sticky]="sticky" [stickyEnd]="stickyEnd">
+<ng-container cdkColumnDef [sticky]="sticky()" [stickyEnd]="stickyEnd()">
 	<th cdk-header-cell *cdkHeaderCellDef>
 		@if (enableSelectAll() && multi()) {
 			<div class="form-check">
@@ -20,7 +20,7 @@
 				id="table-selected-{{ _isMultiTemplateDataRows ? dataIndex : index }}"
 				type="{{ multi() ? 'checkbox' : 'radio' }}"
 				[checked]="isSelected(_isMultiTemplateDataRows ? dataIndex : index, result)"
-				[disabled]="!isSelectable(_isMultiTemplateDataRows ? dataIndex : index, result)"
+				[disabled]="!isSelectable()(_isMultiTemplateDataRows ? dataIndex : index, result)"
 				(change)="toggle(_isMultiTemplateDataRows ? dataIndex : index, result)"
 			/>
 			<label

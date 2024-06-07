@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, booleanAttribute, input, signal } from '@angular/core';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
@@ -9,26 +9,23 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
 		class: 'sidebar',
-		'[class.sidebar-left]': 'placement === "left"'
+		'[class.sidebar-open]': 'open()',
+		'[class.sidebar-left]': 'placement() === "left"',
+		'[class.card]': 'showInCard()'
 	},
 	imports: [TooltipModule],
 	standalone: true
 })
 export class SidebarComponent {
-	@Input()
-	headerText = '';
+	readonly headerText = input('');
 
-	@HostBinding('class.card')
-	@Input()
-	showInCard = true;
+	readonly showInCard = input(true, { transform: booleanAttribute });
 
-	@HostBinding('class.sidebar-open')
-	open = false;
+	readonly placement = input<'left' | 'right'>('right');
 
-	@Input()
-	placement: 'left' | 'right' = 'right';
+	readonly open = signal(false);
 
 	toggle(): void {
-		this.open = !this.open;
+		this.open.update((open) => !open);
 	}
 }

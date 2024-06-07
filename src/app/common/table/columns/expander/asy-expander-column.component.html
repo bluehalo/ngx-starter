@@ -1,7 +1,7 @@
-<ng-container cdkColumnDef [sticky]="sticky" [stickyEnd]="stickyEnd">
+<ng-container cdkColumnDef [sticky]="sticky()" [stickyEnd]="stickyEnd()">
 	<th cdk-header-cell style="width: 42px" *cdkHeaderCellDef></th>
 	<td cdk-cell *cdkCellDef="let item; let index = index">
-		@if (isExpandable(index, item)) {
+		@if (isExpandable()(index, item)) {
 			<div style="cursor: pointer" (click)="toggle(index, item)">
 				<span
 					class="fa-solid fa-2x fa-angle-down"

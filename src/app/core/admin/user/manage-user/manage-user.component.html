@@ -2,203 +2,199 @@
 	<!-- Alert Notifications -->
 	<system-alert></system-alert>
 
-	@if (user) {
-		<form
-			role="form"
-			autocomplete="off"
-			novalidate
-			style="max-width: 1000px"
-			#form="ngForm"
-			(ngSubmit)="submitUser()"
-		>
-			<div class="mb-4">
-				<h2 skipTo>{{ mode | titlecase }} User</h2>
-				@if (mode === 'create') {
-					Provide the required information to create a new User
-				}
-				@if (mode === 'edit') {
-					Make changes to the User's information
-				}
-			</div>
-
-			<!-- Name -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="name">Name</label>
-				<input
-					class="form-control"
-					id="name"
-					name="name"
-					type="text"
-					required
-					[(ngModel)]="user.name"
-					[disabled]="metadataLocked()"
-				/>
-			</div>
-			<!-- Username -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="username">Username</label>
-				<input
-					class="form-control"
-					id="username"
-					name="username"
-					type="text"
-					required
-					[(ngModel)]="user.username"
-					[disabled]="metadataLocked()"
-				/>
-			</div>
-			<!-- Organization -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="organization">Organization</label>
-				<input
-					class="form-control"
-					id="organization"
-					name="organization"
-					type="text"
-					required
-					[(ngModel)]="user.organization"
-					[disabled]="metadataLocked()"
-				/>
-			</div>
-			<!-- Email -->
-			<div class="mb-3">
-				<label class="form-label form-required" for="email">Email</label>
-				<input
-					class="form-control"
-					id="email"
-					name="email"
-					type="email"
-					required
-					[(ngModel)]="user.email"
-					[disabled]="metadataLocked()"
-				/>
-			</div>
-			<!-- Local Login Information -->
-			@if (!proxyPki()) {
-				<div class="py-3">
-					<h3>Password</h3>
-					At least 6 characters.
-					<span>Leave blank if you do not want to change the password.</span>
-				</div>
-
-				<div class="mb-3">
-					<label class="form-label" for="password">
-						@if (mode === 'edit') {
-							<label>New</label>
-						}
-						Password</label
-					>
-					<input
-						class="form-control"
-						id="password"
-						name="password"
-						type="password"
-						autocomplete="off"
-						[(ngModel)]="user.password"
-					/>
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="password2"
-						>Re-enter
-						@if (mode === 'edit') {
-							<label>New</label>
-						}
-						Password</label
-					>
-					<input
-						class="form-control"
-						id="password2"
-						name="password2"
-						type="password"
-						autocomplete="off"
-						[(ngModel)]="user.verifyPassword"
-					/>
-				</div>
+	<form
+		role="form"
+		autocomplete="off"
+		novalidate
+		style="max-width: 1000px"
+		#form="ngForm"
+		(ngSubmit)="submitUser()"
+	>
+		<div class="mb-4">
+			<h2 skipTo>{{ mode() | titlecase }} User</h2>
+			@if (mode() === 'create') {
+				Provide the required information to create a new User
 			}
-			<!-- PKI Information -->
-			@if (proxyPki()) {
-				<!-- Bypass Access Checker -->
-				<div class="mb-3">
-					<label class="form-label">Access Check</label>
-					<div class="form-check m-n1">
+			@if (mode() === 'edit') {
+				Make changes to the User's information
+			}
+		</div>
+
+		<!-- Name -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="name">Name</label>
+			<input
+				class="form-control"
+				id="name"
+				name="name"
+				type="text"
+				required
+				[(ngModel)]="user().name"
+				[disabled]="metadataLocked()"
+			/>
+		</div>
+		<!-- Username -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="username">Username</label>
+			<input
+				class="form-control"
+				id="username"
+				name="username"
+				type="text"
+				required
+				[(ngModel)]="user().username"
+				[disabled]="metadataLocked()"
+			/>
+		</div>
+		<!-- Organization -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="organization">Organization</label>
+			<input
+				class="form-control"
+				id="organization"
+				name="organization"
+				type="text"
+				required
+				[(ngModel)]="user().organization"
+				[disabled]="metadataLocked()"
+			/>
+		</div>
+		<!-- Email -->
+		<div class="mb-3">
+			<label class="form-label form-required" for="email">Email</label>
+			<input
+				class="form-control"
+				id="email"
+				name="email"
+				type="email"
+				required
+				[(ngModel)]="user().email"
+				[disabled]="metadataLocked()"
+			/>
+		</div>
+		<!-- Local Login Information -->
+		@if (!proxyPki()) {
+			<div class="py-3">
+				<h3>Password</h3>
+				At least 6 characters.
+				<span>Leave blank if you do not want to change the password.</span>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label" for="password">
+					@if (mode() === 'edit') {
+						<label>New</label>
+					}
+					Password</label
+				>
+				<input
+					class="form-control"
+					id="password"
+					name="password"
+					type="password"
+					autocomplete="off"
+					[(ngModel)]="user().password"
+				/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="password2"
+					>Re-enter
+					@if (mode() === 'edit') {
+						<label>New</label>
+					}
+					Password</label
+				>
+				<input
+					class="form-control"
+					id="password2"
+					name="password2"
+					type="password"
+					autocomplete="off"
+					[(ngModel)]="user().verifyPassword"
+				/>
+			</div>
+		}
+		<!-- PKI Information -->
+		@if (proxyPki()) {
+			<!-- Bypass Access Checker -->
+			<div class="mb-3">
+				<label class="form-label">Access Check</label>
+				<div class="form-check m-n1">
+					<input
+						class="form-check-input"
+						id="bypassAC"
+						name="bypassAccessCheck"
+						type="checkbox"
+						[(ngModel)]="user().bypassAccessCheck"
+					/>
+					<label class="form-check-label" for="bypassAC">Bypass Access Check</label>
+				</div>
+			</div>
+			<!-- Stuff that normal users can see, but won't be able to modify -->
+			<!-- dn -->
+			<div class="mb-3">
+				<label class="form-label" for="dn">DN</label>
+				<input
+					class="form-control"
+					id="dn"
+					name="dn"
+					type="text"
+					disabled
+					[(ngModel)]="user().providerData.dn"
+				/>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="externalRoles">External Roles</label>
+				<textarea
+					class="form-control"
+					id="externalRoles"
+					name="externalRoles"
+					type="text"
+					disabled
+					rows="4"
+					>{{ user().externalRolesDisplay | join: '\n' }}</textarea
+				>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="externalGroups">External Groups</label>
+				<textarea
+					class="form-control"
+					id="externalGroups"
+					name="externalGroups"
+					type="text"
+					disabled
+					rows="4"
+					>{{ user().externalGroups | join: '\n' }}</textarea
+				>
+			</div>
+		}
+		<!-- Admin only stuff -->
+		<div class="mb-3">
+			<label class="form-label">Roles</label>
+			<div>
+				@for (role of possibleRoles; track role) {
+					<div class="form-check form-check-inline" tooltip="{{ role.description }}">
 						<input
 							class="form-check-input"
-							id="bypassAC"
-							name="bypassAccessCheck"
+							id="role{{ role.role }}Cb"
+							name="role{{ role.role }}Cb"
 							type="checkbox"
-							[(ngModel)]="user.bypassAccessCheck"
+							[(ngModel)]="user().roles[role.role]"
 						/>
-						<label class="form-check-label" for="bypassAC">Bypass Access Check</label>
+						<label class="form-check-label" for="role{{ role.role }}Cb">{{
+							role.label
+						}}</label>
 					</div>
-				</div>
-				<!-- Stuff that normal users can see, but won't be able to modify -->
-				<!-- dn -->
-				<div class="mb-3">
-					<label class="form-label" for="dn">DN</label>
-					<input
-						class="form-control"
-						id="dn"
-						name="dn"
-						type="text"
-						disabled
-						[(ngModel)]="user.providerData.dn"
-					/>
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="externalRoles">External Roles</label>
-					<textarea
-						class="form-control"
-						id="externalRoles"
-						name="externalRoles"
-						type="text"
-						disabled
-						rows="4"
-						>{{ user.externalRolesDisplay | join: '\n' }}</textarea
-					>
-				</div>
-				<div class="mb-3">
-					<label class="form-label" for="externalGroups">External Groups</label>
-					<textarea
-						class="form-control"
-						id="externalGroups"
-						name="externalGroups"
-						type="text"
-						disabled
-						rows="4"
-						>{{ user.externalGroups | join: '\n' }}</textarea
-					>
-				</div>
-			}
-			<!-- Admin only stuff -->
-			<div class="mb-3">
-				<label class="form-label">Roles</label>
-				<div>
-					@for (role of possibleRoles; track role) {
-						<div class="form-check form-check-inline" tooltip="{{ role.description }}">
-							<input
-								class="form-check-input"
-								id="role{{ role.role }}Cb"
-								name="role{{ role.role }}Cb"
-								type="checkbox"
-								[(ngModel)]="user.roles[role.role]"
-							/>
-							<label class="form-check-label" for="role{{ role.role }}Cb">{{
-								role.label
-							}}</label>
-						</div>
-					}
-				</div>
+				}
 			</div>
-			<div class="mb-3">
-				<div class="text-end">
-					<button class="btn btn-link me-2" type="button" routerLink="/admin/users">
-						Cancel
-					</button>
-					<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
-						{{ mode === 'create' ? 'Create' : 'Save' }}
-					</button>
-				</div>
-			</div>
-		</form>
-	}
+		</div>
+		<div class="mb-3 text-end">
+			<button class="btn btn-link me-2" type="button" routerLink="/admin/users">
+				Cancel
+			</button>
+			<button class="btn btn-primary" type="submit" [disabled]="!form.form.valid">
+				{{ mode() === 'create' ? 'Create' : 'Save' }}
+			</button>
+		</div>
+	</form>
 </section>

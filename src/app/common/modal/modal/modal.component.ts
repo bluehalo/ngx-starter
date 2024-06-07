@@ -1,5 +1,5 @@
 import { A11yModule } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
 
 @Component({
 	selector: 'asy-modal',
@@ -13,27 +13,21 @@ export class ModalComponent {
 	/**
 	 * Title to display in the modal header
 	 */
-	@Input()
-	title = '';
+	readonly title = input('');
 
 	/**
 	 * Text to display on the modal 'ok' button
 	 */
-	@Input()
-	okText = 'OK';
+	readonly okText = input('OK');
 
 	/**
 	 * Text to display on the modal 'cancel' button
 	 */
-	@Input()
-	cancelText?: string = 'Cancel';
+	readonly cancelText = input('Cancel');
 
-	@Input()
-	disableOk = false;
+	readonly disableOk = input(false, { transform: booleanAttribute });
+	readonly hideCancel = input(false, { transform: booleanAttribute });
 
-	@Output()
-	readonly ok = new EventEmitter<void>();
-
-	@Output()
-	readonly cancel = new EventEmitter<void>();
+	readonly ok = output();
+	readonly cancel = output();
 }
