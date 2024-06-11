@@ -1,16 +1,16 @@
 <nav
-	class="navbar d-flex flex-column align-items-start py-0 bg-body-tertiary border-end"
+	class="navbar d-flex flex-column align-items-stretch py-0 bg-body-tertiary border-end"
 	[ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }"
 >
 	<nav class="nav flex-column border-bottom">
-		<a class="nav-link navbar-logo p-1" href="#">
+		<a class="nav-link navbar-logo p-1 border-bottom" href="#">
 			<img src="/assets/images/nav-logo.png" alt="Logo" />
 			<span class="nav-label">{{ appTitle() }}</span>
 		</a>
 	</nav>
 
 	<div class="nav-inner-scroll" cdkScrollable>
-		<nav class="nav nav-main flex-column">
+		<nav class="nav nav-pills nav-main flex-column">
 			@for (navbarItem of navbarItems; track navbarItem) {
 				@if (session().hasSomeRoles(navbarItem.hasSomeRoles)) {
 					<a
@@ -30,7 +30,7 @@
 		</nav>
 
 		<!-- Bottom Aux Nav -->
-		<nav class="nav nav-aux flex-column">
+		<nav class="nav nav-pills nav-aux flex-column">
 			<!-- Auditor Nav	-->
 			@if (auditEnabled && session().hasRole('auditor')) {
 				<a
@@ -70,6 +70,7 @@
 					[class.highlight-link]="userNavOpen()"
 					id="user-nav-menu-btn"
 					aria-controls="user-nav-menu"
+					container="body"
 					linkAccessibility
 					placement="left"
 					tooltip="User Profile"
@@ -150,6 +151,7 @@
 					[class.highlight-link]="adminNavOpen()"
 					id="admin-nav-menu-btn"
 					aria-controls="admin-nav-menu"
+					container="body"
 					linkAccessibility
 					placement="left"
 					tooltip="Admin"
@@ -188,6 +190,7 @@
 				<a
 					class="nav-link"
 					[class.highlight-link]="messagesNavOpen()"
+					container="body"
 					linkAccessibility
 					placement="left bottom"
 					tooltip="Notifications"
@@ -226,6 +229,7 @@
 				[class.highlight-link]="helpNavOpen()"
 				id="help-nav-menu-btn"
 				aria-controls="help-nav-menu"
+				container="body"
 				linkAccessibility
 				placement="left"
 				tooltip="Help"

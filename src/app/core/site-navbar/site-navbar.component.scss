@@ -13,6 +13,7 @@ $nav-popover-width: 192px !default;
 :host {
 	display: flex;
 	height: 100%;
+
 }
 
 .navbar {
@@ -22,14 +23,10 @@ $nav-popover-width: 192px !default;
 
 	width: $nav-closed-width;
 
-	transition: width 0.15s ease-in-out;
+	@include transition(width 0.2s ease-in-out);
 
 	&.navbar-open {
 		width: $nav-open-width;
-
-		.nav-link, .nav-inner-scroll {
-			width: $nav-open-width;
-		}
 
 		.nav-link {
 			.nav-label {
@@ -43,38 +40,38 @@ $nav-popover-width: 192px !default;
 
 			height: auto;
 			width: $nav-closed-width - 2 * $nav-logo-img-margin;
-
-			[data-bs-theme=light] & {
-				filter: invert(100%);
-			}
 		}
 		.nav-label {
 			font-size: $nav-logo-text-font-size;
 			font-weight: bold;
+			color: var(--bs-nav-link-color);
 		}
 	}
 
 	.nav-inner-scroll {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: stretch;
 		justify-content: space-between;
 		flex-grow: 1;
 		overflow-y: auto;
 		overflow-x: hidden;
-		width: $nav-closed-width;
 	}
 
 	.nav-link {
-		width: $nav-closed-width;
-
+		--bs-nav-pills-border-radius: 0;
 		display: flex;
 		align-items: center;
 		justify-items: start;
+		white-space: nowrap;
+
+		&:not(.active):hover {
+			background-color: var(--bs-secondary-bg);
+		}
 
 		.nav-icon {
 			font-size: $nav-icon-size;
-			margin: 2px 0 2px $nav-icon-margin-left;
+			margin: 2px 0 2px -2px;
 			flex-shrink: 0;
 
 			&.fa-stack {
@@ -106,13 +103,6 @@ $nav-popover-width: 192px !default;
 			margin-left: .5rem;
 		}
 
-		&.active {
-			border-left: $nav-element-active-indicator-width solid var(--bs-secondary);
-
-			.nav-icon {
-				margin-left: $nav-icon-margin-left - $nav-element-active-indicator-width;
-			}
-		}
 	}
 }
 
@@ -128,8 +118,4 @@ $nav-popover-width: 192px !default;
 
 .nav-menu {
 	width: $nav-popover-width;
-
-	.dropdown-item {
-		padding: 10px 24px;
-	}
 }

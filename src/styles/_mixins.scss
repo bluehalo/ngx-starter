@@ -4,17 +4,3 @@
 	border: $border-width solid $border-color;
 	border-radius: $border-radius;
 }
-
-@mixin transition($properties...) {
-	$transition-list: ();
-	@each $prop in $properties {
-		$transition-list: list.append($transition-list, $prop 300ms, $separator: comma);
-	}
-
-	transition: $transition-list;
-
-	// if the user requests a reduced motion experience, remove transitions
-	@media screen and (prefers-reduced-motion: reduce) {
-		transition: none;
-	}
-}

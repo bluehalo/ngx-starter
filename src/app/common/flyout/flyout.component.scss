@@ -12,7 +12,7 @@ $flyout-bottom-bottom: 20px * 2 !default;
 	position: fixed;
 	right: 0;
 	top: $flyout-right-top;
-	transition: left 0.15s ease-in-out, right 0.15s ease-in-out;
+	@include transition(left 0.15s ease-in-out, right 0.15s ease-in-out);
 	z-index: $zindex-popover;
 
 	&[placement='left'] {
@@ -116,5 +116,5 @@ $flyout-bottom-bottom: 20px * 2 !default;
 		max-height: calc(100vh - 100px);
 	}
 
-	transition: width 1s ease-in-out, height 1s ease-in-out;
+	@include transition(width 1s ease-in-out, height 1s ease-in-out);
 }
