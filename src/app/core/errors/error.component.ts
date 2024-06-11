@@ -8,15 +8,11 @@ import { ErrorState } from './error-state.model';
 	standalone: true,
 	imports: [HasRoleDirective],
 	template: `
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 offset-2 jumbotron" style="margin-top: 4rem;">
-					<h1>{{ state.status }} {{ state.statusText }}</h1>
-					<p>{{ state.url }}</p>
-					<p>{{ state.message }}</p>
-					<p *hasRole="'admin'">{{ state.stack }}</p>
-				</div>
-			</div>
+		<div class="p-5 bg-body-tertiary rounded-3">
+			<h1 class="text-body-emphasis">{{ state.status }} {{ state.statusText }}</h1>
+			<p class="load">{{ state.url }}</p>
+			<p class="load">{{ state.message }}</p>
+			<p class="load" *hasRole="'admin'">{{ state.stack }}</p>
 		</div>
 	`
 })
