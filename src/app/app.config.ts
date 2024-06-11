@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
 import {
 	TitleStrategy,
 	provideRouter,
@@ -31,10 +31,12 @@ import {
 import { provideTeamsFeature } from './core/teams/provider';
 import { provideExampleSiteFeature } from './site/example/provider';
 
+const disableAnimations: boolean = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export const appConfig: ApplicationConfig = {
 	providers: [
 		importProvidersFrom(BsDatepickerModule.forRoot(), TooltipModule.forRoot()),
-		provideAnimations(),
+		!disableAnimations ? provideAnimations() : provideNoopAnimations(),
 		provideHttpClient(
 			withInterceptors([
 				signinInterceptor,

@@ -4,13 +4,9 @@ import { APP_CONFIG } from './tokens';
 
 @Component({
 	template: `
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 offset-2 jumbotron" style="margin-top: 4rem;">
-					<h1>{{ appTitle() }}</h1>
-					<p>v{{ version() }}</p>
-				</div>
-			</div>
+		<div class="p-5 text-center bg-body-tertiary rounded-3">
+			<h1 class="text-body-emphasis">{{ appTitle() }}</h1>
+			<p class="load">v{{ version() }}</p>
 		</div>
 	`,
 	standalone: true,

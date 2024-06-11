@@ -3,14 +3,10 @@ import { Router } from '@angular/router';
 
 @Component({
 	template: `
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 offset-2 jumbotron" style="margin-top: 4rem;">
-					<h1>{{ status }}</h1>
-					<p>{{ message }}</p>
-					<p>Once your account is updated, <a href="/">go back home</a> and try again.</p>
-				</div>
-			</div>
+		<div class="p-5 text-center bg-body-tertiary rounded-3">
+			<h1 class="text-body-emphasis">{{ status }}</h1>
+			<p class="load">{{ message }}</p>
+			<p>Once your account is updated, <a href="/">go back home</a> and try again.</p>
 		</div>
 	`,
 	standalone: true,

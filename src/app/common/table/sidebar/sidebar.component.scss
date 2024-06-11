@@ -1,6 +1,5 @@
 @use 'sass:map';
 @import '../../../../styles/shared';
-@import '../../../../styles/bootstrap/shared';
 
 $sidebar-width: 250px !default;
 $sidebar-transition-duration: 0.15s !default;
@@ -13,19 +12,23 @@ $sidebar-transition-duration: 0.15s !default;
 	width: 0;
 	min-width: 0;
 
-	transition: width $sidebar-transition-duration ease-in-out,
+	@include transition(
+		width $sidebar-transition-duration ease-in-out,
 		min-width $sidebar-transition-duration ease-in-out,
 		margin-left $sidebar-transition-duration ease-in-out,
-		opacity 0s ease-in-out $sidebar-transition-duration;
+		opacity 0s ease-in-out $sidebar-transition-duration
+	);
 
 	&.sidebar-open {
 		margin-left: map.get($spacers, 3);
 		opacity: 1;
 		width: $sidebar-width;
 		min-width: $sidebar-width;
-		transition: width $sidebar-transition-duration ease-in-out,
+		@include transition(
+			width $sidebar-transition-duration ease-in-out,
 			min-width $sidebar-transition-duration ease-in-out,
-			margin-left $sidebar-transition-duration ease-in-out;
+			margin-left $sidebar-transition-duration ease-in-out
+		);
 
 		&.sidebar-left {
 			margin-left: 0;
