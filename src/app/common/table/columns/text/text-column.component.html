@@ -12,6 +12,6 @@
 		</ng-template>
 	</th>
 	<td class="text-nowrap" cdk-cell *cdkCellDef="let obj">
-		{{ obj[name] }}
+		{{ obj[name] || defaultValue() }}
 	</td>
 </ng-container>

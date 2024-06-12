@@ -3,9 +3,15 @@
 @import '../shared';
 
 .dropdown-menu {
-	width: 210px;
+	width: 244px;
+
+	> .form-check {
+		margin-left: $spacer * .5;
+	}
 
 	.input-group {
+		padding: 0;
+
 		::ng-deep .ng-select-container {
 			border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
 			min-width: 82px;

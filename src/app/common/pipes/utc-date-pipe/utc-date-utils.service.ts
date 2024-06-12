@@ -7,7 +7,7 @@ export class UtcDateUtils {
 		value: string | number | Date | DateTime | null | undefined,
 		format?: string
 	): string {
-		if (null != value) {
+		if (value) {
 			let luxonDate;
 			if (value instanceof DateTime) {
 				luxonDate = value;
@@ -15,8 +15,15 @@ export class UtcDateUtils {
 				luxonDate = DateTime.fromJSDate(value).toUTC();
 			} else if (typeof value === 'number') {
 				luxonDate = DateTime.fromMillis(value).toUTC();
-			} else if (typeof value === 'string') {
+			} else {
 				luxonDate = DateTime.fromISO(value).toUTC();
+
+				if (!luxonDate.isValid) {
+					luxonDate = DateTime.fromFormat(value, 'D').toUTC();
+				}
+				if (!luxonDate.isValid) {
+					luxonDate = DateTime.fromFormat(value, 'M-d-yyyy').toUTC();
+				}
 				if (!luxonDate.isValid) {
 					// converts a string of milliseconds into a number
 					value = +value;

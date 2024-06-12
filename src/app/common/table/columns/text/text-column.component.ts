@@ -1,6 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { AsySortHeaderComponent } from '../../sort/asy-sort-header/asy-sort-header.component';
 import { AsyAbstractValueColumnComponent } from '../asy-abstract-value-column.component';
@@ -12,4 +12,6 @@ import { AsyAbstractValueColumnComponent } from '../asy-abstract-value-column.co
 	templateUrl: './text-column.component.html',
 	styleUrls: ['./text-column.component.scss']
 })
-export class TextColumnComponent<T> extends AsyAbstractValueColumnComponent<T> {}
+export class TextColumnComponent<T> extends AsyAbstractValueColumnComponent<T> {
+	readonly defaultValue = input('');
+}

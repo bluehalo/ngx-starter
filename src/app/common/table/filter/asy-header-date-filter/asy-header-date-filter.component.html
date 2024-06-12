@@ -24,7 +24,7 @@
 	cdkConnectedOverlay
 	[cdkConnectedOverlayOpen]="isOpen()"
 	[cdkConnectedOverlayOrigin]="trigger"
-	(overlayOutsideClick)="isOpen.set(isClickOnDateRangePicker($event))"
+	(overlayOutsideClick)="handleOutsideClick($event)"
 >
 	<div class="dropdown-menu px-3" cdkTrapFocus cdkTrapFocusAutoCapture>
 		<div class="form-check">
@@ -76,6 +76,7 @@
 			<div class="input-group-append">
 				<ng-select
 					id="dateDurationInput"
+					appendTo="body"
 					[(ngModel)]="duration"
 					[clearable]="false"
 					[disabled]="isCustom()"
@@ -101,20 +102,18 @@
 			/>
 			<label class="form-check-label" for="custom-date-filter-enabled">Custom Range</label>
 		</div>
-		<div class="mb-0">
-			<input
-				class="form-control"
-				type="text"
-				bsDaterangepicker
-				placeholder="Custom range..."
-				[(ngModel)]="customRange"
-				[bsConfig]="{
-					adaptivePosition: true,
-					containerClass: 'theme-default'
-				}"
-				[disabled]="!isCustom"
-				(ngModelChange)="onDateFilterChange()"
-			/>
-		</div>
+		<input
+			class="form-control"
+			type="text"
+			bsDaterangepicker
+			placeholder="Custom range..."
+			[(ngModel)]="customRange"
+			[bsConfig]="{
+				adaptivePosition: true,
+				containerClass: 'theme-default'
+			}"
+			[disabled]="!isCustom"
+			(ngModelChange)="onDateFilterChange()"
+		/>
 	</div>
 </ng-template>
