@@ -48,8 +48,12 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 		super(_columnDef);
 	}
 
-	isClickOnDateRangePicker(event: Event) {
-		return ((event.target as Element).closest('bs-daterangepicker-container') ?? null) !== null;
+	handleOutsideClick(event: Event) {
+		const isDatePickerOrNgSelect =
+			((event.target as Element).closest('bs-daterangepicker-container, ng-dropdown-panel') ??
+				null) !== null;
+
+		this.isOpen.set(isDatePickerOrNgSelect);
 	}
 
 	onDateFilterChange() {

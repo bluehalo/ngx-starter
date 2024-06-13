@@ -86,7 +86,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 				switchMap(([search, filter]) =>
 					pagingOptions$.pipe(map((pagingOptions) => [pagingOptions, search, filter]))
 				),
-				tap(([pagingOptions]) => {
+				tap(() => {
 					this.loading$.next(true);
 					this.pagingResults$.next(NULL_PAGING_RESULTS);
 				}),

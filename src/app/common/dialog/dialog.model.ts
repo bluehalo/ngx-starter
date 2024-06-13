@@ -13,7 +13,7 @@ export class DialogReturn<T> {
 
 export function isDialogActionOK<T>() {
 	return (source$: Observable<DialogReturn<T>>) =>
-		source$.pipe(filter((result) => result.action === DialogAction.OK));
+		source$.pipe(filter((result) => result?.action === DialogAction.OK));
 }
 
 export function mapToDialogReturnData<T>() {

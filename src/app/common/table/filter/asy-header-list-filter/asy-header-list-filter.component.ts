@@ -11,6 +11,7 @@ import {
 	booleanAttribute,
 	inject,
 	input,
+	numberAttribute,
 	signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -60,8 +61,11 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 	readonly #titleCasePipe = inject(TitleCasePipe);
 	readonly #destroyRef = inject(DestroyRef);
 
-	readonly showSearch = input(false, { transform: booleanAttribute });
 	readonly showMatch = input(false, { transform: booleanAttribute });
+	readonly showSearch = input(false, { transform: booleanAttribute });
+	readonly showSearchMinOptions = input(Number.MAX_SAFE_INTEGER, {
+		transform: numberAttribute
+	});
 
 	readonly optionsLoading = signal(false);
 

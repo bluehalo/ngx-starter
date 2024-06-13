@@ -9,7 +9,6 @@
 					[checked]="_isAllSelected$ | async"
 					(change)="_toggleAll()"
 				/>
-				<label class="form-check-label" for="table-select-all"></label>
 			</div>
 		}
 	</th>
@@ -23,10 +22,6 @@
 				[disabled]="!isSelectable()(_isMultiTemplateDataRows ? dataIndex : index, result)"
 				(change)="toggle(_isMultiTemplateDataRows ? dataIndex : index, result)"
 			/>
-			<label
-				class="form-check-label"
-				for="table-selected-{{ _isMultiTemplateDataRows ? dataIndex : index }}"
-			></label>
 		</div>
 	</td>
 </ng-container>

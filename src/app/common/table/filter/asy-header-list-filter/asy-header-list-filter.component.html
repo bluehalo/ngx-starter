@@ -28,7 +28,7 @@
 	(overlayOutsideClick)="isOpen.set(false)"
 >
 	<div class="dropdown-menu d-flex flex-column" cdkTrapFocus cdkTrapFocusAutoCapture>
-		@if (showSearch()) {
+		@if (showSearch() || _options.length > showSearchMinOptions()) {
 			<div class="search mt-2">
 				<asy-search-input
 					placeholder="Search..."
