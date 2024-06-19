@@ -1,6 +1,7 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -42,7 +43,7 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListSubTeamsComponent extends BaseListTeamsComponent implements OnChanges, OnInit {
+export class ListSubTeamsComponent extends BaseListTeamsComponent {
 	constructor() {
 		super(
 			new AsyTableDataSource<Team>(
@@ -54,5 +55,10 @@ export class ListSubTeamsComponent extends BaseListTeamsComponent implements OnC
 				}
 			)
 		);
+
+		// eslint-disable-next-line rxjs-angular/prefer-takeuntil
+		toObservable(this.parent).subscribe(() => {
+			this.dataSource.reload();
+		});
 	}
 }

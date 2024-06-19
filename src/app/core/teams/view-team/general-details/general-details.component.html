@@ -13,15 +13,16 @@
 		<div class="card">
 			<div class="card-header">
 				<h2>Details</h2>
-				<button
-					class="btn btn-outline-primary ms-3"
-					type="button"
-					*hasTeamRole="team(); role: 'admin'"
-					[disabled]="isEditing()"
-					(click)="edit()"
-				>
-					<span class="fa-solid fa-lg fa-pencil"></span>
-				</button>
+				@if (isTeamAdmin()) {
+					<button
+						class="btn btn-outline-primary ms-3"
+						type="button"
+						[disabled]="isEditing()"
+						(click)="edit()"
+					>
+						<span class="fa-solid fa-lg fa-pencil"></span>
+					</button>
+				}
 				@if (isEditing()) {
 					<div class="inline-edit-header-btns ms-auto">
 						<button

@@ -4,14 +4,11 @@
 
 	<div class="d-flex mb-3">
 		<h1>{{ team().name }}</h1>
-		<button
-			class="btn btn-link ms-auto"
-			type="button"
-			*hasTeamRole="team(); role: 'admin'"
-			(click)="remove(team())"
-		>
-			Delete Team
-		</button>
+		@if (isTeamAdmin()) {
+			<button class="btn btn-link ms-auto" type="button" (click)="remove(team())">
+				Delete Team
+			</button>
+		}
 	</div>
 	<ul class="nav nav-tabs">
 		@for (topic of topics; track topic) {

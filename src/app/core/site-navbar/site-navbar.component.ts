@@ -90,6 +90,7 @@ export class SiteNavbarComponent implements OnInit {
 	);
 	readonly userPreferencesLink = computed(() => this.#config()?.userPreferences?.path ?? '');
 	readonly canMasquerade = computed(() => this.session().user?.canMasquerade ?? false);
+	readonly isAuthenticated = computed(() => this.session().isAuthenticated);
 
 	readonly navbarOpen = toSignal(
 		inject(STORAGE_EVENT).pipe(

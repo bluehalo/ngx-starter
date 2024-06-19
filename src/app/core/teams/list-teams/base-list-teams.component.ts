@@ -1,9 +1,6 @@
 import {
 	Directive,
 	HostAttributeToken,
-	OnChanges,
-	OnInit,
-	SimpleChanges,
 	booleanAttribute,
 	computed,
 	inject,
@@ -21,7 +18,7 @@ import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
 @Directive()
-export abstract class BaseListTeamsComponent implements OnChanges, OnInit {
+export abstract class BaseListTeamsComponent {
 	readonly #teamsService = inject(TeamsService);
 	readonly #alertService = inject(SystemAlertService);
 	readonly #session = inject(APP_SESSION);
@@ -35,16 +32,8 @@ export abstract class BaseListTeamsComponent implements OnChanges, OnInit {
 
 	readonly displayedColumns = ['name', 'created', 'description'];
 
-	protected constructor(public dataSource: AsyTableDataSource<Team>) {}
-
-	ngOnInit() {
+	protected constructor(public dataSource: AsyTableDataSource<Team>) {
 		this.#alertService.clearAllAlerts();
-	}
-
-	ngOnChanges(changes: SimpleChanges) {
-		if (changes['parent']) {
-			this.dataSource.reload();
-		}
 	}
 
 	loadData(
