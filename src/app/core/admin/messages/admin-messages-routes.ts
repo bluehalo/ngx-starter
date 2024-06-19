@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { messageResolver } from '../../messages/message.service';
+import { messageResolver } from '../../messages';
 import { ListMessagesComponent } from './list-messages/list-messages.component';
 import { ManageMessageComponent } from './manage-message/manage-message.component';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
+import { AbstractEntityService, ServiceMethod } from '../../common';
 import { Feedback, FeedbackStatusOption } from './feedback.model';
 
 @Injectable({

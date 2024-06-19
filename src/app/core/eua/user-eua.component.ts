@@ -14,10 +14,8 @@ import { FormsModule } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
-import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
-import { SessionService } from '../auth';
+import { SystemAlertComponent, SystemAlertService } from '../../common/system-alert';
+import { EndUserAgreement, SessionService } from '../auth';
 import { NavigationService } from '../navigation.service';
 import { APP_SESSION } from '../tokens';
 

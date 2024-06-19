@@ -5,8 +5,8 @@ import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common/paging.model';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../../common';
+import { SystemAlertService } from '../../../common/system-alert';
 import { User } from '../../auth';
 import { ErrorState } from '../../errors/error-state.model';
 

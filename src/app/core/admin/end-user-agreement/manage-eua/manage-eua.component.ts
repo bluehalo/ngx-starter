@@ -4,11 +4,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
+import { SkipToDirective } from '../../../../common';
 import { DialogService } from '../../../../common/dialog';
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { EndUserAgreement } from '../eua.model';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
+import { EndUserAgreement } from '../../../auth';
 import { EuaService } from '../eua.service';
 
 @Component({

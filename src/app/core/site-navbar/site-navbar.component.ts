@@ -11,19 +11,19 @@ import { STORAGE_EVENT, StorageService, filterByKey, toValue } from '@ng-web-api
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { map } from 'rxjs/operators';
 
-import { CdkMenuItemHrefDirective } from '../../common/cdk-menu-item-href.directive';
-import { CdkMenuItemRouterLinkDirective } from '../../common/cdk-menu-item-router-link.directive';
+import {
+	CdkMenuItemHrefDirective,
+	CdkMenuItemRouterLinkDirective,
+	LinkAccessibilityDirective
+} from '../../common';
 import { DialogService } from '../../common/dialog';
-import { LinkAccessibilityDirective } from '../../common/directives/link-accessibility.directive';
-import { injectAdminEnabled } from '../admin';
-import { injectAdminTopics } from '../admin/admin-topic.model';
+import { injectAdminEnabled, injectAdminTopics } from '../admin';
 import { injectAuditEnabled } from '../audit';
 import { HasRoleDirective, HasSomeRolesDirective, IsAuthenticatedDirective } from '../auth';
-import { FeedbackModalComponent } from '../feedback/feedback-modal/feedback-modal.component';
+import { FeedbackModalComponent } from '../feedback';
 import { injectHelpEnabled } from '../help';
 import { MasqueradeService } from '../masquerade/masquerade.service';
-import { MessageService } from '../messages/message.service';
-import { RecentMessagesComponent } from '../messages/recent-messages/recent-messages.component';
+import { MessageService, RecentMessagesComponent } from '../messages';
 import { injectTeamsEnabled } from '../teams/provider';
 import { ThemeToggleComponent } from '../theming/theme-toggle/theme-toggle.component';
 import { APP_CONFIG, APP_SESSION } from '../tokens';

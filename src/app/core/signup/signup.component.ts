@@ -7,8 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { SystemAlertComponent } from '../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../common/system-alert/system-alert.service';
+import { SystemAlertComponent, SystemAlertService } from '../../common/system-alert';
 import { AuthenticationService, EditUser } from '../auth';
 
 @Component({

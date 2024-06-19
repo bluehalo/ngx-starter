@@ -4,8 +4,8 @@ import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { AbstractEntityService, ServiceMethod } from '../../../common/abstract-entity.service';
-import { EndUserAgreement } from './eua.model';
+import { AbstractEntityService, ServiceMethod } from '../../../common';
+import { EndUserAgreement } from '../../auth';
 
 export const euaResolver: ResolveFn<EndUserAgreement | null> = (
 	route: ActivatedRouteSnapshot,

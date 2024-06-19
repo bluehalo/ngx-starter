@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '../../common';
 import { SessionService } from '../auth';
 import { NavigationService } from '../navigation.service';
 import { APP_CONFIG } from '../tokens';

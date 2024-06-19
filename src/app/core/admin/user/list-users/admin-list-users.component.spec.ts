@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { of } from 'rxjs';
 
-import { PagingResults } from '../../../../common/paging.model';
+import { PagingResults } from '../../../../common';
 import { User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
 import { APP_CONFIG } from '../../../tokens';

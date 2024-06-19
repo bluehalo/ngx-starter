@@ -4,11 +4,11 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/r
 
 import { of } from 'rxjs';
 
-import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
 import { provideSession } from '../provider';
 import { APP_CONFIG } from '../tokens';
 import { authGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
+import { EndUserAgreement } from './eua.model';
 import { Session } from './session.model';
 import { SessionService } from './session.service';
 

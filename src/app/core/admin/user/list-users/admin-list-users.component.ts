@@ -11,16 +11,20 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
-import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item-router-link.directive';
-import { DialogAction, DialogService } from '../../../../common/dialog';
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { JoinPipe } from '../../../../common/pipes/join.pipe';
-import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	CdkMenuItemRouterLinkDirective,
+	PagingOptions,
+	PagingResults,
+	SearchInputComponent,
+	SkipToDirective,
+	SortDirection
+} from '../../../../common';
+import { DialogAction, DialogService } from '../../../../common/dialog';
+import { JoinPipe } from '../../../../common/pipes';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective,
 	AgoDateColumnComponent,
 	AsyExpandableListColumnComponent,
 	AsyFilterDirective,
@@ -36,10 +40,6 @@ import {
 	SidebarComponent,
 	TextColumnComponent
 } from '../../../../common/table';
-import {
-	ActionsMenuColumnComponent,
-	ActionsMenuTemplateDirective
-} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
 import { Role, User } from '../../../auth';
 import { ExportConfigService } from '../../../export-config.service';
 import { APP_CONFIG } from '../../../tokens';

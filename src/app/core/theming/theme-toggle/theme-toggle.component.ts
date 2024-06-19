@@ -2,7 +2,7 @@ import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { CdkMenuItemRouterLinkDirective } from '../../../common/cdk-menu-item-router-link.directive';
+import { CdkMenuItemRouterLinkDirective } from '../../../common';
 import { Theme, ThemingService } from '../theming.service';
 
 @Component({

@@ -8,11 +8,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
-import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { MultiSelectDirective } from '../../../common/multi-select.directive';
-import { PagingOptions } from '../../../common/paging.model';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { MultiSelectDirective, PagingOptions, SkipToDirective } from '../../../common';
+import { SystemAlertComponent, SystemAlertService } from '../../../common/system-alert';
 import { SessionService, User, UserExternalRolesSelectDirective } from '../../auth';
 import { APP_CONFIG, APP_SESSION } from '../../tokens';
 import { TeamSelectDirective } from '../directives/team-select.directive';

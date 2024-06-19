@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { SystemAlertComponent, SystemAlertService } from '../../../common/system-alert';
 
 @Component({
 	templateUrl: './alerts.component.html',

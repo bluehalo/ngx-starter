@@ -6,7 +6,7 @@ import { AccessComponent } from './errors/access.component';
 import { ErrorComponent } from './errors/error.component';
 import { UserEuaComponent } from './eua/user-eua.component';
 import { MasqueradeComponent } from './masquerade/masquerade/masquerade.component';
-import { ViewAllMessagesComponent } from './messages/view-all-messages/view-all-messages.component';
+import { ViewAllMessagesComponent } from './messages';
 import { SigninComponent } from './signin/signin.component';
 import { SignedUpComponent } from './signup/signed-up.component';
 import { SignupComponent } from './signup/signup.component';

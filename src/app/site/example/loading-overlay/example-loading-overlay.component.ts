@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LoadingOverlayComponent } from '../../../common/loading-overlay/loading-overlay.component';
+import { LoadingOverlayComponent } from '../../../common';
 
 @Component({
 	templateUrl: './example-loading-overlay.component.html',

@@ -8,14 +8,18 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
-import { DialogAction, DialogService } from '../../../../common/dialog';
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	PagingOptions,
+	PagingResults,
+	SearchInputComponent,
+	SkipToDirective,
+	SortDirection
+} from '../../../../common';
+import { DialogAction, DialogService } from '../../../../common/dialog';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective,
 	AsyFilterDirective,
 	AsySortDirective,
 	AsySortHeaderComponent,
@@ -27,11 +31,7 @@ import {
 	SidebarComponent,
 	TextColumnComponent
 } from '../../../../common/table';
-import {
-	ActionsMenuColumnComponent,
-	ActionsMenuTemplateDirective
-} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
-import { EndUserAgreement } from '../eua.model';
+import { EndUserAgreement } from '../../../auth';
 import { EuaService } from '../eua.service';
 
 @Component({

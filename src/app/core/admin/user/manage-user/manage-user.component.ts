@@ -7,10 +7,9 @@ import { Router, RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { JoinPipe } from '../../../../common/pipes/join.pipe';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { SkipToDirective } from '../../../../common';
+import { JoinPipe } from '../../../../common/pipes';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import { EditUser, Role } from '../../../auth';
 import { APP_CONFIG } from '../../../tokens';
 import { AdminUsersService } from '../admin-users.service';

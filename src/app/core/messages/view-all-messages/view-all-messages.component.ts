@@ -12,11 +12,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { WINDOW } from '@ng-web-apis/common';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.model';
-import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
-import { SearchInputComponent } from '../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
+import { PagingOptions, PagingResults, SearchInputComponent, SortDirection } from '../../../common';
+import { AgoDatePipe } from '../../../common/pipes';
+import { SystemAlertComponent } from '../../../common/system-alert';
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 

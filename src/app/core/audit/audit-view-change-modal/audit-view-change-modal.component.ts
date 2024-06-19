@@ -1,9 +1,8 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { ModalComponent } from '../../../common/modal/modal/modal.component';
-import { SortObjectKeysPipe } from '../../../common/pipes/sort-object-keys.pipe';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { ModalComponent } from '../../../common';
+import { SortObjectKeysPipe, UtcDatePipe } from '../../../common/pipes';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
 
 @Component({

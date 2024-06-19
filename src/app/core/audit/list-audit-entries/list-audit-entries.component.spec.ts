@@ -7,8 +7,8 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 
 import { of } from 'rxjs';
 
-import { PagingResults } from '../../../common/paging.model';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { PagingResults } from '../../../common';
+import { SystemAlertService } from '../../../common/system-alert';
 import { APP_CONFIG } from '../../tokens';
 import { AuditService } from '../audit.service';
 import { ListAuditEntriesComponent } from './list-audit-entries.component';

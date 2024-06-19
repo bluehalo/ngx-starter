@@ -4,6 +4,7 @@ export * from './session.model';
 export * from './session.service';
 export * from './role.model';
 export * from './user.model';
+export * from './eua.model';
 export * from './directives/has-every-role.directive';
 export * from './directives/has-role.directive';
 export * from './directives/has-some-roles.directive';

@@ -5,8 +5,7 @@ import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '
 import { Observable, take } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
-import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { isNotNullOrUndefined } from '../../common/rxjs-utils';
+import { AbstractEntityService, ServiceMethod, isNotNullOrUndefined } from '../../common';
 import { SocketService } from '../socket.service';
 import { APP_SESSION } from '../tokens';
 import { Message } from './message.model';

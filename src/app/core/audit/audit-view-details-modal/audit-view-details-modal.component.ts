@@ -2,8 +2,8 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { JsonPipe, TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { ModalComponent } from '../../../common/modal/modal/modal.component';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
+import { ModalComponent } from '../../../common';
+import { UtcDatePipe } from '../../../common/pipes';
 
 @Component({
 	templateUrl: './audit-view-details-modal.component.html',

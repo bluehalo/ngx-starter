@@ -4,7 +4,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
+import { EndUserAgreement } from './eua.model';
 import { EditUser } from './user.model';
 
 @Injectable({ providedIn: 'root' })

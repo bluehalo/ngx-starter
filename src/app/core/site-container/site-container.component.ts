@@ -2,7 +2,7 @@ import { CdkScrollable } from '@angular/cdk/overlay';
 import { Component, computed, inject } from '@angular/core';
 
 import { IsAuthenticatedDirective } from '../auth';
-import { FeedbackFlyoutComponent } from '../feedback/feedback-flyout/feedback-flyout.component';
+import { FeedbackFlyoutComponent } from '../feedback';
 import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
 import { APP_CONFIG, APP_SESSION } from '../tokens';
 
