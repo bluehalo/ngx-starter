@@ -6,9 +6,8 @@ import { RouterLink } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { SearchInputComponent } from '../../../common/search-input/search-input.component';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
+import { SearchInputComponent, SkipToDirective } from '../../../common';
+import { SystemAlertComponent } from '../../../common/system-alert';
 import {
 	AgoDateColumnComponent,
 	AsyFilterDirective,

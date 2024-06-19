@@ -1,9 +1,19 @@
 import { InjectionToken, inject, makeEnvironmentProviders } from '@angular/core';
 import { ROUTES } from '@angular/router';
 
+import sortBy from 'lodash/sortBy';
+
 import { ADMIN_TOPICS } from './admin-topic.model';
 
 export const APP_FEATURE_ADMIN = new InjectionToken<boolean>('APP_FEATURE_ADMIN');
+
+export function injectAdminTopics() {
+	return sortBy((inject(ADMIN_TOPICS, { optional: true }) ?? []).flat(), [
+		(t) => t.ordinal ?? 1,
+		'title',
+		'path'
+	]);
+}
 
 export function injectAdminEnabled() {
 	return inject(APP_FEATURE_ADMIN, { optional: true }) ?? false;

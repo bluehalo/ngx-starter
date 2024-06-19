@@ -6,12 +6,10 @@ import { Router, RouterLink } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
+import { SkipToDirective } from '../../../../common';
 import { DialogService } from '../../../../common/dialog';
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { Message, MessageType } from '../../../messages/message.model';
-import { MessageService } from '../../../messages/message.service';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
+import { Message, MessageService, MessageType } from '../../../messages';
 
 @Component({
 	standalone: true,

@@ -1,4 +1,4 @@
-import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
+import { EndUserAgreement } from './eua.model';
 
 export class User {
 	public _id: string;

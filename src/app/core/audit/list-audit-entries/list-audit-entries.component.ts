@@ -13,12 +13,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
+import { PagingOptions, PagingResults, SkipToDirective } from '../../../common';
 import { DialogService } from '../../../common/dialog';
-import { SkipToDirective } from '../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../common/paging.model';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { UtcDatePipe } from '../../../common/pipes';
+import { SystemAlertComponent, SystemAlertService } from '../../../common/system-alert';
 import {
 	AsyFilterDirective,
 	AsyHeaderDateFilterComponent,

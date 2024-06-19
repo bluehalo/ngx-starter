@@ -7,15 +7,19 @@ import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
-import { CdkMenuItemRouterLinkDirective } from '../../../../common/cdk-menu-item-router-link.directive';
-import { DialogAction, DialogService } from '../../../../common/dialog';
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import {
+	CdkMenuItemRouterLinkDirective,
+	PagingOptions,
+	PagingResults,
+	SearchInputComponent,
+	SkipToDirective,
+	SortDirection
+} from '../../../../common';
+import { DialogAction, DialogService } from '../../../../common/dialog';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
+import {
+	ActionsMenuColumnComponent,
+	ActionsMenuTemplateDirective,
 	AsyFilterDirective,
 	AsySortDirective,
 	AsySortHeaderComponent,
@@ -25,12 +29,7 @@ import {
 	PaginatorComponent,
 	TextColumnComponent
 } from '../../../../common/table';
-import {
-	ActionsMenuColumnComponent,
-	ActionsMenuTemplateDirective
-} from '../../../../common/table/actions-menu-column/actions-menu-column.component';
-import { Message } from '../../../messages/message.model';
-import { MessageService } from '../../../messages/message.service';
+import { Message, MessageService } from '../../../messages';
 
 @Component({
 	templateUrl: './list-messages.component.html',

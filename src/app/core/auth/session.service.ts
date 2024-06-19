@@ -4,8 +4,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { EndUserAgreement } from '../admin/end-user-agreement/eua.model';
 import { AuthenticationService } from './authentication.service';
+import { EndUserAgreement } from './eua.model';
 import { Session } from './session.model';
 
 @Injectable({

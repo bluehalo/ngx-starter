@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Subject, of } from 'rxjs';
 
-import { PagingResults } from '../../../common/paging.model';
+import { PagingResults } from '../../../common';
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
 import { ViewAllMessagesComponent } from './view-all-messages.component';

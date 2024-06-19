@@ -17,9 +17,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
+import { ModalComponent, PagingOptions } from '../../../common';
 import { DialogAction, DialogReturn } from '../../../common/dialog';
-import { ModalComponent } from '../../../common/modal/modal/modal.component';
-import { PagingOptions } from '../../../common/paging.model';
 import { User } from '../../auth';
 import { TeamRole } from '../team-role.model';
 import { AddedMember, TeamsService } from '../teams.service';

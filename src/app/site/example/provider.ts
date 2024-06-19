@@ -1,7 +1,8 @@
 import { makeEnvironmentProviders } from '@angular/core';
 import { ROUTES } from '@angular/router';
 
-import { ADMIN_TOPICS, NAVBAR_TOPICS } from '../../core';
+import { NAVBAR_TOPICS } from '../../core';
+import { ADMIN_TOPICS } from '../../core/admin';
 import { EXAMPLE_ROUTES } from './example-routes';
 
 export function provideExampleSiteFeature() {

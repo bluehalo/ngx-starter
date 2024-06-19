@@ -2,7 +2,7 @@ import { Directive, OnInit, inject } from '@angular/core';
 
 import { map } from 'rxjs/operators';
 
-import { PagingOptions } from '../../../common/paging.model';
+import { PagingOptions } from '../../../common';
 import { AsyHeaderTypeaheadFilterComponent } from '../../../common/table';
 import { AuditService } from '../audit.service';
 

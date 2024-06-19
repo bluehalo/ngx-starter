@@ -1,7 +1,7 @@
 import { InjectionToken, inject, makeEnvironmentProviders } from '@angular/core';
 import { ROUTES, Routes } from '@angular/router';
 
-import { Topic } from '../../common/topic.model';
+import { Topic } from '../../common';
 import { TEAM_TOPICS } from './team-topic.model';
 
 export type AdditionalTeamsRoutes = {

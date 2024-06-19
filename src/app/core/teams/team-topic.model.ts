@@ -2,7 +2,7 @@ import { InjectionToken, inject } from '@angular/core';
 
 import sortBy from 'lodash/sortBy';
 
-import { Topic } from '../../common/topic.model';
+import { Topic } from '../../common';
 
 export const TEAM_TOPICS = new InjectionToken<Topic[][]>('TEAM_TOPIC');
 

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { FlyoutComponent } from '../../../common/flyout/flyout.component';
+import { FlyoutComponent } from '../../../common';
 import { APP_CONFIG } from '../../tokens';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';

@@ -13,7 +13,7 @@ import {
 	tap
 } from 'rxjs/operators';
 
-import { LoadingSpinnerComponent } from '../../../common/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '../../../common';
 import { User } from '../../auth';
 import { APP_SESSION } from '../../tokens';
 import { MasqueradeService } from '../masquerade.service';

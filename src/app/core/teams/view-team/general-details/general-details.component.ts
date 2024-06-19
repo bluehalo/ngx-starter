@@ -15,10 +15,9 @@ import { RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { MultiSelectDirective } from '../../../../common/multi-select.directive';
-import { JoinPipe } from '../../../../common/pipes/join.pipe';
-import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { MultiSelectDirective } from '../../../../common';
+import { JoinPipe, UtcDatePipe } from '../../../../common/pipes';
+import { SystemAlertService } from '../../../../common/system-alert';
 import { SessionService, UserExternalRolesSelectDirective } from '../../../auth';
 import { APP_CONFIG, APP_SESSION } from '../../../tokens';
 import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';

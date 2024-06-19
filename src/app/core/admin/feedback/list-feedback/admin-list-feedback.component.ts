@@ -9,12 +9,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 
-import { SkipToDirective } from '../../../../common/directives/skip-to.directive';
-import { PagingOptions, PagingResults } from '../../../../common/paging.model';
-import { SearchInputComponent } from '../../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../../common/sorting.model';
-import { SystemAlertComponent } from '../../../../common/system-alert/system-alert.component';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import {
+	PagingOptions,
+	PagingResults,
+	SearchInputComponent,
+	SkipToDirective,
+	SortDirection
+} from '../../../../common';
+import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {
 	AgoDateColumnComponent,
 	AsyFilterDirective,
@@ -30,8 +32,7 @@ import {
 	TextColumnComponent
 } from '../../../../common/table';
 import { ExportConfigService } from '../../../export-config.service';
-import { Feedback, FeedbackStatusOption } from '../../../feedback/feedback.model';
-import { FeedbackService } from '../../../feedback/feedback.service';
+import { Feedback, FeedbackService, FeedbackStatusOption } from '../../../feedback';
 import { AdminUsersService } from '../../user/admin-users.service';
 
 @Component({

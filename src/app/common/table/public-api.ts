@@ -1,4 +1,5 @@
 export * from './asy-table-data-source';
+export * from './actions-menu-column/actions-menu-column.component';
 export * from './column-chooser/column-chooser.component';
 export * from './paginator/paginator.component';
 export * from './sidebar/sidebar.component';

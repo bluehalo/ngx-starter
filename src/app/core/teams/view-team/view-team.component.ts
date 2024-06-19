@@ -12,7 +12,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { filter, first, map, switchMap } from 'rxjs/operators';
 
 import { DialogAction, DialogService } from '../../../common/dialog';
-import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
+import { SystemAlertComponent } from '../../../common/system-alert';
 import { SessionService } from '../../auth';
 import { APP_SESSION } from '../../tokens';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';

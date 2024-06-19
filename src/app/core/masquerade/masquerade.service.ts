@@ -4,7 +4,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingResults } from '../../common/paging.model';
+import { NULL_PAGING_RESULTS, PagingResults } from '../../common';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
 import { User } from '../auth';
 

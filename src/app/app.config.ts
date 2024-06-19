@@ -12,7 +12,7 @@ import {
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
-import { provideCdkDialog } from './common/dialog/provider';
+import { provideCdkDialog } from './common/dialog';
 import { provideAdminFeature } from './core/admin';
 import { provideAuditFeature } from './core/audit';
 import { authInterceptor } from './core/auth/auth.interceptor';

@@ -5,8 +5,13 @@ import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { AbstractEntityService, ServiceMethod } from '../../common/abstract-entity.service';
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common/paging.model';
+import {
+	AbstractEntityService,
+	NULL_PAGING_RESULTS,
+	PagingOptions,
+	PagingResults,
+	ServiceMethod
+} from '../../common';
 import { User } from '../auth';
 import { APP_SESSION } from '../tokens';
 import { TeamMember } from './team-member.model';

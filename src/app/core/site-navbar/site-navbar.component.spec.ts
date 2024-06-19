@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 import { Session } from '../auth';
 import { Config } from '../config.model';
 import { MasqueradeService } from '../masquerade/masquerade.service';
-import { MessageService } from '../messages/message.service';
+import { MessageService } from '../messages';
 import { APP_CONFIG, APP_SESSION } from '../tokens';
 import { SiteNavbarComponent } from './site-navbar.component';
 

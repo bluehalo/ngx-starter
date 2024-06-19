@@ -10,8 +10,8 @@ import {
 import cloneDeep from 'lodash/cloneDeep';
 import { Observable } from 'rxjs';
 
-import { PagingOptions, PagingResults } from '../../../common/paging.model';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { PagingOptions, PagingResults } from '../../../common';
+import { SystemAlertService } from '../../../common/system-alert';
 import { AsyTableDataSource } from '../../../common/table';
 import { APP_SESSION } from '../../tokens';
 import { Team } from '../team.model';

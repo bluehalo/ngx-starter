@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { DialogService } from '../../../../common/dialog';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
+import { SystemAlertService } from '../../../../common/system-alert';
 import { EuaService } from '../eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';
 

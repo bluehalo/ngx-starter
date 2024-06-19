@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { ModalComponent } from '../../../common/modal/modal/modal.component';
+import { ModalComponent } from '../../../common';
 import { APP_CONFIG } from '../../tokens';
 import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';

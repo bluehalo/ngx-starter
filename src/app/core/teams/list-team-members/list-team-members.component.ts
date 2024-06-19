@@ -18,18 +18,20 @@ import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
 import {
+	PagingOptions,
+	PagingResults,
+	SearchInputComponent,
+	SortDirection,
+	isNotNullOrUndefined
+} from '../../../common';
+import {
 	DialogAction,
 	DialogService,
 	isDialogActionOK,
 	mapToDialogReturnData
 } from '../../../common/dialog';
-import { PagingOptions, PagingResults } from '../../../common/paging.model';
-import { AgoDatePipe } from '../../../common/pipes/ago-date.pipe';
-import { UtcDatePipe } from '../../../common/pipes/utc-date-pipe/utc-date.pipe';
-import { isNotNullOrUndefined } from '../../../common/rxjs-utils';
-import { SearchInputComponent } from '../../../common/search-input/search-input.component';
-import { SortDirection } from '../../../common/sorting.model';
-import { SystemAlertService } from '../../../common/system-alert/system-alert.service';
+import { AgoDatePipe, UtcDatePipe } from '../../../common/pipes';
+import { SystemAlertService } from '../../../common/system-alert';
 import {
 	AgoDateColumnComponent,
 	AsyFilterDirective,

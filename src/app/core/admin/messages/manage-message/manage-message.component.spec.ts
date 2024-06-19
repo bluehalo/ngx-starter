@@ -5,9 +5,8 @@ import { RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 
 import { DialogService } from '../../../../common/dialog';
-import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
-import { Message, MessageType } from '../../../messages/message.model';
-import { MessageService } from '../../../messages/message.service';
+import { SystemAlertService } from '../../../../common/system-alert';
+import { Message, MessageService, MessageType } from '../../../messages';
 import { ManageMessageComponent } from './manage-message.component';
 
 describe('ManageMessageComponent', () => {

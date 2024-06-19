@@ -4,7 +4,7 @@ import { signal } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
-import { provideCdkDialog } from './common/dialog/provider';
+import { provideCdkDialog } from './common/dialog';
 import { APP_CONFIG } from './core';
 import { provideSession } from './core/provider';
 
