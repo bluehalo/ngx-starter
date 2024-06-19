@@ -4,7 +4,7 @@ import { Component, computed, inject } from '@angular/core';
 import { IsAuthenticatedDirective } from '../auth';
 import { FeedbackFlyoutComponent } from '../feedback/feedback-flyout/feedback-flyout.component';
 import { SiteNavbarComponent } from '../site-navbar/site-navbar.component';
-import { APP_CONFIG } from '../tokens';
+import { APP_CONFIG, APP_SESSION } from '../tokens';
 
 @Component({
 	selector: 'site-container',
@@ -15,11 +15,13 @@ import { APP_CONFIG } from '../tokens';
 	imports: [SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent, CdkScrollable]
 })
 export class SiteContainerComponent {
+	readonly #session = inject(APP_SESSION);
 	readonly #config = inject(APP_CONFIG);
 
 	readonly bannerHtml = computed(() => this.#config()?.banner?.html);
 	readonly copyrightHtml = computed(() => this.#config()?.copyright?.html);
 	readonly showFeedbackFlyout = computed(() => this.#config()?.feedback?.showFlyout ?? false);
+	readonly isAuthenticated = computed(() => this.#session().isAuthenticated);
 
 	skipToMainContent(e: any) {
 		e.preventDefault();

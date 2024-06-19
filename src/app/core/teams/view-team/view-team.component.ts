@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	computed,
+	inject,
+	input
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -7,7 +14,9 @@ import { filter, first, map, switchMap } from 'rxjs/operators';
 import { DialogAction, DialogService } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert/system-alert.component';
 import { SessionService } from '../../auth';
+import { APP_SESSION } from '../../tokens';
 import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
+import { TeamRole } from '../team-role.model';
 import { injectTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
@@ -32,10 +41,15 @@ export class ViewTeamComponent {
 	readonly #dialogService = inject(DialogService);
 	readonly #teamsService = inject(TeamsService);
 	readonly #sessionService = inject(SessionService);
+	readonly #session = inject(APP_SESSION);
 
 	readonly topics = injectTeamTopics();
 
 	readonly team = input.required<Team>();
+
+	readonly isTeamAdmin = computed(
+		() => this.#session().isAdmin() || this.#session().hasTeamRole(this.team(), TeamRole.ADMIN)
+	);
 
 	remove(team: Team) {
 		this.#dialogService

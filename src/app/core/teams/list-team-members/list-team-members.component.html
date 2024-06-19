@@ -10,14 +10,11 @@
 			</div>
 
 			<div class="mb-3 ms-auto">
-				<button
-					class="btn btn-primary ms-auto"
-					type="button"
-					*hasTeamRole="team(); role: 'admin'"
-					(click)="addMembers()"
-				>
-					<span class="fa-solid fa-plus"></span> Add New
-				</button>
+				@if (isTeamAdmin()) {
+					<button class="btn btn-primary ms-auto" type="button" (click)="addMembers()">
+						<span class="fa-solid fa-plus"></span> Add New
+					</button>
+				}
 			</div>
 		</div>
 	</div>
@@ -49,57 +46,57 @@
 					</asy-header-filter>
 				</th>
 				<td cdk-cell *cdkCellDef="let member">
-					<button
-						class="btn dropdown-toggle p-0"
-						id="member-{{ member._id }}-role-menu-btn"
-						type="button"
-						attr.aria-controls="member-{{ member._id }}-role-menu"
-						*hasTeamRole="team(); role: 'admin'; else: readOnlyRole"
-						[cdkMenuTriggerFor]="roleMenu"
-					>
-						<span class="me-1">{{ member.roleDisplay }}</span>
-					</button>
-					<ng-template #roleMenu>
-						<div
-							class="dropdown-menu"
-							id="member-{{ member._id }}-role-menu"
-							attr.aria-labelledby="member-{{ member._id }}-role-menu-btn"
-							cdkMenu
+					@if (isTeamAdmin()) {
+						<button
+							class="btn dropdown-toggle p-0"
+							id="member-{{ member._id }}-role-menu-btn"
+							type="button"
+							attr.aria-controls="member-{{ member._id }}-role-menu"
+							[cdkMenuTriggerFor]="roleMenu"
 						>
-							@for (role of teamRoleOptions; track role) {
-								<button
-									class="dropdown-item"
-									cdkMenuItem
-									(cdkMenuItemTriggered)="updateRole(member, role.role)"
-								>
-									{{ role.label }}
-								</button>
-							}
-						</div>
-					</ng-template>
-
-					<ng-template #readOnlyRole>
+							<span class="me-1">{{ member.roleDisplay }}</span>
+						</button>
+						<ng-template #roleMenu>
+							<div
+								class="dropdown-menu"
+								id="member-{{ member._id }}-role-menu"
+								attr.aria-labelledby="member-{{ member._id }}-role-menu-btn"
+								cdkMenu
+							>
+								@for (role of teamRoleOptions; track role) {
+									<button
+										class="dropdown-item"
+										cdkMenuItem
+										(cdkMenuItemTriggered)="updateRole(member, role.role)"
+									>
+										{{ role.label }}
+									</button>
+								}
+							</div>
+						</ng-template>
+					} @else {
 						{{ member.roleDisplay }}
-					</ng-template>
+					}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="actions">
 				<th cdk-header-cell *cdkHeaderCellDef></th>
 				<td cdk-cell *cdkCellDef="let member">
-					<button
-						class="btn btn-link p-0"
-						container="body"
-						placement="left"
-						tooltip="Remove Member"
-						*hasTeamRole="team(); role: 'admin'; and: member.explicit"
-						(click)="removeMember(member)"
-					>
-						<span class="fa-solid fa-lg fa-trash"></span>
-					</button>
+					@if (isTeamAdmin() && member.explicit) {
+						<button
+							class="btn btn-link p-0"
+							container="body"
+							placement="left"
+							tooltip="Remove Member"
+							(click)="removeMember(member)"
+						>
+							<span class="fa-solid fa-lg fa-trash"></span>
+						</button>
+					}
 				</td>
 			</ng-container>
-			<tr cdk-header-row *cdkHeaderRowDef="displayedColumns; sticky: true"></tr>
-			<tr cdk-row *cdkRowDef="let item; columns: displayedColumns"></tr>
+			<tr cdk-header-row *cdkHeaderRowDef="columns; sticky: true"></tr>
+			<tr cdk-row *cdkRowDef="let item; columns: columns"></tr>
 		</table>
 
 		<asy-table-empty-state

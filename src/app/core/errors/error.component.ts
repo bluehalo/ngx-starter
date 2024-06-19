@@ -1,23 +1,28 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HasRoleDirective } from '../auth';
+import { APP_SESSION } from '../tokens';
 import { ErrorState } from './error-state.model';
 
 @Component({
 	standalone: true,
-	imports: [HasRoleDirective],
+	imports: [],
 	template: `
 		<div class="p-5 bg-body-tertiary rounded-3">
 			<h1 class="text-body-emphasis">{{ state.status }} {{ state.statusText }}</h1>
 			<p class="load">{{ state.url }}</p>
 			<p class="load">{{ state.message }}</p>
-			<p class="load" *hasRole="'admin'">{{ state.stack }}</p>
+			@if (isAdmin()) {
+				<p class="load">{{ state.stack }}</p>
+			}
 		</div>
 	`
 })
 export class ErrorComponent {
 	readonly #router = inject(Router);
+	readonly #session = inject(APP_SESSION);
+
+	readonly isAdmin = computed(() => this.#session().isAdmin());
 
 	state: ErrorState = {
 		status: 500,

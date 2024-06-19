@@ -20,10 +20,11 @@ import { JoinPipe } from '../../../../common/pipes/join.pipe';
 import { UtcDatePipe } from '../../../../common/pipes/utc-date-pipe/utc-date.pipe';
 import { SystemAlertService } from '../../../../common/system-alert/system-alert.service';
 import { SessionService, UserExternalRolesSelectDirective } from '../../../auth';
-import { APP_CONFIG } from '../../../tokens';
+import { APP_CONFIG, APP_SESSION } from '../../../tokens';
 import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';
 import { ListTeamMembersComponent } from '../../list-team-members/list-team-members.component';
 import { ListSubTeamsComponent } from '../../list-teams/list-sub-teams.component';
+import { TeamRole } from '../../team-role.model';
 import { Team } from '../../team.model';
 import { TeamsService } from '../../teams.service';
 
@@ -52,6 +53,7 @@ export class GeneralDetailsComponent {
 	readonly #alertService = inject(SystemAlertService);
 	readonly #sessionService = inject(SessionService);
 	readonly #teamsService = inject(TeamsService);
+	readonly #session = inject(APP_SESSION);
 	readonly #config = inject(APP_CONFIG);
 
 	readonly nestedTeamsEnabled = computed(() => this.#config()?.teams?.nestedTeams ?? false);
@@ -61,6 +63,10 @@ export class GeneralDetailsComponent {
 
 	readonly team = model.required<Team>();
 	readonly isEditing = signal(false);
+
+	readonly isTeamAdmin = computed(
+		() => this.#session().isAdmin() || this.#session().hasTeamRole(this.team(), TeamRole.ADMIN)
+	);
 
 	teamEditCopy: Team;
 

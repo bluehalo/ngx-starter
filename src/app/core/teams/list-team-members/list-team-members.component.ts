@@ -5,15 +5,12 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	DestroyRef,
-	OnChanges,
-	OnInit,
-	SimpleChanges,
 	computed,
 	inject,
 	input,
 	viewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -83,7 +80,7 @@ import { TeamsService } from '../teams.service';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListTeamMembersComponent implements OnChanges, OnInit {
+export class ListTeamMembersComponent {
 	readonly #destroyRef = inject(DestroyRef);
 	readonly #dialogService = inject(DialogService);
 	readonly #router = inject(Router);
@@ -96,7 +93,9 @@ export class ListTeamMembersComponent implements OnChanges, OnInit {
 
 	readonly team = input.required<Team>();
 
-	readonly #user = computed(() => this.#session().user);
+	readonly isTeamAdmin = computed(
+		() => this.#session().isAdmin() || this.#session().hasTeamRole(this.team(), TeamRole.ADMIN)
+	);
 
 	readonly teamRoleOptions = TeamRole.ROLES;
 
@@ -123,22 +122,14 @@ export class ListTeamMembersComponent implements OnChanges, OnInit {
 	);
 
 	readonly columns = ['name', 'username', 'lastLogin', 'type', 'role', 'actions'];
-	displayedColumns: string[] = [];
 
 	constructor() {
 		this.#alertService.clearAllAlerts();
-	}
 
-	ngOnInit() {
-		this.displayedColumns = this.columns.filter(
-			(column) => this.team().implicitMembers || column !== 'explicit'
-		);
-	}
-
-	ngOnChanges(changes: SimpleChanges) {
-		if (changes['team']) {
+		// eslint-disable-next-line rxjs-angular/prefer-takeuntil
+		toObservable(this.team).subscribe(() => {
 			this.dataSource.reload();
-		}
+		});
 	}
 
 	loadData(
@@ -203,7 +194,11 @@ export class ListTeamMembersComponent implements OnChanges, OnInit {
 		}
 
 		// If user is removing their own admin, verify that they know what they're doing
-		if (this.#user()?._id === member._id && member.role === 'admin' && role !== 'admin') {
+		if (
+			this.#session().user?._id === member._id &&
+			member.role === 'admin' &&
+			role !== 'admin'
+		) {
 			this.#dialogService
 				.confirm(
 					'Remove "Team Admin" role?',

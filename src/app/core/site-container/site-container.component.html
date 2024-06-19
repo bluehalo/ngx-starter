@@ -26,4 +26,6 @@
 	}
 </footer>
 
-<app-feedback-flyout *isAuthenticated="true; and: showFeedbackFlyout()"></app-feedback-flyout>
+@if (isAuthenticated() && showFeedbackFlyout()) {
+	<app-feedback-flyout />
+}

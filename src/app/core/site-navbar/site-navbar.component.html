@@ -257,14 +257,15 @@
 						</button>
 					}
 					<!-- Feedback -->
-					<button
-						class="dropdown-item"
-						cdkMenuItem
-						*isAuthenticated="true; and: showFeedbackOption()"
-						(cdkMenuItemTriggered)="showFeedbackModal()"
-					>
-						Give Feedback
-					</button>
+					@if (isAuthenticated() && showFeedbackOption()) {
+						<button
+							class="dropdown-item"
+							cdkMenuItem
+							(cdkMenuItemTriggered)="showFeedbackModal()"
+						>
+							Give Feedback
+						</button>
+					}
 					<!-- API Docs -->
 					@if (showApiDocsLink()) {
 						<a class="dropdown-item" [href]="apiDocsLink()" cdkMenuItem target="_blank">
