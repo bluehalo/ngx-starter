@@ -78,15 +78,16 @@
 					></asy-audit-component>
 					<div>
 						@if (entry.isViewDetailsAction) {
-							<small>
-								<a
-									class="btn-icon no-href"
-									[hidden]="(entry.audit.object ?? null) === null"
-									(click)="viewMore(entry, 'viewDetails')"
-								>
-									<span class="fa-solid fa-eye"></span><span>View Details</span>
-								</a>
-							</small>
+							<button
+								class="btn btn-link btn-sm"
+								container="body"
+								placement="bottom"
+								tooltip="See details of the update"
+								[hidden]="(entry.audit.object ?? null) === null"
+								(click)="viewMore(entry, 'viewDetails')"
+							>
+								<span class="fa-solid fa-eye"></span><span>View Details</span>
+							</button>
 						}
 						@if (entry.audit.action === 'save') {
 							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
@@ -106,18 +107,16 @@
 					></asy-audit-component>
 					<div>
 						@if (entry.isViewChangesAction) {
-							<small>
-								<a
-									class="btn-icon no-href"
-									container="body"
-									placement="bottom"
-									tooltip="See details of the update"
-									[hidden]="(entry.audit.object?.before ?? null) === null"
-									(click)="viewMore(entry, 'viewChanges')"
-								>
-									<span class="fa-solid fa-eye"></span><span>View Changes</span>
-								</a>
-							</small>
+							<button
+								class="btn btn-link btn-sm"
+								container="body"
+								placement="bottom"
+								tooltip="See details of the update"
+								[hidden]="(entry.audit.object?.before ?? null) === null"
+								(click)="viewMore(entry, 'viewChanges')"
+							>
+								<span class="fa-solid fa-eye"></span><span>View Details</span>
+							</button>
 						}
 						@if (entry.audit.action === 'save') {
 							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
