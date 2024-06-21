@@ -25,7 +25,7 @@ $card-header-height: 4rem !default;
 		.card-header {
 			height: auto;
 			border-bottom: 0;
-			border-right: $border-width solid $border-color;
+			border-right: $border-width solid var(--bs-border-color);
 		}
 	}
 }

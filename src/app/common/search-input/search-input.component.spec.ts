@@ -93,7 +93,8 @@ describe('SearchInputComponent', () => {
 
 		expect(
 			(
-				fixture.debugElement.query(By.css('.text-muted')).nativeElement as HTMLElement
+				fixture.debugElement.query(By.css('.text-body-secondary'))
+					.nativeElement as HTMLElement
 			).textContent?.trim()
 		).toEqual('Searches require a minimum of 3 characters.');
 	}));
@@ -110,7 +111,7 @@ describe('SearchInputComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
+		expect(fixture.debugElement.query(By.css('.text-body-secondary'))).toBeNull();
 	}));
 
 	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is adhered to', fakeAsync(() => {
@@ -126,7 +127,7 @@ describe('SearchInputComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
+		expect(fixture.debugElement.query(By.css('.text-body-secondary'))).toBeNull();
 	}));
 
 	it('should not show warning message if disableMinCountMessage is set when minSearchCharacterCount is not adhered to', fakeAsync(() => {
@@ -142,7 +143,7 @@ describe('SearchInputComponent', () => {
 
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.query(By.css('.text-muted'))).toBeNull();
+		expect(fixture.debugElement.query(By.css('.text-body-secondary'))).toBeNull();
 	}));
 
 	it('should show clear-search options if search input length > 0', () => {
