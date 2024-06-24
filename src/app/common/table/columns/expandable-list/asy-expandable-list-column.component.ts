@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
-import { Component, ContentChild, Directive, OnInit, TemplateRef } from '@angular/core';
+import { Component, Directive, OnInit, TemplateRef, contentChild } from '@angular/core';
 
 import { AsyAbstractValueColumnComponent } from '../asy-abstract-value-column.component';
 
@@ -23,8 +23,7 @@ export class AsyExpandableListColumnComponent<T>
 {
 	readonly #selectionModel = new SelectionModel<T>();
 
-	@ContentChild(ItemTemplateDirective, { read: TemplateRef })
-	itemTemplate?: TemplateRef<any>;
+	readonly itemTemplate = contentChild(ItemTemplateDirective, { read: TemplateRef });
 
 	toggle(item: T) {
 		this.#selectionModel.toggle(item);
