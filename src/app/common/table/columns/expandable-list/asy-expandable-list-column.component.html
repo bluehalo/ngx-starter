@@ -4,7 +4,7 @@
 			{{ header() ?? (name | titlecase) }}
 		</ng-template>
 		<ng-template
-			[ngTemplateOutlet]="headerTemplate ?? defaultHeaderTemplate"
+			[ngTemplateOutlet]="headerTemplate() ?? defaultHeaderTemplate"
 			[ngTemplateOutletContext]="{
 				header: header()
 			}"
@@ -26,7 +26,7 @@
 								{{ listItem }}
 							</ng-template>
 							<ng-template
-								[ngTemplateOutlet]="itemTemplate ?? defaultItemTemplate"
+								[ngTemplateOutlet]="itemTemplate() ?? defaultItemTemplate"
 								[ngTemplateOutletContext]="{
 									listItem: listItem,
 									item: item,
