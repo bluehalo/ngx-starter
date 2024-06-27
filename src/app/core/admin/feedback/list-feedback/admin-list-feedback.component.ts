@@ -36,8 +36,8 @@ import { Feedback, FeedbackService, FeedbackStatusOption } from '../../../feedba
 import { AdminUsersService } from '../../user/admin-users.service';
 
 @Component({
-	templateUrl: 'admin-list-feedback.component.html',
-	styleUrls: ['admin-list-feedback.component.scss'],
+	templateUrl: './admin-list-feedback.component.html',
+	styleUrls: ['./admin-list-feedback.component.scss'],
 	standalone: true,
 	imports: [
 		SystemAlertComponent,

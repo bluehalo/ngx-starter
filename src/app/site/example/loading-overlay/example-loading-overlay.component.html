@@ -6,17 +6,27 @@
 			[isError]="isError"
 			[isLoading]="isLoading"
 			(retry)="handleRetry()"
-		></loading-overlay>
+		/>
 		<p class="p-3">This is the where the loaded content will go</p>
 		<br />
 		<br />
 	</div>
 
 	<div class="btn-group">
-		<button class="btn btn-primary" [disabled]="isError" (click)="toggleLoading()">
+		<button
+			class="btn btn-primary"
+			type="button"
+			[disabled]="isError"
+			(click)="toggleLoading()"
+		>
 			{{ isLoading ? 'Stop' : 'Start' }} Loading
 		</button>
-		<button class="btn btn-primary ms-3" [disabled]="!isLoading" (click)="toggleError()">
+		<button
+			class="btn btn-primary ms-3"
+			type="button"
+			[disabled]="!isLoading"
+			(click)="toggleError()"
+		>
 			{{ isError ? 'Hide' : 'Show' }} Error
 		</button>
 	</div>

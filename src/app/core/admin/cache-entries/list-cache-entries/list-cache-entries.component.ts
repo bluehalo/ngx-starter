@@ -126,6 +126,7 @@ export class ListCacheEntriesComponent implements OnInit {
 	}
 
 	viewCacheEntry(cacheEntry: CacheEntry) {
+		console.log(cacheEntry);
 		this.#dialogService.open<unknown, CacheEntryModalData>(CacheEntryModalComponent, {
 			data: {
 				cacheEntry

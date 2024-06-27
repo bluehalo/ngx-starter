@@ -9,6 +9,7 @@ import { SystemAlertService } from '../../common/system-alert';
 import { User } from '../auth';
 import { AuditActionTypes } from './audit.classes';
 
+// eslint-disable-next-line @angular-eslint/use-injectable-provided-in
 @Injectable()
 export class AuditService {
 	readonly #http = inject(HttpClient);

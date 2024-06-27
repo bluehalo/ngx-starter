@@ -1,5 +1,6 @@
 <button
 	class="dropdown-toggle dropdown-toggle-hide-caret"
+	type="button"
 	cdkOverlayOrigin
 	#trigger
 	(click)="toggle()"
@@ -35,16 +36,14 @@
 				[searchable]="false"
 				(click)="$event.stopPropagation()"
 				(ngModelChange)="onSearchTypeChange()"
-			>
-			</ng-select>
+			/>
 		</div>
 		<div class="search mt-2 mb-3">
 			<asy-search-input
 				placeholder="Search..."
 				[search]="search()"
 				(applySearch)="onSearchText($event)"
-			>
-			</asy-search-input>
+			/>
 		</div>
 	</div>
 </ng-template>

@@ -1,0 +1,9 @@
+.cdk-cell {
+	button {
+		border: 0;
+
+		&:hover {
+			color: var(--bs-link-hover-color);
+		}
+	}
+}

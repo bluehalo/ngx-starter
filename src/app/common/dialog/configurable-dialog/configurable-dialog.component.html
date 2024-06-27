@@ -13,10 +13,13 @@
 	<form id="modalForm" #modalForm="ngForm">
 		@for (input of data.inputs; track input; let isFirst = $first) {
 			<div class="mb-3">
-				<label [class.form-required]="input.required">{{ input.label }}</label>
+				<label [class.form-required]="input.required" for="dialog-input-{{ input.key }}">
+					{{ input.label }}
+				</label>
 				@if (input.type === 'textarea') {
 					<textarea
 						class="form-control text-area"
+						id="dialog-input-{{ input.key }}"
 						[name]="input.key"
 						placeholder="Enter {{ input.label }}..."
 						[(ngModel)]="formData[input.key]"

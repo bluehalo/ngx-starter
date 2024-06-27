@@ -1,10 +1,10 @@
 @if (isMasquerading) {
 	<div class="mx-auto mt-5">
-		<loading-spinner message="Clearing Masquerade..."> </loading-spinner>
+		<loading-spinner message="Clearing Masquerade..." />
 	</div>
 } @else {
 	<div class="mb-2">
-		<label>Search Type</label>
+		<div class="form-label">Search Type</div>
 		<div class="form-check">
 			<input
 				class="form-check-input"
@@ -54,7 +54,7 @@
 			/>
 		</div>
 	}
-	<button class="btn btn-primary" [disabled]="!selectedUserDn" (click)="submit()">
+	<button class="btn btn-primary" type="button" [disabled]="!selectedUserDn" (click)="submit()">
 		Masquerade
 	</button>
 }

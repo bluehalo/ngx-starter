@@ -3,12 +3,14 @@
 		@if (isError()) {
 			<notification notificationType="danger" showActions [message]="errorMessage()">
 				<ng-template #notificationActions>
-					<button class="btn btn-primary" (click)="retry.emit()">Retry</button>
+					<button class="btn btn-primary" type="button" (click)="retry.emit()">
+						Retry
+					</button>
 				</ng-template>
 			</notification>
 		} @else {
 			<div class="overlay-spinner">
-				<loading-spinner [message]="message()"> </loading-spinner>
+				<loading-spinner [message]="message()" />
 			</div>
 		}
 	</div>

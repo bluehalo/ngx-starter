@@ -4,8 +4,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { injectAdminTopics } from './provider';
 
 @Component({
-	templateUrl: 'admin.component.html',
-	styleUrls: ['admin.component.scss'],
+	templateUrl: './admin.component.html',
+	styleUrls: ['./admin.component.scss'],
 	standalone: true,
 	imports: [RouterLinkActive, RouterLink, RouterOutlet]
 })

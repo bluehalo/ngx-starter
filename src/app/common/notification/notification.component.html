@@ -4,7 +4,7 @@
 	</div>
 	@if (showActions() && actionTemplate()) {
 		<div class="table-actions d-flex">
-			<ng-container *ngTemplateOutlet="actionTemplate() ?? null"></ng-container>
+			<ng-container *ngTemplateOutlet="actionTemplate() ?? null" />
 		</div>
 	}
 </div>

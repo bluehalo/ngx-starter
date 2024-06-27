@@ -4,7 +4,7 @@ import { Config } from '../../config.model';
 
 @Component({
 	selector: 'external-links',
-	templateUrl: 'external-links.component.html',
+	templateUrl: './external-links.component.html',
 	standalone: true,
 	imports: []
 })

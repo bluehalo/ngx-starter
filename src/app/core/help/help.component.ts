@@ -13,8 +13,8 @@ import {
 import { filter, map } from 'rxjs/operators';
 
 @Component({
-	templateUrl: 'help.component.html',
-	styleUrls: ['help.component.scss'],
+	templateUrl: './help.component.html',
+	styleUrls: ['./help.component.scss'],
 	standalone: true,
 	imports: [RouterLinkActive, RouterLink, RouterOutlet, TitleCasePipe, JsonPipe]
 })

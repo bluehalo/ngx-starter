@@ -113,7 +113,7 @@ $nav-popover-width: 192px !default;
 }
 
 .messages-menu {
-	max-width: min(calc(100vw - #{$nav-open-width} - 1rem), #{$nav-messages-popover-max-width});
+	width: min(calc(100vw - #{$nav-open-width} - 1rem), #{$nav-messages-popover-max-width});
 }
 
 .nav-menu {

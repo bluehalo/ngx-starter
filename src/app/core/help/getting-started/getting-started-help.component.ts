@@ -4,7 +4,7 @@ import { APP_CONFIG } from '../../tokens';
 import { ExternalLinksComponent } from './external-links.component';
 
 @Component({
-	templateUrl: 'getting-started-help.component.html',
+	templateUrl: './getting-started-help.component.html',
 	standalone: true,
 	imports: [ExternalLinksComponent]
 })

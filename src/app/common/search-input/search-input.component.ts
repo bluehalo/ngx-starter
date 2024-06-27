@@ -1,10 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { NgClass } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	booleanAttribute,
 	input,
 	model,
+	numberAttribute,
 	output,
 	signal
 } from '@angular/core';
@@ -31,7 +33,7 @@ import { debounceTime } from 'rxjs/operators';
 		])
 	],
 	standalone: true,
-	imports: [FormsModule],
+	imports: [FormsModule, NgClass],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchInputComponent {
@@ -48,7 +50,7 @@ export class SearchInputComponent {
 	 * Specifies a minimum character count required to search.
 	 * In the event the number of characters is between 0 and the minimum, a warning message is shown beneath the search bar
 	 */
-	readonly minSearchCharacterCount = input(0);
+	readonly minSearchCharacterCount = input(0, { transform: numberAttribute });
 
 	/**
 	 * When set to true, the minimum search character
@@ -90,10 +92,12 @@ export class SearchInputComponent {
 	}
 
 	clearSearch(event?: MouseEvent) {
-		this.search.set('');
-		this.applySearch.emit(this.search());
-		if (event) {
-			event.stopPropagation();
+		if (this.search().length > 0) {
+			this.search.set('');
+			this.applySearch.emit(this.search());
+			if (event) {
+				event.stopPropagation();
+			}
 		}
 	}
 }

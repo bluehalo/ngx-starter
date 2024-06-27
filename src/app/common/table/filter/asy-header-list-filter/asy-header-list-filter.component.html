@@ -1,5 +1,6 @@
 <button
 	class="dropdown-toggle dropdown-toggle-hide-caret"
+	type="button"
 	cdkOverlayOrigin
 	#trigger
 	(click)="toggle()"
@@ -34,8 +35,7 @@
 					placeholder="Search..."
 					[search]="search"
 					(applySearch)="onSearchOptions($event)"
-				>
-				</asy-search-input>
+				/>
 			</div>
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
 		}
@@ -68,8 +68,8 @@
 		</div>
 		@if (showMatch()) {
 			<div class="divider dropdown-divider my-0 mx-3"></div>
-			<div class="my-1">
-				<label class="mb-0 me-3">Match:</label>
+			<div class="mt-2 mb-1">
+				<span class="me-3">Match:</span>
 				@for (operatorOption of [false, true]; track operatorOption; let i = $index) {
 					<div class="form-check form-check-inline">
 						<input
@@ -91,7 +91,11 @@
 		@if (isFiltered()) {
 			<div class="divider dropdown-divider mb-0 mx-3"></div>
 			<div class="mt-2">
-				<button class="btn btn-link px-0" (click)="clearFilter(); $event.stopPropagation()">
+				<button
+					class="btn btn-link px-0"
+					type="button"
+					(click)="clearFilter(); $event.stopPropagation()"
+				>
 					Clear Filters
 				</button>
 			</div>

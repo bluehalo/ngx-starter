@@ -1,6 +1,6 @@
 <section>
 	<!-- Alert Notifications -->
-	<system-alert></system-alert>
+	<system-alert />
 
 	<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="submitMessage()">
 		<div class="mb-4">
@@ -24,7 +24,7 @@
 				style="width: 350px"
 				[(ngModel)]="message().type"
 				[items]="typeOptions"
-			></ng-select>
+			/>
 		</div>
 		<!-- Title -->
 		<div class="mb-3">

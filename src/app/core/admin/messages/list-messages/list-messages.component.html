@@ -3,7 +3,7 @@
 		<h1 skipTo>Messages</h1>
 		View and manage messages.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -14,7 +14,7 @@
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -37,15 +37,15 @@
 					<a [routerLink]="['/admin/message', message._id]">{{ message.title }}</a>
 				</td>
 			</ng-container>
-			<asy-text-column name="type"></asy-text-column>
+			<asy-text-column name="type" />
 			<ng-container cdkColumnDef="body">
 				<th cdk-header-cell *cdkHeaderCellDef>Body</th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let message">
 					{{ message.body }}
 				</td>
 			</ng-container>
-			<asy-date-column name="created"></asy-date-column>
-			<asy-date-column name="updated"></asy-date-column>
+			<asy-date-column name="created" />
+			<asy-date-column name="updated" />
 			<asy-actions-menu-column scope="user" stickyEnd>
 				<ng-template
 					actions-menu-tmp
@@ -89,12 +89,12 @@
 			filteredText="No messages matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
-		></asy-table-empty-state>
+		/>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

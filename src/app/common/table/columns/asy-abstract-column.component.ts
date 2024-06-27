@@ -10,7 +10,7 @@ import {
 	input
 } from '@angular/core';
 
-@Directive()
+@Directive({ standalone: true })
 export abstract class AsyAbstractColumnComponent<T> implements OnDestroy, OnInit {
 	/** Column name that should be used to reference this column. */
 	@Input()

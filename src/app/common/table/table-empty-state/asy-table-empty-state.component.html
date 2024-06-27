@@ -1,10 +1,15 @@
 @if (dataSource().loading) {
-	<asy-skeleton-rows [rows]="dataSource().pageChangeEvent$.value.pageSize"></asy-skeleton-rows>
+	<asy-skeleton-rows [rows]="dataSource().pageChangeEvent$.value.pageSize" />
 } @else if (dataSource().pagingResults$.value.elements.length === 0) {
 	<div class="d-flex justify-content-center py-5">
 		@if (dataSource().isFiltered) {
 			@if (showIcons()) {
-				<img src="/assets/images/empty-state/no-results.png" />
+				<img
+					alt="No Results"
+					height="237"
+					ngSrc="/assets/images/empty-state/no-results.png"
+					width="257"
+				/>
 			}
 			<div class="d-flex flex-column align-items-start">
 				<h3>{{ filteredText() }}</h3>
@@ -20,7 +25,12 @@
 			</div>
 		} @else {
 			@if (showIcons()) {
-				<img src="/assets/images/empty-state/no-data.png" />
+				<img
+					alt="No Results"
+					height="220"
+					ngSrc="/assets/images/empty-state/no-data.png"
+					width="219"
+				/>
 			}
 			<div class="d-flex flex-column align-items-start">
 				<h3>{{ emptyText() }}</h3>

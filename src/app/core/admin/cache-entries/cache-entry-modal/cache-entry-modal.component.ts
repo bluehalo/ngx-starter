@@ -11,7 +11,7 @@ export class CacheEntryModalData {
 	cacheEntry: CacheEntry;
 }
 @Component({
-	templateUrl: 'cache-entry-modal.component.html',
+	templateUrl: './cache-entry-modal.component.html',
 	styles: [
 		`
 			:host {

@@ -7,11 +7,12 @@
 		(input)="onInput()"
 		(keyup)="onKeyup()"
 	/>
-	@if (search().length === 0) {
-		<span class="icon fa-solid fa-search"></span>
-	} @else {
-		<span class="icon fa-solid fa-times" (click)="clearSearch($event)"></span>
-	}
+	<button class="btn shadow-none" type="button" (click)="clearSearch($event)">
+		<span
+			class="fa-solid fa-fw"
+			[ngClass]="search().length === 0 ? 'fa-search' : 'fa-times'"
+		></span>
+	</button>
 </div>
 @if (!disableMinCountMessage() && showMinCountMessage()) {
 	<div class="text-body-secondary pt-2" [@minCount]>

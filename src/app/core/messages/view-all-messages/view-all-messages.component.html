@@ -2,19 +2,18 @@
 	<h1 class="mb-3">Notifications</h1>
 
 	<!-- Alert Notifications -->
-	<system-alert></system-alert>
+	<system-alert />
 
 	<div class="pt-2 d-flex flex-column align-items-stretch">
 		<asy-search-input
 			class="mx-auto mb-4"
 			placeholder="Search messages..."
 			(applySearch)="onSearch($event)"
-		>
-		</asy-search-input>
+		/>
 		<div class="p-2">
 			@if (newMessages()) {
 				<div>
-					<button class="btn btn-sm btn-link" (click)="loadNewMessages()">
+					<button class="btn btn-sm btn-link" type="button" (click)="loadNewMessages()">
 						Load new messages
 					</button>
 				</div>

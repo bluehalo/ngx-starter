@@ -8,8 +8,7 @@
 			[ngTemplateOutletContext]="{
 				header: header()
 			}"
-		>
-		</ng-template>
+		/>
 	</th>
 	<td
 		class=""
@@ -32,15 +31,14 @@
 									item: item,
 									index: item.index
 								}"
-							>
-							</ng-template>
+							/>
 						</div>
 					}
 				</div>
 			}
 			@if (item[name]?.length > 1) {
 				<div class="ps-auto">
-					<button class="btn btn-sm btn-link py-0" (click)="toggle(item)">
+					<button class="btn btn-sm btn-link py-0" type="button" (click)="toggle(item)">
 						<span class="fa-solid fa-lg fa-angle-down"></span>
 					</button>
 				</div>
