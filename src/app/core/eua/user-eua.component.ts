@@ -20,7 +20,7 @@ import { NavigationService } from '../navigation.service';
 import { APP_SESSION } from '../tokens';
 
 @Component({
-	templateUrl: 'user-eua.component.html',
+	templateUrl: './user-eua.component.html',
 	standalone: true,
 	imports: [SystemAlertComponent, FormsModule, AsyncPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush

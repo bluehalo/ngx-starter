@@ -19,11 +19,12 @@
 						<div class="card-body">
 							<div class="d-flex">
 								<h4 class="card-title text-truncate me-3">{{ message.title }}</h4>
-								<span
-									class="fa-solid fa-lg fa-close ms-auto"
-									style="cursor: pointer"
+								<button
+									class="btn-close ms-auto"
+									type="button"
+									aria-label="Dismiss Message"
 									(click)="dismissMessage(message)"
-								></span>
+								></button>
 							</div>
 							<p class="card-text line-clamp" [innerHTML]="message.body"></p>
 						</div>

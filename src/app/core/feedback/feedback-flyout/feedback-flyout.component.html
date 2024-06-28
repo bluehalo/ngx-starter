@@ -21,7 +21,7 @@
 					>
 				</div>
 				@if (feedback.type === 'general feedback') {
-					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+					<ng-container *ngTemplateOutlet="textInput" />
 				}
 				<div class="form-check">
 					<input
@@ -38,7 +38,7 @@
 					>
 				</div>
 				@if (feedback.type === 'feature request') {
-					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+					<ng-container *ngTemplateOutlet="textInput" />
 				}
 				<div class="form-check">
 					<input
@@ -135,7 +135,7 @@
 						>
 					</div>
 					<h3 class="pt-2">What happened?</h3>
-					<ng-container *ngTemplateOutlet="textInput"></ng-container>
+					<ng-container *ngTemplateOutlet="textInput" />
 				}
 				<ng-template #textInput>
 					@if (classificationOptions().length > 0) {
@@ -149,8 +149,7 @@
 								[(ngModel)]="feedback.classification"
 								[clearable]="false"
 								[items]="classificationOptions()"
-							>
-							</ng-select>
+							/>
 						</div>
 					}
 					<div

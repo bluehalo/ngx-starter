@@ -3,7 +3,7 @@
 		<h1 skipTo>Cache Entries</h1>
 		View and manage user cache entries.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -14,21 +14,21 @@
 					placeholder="Search key and value..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 		</div>
 	</div>
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<asy-text-column name="key"></asy-text-column>
+			<asy-text-column name="key" />
 			<ng-container cdkColumnDef="value">
 				<th cdk-header-cell *cdkHeaderCellDef>Value</th>
 				<td class="hide-overflow" cdk-cell style="max-width: 300px" *cdkCellDef="let entry">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
-			<asy-ago-date-column name="ts" header="Created"></asy-ago-date-column>
+			<asy-ago-date-column name="ts" header="Created" />
 			<asy-actions-menu-column scope="cache-entry" stickyEnd>
 				<ng-template
 					actions-menu-tmp
@@ -44,6 +44,7 @@
 					>
 						<button
 							class="dropdown-item"
+							type="button"
 							cdkMenuItem
 							(cdkMenuItemTriggered)="viewCacheEntry(item)"
 						>
@@ -51,6 +52,7 @@
 						</button>
 						<button
 							class="dropdown-item"
+							type="button"
 							cdkMenuItem
 							(cdkMenuItemTriggered)="refreshCacheEntry(item)"
 						>
@@ -58,6 +60,7 @@
 						</button>
 						<button
 							class="dropdown-item"
+							type="button"
 							cdkMenuItem
 							(cdkMenuItemTriggered)="confirmDeleteEntry(item)"
 						>
@@ -75,12 +78,12 @@
 			filteredText="No cache entries matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
-		></asy-table-empty-state>
+		/>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

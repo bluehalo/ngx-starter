@@ -20,7 +20,7 @@ export interface AsyFilterHeaderColumnDef {
 	name: string;
 }
 
-@Directive()
+@Directive({ standalone: true })
 export abstract class AsyAbstractHeaderFilterComponent
 	implements AsyFilterable, AfterViewInit, OnDestroy, OnInit
 {

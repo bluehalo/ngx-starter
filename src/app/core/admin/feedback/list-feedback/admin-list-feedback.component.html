@@ -3,7 +3,7 @@
 		<h1 skipTo>System Feedback</h1>
 		View and manage system feedback.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -14,7 +14,7 @@
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -71,8 +71,8 @@
 						{{ feedback.creator.organization }}
 					</td>
 				</ng-container>
-				<asy-ago-date-column name="created" header="Submitted Date"></asy-ago-date-column>
-				<asy-ago-date-column name="updated"></asy-ago-date-column>
+				<asy-ago-date-column name="created" header="Submitted Date" />
+				<asy-ago-date-column name="updated" />
 				<ng-container cdkColumnDef="type">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Type</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let feedback">
@@ -82,22 +82,19 @@
 				<ng-container cdkColumnDef="body">
 					<th cdk-header-cell *cdkHeaderCellDef>
 						Feedback
-						<asy-header-filter text-filter></asy-header-filter>
+						<asy-header-filter text-filter />
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						{{ feedback.body }}
 					</td>
 				</ng-container>
-				<asy-text-column name="browser"></asy-text-column>
-				<asy-text-column name="os"></asy-text-column>
-				<asy-text-column name="url" header="Submitted From"></asy-text-column>
+				<asy-text-column name="browser" />
+				<asy-text-column name="os" />
+				<asy-text-column name="url" header="Submitted From" />
 				<ng-container cdkColumnDef="status">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 						Status
-						<asy-header-filter
-							list-filter
-							[options]="['New', 'Open', 'Closed']"
-						></asy-header-filter>
+						<asy-header-filter list-filter [options]="['New', 'Open', 'Closed']" />
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						<button
@@ -119,6 +116,7 @@
 								@if (feedback.status !== feedbackStatusOptions.OPEN) {
 									<button
 										class="dropdown-item"
+										type="button"
 										cdkMenuItem
 										(cdkMenuItemTriggered)="
 											updateFeedbackStatus(
@@ -133,6 +131,7 @@
 								@if (feedback.status !== feedbackStatusOptions.CLOSED) {
 									<button
 										class="dropdown-item"
+										type="button"
 										cdkMenuItem
 										(cdkMenuItemTriggered)="
 											updateFeedbackStatus(
@@ -169,6 +168,7 @@
 							>
 								<button
 									class="dropdown-item"
+									type="button"
 									cdkMenuItem
 									(cdkMenuItemTriggered)="updateFeedbackAssignee(feedback)"
 								>
@@ -177,6 +177,7 @@
 								@for (username of assigneeUsernames(); track username) {
 									<button
 										class="dropdown-item"
+										type="button"
 										cdkMenuItem
 										(cdkMenuItemTriggered)="
 											updateFeedbackAssignee(feedback, username)
@@ -198,7 +199,7 @@
 				filteredText="No feedback matched your search."
 				[dataSource]="dataSource"
 				(clearFilters)="clearFilters()"
-			></asy-table-empty-state>
+			/>
 		</div>
 
 		<asy-sidebar headerText="Columns" #sidebar>
@@ -206,13 +207,13 @@
 				[columns]="columns"
 				[storageKey]="dataSource.storageKey"
 				(columnsChange)="columnsChanged($event)"
-			></asy-column-chooser>
+			/>
 		</asy-sidebar>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

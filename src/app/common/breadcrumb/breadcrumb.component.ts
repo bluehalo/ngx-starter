@@ -9,8 +9,8 @@ import { Breadcrumb, BreadcrumbService } from './breadcrumb.service';
 
 @Component({
 	selector: 'breadcrumb',
-	templateUrl: 'breadcrumb.component.html',
-	styleUrls: ['breadcrumb.component.scss'],
+	templateUrl: './breadcrumb.component.html',
+	styleUrls: ['./breadcrumb.component.scss'],
 	standalone: true,
 	imports: [RouterLink]
 })

@@ -17,8 +17,8 @@ import { NavigationService } from '../navigation.service';
 import { APP_CONFIG } from '../tokens';
 
 @Component({
-	templateUrl: 'signin.component.html',
-	styleUrls: ['signin.component.scss'],
+	templateUrl: './signin.component.html',
+	styleUrls: ['./signin.component.scss'],
 	standalone: true,
 	imports: [LoadingSpinnerComponent, FormsModule, RouterLink],
 	changeDetection: ChangeDetectionStrategy.OnPush

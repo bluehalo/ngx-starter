@@ -19,7 +19,7 @@
 			[typeahead]="usersInput$"
 			(change)="typeaheadOnSelect($event, selectDropdown)"
 		>
-			<ng-template let-item="item" ng-label-tmp> </ng-template>
+			<ng-template let-item="item" ng-label-tmp />
 		</ng-select>
 	</div>
 
@@ -65,6 +65,7 @@
 						@for (role of teamRoleOptions; track role) {
 							<button
 								class="dropdown-item"
+								type="button"
 								[value]="role.role"
 								cdkMenuItem
 								(cdkMenuItemTriggered)="updateRoleSelection(member, role.role)"
@@ -81,6 +82,7 @@
 			<td cdk-cell *cdkCellDef="let index = index">
 				<button
 					class="btn btn-link p-0"
+					type="button"
 					container="body"
 					placement="left"
 					tooltip="Remove User"

@@ -3,7 +3,7 @@ import { Directive, TemplateRef, booleanAttribute, contentChild, input } from '@
 import { AsyAbstractColumnComponent } from './asy-abstract-column.component';
 import { HeaderTemplateDirective } from './header-template.directive';
 
-@Directive()
+@Directive({ standalone: true })
 export abstract class AsyAbstractValueColumnComponent<T> extends AsyAbstractColumnComponent<T> {
 	readonly header = input<string>();
 	readonly sortable = input(true, { transform: booleanAttribute });

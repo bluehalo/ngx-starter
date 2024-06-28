@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, booleanAttribute, input, output } from '@angular/core';
 
 import { AsyTableDataSource } from '../asy-table-data-source';
@@ -8,7 +9,7 @@ import { AsySkeletonRowsComponent } from '../skeleton-rows/asy-skeleton-rows.com
 	templateUrl: './asy-table-empty-state.component.html',
 	styleUrls: ['./asy-table-empty-state.component.scss'],
 	standalone: true,
-	imports: [AsySkeletonRowsComponent]
+	imports: [AsySkeletonRowsComponent, NgOptimizedImage]
 })
 export class AsyTableEmptyStateComponent<T> {
 	readonly dataSource = input.required<AsyTableDataSource<T>>();

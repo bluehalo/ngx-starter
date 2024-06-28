@@ -3,7 +3,7 @@
 		<h1 skipTo>EUAs</h1>
 		View and manage end user agreements.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -14,7 +14,7 @@
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -43,7 +43,7 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<asy-text-column name="_id" header="ID" [sortable]="false"></asy-text-column>
+				<asy-text-column name="_id" header="ID" [sortable]="false" />
 				<ng-container cdkColumnDef="title">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
@@ -56,9 +56,9 @@
 						{{ eua.text }}
 					</td>
 				</ng-container>
-				<asy-date-column name="created"></asy-date-column>
-				<asy-date-column name="published"></asy-date-column>
-				<asy-date-column name="updated"></asy-date-column>
+				<asy-date-column name="created" />
+				<asy-date-column name="published" />
+				<asy-date-column name="updated" />
 				<asy-actions-menu-column scope="eua" stickyEnd>
 					<ng-template
 						actions-menu-tmp
@@ -74,6 +74,7 @@
 						>
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								[routerLink]="['/admin/eua', item._id]"
 							>
@@ -81,16 +82,23 @@
 							</button>
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								(click)="previewEndUserAgreement(item)"
 							>
 								Preview
 							</button>
-							<button class="dropdown-item" cdkMenuItem (click)="publishEua(item)">
+							<button
+								class="dropdown-item"
+								type="button"
+								cdkMenuItem
+								(click)="publishEua(item)"
+							>
 								Publish
 							</button>
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								(click)="confirmDeleteEua(item)"
 							>
@@ -108,7 +116,7 @@
 				filteredText="No EUAs matched your search."
 				[dataSource]="dataSource"
 				(clearFilters)="clearFilters()"
-			></asy-table-empty-state>
+			/>
 		</div>
 
 		<asy-sidebar headerText="Columns" #sidebar>
@@ -116,13 +124,13 @@
 				[columns]="columns"
 				[storageKey]="dataSource.storageKey"
 				(columnsChange)="columnsChanged($event)"
-			></asy-column-chooser>
+			/>
 		</asy-sidebar>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

@@ -1,7 +1,7 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { CdkConnectedOverlay, CdkScrollable, ConnectedPosition } from '@angular/cdk/overlay';
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -33,8 +33,8 @@ const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 
 @Component({
 	selector: 'site-navbar',
-	templateUrl: 'site-navbar.component.html',
-	styleUrls: ['site-navbar.component.scss'],
+	templateUrl: './site-navbar.component.html',
+	styleUrls: ['./site-navbar.component.scss'],
 	standalone: true,
 	imports: [
 		NgClass,
@@ -54,7 +54,8 @@ const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 		CdkConnectedOverlay,
 		A11yModule,
 		CdkScrollable,
-		ThemeToggleComponent
+		ThemeToggleComponent,
+		NgOptimizedImage
 	]
 })
 export class SiteNavbarComponent implements OnInit {

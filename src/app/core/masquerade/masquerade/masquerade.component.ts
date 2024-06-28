@@ -45,7 +45,7 @@ export class MasqueradeComponent implements OnInit {
 		} else if (this.#session().user?.canMasquerade) {
 			this.loadUsers();
 		} else {
-			window.location.href = '#/';
+			// window.location.href = '#/';
 		}
 	}
 

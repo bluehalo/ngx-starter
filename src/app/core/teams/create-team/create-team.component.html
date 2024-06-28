@@ -1,6 +1,6 @@
 <section>
 	<!-- Alert Notifications -->
-	<system-alert></system-alert>
+	<system-alert />
 
 	<form role="form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="save()">
 		<div>
@@ -32,8 +32,9 @@
 		<!-- Team Admin -->
 		@if (isAdmin()) {
 			<div class="mb-3">
-				<label class="form-label form-required">Team Admin</label>
+				<label class="form-label form-required" for="teamAdmin">Team Admin</label>
 				<ng-select
+					id="teamAdmin"
 					name="teamAdmin"
 					bindLabel="name"
 					placeholder="Search for user..."
@@ -43,8 +44,7 @@
 					[items]="typeaheadUsers()"
 					[loading]="usersLoading()"
 					[typeahead]="usersInput$"
-				>
-				</ng-select>
+				/>
 				<button
 					class="btn btn-sm btn-link px-0 pb-0"
 					type="button"
@@ -81,15 +81,14 @@
 					placeholder="Select parent..."
 					style="width: 400px"
 					[(ngModel)]="team.parent"
-				>
-				</ng-select>
+				/>
 			</div>
 		}
 
 		<!-- Implicit Teams Members -->
 		@if (implicitMembersStrategy() !== undefined) {
 			<div class="mb-3">
-				<label class="form-label form-required">Implicit Team Members</label>
+				<div class="form-label form-required">Implicit Team Members</div>
 				<p class="mt-n1 mb-1">
 					Do you want to automatically grant users access to team based on external
 					{{ implicitMembersStrategy() }}?
@@ -124,25 +123,27 @@
 		@if (implicitMembersStrategy() === 'roles') {
 			<!-- External Roles -->
 			<div class="mb-3" [hidden]="!team.implicitMembers">
-				<label class="form-label">External Roles</label>
+				<label class="form-label" for="externalRoles">External Roles</label>
 				<ng-select
+					id="externalRoles"
 					name="externalRoles"
 					appUserExternalRolesSelect
 					multi-select
 					placeholder="Start typing a role..."
 					[(ngModel)]="team.requiresExternalRoles"
-				></ng-select>
+				/>
 			</div>
 		} @else if (implicitMembersStrategy() === 'teams') {
 			<!-- External Teams -->
 			<div class="mb-3" [hidden]="!team.implicitMembers">
-				<label class="form-label">External Teams</label>
+				<label class="form-label" for="externalTeams">External Teams</label>
 				<ng-select
+					id="externalTeams"
 					name="externalTeams"
 					multi-select
 					placeholder="Start typing a team..."
 					[(ngModel)]="team.requiresExternalTeams"
-				></ng-select>
+				/>
 			</div>
 		}
 

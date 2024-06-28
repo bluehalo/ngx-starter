@@ -4,7 +4,7 @@
 			<h1 skipTo>Teams</h1>
 			View and manage team membership and roles.
 		</div>
-		<system-alert></system-alert>
+		<system-alert />
 	</section>
 }
 
@@ -16,7 +16,7 @@
 					placeholder="Search teams..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -42,7 +42,7 @@
 					<a [routerLink]="['/team', team._id]">{{ team.name }}</a>
 				</td>
 			</ng-container>
-			<asy-ago-date-column name="created"></asy-ago-date-column>
+			<asy-ago-date-column name="created" />
 			<ng-container cdkColumnDef="description">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Description</th>
 				<td cdk-cell *cdkCellDef="let team">
@@ -58,12 +58,12 @@
 			filteredText="No {{ parent() ? 'sub-teams' : 'teams' }} matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
-		></asy-table-empty-state>
+		/>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

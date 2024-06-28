@@ -20,8 +20,8 @@ import { Feedback } from '../feedback.model';
 import { FeedbackService } from '../feedback.service';
 
 @Component({
-	templateUrl: 'feedback-modal.component.html',
-	styleUrls: ['feedback-modal.component.scss'],
+	templateUrl: './feedback-modal.component.html',
+	styleUrls: ['./feedback-modal.component.scss'],
 	standalone: true,
 	imports: [ModalComponent, FormsModule, NgTemplateOutlet, NgSelectModule],
 	changeDetection: ChangeDetectionStrategy.OnPush

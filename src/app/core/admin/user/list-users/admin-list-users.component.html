@@ -3,7 +3,7 @@
 		<h1 skipTo>Users</h1>
 		View and manage user accounts.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -14,7 +14,7 @@
 					placeholder="Search..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -47,33 +47,27 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<asy-text-column name="_id" header="ID" [sortable]="false"></asy-text-column>
+				<asy-text-column name="_id" header="ID" [sortable]="false" />
 				<ng-container cdkColumnDef="name">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						<a [routerLink]="['/admin/user', user._id]">{{ user.name }}</a>
 					</td>
 				</ng-container>
-				<asy-text-column name="username" [sortable]="false"></asy-text-column>
-				<asy-text-column name="organization" [sortable]="false"></asy-text-column>
-				<asy-text-column name="email" [sortable]="false"></asy-text-column>
-				<asy-text-column name="phone" [sortable]="false"></asy-text-column>
-				<asy-ago-date-column name="acceptedEua" header="EUA"></asy-ago-date-column>
-				<asy-ago-date-column name="lastLogin" header="Last Login"></asy-ago-date-column>
-				<asy-date-column name="created"></asy-date-column>
-				<asy-date-column name="updated"></asy-date-column>
-				<asy-expandable-list-column
-					name="externalRoles"
-					header="External Roles"
-				></asy-expandable-list-column>
-				<asy-expandable-list-column
-					name="externalGroups"
-					header="External Groups"
-				></asy-expandable-list-column>
+				<asy-text-column name="username" [sortable]="false" />
+				<asy-text-column name="organization" [sortable]="false" />
+				<asy-text-column name="email" [sortable]="false" />
+				<asy-text-column name="phone" [sortable]="false" />
+				<asy-ago-date-column name="acceptedEua" header="EUA" />
+				<asy-ago-date-column name="lastLogin" header="Last Login" />
+				<asy-date-column name="created" />
+				<asy-date-column name="updated" />
+				<asy-expandable-list-column name="externalRoles" header="External Roles" />
+				<asy-expandable-list-column name="externalGroups" header="External Groups" />
 				<ng-container cdkColumnDef="roles">
 					<th cdk-header-cell *cdkHeaderCellDef>
 						Roles
-						<asy-header-filter list-filter user-role-filter></asy-header-filter>
+						<asy-header-filter list-filter user-role-filter />
 					</th>
 					<td cdk-cell *cdkCellDef="let user">
 						@for (role of possibleRoles; track role) {
@@ -111,6 +105,7 @@
 						>
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								[routerLink]="['/admin/user', item._id]"
 							>
@@ -119,6 +114,7 @@
 							@if (allowDeleteUser()) {
 								<button
 									class="dropdown-item"
+									type="button"
 									cdkMenuItem
 									(cdkMenuItemTriggered)="confirmDeleteUser(item)"
 								>
@@ -137,7 +133,7 @@
 				filteredText="No users matched your search."
 				[dataSource]="dataSource"
 				(clearFilters)="clearFilters()"
-			></asy-table-empty-state>
+			/>
 		</div>
 
 		<asy-sidebar headerText="Columns" #sidebar>
@@ -145,13 +141,13 @@
 				[columns]="columns"
 				[storageKey]="dataSource.storageKey"
 				(columnsChange)="columnsChanged($event)"
-			></asy-column-chooser>
+			/>
 		</asy-sidebar>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

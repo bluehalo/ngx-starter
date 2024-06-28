@@ -6,7 +6,7 @@
 					placeholder="Search team members..."
 					[search]="dataSource.searchEvent$.value"
 					(applySearch)="dataSource.search($event)"
-				></asy-search-input>
+				/>
 			</div>
 
 			<div class="mb-3 ms-auto">
@@ -21,14 +21,13 @@
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<asy-text-column name="name"></asy-text-column>
-			<asy-text-column name="username"></asy-text-column>
-			<asy-ago-date-column name="lastLogin" header="Last Login"></asy-ago-date-column>
+			<asy-text-column name="name" />
+			<asy-text-column name="username" />
+			<asy-ago-date-column name="lastLogin" header="Last Login" />
 			<ng-container cdkColumnDef="type">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Type
-					<asy-header-filter list-filter [options]="typeFilterOptions">
-					</asy-header-filter>
+					<asy-header-filter list-filter [options]="typeFilterOptions" />
 				</th>
 
 				<td cdk-cell *cdkCellDef="let member">
@@ -42,8 +41,7 @@
 			<ng-container cdkColumnDef="role">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Role
-					<asy-header-filter list-filter [options]="roleFilterOptions">
-					</asy-header-filter>
+					<asy-header-filter list-filter [options]="roleFilterOptions" />
 				</th>
 				<td cdk-cell *cdkCellDef="let member">
 					@if (isTeamAdmin()) {
@@ -66,6 +64,7 @@
 								@for (role of teamRoleOptions; track role) {
 									<button
 										class="dropdown-item"
+										type="button"
 										cdkMenuItem
 										(cdkMenuItemTriggered)="updateRole(member, role.role)"
 									>
@@ -85,6 +84,7 @@
 					@if (isTeamAdmin() && member.explicit) {
 						<button
 							class="btn btn-link p-0"
+							type="button"
 							container="body"
 							placement="left"
 							tooltip="Remove Member"
@@ -104,12 +104,12 @@
 			filteredText="No team members matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
-		></asy-table-empty-state>
+		/>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>

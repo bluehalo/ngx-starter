@@ -151,7 +151,7 @@ describe('SearchInputComponent', () => {
 		inputElement.nativeElement.dispatchEvent(new Event('input'));
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.queryAll(By.css('.icon.fa-times')).length).toBe(1);
+		expect(fixture.debugElement.queryAll(By.css('.fa-times')).length).toBe(1);
 	});
 
 	it('should not show clear-search options if search input length === 0', () => {
@@ -159,7 +159,7 @@ describe('SearchInputComponent', () => {
 		inputElement.nativeElement.dispatchEvent(new Event('input'));
 		fixture.detectChanges();
 
-		expect(fixture.debugElement.queryAll(By.css('span.icon.fa-times')).length).toBe(0);
+		expect(fixture.debugElement.queryAll(By.css('.fa-times')).length).toBe(0);
 	});
 
 	it('should clear the search when the clearSearch span is clicked', waitForAsync(() => {
@@ -170,9 +170,7 @@ describe('SearchInputComponent', () => {
 		fixture.detectChanges();
 
 		// click the clear-search option
-		(
-			fixture.debugElement.query(By.css('span.icon.fa-times')).nativeElement as HTMLElement
-		).click();
+		(fixture.debugElement.query(By.css('.fa-times')).nativeElement as HTMLElement).click();
 
 		fixture.detectChanges();
 

@@ -2,12 +2,12 @@
 	<th cdk-header-cell style="width: 42px" *cdkHeaderCellDef></th>
 	<td cdk-cell *cdkCellDef="let item; let index = index">
 		@if (isExpandable()(index, item)) {
-			<div style="cursor: pointer" (click)="toggle(index, item)">
+			<button class="btn shadow-none p-0" type="button" (click)="toggle(index, item)">
 				<span
 					class="fa-solid fa-lg fa-angle-down"
 					[class.fa-flip-vertical]="isExpanded(index, item)"
 				></span>
-			</div>
+			</button>
 		}
 	</td>
 </ng-container>

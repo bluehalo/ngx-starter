@@ -9,8 +9,8 @@ import { APP_CONFIG, APP_SESSION } from '../tokens';
 @Component({
 	selector: 'site-container',
 
-	templateUrl: 'site-container.component.html',
-	styleUrls: ['site-container.component.scss'],
+	templateUrl: './site-container.component.html',
+	styleUrls: ['./site-container.component.scss'],
 	standalone: true,
 	imports: [SiteNavbarComponent, IsAuthenticatedDirective, FeedbackFlyoutComponent, CdkScrollable]
 })

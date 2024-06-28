@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import { APP_CONFIG } from './tokens';
 
+// eslint-disable-next-line @angular-eslint/use-injectable-provided-in
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {
 	readonly #title = inject(Title);

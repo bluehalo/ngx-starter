@@ -17,7 +17,7 @@ import { APP_SESSION } from '../../tokens';
 import { Team } from '../team.model';
 import { TeamsService } from '../teams.service';
 
-@Directive()
+@Directive({ standalone: true })
 export abstract class BaseListTeamsComponent {
 	readonly #teamsService = inject(TeamsService);
 	readonly #alertService = inject(SystemAlertService);

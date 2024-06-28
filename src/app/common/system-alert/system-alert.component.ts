@@ -5,8 +5,8 @@ import { SystemAlertService } from './system-alert.service';
 
 @Component({
 	selector: 'system-alert',
-	templateUrl: 'system-alert.component.html',
-	styleUrls: ['system-alert.component.scss'],
+	templateUrl: './system-alert.component.html',
+	styleUrls: ['./system-alert.component.scss'],
 	animations: [
 		trigger('animateAddRemove', [
 			transition(':enter', [

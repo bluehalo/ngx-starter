@@ -4,7 +4,7 @@
 >
 	<nav class="nav flex-column border-bottom">
 		<a class="nav-link navbar-logo p-1 border-bottom" href="#">
-			<img src="/assets/images/nav-logo.png" alt="Logo" />
+			<img alt="Logo" height="184" ngSrc="/assets/images/nav-logo.png" width="184" />
 			<span class="nav-label">{{ appTitle() }}</span>
 		</a>
 	</nav>
@@ -98,7 +98,12 @@
 						<!-- User Signout -->
 						<a class="dropdown-item" href="/api/auth/signout" cdkMenuItem> Sign out </a>
 						@if (session().user?.eua) {
-							<button class="dropdown-item" cdkMenuItem routerLink="/eua">
+							<button
+								class="dropdown-item"
+								type="button"
+								cdkMenuItem
+								routerLink="/eua"
+							>
 								View EUA
 							</button>
 						}
@@ -107,6 +112,7 @@
 						@if (showUserPreferencesLink()) {
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								[routerLink]="userPreferencesLink()"
 							>
@@ -114,7 +120,12 @@
 							</button>
 						}
 						@if (masqueradeEnabled() && (canMasquerade() || isMasquerade())) {
-							<button class="dropdown-item" cdkMenuItem routerLink="/masquerade">
+							<button
+								class="dropdown-item"
+								type="button"
+								cdkMenuItem
+								routerLink="/masquerade"
+							>
 								@if (isMasquerade()) {
 									Clear
 								}
@@ -175,6 +186,7 @@
 						@for (adminItem of adminTopics; track adminItem) {
 							<button
 								class="dropdown-item"
+								type="button"
 								cdkMenuItem
 								[routerLink]="['admin/' + adminItem.path]"
 							>
@@ -187,11 +199,11 @@
 
 			<!-- Messages Nav   -->
 			@if (session().isUser()) {
-				<a
+				<button
 					class="nav-link"
 					[class.highlight-link]="messagesNavOpen()"
+					type="button"
 					container="body"
-					linkAccessibility
 					placement="left bottom"
 					tooltip="Notifications"
 					#trigger
@@ -204,7 +216,7 @@
 						[attr.data-new-messages-count]="numNewMessages()"
 					></span>
 					<span class="nav-label">Notifications</span>
-				</a>
+				</button>
 				<ng-template
 					cdkConnectedOverlay
 					cdkConnectedOverlayPanelClass="messages-nav"
@@ -216,9 +228,7 @@
 					(overlayOutsideClick)="messagesNavOpen.set(false)"
 				>
 					<div class="dropdown-menu messages-menu">
-						<app-recent-messages
-							(viewAllClicked)="messagesNavOpen.set(false)"
-						></app-recent-messages>
+						<app-recent-messages (viewAllClicked)="messagesNavOpen.set(false)" />
 					</div>
 				</ng-template>
 			}
@@ -252,7 +262,7 @@
 				>
 					<!-- Help -->
 					@if (helpEnabled) {
-						<button class="dropdown-item" cdkMenuItem routerLink="/help">
+						<button class="dropdown-item" type="button" cdkMenuItem routerLink="/help">
 							Help Docs
 						</button>
 					}
@@ -260,6 +270,7 @@
 					@if (isAuthenticated() && showFeedbackOption()) {
 						<button
 							class="dropdown-item"
+							type="button"
 							cdkMenuItem
 							(cdkMenuItemTriggered)="showFeedbackModal()"
 						>
@@ -273,7 +284,9 @@
 						</a>
 					}
 					<!-- About -->
-					<button class="dropdown-item" cdkMenuItem routerLink="/about">About</button>
+					<button class="dropdown-item" type="button" cdkMenuItem routerLink="/about">
+						About
+					</button>
 				</div>
 			</ng-template>
 		</nav>
@@ -286,6 +299,7 @@
 		<!-- Collapse/Expand -->
 		<button
 			class="nav-link text-start"
+			type="button"
 			container="body"
 			placement="left"
 			tooltip="Expand"
@@ -305,5 +319,5 @@
 	class="navbar-content"
 	[ngClass]="{ 'navbar-open': navbarOpen(), 'navbar-close': !navbarOpen() }"
 >
-	<ng-content></ng-content>
+	<ng-content />
 </div>

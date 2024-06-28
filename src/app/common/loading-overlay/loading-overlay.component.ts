@@ -5,8 +5,8 @@ import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
 	selector: 'loading-overlay',
-	templateUrl: 'loading-overlay.component.html',
-	styleUrls: ['loading-overlay.component.scss'],
+	templateUrl: './loading-overlay.component.html',
+	styleUrls: ['./loading-overlay.component.scss'],
 	standalone: true,
 	imports: [NotificationComponent, LoadingSpinnerComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush

@@ -3,7 +3,7 @@
 		<h1 skipTo>Audit Logs</h1>
 		Browse and search audit logs.
 	</div>
-	<system-alert></system-alert>
+	<system-alert />
 </section>
 
 <section class="page-body anchored-page-body">
@@ -22,20 +22,17 @@
 				<th asy-sort-header="audit.actor.name" cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-user"></span>
 					Actor
-					<asy-header-filter audit-actor-filter typeahead-filter></asy-header-filter>
+					<asy-header-filter audit-actor-filter typeahead-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
-					<asy-audit-component
-						auditType="user"
-						[auditObject]="entry.audit.actor"
-					></asy-audit-component>
+					<asy-audit-component auditType="user" [auditObject]="entry.audit.actor" />
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-clock"></span>
 					Timestamp
-					<asy-header-filter date-filter></asy-header-filter>
+					<asy-header-filter date-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.created | utcDate }}
@@ -45,11 +42,7 @@
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-mouse-pointer"></span>
 					Action
-					<asy-header-filter
-						audit-distinct-value-filter
-						list-filter
-						showSearch
-					></asy-header-filter>
+					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.audit?.action }}
@@ -59,11 +52,7 @@
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
 					<span class="fa-solid fa-tag"></span>
 					Type
-					<asy-header-filter
-						audit-distinct-value-filter
-						list-filter
-						showSearch
-					></asy-header-filter>
+					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.audit?.auditType }}
@@ -75,11 +64,12 @@
 					<asy-audit-component
 						[auditObject]="entry.audit.object?.after ?? entry.audit.object"
 						[auditType]="entry.audit.auditType"
-					></asy-audit-component>
+					/>
 					<div>
 						@if (entry.isViewDetailsAction) {
 							<button
 								class="btn btn-link btn-sm"
+								type="button"
 								container="body"
 								placement="bottom"
 								tooltip="See details of the update"
@@ -104,11 +94,12 @@
 					<asy-audit-component
 						[auditObject]="entry.audit.object?.before"
 						[auditType]="entry.audit.auditType"
-					></asy-audit-component>
+					/>
 					<div>
 						@if (entry.isViewChangesAction) {
 							<button
 								class="btn btn-link btn-sm"
+								type="button"
 								container="body"
 								placement="bottom"
 								tooltip="See details of the update"
@@ -151,12 +142,12 @@
 			filteredText="No audit logs matched your search."
 			[dataSource]="dataSource"
 			(clearFilters)="clearFilters()"
-		></asy-table-empty-state>
+		/>
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
 		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource"></asy-paginator>
+			<asy-paginator [dataSource]="dataSource" />
 		</div>
 	</div>
 </section>
