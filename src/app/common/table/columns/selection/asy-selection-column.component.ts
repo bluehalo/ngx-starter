@@ -37,7 +37,7 @@ export class AsySelectionColumnComponent<T, TB = T>
 {
 	readonly #destroyRef = inject(DestroyRef);
 	#dataSource: AsyTableDataSource<T>;
-	#selectionModel: SelectionModel<TB>;
+	#selectionModel = new SelectionModel<TB>();
 
 	readonly enableSelectAll = input(true, { transform: booleanAttribute });
 	readonly clearOnLoad = input(true, { transform: booleanAttribute });
@@ -57,7 +57,11 @@ export class AsySelectionColumnComponent<T, TB = T>
 	override ngOnInit(): void {
 		super.ngOnInit();
 
-		this.#selectionModel = new SelectionModel<TB>(this.multi());
+		if (this.multi()) {
+			const selection = this.#selectionModel.selected;
+			this.#selectionModel = new SelectionModel<TB>(this.multi());
+			this.#selectionModel.select(...selection);
+		}
 
 		if (this._isAsyTableDataSource(this._table.dataSource)) {
 			this.#dataSource = this._table.dataSource;
