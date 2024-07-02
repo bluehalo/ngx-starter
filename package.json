@@ -87,7 +87,7 @@
     "webpack-bundle-analyzer": "4.5.0"
   },
   "lint-staged": {
-    "*.{scss, css}": "stylelint --fix",
+    "*.{scss,css}": "stylelint --fix",
     "*.ts": "eslint --fix",
     "*.html": "eslint --fix"
   }
