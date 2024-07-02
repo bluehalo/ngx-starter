@@ -46,11 +46,6 @@ input[bsDatepicker] + span {
 		padding-top: calc(#{$input-padding-y} + 1px);
 	}
 
-	.form-check-inline .form-check-label {
-		margin-top: $spacer * 0.5;
-		margin-bottom: 0;
-	}
-
 	.form-inline-edit-item {
 		border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
 		display: flex;
