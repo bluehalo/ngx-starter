@@ -4,11 +4,11 @@ import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { NgbInputDatepicker, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DateTime } from 'luxon';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
+import { DatepickerRangePopupComponent } from '../../../datepicker';
 import {
 	AsyAbstractHeaderFilterComponent,
 	AsyFilterHeaderColumnDef
@@ -23,13 +23,14 @@ import {
 	imports: [
 		FormsModule,
 		NgSelectModule,
-		BsDatepickerModule,
 		TitleCasePipe,
-		TooltipModule,
 		CdkOverlayOrigin,
 		CdkConnectedOverlay,
 		A11yModule,
-		OverlayModule
+		OverlayModule,
+		NgbTooltip,
+		NgbInputDatepicker,
+		DatepickerRangePopupComponent
 	]
 })
 export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterComponent {
@@ -130,5 +131,9 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 		}
 
 		return { ...($gte.isValid && $lte.isValid && { [this.id]: { $gte, $lte } }) };
+	}
+
+	test(input: unknown) {
+		console.log(input);
 	}
 }

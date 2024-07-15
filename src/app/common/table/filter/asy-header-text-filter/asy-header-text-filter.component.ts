@@ -4,9 +4,9 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import escapeRegExp from 'lodash/escapeRegExp';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { SearchInputComponent } from '../../../search-input/search-input.component';
 import {
@@ -29,11 +29,11 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 		NgSelectModule,
 		FormsModule,
 		SearchInputComponent,
-		TooltipModule,
 		A11yModule,
 		OverlayModule,
 		CdkConnectedOverlay,
-		CdkOverlayOrigin
+		CdkOverlayOrigin,
+		NgbTooltip
 	]
 })
 export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {

@@ -8,15 +8,15 @@
 	<span
 		class="filter fa-solid fa-list"
 		container="body"
+		ngbTooltip="Apply Filters"
 		placement="bottom"
-		tooltip="Apply Filters"
 		[hidden]="isFiltered()"
 	></span>
 	<span
 		class="filter fa-solid fa-filter"
 		container="body"
+		ngbTooltip="Edit Filters"
 		placement="bottom"
-		tooltip="Edit Filters"
 		[hidden]="!isFiltered()"
 	></span>
 </button>
@@ -39,7 +39,7 @@
 			<label class="form-check-label" for="date-filter-enabled">Enabled</label>
 		</div>
 
-		<div class="form-check form-check-inline">
+		<div class="form-check form-check-inline mt-2">
 			<input
 				class="form-check-input"
 				id="dir-radio-past"
@@ -93,7 +93,7 @@
 			</div>
 		</div>
 
-		<div class="form-check">
+		<div class="form-check mt-2">
 			<input
 				class="form-check-input"
 				id="custom-date-filter-enabled"
@@ -103,17 +103,11 @@
 			/>
 			<label class="form-check-label" for="custom-date-filter-enabled">Custom Range</label>
 		</div>
-		<input
-			class="form-control"
-			type="text"
-			bsDaterangepicker
-			placeholder="Custom range..."
+
+		<app-datepicker-range-popup
+			name="customRange"
 			[(ngModel)]="customRange"
-			[bsConfig]="{
-				adaptivePosition: true,
-				containerClass: 'theme-default'
-			}"
-			[disabled]="!isCustom"
+			[disabled]="!isCustom()"
 			(ngModelChange)="onDateFilterChange()"
 		/>
 	</div>

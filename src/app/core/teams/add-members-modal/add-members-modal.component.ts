@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
@@ -36,12 +36,12 @@ export type AddMembersModalReturn = DialogReturn<number>;
 	imports: [
 		ModalComponent,
 		NgSelectModule,
-		TooltipModule,
 		AsyncPipe,
 		CdkMenu,
 		CdkMenuItem,
 		CdkMenuTrigger,
-		CdkTableModule
+		CdkTableModule,
+		NgbTooltip
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })

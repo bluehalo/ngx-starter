@@ -172,7 +172,7 @@
 		<div class="mb-3">
 			<div class="form-label">Roles</div>
 			@for (role of possibleRoles; track role) {
-				<div class="form-check form-check-inline" tooltip="{{ role.description }}">
+				<div class="form-check form-check-inline" ngbTooltip="{{ role.description }}">
 					<input
 						class="form-check-input"
 						id="role{{ role.role }}Cb"

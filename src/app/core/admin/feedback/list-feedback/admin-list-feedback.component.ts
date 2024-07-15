@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
 import {
@@ -42,7 +42,6 @@ import { AdminUsersService } from '../../user/admin-users.service';
 	imports: [
 		SystemAlertComponent,
 		SearchInputComponent,
-		TooltipModule,
 		CdkTableModule,
 		OverlayModule,
 		AsySortDirective,
@@ -61,7 +60,8 @@ import { AdminUsersService } from '../../user/admin-users.service';
 		CdkMenuItem,
 		AgoDateColumnComponent,
 		TextColumnComponent,
-		AsyHeaderTextFilterComponent
+		AsyHeaderTextFilterComponent,
+		NgbTooltip
 	]
 })
 export class AdminListFeedbackComponent implements OnInit {

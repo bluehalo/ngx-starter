@@ -7,7 +7,7 @@ import { Component, DestroyRef, OnInit, computed, inject, signal, viewChild } fr
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
@@ -55,7 +55,6 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		SystemAlertComponent,
 		SearchInputComponent,
 		RouterLink,
-		TooltipModule,
 		CdkTableModule,
 		OverlayModule,
 		AsySortDirective,
@@ -79,7 +78,8 @@ import { UserRoleFilterDirective } from './user-role-filter.directive';
 		AgoDateColumnComponent,
 		TextColumnComponent,
 		ActionsMenuColumnComponent,
-		ActionsMenuTemplateDirective
+		ActionsMenuTemplateDirective,
+		NgbTooltip
 	]
 })
 export class AdminListUsersComponent implements OnInit {

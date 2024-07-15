@@ -16,10 +16,10 @@
 					<a
 						class="nav-link"
 						container="body"
-						placement="left"
+						placement="end"
 						routerLinkActive="active"
-						tooltip="{{ navbarItem.title }}"
-						[isDisabled]="navbarOpen()"
+						[disableTooltip]="navbarOpen()"
+						[ngbTooltip]="navbarItem.title"
 						[routerLink]="navbarItem.path"
 					>
 						<span class="nav-icon fa-solid fa-fw {{ navbarItem.iconClass }}"></span>
@@ -36,11 +36,11 @@
 				<a
 					class="nav-link"
 					container="body"
-					placement="left"
+					ngbTooltip="Audit Logs"
+					placement="end"
 					routerLink="/audit"
 					routerLinkActive="active"
-					tooltip="Audit Logs"
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 				>
 					<span class="nav-icon fa-solid fa-fw fa-file-text"></span>
 					<span class="nav-label">Audit Logs</span>
@@ -52,11 +52,11 @@
 				<a
 					class="nav-link"
 					container="body"
-					placement="left"
+					ngbTooltip="Teams"
+					placement="end"
 					routerLink="/team"
 					routerLinkActive="active"
-					tooltip="Teams"
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 				>
 					<span class="nav-icon fa-solid fa-fw fa-users"></span>
 					<span class="nav-label">Teams</span>
@@ -72,11 +72,11 @@
 					aria-controls="user-nav-menu"
 					container="body"
 					linkAccessibility
-					placement="left"
-					tooltip="User Profile"
+					ngbTooltip="User Profile"
+					placement="end"
 					[cdkMenuPosition]="menuPositions"
 					[cdkMenuTriggerFor]="userNav"
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 					(cdkMenuClosed)="userNavOpen.set(false)"
 					(cdkMenuOpened)="userNavOpen.set(true)"
 				>
@@ -141,11 +141,11 @@
 				<a
 					class="nav-link"
 					container="body"
-					placement="left"
+					ngbTooltip="Clear Masquerade"
+					placement="end"
 					routerLink="masquerade"
 					routerLinkActive="active"
-					tooltip="Clear Masquerade"
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 				>
 					<span class="class nav-icon fa-stack">
 						<span class="fa-solid fa-lg fa-user-secret fa-stack-1x"></span>
@@ -164,11 +164,11 @@
 					aria-controls="admin-nav-menu"
 					container="body"
 					linkAccessibility
-					placement="left"
-					tooltip="Admin"
+					ngbTooltip="Admin"
+					placement="end"
 					[cdkMenuPosition]="menuPositions"
 					[cdkMenuTriggerFor]="adminNav"
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 					(cdkMenuClosed)="adminNavOpen.set(false)"
 					(cdkMenuOpened)="adminNavOpen.set(true)"
 				>
@@ -204,10 +204,10 @@
 					[class.highlight-link]="messagesNavOpen()"
 					type="button"
 					container="body"
-					placement="left bottom"
-					tooltip="Notifications"
+					ngbTooltip="Notifications"
+					placement="end"
 					#trigger
-					[isDisabled]="navbarOpen()"
+					[disableTooltip]="navbarOpen()"
 					(click)="messagesNavOpen.set(!messagesNavOpen())"
 				>
 					<span
@@ -241,11 +241,11 @@
 				aria-controls="help-nav-menu"
 				container="body"
 				linkAccessibility
-				placement="left"
-				tooltip="Help"
+				ngbTooltip="Help"
+				placement="end"
 				[cdkMenuPosition]="menuPositions"
 				[cdkMenuTriggerFor]="helpNav"
-				[isDisabled]="navbarOpen()"
+				[disableTooltip]="navbarOpen()"
 				(cdkMenuClosed)="helpNavOpen.set(false)"
 				(cdkMenuOpened)="helpNavOpen.set(true)"
 			>
@@ -297,15 +297,7 @@
 		<li class="element element-divider element-divider-collapse"></li>
 
 		<!-- Collapse/Expand -->
-		<button
-			class="nav-link text-start"
-			type="button"
-			container="body"
-			placement="left"
-			tooltip="Expand"
-			[isDisabled]="navbarOpen()"
-			(click)="toggleNavbar()"
-		>
+		<button class="nav-link text-start" type="button" (click)="toggleNavbar()">
 			<span
 				class="nav-icon fa-solid fa-fw fa-angle-double-right"
 				[class.fa-flip-horizontal]="navbarOpen()"

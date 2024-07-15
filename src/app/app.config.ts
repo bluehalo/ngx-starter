@@ -9,9 +9,6 @@ import {
 	withInMemoryScrolling
 } from '@angular/router';
 
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
 import { provideCdkDialog } from './common/dialog';
 import { provideAdminFeature } from './core/admin';
 import { provideAuditFeature } from './core/audit';
@@ -35,7 +32,6 @@ const disableAnimations: boolean = window.matchMedia('(prefers-reduced-motion: r
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		importProvidersFrom(BsDatepickerModule.forRoot(), TooltipModule.forRoot()),
 		!disableAnimations ? provideAnimations() : provideNoopAnimations(),
 		provideHttpClient(
 			withInterceptors([

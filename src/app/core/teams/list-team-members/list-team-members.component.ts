@@ -13,7 +13,7 @@ import {
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
@@ -68,7 +68,6 @@ import { TeamsService } from '../teams.service';
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
-		TooltipModule,
 		AsyHeaderListFilterComponent,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
@@ -78,7 +77,8 @@ import { TeamsService } from '../teams.service';
 		CdkMenuTrigger,
 		CdkMenuItem,
 		TextColumnComponent,
-		AgoDateColumnComponent
+		AgoDateColumnComponent,
+		NgbTooltip
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })

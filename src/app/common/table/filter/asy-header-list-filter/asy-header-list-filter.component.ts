@@ -17,7 +17,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -49,11 +49,11 @@ export type ListFilterOption = {
 		SearchInputComponent,
 		FormsModule,
 		TitleCasePipe,
-		TooltipModule,
 		CdkOverlayOrigin,
 		CdkConnectedOverlay,
 		A11yModule,
-		OverlayModule
+		OverlayModule,
+		NgbTooltip
 	],
 	providers: [TitleCasePipe]
 })

@@ -2,10 +2,9 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CommonModule } from '@angular/common';
 import { Component, booleanAttribute, input } from '@angular/core';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
-import { AgoDatePipe } from '../../../pipes/ago-date.pipe';
-import { UtcDatePipe } from '../../../pipes/utc-date-pipe/utc-date.pipe';
+import { AgoDatePipe, UtcDatePipe } from '../../../pipes';
 import { AsySortHeaderComponent } from '../../sort/asy-sort-header/asy-sort-header.component';
 import { DateColumnComponent } from '../date/date-column.component';
 
@@ -18,7 +17,7 @@ import { DateColumnComponent } from '../date/date-column.component';
 		UtcDatePipe,
 		AsySortHeaderComponent,
 		AgoDatePipe,
-		TooltipModule
+		NgbTooltip
 	],
 	templateUrl: './ago-date-column.component.html',
 	styleUrls: ['./ago-date-column.component.scss']

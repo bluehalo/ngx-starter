@@ -4,14 +4,6 @@
 $form-inline-edit-btns-bottom: -2rem !default;
 $form-inline-edit-label-col-width: 30% !default;
 
-input[bsDatepicker] + span {
-	position: relative;
-	display: flex;
-	align-items: center;
-	margin-left: -22px;
-	cursor: pointer;
-}
-
 .card-body.editing {
 	padding-bottom: 0;
 }

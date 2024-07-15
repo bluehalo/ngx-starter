@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
 import { PagingOptions, PagingResults, SkipToDirective } from '../../../common';
@@ -55,10 +55,10 @@ import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter
 		AsyHeaderDateFilterComponent,
 		AsyHeaderListFilterComponent,
 		AuditDistinctValueFilterDirective,
-		TooltipModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
-		UtcDatePipe
+		UtcDatePipe,
+		NgbTooltip
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })

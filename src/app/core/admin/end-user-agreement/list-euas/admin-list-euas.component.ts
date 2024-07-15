@@ -4,7 +4,7 @@ import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
@@ -51,13 +51,13 @@ import { EuaService } from '../eua.service';
 		SidebarComponent,
 		ColumnChooserComponent,
 		PaginatorComponent,
-		TooltipModule,
 		CdkMenu,
 		CdkMenuItem,
 		TextColumnComponent,
 		DateColumnComponent,
 		ActionsMenuColumnComponent,
-		ActionsMenuTemplateDirective
+		ActionsMenuTemplateDirective,
+		NgbTooltip
 	]
 })
 export class AdminListEuasComponent implements OnInit {

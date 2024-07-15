@@ -11,7 +11,7 @@
 		/>
 	</th>
 	<td class="text-nowrap" cdk-cell *cdkCellDef="let obj">
-		<div class="text-nowrap" container="body" tooltip="{{ obj[name] | utcDate: format() }}">
+		<div class="text-nowrap" container="body" ngbTooltip="{{ obj[name] | utcDate: format() }}">
 			{{ obj[name] | agoDate: hideAgo() }}
 		</div>
 	</td>
