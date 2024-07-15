@@ -71,8 +71,8 @@
 								class="btn btn-link btn-sm"
 								type="button"
 								container="body"
+								ngbTooltip="See details of the update"
 								placement="bottom"
-								tooltip="See details of the update"
 								[hidden]="(entry.audit.object ?? null) === null"
 								(click)="viewMore(entry, 'viewDetails')"
 							>
@@ -101,8 +101,8 @@
 								class="btn btn-link btn-sm"
 								type="button"
 								container="body"
+								ngbTooltip="See details of the update"
 								placement="bottom"
-								tooltip="See details of the update"
 								[hidden]="(entry.audit.object?.before ?? null) === null"
 								(click)="viewMore(entry, 'viewChanges')"
 							>

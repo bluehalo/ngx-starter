@@ -5,7 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 import { SkipToDirective } from '../../../../common';
 import { JoinPipe } from '../../../../common/pipes';
@@ -21,9 +21,9 @@ import { AdminUsersService } from '../admin-users.service';
 		RouterLink,
 		SystemAlertComponent,
 		FormsModule,
-		TooltipModule,
 		SkipToDirective,
-		JoinPipe
+		JoinPipe,
+		NgbTooltip
 	],
 	templateUrl: './manage-user.component.html',
 	styleUrls: ['./manage-user.component.scss']

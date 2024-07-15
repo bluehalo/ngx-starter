@@ -1,6 +1,6 @@
 import { Component, booleanAttribute, input, signal } from '@angular/core';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'asy-sidebar',
@@ -13,7 +13,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 		'[class.sidebar-left]': 'placement() === "left"',
 		'[class.card]': 'showInCard()'
 	},
-	imports: [TooltipModule],
+	imports: [NgbTooltip],
 	standalone: true
 })
 export class SidebarComponent {

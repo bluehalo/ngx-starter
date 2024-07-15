@@ -5,8 +5,8 @@ import { Component, DestroyRef, Inject, OnInit, Optional, inject, signal } from 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable, Subject, concat, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 
@@ -28,11 +28,11 @@ type BuildFilterFunction = (selectedValue: any | null) => any;
 		NgSelectModule,
 		FormsModule,
 		AsyncPipe,
-		TooltipModule,
 		CdkOverlayOrigin,
 		A11yModule,
 		OverlayModule,
-		CdkConnectedOverlay
+		CdkConnectedOverlay,
+		NgbTooltip
 	]
 })
 export class AsyHeaderTypeaheadFilterComponent

@@ -6,9 +6,9 @@ import { Component, OnInit, computed, effect, inject, signal } from '@angular/co
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { WINDOW } from '@ng-web-apis/common';
 import { STORAGE_EVENT, StorageService, filterByKey, toValue } from '@ng-web-apis/storage';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { map } from 'rxjs/operators';
 
 import {
@@ -40,7 +40,6 @@ const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 		NgClass,
 		HasSomeRolesDirective,
 		RouterLinkActive,
-		TooltipModule,
 		RouterLink,
 		HasRoleDirective,
 		LinkAccessibilityDirective,
@@ -55,7 +54,8 @@ const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 		A11yModule,
 		CdkScrollable,
 		ThemeToggleComponent,
-		NgOptimizedImage
+		NgOptimizedImage,
+		NgbTooltip
 	]
 })
 export class SiteNavbarComponent implements OnInit {

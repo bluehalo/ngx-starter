@@ -5,15 +5,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
 import { SystemAlertComponent, SystemAlertService } from '../../common/system-alert';
 import { AuthenticationService, EditUser } from '../auth';
 
 @Component({
 	standalone: true,
 	templateUrl: './signup.component.html',
-	imports: [RouterLink, SystemAlertComponent, FormsModule, TooltipModule, TitleCasePipe],
+	imports: [RouterLink, SystemAlertComponent, FormsModule, TitleCasePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupComponent {

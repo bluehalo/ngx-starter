@@ -4,8 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
 import { SearchInputComponent, SkipToDirective } from '../../../common';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import {
@@ -35,7 +33,6 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
-		TooltipModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		AgoDateColumnComponent

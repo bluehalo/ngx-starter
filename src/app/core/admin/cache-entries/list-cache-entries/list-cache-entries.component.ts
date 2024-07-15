@@ -5,7 +5,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
@@ -49,7 +48,6 @@ import { CacheEntry } from '../cache-entry.model';
 		AsySortDirective,
 		AsyFilterDirective,
 		AsySortHeaderComponent,
-		TooltipModule,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		JsonPipe,
