@@ -6,7 +6,7 @@ import { HeaderTemplateDirective } from './header-template.directive';
 @Directive({ standalone: true })
 export abstract class AsyAbstractValueColumnComponent<T> extends AsyAbstractColumnComponent<T> {
 	readonly header = input<string>();
-	readonly sortable = input(true, { transform: booleanAttribute });
+	readonly sortable = input(false, { transform: booleanAttribute });
 
 	readonly headerTemplate = contentChild(HeaderTemplateDirective, { read: TemplateRef });
 }

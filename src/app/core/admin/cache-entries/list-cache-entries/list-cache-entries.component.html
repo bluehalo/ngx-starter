@@ -21,14 +21,14 @@
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<asy-text-column name="key" />
+			<asy-text-column name="key" sortable />
 			<ng-container cdkColumnDef="value">
 				<th cdk-header-cell *cdkHeaderCellDef>Value</th>
 				<td class="hide-overflow" cdk-cell style="max-width: 300px" *cdkCellDef="let entry">
 					{{ entry.value | json }}
 				</td>
 			</ng-container>
-			<asy-ago-date-column name="ts" header="Created" />
+			<asy-ago-date-column name="ts" header="Created" sortable />
 			<asy-actions-menu-column scope="cache-entry" stickyEnd>
 				<ng-template
 					actions-menu-tmp

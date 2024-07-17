@@ -1,20 +1,22 @@
 <ng-container cdkColumnDef="actionsMenu" [sticky]="sticky()" [stickyEnd]="stickyEnd()">
 	<th cdk-header-cell *cdkHeaderCellDef></th>
 	<td cdk-cell *cdkCellDef="let item; let index = index">
-		<button
-			class="btn btn-text dropdown-toggle dropdown-toggle-hide-caret py-0"
-			type="button"
-			[attr.aria-controls]="getMenuId(index)"
-			[cdkMenuTriggerData]="{
-				item,
-				index,
-				triggerId: getTriggerId(index),
-				menuId: getMenuId(index)
-			}"
-			[cdkMenuTriggerFor]="template()"
-			[id]="getTriggerId(index)"
-		>
-			<span class="fa-solid fa-lg fa-ellipsis-v"></span>
-		</button>
+		@if (!hideMenu()) {
+			<button
+				class="btn btn-text dropdown-toggle dropdown-toggle-hide-caret shadow-none py-0 ps-3"
+				type="button"
+				[attr.aria-controls]="getMenuId(index)"
+				[cdkMenuTriggerData]="{
+					item,
+					index,
+					triggerId: getTriggerId(index),
+					menuId: getMenuId(index)
+				}"
+				[cdkMenuTriggerFor]="template()"
+				[id]="getTriggerId(index)"
+			>
+				<span class="fa-solid fa-lg fa-ellipsis-v"></span>
+			</button>
+		}
 	</td>
 </ng-container>

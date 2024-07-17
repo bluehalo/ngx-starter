@@ -21,9 +21,9 @@
 
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
-			<asy-text-column name="name" />
-			<asy-text-column name="username" />
-			<asy-ago-date-column name="lastLogin" header="Last Login" />
+			<asy-text-column name="name" sortable />
+			<asy-text-column name="username" sortable />
+			<asy-ago-date-column name="lastLogin" header="Last Login" sortable />
 			<ng-container cdkColumnDef="type">
 				<th cdk-header-cell *cdkHeaderCellDef>
 					Type

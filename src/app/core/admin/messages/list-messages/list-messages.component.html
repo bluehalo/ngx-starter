@@ -32,22 +32,24 @@
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="title">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>Title</asy-header-sort>
+				</th>
 				<td cdk-cell *cdkCellDef="let message">
 					<a class="btn btn-link p-0" [routerLink]="['/admin/message', message._id]">
 						{{ message.title }}
 					</a>
 				</td>
 			</ng-container>
-			<asy-text-column name="type" />
+			<asy-text-column name="type" sortable />
 			<ng-container cdkColumnDef="body">
 				<th cdk-header-cell *cdkHeaderCellDef>Body</th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let message">
 					{{ message.body }}
 				</td>
 			</ng-container>
-			<asy-date-column name="created" />
-			<asy-date-column name="updated" />
+			<asy-date-column name="created" sortable />
+			<asy-date-column name="updated" sortable />
 			<asy-actions-menu-column scope="user" stickyEnd>
 				<ng-template
 					actions-menu-tmp

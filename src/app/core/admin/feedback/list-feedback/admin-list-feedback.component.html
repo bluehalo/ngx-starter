@@ -71,10 +71,12 @@
 						{{ feedback.creator.organization }}
 					</td>
 				</ng-container>
-				<asy-ago-date-column name="created" header="Submitted Date" />
-				<asy-ago-date-column name="updated" />
+				<asy-ago-date-column name="created" header="Submitted Date" sortable />
+				<asy-ago-date-column name="updated" sortable />
 				<ng-container cdkColumnDef="type">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Type</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort>Type</asy-header-sort>
+					</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let feedback">
 						{{ feedback.type | titlecase }}
 					</td>
@@ -88,12 +90,12 @@
 						{{ feedback.body }}
 					</td>
 				</ng-container>
-				<asy-text-column name="browser" />
-				<asy-text-column name="os" />
-				<asy-text-column name="url" header="Submitted From" />
+				<asy-text-column name="browser" sortable />
+				<asy-text-column name="os" sortable />
+				<asy-text-column name="url" header="Submitted From" sortable />
 				<ng-container cdkColumnDef="status">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-						Status
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort> Status </asy-header-sort>
 						<asy-header-filter list-filter [options]="['New', 'Open', 'Closed']" />
 					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
@@ -148,7 +150,9 @@
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="assignee">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Assignee</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort>Assignee</asy-header-sort>
+					</th>
 					<td cdk-cell *cdkCellDef="let feedback">
 						<button
 							class="btn btn-text dropdown-toggle p-0"

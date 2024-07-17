@@ -19,9 +19,11 @@
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="audit.actor">
-				<th asy-sort-header="audit.actor.name" cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-user"></span>
-					Actor
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort sortId="audit.actor.name">
+						<span class="fa-solid fa-user"></span>
+						Actor
+					</asy-header-sort>
 					<asy-header-filter audit-actor-filter typeahead-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
@@ -29,9 +31,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-clock"></span>
-					Timestamp
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>
+						<span class="fa-solid fa-clock"></span>
+						Timestamp
+					</asy-header-sort>
 					<asy-header-filter date-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
@@ -39,9 +43,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.action">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-mouse-pointer"></span>
-					Action
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>
+						<span class="fa-solid fa-mouse-pointer"></span>
+						Action
+					</asy-header-sort>
 					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
@@ -49,9 +55,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.auditType">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-tag"></span>
-					Type
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>
+						<span class="fa-solid fa-tag"></span>
+						Type
+					</asy-header-sort>
 					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
@@ -59,7 +67,7 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.object">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Object</th>
+				<th cdk-header-cell *cdkHeaderCellDef><asy-header-sort>Object</asy-header-sort></th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
 					<asy-audit-component
 						[auditObject]="entry.audit.object?.after ?? entry.audit.object"
@@ -86,9 +94,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="before">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-history"></span>
-					Before
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>
+						<span class="fa-solid fa-history"></span>
+						Before
+					</asy-header-sort>
 				</th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
 					<asy-audit-component
@@ -116,9 +126,11 @@
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="message">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>
-					<span class="fa-solid fa-file-text"></span>
-					Message
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>
+						<span class="fa-solid fa-file-text"></span>
+						Message
+					</asy-header-sort>
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
 					{{ entry?.message }}

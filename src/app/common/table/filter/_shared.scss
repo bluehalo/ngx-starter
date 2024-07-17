@@ -5,6 +5,8 @@ $filter-dropdown-font-size: 0.75rem !default;
 $filter-dropdown-max-height: 250px !default;
 
 button.dropdown-toggle {
+	position: relative;
+	top: -2px;
 	background: inherit;
 	border: none;
 	font: inherit;

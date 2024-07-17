@@ -47,23 +47,25 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<asy-text-column name="_id" header="ID" [sortable]="false" />
+				<asy-text-column name="_id" header="ID" />
 				<ng-container cdkColumnDef="name">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort>Name</asy-header-sort>
+					</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
 						<a class="btn btn-link p-0" [routerLink]="['/admin/user', user._id]">
 							{{ user.name }}
 						</a>
 					</td>
 				</ng-container>
-				<asy-text-column name="username" [sortable]="false" />
-				<asy-text-column name="organization" [sortable]="false" />
-				<asy-text-column name="email" [sortable]="false" />
-				<asy-text-column name="phone" [sortable]="false" />
-				<asy-ago-date-column name="acceptedEua" header="EUA" />
-				<asy-ago-date-column name="lastLogin" header="Last Login" />
-				<asy-date-column name="created" />
-				<asy-date-column name="updated" />
+				<asy-text-column name="username" sortable />
+				<asy-text-column name="organization" sortable />
+				<asy-text-column name="email" />
+				<asy-text-column name="phone" />
+				<asy-ago-date-column name="acceptedEua" header="EUA" sortable />
+				<asy-ago-date-column name="lastLogin" header="Last Login" sortable />
+				<asy-date-column name="created" sortable />
+				<asy-date-column name="updated" sortable />
 				<asy-expandable-list-column name="externalRoles" header="External Roles" />
 				<asy-expandable-list-column name="externalGroups" header="External Groups" />
 				<ng-container cdkColumnDef="roles">
