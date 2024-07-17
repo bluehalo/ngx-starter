@@ -86,3 +86,8 @@ $btn-submit-linear-animation: $btn-submit-linear-animation-name
 		}
 	}
 }
+
+.btn.btn-text {
+	--bs-btn-box-shadow: 0 0 0 #000;
+	--bs-btn-focus-shadow-rgb: #{$btn-link-focus-shadow-rgb};
+}
