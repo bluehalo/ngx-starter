@@ -51,7 +51,9 @@
 				<ng-container cdkColumnDef="name">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 					<td class="text-nowrap" cdk-cell *cdkCellDef="let user">
-						<a [routerLink]="['/admin/user', user._id]">{{ user.name }}</a>
+						<a class="btn btn-link p-0" [routerLink]="['/admin/user', user._id]">
+							{{ user.name }}
+						</a>
 					</td>
 				</ng-container>
 				<asy-text-column name="username" [sortable]="false" />
@@ -87,7 +89,9 @@
 				</ng-container>
 				<asy-expandable-list-column name="teams">
 					<ng-template lc-item-tmp let-team="listItem">
-						<a [routerLink]="['/team', team._id]">{{ team.team.name }}</a>
+						<a class="btn btn-link p-0" [routerLink]="['/team', team._id]">
+							{{ team.team.name }}
+						</a>
 					</ng-template>
 				</asy-expandable-list-column>
 				<asy-actions-menu-column scope="user" stickyEnd>

@@ -39,7 +39,9 @@
 			<ng-container cdkColumnDef="name">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let team">
-					<a [routerLink]="['/team', team._id]">{{ team.name }}</a>
+					<a class="btn btn-link p-0" [routerLink]="['/team', team._id]">
+						{{ team.name }}
+					</a>
 				</td>
 			</ng-container>
 			<asy-ago-date-column name="created" />
