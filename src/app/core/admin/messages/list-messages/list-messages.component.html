@@ -34,7 +34,9 @@
 			<ng-container cdkColumnDef="title">
 				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 				<td cdk-cell *cdkCellDef="let message">
-					<a [routerLink]="['/admin/message', message._id]">{{ message.title }}</a>
+					<a class="btn btn-link p-0" [routerLink]="['/admin/message', message._id]">
+						{{ message.title }}
+					</a>
 				</td>
 			</ng-container>
 			<asy-text-column name="type" />

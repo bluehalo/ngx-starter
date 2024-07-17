@@ -47,7 +47,9 @@
 				<ng-container cdkColumnDef="title">
 					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
-						<a [routerLink]="['/admin/eua', eua._id]">{{ eua.title }}</a>
+						<a class="btn btn-link p-0" [routerLink]="['/admin/eua', eua._id]">
+							{{ eua.title }}
+						</a>
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">

@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 		<div class="p-5 text-center bg-body-tertiary rounded-3">
 			<h1 class="text-body-emphasis">{{ status }}</h1>
 			<p class="load">{{ message }}</p>
-			<p>Once your account is updated, <a href="/">go back home</a> and try again.</p>
+			<p>
+				Once your account is updated,
+				<a class="btn btn-link p-0" href="/">go back home</a> and try again.
+			</p>
 		</div>
 	`,
 	standalone: true,

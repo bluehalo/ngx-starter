@@ -1,9 +1,13 @@
 <ul>
 	@for (link of links(); track link) {
 		<li>
-			<a href="{{ link.href }}" target="_blank" (click)="handleLinkClick($event)">{{
-				link.title
-			}}</a>
+			<a
+				class="btn btn-link p-0"
+				href="{{ link.href }}"
+				target="_blank"
+				(click)="handleLinkClick($event)"
+				>{{ link.title }}</a
+			>
 			- {{ link.description }}
 		</li>
 	}
