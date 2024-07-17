@@ -5,7 +5,7 @@ import { Component, booleanAttribute, input } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgoDatePipe, UtcDatePipe } from '../../../pipes';
-import { AsySortHeaderComponent } from '../../sort/asy-sort-header/asy-sort-header.component';
+import { AsyHeaderSortComponent } from '../../sort/asy-header-sort/asy-header-sort.component';
 import { DateColumnComponent } from '../date/date-column.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { DateColumnComponent } from '../date/date-column.component';
 		CommonModule,
 		CdkTableModule,
 		UtcDatePipe,
-		AsySortHeaderComponent,
+		AsyHeaderSortComponent,
 		AgoDatePipe,
 		NgbTooltip
 	],

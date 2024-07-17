@@ -37,16 +37,20 @@
 	<div class="table-content">
 		<table class="table table-striped" asyFilter asySort cdk-table [dataSource]="dataSource">
 			<ng-container cdkColumnDef="name">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Name</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>Name</asy-header-sort>
+				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let team">
 					<a class="btn btn-link p-0" [routerLink]="['/team', team._id]">
 						{{ team.name }}
 					</a>
 				</td>
 			</ng-container>
-			<asy-ago-date-column name="created" />
+			<asy-ago-date-column name="created" sortable />
 			<ng-container cdkColumnDef="description">
-				<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Description</th>
+				<th cdk-header-cell *cdkHeaderCellDef>
+					<asy-header-sort>Description</asy-header-sort>
+				</th>
 				<td cdk-cell *cdkCellDef="let team">
 					{{ team.description }}
 				</td>

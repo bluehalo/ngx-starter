@@ -7,8 +7,8 @@ import { SystemAlertComponent } from '../../../common/system-alert';
 import {
 	AgoDateColumnComponent,
 	AsyFilterDirective,
+	AsyHeaderSortComponent,
 	AsySortDirective,
-	AsySortHeaderComponent,
 	AsyTableDataSource,
 	AsyTableEmptyStateComponent,
 	DateColumnComponent,
@@ -29,7 +29,7 @@ import { BaseListTeamsComponent } from './base-list-teams.component';
 		CdkTableModule,
 		AsySortDirective,
 		AsyFilterDirective,
-		AsySortHeaderComponent,
+		AsyHeaderSortComponent,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		AgoDateColumnComponent,

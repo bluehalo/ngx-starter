@@ -43,9 +43,11 @@
 				cdk-table
 				[dataSource]="dataSource"
 			>
-				<asy-text-column name="_id" header="ID" [sortable]="false" />
+				<asy-text-column name="_id" header="ID" />
 				<ng-container cdkColumnDef="title">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Title</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort>Title</asy-header-sort>
+					</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
 						<a class="btn btn-link p-0" [routerLink]="['/admin/eua', eua._id]">
 							{{ eua.title }}
@@ -53,14 +55,16 @@
 					</td>
 				</ng-container>
 				<ng-container cdkColumnDef="text">
-					<th asy-sort-header cdk-header-cell *cdkHeaderCellDef>Text</th>
+					<th cdk-header-cell *cdkHeaderCellDef>
+						<asy-header-sort>Text</asy-header-sort>
+					</th>
 					<td class="hide-overflow" cdk-cell *cdkCellDef="let eua">
 						{{ eua.text }}
 					</td>
 				</ng-container>
-				<asy-date-column name="created" />
-				<asy-date-column name="published" />
-				<asy-date-column name="updated" />
+				<asy-date-column name="created" sortable />
+				<asy-date-column name="published" sortable />
+				<asy-date-column name="updated" sortable />
 				<asy-actions-menu-column scope="eua" stickyEnd>
 					<ng-template
 						actions-menu-tmp

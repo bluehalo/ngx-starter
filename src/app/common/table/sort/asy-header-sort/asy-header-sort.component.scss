@@ -1,11 +1,12 @@
 @import '../../../../../styles/shared';
 
+:host {
+	display: inline-block;
+}
+
 button {
 	background: inherit;
-	border: none;
 	font: inherit;
-	padding-top: 0;
-	padding-bottom: 0;
 }
 
 .fa-solid {
@@ -22,9 +23,4 @@ button {
 	height: 6px;
 	line-height: 2px;
 	width: 22px;
-}
-
-.asy-sort-header-sortable {
-	cursor: pointer;
-	padding-right: 5px;
 }

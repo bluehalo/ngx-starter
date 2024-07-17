@@ -1,14 +1,17 @@
 <ng-container cdkColumnDef [sticky]="sticky()" [stickyEnd]="stickyEnd()">
 	<th cdk-header-cell *cdkHeaderCellDef>
-		<ng-template #defaultHeaderTemplate>
+		<div class="header-text">
 			{{ header() ?? (name | titlecase) }}
-		</ng-template>
-		<ng-template
-			[ngTemplateOutlet]="headerTemplate() ?? defaultHeaderTemplate"
-			[ngTemplateOutletContext]="{
-				header: header()
-			}"
-		/>
+		</div>
+		@if (headerTemplate(); as tpl) {
+			<ng-template
+				[ngTemplateOutlet]="tpl"
+				[ngTemplateOutletContext]="{
+					header: header()
+				}"
+			/>
+		}
+		<ng-content />
 	</th>
 	<td
 		class=""

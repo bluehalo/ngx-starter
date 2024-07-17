@@ -24,21 +24,20 @@ interface AsySortHeaderColumnDef {
 }
 
 @Component({
-	selector: '[asy-sort-header]',
-	templateUrl: './asy-sort-header.component.html',
-	styleUrls: ['./asy-sort-header.component.scss'],
+	selector: 'asy-header-sort',
+	templateUrl: './asy-header-sort.component.html',
+	styleUrls: ['./asy-header-sort.component.scss'],
 	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
-		class: 'asy-sort-header',
+		class: 'text-nowrap',
 		'(click)': '_handleClick()',
-		'[class.asy-sort-header-sorted]': 'isSorted()',
 		'[attr.aria-sort]': '_getAriaSortAttribute()'
 	},
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: []
 })
-export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
+export class AsyHeaderSortComponent implements AsySortable, OnDestroy, OnInit {
 	readonly #destroyRef = inject(DestroyRef);
 	readonly #changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -51,7 +50,8 @@ export class AsySortHeaderComponent implements AsySortable, OnDestroy, OnInit {
 	 * ID of this sort header. If used within the context of a CdkColumnDef, this will default to
 	 * the column's name.
 	 */
-	@Input('asy-sort-header')
+	// eslint-disable-next-line @angular-eslint/no-input-rename
+	@Input('sortId')
 	id: string;
 
 	/** Overrides the sort start value of the containing AsySort for this AsySortable. */

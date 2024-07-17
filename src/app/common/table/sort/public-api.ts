@@ -1,2 +1,2 @@
-export * from './asy-sort-header/asy-sort-header.component';
+export * from './asy-header-sort/asy-header-sort.component';
 export * from './asy-sort.directive';

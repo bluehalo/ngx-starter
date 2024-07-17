@@ -7,8 +7,10 @@ import {
 	Directive,
 	HostAttributeToken,
 	TemplateRef,
+	booleanAttribute,
 	contentChild,
-	inject
+	inject,
+	input
 } from '@angular/core';
 
 import { AsyAbstractColumnComponent } from '../columns/asy-abstract-column.component';
@@ -28,6 +30,8 @@ export class ActionsMenuTemplateDirective {
 })
 export class ActionsMenuColumnComponent<T> extends AsyAbstractColumnComponent<T> {
 	readonly template = contentChild.required(ActionsMenuTemplateDirective, { read: TemplateRef });
+
+	readonly hideMenu = input(false, { transform: booleanAttribute });
 
 	#scope = inject(new HostAttributeToken('scope'));
 
