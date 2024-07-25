@@ -2,6 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { provideCdkDialog } from './common/dialog';
@@ -18,7 +19,8 @@ describe('AppComponent', () => {
 				provideSession(),
 				provideCdkDialog(),
 				provideHttpClient(),
-				provideHttpClientTesting()
+				provideHttpClientTesting(),
+				provideNoopAnimations()
 			]
 		}).compileComponents();
 	});
