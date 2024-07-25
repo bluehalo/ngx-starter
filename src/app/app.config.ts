@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
 import {
 	TitleStrategy,
