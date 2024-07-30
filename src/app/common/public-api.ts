@@ -9,7 +9,6 @@ export * from './multi-select.directive';
 export * from './modal/modal/modal.component';
 export * from './not-whitespace.directive';
 export * from './paging.model';
-export * from './rxjs-utils';
 export * from './search-input/search-input.component';
 export * from './skip-to.directive';
 export * from './sorting.model';

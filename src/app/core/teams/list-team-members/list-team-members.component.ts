@@ -10,26 +10,16 @@ import {
 	input,
 	viewChild
 } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { explicitEffect } from 'ngxtension/explicit-effect';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, first, switchMap } from 'rxjs/operators';
+import { catchError, first, switchMap } from 'rxjs/operators';
 
-import {
-	PagingOptions,
-	PagingResults,
-	SearchInputComponent,
-	SortDirection,
-	isNotNullOrUndefined
-} from '../../../common';
-import {
-	DialogAction,
-	DialogService,
-	isDialogActionOK,
-	mapToDialogReturnData
-} from '../../../common/dialog';
+import { PagingOptions, PagingResults, SearchInputComponent, SortDirection } from '../../../common';
+import { DialogService, isDialogActionOK, mapToDialogReturnData } from '../../../common/dialog';
 import { AgoDatePipe, UtcDatePipe } from '../../../common/pipes';
 import { SystemAlertService } from '../../../common/system-alert';
 import {
@@ -128,8 +118,7 @@ export class ListTeamMembersComponent {
 	constructor() {
 		this.#alertService.clearAllAlerts();
 
-		// eslint-disable-next-line rxjs-angular/prefer-takeuntil
-		toObservable(this.team).subscribe(() => {
+		explicitEffect([this.team], () => {
 			this.dataSource.reload();
 		});
 	}
@@ -155,7 +144,6 @@ export class ListTeamMembersComponent {
 				}
 			})
 			.closed.pipe(
-				isNotNullOrUndefined(),
 				isDialogActionOK(),
 				mapToDialogReturnData(),
 				takeUntilDestroyed(this.#destroyRef)
@@ -175,7 +163,7 @@ export class ListTeamMembersComponent {
 			)
 			.closed.pipe(
 				first(),
-				filter((result) => result?.action === DialogAction.OK),
+				isDialogActionOK(),
 				switchMap(() => this.#teamsService.removeMember(this.team(), member._id)),
 				switchMap(() => this.#sessionService.reloadSession()),
 				catchError((error: unknown) => {
@@ -209,7 +197,7 @@ export class ListTeamMembersComponent {
 				)
 				.closed.pipe(
 					first(),
-					filter((result) => result?.action === DialogAction.OK),
+					isDialogActionOK(),
 					switchMap(() => this.doUpdateRole(member, role)),
 					switchMap(() => this.#sessionService.reloadSession()),
 					catchError((error: unknown) => {

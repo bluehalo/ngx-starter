@@ -1,8 +1,9 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+
+import { explicitEffect } from 'ngxtension/explicit-effect';
 
 import { SearchInputComponent, SkipToDirective } from '../../../common';
 import { SystemAlertComponent } from '../../../common/system-alert';
@@ -52,8 +53,7 @@ export class ListSubTeamsComponent extends BaseListTeamsComponent {
 			)
 		);
 
-		// eslint-disable-next-line rxjs-angular/prefer-takeuntil
-		toObservable(this.parent).subscribe(() => {
+		explicitEffect([this.parent], () => {
 			this.dataSource.reload();
 		});
 	}

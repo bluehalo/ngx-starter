@@ -2,10 +2,12 @@ import { EventEmitter, Injectable, inject, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
+import { filterNil } from 'ngxtension/filter-nil';
+import { mapArray } from 'ngxtension/map-array';
 import { Observable, take } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 
-import { AbstractEntityService, ServiceMethod, isNotNullOrUndefined } from '../../common';
+import { AbstractEntityService, ServiceMethod } from '../../common';
 import { SocketService } from '../socket.service';
 import { APP_SESSION } from '../tokens';
 import { Message } from './message.model';
@@ -63,7 +65,7 @@ export class MessageService extends AbstractEntityService<Message> {
 
 	recent(): Observable<Message[]> {
 		return this.http.post<unknown[]>('api/messages/recent', {}, { headers: this.headers }).pipe(
-			map((results) => results.map((result) => this.mapToType(result))),
+			mapArray((result) => this.mapToType(result)),
 			catchError((error: unknown) => this.handleError(error, []))
 		);
 	}
@@ -118,7 +120,7 @@ export class MessageService extends AbstractEntityService<Message> {
 
 	private updateNewMessageCount() {
 		this.recent()
-			.pipe(isNotNullOrUndefined())
+			.pipe(filterNil())
 			.subscribe((results) => {
 				this.#newMessageCount.set(results.length);
 			});
