@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { filterNil } from 'ngxtension/filter-nil';
 import { Observable, of } from 'rxjs';
 import { catchError, filter, first, switchMap } from 'rxjs/operators';
 
@@ -19,7 +20,7 @@ import {
 	SkipToDirective,
 	SortDirection
 } from '../../../../common';
-import { DialogAction, DialogService } from '../../../../common/dialog';
+import { DialogAction, DialogService, isDialogActionOK } from '../../../../common/dialog';
 import { JoinPipe } from '../../../../common/pipes';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {
@@ -212,7 +213,7 @@ export class AdminListUsersComponent implements OnInit {
 			)
 			.closed.pipe(
 				first(),
-				filter((result) => result?.action === DialogAction.OK),
+				isDialogActionOK(),
 				switchMap(() => this.#adminUsersService.removeUser(user._id)),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {

@@ -1,3 +1,4 @@
+import { filterNil } from 'ngxtension/filter-nil';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -12,8 +13,11 @@ export class DialogReturn<T> {
 }
 
 export function isDialogActionOK<T>() {
-	return (source$: Observable<DialogReturn<T>>) =>
-		source$.pipe(filter((result) => result?.action === DialogAction.OK));
+	return (source$: Observable<DialogReturn<T> | undefined>) =>
+		source$.pipe(
+			filterNil(),
+			filter((result) => result.action === DialogAction.OK)
+		);
 }
 
 export function mapToDialogReturnData<T>() {

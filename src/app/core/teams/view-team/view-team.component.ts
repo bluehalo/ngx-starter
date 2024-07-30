@@ -11,7 +11,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 
 import { filter, first, map, switchMap } from 'rxjs/operators';
 
-import { DialogAction, DialogService } from '../../../common/dialog';
+import { DialogAction, DialogService, isDialogActionOK } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import { SessionService } from '../../auth';
 import { APP_SESSION } from '../../tokens';
@@ -60,7 +60,7 @@ export class ViewTeamComponent {
 			)
 			.closed.pipe(
 				first(),
-				filter((result) => result?.action === DialogAction.OK),
+				isDialogActionOK(),
 				switchMap(() => this.#teamsService.delete(team)),
 				switchMap((team) =>
 					this.#sessionService.reloadSession().pipe(map((session) => team))

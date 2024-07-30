@@ -36,6 +36,7 @@
     "bootstrap": "^5.3.3",
     "lodash": "~4.17.21",
     "luxon": "~3.2.1",
+    "ngxtension": "^4.0.0",
     "roboto-fontface": "0.10",
     "rxjs": "~7.8.1",
     "socket.io-client": "^2.2.0",

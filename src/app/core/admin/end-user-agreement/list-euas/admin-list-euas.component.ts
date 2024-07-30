@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { filter, first, switchMap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
 import {
 	PagingOptions,
@@ -15,7 +15,7 @@ import {
 	SkipToDirective,
 	SortDirection
 } from '../../../../common';
-import { DialogAction, DialogService } from '../../../../common/dialog';
+import { DialogService, isDialogActionOK } from '../../../../common/dialog';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {
 	ActionsMenuColumnComponent,
@@ -132,7 +132,7 @@ export class AdminListEuasComponent implements OnInit {
 			)
 			.closed.pipe(
 				first(),
-				filter((result) => result?.action === DialogAction.OK),
+				isDialogActionOK(),
 				switchMap(() => this.#euaService.delete(eua)),
 				takeUntilDestroyed(this.#destroyRef)
 			)

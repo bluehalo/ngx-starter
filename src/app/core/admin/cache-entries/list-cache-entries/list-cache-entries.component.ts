@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { filterNil } from 'ngxtension/filter-nil';
 import { Observable } from 'rxjs';
 import { filter, first, switchMap } from 'rxjs/operators';
 
@@ -15,7 +16,7 @@ import {
 	SkipToDirective,
 	SortDirection
 } from '../../../../common';
-import { DialogAction, DialogService } from '../../../../common/dialog';
+import { DialogAction, DialogService, isDialogActionOK } from '../../../../common/dialog';
 import { AgoDatePipe, UtcDatePipe } from '../../../../common/pipes';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {
@@ -103,7 +104,7 @@ export class ListCacheEntriesComponent implements OnInit {
 			)
 			.closed.pipe(
 				first(),
-				filter((result) => result?.action === DialogAction.OK),
+				isDialogActionOK(),
 				switchMap(() => this.#cacheEntriesService.remove(cacheEntry.key)),
 				takeUntilDestroyed(this.#destroyRef)
 			)
