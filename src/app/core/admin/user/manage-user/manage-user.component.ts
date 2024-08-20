@@ -51,7 +51,7 @@ export class ManageUserComponent {
 		this.#alertService.clearAllAlerts();
 	}
 
-	submitUser(): any {
+	submitUser(): void {
 		if (this.validatePassword()) {
 			const obs$ =
 				this.mode() === 'create'

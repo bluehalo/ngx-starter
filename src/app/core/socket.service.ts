@@ -38,8 +38,8 @@ export class SocketService {
 		});
 	}
 
-	public on(eventName: string, callback: (event: any) => void) {
-		this.socket.on(eventName, (event: any) => {
+	public on<T>(eventName: string, callback: (event: T) => void) {
+		this.socket.on(eventName, (event: T) => {
 			callback.apply(this.socket, [event]);
 		});
 	}

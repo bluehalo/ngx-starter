@@ -4,14 +4,14 @@ export class StringUtils {
 	/**
 	 * Returns true if input is a string and it is not empty.
 	 */
-	public static isNonEmptyString(s: any): boolean {
+	public static isNonEmptyString(s: unknown): boolean {
 		return isString(s) && s.trim().length > 0;
 	}
 
 	/**
 	 * Returns true if input is not a string or if input is empty
 	 */
-	public static isInvalid(s: any): boolean {
+	public static isInvalid(s: unknown): boolean {
 		return !StringUtils.isNonEmptyString(s);
 	}
 

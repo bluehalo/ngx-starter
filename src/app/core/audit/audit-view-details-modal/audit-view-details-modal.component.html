@@ -1,7 +1,7 @@
 <asy-modal
-	title="{{ auditEntry?.audit?.auditType | titlecase }} {{
-		auditEntry?.audit?.action + 'd'
-	}} by {{ auditEntry?.audit?.actor?.username }} on {{ auditEntry?.created | utcDate }}"
+	title="{{ auditEntry.audit.auditType | titlecase }} {{ auditEntry.audit.action + 'd' }} by {{
+		auditEntry.audit.actor.username
+	}} on {{ auditEntry.created | utcDate }}"
 	hideCancel
 	okText="Close"
 	(cancel)="close()"
@@ -9,12 +9,12 @@
 >
 	<div class="row">
 		<div class="col-md-12">
-			@if (auditEntry?.audit?.object?.title) {
+			@if (auditEntry.audit.object.title) {
 				<h4>
-					{{ auditEntry?.audit?.object?.title }}
+					{{ auditEntry.audit.object.title }}
 				</h4>
 			}
-			<pre>{{ auditEntry?.audit?.object | json }}</pre>
+			<pre>{{ auditEntry.audit.object | json }}</pre>
 		</div>
 	</div>
 </asy-modal>

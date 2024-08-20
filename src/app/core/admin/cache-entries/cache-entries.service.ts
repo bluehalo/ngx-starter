@@ -14,9 +14,9 @@ export class CacheEntriesService {
 	readonly #alertService = inject(SystemAlertService);
 
 	public match(
-		query: any,
-		search: string,
-		paging: PagingOptions
+		paging: PagingOptions,
+		query: object = {},
+		search: string = ''
 	): Observable<PagingResults<CacheEntry>> {
 		return this.#http
 			.post<
@@ -27,19 +27,19 @@ export class CacheEntriesService {
 					if (error instanceof HttpErrorResponse) {
 						this.#alertService.addClientErrorAlert(error);
 					}
-					return of(NULL_PAGING_RESULTS);
+					return of(NULL_PAGING_RESULTS as PagingResults<CacheEntry>);
 				})
 			);
 	}
 
-	public remove(key: string): Observable<any> {
+	public remove(key: string): Observable<unknown> {
 		return this.#http.delete(
 			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{ params: { key } } // query parameter 'key'
 		);
 	}
 
-	public refresh(key: string): Observable<any> {
+	public refresh(key: string): Observable<unknown> {
 		return this.#http.post(
 			`api/access-checker/entry/${encodeURIComponent(key)}`,
 			{}, // empty POST body
@@ -47,7 +47,7 @@ export class CacheEntriesService {
 		);
 	}
 
-	public refreshCurrentUser(): Observable<any> {
+	public refreshCurrentUser(): Observable<unknown> {
 		return this.#http.post(
 			`api/access-checker/user`,
 			{} // empty POST body

@@ -16,7 +16,7 @@ import {
 
 export type TextFilterOption = 'Equals' | 'Contains' | 'Starts with' | 'Ends with';
 
-type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
+type BuildFilterFunction = (search: string, option: TextFilterOption) => object;
 
 @Component({
 	selector: 'asy-header-filter[text-filter]',
@@ -36,7 +36,7 @@ type BuildFilterFunction = (search: string, option: TextFilterOption) => any;
 		NgbTooltip
 	]
 })
-export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterComponent {
+export class AsyHeaderTextFilterComponent<T> extends AsyAbstractHeaderFilterComponent<T> {
 	readonly search = signal('');
 	option = signal<TextFilterOption>('Contains');
 
@@ -68,7 +68,7 @@ export class AsyHeaderTextFilterComponent extends AsyAbstractHeaderFilterCompone
 		return undefined;
 	}
 
-	_restoreState(state: any) {
+	_restoreState(state?: { search: string; option: TextFilterOption }) {
 		if (state) {
 			this.search.set(state.search);
 			this.option.set(state.option);

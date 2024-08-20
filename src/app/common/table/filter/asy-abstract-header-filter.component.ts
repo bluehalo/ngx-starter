@@ -21,7 +21,7 @@ export interface AsyFilterHeaderColumnDef {
 }
 
 @Directive({ standalone: true })
-export abstract class AsyAbstractHeaderFilterComponent
+export abstract class AsyAbstractHeaderFilterComponent<T>
 	implements AsyFilterable, AfterViewInit, OnDestroy, OnInit
 {
 	#storage = new SessionStorageService();
@@ -34,7 +34,7 @@ export abstract class AsyAbstractHeaderFilterComponent
 	@Input('filter-field') id: string;
 
 	// `AsyFilterDirective` is not optionally injected, but just asserted manually w/ better error.
-	protected _filter = inject(AsyFilterDirective, { optional: true }) as AsyFilterDirective;
+	protected _filter = inject(AsyFilterDirective, { optional: true }) as AsyFilterDirective<T>;
 
 	protected changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -43,10 +43,10 @@ export abstract class AsyAbstractHeaderFilterComponent
 
 	protected constructor(public _columnDef: AsyFilterHeaderColumnDef) {}
 
-	abstract _buildFilter(): any;
-	abstract _buildState(): any;
+	abstract _buildFilter(): object;
+	abstract _buildState(): object | undefined;
 	abstract _clearState(): void;
-	abstract _restoreState(state: any): void;
+	abstract _restoreState(state?: object): void;
 
 	ngOnInit(): void {
 		if (!this._filter) {
@@ -86,7 +86,7 @@ export abstract class AsyAbstractHeaderFilterComponent
 		this.onFilterChange();
 	}
 
-	loadState(): any {
+	loadState(): object | undefined {
 		const storageKey = this._filter.dataSource().storageKey;
 		if (storageKey) {
 			return this.#storage.getValue(`${storageKey}-${this.id}-filter`);

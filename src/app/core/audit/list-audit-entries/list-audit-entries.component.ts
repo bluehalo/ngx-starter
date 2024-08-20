@@ -1,5 +1,6 @@
 import { ComponentType, OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
+import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -30,7 +31,7 @@ import {
 } from '../../../common/table';
 import { ExportConfigService } from '../../export-config.service';
 import { APP_CONFIG } from '../../tokens';
-import { AuditObjectComponent } from '../audit-object.component';
+import { AuditEntry } from '../audit-entry.model';
 import { AuditViewChangeModalComponent } from '../audit-view-change-modal/audit-view-change-modal.component';
 import { AuditViewDetailsModalComponent } from '../audit-view-details-modal/audit-view-details-modal.component';
 import { AuditService } from '../audit.service';
@@ -51,14 +52,14 @@ import { AuditDistinctValueFilterDirective } from './audit-distinct-value-filter
 		AsyHeaderSortComponent,
 		AsyHeaderTypeaheadFilterComponent,
 		AuditActorFilterDirective,
-		AuditObjectComponent,
 		AsyHeaderDateFilterComponent,
 		AsyHeaderListFilterComponent,
 		AuditDistinctValueFilterDirective,
 		AsyTableEmptyStateComponent,
 		PaginatorComponent,
 		UtcDatePipe,
-		NgbTooltip
+		NgbTooltip,
+		JsonPipe
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -124,7 +125,7 @@ export class ListAuditEntriesComponent {
 		'message'
 	]);
 
-	readonly dataSource = new AsyTableDataSource(
+	readonly dataSource = new AsyTableDataSource<AuditEntry>(
 		(request) => this.loadData(request.pagingOptions, request.search, request.filter),
 		'list-audit-entries-component',
 		{
@@ -141,8 +142,12 @@ export class ListAuditEntriesComponent {
 		}
 	}
 
-	loadData(pagingOptions: PagingOptions, search: string, query: any): Observable<PagingResults> {
-		return this.#auditService.search(query, search, pagingOptions);
+	loadData(
+		pagingOptions: PagingOptions,
+		search: string,
+		query: object
+	): Observable<PagingResults<AuditEntry>> {
+		return this.#auditService.search(pagingOptions, query, search);
 	}
 
 	exportCurrentView() {
@@ -159,7 +164,7 @@ export class ListAuditEntriesComponent {
 				cols: viewColumns
 			})
 			.pipe(takeUntilDestroyed(this.#destroyRef))
-			.subscribe((response: any) => {
+			.subscribe((response) => {
 				window.open(`/api/audit/csv/${response._id}`);
 			});
 	}
@@ -174,7 +179,7 @@ export class ListAuditEntriesComponent {
 		['viewChanges', AuditViewChangeModalComponent]
 	]);
 
-	viewMore(auditEntry: any, type: string) {
+	viewMore(auditEntry: unknown, type: string) {
 		const component = this.viewComponents.get(type);
 		if (component) {
 			this.#dialogService.open(component, {

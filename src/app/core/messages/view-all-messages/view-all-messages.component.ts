@@ -12,7 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { WINDOW } from '@ng-web-apis/common';
 
-import { PagingOptions, PagingResults, SearchInputComponent, SortDirection } from '../../../common';
+import { PagingOptions, SearchInputComponent, SortDirection } from '../../../common';
 import { AgoDatePipe } from '../../../common/pipes';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import { Message, MessageType } from '../message.model';
@@ -73,7 +73,7 @@ export class ViewAllMessagesComponent implements OnInit {
 				this.search
 			)
 			.pipe(takeUntilDestroyed(this.#destroyRef))
-			.subscribe((result: PagingResults) => {
+			.subscribe((result) => {
 				if (page === 0) {
 					this.messages.set(result.elements);
 				} else {

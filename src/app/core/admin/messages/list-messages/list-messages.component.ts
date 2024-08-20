@@ -83,7 +83,7 @@ export class ListMessagesComponent implements OnInit {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<Message>> {
 		return this.#messageService.search(pagingOptions, query, search);
 	}

@@ -7,7 +7,7 @@ export enum DialogAction {
 	CANCEL
 }
 
-export class DialogReturn<T> {
+export class DialogReturn<T = void> {
 	action: DialogAction;
 	data?: T;
 }

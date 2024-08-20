@@ -75,10 +75,9 @@ export class AddMembersModalComponent implements OnInit {
 				}),
 				switchMap((term) =>
 					this.#teamsService.searchUsers(
-						{ 'teams._id': { $ne: this.#data.teamId } },
-						term,
 						new PagingOptions(),
-						{}
+						{ 'teams._id': { $ne: this.#data.teamId } },
+						term
 					)
 				),
 				map((result) =>

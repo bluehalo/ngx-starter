@@ -3,7 +3,7 @@
 	[cancelText]="data.cancelText ?? 'Cancel'"
 	[disableOk]="!modalForm.form.valid"
 	[hideCancel]="data.hideCancel ?? false"
-	[okText]="data.okText"
+	[okText]="data.okText ?? 'OK'"
 	(cancel)="cancel()"
 	(ok)="ok()"
 >

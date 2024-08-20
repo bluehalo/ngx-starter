@@ -12,9 +12,13 @@ import { Observable } from 'rxjs';
 export class ExportConfigService {
 	readonly #http = inject(HttpClient);
 
-	postExportConfig(type: string, config: any): Observable<any> {
-		return this.#http.post('/api/requestExport', JSON.stringify({ type, config }), {
-			headers: { 'Content-Type': 'application/json' }
-		});
+	postExportConfig(type: string, config: unknown): Observable<{ _id: string }> {
+		return this.#http.post<{ _id: string }>(
+			'/api/requestExport',
+			JSON.stringify({ type, config }),
+			{
+				headers: { 'Content-Type': 'application/json' }
+			}
+		);
 	}
 }

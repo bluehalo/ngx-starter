@@ -30,31 +30,30 @@ export class AdminUsersService {
 	readonly #router = inject(Router);
 
 	search(
-		query: any,
-		search: string,
 		paging: PagingOptions,
-		options: any = {}
+		query: object = {},
+		search = '',
+		body?: object,
+		options: object = {}
 	): Observable<PagingResults<User>> {
 		return this.#http
 			.post<PagingResults>(
 				'api/admin/users',
-				{ q: query, s: search, options },
+				{ q: query, s: search, options, ...body },
 				{ params: paging.toObj() }
 			)
 			.pipe(
-				map((results: PagingResults) => {
-					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map(
-							(element: any) => new User(element)
-						);
-					}
-					return results;
+				map((pagingResults) => {
+					return {
+						...pagingResults,
+						elements: pagingResults.elements.map((model) => new User(model))
+					} as PagingResults<User>;
 				}),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
 						this.#alertService.addClientErrorAlert(error);
 					}
-					return of(NULL_PAGING_RESULTS);
+					return of(NULL_PAGING_RESULTS as PagingResults<User>);
 				})
 			);
 	}
@@ -63,7 +62,7 @@ export class AdminUsersService {
 		return this.#http.delete(`api/admin/user/${id}`);
 	}
 
-	getAll(query: any, field: string) {
+	getAll(query: object, field: string) {
 		return this.#http.post('api/admin/users/getAll', { query, field });
 	}
 
@@ -74,10 +73,10 @@ export class AdminUsersService {
 	read(userId: string) {
 		return this.#http
 			.get(`api/admin/user/${userId}`)
-			.pipe(map((userRaw: any) => new User(userRaw)));
+			.pipe(map((userRaw: unknown) => new User(userRaw)));
 	}
 
-	update(user: User): Observable<any> {
+	update(user: User): Observable<unknown> {
 		return this.#http.post(`api/admin/user/${user._id}`, user);
 	}
 

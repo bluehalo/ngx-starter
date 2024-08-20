@@ -180,7 +180,7 @@ export class AdminListFeedbackComponent implements OnInit {
 				cols: viewColumns
 			})
 			.pipe(takeUntilDestroyed(this.#destroyRef))
-			.subscribe((response: any) => {
+			.subscribe((response) => {
 				window.open(`/api/admin/feedback/csv/${response._id}`);
 			});
 	}
@@ -188,7 +188,7 @@ export class AdminListFeedbackComponent implements OnInit {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<Feedback>> {
 		return this.#feedbackService.search(pagingOptions, query, search);
 	}

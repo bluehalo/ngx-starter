@@ -8,8 +8,8 @@ import { AsyFilterDirective } from '../asy-filter.directive';
 import { AsyHeaderDateFilterComponent } from './asy-header-date-filter.component';
 
 describe('AsyHeaderDateFilter', () => {
-	let component: AsyHeaderDateFilterComponent;
-	let fixture: ComponentFixture<AsyHeaderDateFilterComponent>;
+	let component: AsyHeaderDateFilterComponent<unknown>;
+	let fixture: ComponentFixture<AsyHeaderDateFilterComponent<unknown>>;
 	let filterSpy: any;
 
 	let luxonNowFn: () => number;
@@ -41,7 +41,9 @@ describe('AsyHeaderDateFilter', () => {
 
 		await TestBed.configureTestingModule({
 			imports: [BrowserAnimationsModule, AsyHeaderDateFilterComponent],
-			providers: [{ provide: AsyFilterDirective, useValue: filterSpy as AsyFilterDirective }]
+			providers: [
+				{ provide: AsyFilterDirective, useValue: filterSpy as AsyFilterDirective<unknown> }
+			]
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(AsyHeaderDateFilterComponent);

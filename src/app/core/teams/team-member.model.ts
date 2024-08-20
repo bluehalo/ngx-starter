@@ -9,24 +9,20 @@ export class TeamMember extends User {
 
 	public roleDisplay = TeamRole.getDisplay(this.role);
 
-	constructor(model: any, team?: Team) {
+	constructor(model: unknown, team?: Pick<Team, '_id'>) {
 		super(model);
-		this.setFromModelAndTeam(model, team);
+		this.setFromTeam(team);
 	}
 
-	private setFromModelAndTeam(model: any, team?: Team): TeamMember {
-		if (!model) {
-			return this;
-		}
-
+	private setFromTeam(team?: Pick<Team, '_id'>): TeamMember {
 		// Determine if user is implicit/explicit and active/inactive
-		this.explicit = (model.teams?.length ?? 0) > 0;
+		this.explicit = (this.teams?.length ?? 0) > 0;
 
 		if (team) {
 			this.role = this.getTeamRole(team) ?? TeamRole.MEMBER.role;
 			this.roleDisplay = TeamRole.getDisplay(this.role);
 
-			this.explicit = model.teams.map((t: any) => t._id).includes(team._id);
+			this.explicit = this.teams.map((t) => t._id).includes(team._id);
 		}
 
 		return this;

@@ -27,7 +27,7 @@
 					<asy-header-filter audit-actor-filter typeahead-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
-					<asy-audit-component auditType="user" [auditObject]="entry.audit.actor" />
+					{{ entry.audit.actor?.username }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="created">
@@ -39,7 +39,7 @@
 					<asy-header-filter date-filter />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
-					{{ entry?.created | utcDate }}
+					{{ entry.created | utcDate }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.action">
@@ -51,7 +51,7 @@
 					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
-					{{ entry?.audit?.action }}
+					{{ entry.audit.action }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.auditType">
@@ -63,34 +63,29 @@
 					<asy-header-filter audit-distinct-value-filter list-filter showSearch />
 				</th>
 				<td class="text-nowrap" cdk-cell *cdkCellDef="let entry">
-					{{ entry?.audit?.auditType }}
+					{{ entry.audit.auditType }}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="audit.object">
 				<th cdk-header-cell *cdkHeaderCellDef><asy-header-sort>Object</asy-header-sort></th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
-					<asy-audit-component
-						[auditObject]="entry.audit.object?.after ?? entry.audit.object"
-						[auditType]="entry.audit.auditType"
-					/>
-					<div>
-						@if (entry.isViewDetailsAction) {
+					@if (entry.audit.object?.after) {
+						{{ entry.audit.object.after | json }}
+					} @else {
+						{{ entry.audit.object | json }}
+						<div>
 							<button
-								class="btn btn-link btn-sm"
+								class="btn btn-link btn-sm ps-0 pe-3"
 								type="button"
 								container="body"
 								ngbTooltip="See details of the update"
 								placement="bottom"
-								[hidden]="(entry.audit.object ?? null) === null"
 								(click)="viewMore(entry, 'viewDetails')"
 							>
-								<span class="fa-solid fa-eye"></span><span>View Details</span>
+								<span class="fa-solid fa-eye"></span>View Details
 							</button>
-						}
-						@if (entry.audit.action === 'save') {
-							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
-						}
-					</div>
+						</div>
+					}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="before">
@@ -101,28 +96,21 @@
 					</asy-header-sort>
 				</th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
-					<asy-audit-component
-						[auditObject]="entry.audit.object?.before"
-						[auditType]="entry.audit.auditType"
-					/>
-					<div>
-						@if (entry.isViewChangesAction) {
+					@if (entry.audit.object?.before) {
+						{{ entry.audit.object?.before | json }}
+						<div>
 							<button
-								class="btn btn-link btn-sm"
+								class="btn btn-link btn-sm ps-0"
 								type="button"
 								container="body"
 								ngbTooltip="See details of the update"
 								placement="bottom"
-								[hidden]="(entry.audit.object?.before ?? null) === null"
 								(click)="viewMore(entry, 'viewChanges')"
 							>
 								<span class="fa-solid fa-eye"></span><span>View Details</span>
 							</button>
-						}
-						@if (entry.audit.action === 'save') {
-							<small style="opacity: 0.5"><span>No Changes Detected</span></small>
-						}
-					</div>
+						</div>
+					}
 				</td>
 			</ng-container>
 			<ng-container cdkColumnDef="message">

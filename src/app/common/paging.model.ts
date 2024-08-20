@@ -1,6 +1,6 @@
 import { SortDir } from './sorting.model';
 
-export interface PagingResults<T = any> {
+export interface PagingResults<T = unknown> {
 	pageNumber: number;
 	pageSize: number;
 	totalPages: number;
@@ -54,7 +54,12 @@ export class PagingOptions {
 		this.pageNumber = pageNumber;
 	}
 
-	toObj(): any {
+	toObj(): {
+		page: PagingOptions['pageNumber'];
+		size: PagingOptions['pageSize'];
+		sort?: PagingOptions['sortField'];
+		dir?: PagingOptions['sortDir'];
+	} {
 		return {
 			page: this.pageNumber,
 			size: this.pageSize,

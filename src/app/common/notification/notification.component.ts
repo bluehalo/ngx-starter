@@ -17,7 +17,7 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent {
-	readonly actionTemplate = contentChild<TemplateRef<any>>('notificationActions');
+	readonly actionTemplate = contentChild<TemplateRef<unknown>>('notificationActions');
 
 	readonly notificationType = input<'info' | 'success' | 'warning' | 'danger'>('info');
 	readonly message = input('');

@@ -11,7 +11,7 @@ import { SessionStorageService } from '../storage/session-storage.service';
 export type LoadPageFunction<T> = (options: {
 	pagingOptions: PagingOptions;
 	search: string;
-	filter: any;
+	filter: object;
 }) => Observable<PagingResults<T>>;
 
 type State = {
@@ -22,7 +22,7 @@ type State = {
 
 export class AsyTableDataSource<T> extends DataSource<T> {
 	readonly sortEvent$: BehaviorSubject<SortChange>;
-	readonly filterEvent$: BehaviorSubject<any>;
+	readonly filterEvent$: BehaviorSubject<object>;
 	readonly searchEvent$: BehaviorSubject<string>;
 	readonly pageChangeEvent$: BehaviorSubject<PageChange>;
 	readonly pagingResults$: BehaviorSubject<PagingResults<T>>;
@@ -38,7 +38,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		public storageKey?: string,
 		initialSort: SortChange = {} as SortChange,
 		initialSearch = '',
-		initialFilter: any = {},
+		initialFilter: object = {},
 		initialPageSize = 20,
 		private debounceTimeMs = 100
 	) {
@@ -53,7 +53,9 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 			pageNumber: 0,
 			pageSize: state.pageSize ?? initialPageSize
 		});
-		this.pagingResults$ = new BehaviorSubject<PagingResults<T>>(NULL_PAGING_RESULTS);
+		this.pagingResults$ = new BehaviorSubject<PagingResults<T>>(
+			NULL_PAGING_RESULTS as PagingResults<T>
+		);
 
 		const param$ = combineLatest([this.searchEvent$, this.filterEvent$]);
 
@@ -84,14 +86,20 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 					});
 				}),
 				switchMap(([search, filter]) =>
-					pagingOptions$.pipe(map((pagingOptions) => [pagingOptions, search, filter]))
+					pagingOptions$.pipe(
+						map((pagingOptions) => ({
+							pagingOptions,
+							search,
+							filter
+						}))
+					)
 				),
 				tap(() => {
 					this.loading$.next(true);
-					this.pagingResults$.next(NULL_PAGING_RESULTS);
+					this.pagingResults$.next(NULL_PAGING_RESULTS as PagingResults<T>);
 				}),
 				debounceTime(this.debounceTimeMs),
-				switchMap(([pagingOptions, search, filter]) =>
+				switchMap(({ pagingOptions, search, filter }) =>
 					loadPageFunc({
 						pagingOptions,
 						search,
@@ -116,7 +124,7 @@ export class AsyTableDataSource<T> extends DataSource<T> {
 		this.saveState();
 	}
 
-	filter(filter: any) {
+	filter(filter: object) {
 		this.filterEvent$.next(filter);
 	}
 

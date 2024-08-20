@@ -23,7 +23,7 @@ export class SiteContainerComponent {
 	readonly showFeedbackFlyout = computed(() => this.#config()?.feedback?.showFlyout ?? false);
 	readonly isAuthenticated = computed(() => this.#session().isAuthenticated);
 
-	skipToMainContent(e: any) {
+	skipToMainContent(e: Event) {
 		e.preventDefault();
 
 		// querySelector gets the first matched element

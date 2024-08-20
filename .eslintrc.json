@@ -56,7 +56,7 @@
         "@angular-eslint/use-component-view-encapsulation": ["error"],
         "@angular-eslint/use-injectable-provided-in": ["error"],
         "@angular-eslint/use-lifecycle-interface": ["error"],
-        "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/no-explicit-any": ["error"],
         "@typescript-eslint/no-unused-vars": [
           "error",
           {
@@ -104,6 +104,14 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "*.spec.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": ["off"]
       }
     },
     {

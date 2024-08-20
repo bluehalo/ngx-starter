@@ -32,7 +32,7 @@ export class ManageEuaComponent {
 		this.#alertService.clearAllAlerts();
 	}
 
-	submitEua(): any {
+	submitEua(): void {
 		const obs$ =
 			this.mode() === 'create'
 				? this.#euaService.create(this.eua())
@@ -43,7 +43,7 @@ export class ManageEuaComponent {
 		);
 	}
 
-	previewEua() {
+	previewEua(): void {
 		this.#dialogService.alert(this.eua().title, this.eua().text);
 	}
 }

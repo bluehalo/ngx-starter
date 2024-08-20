@@ -3,7 +3,7 @@ export class CacheEntry {
 
 	constructor(
 		public key: string,
-		public value: any,
+		public value: unknown,
 		public ts: number
 	) {}
 }

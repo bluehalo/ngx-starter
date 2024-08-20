@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { NULL_PAGING_RESULTS, PagingResults } from '../../common';
 import { LocalStorageService } from '../../common/storage/local-storage.service';
@@ -28,14 +28,19 @@ export class MasqueradeService {
 		return this.#storage.getValue(LOCAL_STORAGE_KEY);
 	}
 
-	searchUsers(query: any = {}, search = '', options: any = {}): Observable<PagingResults<User>> {
+	searchUsers(
+		query: unknown = {},
+		search = '',
+		options: unknown = {}
+	): Observable<PagingResults<User>> {
 		return this.#http.post<PagingResults>('api/users', { q: query, s: search, options }).pipe(
-			tap((results: PagingResults) => {
-				if (Array.isArray(results?.elements)) {
-					results.elements = results.elements.map((element: any) => new User(element));
-				}
+			map((pagingResults) => {
+				return {
+					...pagingResults,
+					elements: pagingResults.elements.map((model) => new User(model))
+				} as PagingResults<User>;
 			}),
-			catchError(() => of(NULL_PAGING_RESULTS))
+			catchError(() => of(NULL_PAGING_RESULTS as PagingResults<User>))
 		);
 	}
 }
