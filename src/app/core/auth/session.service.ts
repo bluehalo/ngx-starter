@@ -61,7 +61,7 @@ export class SessionService {
 		);
 	}
 
-	acceptEua(): Observable<any> {
+	acceptEua(): Observable<unknown> {
 		return this.#authService.acceptEua().pipe(
 			catchError(() => {
 				return of(null);

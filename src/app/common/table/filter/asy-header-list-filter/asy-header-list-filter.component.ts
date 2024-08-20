@@ -27,7 +27,7 @@ import {
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
 
-type BuildFilterFunction = (options: ListFilterOption[], matchAll?: boolean) => any;
+type BuildFilterFunction = (options: ListFilterOption[], matchAll?: boolean) => object;
 
 type LoadOptionsFunction = () => Observable<(string | string[] | ListFilterOption)[]>;
 
@@ -57,7 +57,7 @@ export type ListFilterOption = {
 	],
 	providers: [TitleCasePipe]
 })
-export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterComponent {
+export class AsyHeaderListFilterComponent<T> extends AsyAbstractHeaderFilterComponent<T> {
 	readonly #titleCasePipe = inject(TitleCasePipe);
 	readonly #destroyRef = inject(DestroyRef);
 
@@ -138,10 +138,10 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 		}
 	}
 
-	_restoreState(state: any) {
+	_restoreState(state?: { matchAll: boolean; options: ListFilterOption[] }) {
 		if (state) {
 			this.matchAll.set(this.showMatch() && (state.matchAll ?? false));
-			this._setActiveOptions(state.options as ListFilterOption[]);
+			this._setActiveOptions(state.options);
 			this.onFilterChange();
 		}
 	}
@@ -194,7 +194,7 @@ export class AsyHeaderListFilterComponent extends AsyAbstractHeaderFilterCompone
 					}
 				});
 			} else {
-				this._options = activeOptions.map((option: any) => ({ active: true, ...option }));
+				this._options = activeOptions.map((option) => ({ active: true, ...option }));
 			}
 		}
 	}

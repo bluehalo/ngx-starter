@@ -1,70 +1,48 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from '../../common';
-import { SystemAlertService } from '../../common/system-alert';
+import { AbstractEntityService, PagingOptions, PagingResults, ServiceMethod } from '../../common';
 import { User } from '../auth';
-import { AuditActionTypes } from './audit.classes';
+import { AuditEntry } from './audit-entry.model';
 
 // eslint-disable-next-line @angular-eslint/use-injectable-provided-in
 @Injectable()
-export class AuditService {
-	readonly #http = inject(HttpClient);
-	readonly #alertService = inject(SystemAlertService);
-
-	public getDistinctAuditValues(field: string): Observable<string[]> {
-		return this.#http.get<string[]>('api/audit/distinctValues', { params: { field } });
+export class AuditService extends AbstractEntityService<AuditEntry> {
+	constructor() {
+		super({
+			[ServiceMethod.search]: 'api/audit'
+		});
 	}
 
-	public search(query: any, search: string, paging: PagingOptions): Observable<PagingResults> {
-		return this.#http
-			.post<PagingResults>('api/audit', { q: query, s: search }, { params: paging.toObj() })
-			.pipe(
-				map((results: PagingResults) => {
-					if (null != results && Array.isArray(results.elements)) {
-						results.elements.forEach((entry) => {
-							entry.isViewDetailsAction = AuditActionTypes.isViewDetailsAction(
-								entry.audit.action
-							);
-							entry.isViewChangesAction = AuditActionTypes.isViewChangesAction(
-								entry.audit.action
-							);
-						});
-					}
-					return results;
-				}),
-				catchError((error: unknown) => {
-					if (error instanceof HttpErrorResponse) {
-						this.#alertService.addClientErrorAlert(error);
-					}
-					return of(NULL_PAGING_RESULTS);
-				})
-			);
+	mapToType(model: unknown): AuditEntry {
+		return new AuditEntry(model);
+	}
+
+	public getDistinctAuditValues(field: string): Observable<string[]> {
+		return this.http.get<string[]>('api/audit/distinctValues', { params: { field } });
 	}
 
 	public matchUser(
-		query: any,
-		search: string,
 		paging: PagingOptions,
-		options: any
+		query: object = {},
+		search = '',
+		body?: object,
+		options: object = {}
 	): Observable<PagingResults<User>> {
-		return this.#http
+		return this.http
 			.post<PagingResults>(
 				'api/users/match',
-				{ q: query, s: search, options },
+				{ q: query, s: search, options, ...body },
 				{ params: paging.toObj() }
 			)
 			.pipe(
-				map((results: PagingResults) => {
-					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map(
-							(element: any) => new User(element)
-						);
-					}
-					return results;
+				map((pagingResults) => {
+					return {
+						...pagingResults,
+						elements: pagingResults.elements.map((model) => new User(model))
+					} as PagingResults<User>;
 				})
 			);
 	}

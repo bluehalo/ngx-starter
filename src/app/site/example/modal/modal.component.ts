@@ -3,9 +3,17 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 
+import { filterNil } from 'ngxtension/filter-nil';
 import { Subject } from 'rxjs';
 
-import { ConfigurableDialogData, DialogService } from '../../../common/dialog';
+import {
+	ConfigurableDialogData,
+	ConfigurableDialogReturn,
+	DialogData,
+	DialogReturn,
+	DialogService,
+	PromptDialogData
+} from '../../../common/dialog';
 
 @Component({
 	templateUrl: './modal.component.html',
@@ -16,17 +24,17 @@ export class ModalComponent {
 	private destroyRef = inject(DestroyRef);
 	dialogService = inject(DialogService);
 
-	alertConfig: any = {
+	alertConfig: DialogData = {
 		title: 'Alert!',
 		message: 'Something important happened!'
 	};
 
-	confirmConfig: any = {
+	confirmConfig: DialogData = {
 		title: 'Confirm?',
 		message: 'Are you sure?'
 	};
 
-	promptConfig: any = {
+	promptConfig: PromptDialogData = {
 		title: 'Prompt',
 		message: 'Are you sure?',
 		inputLabel: 'Input'
@@ -43,15 +51,15 @@ export class ModalComponent {
 	{ "type": "textarea", "label": "Field 2", "key": "field2", "required": true }
 ]`;
 
-	alertOutput$ = new Subject<any>();
-	confirmOutput$ = new Subject<any>();
-	promptOutput$ = new Subject<any>();
-	showOutput$ = new Subject<any>();
+	alertOutput$ = new Subject<DialogReturn>();
+	confirmOutput$ = new Subject<DialogReturn>();
+	promptOutput$ = new Subject<DialogReturn<{ prompt: string }>>();
+	showOutput$ = new Subject<ConfigurableDialogReturn>();
 
 	showAlert() {
 		this.dialogService
 			.alert(this.alertConfig.title, this.alertConfig.message, this.alertConfig.okText)
-			.closed.pipe(takeUntilDestroyed(this.destroyRef))
+			.closed.pipe(filterNil(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((returnData) => {
 				this.alertOutput$.next(returnData);
 			});
@@ -65,7 +73,7 @@ export class ModalComponent {
 				this.alertConfig.okText,
 				this.confirmConfig.cancelText
 			)
-			.closed.pipe(takeUntilDestroyed(this.destroyRef))
+			.closed.pipe(filterNil(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((returnData) => {
 				this.confirmOutput$.next(returnData);
 			});
@@ -80,17 +88,16 @@ export class ModalComponent {
 				this.alertConfig.okText,
 				this.confirmConfig.cancelText
 			)
-			.closed.pipe(takeUntilDestroyed(this.destroyRef))
+			.closed.pipe(filterNil(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((returnData) => {
 				this.promptOutput$.next(returnData);
 			});
 	}
 
 	showModal() {
-		this.showConfig.inputs = JSON.parse(this.showInputConfig);
 		this.dialogService
-			.show(this.showConfig)
-			.closed.pipe(takeUntilDestroyed(this.destroyRef))
+			.show({ ...this.showConfig, inputs: JSON.parse(this.showInputConfig) })
+			.closed.pipe(filterNil(), takeUntilDestroyed(this.destroyRef))
 			.subscribe((returnData) => {
 				this.showOutput$.next(returnData);
 			});

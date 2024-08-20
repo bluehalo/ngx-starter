@@ -1,8 +1,4 @@
-import isEmpty from 'lodash/isEmpty';
-
 export class Team {
-	numResources: any = {};
-
 	_id: string;
 	name: string;
 	description: string;
@@ -30,13 +26,5 @@ export class Team {
 		if (this.parent) {
 			this.parent = new Team(this.parent);
 		}
-	}
-
-	hasResourcesOfType(type: string): boolean {
-		if (!isEmpty(this.numResources) && this.numResources.hasOwnProperty(type)) {
-			return this.numResources[type] > 0;
-		}
-
-		return false;
 	}
 }

@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 
 import { DialogService } from '../../../../common/dialog';
 import { SystemAlertService } from '../../../../common/system-alert';
+import { EndUserAgreement } from '../../../auth';
 import { EuaService } from '../eua.service';
 import { AdminListEuasComponent } from './admin-list-euas.component';
 
@@ -53,7 +54,7 @@ describe('Admin List End User Agreements Component', () => {
 	it('Should Open a Modal When Preview End User Agreement', () => {
 		fixture.detectChanges();
 		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(0);
-		component.previewEndUserAgreement({});
+		component.previewEndUserAgreement(new EndUserAgreement());
 		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(1);
 	});
 });

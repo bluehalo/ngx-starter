@@ -39,7 +39,7 @@ export abstract class BaseListTeamsComponent {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object & { $and?: object[] }
 	): Observable<PagingResults<Team>> {
 		if (this.parent()) {
 			query = cloneDeep(query);

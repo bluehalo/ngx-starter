@@ -187,9 +187,9 @@ export class AdminListUsersComponent implements OnInit {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<User>> {
-		return this.#adminUsersService.search(query, search, pagingOptions);
+		return this.#adminUsersService.search(pagingOptions, query, search);
 	}
 
 	columnsChanged(columns: string[]) {
@@ -239,7 +239,7 @@ export class AdminListUsersComponent implements OnInit {
 				cols: viewColumns
 			})
 			.pipe(takeUntilDestroyed(this.#destroyRef))
-			.subscribe((response: any) => {
+			.subscribe((response) => {
 				window.open(`/api/admin/users/csv/${response._id}`);
 			});
 	}

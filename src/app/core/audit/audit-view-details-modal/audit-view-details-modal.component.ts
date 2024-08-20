@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 
 import { ModalComponent } from '../../../common';
 import { UtcDatePipe } from '../../../common/pipes';
+import { AuditEntry } from '../audit-entry.model';
 
 @Component({
 	templateUrl: './audit-view-details-modal.component.html',
@@ -19,9 +20,9 @@ import { UtcDatePipe } from '../../../common/pipes';
 })
 export class AuditViewDetailsModalComponent {
 	#dialogRef = inject(DialogRef);
-	#data = inject(DIALOG_DATA);
+	#data: { auditEntry: AuditEntry } = inject(DIALOG_DATA);
 
-	auditEntry: any;
+	auditEntry: AuditEntry;
 
 	constructor() {
 		this.auditEntry = this.#data.auditEntry;

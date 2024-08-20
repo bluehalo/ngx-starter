@@ -18,13 +18,13 @@ export interface AsyFilterable {
 	host: { class: 'asy-filter' },
 	standalone: true
 })
-export class AsyFilterDirective {
-	dataSource = input.required<AsyTableDataSource<any>>();
+export class AsyFilterDirective<T> {
+	dataSource = input.required<AsyTableDataSource<T>>();
 
 	/** Collection of all registered filterables that this directive manages. */
 	filterables = new Map<string, AsyFilterable>();
 
-	filters = new Map<string, any>();
+	filters = new Map<string, object>();
 
 	/**
 	 * Register function to be used by the contained AsyFilterables. Adds the AsyFilterable to the
@@ -50,7 +50,7 @@ export class AsyFilterDirective {
 		this.filterables.delete(filterable.id);
 	}
 
-	filter(id: string, query: any): void {
+	filter(id: string, query: object): void {
 		this.filters.set(id, query);
 		this.dataSource().filter(this._buildFilter());
 	}

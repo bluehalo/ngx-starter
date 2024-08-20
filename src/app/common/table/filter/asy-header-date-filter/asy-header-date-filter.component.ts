@@ -14,6 +14,8 @@ import {
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
 
+type Duration = 'hour' | 'day' | 'week' | 'month' | 'year';
+
 @Component({
 	selector: 'asy-header-filter[date-filter]',
 	templateUrl: './asy-header-date-filter.component.html',
@@ -33,10 +35,10 @@ import {
 		DatepickerRangePopupComponent
 	]
 })
-export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterComponent {
+export class AsyHeaderDateFilterComponent<T> extends AsyAbstractHeaderFilterComponent<T> {
 	enabled = signal(false);
 	direction = signal('past');
-	duration = signal<'hour' | 'day' | 'week' | 'month' | 'year'>('week');
+	duration = signal<Duration>('week');
 	count = signal(1);
 	isCustom = signal(false);
 	customRange = signal<Date[]>([]);
@@ -81,12 +83,18 @@ export class AsyHeaderDateFilterComponent extends AsyAbstractHeaderFilterCompone
 		return undefined;
 	}
 
-	_restoreState(state: any) {
+	_restoreState(state?: {
+		direction: string;
+		duration: Duration;
+		count: number;
+		isCustom: boolean;
+		customRange: Array<string>;
+	}) {
 		if (state) {
 			this.enabled.set(true);
 			if (state.isCustom) {
 				this.isCustom.set(true);
-				this.customRange.set(state.customRange.map((d: any) => new Date(d)));
+				this.customRange.set(state.customRange.map((d) => new Date(d)));
 			} else {
 				this.direction.set(state.direction);
 				this.duration.set(state.duration);

@@ -3,11 +3,11 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { ErrorState } from '../core';
 import { NULL_PAGING_RESULTS, PagingOptions, PagingResults } from './paging.model';
-import { SystemAlertService } from './system-alert/system-alert.service';
+import { SystemAlertService } from './system-alert';
 
 export enum ServiceMethod {
 	create = 'create',
@@ -18,7 +18,7 @@ export enum ServiceMethod {
 }
 
 export abstract class AbstractEntityService<T extends { _id: string }> {
-	headers: any = { 'Content-Type': 'application/json' };
+	headers = { 'Content-Type': 'application/json' };
 
 	protected readonly router = inject(Router);
 	protected readonly http = inject(HttpClient);
@@ -66,11 +66,11 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 			.pipe(map((model) => this.mapToType(model)));
 	}
 
-	update(t: T, params: any = null): Observable<T | null> {
+	update(t: T, params?: object): Observable<T | null> {
 		return this.http
 			.post(this.getMethodUrl(ServiceMethod.update, t), t, {
-				headers: this.headers,
-				params
+				params: { ...params },
+				headers: this.headers
 			})
 			.pipe(
 				map((model) => this.mapToType(model)),
@@ -87,11 +87,11 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 
 	search(
 		paging: PagingOptions,
-		query: Record<string, any> = {},
+		query: object = {},
 		search = '',
-		body: any = null,
-		params: any = null,
-		options: any = {},
+		body?: object,
+		params?: object,
+		options: object = {},
 		urlOverride?: string
 	): Observable<PagingResults<T>> {
 		return this.http
@@ -104,16 +104,23 @@ export abstract class AbstractEntityService<T extends { _id: string }> {
 				}
 			)
 			.pipe(
-				tap((pagingResult) => {
-					pagingResult.elements = pagingResult.elements.map((model: any) =>
-						this.mapToType(model)
-					);
+				map((pagingResults) => {
+					return {
+						...pagingResults,
+						elements: pagingResults.elements.map((model) => this.mapToType(model))
+					} as PagingResults<T>;
 				}),
-				catchError((error: unknown) => this.handleError(error, NULL_PAGING_RESULTS))
+				catchError((error: unknown) =>
+					this.handleError(error, NULL_PAGING_RESULTS as PagingResults<T>)
+				)
 			);
 	}
 
-	updateAction(action: string, t: Pick<T, '_id'>, body: any | null = null): Observable<T | null> {
+	updateAction(
+		action: string,
+		t: Pick<T, '_id'>,
+		body: object | null = null
+	): Observable<T | null> {
 		return this.http
 			.post(`${this.getMethodUrl(ServiceMethod.update, t)}/${action}`, body, {
 				headers: this.headers

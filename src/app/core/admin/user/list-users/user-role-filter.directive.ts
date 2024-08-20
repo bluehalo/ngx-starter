@@ -26,8 +26,8 @@ export class UserRoleFilterDirective implements OnInit {
 		this.#listFilter.buildFilterFunc = this.buildFilter.bind(this);
 	}
 
-	buildFilter(options: ListFilterOption[]): any {
-		const $or: any[] = options
+	buildFilter(options: ListFilterOption[]): object {
+		const $or: Record<string, unknown>[] = options
 			.filter((option) => option.active && option.value !== 'pending')
 			.map((option) => ({ [`roles.${option.value}`]: true }))
 			.filter((query) => query !== undefined);

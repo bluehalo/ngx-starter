@@ -85,9 +85,9 @@ export class ListCacheEntriesComponent implements OnInit {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<CacheEntry>> {
-		return this.#cacheEntriesService.match(query, search, pagingOptions);
+		return this.#cacheEntriesService.match(pagingOptions, query, search);
 	}
 
 	clearFilters() {

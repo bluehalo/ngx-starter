@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import {
 	AbstractEntityService,
@@ -56,7 +56,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 		return new Team(model);
 	}
 
-	override create(team: Team, firstAdmin?: string): Observable<any> {
+	override create(team: Team, firstAdmin?: string): Observable<Team | null> {
 		return this.http
 			.post(
 				this.getMethodUrl(ServiceMethod.create),
@@ -72,7 +72,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 			);
 	}
 
-	addMember(team: Pick<Team, '_id'>, memberId: string, role?: string): Observable<any> {
+	addMember(team: Pick<Team, '_id'>, memberId: string, role?: string): Observable<unknown> {
 		return this.http.post(
 			`api/team/${team._id}/member/${memberId}`,
 			{ role },
@@ -82,7 +82,7 @@ export class TeamsService extends AbstractEntityService<Team> {
 		);
 	}
 
-	addMembers(newMembers: AddedMember[], team: Pick<Team, '_id'>): Observable<any> {
+	addMembers(newMembers: AddedMember[], team: Pick<Team, '_id'>): Observable<unknown> {
 		return this.http.put(
 			`api/team/${team._id}/members`,
 			{ newMembers },
@@ -94,28 +94,34 @@ export class TeamsService extends AbstractEntityService<Team> {
 
 	searchMembers(
 		team: Team,
-		query: any,
-		search: any,
 		paging: PagingOptions,
-		options: any
+		query: object = {},
+		search = '',
+		body?: object,
+		options: object = {}
 	): Observable<PagingResults<TeamMember>> {
 		return this.http
 			.post<PagingResults>(
-				`api/team/${team._id}/members?`,
-				{ s: search, q: query, options },
+				`api/team/${team._id}/members`,
+				{ s: search, q: query, options, ...body },
 				{ params: paging.toObj(), headers: this.headers }
 			)
 			.pipe(
-				map((result: PagingResults) => this.handleTeamMembers(result, team)),
-				catchError(() => of(NULL_PAGING_RESULTS))
+				map((pagingResults) => {
+					return {
+						...pagingResults,
+						elements: pagingResults.elements.map((model) => new TeamMember(model, team))
+					} as PagingResults<TeamMember>;
+				}),
+				catchError(() => of(NULL_PAGING_RESULTS as PagingResults<TeamMember>))
 			);
 	}
 
-	removeMember(team: Pick<Team, '_id'>, memberId: string): Observable<any> {
+	removeMember(team: Pick<Team, '_id'>, memberId: string): Observable<unknown> {
 		return this.http.delete(`api/team/${team._id}/member/${memberId}`);
 	}
 
-	updateMemberRole(team: Pick<Team, '_id'>, memberId: string, role: string): Observable<any> {
+	updateMemberRole(team: Pick<Team, '_id'>, memberId: string, role: string): Observable<unknown> {
 		return this.http.post(
 			`api/team/${team._id}/member/${memberId}/role`,
 			{ role },
@@ -143,36 +149,33 @@ export class TeamsService extends AbstractEntityService<Team> {
 	}
 
 	searchUsers(
-		query: any,
-		search: string,
 		paging: PagingOptions,
-		options: any,
+		query: object = {},
+		search = '',
+		body?: object,
+		options: object = {},
 		admin = false
 	): Observable<PagingResults<User>> {
 		const url = admin ? 'api/admin/users' : 'api/users';
 		return this.http
-			.post<PagingResults>(url, { q: query, s: search, options }, { params: paging.toObj() })
+			.post<PagingResults>(
+				url,
+				{ q: query, s: search, options, ...body },
+				{ params: paging.toObj() }
+			)
 			.pipe(
-				tap((results: PagingResults) => {
-					if (null != results && Array.isArray(results.elements)) {
-						results.elements = results.elements.map(
-							(element: any) => new User(element)
-						);
-					}
+				map((pagingResults) => {
+					return {
+						...pagingResults,
+						elements: pagingResults.elements.map((model) => new User(model))
+					} as PagingResults<User>;
 				}),
 				catchError((error: unknown) => {
 					if (error instanceof HttpErrorResponse) {
 						this.alertService.addClientErrorAlert(error);
 					}
-					return of(NULL_PAGING_RESULTS);
+					return of(NULL_PAGING_RESULTS as PagingResults<User>);
 				})
 			);
-	}
-
-	private handleTeamMembers(result: any, team: Team): PagingResults<TeamMember> {
-		if (null != result && Array.isArray(result.elements)) {
-			result.elements = result.elements.map((element: any) => new TeamMember(element, team));
-		}
-		return result;
 	}
 }

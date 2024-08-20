@@ -7,7 +7,7 @@ import { AsyAbstractValueColumnComponent } from '../asy-abstract-value-column.co
 
 @Directive({ selector: '[lc-item-tmp]', standalone: true })
 export class ItemTemplateDirective {
-	constructor(public template: TemplateRef<any>) {}
+	constructor(public template: TemplateRef<unknown>) {}
 }
 
 @Component({

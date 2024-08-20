@@ -21,17 +21,18 @@ export class AuditActorFilterDirective implements OnInit {
 
 	typeaheadSearch(term: string) {
 		return this.#auditService
-			.matchUser({}, term, new PagingOptions(), {})
+			.matchUser(new PagingOptions(), {}, term)
 			.pipe(map((pagingResult) => pagingResult.elements));
 	}
 
-	buildFilter(selectedValue: any): any {
-		if (selectedValue) {
-			return {
-				['audit.actor._id']: {
-					$obj: selectedValue._id
-				}
-			};
+	buildFilter(selectedValue: { _id: unknown }): object {
+		if (!selectedValue) {
+			return {};
 		}
+		return {
+			['audit.actor._id']: {
+				$obj: selectedValue._id
+			}
+		};
 	}
 }

@@ -37,7 +37,7 @@ interface AsySortHeaderColumnDef {
 	standalone: true,
 	imports: []
 })
-export class AsyHeaderSortComponent implements AsySortable, OnDestroy, OnInit {
+export class AsyHeaderSortComponent<T> implements AsySortable, OnDestroy, OnInit {
 	readonly #destroyRef = inject(DestroyRef);
 	readonly #changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -62,7 +62,7 @@ export class AsyHeaderSortComponent implements AsySortable, OnDestroy, OnInit {
 	constructor(
 		// `AsySortDirective` is not optionally injected, but just asserted manually w/ better error.
 		@Optional()
-		public _sort: AsySortDirective,
+		public _sort: AsySortDirective<T>,
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
 		@Optional()
 		public _columnDef: AsySortHeaderColumnDef

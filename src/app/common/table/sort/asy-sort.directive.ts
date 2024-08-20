@@ -16,8 +16,8 @@ export interface AsySortable {
 	host: { class: 'asy-sort' },
 	standalone: true
 })
-export class AsySortDirective {
-	readonly dataSource = input.required<AsyTableDataSource<any>>();
+export class AsySortDirective<T> {
+	readonly dataSource = input.required<AsyTableDataSource<T>>();
 
 	/** Collection of all registered sortables that this directive manages. */
 	sortables = new Map<string, AsySortable>();

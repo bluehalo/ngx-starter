@@ -15,8 +15,8 @@ import {
 	AsyFilterHeaderColumnDef
 } from '../asy-abstract-header-filter.component';
 
-type TypeaheadFunction = (search: string) => Observable<any[]>;
-type BuildFilterFunction = (selectedValue: any | null) => any;
+type TypeaheadFunction<T> = (search: string) => Observable<T[]>;
+type BuildFilterFunction<T> = (selectedValue: T | null) => object;
 
 @Component({
 	selector: 'asy-header-filter[typeahead-filter]',
@@ -35,22 +35,22 @@ type BuildFilterFunction = (selectedValue: any | null) => any;
 		NgbTooltip
 	]
 })
-export class AsyHeaderTypeaheadFilterComponent
-	extends AsyAbstractHeaderFilterComponent
+export class AsyHeaderTypeaheadFilterComponent<T, FilterType>
+	extends AsyAbstractHeaderFilterComponent<T>
 	implements OnInit
 {
 	readonly #destroyRef = inject(DestroyRef);
 
 	readonly loading = signal(false);
 
-	selectedValue: any | null = null;
+	selectedValue: FilterType | null = null;
 
 	input$ = new Subject<string>();
-	values$: Observable<any[]> = of([]);
+	values$: Observable<FilterType[]> = of([]);
 
-	typeaheadFunc?: TypeaheadFunction;
+	typeaheadFunc?: TypeaheadFunction<FilterType>;
 
-	buildFilterFunc?: BuildFilterFunction;
+	buildFilterFunc?: BuildFilterFunction<FilterType>;
 
 	constructor(
 		@Inject('MAT_SORT_HEADER_COLUMN_DEF')
@@ -64,7 +64,7 @@ export class AsyHeaderTypeaheadFilterComponent
 		super.ngOnInit();
 
 		this.values$ = concat(
-			of([] as any[]), // default items
+			of([] as FilterType[]), // default items
 			this.input$.pipe(
 				debounceTime(200),
 				distinctUntilChanged(),
@@ -75,7 +75,7 @@ export class AsyHeaderTypeaheadFilterComponent
 					if (this.typeaheadFunc) {
 						return this.typeaheadFunc(term);
 					}
-					return of([] as any[]);
+					return of([] as FilterType[]);
 				}),
 				tap(() => {
 					this.loading.set(false);
@@ -90,7 +90,7 @@ export class AsyHeaderTypeaheadFilterComponent
 		super.clearFilter();
 	}
 
-	_buildFilter(): any {
+	_buildFilter(): object {
 		if (this.buildFilterFunc) {
 			return this.buildFilterFunc(this.selectedValue);
 		}
@@ -104,7 +104,7 @@ export class AsyHeaderTypeaheadFilterComponent
 		return {};
 	}
 
-	_buildState(): any {
+	_buildState(): object {
 		return { selectedValue: this.selectedValue };
 	}
 
@@ -112,7 +112,7 @@ export class AsyHeaderTypeaheadFilterComponent
 		this.selectedValue = null;
 	}
 
-	_restoreState(state: any): void {
+	_restoreState(state?: { selectedValue: FilterType }): void {
 		if (state) {
 			this.selectedValue = state.selectedValue;
 			this.onFilterChange();

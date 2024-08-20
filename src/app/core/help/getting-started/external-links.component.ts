@@ -11,7 +11,7 @@ import { Config } from '../../config.model';
 export class ExternalLinksComponent {
 	readonly links = input<Config['help']['welcomeLinks']>([]);
 
-	handleLinkClick(evt: any) {
+	handleLinkClick(evt: Event) {
 		evt.stopPropagation();
 	}
 }

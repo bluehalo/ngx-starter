@@ -17,7 +17,7 @@ import { AsyAbstractColumnComponent } from '../columns/asy-abstract-column.compo
 
 @Directive({ selector: '[actions-menu-tmp]', standalone: true })
 export class ActionsMenuTemplateDirective {
-	constructor(public template: TemplateRef<any>) {}
+	constructor(public template: TemplateRef<unknown>) {}
 }
 
 @Component({

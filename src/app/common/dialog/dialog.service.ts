@@ -4,7 +4,8 @@ import { Injectable, inject } from '@angular/core';
 
 import {
 	ConfigurableDialogComponent,
-	ConfigurableDialogData
+	ConfigurableDialogData,
+	ConfigurableDialogReturn
 } from './configurable-dialog/configurable-dialog.component';
 import { DialogReturn } from './dialog.model';
 
@@ -72,7 +73,10 @@ export class DialogService {
 	/**
 	 * The show method will display a modal that can include a message and a form
 	 */
-	show<R = unknown>(contentConfig: ConfigurableDialogData, modalOptions: DialogConfig = {}) {
+	show<R = ConfigurableDialogReturn>(
+		contentConfig: ConfigurableDialogData,
+		modalOptions: DialogConfig = {}
+	) {
 		const config = {
 			disableClose: true,
 			data: contentConfig,

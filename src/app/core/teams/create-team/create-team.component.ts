@@ -88,7 +88,14 @@ export class CreateTeamComponent implements OnInit {
 						this.usersLoading.set(true);
 					}),
 					switchMap((term) =>
-						this.#teamsService.searchUsers({}, term, new PagingOptions(), {}, true)
+						this.#teamsService.searchUsers(
+							new PagingOptions(),
+							{},
+							term,
+							{},
+							undefined,
+							true
+						)
 					),
 					map((result) =>
 						result.elements.filter((user) => user._id !== this.teamAdmin()?._id)

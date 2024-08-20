@@ -13,16 +13,23 @@ export type DialogInput = {
 	required: boolean;
 };
 
-export class ConfigurableDialogData {
+export type DialogData = {
 	title: string;
-	okText: string;
+	message: string;
+	okText?: string;
 	cancelText?: string;
 	hideCancel?: boolean;
-	message: string;
-	inputs?: DialogInput[];
-}
+};
 
-export type ConfigurableDialogReturn = DialogReturn<any>;
+export type PromptDialogData = DialogData & {
+	inputLabel: string;
+};
+
+export type ConfigurableDialogData = DialogData & {
+	inputs?: DialogInput[];
+};
+
+export type ConfigurableDialogReturn = DialogReturn<Record<string, string>>;
 
 @Component({
 	standalone: true,
@@ -34,14 +41,14 @@ export class ConfigurableDialogComponent {
 	dialogRef: DialogRef<ConfigurableDialogReturn> = inject(DialogRef);
 	data: ConfigurableDialogData = inject(DIALOG_DATA);
 
-	formData: Record<string, unknown> = {};
+	formData: Record<string, string> = {};
 
 	cancel() {
 		this.dialogRef.close({ action: DialogAction.CANCEL });
 	}
 
 	ok() {
-		const event: DialogReturn<any> = { action: DialogAction.OK };
+		const event: ConfigurableDialogReturn = { action: DialogAction.OK };
 		if (this.data.inputs) {
 			event.data = this.formData;
 		}

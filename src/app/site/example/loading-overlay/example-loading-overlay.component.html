@@ -12,22 +12,15 @@
 		<br />
 	</div>
 
-	<div class="btn-group">
-		<button
-			class="btn btn-primary"
-			type="button"
-			[disabled]="isError"
-			(click)="toggleLoading()"
-		>
-			{{ isLoading ? 'Stop' : 'Start' }} Loading
-		</button>
-		<button
-			class="btn btn-primary ms-3"
-			type="button"
-			[disabled]="!isLoading"
-			(click)="toggleError()"
-		>
-			{{ isError ? 'Hide' : 'Show' }} Error
-		</button>
-	</div>
+	<button class="btn btn-primary" type="button" [disabled]="isError" (click)="toggleLoading()">
+		{{ isLoading ? 'Stop' : 'Start' }} Loading
+	</button>
+	<button
+		class="btn btn-primary ms-3"
+		type="button"
+		[disabled]="!isLoading"
+		(click)="toggleError()"
+	>
+		{{ isError ? 'Hide' : 'Show' }} Error
+	</button>
 </div>

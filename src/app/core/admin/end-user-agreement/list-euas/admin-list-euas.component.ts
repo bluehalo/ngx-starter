@@ -155,17 +155,15 @@ export class AdminListEuasComponent implements OnInit {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<EndUserAgreement>> {
 		return this.#euaService.search(pagingOptions, query, search);
 	}
 
 	/**
 	 * Opens a preview modal containing the text and title of this end user agreement.
-	 *
-	 * @param endUserAgreement - the end user agreement used to populate the modal
 	 */
-	previewEndUserAgreement(endUserAgreement: any) {
+	previewEndUserAgreement(endUserAgreement: EndUserAgreement) {
 		const { text, title } = endUserAgreement;
 		this.#dialogService.alert(title, text);
 	}

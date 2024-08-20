@@ -126,9 +126,9 @@ export class ListTeamMembersComponent {
 	loadData(
 		pagingOptions: PagingOptions,
 		search: string,
-		query: any
+		query: object
 	): Observable<PagingResults<TeamMember>> {
-		return this.#teamsService.searchMembers(this.team(), query, search, pagingOptions, {});
+		return this.#teamsService.searchMembers(this.team(), pagingOptions, query, search);
 	}
 
 	clearFilters() {
@@ -251,7 +251,7 @@ export class ListTeamMembersComponent {
 			.subscribe(() => this.reloadTeamMembers());
 	}
 
-	private doUpdateRole(member: TeamMember, role: string, persist = true): Observable<any> {
+	private doUpdateRole(member: TeamMember, role: string, persist = true): Observable<unknown> {
 		if (!persist) {
 			member.role = role;
 			member.roleDisplay = TeamRole.getDisplay(member.role);

@@ -6,6 +6,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import { PagingOptions, PagingResults } from '../../common';
 import { SystemAlertService } from '../../common/system-alert';
 import { User } from '../auth';
+import { AuditEntry } from './audit-entry.model';
 import { AuditService } from './audit.service';
 
 describe('Audit Service', () => {
@@ -46,21 +47,22 @@ describe('Audit Service', () => {
 		it('should call once and return an Observable<PagingResults>', () => {
 			const results = {
 				elements: [
-					{ id: '123', audit: {} },
-					{ id: '456', audit: {} }
+					new AuditEntry({ id: '123', audit: {} }),
+					new AuditEntry({ id: '456', audit: {} })
 				]
-			} as PagingResults;
+			} as PagingResults<AuditEntry>;
 			const paging = new PagingOptions();
 			paging.setPageNumber(2);
-			service.search({ actor: 'test' }, 'some-search', paging).subscribe((actual) => {
-				expect(actual).toBe(results);
+			service.search(paging, { actor: 'test' }, 'some-search').subscribe((actual) => {
+				expect(actual).toEqual(results);
 			});
 
 			const req = httpMock.expectOne('api/audit?page=2&size=50');
 			expect(req.request.method).toBe('POST');
 			expect(req.request.body).toEqual({
 				q: { actor: 'test' },
-				s: 'some-search'
+				s: 'some-search',
+				options: {}
 			});
 			req.flush(results);
 		});
@@ -83,8 +85,8 @@ describe('Audit Service', () => {
 			const query = { actor: 'test' };
 			const search = 'some-search';
 			const options = { test: false };
-			service.matchUser(query, search, paging, options).subscribe((actual) => {
-				expect(actual).toEqual(expectedResults);
+			service.matchUser(paging, query, search, undefined, options).subscribe((actual) => {
+				expect(actual).toEqual(expectedResults as PagingResults<User>);
 			});
 
 			const req = httpMock.expectOne('api/users/match?page=2&size=50');

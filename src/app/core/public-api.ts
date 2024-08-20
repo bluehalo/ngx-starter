@@ -6,4 +6,3 @@ export * from './export-config.service';
 export * from './tokens';
 export * from './site-navbar/navbar-topic.model';
 export * from './errors/error-state.model';
-export * from './audit/audit.classes';

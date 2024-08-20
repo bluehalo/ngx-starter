@@ -9,7 +9,7 @@ import { Feedback, FeedbackStatusOption } from './feedback.model';
 	providedIn: 'root'
 })
 export class FeedbackService extends AbstractEntityService<Feedback> {
-	static feedbackTypes: any[] = [
+	static feedbackTypes = [
 		{ name: 'general feedback', prompt: 'Ask a question or make a comment' },
 		{ name: 'feature request', prompt: 'Suggest a new feature' },
 		{

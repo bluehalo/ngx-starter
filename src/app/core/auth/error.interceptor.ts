@@ -7,6 +7,12 @@ type HttpError = { status: number; type: string; url: string; message: string };
 
 export type HttpErrorHandlerFn = (err: HttpError, req: HttpRequest<unknown>) => boolean;
 
+type ErrorLike = {
+	status?: number;
+	url?: string;
+	error?: { type?: string; message?: string };
+};
+
 // eslint-disable-next-line rxjs/finnish
 export function errorInterceptor(
 	req: HttpRequest<unknown>,
@@ -15,7 +21,7 @@ export function errorInterceptor(
 ): Observable<HttpEvent<unknown>> {
 	return next(req).pipe(
 		catchError((err: unknown) => {
-			if (errorHandler(parseError(err), req)) {
+			if (errorHandler(parseError(err as ErrorLike), req)) {
 				return EMPTY;
 			}
 			return throwError(() => err);
@@ -23,7 +29,7 @@ export function errorInterceptor(
 	);
 }
 
-function parseError(err: any): HttpError {
+function parseError(err?: ErrorLike): HttpError {
 	const status = err?.status ?? 200;
 	const type = err?.error?.type ?? '';
 	const url = err?.url ?? '';
