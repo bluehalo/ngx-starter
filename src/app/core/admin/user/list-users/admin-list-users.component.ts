@@ -8,9 +8,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import { filterNil } from 'ngxtension/filter-nil';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, first, switchMap } from 'rxjs/operators';
+import { catchError, first, switchMap } from 'rxjs/operators';
 
 import {
 	CdkMenuItemRouterLinkDirective,
@@ -20,7 +19,7 @@ import {
 	SkipToDirective,
 	SortDirection
 } from '../../../../common';
-import { DialogAction, DialogService, isDialogActionOK } from '../../../../common/dialog';
+import { DialogService, isDialogActionOK } from '../../../../common/dialog';
 import { JoinPipe } from '../../../../common/pipes';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {

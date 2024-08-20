@@ -9,9 +9,9 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { filter, first, map, switchMap } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 
-import { DialogAction, DialogService, isDialogActionOK } from '../../../common/dialog';
+import { DialogService, isDialogActionOK } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import { SessionService } from '../../auth';
 import { APP_SESSION } from '../../tokens';

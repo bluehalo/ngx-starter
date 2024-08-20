@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '
 import { filterNil } from 'ngxtension/filter-nil';
 import { mapArray } from 'ngxtension/map-array';
 import { Observable, take } from 'rxjs';
-import { catchError, filter, map } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
 
 import { AbstractEntityService, ServiceMethod } from '../../common';
 import { SocketService } from '../socket.service';

@@ -5,9 +5,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { filterNil } from 'ngxtension/filter-nil';
 import { Observable } from 'rxjs';
-import { filter, first, switchMap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
 import {
 	PagingOptions,
@@ -16,7 +15,7 @@ import {
 	SkipToDirective,
 	SortDirection
 } from '../../../../common';
-import { DialogAction, DialogService, isDialogActionOK } from '../../../../common/dialog';
+import { DialogService, isDialogActionOK } from '../../../../common/dialog';
 import { AgoDatePipe, UtcDatePipe } from '../../../../common/pipes';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import {
