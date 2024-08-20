@@ -51,14 +51,14 @@
         ],
         "@angular-eslint/prefer-on-push-component-change-detection": ["off"],
         "@angular-eslint/prefer-output-readonly": ["error"],
-        "@angular-eslint/prefer-standalone": ["warn"],
+        "@angular-eslint/prefer-standalone": ["error"],
         "@angular-eslint/relative-url-prefix": ["error"],
         "@angular-eslint/use-component-view-encapsulation": ["error"],
         "@angular-eslint/use-injectable-provided-in": ["error"],
         "@angular-eslint/use-lifecycle-interface": ["error"],
         "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/no-unused-vars": [
-          "warn",
+          "error",
           {
             "vars": "all",
             "args": "none"
