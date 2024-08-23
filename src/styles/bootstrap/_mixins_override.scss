@@ -1,0 +1,21 @@
+// Mixins defined here will override mixins of the same name provided by bootstrap
+
+@mixin form-validation-state-selector($state) {
+	@if ($state == "valid" or $state == "invalid") {
+		.was-validated #{if(&, "&", "")}:#{$state},
+		#{if(&, "&", "")}.is-#{$state} {
+			@content;
+		}
+	} @else {
+		#{if(&, "&", "")}.is-#{$state} {
+			@content;
+		}
+	}
+	// Add bootstrap validation styling based on ng-invalid
+	@if ($state == "invalid") {
+		#{if(&, "&", "")}.ng-#{$state}.ng-dirty,
+		#{if(&, "&", "")}.ng-#{$state}.ng-touched {
+			@content;
+		}
+	}
+}

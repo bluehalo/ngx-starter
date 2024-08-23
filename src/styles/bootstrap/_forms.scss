@@ -77,3 +77,16 @@ $form-inline-edit-label-col-width: 30% !default;
 		}
 	}
 }
+
+@mixin form-validation-state-selector($state) {
+	@if ($state == "valid" or $state == "invalid") {
+		.was-validated #{if(&, "&", "")}:#{$state},
+		#{if(&, "&", "")}.is-#{$state} {
+			@content;
+		}
+	} @else {
+		#{if(&, "&", "")}.is-#{$state} {
+			@content;
+		}
+	}
+}
