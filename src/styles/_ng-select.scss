@@ -1,6 +1,5 @@
 @use 'sass:color';
 @import 'shared';
-@import 'bootstrap/shared';
 
 @import '../../node_modules/@ng-select/ng-select/scss/mixins'; /* stylelint-disable-line no-invalid-position-at-import-rule */
 
@@ -34,6 +33,41 @@ $ng-select-dropdown-optgroup-marked: $ng-select-dropdown-optgroup-text !default;
 $ng-select-dropdown-option-bg: $ng-select-dropdown-bg !default;
 $ng-select-dropdown-option-text: var(--bs-body-color) !default;
 $ng-select-dropdown-option-disabled: color.adjust($ng-select-primary-text-old, $lightness: 60%) !default;
+
+@mixin ng-select-form-validation-state(
+	$state,
+	$color,
+	$icon,
+	$tooltip-color: color-contrast($color),
+	$tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
+	$focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($color, $input-btn-focus-color-opacity),
+	$border-color: $color
+) {
+	@include form-validation-state-selector($state) {
+		.ng-select-container {
+			border-color: $border-color;
+
+			@if $enable-validation-icons {
+				padding-right: $input-height-inner;
+				background-image: escape-svg($icon);
+				background-repeat: no-repeat;
+				background-position: right $input-height-inner-quarter center;
+				background-size: $input-height-inner-half $input-height-inner-half;
+			}
+		}
+		&.ng-select-focused {
+			&:not(.ng-select-opened) > .ng-select-container {
+				border-color: $border-color;
+				@if $enable-shadows {
+					@include box-shadow($input-box-shadow, $focus-box-shadow);
+				} @else {
+					// Avoid using mixin so we can pass custom focus shadow properly
+					box-shadow: $focus-box-shadow;
+				}
+			}
+		}
+	}
+}
 
 .ng-select {
 	&.ng-select-opened {
@@ -252,6 +286,10 @@ $ng-select-dropdown-option-disabled: color.adjust($ng-select-primary-text-old, $
 			border-style: solid;
 			border-width: 5px 5px 2.5px;
 		}
+	}
+
+	@each $state, $data in $form-validation-states {
+		@include ng-select-form-validation-state($state, $data...);
 	}
 }
 

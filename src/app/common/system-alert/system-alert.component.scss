@@ -1,6 +1,5 @@
 @use 'sass:map';
 @import '../../../styles/shared';
-@import '../../../styles/bootstrap/shared';
 
 $system-alert-icons: () !default;
 $system-alert-icons: map.merge(
