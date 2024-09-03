@@ -1,6 +1,7 @@
 import { DialogModule } from '@angular/cdk/dialog';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -67,12 +68,14 @@ describe('Site Navbar Component Spec', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [],
-			imports: [HttpClientTestingModule, RouterModule.forRoot([]), DialogModule],
+			imports: [RouterModule.forRoot([]), DialogModule],
 			providers: [
 				{ provide: APP_CONFIG, useValue: signal(mockConfig) },
 				{ provide: APP_SESSION, useValue: signal(new Session()) },
 				{ provide: MessageService, useValue: messageServiceSpy },
-				{ provide: MasqueradeService, useValue: masqServiceSpy }
+				{ provide: MasqueradeService, useValue: masqServiceSpy },
+				provideHttpClient(withInterceptorsFromDi()),
+				provideHttpClientTesting()
 			]
 		});
 	});
