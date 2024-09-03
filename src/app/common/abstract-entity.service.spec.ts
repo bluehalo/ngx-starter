@@ -1,5 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
@@ -35,8 +35,12 @@ describe('AbstractEntityService', () => {
 		const spy = jasmine.createSpyObj('SystemAlertService', ['addAlert', 'addClientErrorAlert']);
 
 		TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
-			providers: [{ provide: SystemAlertService, useValue: spy }]
+			imports: [],
+			providers: [
+				{ provide: SystemAlertService, useValue: spy },
+				provideHttpClient(withInterceptorsFromDi()),
+				provideHttpClientTesting()
+			]
 		});
 
 		service = TestBed.inject(TestEntityService);

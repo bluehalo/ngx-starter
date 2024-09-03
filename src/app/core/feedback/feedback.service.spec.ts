@@ -1,4 +1,5 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, getTestBed } from '@angular/core/testing';
 
 import { Feedback, FeedbackStatusOption } from './feedback.model';
@@ -11,8 +12,12 @@ describe('FeedbackService', () => {
 
 	beforeEach(async () => {
 		TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
-			providers: [FeedbackService]
+			imports: [],
+			providers: [
+				FeedbackService,
+				provideHttpClient(withInterceptorsFromDi()),
+				provideHttpClientTesting()
+			]
 		});
 
 		injector = getTestBed();
