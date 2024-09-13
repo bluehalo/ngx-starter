@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2, inject } from '@angular/core';
+import { Directive, ElementRef, Renderer2, inject } from '@angular/core';
 
 /**
  * Used to enable link for keyboard accessibility.
@@ -8,7 +8,10 @@ import { Directive, ElementRef, HostListener, Renderer2, inject } from '@angular
  */
 @Directive({
 	selector: '[linkAccessibility]',
-	standalone: true
+	standalone: true,
+	host: {
+		'(keydown.enter)': 'onEnter($event)'
+	}
 })
 export class LinkAccessibilityDirective {
 	private elRef = inject(ElementRef);
@@ -19,7 +22,6 @@ export class LinkAccessibilityDirective {
 		this.renderer.setAttribute(el, 'tabIndex', '0');
 	}
 
-	@HostListener('keydown.enter', ['$event'])
 	onEnter(event: Event) {
 		event.target?.dispatchEvent(new Event('click'));
 	}

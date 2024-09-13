@@ -6,7 +6,6 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 	selector: 'asy-sidebar',
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.scss'],
-	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
 		class: 'sidebar',
 		'[class.sidebar-open]': 'open()',
