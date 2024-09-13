@@ -2,7 +2,6 @@ import {
 	AfterViewInit,
 	ChangeDetectorRef,
 	Directive,
-	HostListener,
 	Input,
 	OnDestroy,
 	OnInit,
@@ -20,7 +19,12 @@ export interface AsyFilterHeaderColumnDef {
 	name: string;
 }
 
-@Directive({ standalone: true })
+@Directive({
+	standalone: true,
+	host: {
+		'(click)': '_handleClick($event)'
+	}
+})
 export abstract class AsyAbstractHeaderFilterComponent<T>
 	implements AsyFilterable, AfterViewInit, OnDestroy, OnInit
 {
@@ -104,7 +108,6 @@ export abstract class AsyAbstractHeaderFilterComponent<T>
 	/**
 	 * Stop click event propagation to prevent sorting from being updated
 	 */
-	@HostListener('click', ['$event'])
 	_handleClick(event: Event) {
 		event.stopPropagation();
 	}

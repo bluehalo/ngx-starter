@@ -1,13 +1,5 @@
 import { DOCUMENT, LowerCasePipe, NgClass } from '@angular/common';
-import {
-	Component,
-	DestroyRef,
-	HostListener,
-	OnInit,
-	inject,
-	signal,
-	viewChild
-} from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { WINDOW } from '@ng-web-apis/common';
@@ -23,7 +15,10 @@ import { MessageService } from '../message.service';
 	templateUrl: './view-all-messages.component.html',
 	styleUrls: ['./view-all-messages.component.scss'],
 	standalone: true,
-	imports: [SystemAlertComponent, SearchInputComponent, NgClass, LowerCasePipe, AgoDatePipe]
+	imports: [SystemAlertComponent, SearchInputComponent, NgClass, LowerCasePipe, AgoDatePipe],
+	host: {
+		'(window:scroll)': 'onScroll()'
+	}
 })
 export class ViewAllMessagesComponent implements OnInit {
 	readonly #destroyRef = inject(DestroyRef);
@@ -52,7 +47,6 @@ export class ViewAllMessagesComponent implements OnInit {
 			});
 	}
 
-	@HostListener('window:scroll')
 	onScroll() {
 		// If at the bottom of the page, load more messages
 		if (

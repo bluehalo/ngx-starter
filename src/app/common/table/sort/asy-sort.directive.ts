@@ -12,7 +12,6 @@ export interface AsySortable {
 @Directive({
 	selector: '[asySort]',
 	exportAs: 'asySort',
-	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: { class: 'asy-sort' },
 	standalone: true
 })

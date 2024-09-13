@@ -14,7 +14,6 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 @Directive({
 	selector: 'ng-select[multi-select]',
 	standalone: true,
-	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
 		['class.ng-hide-arrow-wrapper']: 'hideArrow()'
 	}
