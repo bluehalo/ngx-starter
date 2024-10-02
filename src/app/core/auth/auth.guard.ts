@@ -1,5 +1,11 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+	ActivatedRouteSnapshot,
+	GuardResult,
+	RedirectCommand,
+	Router,
+	RouterStateSnapshot
+} from '@angular/router';
 
 import { of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -58,18 +64,18 @@ export function authGuard(configOrRoles?: string | string[] | Partial<AuthGuardC
 
 		return session$.pipe(
 			switchMap(() => sessionService.getCurrentEua()),
-			map((): boolean | UrlTree => {
+			map((): GuardResult => {
 				// The user still isn't authenticated
 				if (!session().isAuthenticated()) {
-					return router.parseUrl('/signin');
+					return new RedirectCommand(router.parseUrl('/signin'));
 				}
 
 				// Check to see if the user needs to agree to the end user agreement
 				if (config.requiresEua && !session().isEuaCurrent()) {
-					return router.parseUrl('/eua');
+					return new RedirectCommand(router.parseUrl('/eua'));
 				}
 
-				if (!session().isAdmin()) {
+				if (!session().isAdmin() || true) {
 					// -----------------------------------------------------------
 					// Check the role requirements for the route
 					// -----------------------------------------------------------
@@ -78,7 +84,7 @@ export function authGuard(configOrRoles?: string | string[] | Partial<AuthGuardC
 						!session().hasSomeRoles(config.roles)
 					) {
 						// The user doesn't have the needed roles to view the page
-						return router.parseUrl('/unauthorized');
+						return new RedirectCommand(router.parseUrl('/unauthorized'));
 					}
 				}
 

@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RedirectCommand, RouterStateSnapshot } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -60,8 +60,8 @@ describe('AuthGuard', () => {
 
 			TestBed.runInInjectionContext(() => {
 				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
-					expect(result instanceof UrlTree).toBe(true);
-					expect(result.toString()).toBe('/signin');
+					expect(result instanceof RedirectCommand).toBe(true);
+					expect((result as RedirectCommand).redirectTo.toString()).toBe('/signin');
 					done();
 				});
 			});
@@ -79,8 +79,8 @@ describe('AuthGuard', () => {
 
 			TestBed.runInInjectionContext(() => {
 				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
-					expect(result instanceof UrlTree).toBe(true);
-					expect(result.toString()).toBe('/unauthorized');
+					expect(result instanceof RedirectCommand).toBe(true);
+					expect((result as RedirectCommand).redirectTo.toString()).toBe('/unauthorized');
 					done();
 				});
 			});
@@ -120,8 +120,8 @@ describe('AuthGuard', () => {
 
 			TestBed.runInInjectionContext(() => {
 				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
-					expect(result instanceof UrlTree).toBe(true);
-					expect(result.toString()).toBe('/unauthorized');
+					expect(result instanceof RedirectCommand).toBe(true);
+					expect((result as RedirectCommand).redirectTo.toString()).toBe('/unauthorized');
 					done();
 				});
 			});
@@ -142,8 +142,8 @@ describe('AuthGuard', () => {
 
 			TestBed.runInInjectionContext(() => {
 				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
-					expect(result instanceof UrlTree).toBe(true);
-					expect(result.toString()).toBe('/unauthorized');
+					expect(result instanceof RedirectCommand).toBe(true);
+					expect((result as RedirectCommand).redirectTo.toString()).toBe('/unauthorized');
 					done();
 				});
 			});
@@ -207,8 +207,8 @@ describe('AuthGuard', () => {
 
 			TestBed.runInInjectionContext(() => {
 				authGuard()(route, {} as RouterStateSnapshot).subscribe((result) => {
-					expect(result instanceof UrlTree).toBe(true);
-					expect(result.toString()).toBe('/eua');
+					expect(result instanceof RedirectCommand).toBe(true);
+					expect((result as RedirectCommand).redirectTo.toString()).toBe('/eua');
 					done();
 				});
 			});
