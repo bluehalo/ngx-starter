@@ -13,6 +13,9 @@
 		<main class="site-content h-100 overflow-auto" id="app-content" cdkScrollable tabindex="-1">
 			<ng-content />
 		</main>
+		@if (isAuthenticated() && showFeedbackFlyout()) {
+			<app-feedback-flyout />
+		}
 	</site-navbar>
 </section>
 
@@ -25,7 +28,3 @@
 		<div class="site-banner footer-banner" [innerHtml]="bannerHtml()"></div>
 	}
 </footer>
-
-@if (isAuthenticated() && showFeedbackFlyout()) {
-	<app-feedback-flyout />
-}
