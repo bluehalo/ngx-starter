@@ -11,9 +11,10 @@ $nav-logo-text-font-size: 1.75rem !default;
 $nav-popover-width: 192px !default;
 
 :host {
+	--nav-open-width: $nav-open-width;
+	--nav-closed-width: $nav-closed-width;
 	display: flex;
 	height: 100%;
-
 }
 
 .navbar {

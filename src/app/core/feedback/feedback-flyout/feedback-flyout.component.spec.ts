@@ -1,6 +1,7 @@
 import { DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 
 import { APP_CONFIG } from '../../tokens';
@@ -27,7 +28,7 @@ describe('FeedbackFlyoutComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			imports: [FeedbackFlyoutComponent],
+			imports: [FeedbackFlyoutComponent, NoopAnimationsModule],
 			providers: [
 				{ provide: Router, useValue: { url: 'test-url' } },
 				{ provide: APP_CONFIG, useValue: signal(mockConfigObject) },

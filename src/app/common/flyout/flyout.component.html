@@ -9,7 +9,15 @@
 		<span class="fa-solid fa-lg fa-angle-down ms-2" data-inline="true"></span>
 	</button>
 
-	<div class="flyout-content" #flyoutContentContainer>
-		<ng-content />
-	</div>
+	@if (placement().startsWith('top') || placement().startsWith('bottom')) {
+		<div class="flyout-content" [@flyInOutVertical]="isOpen()">
+			<ng-container *ngTemplateOutlet="content" />
+		</div>
+	} @else {
+		<div class="flyout-content" [@flyInOutHorizontal]="isOpen()">
+			<ng-container *ngTemplateOutlet="content" />
+		</div>
+	}
 </section>
+
+<ng-template #content><ng-content /></ng-template>

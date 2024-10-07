@@ -3,56 +3,87 @@
 $flyout-border-top: 8px !default;
 $flyout-box-shadow: 0 0.25rem 0.5rem rgba(var(--bs-body-bg-rgb), 0.2) !default;
 
-$flyout-right-top: 24px !default;
-$flyout-top-top: 20px !default;
-$flyout-bottom-bottom: 20px * 2 !default;
+$flyout-top: 24px !default;
+$flyout-bottom: 24px * 2 !default;
 
 :host {
 	position: fixed;
 	right: 0;
-	top: $flyout-right-top;
+	top: $flyout-top;
 	@include transition(left 0.15s ease-in-out, right 0.15s ease-in-out);
 	z-index: $zindex-popover;
 
-	&[placement='left'] {
-		right: auto;
-		left: $nav-open-width;
+	&[placement='right-bottom'] {
+		right: 0;
+		top: auto;
+		bottom: $flyout-bottom;
+		left: var(--nav-open-width);
 	}
 
-	&[placement='top'] {
+	&[placement='left-top']
+	{
 		right: auto;
-		top: $flyout-top-top;
-		left: $nav-open-width;
+		left: var(--nav-open-width);
 	}
 
-	&[placement='bottom'] {
+	&[placement='left-bottom'] {
+		right: auto;
+		left: var(--nav-open-width);
+		top: auto;
+		bottom: $flyout-bottom;
+	}
+
+	&[placement='top-left'] {
+		right: auto;
+		top: $flyout-top;
+		left: var(--nav-open-width);
+	}
+
+	&[placement='top-right'] {
+		top: $flyout-top;
+		left: var(--nav-open-width);
+	}
+
+	&[placement='bottom-left'] {
 		right: auto;
 		top: auto;
-		bottom: $flyout-bottom-bottom;
-		left: $nav-open-width;
+		bottom: $flyout-bottom;
+		left: var(--nav-open-width);
+	}
+
+	&[placement='bottom-right'] {
+		right: 0;
+		top: auto;
+		bottom: $flyout-bottom;
+		left: var(--nav-open-width);
 	}
 }
 
 .navbar-close {
-	:host[placement='left'],
-	:host[placement='top'],
-	:host[placement='bottom'] {
-		left: $nav-closed-width;
+	:host[placement='left-top'],
+	:host[placement='left-bottom'],
+	:host[placement='top-left'],
+	:host[placement='bottom-left'] {
+		left: var(--nav-closed-width);
 	}
 }
 
 .flyout {
 	background: var(--bs-body-bg);
 
-	&.flyout-left {
+	&.flyout-left-top,
+	&.flyout-left-bottom, {
 		flex-direction: row-reverse;
 	}
 
-	&.flyout-top {
+
+	&.flyout-top-left,
+	&.flyout-top-right {
 		flex-direction: column-reverse;
 	}
 
-	&.flyout-bottom {
+	&.flyout-bottom-left,
+	&.flyout-bottom-right {
 		flex-direction: column;
 
 		.flyout-btn {
@@ -79,41 +110,62 @@ $flyout-bottom-bottom: 20px * 2 !default;
 
 .flyout-btn {
 	position: absolute;
-	transform: rotate(90deg);
-	transform-origin: 0 0;
-
+	box-shadow: none;
 	border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
 
-	.flyout-left & {
+	.flyout-left-top & {
 		transform: rotate(-90deg);
 		transform-origin: 100% 0;
 	}
 
-	.flyout-top & {
+	.flyout-left-bottom & {
+		bottom: 0;
+		transform: translate(100%, 100%) rotate(-90deg);
+		transform-origin: 0 0;
+	}
+
+	.flyout-right-top & {
+		transform: rotate(90deg);
+		transform-origin: 0 0;
+	}
+
+	.flyout-right-bottom & {
+		bottom: 0;
+		transform: translate(-100%, 100%) rotate(90deg);
+		transform-origin: top right;
+	}
+
+	.flyout-top-left & {
 		transform: translateY(100%);
 	}
 
-	.flyout-bottom & {
+	.flyout-top-right & {
+		right: 0;
+		transform: translateY(100%);
+	}
+
+	.flyout-bottom-left & {
 		transform: translateY(-100%);
 	}
+
+	.flyout-bottom-right & {
+		right: 0;
+		transform: translateY(-100%)
+	}
+
 }
 
 .flyout-content {
 	@include box-shadow(var(--bs-box-shadow));
 
 	overflow: auto;
-	border-top: $flyout-border-top solid var(--bs-primary);
 	max-height: calc(100vh - 80px);
-	width: 0;
 
-	.flyout-top &,
-	.flyout-bottom & {
-		border-top: none;
-		border-left: $flyout-border-top solid  var(--bs-primary);
+	.flyout-top-left &,
+	.flyout-top-right &,
+	.flyout-bottom-left &,
+	.flyout-bottom-right & {
 		width: auto;
-		height: 0;
 		max-height: calc(100vh - 100px);
 	}
-
-	@include transition(width 1s ease-in-out, height 1s ease-in-out);
 }
