@@ -24,30 +24,9 @@
 				</div>
 			}
 			@for (message of messages(); track message) {
-				<div class="card card-message mb-4">
-					<div class="row g-0">
-						<div class="col-alert-icon {{ messageType[message.type] | lowercase }}">
-							<span
-								class="fa-solid alert-icon d-flex align-items-center"
-								[ngClass]="{
-									'fa-check': message.type === messageType.MOTD,
-									'fa-info': message.type === messageType.INFO,
-									'fa-exclamation': message.type === messageType.WARN,
-									'fa-exclamation-triangle': message.type === messageType.ERROR
-								}"
-							></span>
-						</div>
-						<div class="col-alert-body">
-							<div class="card-body">
-								<div class="d-flex">
-									<h3 class="card-title">{{ message.title }}</h3>
-									<span class="ms-auto">{{ message.created | agoDate }}</span>
-								</div>
-								<p class="mb-0" [innerHTML]="message.body"></p>
-							</div>
-						</div>
-					</div>
-				</div>
+				<app-message class="mb-4" [message]="message">
+					<span class="ms-auto">{{ message.created | agoDate }}</span>
+				</app-message>
 			}
 		</div>
 	</div>

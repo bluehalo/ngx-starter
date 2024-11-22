@@ -7,13 +7,14 @@ import orderBy from 'lodash/orderBy';
 
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
 	selector: 'app-recent-messages',
 	templateUrl: './recent-messages.component.html',
 	styleUrls: ['./recent-messages.component.scss'],
 	standalone: true,
-	imports: [NgClass, LowerCasePipe]
+	imports: [NgClass, LowerCasePipe, MessageComponent]
 })
 export class RecentMessagesComponent implements OnInit {
 	readonly #destroyRef = inject(DestroyRef);

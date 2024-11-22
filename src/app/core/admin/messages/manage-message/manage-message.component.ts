@@ -10,6 +10,10 @@ import { SkipToDirective } from '../../../../common';
 import { DialogService } from '../../../../common/dialog';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import { Message, MessageService, MessageType } from '../../../messages';
+import {
+	PreviewMessageModalComponent,
+	PreviewMessageModalData
+} from '../preview-message-modal/preview-message-modal.component';
 
 @Component({
 	standalone: true,
@@ -60,6 +64,10 @@ export class ManageMessageComponent {
 	}
 
 	previewMessage() {
-		this.#dialogService.alert(this.message().title, this.message().body);
+		this.#dialogService.open<unknown, PreviewMessageModalData>(PreviewMessageModalComponent, {
+			data: {
+				message: this.message()
+			}
+		});
 	}
 }

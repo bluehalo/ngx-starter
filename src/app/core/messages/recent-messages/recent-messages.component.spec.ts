@@ -64,15 +64,15 @@ describe('Recent Messages Component Spec', () => {
 		};
 		expect(component.messages).toEqual([new Message(expectedMessage)]);
 
-		expect(rootHTMLElement.querySelector('.card-title').textContent).toEqual(
+		expect(rootHTMLElement.querySelector('.card-title')?.textContent?.trim()).toEqual(
 			'THIS is a Test Message'
 		);
 		// should render as HTML, so text content would not include the bold tag
-		expect(rootHTMLElement.querySelector('.card-body > p').textContent).toEqual(
+		expect(rootHTMLElement.querySelector('.card-body > p')?.textContent).toEqual(
 			'Here is some body contents with HTML'
 		);
 		// should render as HTML, so HTML content would include the bold tag
-		expect(rootHTMLElement.querySelector('.card-body > p').innerHTML).toEqual(
+		expect(rootHTMLElement.querySelector('.card-body > p')?.innerHTML).toEqual(
 			expectedMessage.body
 		);
 	});

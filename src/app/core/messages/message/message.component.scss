@@ -1,0 +1,46 @@
+@import '../../../../styles/shared';
+
+$message-card-icon-width: 2rem;
+$message-card-body-truncate-line-count: 3 !default;
+
+:host {
+	display: block;
+
+	.col-alert-icon {
+		max-width: $message-card-icon-width;
+		flex: 0 0 $message-card-icon-width;
+		background-color: var(--bs-info);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.alert-icon {
+			font-size: 1.6rem;
+			color: var(--bs-white);
+		}
+
+		&.warn {
+			background-color: var(--bs-warning);
+		}
+
+		&.error {
+			background-color: var(--bs-danger);
+		}
+
+		&.motd {
+			background-color: var(--bs-success);
+		}
+	}
+
+	.col-alert-body {
+		max-width: calc(100% - #{$message-card-icon-width});
+		flex: 0 0 calc(100% - #{$message-card-icon-width});
+	}
+}
+
+.line-clamp {
+	display: -webkit-box;
+	-webkit-line-clamp: $message-card-body-truncate-line-count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}

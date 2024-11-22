@@ -35,8 +35,8 @@ describe('ManageMessageComponent', () => {
 		messageServiceSpy.create.and.callFake(() => {
 			return of(message);
 		});
-		dialogServiceSpy = jasmine.createSpyObj('DialogService', ['alert']);
-		dialogServiceSpy.alert.and.callFake(() => {
+		dialogServiceSpy = jasmine.createSpyObj('DialogService', ['open']);
+		dialogServiceSpy.open.and.callFake(() => {
 			return of();
 		});
 
@@ -75,8 +75,8 @@ describe('ManageMessageComponent', () => {
 
 	it('Should Open a Modal When Preview Message', () => {
 		fixture.detectChanges();
-		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(0);
+		expect(dialogServiceSpy.open).toHaveBeenCalledTimes(0);
 		component.previewMessage();
-		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(1);
+		expect(dialogServiceSpy.open).toHaveBeenCalledTimes(1);
 	});
 });

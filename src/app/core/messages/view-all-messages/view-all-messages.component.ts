@@ -9,13 +9,21 @@ import { AgoDatePipe } from '../../../common/pipes';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import { Message, MessageType } from '../message.model';
 import { MessageService } from '../message.service';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
 	selector: 'app-view-all-messages',
 	templateUrl: './view-all-messages.component.html',
 	styleUrls: ['./view-all-messages.component.scss'],
 	standalone: true,
-	imports: [SystemAlertComponent, SearchInputComponent, NgClass, LowerCasePipe, AgoDatePipe],
+	imports: [
+		SystemAlertComponent,
+		SearchInputComponent,
+		NgClass,
+		LowerCasePipe,
+		AgoDatePipe,
+		MessageComponent
+	],
 	host: {
 		'(window:scroll)': 'onScroll()'
 	}

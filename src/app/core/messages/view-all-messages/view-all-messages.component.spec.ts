@@ -66,7 +66,7 @@ describe('View All Messages Component Spec', () => {
 		};
 		expect(component.messages()).toEqual([new Message(expectedMessage)]);
 
-		expect(rootHTMLElement.querySelector('.card-title')?.textContent).toEqual(
+		expect(rootHTMLElement.querySelector('.card-title')?.textContent?.trim()).toEqual(
 			'THIS is a Test Message'
 		);
 		// should render as HTML, so text content would not include the bold tag

@@ -1,8 +1,5 @@
 @use 'sass:map';
 @import '../../../../styles/shared';
-@import '../shared';
-
-$recent-message-preview-lint-count: 3 !default;
 
 :host {
 	display: flex;
@@ -19,25 +16,4 @@ $recent-message-preview-lint-count: 3 !default;
 	overflow: auto;
 	min-height: 120px;
 	max-height: min(calc(100vh - 280px), #{$nav-messages-popover-max-height});
-}
-
-.card-message {
-	@include card-message();
-
-	.card-body {
-		padding: 0.75rem;
-
-		.card-text ::ng-deep a {
-			display: inline;
-			padding: 0;
-			text-decoration: underline;
-		}
-	}
-
-	.line-clamp {
-		display: -webkit-box;
-		-webkit-line-clamp: $recent-message-preview-lint-count;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
 }

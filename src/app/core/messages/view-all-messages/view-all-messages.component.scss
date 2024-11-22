@@ -1,5 +1,4 @@
 @import '../../../../styles/shared';
-@import '../shared';
 
 $card-width: 800px;
 
@@ -7,9 +6,7 @@ section {
 	min-width: 500px;
 }
 
-.card-message {
-	@include card-message();
-
+app-message {
 	width: 100%;
 	max-width: $card-width;
 	margin: auto;
