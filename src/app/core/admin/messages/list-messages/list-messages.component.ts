@@ -30,6 +30,10 @@ import {
 	TextColumnComponent
 } from '../../../../common/table';
 import { Message, MessageService } from '../../../messages';
+import {
+	PreviewMessageModalComponent,
+	PreviewMessageModalData
+} from '../preview-message-modal/preview-message-modal.component';
 
 @Component({
 	templateUrl: './list-messages.component.html',
@@ -113,7 +117,10 @@ export class ListMessagesComponent implements OnInit {
 	 * @param message - the message used to populate the modal
 	 */
 	previewMessage(message: Message) {
-		const { body, title } = message;
-		this.#dialogService.alert(title, body);
+		this.#dialogService.open<unknown, PreviewMessageModalData>(PreviewMessageModalComponent, {
+			data: {
+				message
+			}
+		});
 	}
 }

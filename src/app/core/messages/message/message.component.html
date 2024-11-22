@@ -1,0 +1,22 @@
+<div class="row g-0">
+	<div class="col-alert-icon {{ messageType[message().type] | lowercase }}">
+		<span
+			class="fa-solid alert-icon"
+			[class.fa-check]="message().type === messageType.MOTD"
+			[class.fa-exclamation-triangle]="message().type === messageType.ERROR"
+			[class.fa-exclamation]="message().type === messageType.WARN"
+			[class.fa-info]="message().type === messageType.INFO"
+		></span>
+	</div>
+	<div class="col-alert-body">
+		<div class="card-body">
+			<div class="d-flex">
+				<h4 class="card-title me-3" [class.text-truncate]="truncate()">
+					{{ message().title }}
+				</h4>
+				<ng-content />
+			</div>
+			<p class="mb-0" [class.line-clamp]="truncate()" [innerHTML]="message().body"></p>
+		</div>
+	</div>
+</div>

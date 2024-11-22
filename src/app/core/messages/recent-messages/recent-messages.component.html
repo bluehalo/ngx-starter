@@ -2,35 +2,14 @@
 	<h4 class="mb-0">Notifications</h4>
 	<div class="cards">
 		@for (message of messages; track message) {
-			<div class="card card-message">
-				<div class="row g-0">
-					<div class="col col-alert-icon {{ messageType[message.type] | lowercase }}">
-						<span
-							class="fa-solid alert-icon {{ messageType[message.type] | lowercase }}"
-							[ngClass]="{
-								'fa-check': message.type === messageType.MOTD,
-								'fa-info': message.type === messageType.INFO,
-								'fa-exclamation': message.type === messageType.WARN,
-								'fa-exclamation-triangle': message.type === messageType.ERROR
-							}"
-						></span>
-					</div>
-					<div class="col-alert-body">
-						<div class="card-body">
-							<div class="d-flex">
-								<h4 class="card-title text-truncate me-3">{{ message.title }}</h4>
-								<button
-									class="btn-close ms-auto"
-									type="button"
-									aria-label="Dismiss Message"
-									(click)="dismissMessage(message)"
-								></button>
-							</div>
-							<p class="card-text line-clamp" [innerHTML]="message.body"></p>
-						</div>
-					</div>
-				</div>
-			</div>
+			<app-message truncate [message]="message">
+				<button
+					class="btn-close ms-auto"
+					type="button"
+					aria-label="Dismiss Message"
+					(click)="dismissMessage(message)"
+				></button>
+			</app-message>
 		}
 	</div>
 	<div class="d-flex">
