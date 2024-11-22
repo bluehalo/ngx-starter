@@ -60,6 +60,7 @@ export class AddMembersModalComponent implements OnInit {
 	readonly usersLoading = signal(false);
 	readonly usersInput$ = new Subject<string>();
 	readonly typeaheadUsers = signal<User[]>([]);
+	readonly errorMsg = signal('');
 
 	ngOnInit() {
 		if (!this.#data.teamId) {
@@ -99,18 +100,25 @@ export class AddMembersModalComponent implements OnInit {
 	}
 
 	submit() {
+		this.errorMsg.set('');
 		this.isSubmitting.set(true);
 
 		// Add users who are already in the system
 		this.#teamsService
 			.addMembers(this.addedMembers(), { _id: this.#data.teamId })
 			.pipe(takeUntilDestroyed(this.#destroyRef))
-			.subscribe(() => {
-				this.isSubmitting.set(false);
-				this.#dialogRef.close({
-					action: DialogAction.OK,
-					data: this.addedMembers().length
-				});
+			.subscribe({
+				next: () => {
+					this.#dialogRef.close({
+						action: DialogAction.OK,
+						data: this.addedMembers().length
+					});
+				},
+				error: (error: unknown) => {
+					this.errorMsg.set('An error occurred');
+					this.isSubmitting.set(false);
+				},
+				complete: () => {}
 			});
 	}
 
