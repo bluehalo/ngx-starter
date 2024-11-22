@@ -2,6 +2,7 @@
 	title="Add Team Members"
 	okText="Add Users"
 	[disableOk]="isSubmitting() || addedMembers().length === 0"
+	[errorMsg]="errorMsg()"
 	(cancel)="cancel()"
 	(ok)="submit()"
 >
