@@ -34,6 +34,6 @@ export class EuaService extends AbstractEntityService<EndUserAgreement> {
 	}
 
 	publish(eua: EndUserAgreement): Observable<EndUserAgreement | null> {
-		return this.updateAction('publish', eua);
+		return this.updateAction('publish', eua, {});
 	}
 }

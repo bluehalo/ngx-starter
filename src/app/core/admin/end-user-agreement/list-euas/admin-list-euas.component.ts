@@ -33,6 +33,10 @@ import {
 } from '../../../../common/table';
 import { EndUserAgreement } from '../../../auth';
 import { EuaService } from '../eua.service';
+import {
+	PreviewEuaModalComponent,
+	PreviewEuaModalData
+} from '../preview-eua-modal/preview-eua-modal.component';
 
 @Component({
 	templateUrl: './admin-list-euas.component.html',
@@ -163,8 +167,9 @@ export class AdminListEuasComponent implements OnInit {
 	/**
 	 * Opens a preview modal containing the text and title of this end user agreement.
 	 */
-	previewEndUserAgreement(endUserAgreement: EndUserAgreement) {
-		const { text, title } = endUserAgreement;
-		this.#dialogService.alert(title, text);
+	previewEndUserAgreement(eua: EndUserAgreement) {
+		this.#dialogService.open<unknown, PreviewEuaModalData>(PreviewEuaModalComponent, {
+			data: { eua }
+		});
 	}
 }

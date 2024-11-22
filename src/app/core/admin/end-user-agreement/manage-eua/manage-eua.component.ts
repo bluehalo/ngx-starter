@@ -9,6 +9,10 @@ import { DialogService } from '../../../../common/dialog';
 import { SystemAlertComponent, SystemAlertService } from '../../../../common/system-alert';
 import { EndUserAgreement } from '../../../auth';
 import { EuaService } from '../eua.service';
+import {
+	PreviewEuaModalComponent,
+	PreviewEuaModalData
+} from '../preview-eua-modal/preview-eua-modal.component';
 
 @Component({
 	standalone: true,
@@ -44,6 +48,8 @@ export class ManageEuaComponent {
 	}
 
 	previewEua(): void {
-		this.#dialogService.alert(this.eua().title, this.eua().text);
+		this.#dialogService.open<unknown, PreviewEuaModalData>(PreviewEuaModalComponent, {
+			data: { eua: this.eua() }
+		});
 	}
 }

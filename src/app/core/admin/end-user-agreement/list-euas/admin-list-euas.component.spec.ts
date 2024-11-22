@@ -28,8 +28,8 @@ describe('Admin List End User Agreements Component', () => {
 			return of(void 0);
 		});
 		endUserAgreementServiceSpy.cache = {};
-		dialogServiceSpy = jasmine.createSpyObj('DialogService', ['alert']);
-		dialogServiceSpy.alert.and.callFake(() => {
+		dialogServiceSpy = jasmine.createSpyObj('DialogService', ['open']);
+		dialogServiceSpy.open.and.callFake(() => {
 			return of(void 0);
 		});
 		const testBed = TestBed.configureTestingModule({
@@ -53,8 +53,8 @@ describe('Admin List End User Agreements Component', () => {
 
 	it('Should Open a Modal When Preview End User Agreement', () => {
 		fixture.detectChanges();
-		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(0);
+		expect(dialogServiceSpy.open).toHaveBeenCalledTimes(0);
 		component.previewEndUserAgreement(new EndUserAgreement());
-		expect(dialogServiceSpy.alert).toHaveBeenCalledTimes(1);
+		expect(dialogServiceSpy.open).toHaveBeenCalledTimes(1);
 	});
 });
