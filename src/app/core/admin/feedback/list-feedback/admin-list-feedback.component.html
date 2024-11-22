@@ -161,7 +161,7 @@
 							attr.aria-controls="feedback-{{ feedback._id }}-assignee-menu"
 							[cdkMenuTriggerFor]="assigneeMenu"
 						>
-							{{ feedback.assignee ?? 'None' }}
+							{{ feedback.assignee || 'None' }}
 						</button>
 						<ng-template #assigneeMenu>
 							<div
