@@ -3,7 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -71,6 +71,8 @@ export class AdminListFeedbackComponent implements OnInit {
 	readonly #alertService = inject(SystemAlertService);
 	readonly #adminUsersService = inject(AdminUsersService);
 	readonly feedbackStatusOptions = FeedbackStatusOption;
+
+	readonly filter = viewChild.required(AsyFilterDirective);
 
 	readonly displayedColumns = signal<string[]>([]);
 	readonly assigneeUsernames = signal<string[]>([]);
@@ -164,6 +166,7 @@ export class AdminListFeedbackComponent implements OnInit {
 
 	clearFilters() {
 		this.dataSource.search('');
+		this.filter().clearFilter();
 	}
 
 	exportCurrentView() {

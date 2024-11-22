@@ -82,9 +82,14 @@
 	</div>
 
 	<div class="table-footer d-flex align-items-center">
-		<div class="table-footer-pager ms-auto">
-			<asy-paginator [dataSource]="dataSource" />
-		</div>
+		<button
+			class="btn btn-outline-primary btn-sm px-4 me-3"
+			type="button"
+			(click)="clearFilters()"
+		>
+			Reset Filters
+		</button>
+		<asy-paginator class="ms-auto" [dataSource]="dataSource" />
 	</div>
 </section>
 
