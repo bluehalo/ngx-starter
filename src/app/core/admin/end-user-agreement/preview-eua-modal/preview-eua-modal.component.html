@@ -1,0 +1,8 @@
+<asy-modal title="EUA Preview" (cancel)="close()" (ok)="close()">
+	<div class="card">
+		<div class="card-header">
+			<h2>{{ data.eua.title }}</h2>
+		</div>
+		<div class="card-body" [innerHtml]="data.eua.text"></div>
+	</div>
+</asy-modal>

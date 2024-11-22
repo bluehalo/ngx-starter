@@ -2,12 +2,12 @@
 	<div class="row g-0">
 		@if (eua$ | async; as eua) {
 			<div class="col-xl-8 offset-xl-2">
-				<h1>
+				<h2>
 					End User Agreement (EUA)<br />
 					@if (!alreadyAccepted()) {
 						<small> Please review and acknowledge the end user agreement </small>
 					}
-				</h1>
+				</h2>
 				<!-- Alert Notifications -->
 				<system-alert />
 				<form name="userForm" role="form" autocomplete="off">
