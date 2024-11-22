@@ -11,6 +11,12 @@
 </section>
 
 <section class="modal-footer">
+	@if (errorMsg()) {
+		<div class="alert alert-danger py-1">
+			<span class="fa-solid fa-fw fa-warning me-1"></span>
+			{{ errorMsg() }}
+		</div>
+	}
 	@if (hideCancel()) {
 		<button class="btn btn-outline-primary me-2" type="button" (click)="cancel.emit()">
 			{{ cancelText() }}

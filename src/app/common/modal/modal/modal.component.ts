@@ -25,6 +25,11 @@ export class ModalComponent {
 	 */
 	readonly cancelText = input('Cancel');
 
+	/**
+	 * Error message to display
+	 */
+	readonly errorMsg = input('');
+
 	readonly disableOk = input(false, { transform: booleanAttribute });
 	readonly hideCancel = input(false, { transform: booleanAttribute });
 
