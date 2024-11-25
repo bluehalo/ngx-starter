@@ -7,6 +7,9 @@ export class Team {
 	requiresExternalRoles: string[] = [];
 	requiresExternalTeams: string[] = [];
 	parent?: Team;
+	parentObj: Team;
+	ancestors: string[] = [];
+	ancestorObjs: Team[] = [];
 
 	constructor(model?: unknown) {
 		this.setFromModel(model);
@@ -23,8 +26,9 @@ export class Team {
 		this.requiresExternalTeams ??= [];
 
 		// Replace raw objects (from Object.assign) with class instances
-		if (this.parent) {
-			this.parent = new Team(this.parent);
+		if (this.parentObj) {
+			this.parentObj = new Team(this.parentObj);
 		}
+		this.ancestorObjs = this.ancestorObjs.map((team) => new Team(team));
 	}
 }

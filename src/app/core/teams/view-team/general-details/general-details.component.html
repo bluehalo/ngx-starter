@@ -149,18 +149,13 @@
 								<div>{{ team().created | utcDate: 'yyyy-MM-dd' }}</div>
 							</div>
 						</div>
-						@if (team().parent) {
+						@if (team().parentObj) {
 							<div class="form-inline-edit-item">
 								<div class="col col-form-label">Parent</div>
 								<div class="col col-form-readonly-value">
 									<div>
-										<a
-											[routerLink]="[
-												'/team',
-												team().parent?._id || team().parent
-											]"
-										>
-											{{ team().parent?.name ?? 'Unknown' }}
+										<a [routerLink]="['/team', team().parentObj._id]">
+											{{ team().parentObj.name ?? 'Unknown' }}
 										</a>
 									</div>
 								</div>
