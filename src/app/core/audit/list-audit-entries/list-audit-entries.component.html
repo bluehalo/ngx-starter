@@ -69,13 +69,13 @@
 			<ng-container cdkColumnDef="audit.object">
 				<th cdk-header-cell *cdkHeaderCellDef><asy-header-sort>Object</asy-header-sort></th>
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
-					@if (entry.audit.object?.after) {
-						{{ entry.audit.object.after | json }}
-					} @else {
-						{{ entry.audit.object | json }}
-						<div>
+					@if (entry.audit.object) {
+						@if (entry.audit.object?.after) {
+							{{ entry.audit.object.after | json }}
+						} @else {
+							{{ entry.audit.object | json }}
 							<button
-								class="btn btn-link btn-sm ps-0 pe-3"
+								class="d-block btn btn-link btn-sm ps-0 pe-3"
 								type="button"
 								container="body"
 								ngbTooltip="See details of the update"
@@ -84,7 +84,7 @@
 							>
 								<span class="fa-solid fa-eye"></span>View Details
 							</button>
-						</div>
+						}
 					}
 				</td>
 			</ng-container>
@@ -98,18 +98,16 @@
 				<td class="hide-overflow" cdk-cell *cdkCellDef="let entry">
 					@if (entry.audit.object?.before) {
 						{{ entry.audit.object?.before | json }}
-						<div>
-							<button
-								class="btn btn-link btn-sm ps-0"
-								type="button"
-								container="body"
-								ngbTooltip="See details of the update"
-								placement="bottom"
-								(click)="viewMore(entry, 'viewChanges')"
-							>
-								<span class="fa-solid fa-eye"></span><span>View Details</span>
-							</button>
-						</div>
+						<button
+							class="d-block btn btn-link btn-sm ps-0"
+							type="button"
+							container="body"
+							ngbTooltip="See details of the update"
+							placement="bottom"
+							(click)="viewMore(entry, 'viewChanges')"
+						>
+							<span class="fa-solid fa-eye"></span><span>View Details</span>
+						</button>
 					}
 				</td>
 			</ng-container>
