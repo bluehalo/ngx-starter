@@ -19,7 +19,6 @@ import {
 import { DialogService } from '../../common/dialog';
 import { injectAdminEnabled, injectAdminTopics } from '../admin';
 import { injectAuditEnabled } from '../audit';
-import { HasRoleDirective, HasSomeRolesDirective, IsAuthenticatedDirective } from '../auth';
 import { FeedbackModalComponent } from '../feedback';
 import { injectHelpEnabled } from '../help';
 import { MasqueradeService } from '../masquerade/masquerade.service';
@@ -38,12 +37,9 @@ const NAV_OPEN_STORAGE_KEY = 'navbar-open';
 	standalone: true,
 	imports: [
 		NgClass,
-		HasSomeRolesDirective,
 		RouterLinkActive,
 		RouterLink,
-		HasRoleDirective,
 		LinkAccessibilityDirective,
-		IsAuthenticatedDirective,
 		RecentMessagesComponent,
 		CdkMenu,
 		CdkMenuItem,

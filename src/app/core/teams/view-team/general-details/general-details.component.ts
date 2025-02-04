@@ -20,7 +20,6 @@ import { JoinPipe, UtcDatePipe } from '../../../../common/pipes';
 import { SystemAlertService } from '../../../../common/system-alert';
 import { SessionService, UserExternalRolesSelectDirective } from '../../../auth';
 import { APP_CONFIG, APP_SESSION } from '../../../tokens';
-import { HasTeamRoleDirective } from '../../directives/has-team-role.directive';
 import { ListTeamMembersComponent } from '../../list-team-members/list-team-members.component';
 import { ListSubTeamsComponent } from '../../list-teams/list-sub-teams.component';
 import { TeamRole } from '../../team-role.model';
@@ -34,7 +33,6 @@ import { TeamsService } from '../../teams.service';
 	standalone: true,
 	imports: [
 		ListTeamMembersComponent,
-		HasTeamRoleDirective,
 		FormsModule,
 		RouterLink,
 		ListSubTeamsComponent,
