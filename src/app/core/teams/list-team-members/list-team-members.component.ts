@@ -41,7 +41,6 @@ import {
 	AddMembersModalData,
 	AddMembersModalReturn
 } from '../add-members-modal/add-members-modal.component';
-import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { TeamMember } from '../team-member.model';
 import { TeamRole } from '../team-role.model';
 import { Team } from '../team.model';
@@ -53,7 +52,6 @@ import { TeamsService } from '../teams.service';
 	standalone: true,
 	imports: [
 		SearchInputComponent,
-		HasTeamRoleDirective,
 		CdkTableModule,
 		AsySortDirective,
 		AsyFilterDirective,

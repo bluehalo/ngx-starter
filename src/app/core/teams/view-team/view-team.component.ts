@@ -15,7 +15,6 @@ import { DialogService, isDialogActionOK } from '../../../common/dialog';
 import { SystemAlertComponent } from '../../../common/system-alert';
 import { SessionService } from '../../auth';
 import { APP_SESSION } from '../../tokens';
-import { HasTeamRoleDirective } from '../directives/has-team-role.directive';
 import { TeamRole } from '../team-role.model';
 import { injectTeamTopics } from '../team-topic.model';
 import { Team } from '../team.model';
@@ -26,13 +25,7 @@ import { TeamsService } from '../teams.service';
 	templateUrl: './view-team.component.html',
 	styleUrls: ['./view-team.component.scss'],
 	standalone: true,
-	imports: [
-		SystemAlertComponent,
-		RouterLink,
-		HasTeamRoleDirective,
-		RouterLinkActive,
-		RouterOutlet
-	],
+	imports: [SystemAlertComponent, RouterLink, RouterLinkActive, RouterOutlet],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTeamComponent {
